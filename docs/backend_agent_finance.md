@@ -120,105 +120,141 @@ bunx prisma migrate dev --name rollback_expense_table
 
 ## Implementation Areas
 
-### 1. API Endpoint Implementation
+#### Standard Route, Controller, and Service Pattern
 
-**Standard Route Structure**:
+To ensure the backend code is organized, testable, and maintainable, all new features should follow a three-layered pattern: **Routes**, **Controllers**, and **Services**.
+
+*   **Routes (`.routes.ts` files):**
+    *   **Responsibility**: Define the Hono routes and map them to the appropriate controller functions.
+    *   This layer should be as simple as possible, containing no business logic.
+
+*   **Controller (`.controller.tsx` files):**
+    *   **Responsibility**: Handle the Hono context (`c`), parse request data (query params, form body), and call the service layer to perform business logic. After the service layer returns the data, the controller is responsible for rendering the Hono JSX components and returning the final response.
+    *   This layer acts as the bridge between the HTTP world and the application's business logic. It should not contain any direct database access.
+
+*   **Service (`.service.ts` files):**
+    *   **Responsibility**: Contain all business logic and data access operations. This is where you will use Prisma to interact with the database.
+    *   Services should be completely independent of Hono. They should not know about the Hono context (`c`) or any HTTP-related objects. This makes the business logic reusable and easy to test in isolation.
+
+**Data Flow:**
+
+The flow of a request should be as follows:
+
+1.  The request hits the Hono server.
+2.  The **Route** file matches the URL and calls the corresponding **Controller** function.
+3.  The **Controller** parses the request and calls the **Service** with the necessary data.
+4.  The **Service** executes the business logic and uses Prisma to query the database.
+5.  The data is returned from the **Service** to the **Controller**.
+6.  The **Controller** uses the data to render a Hono JSX component and sends the HTML as the response.
+
+---
+
+### Controller Implementation Examples
+
+The following examples illustrate the two primary rendering patterns you will use in the application: full page loads with `c.render` and HTMX partial updates with `c.html`.
+
+---
+
+#### **Example 1: Full Page Load with `c.render`**
+
+Use `c.render` when you need to render a complete page. The `jsxRenderer` middleware will automatically wrap the component you provide in the main `Layout.tsx`. This is typically used for initial page visits or full-page navigations.
+
+**Scenario**: A user navigates to the main dashboard page (`/`).
+
+**`dashboard.routes.ts`**
 ```typescript
-// src/routes/expenses.ts
+// src/api/dashboard.routes.ts
 import { Hono } from 'hono';
+import { DashboardController } from './dashboard.controller';
+
+const dashboardRoutes = new Hono();
+const controller = new DashboardController();
+
+// This route handles the initial page load for the dashboard.
+dashboardRoutes.get('/', controller.getDashboardPage);
+
+export default dashboardRoutes;
+```
+
+**`dashboard.controller.tsx`**
+```typescript
+// src/api/dashboard.controller.tsx
+import { Context } from 'hono';
+import { DashboardService } from './dashboard.service';
+import { DashboardPage } from '../pages/DashboardPage'; // A new component for the page
+
+export class DashboardController {
+  private dashboardService = new DashboardService();
+
+  getDashboardPage = async (c: Context) => {
+    const userId = c.get('userId');
+    
+    // 1. Call the service to get all necessary data for the dashboard.
+    const recentExpenses = await this.dashboardService.getRecentExpenses(userId);
+    const stats = await this.dashboardService.getDashboardStats(userId);
+
+    // 2. Use c.render() to render the main page component with the data.
+    // Hono will automatically place <DashboardPage> inside your <Layout>.
+    return c.render(
+      <DashboardPage expenses={recentExpenses} stats={stats} />
+    );
+  };
+}
+```
+
+---
+
+#### **Example 2: HTMX Partial Update with `c.html`**
+
+Use `c.html` when you need to return a small HTML fragment for an HTMX-powered partial update. This avoids sending the entire layout and only provides the piece of the page that needs to be changed.
+
+**Scenario**: A user submits the "Add Expense" form, and we want to add the new expense to the top of the expense list without a full page reload.
+
+**`expense.routes.ts`**
+```typescript
+// src/api/expense.routes.ts
+import { Hono } from 'hono';
+import { ExpenseController } from './expense.controller';
+
+const expenseRoutes = new Hono();
+const controller = new ExpenseController();
+
+// This route handles the form submission from HTMX.
+expenseRoutes.post('/', ...controller.createExpense);
+
+export default expenseRoutes;
+```
+
+**`expense.controller.tsx`**
+```typescript
+// src/api/expense.controller.tsx
 import { zValidator } from '@hono/zod-validator';
-import { prisma } from '../lib/prisma';
-import { expenseSchema, updateExpenseSchema } from '../schemas/expense';
+import { expenseSchema } from '../schemas/expense';
+import { ExpenseService } from './expense.service';
+import { ExpenseRow } from '../components/expenses/ExpenseRow';
+import { Context } from 'hono';
 
-const app = new Hono();
+export class ExpenseController {
+  private expenseService = new ExpenseService();
 
-// List with filters
-app.get('/', async (c) => {
-  const userId = c.get('userId');
-  const { startDate, endDate, category, limit = '50', offset = '0' } = c.req.query();
-  
-  const expenses = await prisma.expense.findMany({
-    where: {
-      userId,
-      ...(startDate && { date: { gte: new Date(startDate) } }),
-      ...(endDate && { date: { lte: new Date(endDate) } }),
-      ...(category && { category })
-    },
-    orderBy: { date: 'desc' },
-    take: parseInt(limit),
-    skip: parseInt(offset),
-    include: { categoryData: true }
-  });
-  
-  const total = await prisma.expense.count({
-    where: { userId }
-  });
-  
-  return c.html(<ExpenseList expenses={expenses} total={total} />);
-});
+  createExpense = [
+    zValidator('form', expenseSchema),
+    async (c: Context) => {
+      const userId = c.get('userId');
+      const data = c.req.valid('form');
+      
+      // 1. Call the service to create the new expense.
+      const newExpense = await this.expenseService.create(userId, data);
+      
+      // 2. Set the status code for a successful creation.
+      c.status(201);
 
-// Create
-app.post('/', zValidator('form', expenseSchema), async (c) => {
-  const userId = c.get('userId');
-  const data = c.req.valid('form');
-  
-  const expense = await prisma.expense.create({
-    data: {
-      ...data,
-      userId,
-      amount: new Prisma.Decimal(data.amount)
+      // 3. Use c.html() to return ONLY the HTML for the new table row.
+      // This fragment will be inserted into the page by HTMX.
+      return c.html(<ExpenseRow expense={newExpense} />);
     }
-  });
-  
-  return c.html(<ExpenseRow expense={expense} />, 201);
-});
-
-// Update
-app.put('/:id', zValidator('form', updateExpenseSchema), async (c) => {
-  const userId = c.get('userId');
-  const id = c.req.param('id');
-  const data = c.req.valid('form');
-  
-  // Verify ownership
-  const existing = await prisma.expense.findUnique({
-    where: { id, userId }
-  });
-  
-  if (!existing) {
-    return c.json({ error: 'Not found' }, 404);
-  }
-  
-  const expense = await prisma.expense.update({
-    where: { id },
-    data: {
-      ...data,
-      ...(data.amount && { amount: new Prisma.Decimal(data.amount) })
-    }
-  });
-  
-  return c.html(<ExpenseRow expense={expense} />);
-});
-
-// Delete
-app.delete('/:id', async (c) => {
-  const userId = c.get('userId');
-  const id = c.req.param('id');
-  
-  // Verify ownership
-  const expense = await prisma.expense.findUnique({
-    where: { id, userId }
-  });
-  
-  if (!expense) {
-    return c.json({ error: 'Not found' }, 404);
-  }
-  
-  await prisma.expense.delete({ where: { id } });
-  
-  return c.body(null, 204);
-});
-
-export default app;
+  ];
+}
 ```
 
 ### 2. Prisma Schema Design

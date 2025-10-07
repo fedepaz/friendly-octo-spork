@@ -845,6 +845,99 @@ export const ExpenseRow: FC<{ expense: Expense }> = ({ expense }) => (
 </button>
 ```
 
+### Component Rendering and Styling Pattern
+
+All components should be created as Hono Functional Components (`FC`) and rendered on the server. The styling should follow a mobile-first approach.
+
+**1. Component Structure:**
+
+```typescript
+import type { FC } from 'hono/jsx';
+
+interface MyComponentProps {
+  // Define your component props here
+}
+
+export const MyComponent: FC<MyComponentProps> = (props) => {
+  return (
+    <div class="p-4 bg-white rounded-lg shadow">
+      {/* Your component's HTML and JSX here */}
+    </div>
+  );
+};
+```
+
+**2. Styling with Tailwind CSS and Tabler UI:**
+
+*   **Use `class`**: Hono's JSX uses the standard HTML `class` attribute, not `className`.
+*   **Mobile-First**: Design for mobile by default. Use Tailwind's responsive prefixes (`md:`, `lg:`, `xl:`) to add styles for larger screens.
+*   **Tabler UI for Layout**: Use Tabler UI's grid system (`container-xl`, `row`, `col-md-6`, etc.) for the main page layout.
+*   **Tailwind for Components**: Use Tailwind's utility classes for styling individual components and elements.
+
+### 3. Responsive Design Example:
+
+Here is an example of a simple card component that is responsive. On mobile, the items are stacked vertically. On medium screens and up, they are displayed in a row.
+
+```typescript
+import type { FC } from 'hono/jsx';
+
+interface StatCardProps {
+  title: string;
+  value: string;
+}
+
+export const StatCard: FC<StatCardProps> = ({ title, value }) => {
+  return (
+    <div class="card">
+      <div class="card-body">
+        {/* On mobile (default), items are stacked. On medium screens (md:), they are in a row. */}
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="text-muted">{title}</div>
+          <div class="font-bold text-lg md:text-xl">{value}</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+```
+
+**4. Type-Safe HTMX:**
+
+To improve type safety and get autocompletion for HTMX attributes in your JSX, we will use the `typed-htmx` library.
+
+**Setup:**
+
+1.  **Add the dependency**:
+    ```bash
+    bun add typed-htmx
+    ```
+
+2.  **Create a global declaration file**: Create a file named `src/global.d.ts` and add the following lines to it. This will augment Hono's JSX types globally.
+    ```typescript
+    import 'typed-htmx';
+
+    declare module 'hono/jsx' {
+      namespace JSX {
+        interface HTMLAttributes extends HtmxAttributes {}
+      }
+    }
+    ```
+
+**Usage:**
+
+With this setup, you will now get type-checking and autocompletion for all `hx-*` attributes in your components, reducing the risk of typos.
+
+```typescript
+// Example with type-safe hx-post
+export const MyFormComponent: FC = () => {
+  return (
+    <form hx-post="/api/submit">
+      {/* ... */}
+    </form>
+  );
+};
+```
+
 ## Implementation Patterns
 
 ### Pattern 1: Layout Structure
