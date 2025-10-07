@@ -1,9 +1,9 @@
 {
   "name": "finance-app",
   "scripts": {
-    "dev": "concurrently \"bun run watch:css\" \"bun run --hot src/index.tsx\" ",
-    "build:css": "tailwindcss -i ./src/styles.css -o ./src/output.css",
-    "watch:css": " tailwindcss -i ./src/styles.css -o ./src/output.css --watch"
+    "dev": "concurrently \"bun run watch:css\" \"bun run --hot src/index.tsx\"",
+    "watch:css": " tailwindcss -i ./src/styles/main.css -o ./dist/static/output.css --watch",
+    "build:css": "tailwindcss -i ./src/styles/main.css -o ./dist/static/output.css"
   },
   "dependencies": {
     "@prisma/client": "^6.16.3",

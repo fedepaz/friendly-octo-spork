@@ -27,41 +27,8 @@ const Layout: FC<LayoutProps> = (props) => {
       </head>
       <body>
         <div class="page">
-          <header class="navbar navbar-expand-md d-print-none">
-            <div class="container-xl">
-              <h1
-                class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3"
-              >
-                <a href="."> Finance App </a>
-              </h1>
-            </div>
-          </header>
-          <div class="page-wrapper">
-            <div class="page-body">
-              <div class="container-xl">${props.children}</div>
-            </div>
-            <footer class="footer footer-transparent d-print-none">
-              <div class="container-xl">
-                <div
-                  class="row text-center align-items-center flex-row-reverse"
-                >
-                  <div class="col-lg-auto ms-lg-auto">
-                    <ul class="list-inline list-inline-dots mb-0">
-                      <li class="list-inline-item">
-                        Finance App - Made with ❤️
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                    <ul class="list-inline list-inline-dots mb-0">
-                      <li class="list-inline-item">
-                        &copy; 2025 All rights reserved.
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </footer>
+          <div class="mx-auto w-full min-h-screen bg-gray-100">
+            <div class="container-xl">${props.children}</div>
           </div>
         </div>
       </body>

@@ -8,7 +8,7 @@ interface DashboardProps {
 const Dashboard: FC<DashboardProps> = ({ title, description }) => {
   return (
     <div class="page-body">
-      <div class="container-xl">
+      <div class="container">
         <div class="card">
           <div class="card-body">
             <h2 class="card-title">{title}</h2>

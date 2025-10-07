@@ -14,7 +14,7 @@ app.use(
 );
 
 // Serve static files (for Tailwind/Tabler assets later)
-app.use("/output.css", serveStatic({ root: "./src" }));
+app.use("/output.css", serveStatic({ root: "./dist/static" }));
 app.route("/", dashboardRoutes);
 
 export default {

@@ -1,36 +1,89 @@
-# deps
-node_modules/
+# =========================
+# OS & System Files
+# =========================
+.DS_Store
+pids
+*.pid
+*.seed
+*.pid.lock
 
-/src/generated/prisma
+# =========================
+# Dependencies & Package Managers
+# =========================
+**/node_modules/
+.pnpm/
 
+# =========================
+# Build & Compiled Output
+# =========================
+**/dist/
+**/build/
+**/.next/
+**/.turbo/
+**/out/
+*.tsbuildinfo
+next-env.d.ts
 
-**/.DS_Store
-**/.env
-**/.env.*
-**/.env.local
-**/.env.development.local
-**/.env.test.local
-**/.env.production.local
+# =========================
+# Logs & Debug Files
+# =========================
+# General logs
+logs
+*.log
 
-**/npm-debug.log*
-**/yarn-debug.log*
-**/yarn-error.log*
+# Node.js debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-# yarn
-.yarn/*
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions     
+# =========================
+# Environment Variables
+# =========================
 
+# Alternatively, if you want to ignore specific ones but allow others:
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# =========================
+# Testing & Coverage
+# =========================
+**/coverage/
+/.nyc_output
+
+# =========================
+# IDEs & Editors
+# =========================
+# General
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+**/.clerk
+
+# VSCode (preserve workspace settings)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# =========================
+# Misc & Temporary Files
+# =========================
+.vercel
+*.pem
+.temp
+.tmp
 # bun
 .bun 
