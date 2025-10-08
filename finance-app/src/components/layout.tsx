@@ -1,8 +1,8 @@
 import { html } from "hono/html";
-import type { FC } from "hono/jsx";
+import type { FC, JSX } from "hono/jsx";
 
 interface LayoutProps {
-  children?: any;
+  children?: JSX.Element;
 }
 
 const Layout: FC<LayoutProps> = (props) => {

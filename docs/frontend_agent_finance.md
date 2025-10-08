@@ -627,6 +627,13 @@ export const ExpenseForm: FC = () => {
               />
             </div>
           </div>
+          <div class="col-md-2">
+            <label class="form-label">Category</label>
+            <select name="categoryId" class="form-select" required>
+              <option value="">Select...</option>
+              {/* Categories will be dynamically loaded here */}
+            </select>
+          </div>
           {/* More fields... */}
         </div>
         <button type="submit" class="btn btn-primary mt-3">
@@ -783,25 +790,25 @@ export const ExpenseTable: FC<{ expenses: Expense[] }> = ({ expenses }) => (
 );
 
 // Individual Row Component
-export const ExpenseRow: FC<{ expense: Expense }> = ({ expense }) => (
+export const ExpenseRow: FC<{ expense: Expense & { category: Category } }> = ({ expense }) => (
   <tr id={`expense-${expense.id}`}>
     <td class="text-muted">
-      {new Date(expense.date).toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric' 
+      {new Date(expense.date).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric'
       })}
     </td>
     <td>{expense.concept}</td>
     <td>
-      <span class={`badge bg-${getCategoryColor(expense.category)}`}>
-        {expense.category}
+      <span class={`badge bg-${getCategoryColor(expense.category.nombre)}`}>
+        {expense.category.nombre}
       </span>
     </td>
     <td class="text-end text-monospace">
       ${Number(expense.amount).toFixed(2)}
     </td>
     <td>
-      <button 
+      <button
         class="btn btn-sm btn-ghost-secondary"
         hx-get={`/api/expenses/${expense.id}/edit`}
         hx-target={`#expense-${expense.id}`}
@@ -809,7 +816,7 @@ export const ExpenseRow: FC<{ expense: Expense }> = ({ expense }) => (
       >
         Edit
       </button>
-      <button 
+      <button
         class="btn btn-sm btn-ghost-danger"
         hx-delete={`/api/expenses/${expense.id}`}
         hx-target={`#expense-${expense.id}`}

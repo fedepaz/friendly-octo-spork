@@ -117,3 +117,61 @@ export default {
     *   The `div` with the class `mx-auto w-full min-h-screen bg-gray-100` is an example of how Tailwind's utility classes are used directly in the JSX to style the components.
 
 This revised summary should now accurately reflect your project's setup and the technologies you are using.
+
+**5. Database Setup (PostgreSQL with Docker Compose):**
+
+To get the database up and running, we use Docker Compose to manage a PostgreSQL container. This provides an isolated and reproducible environment for your database.
+
+*   **`docker/docker-compose.yml`**:
+    This file defines the PostgreSQL service. It specifies the `postgres:13` image, sets up environment variables for the database user, password, and database name, and mounts a named volume for data persistence. This ensures your data is not lost when the container is stopped or removed.
+
+    ```yaml
+    version: '3.8'
+    services:
+      db:
+        image: postgres:13
+        container_name: finance-app-db
+        restart: always
+        ports:
+          - '5432:5432'
+        environment:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: finance-app
+        volumes:
+          - postgres_data:/var/lib/postgresql/data
+
+    volumes:
+      postgres_data:
+    ```
+
+*   **`finance-app/.env`**:
+    This file, located in your `finance-app` directory, contains the `DATABASE_URL` that Prisma uses to connect to the PostgreSQL database. It should reflect the credentials and database name defined in your `docker-compose.yml`.
+
+    ```
+    DATABASE_URL="postgresql://user:password@localhost:5432/finance-app"
+    ```
+
+*   **Starting the Database Container:**
+    Navigate to the `docker` directory and run the following command to start the PostgreSQL container in detached mode:
+
+    ```bash
+    cd docker
+    sudo docker compose up -d
+    ```
+
+*   **Applying Prisma Migrations:**
+    Once the database container is running, navigate to the `finance-app` directory and apply the Prisma migrations. This will create all the necessary tables in your PostgreSQL database based on your `prisma/schema.prisma` file.
+
+    ```bash
+    cd finance-app
+    bunx prisma migrate dev --name init
+    ```
+
+*   **Verifying the Database Setup:**
+    To confirm that the database is running and the tables have been created, you can execute a command to list the tables directly from the PostgreSQL container:
+
+    ```bash
+    sudo docker exec -it finance-app-db psql -U user -d finance-app -c "\\dt"
+    ```
+    You should see a list of tables including `Category`, `Gasto`, `Ingreso`, `Mes`, `Pago`, and `_prisma_migrations`.

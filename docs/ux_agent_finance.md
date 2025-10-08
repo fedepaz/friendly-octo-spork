@@ -140,9 +140,9 @@ The visual design of the application should be light, simple, and data-focused. 
       </div>
       <div class="col-md-2">
         <label class="form-label">Category</label>
-        <select name="category" class="form-select" required>
-          <option value="food">Food</option>
-          <option value="transport">Transport</option>
+        <select name="categoryId" class="form-select" required>
+          <option value="">Select...</option>
+          {/* Categories will be dynamically loaded here */}
         </select>
       </div>
     </div>
@@ -170,13 +170,13 @@ The visual design of the application should be light, simple, and data-focused. 
     <h3 class="card-title">Expenses</h3>
     <div class="card-actions">
       <!-- Filters using HTMX -->
-      <select name="category" 
+      <select name="categoryId" 
               hx-get="/api/expenses" 
               hx-target="#expense-table"
               hx-include="[name='month']"
               class="form-select form-select-sm">
         <option value="">All Categories</option>
-        <option value="food">Food</option>
+        {/* Categories will be dynamically loaded here */}
       </select>
     </div>
   </div>
@@ -196,7 +196,15 @@ The visual design of the application should be light, simple, and data-focused. 
         <tr>
           <td class="text-muted">Oct 06</td>
           <td>Lunch</td>
-          <td><span class="badge bg-yellow">Food</span></td>
+    <td>
+      <span 
+        class="badge bg-blue"
+        role="status"
+        aria-label={`Category: ${expense.category.nombre}`}
+      >
+        {expense.category.nombre}
+      </span>
+    </td>
           <td class="text-end text-monospace">$27.04</td>
           <td>
             <button class="btn btn-sm btn-ghost-secondary"
@@ -256,9 +264,9 @@ The visual design of the application should be light, simple, and data-focused. 
     <div class="card">
       <div class="card-body">
         <div class="subheader">Top Category</div>
-        <div class="h1 mb-1">Food</div>
+        <div class="h1 mb-1">{topCategory.nombre}</div>
         <div class="text-muted">
-          $532.98 this month
+          ${topCategory.amount} this month
         </div>
       </div>
     </div>
@@ -428,7 +436,7 @@ The visual design of the application should be light, simple, and data-focused. 
   <input tabindex="1" name="date">
   <input tabindex="2" name="amount">
   <input tabindex="3" name="concept">
-  <select tabindex="4" name="category">
+  <select tabindex="4" name="categoryId">
   <button tabindex="5" type="submit">
 </form>
 
@@ -448,6 +456,7 @@ The visual design of the application should be light, simple, and data-focused. 
     <tr>
       <th scope="col">Date</th>
       <th scope="col">Amount</th>
+      <th scope="col">Category</th>
     </tr>
   </thead>
 </table>

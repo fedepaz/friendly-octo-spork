@@ -140,10 +140,19 @@ model Expense {
   date      DateTime
   amount    Decimal  @db.Decimal(10, 2)
   concept   String
-  category  String
+  
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+
   createdAt DateTime @default(now())
   userId    String
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model Category {
+  id          Int      @id @default(autoincrement())
+  nombre      String   @unique
+  createdAt   DateTime @default(now())
 }
 ```
 

@@ -286,7 +286,9 @@ model Expense {
   date      DateTime
   amount    Decimal  @db.Decimal(10, 2)
   concept   String   @db.VarChar(255)
-  category  String   @db.VarChar(100)
+  
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
   
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -295,7 +297,7 @@ model Expense {
   updatedAt DateTime @updatedAt
   
   @@index([userId, date(sort: Desc)])
-  @@index([userId, category])
+  @@index([userId, categoryId])
   @@index([userId, createdAt])
 }
 
@@ -307,6 +309,9 @@ model Payment {
   isRecurring Boolean  @default(false)
   frequency   String?  @db.VarChar(50) // monthly, weekly, etc.
   
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   
@@ -315,12 +320,16 @@ model Payment {
   
   @@index([userId, date(sort: Desc)])
   @@index([userId, isRecurring])
+  @@index([categoryId])
 }
 
 model Budget {
   id        String   @id @default(cuid())
   month     DateTime // First day of month
-  category  String   @db.VarChar(100)
+  
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+
   limit     Decimal  @db.Decimal(10, 2)
   spent     Decimal  @db.Decimal(10, 2) @default(0)
   
@@ -330,17 +339,21 @@ model Budget {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   
-  @@unique([userId, month, category])
+  @@unique([userId, month, categoryId])
   @@index([userId, month])
+  @@index([categoryId])
 }
 
 model Category {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  description String?
-  icon        String?  @db.VarChar(50)
-  color       String?  @db.VarChar(20)
+  id          Int      @id @default(autoincrement())
+  nombre      String   @unique
+  
+  ingresos    Expense[]
+  gastos      Payment[]
+  pagos       Budget[]
+
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 ```
 

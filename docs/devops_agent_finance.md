@@ -58,41 +58,18 @@ CMD ["bun", "run", "dev"]
 version: '3.8'
 
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    ports:
-      - "3000:3000"
-    volumes:
-      - .:/app
-      - /app/node_modules
-    environment:
-      - NODE_ENV=development
-      - DATABASE_URL=${DATABASE_URL}
-      - CLERK_SECRET_KEY=${CLERK_SECRET_KEY}
-      - CLERK_PUBLISHABLE_KEY=${CLERK_PUBLISHABLE_KEY}
-    env_file:
-      - .env
-    depends_on:
-      - db
-    command: sh -c "bunx prisma migrate deploy && bun run dev"
-
   db:
-    image: postgres:16-alpine
+    image: postgres:13
+    container_name: finance-app-db
+    restart: always
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
-      - POSTGRES_DB=financetracker
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: finance-app
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
 
 volumes:
   postgres_data:
@@ -101,7 +78,7 @@ volumes:
 **3. .env.example**
 ```env
 # Database (Local)
-DATABASE_URL="postgresql://postgres:postgres@db:5432/financetracker"
+DATABASE_URL="postgresql://user:password@localhost:5432/finance-app"
 
 # Database (Neon - for production)
 # DATABASE_URL="postgresql://user:password@host.neon.tech/dbname?sslmode=require"
@@ -144,13 +121,17 @@ PORT="3000"
 1. Clone the repository
 2. Copy `.env.example` to `.env`
 3. Add your Clerk keys to `.env`
-4. Run:
+4. Navigate to the `docker` directory:
+```bash
+cd docker
+```
+5. Run:
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
-5. Application runs on `http://localhost:3000`
+6. Application runs on `http://localhost:3000`
 
 ## Without Docker (Bun directly)
 

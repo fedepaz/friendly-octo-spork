@@ -110,7 +110,8 @@ const result = await prisma.$queryRaw`
 ```typescript
 // ✅ GOOD: Always filter by userId
 const expense = await prisma.expense.findUnique({
-  where: { id, userId } // Prevents accessing other users' data
+  where: { id, userId },
+  include: { category: true } // Include category
 });
 
 // ❌ CRITICAL: Missing userId filter
@@ -255,7 +256,7 @@ const expenseSchema = z.object({
   date: z.string().datetime(),
   amount: z.number().positive().max(1000000), // Max reasonable expense
   concept: z.string().min(1).max(255),
-  category: z.enum(['food', 'transport', 'bills', ...])
+  categoryId: z.number().int().positive() // Category ID from database
 });
 
 app.post('/api/expenses', zValidator('form', expenseSchema), async (c) => {

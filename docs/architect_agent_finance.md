@@ -358,7 +358,9 @@ model Expense {
   date      DateTime
   amount    Decimal  @db.Decimal(10, 2)
   concept   String   @db.VarChar(255)
-  category  String   @db.VarChar(100)
+  
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
   
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -367,15 +369,19 @@ model Expense {
   updatedAt DateTime @updatedAt
   
   @@index([userId, date(sort: Desc)])
-  @@index([userId, category])
+  @@index([userId, categoryId])
 }
 
 model Category {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  description String?
-  icon        String?
+  id          Int      @id @default(autoincrement())
+  nombre      String   @unique
+  
+  ingresos    Ingreso[]
+  gastos      Gasto[]
+  pagos       Pago[]
+
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 ```
 
