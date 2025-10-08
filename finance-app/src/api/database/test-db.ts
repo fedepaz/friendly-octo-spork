@@ -1,10 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // src/api/database/test-db.ts
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../../generated/prisma";
 
 const prisma = new PrismaClient();
 
@@ -30,4 +26,4 @@ async function main() {
 
 main()
   .catch((e) => console.error("❌ Error:", e))
-  .finally(() => prisma.$disconnect());
+  .finally(() => { prisma.$disconnect().catch(e => console.error("Error disconnecting Prisma:", e)); });

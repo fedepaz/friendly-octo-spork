@@ -1,11 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as XLSX from "xlsx";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../generated/prisma";
 import * as readline from "readline";
 import * as fs from "fs";
 
@@ -325,6 +319,22 @@ async function confirmarMapeoColumnas(
 // PROCESAMIENTO DE DATOS
 // ============================================
 
+function parsearFecha(valor: any): Date {
+  if (typeof valor === "number") {
+    // Formula para convertir fecha de Excel (número de días desde 1900) a JS Date
+    const jsDate = new Date(Math.round((valor - 25569) * 86400 * 1000));
+    return jsDate;
+  }
+  if (typeof valor === "string") {
+    const date = new Date(valor);
+    if (!isNaN(date.getTime())) {
+      return date;
+    }
+  }
+  // Fallback
+  return new Date();
+}
+
 async function procesarColumna(
   datos: any[][],
   config: ConfigColumna,
@@ -344,8 +354,10 @@ async function procesarColumna(
     const montoNum = limpiarMonto(monto);
     if (montoNum === 0) continue;
 
+    const fechaDate = parsearFecha(fecha);
+
     registros.push({
-      fecha: String(fecha),
+      fecha: fechaDate,
       monto: montoNum,
       concepto: String(concepto || "Sin concepto"),
     });
@@ -360,7 +372,9 @@ async function procesarColumna(
   console.log(`\n   📝 Se encontraron ${registros.length} registros`);
   console.log("   Vista previa:");
   registros.slice(0, 5).forEach((reg) => {
-    console.log(`      ${reg.fecha} | $${reg.monto} | ${reg.concepto}`);
+    console.log(
+      `      ${reg.fecha.toLocaleDateString()} | $${reg.monto} | ${reg.concepto}`
+    );
   });
 
   if (registros.length > 5) {
@@ -388,7 +402,7 @@ async function procesarColumna(
         await prisma.gasto.create({
           data: {
             mesId,
-            fecha: new Date(),
+            fecha: reg.fecha,
             monto: reg.monto,
             concepto: reg.concepto,
             categoryId,
@@ -398,7 +412,7 @@ async function procesarColumna(
         await prisma.pago.create({
           data: {
             mesId,
-            fecha: new Date(),
+            fecha: reg.fecha,
             monto: reg.monto,
             concepto: reg.concepto,
             categoryId,
@@ -408,7 +422,7 @@ async function procesarColumna(
         await prisma.ingreso.create({
           data: {
             mesId,
-            fecha: new Date(),
+            fecha: reg.fecha,
             monto: reg.monto,
             concepto: reg.concepto,
             categoryId,
@@ -711,4 +725,4 @@ main()
     console.error("❌ Error:", e);
     process.exit(1);
   })
-  .finally(() => prisma.$disconnect());
+  .finally(() => { prisma.$disconnect().catch(e => console.error("Error disconnecting Prisma:", e)); });
