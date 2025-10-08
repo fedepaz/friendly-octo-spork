@@ -41,9 +41,9 @@ When the user asks a question that requires research (e.g., "how to implement X 
 
 ---
 
-### Rule: Workflow for Committing New Work
+### Rule: Workflow for Committing and Pushing New Work
 
-When the user asks me to create a commit, I will execute the following master workflow, which combines our previously established rules:
+When the user asks me to **commit, push, or otherwise save new work**, I will execute the following master workflow, which combines our previously established rules:
 
 1.  **Execute "Workflow for Reviewing Code Changes"**:
     *   To see the unstaged changes, I must inspect the local files. I will use `git diff HEAD` to get a summary of all the modifications.
@@ -58,9 +58,12 @@ When the user asks me to create a commit, I will execute the following master wo
         2.  A summary of the research findings.
         3.  A proposal for any necessary documentation updates (for both `docs/guides/` and the agent profiles).
 
-4.  **Commit and Push**:
-    *   Only after receiving your final approval on the comprehensive plan will I proceed to apply the documentation changes, stage all files, and commit them with the approved message.
-    *   I will then ask if you want me to push the changes.
+4.  **Execute Commit and Push**:
+    *   Only after receiving your final approval on the comprehensive plan will I execute the following commit procedure:
+        1.  **Save Commit Message**: Create a `.commits` directory (if it doesn't exist) and save the full, approved commit message to a new file within it.
+        2.  **Stage All Changes**: Run `git add .` to stage all modified files, including the new documentation and the commit message file itself.
+        3.  **Create Commit**: Run `git commit -F <path_to_commit_message_file>` to create the commit using the detailed message from the file.
+        4.  **Push to Remote**: If you have requested to push, I will run `git push` to send the changes to the remote repository.
 
 ---
 

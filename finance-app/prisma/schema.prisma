@@ -1,8 +1,6 @@
 // This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Schema Prisma Minimalista - Versión Inicial
+// Expandir según necesites más funcionalidades
 
 generator client {
   provider = "prisma-client-js"
@@ -12,4 +10,113 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+
+// ============================================
+// TABLA PRINCIPAL: MES
+// ============================================
+model Mes {
+  id            Int       @id @default(autoincrement())
+  año           Int
+  mes           Int       // 1-12
+  fechaInicio   DateTime
+  fechaFin      DateTime
+  
+  // Totales calculados (se actualizan automáticamente)
+  totalIngresos Decimal   @default(0) @db.Decimal(12, 2)
+  totalGastos   Decimal   @default(0) @db.Decimal(12, 2)
+  totalPagos    Decimal   @default(0) @db.Decimal(12, 2)
+  saldoFinal    Decimal   @default(0) @db.Decimal(12, 2)
+  
+  // Relaciones
+  ingresos      Ingreso[]
+  gastos        Gasto[]
+  pagos         Pago[]
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  @@unique([año, mes])
+  @@index([año, mes])
+}
+
+// ============================================
+// CATEGORÍAS
+// ============================================
+model Category {
+  id        Int       @id @default(autoincrement())
+  nombre    String    @unique
+  
+  // Relaciones (opcional, para ver todos los movimientos de una categoría)
+  ingresos  Ingreso[]
+  gastos    Gasto[]
+  pagos     Pago[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+
+// ============================================
+// INGRESOS
+// ============================================
+model Ingreso {
+  id        Int      @id @default(autoincrement())
+  mesId     Int
+  mes       Mes      @relation(fields: [mesId], references: [id], onDelete: Cascade)
+  
+  fecha     DateTime
+  monto     Decimal  @db.Decimal(12, 2)
+  concepto  String
+  
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
+  
+  @@index([mesId, fecha])
+  @@index([categoryId])
+}
+
+// ============================================
+// GASTOS
+// ============================================
+model Gasto {
+  id        Int      @id @default(autoincrement())
+  mesId     Int
+  mes       Mes      @relation(fields: [mesId], references: [id], onDelete: Cascade)
+  
+  fecha     DateTime
+  monto     Decimal  @db.Decimal(12, 2)
+  concepto  String
+
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+  
+  createdAt DateTime @default(now())
+  
+  @@index([mesId, fecha])
+  @@index([categoryId])
+}
+
+// ============================================
+// PAGOS
+// ============================================
+model Pago {
+  id        Int      @id @default(autoincrement())
+  mesId     Int
+  mes       Mes      @relation(fields: [mesId], references: [id], onDelete: Cascade)
+  
+  fecha     DateTime
+  monto     Decimal  @db.Decimal(12, 2)
+  concepto  String
+
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+  
+  createdAt DateTime @default(now())
+  
+  @@index([mesId, fecha])
+  @@index([categoryId])
 }
