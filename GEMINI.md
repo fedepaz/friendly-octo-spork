@@ -1,3 +1,5 @@
+**Rule: Do not take any action or make any changes unless explicitly asked by the user. Always wait for a direct instruction before modifying files or system state.**
+
 # Gemini Agent Protocol for Personal Finance Tracker
 
 This document outlines the specialized agents that assist in the development of the Personal Finance Tracker application. Each agent has a specific role and expertise.
