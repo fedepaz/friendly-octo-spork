@@ -55,7 +55,7 @@ async function extractSheets(
   sheetNames.forEach((h, i) => console.log(`   ${i + 1}. ${h}`));
 
   // Filter out invalid sheet names (e.g., external references)
-  const validSheetNames = sheetNames.filter(name => !name.startsWith("'file:///"));
+  const validSheetNames = sheetNames.filter(name => !name.includes("file:///"));
 
   console.log(`
 📋 Hojas válidas para procesar: ${validSheetNames.length}`);
