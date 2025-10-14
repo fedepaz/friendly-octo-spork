@@ -1,0 +1,180 @@
+{
+  "gastos": [
+    {
+      "fecha": "sáb 31 de dic de 22",
+      "monto": 530,
+      "tipo": "bebidas"
+    },
+    {
+      "fecha": "lun 3 de ene de 22",
+      "monto": 9600,
+      "tipo": "prote"
+    },
+    {
+      "fecha": "jue 3 de feb de 22",
+      "monto": 3400,
+      "tipo": "cipio"
+    },
+    {
+      "fecha": "mié 12 de ene de 22",
+      "monto": 3800,
+      "tipo": "negro auto"
+    },
+    {
+      "fecha": "lun 17 de ene de 22",
+      "monto": 3500,
+      "tipo": "flete"
+    },
+    {
+      "fecha": "lun 17 de ene de 22",
+      "monto": 1500,
+      "tipo": "(?)"
+    },
+    {
+      "fecha": "lun 24 de ene de 22",
+      "monto": 300,
+      "tipo": "modista"
+    },
+    {
+      "fecha": "lun 31 de ene de 22",
+      "monto": 4050,
+      "tipo": "super"
+    },
+    {
+      "fecha": "mié 19 de ene de 22",
+      "monto": 1960,
+      "tipo": "pollo varios"
+    },
+    {
+      "fecha": "lun 3 de ene de 22",
+      "monto": 3586,
+      "tipo": "super"
+    },
+    {
+      "fecha": "mié 5 de ene de 22",
+      "monto": 1400,
+      "tipo": "pollo mila"
+    },
+    {
+      "fecha": "jue 13 de ene de 22",
+      "monto": 639.8,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "lun 17 de ene de 22",
+      "monto": 920,
+      "tipo": "verdu y mila"
+    },
+    {
+      "fecha": "vie 28 de ene de 22",
+      "monto": 660,
+      "tipo": "pollo"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "vie 31 de dic de 21",
+      "monto": 3081.66,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "vie 7 de ene de 22",
+      "monto": 21000,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "dom 2 de ene de 22",
+      "monto": 1790,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "vie 31 de dic de 21",
+      "monto": 6157.17,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "lun 3 de ene de 22",
+      "monto": 2500,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "vie 31 de dic de 21",
+      "monto": 10726.19,
+      "tipo": "auto"
+    },
+    {
+      "fecha": "vie 31 de dic de 21",
+      "monto": 2502,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "dom 2 de ene de 22",
+      "monto": 5612.75,
+      "tipo": "bici"
+    },
+    {
+      "fecha": "dom 2 de ene de 22",
+      "monto": 2753,
+      "tipo": "zapas"
+    },
+    {
+      "fecha": "lun 17 de ene de 22",
+      "monto": 962.28,
+      "tipo": "luz"
+    },
+    {
+      "fecha": "mié 5 de ene de 22",
+      "monto": 999.16,
+      "tipo": "comision(?)"
+    },
+    {
+      "fecha": "mar 25 de ene de 22",
+      "monto": 361.62,
+      "tipo": "gas"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "vie 31 de dic de 21",
+      "monto": 135020.76,
+      "tipo": "sueldo"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "sáb 01/ene 22", "monto": 0, "tipo": "" },
+    { "fecha": "dom 02/ene 22", "monto": 2030, "tipo": "cervezas, lomo" },
+    { "fecha": "lun 03/ene 22", "monto": 50, "tipo": "pan" },
+    { "fecha": "mar 04/ene 22", "monto": 30, "tipo": "pan" },
+    { "fecha": "mié 05/ene 22", "monto": 700, "tipo": "frutas, verduras, pan" },
+    { "fecha": "jue 06/ene 22", "monto": 830, "tipo": "pan, stellas" },
+    { "fecha": "vie 07/ene 22", "monto": 100, "tipo": "pan" },
+    { "fecha": "sáb 08/ene 22", "monto": 1620, "tipo": "birra lomo" },
+    { "fecha": "dom 09/ene 22", "monto": 330, "tipo": "huevos, pan" },
+    { "fecha": "lun 10/ene 22", "monto": 350, "tipo": "pan futbol" },
+    { "fecha": "mar 11/ene 22", "monto": 1660, "tipo": "Pan , birra, lomo" },
+    { "fecha": "mié 12/ene 22", "monto": 300, "tipo": "pan tomates" },
+    { "fecha": "jue 13/ene 22", "monto": 600, "tipo": "peluquería" },
+    { "fecha": "vie 14/ene 22", "monto": 260, "tipo": "cerveza, pan" },
+    { "fecha": "sáb 15/ene 22", "monto": 1410, "tipo": "lomo, cerveza" },
+    { "fecha": "dom 16/ene 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 17/ene 22", "monto": 400, "tipo": "pan, futbol" },
+    { "fecha": "mar 18/ene 22", "monto": 330, "tipo": "birra, mayonesa" },
+    { "fecha": "mié 19/ene 22", "monto": 1050, "tipo": "pan, fernet, coca" },
+    { "fecha": "jue 20/ene 22", "monto": 50, "tipo": "pan" },
+    { "fecha": "vie 21/ene 22", "monto": 2350, "tipo": "asadi matik" },
+    { "fecha": "sáb 22/ene 22", "monto": 1930, "tipo": "birra lomo tabaco lillos" },
+    { "fecha": "dom 23/ene 22", "monto": 250, "tipo": "tomates" },
+    { "fecha": "lun 24/ene 22", "monto": 1422, "tipo": "salidita" },
+    { "fecha": "mar 25/ene 22", "monto": 1260, "tipo": "asado" },
+    { "fecha": "mié 26/ene 22", "monto": 0.6, "tipo": "" },
+    { "fecha": "jue 27/ene 22", "monto": 500, "tipo": "pan,verdura, avena" },
+    { "fecha": "vie 28/ene 22", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 29/ene 22", "monto": 550, "tipo": "filtros y pan" },
+    { "fecha": "dom 30/ene 22", "monto": 1880, "tipo": "lomo, cerveza" },
+    { "fecha": "lun 31/ene 22", "monto": 430, "tipo": "" }
+  ],
+  "saldos": [
+    { "banco": -1890.35 },
+    { "efectivo": 430 }
+  ]
+}

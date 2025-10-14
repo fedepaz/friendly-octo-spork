@@ -1,0 +1,253 @@
+{
+  "gastos": [
+    {
+      "fecha": "lun 7 de ago de 23",
+      "monto": 3760,
+      "tipo": "mastercard"
+    },
+    {
+      "fecha": "mar 1 de ago de 23",
+      "monto": 100000,
+      "tipo": "plazoFijo"
+    },
+    {
+      "fecha": "mar 1 de ago de 23",
+      "monto": 8300,
+      "tipo": "suplementos"
+    },
+    {
+      "fecha": "jue 3 de ago de 23",
+      "monto": 13800,
+      "tipo": "supleDuo"
+    },
+    {
+      "fecha": "vie 11 de ago de 23",
+      "monto": 26250,
+      "tipo": "bici"
+    },
+    {
+      "fecha": "sáb 12 de ago de 23",
+      "monto": 9075,
+      "tipo": "rifaLupita"
+    },
+    {
+      "fecha": "sáb 12 de ago de 23",
+      "monto": 4489.97,
+      "tipo": "conversorMon"
+    },
+    {
+      "fecha": "jue 17 de ago de 23",
+      "monto": 83000,
+      "tipo": "mehariPuertas"
+    },
+    {
+      "fecha": "mar 22 de ago de 23",
+      "monto": 4179,
+      "tipo": "carniVerdu"
+    },
+    {
+      "fecha": "lun 21 de ago de 23",
+      "monto": 3830,
+      "tipo": "verduleria"
+    },
+    {
+      "fecha": "vie 18 de ago de 23",
+      "monto": 4065,
+      "tipo": "super"
+    },
+    {
+      "fecha": "mié 16 de ago de 23",
+      "monto": 3130,
+      "tipo": "carniLimp"
+    },
+    {
+      "fecha": "mar 1 de ago de 23",
+      "monto": 4806,
+      "tipo": "carniVerdu"
+    },
+    {
+      "fecha": "mié 2 de ago de 23",
+      "monto": 1920,
+      "tipo": "patas"
+    },
+    {
+      "fecha": "jue 3 de ago de 23",
+      "monto": 1832,
+      "tipo": "verduPan"
+    },
+    {
+      "fecha": "mié 9 de ago de 23",
+      "monto": 4460,
+      "tipo": "verduPan"
+    },
+    {
+      "fecha": "vie 11 de ago de 23",
+      "monto": 6485,
+      "tipo": "limpPatas"
+    },
+    {
+      "fecha": "vie 11 de ago de 23",
+      "monto": 3680,
+      "tipo": "verduleria"
+    },
+    {
+      "fecha": "dom 13 de ago de 23",
+      "monto": 3100,
+      "tipo": "asado"
+    },
+    {
+      "fecha": "mar 15 de ago de 23",
+      "monto": 2300,
+      "tipo": "verduleria"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "mié 9 de ago de 23",
+      "monto": 78000,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "mar 1 de ago de 23",
+      "monto": 10469.27,
+      "tipo": "prestamo meja"
+    },
+    {
+      "fecha": "mar 1 de ago de 23",
+      "monto": 11118.13,
+      "tipo": "prestamo new"
+    },
+    {
+      "fecha": "mar 1 de ago de 23",
+      "monto": 12483.4,
+      "tipo": "prestamo fibra"
+    },
+    {
+      "fecha": "dom 30 de jul de 23",
+      "monto": 11637.71,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "dom 30 de jul de 23",
+      "monto": 2343.82,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "mar 15 de ago de 23",
+      "monto": 7000,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "mar 1 de ago de 23",
+      "monto": 15633.41,
+      "tipo": "prestamoBsAS"
+    },
+    {
+      "fecha": "mar 1 de ago de 23",
+      "monto": 0,
+      "tipo": "agua"
+    },
+    {
+      "fecha": "mar 1 de ago de 23",
+      "monto": 764.93,
+      "tipo": "edesur"
+    },
+    {
+      "fecha": "jue 3 de ago de 23",
+      "monto": 3849.99,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "jue 3 de ago de 23",
+      "monto": -5896.55,
+      "tipo": "sobrante"
+    },
+    {
+      "fecha": "mié 23 de ago de 23",
+      "monto": 19596,
+      "tipo": "verduCarniSuper"
+    },
+    {
+      "fecha": "mar 8 de ago de 23",
+      "monto": -45000,
+      "tipo": "eze"
+    },
+    {
+      "fecha": "mar 8 de ago de 23",
+      "monto": -10884.01,
+      "tipo": "intMp"
+    },
+    {
+      "fecha": "dom 30 de jul de 23",
+      "monto": -11637.71,
+      "tipo": "mesAnterior"
+    },
+    {
+      "fecha": "dom 30 de jul de 23",
+      "monto": -2343.82,
+      "tipo": "mesAnterior"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "sáb 1 de jul de 23",
+      "monto": 413390.6,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "sáb 1 de jul de 23",
+      "monto": 140000,
+      "tipo": "préstamo"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "mar 01/ago 23", "monto": 5400, "tipo": "tabacoVarios" },
+    { "fecha": "mié 02/ago 23", "monto": 640, "tipo": "futbol" },
+    { "fecha": "jue 03/ago 23", "monto": 2200, "tipo": "farmacia" },
+    { "fecha": "vie 04/ago 23", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 05/ago 23", "monto": 1690, "tipo": "birras" },
+    { "fecha": "dom 06/ago 23", "monto": 0, "tipo": "" },
+    { "fecha": "lun 07/ago 23", "monto": 500, "tipo": "sube" },
+    { "fecha": "mar 08/ago 23", "monto": 1500, "tipo": "telo" },
+    { "fecha": "mié 09/ago 23", "monto": 0, "tipo": "" },
+    { "fecha": "jue 10/ago 23", "monto": 0, "tipo": "" },
+    { "fecha": "vie 11/ago 23", "monto": 1000, "tipo": "sube" },
+    { "fecha": "sáb 12/ago 23", "monto": 0, "tipo": "" },
+    { "fecha": "dom 13/ago 23", "monto": 0, "tipo": "" },
+    { "fecha": "lun 14/ago 23", "monto": 0, "tipo": "" },
+    { "fecha": "mar 15/ago 23", "monto": 3500, "tipo": "birras" },
+    { "fecha": "mié 16/ago 23", "monto": 0, "tipo": "" },
+    { "fecha": "jue 17/ago 23", "monto": 0, "tipo": "" },
+    { "fecha": "vie 18/ago 23", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 19/ago 23", "monto": 1000, "tipo": "bondiola" },
+    { "fecha": "dom 20/ago 23", "monto": 0, "tipo": "" },
+    { "fecha": "lun 21/ago 23", "monto": 2150, "tipo": "tabacoVarios" },
+    { "fecha": "mar 22/ago 23", "monto": 0, "tipo": "" },
+    { "fecha": "mié 23/ago 23", "monto": 0, "tipo": "" },
+    { "fecha": "jue 24/ago 23", "monto": 0, "tipo": "cierreTarjeta" },
+    { "fecha": "vie 25/ago 23", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 26/ago 23", "monto": 5579, "tipo": "verduCarni" },
+    { "fecha": "dom 27/ago 23", "monto": 1890, "tipo": "tabacoVarios" },
+    { "fecha": "lun 28/ago 23", "monto": 3140, "tipo": "panVarios" },
+    { "fecha": "mar 29/ago 23", "monto": 3000, "tipo": "verduVarios" },
+    { "fecha": "mié 30/ago 23", "monto": 2840, "tipo": "fiambres" },
+    { "fecha": "jue 31/ago 23", "monto": 5240, "tipo": "verduCarni" }
+  ],
+  "saldos": [
+    { "mercadoPago": 49165.28 },
+    { "banco": 0.85 },
+    { "efectivo": 30 }
+  ],
+  "gastosTarjeta": [
+    { "fecha": "seis/seis", "monto": 2163.33, "tipo": "calzasBIci" },
+    { "fecha": "cinco/doce", "monto": 3541.67, "tipo": "bateriaAuto" },
+    { "fecha": "cuatro/seis", "monto": 9557.33, "tipo": "camisaCorba" },
+    { "fecha": "tres/tres", "monto": 1999.67, "tipo": "pavaElec" },
+    { "fecha": "tres/tres", "monto": 11396.33, "tipo": "zapasMedi" },
+    { "fecha": "dos/seis", "monto": 4509.15, "tipo": "bañoVarios" },
+    { "fecha": "dos/seis", "monto": 4454.85, "tipo": "miBand7" }
+  ],
+  "gastosTarjetaExc": [
+    { "fecha": "sáb 5 de ago de 23", "monto": 6969, "tipo": "pedidosYa" }
+  ]
+}

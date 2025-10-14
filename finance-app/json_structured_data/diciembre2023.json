@@ -1,0 +1,577 @@
+{
+  "gastos": [
+    {
+      "fecha": "mié 6 de dic de 23",
+      "monto": 21333.67,
+      "tipo": "tarjeta"
+    },
+    {
+      "fecha": "mié 6 de dic de 23",
+      "monto": 136381.34,
+      "tipo": "visa"
+    },
+    {
+      "fecha": "mar 5 de dic de 23",
+      "monto": 55000.0,
+      "tipo": "tattoo"
+    },
+    {
+      "fecha": "mié 27 de dic de 23",
+      "monto": 100000.0,
+      "tipo": "autito"
+    },
+    {
+      "fecha": "mar 5 de dic de 23",
+      "monto": 15500.0,
+      "tipo": "sombre"
+    },
+    {
+      "fecha": "lun 4 de dic de 23",
+      "monto": 43494.5,
+      "tipo": "prestamoUno"
+    },
+    {
+      "fecha": "mar 26 de dic de 23",
+      "monto": 55000.0,
+      "tipo": "tattoo"
+    },
+    {
+      "fecha": "vie 1 de dic de 23",
+      "monto": 15400.0,
+      "tipo": "passport"
+    },
+    {
+      "fecha": "sáb 2 de dic de 23",
+      "monto": 4966.0,
+      "tipo": "ferreteria"
+    },
+    {
+      "fecha": "lun 4 de dic de 23",
+      "monto": 3400.0,
+      "tipo": "envioMochi"
+    },
+    {
+      "fecha": "mar 12 de dic de 23",
+      "monto": 5000.0,
+      "tipo": "señaTattoo"
+    },
+    {
+      "fecha": "mié 20 de dic de 23",
+      "monto": 4280.0,
+      "tipo": "panAceite"
+    },
+    {
+      "fecha": "sáb 2 de dic de 23",
+      "monto": 4561.0,
+      "tipo": "super"
+    },
+    {
+      "fecha": "lun 4 de dic de 23",
+      "monto": 8384.0,
+      "tipo": "polloTom"
+    },
+    {
+      "fecha": "jue 7 de dic de 23",
+      "monto": 1700.0,
+      "tipo": "super"
+    },
+    {
+      "fecha": "sáb 9 de dic de 23",
+      "monto": 9374.0,
+      "tipo": "polloVerdi"
+    },
+    {
+      "fecha": "mar 12 de dic de 23",
+      "monto": 2676.0,
+      "tipo": "verduPan"
+    },
+    {
+      "fecha": "jue 14 de dic de 23",
+      "monto": 7560.0,
+      "tipo": "carni"
+    },
+    {
+      "fecha": "sáb 16 de dic de 23",
+      "monto": 8350.0,
+      "tipo": "super"
+    },
+    {
+      "fecha": "lun 18 de dic de 23",
+      "monto": 8846.0,
+      "tipo": "polloTom"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "sáb 9 de dic de 23",
+      "monto": 86000.0,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "vie 1 de dic de 23",
+      "monto": 10391.96,
+      "tipo": "prestamo meja"
+    },
+    {
+      "fecha": "vie 1 de dic de 23",
+      "monto": 11083.81,
+      "tipo": "prestamo new"
+    },
+    {
+      "fecha": "vie 1 de dic de 23",
+      "monto": 12364.54,
+      "tipo": "prestamo fibra"
+    },
+    {
+      "fecha": "lun 11 de dic de 23",
+      "monto": 21471.53,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "vie 1 de dic de 23",
+      "monto": 5301.25,
+      "tipo": "telCelAbu"
+    },
+    {
+      "fecha": "mar 12 de dic de 23",
+      "monto": 10500.0,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "vie 1 de dic de 23",
+      "monto": 15576.86,
+      "tipo": "prestamoBsAS"
+    },
+    {
+      "fecha": "mar 12 de dic de 23",
+      "monto": 2656.91,
+      "tipo": "agua"
+    },
+    {
+      "fecha": "dom 3 de dic de 23",
+      "monto": 2743.66,
+      "tipo": "edesur"
+    },
+    {
+      "fecha": "vie 1 de dic de 23",
+      "monto": 6998.99,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "mié 20 de dic de 23",
+      "monto": 35000.0,
+      "tipo": "autitoJoseLuis"
+    },
+    {
+      "fecha": "lun 4 de dic de 23",
+      "monto": 1497.0,
+      "tipo": "poliza"
+    },
+    {
+      "fecha": "vie 1 de dic de 23",
+      "monto": 9014.02,
+      "tipo": "gas"
+    },
+    {
+      "fecha": "jue 14 de dic de 23",
+      "monto": 2584.84,
+      "tipo": "agua"
+    },
+    {
+      "fecha": "lun 18 de dic de 23",
+      "monto": 10000.0,
+      "tipo": "plazoFIjoUVA"
+    },
+    {
+      "fecha": "lun 18 de dic de 23",
+      "monto": 1720.0,
+      "tipo": "devoluciónPSA"
+    },
+    {
+      "fecha": "sáb 9 de dic de 23",
+      "monto": -54500.0,
+      "tipo": "eze"
+    },
+    {
+      "fecha": "jue 28 de dic de 23",
+      "monto": -46615.0,
+      "tipo": "niIdea(?)"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "vie 1 de sep de 23",
+      "monto": 541394.17,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "",
+      "monto": 60512.16,
+      "tipo": "rendPrest"
+    },
+    {
+      "fecha": "",
+      "monto": 129034.04,
+      "tipo": "Aguinaldo"
+    }
+  ],
+  "gastosDiarios": [
+    {
+      "fecha": "vie 01/dic 23",
+      "monto": 1045.0,
+      "tipo": "mcDe"
+    },
+    {
+      "fecha": "sáb 02/dic 23",
+      "monto": 5100.0,
+      "tipo": "famacia"
+    },
+    {
+      "fecha": "lun 04/dic 23",
+      "monto": 1500.0,
+      "tipo": "tabaco"
+    },
+    {
+      "fecha": "mar 05/dic 23",
+      "monto": 2450.0,
+      "tipo": "subeDesaMC"
+    },
+    {
+      "fecha": "jue 07/dic 23",
+      "monto": 4850.0,
+      "tipo": "birras"
+    },
+    {
+      "fecha": "vie 08/dic 23",
+      "monto": 540.0,
+      "tipo": "filtros"
+    },
+    {
+      "fecha": "lun 11/dic 23",
+      "monto": 1500.0,
+      "tipo": "tabaco"
+    },
+    {
+      "fecha": "vie 15/dic 23",
+      "monto": 1200.0,
+      "tipo": "birras"
+    },
+    {
+      "fecha": "mié 20/dic 23",
+      "monto": 200.0,
+      "tipo": "fotocopia"
+    },
+    {
+      "fecha": "jue 21/dic 23",
+      "monto": 2880.0,
+      "tipo": "subeNueva"
+    },
+    {
+      "fecha": "vie 22/dic 23",
+      "monto": 4950.0,
+      "tipo": "filtros"
+    },
+    {
+      "fecha": "sáb 23/dic 23",
+      "monto": 2400.0,
+      "tipo": "birras"
+    },
+    {
+      "fecha": "mié 27/dic 23",
+      "monto": 1200.0,
+      "tipo": "birras"
+    },
+    {
+      "fecha": "jue 28/dic 23",
+      "monto": 2700.0,
+      "tipo": "pelu"
+    },
+    {
+      "fecha": "vie 29/dic 23",
+      "monto": 4840.0,
+      "tipo": "birras"
+    }
+  ],
+  "saldos": [
+    {
+      "mercadoPago": 2618.58
+    },
+    {
+      "banco": 0.42
+    },
+    {
+      "efectivo": 70.0
+    }
+  ],
+  "gastosTarjeta": [
+    {
+      "fecha": "nueve/doce",
+      "monto": 3541.67,
+      "tipo": "bateriaAuto"
+    },
+    {
+      "fecha": "seis/seis",
+      "monto": 4509.15,
+      "tipo": "bañoVarios"
+    },
+    {
+      "fecha": "seis/seis",
+      "monto": 4454.85,
+      "tipo": "miBand7"
+    },
+    {
+      "fecha": "mar 24 de oct de 23",
+      "monto": 8828.0,
+      "tipo": "farmaCity"
+    }
+  ],
+  "gastosTarjetaExc": [
+    {
+      "fecha": "mar 5 de dic de 23",
+      "monto": 3495.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "dom 10 de dic de 23",
+      "monto": 6980.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "vie 15 de dic de 23",
+      "monto": 7965.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "sáb 23 de dic de 23",
+      "monto": 4600.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "vie 29 de dic de 23",
+      "monto": 5100.0,
+      "tipo": "pedidosYa"
+    }
+  ],
+  "gastosTarjetaVisa": [
+    {
+      "fecha": "tres/doce",
+      "monto": 21958.33,
+      "tipo": "brackets"
+    },
+    {
+      "fecha": "tres/seis",
+      "monto": 3686.86,
+      "tipo": "taladro"
+    },
+    {
+      "fecha": "tres/doce",
+      "monto": 1657.44,
+      "tipo": "jetSmart"
+    },
+    {
+      "fecha": "tres/tres",
+      "monto": 12533.54,
+      "tipo": "prote"
+    },
+    {
+      "fecha": "dos/seis",
+      "monto": 1367.0,
+      "tipo": "medias"
+    },
+    {
+      "fecha": "lun 23 de oct de 23",
+      "monto": 5949.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "mié 25 de oct de 23",
+      "monto": 5370.0,
+      "tipo": "milas"
+    },
+    {
+      "fecha": "una/seis",
+      "monto": 21665.0,
+      "tipo": "mochi"
+    },
+    {
+      "fecha": "lun 30 de oct de 23",
+      "monto": 6295.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "jue 2 de nov de 23",
+      "monto": 3160.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "lun 6 de nov de 23",
+      "monto": 42525.0,
+      "tipo": "remeras"
+    },
+    {
+      "fecha": "vie 17 de nov de 23",
+      "monto": 3420.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "mar 21 de nov de 23",
+      "monto": 6795.0,
+      "tipo": "pedidosYa"
+    }
+  ],
+  "rendimientos": [
+    {
+      "reserva": "agua",
+      "ganado": 66.31
+    },
+    {
+      "reserva": "osde",
+      "ganado": 497.53
+    },
+    {
+      "reserva": "gas",
+      "ganado": 126.0
+    },
+    {
+      "reserva": "semanaDos",
+      "ganado": 425.5
+    },
+    {
+      "reserva": "semanaTres",
+      "ganado": 467.28
+    },
+    {
+      "reserva": "semanaCuatro",
+      "ganado": 724.69
+    },
+    {
+      "reserva": "Tattoo(2)",
+      "ganado": 1697.8
+    },
+    {
+      "reserva": "tattoo",
+      "ganado": 178.85
+    },
+    {
+      "reserva": "alquiler",
+      "ganado": 1873.69
+    },
+    {
+      "reserva": "dentista",
+      "ganado": 418.31
+    },
+    {
+      "reserva": "auto",
+      "ganado": 3026.8
+    }
+  ],
+  "gastosExtras": [
+    {
+      "fecha": "jue 21 de dic de 23",
+      "monto": 7650.0,
+      "tipo": "milaPan"
+    },
+    {
+      "fecha": "vie 22 de dic de 23",
+      "monto": 6340.0,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "sáb 23 de dic de 23",
+      "monto": 1230.0,
+      "tipo": "panToma"
+    },
+    {
+      "fecha": "mar 26 de dic de 23",
+      "monto": 3180.0,
+      "tipo": "verduPan"
+    },
+    {
+      "fecha": "sáb 30 de dic de 23",
+      "monto": 6490.0,
+      "tipo": "polloPan"
+    }
+  ],
+  "intmp": [
+    {
+      "fecha": "vie 01/dic 23",
+      "monto": 81.84
+    },
+    {
+      "fecha": "lun 04/dic 23",
+      "monto": 102.09
+    },
+    {
+      "fecha": "mar 05/dic 23",
+      "monto": 0.85
+    },
+    {
+      "fecha": "mié 06/dic 23",
+      "monto": 19.56
+    },
+    {
+      "fecha": "jue 07/dic 23",
+      "monto": 27.03
+    },
+    {
+      "fecha": "dom 10/dic 23",
+      "monto": 0.47
+    },
+    {
+      "fecha": "lun 11/dic 23",
+      "monto": 107.82
+    },
+    {
+      "fecha": "mar 12/dic 23",
+      "monto": 47.37
+    },
+    {
+      "fecha": "mié 13/dic 23",
+      "monto": 42.33
+    },
+    {
+      "fecha": "jue 14/dic 23",
+      "monto": 3.66
+    },
+    {
+      "fecha": "vie 15/dic 23",
+      "monto": 3.74
+    },
+    {
+      "fecha": "lun 18/dic 23",
+      "monto": 73.13
+    },
+    {
+      "fecha": "mar 19/dic 23",
+      "monto": 37.96
+    },
+    {
+      "fecha": "mié 20/dic 23",
+      "monto": 16.73
+    },
+    {
+      "fecha": "jue 21/dic 23",
+      "monto": 16.79
+    },
+    {
+      "fecha": "vie 22/dic 23",
+      "monto": 6.72
+    },
+    {
+      "fecha": "mar 26/dic 23",
+      "monto": 101.08
+    },
+    {
+      "fecha": "mié 27/dic 23",
+      "monto": 27.2
+    },
+    {
+      "fecha": "jue 28/dic 23",
+      "monto": 255.37
+    },
+    {
+      "fecha": "vie 29/dic 23",
+      "monto": 37.66
+    }
+  ]
+}

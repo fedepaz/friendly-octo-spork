@@ -1,0 +1,171 @@
+{
+  "gastos": [
+    {
+      "fecha": "sáb 31 de jul de 21",
+      "monto": 275,
+      "tipo": "medias"
+    },
+    {
+      "fecha": "jue 29 de jul de 21",
+      "monto": 6300,
+      "tipo": "suplementos"
+    },
+    {
+      "fecha": "mar 3 de ago de 21",
+      "monto": 960,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "sáb 14 de ago de 21",
+      "monto": 1480,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "vie 27 de ago de 21",
+      "monto": 1400,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "vie 6 de ago de 21",
+      "monto": 8600,
+      "tipo": "pasajes"
+    },
+    {
+      "fecha": "jue 12 de ago de 21",
+      "monto": 15370,
+      "tipo": "droguis"
+    },
+    {
+      "fecha": "sáb 14 de ago de 21",
+      "monto": 950,
+      "tipo": "super"
+    },
+    {
+      "fecha": "dom 18 de jul de 21",
+      "monto": 1200,
+      "tipo": "mechas empre"
+    },
+    {
+      "fecha": "jue 19 de ago de 21",
+      "monto": 3000,
+      "tipo": "emprendimiento"
+    },
+    {
+      "fecha": "lun 23 de ago de 21",
+      "monto": 3600,
+      "tipo": "envio bici"
+    },
+    {
+      "fecha": "lun 23 de ago de 21",
+      "monto": 900,
+      "tipo": "llaves allen"
+    },
+    {
+      "fecha": "mar 24 de ago de 21",
+      "monto": 1000,
+      "tipo": "service bici"
+    },
+    {
+      "fecha": "mar 31 de ago de 21",
+      "monto": 3500,
+      "tipo": "flete"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "sáb 31 de jul de 21",
+      "monto": 3136.34,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "jue 12 de ago de 21",
+      "monto": 21000,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "jue 12 de ago de 21",
+      "monto": 1700,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "vie 30 de jul de 21",
+      "monto": 2619.04,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "mar 17 de ago de 21",
+      "monto": 998.84,
+      "tipo": "gas"
+    },
+    {
+      "fecha": "jue 12 de ago de 21",
+      "monto": 2500,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "jue 12 de ago de 21",
+      "monto": 5898,
+      "tipo": "luz"
+    },
+    {
+      "fecha": "sáb 31 de jul de 21",
+      "monto": 10771.37,
+      "tipo": "auto"
+    },
+    {
+      "fecha": "vie 30 de jul de 21",
+      "monto": 1865.75,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "vie 30 de jul de 21",
+      "monto": 750,
+      "tipo": "comision(?)"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "sáb 31 de jul de 21",
+      "monto": 82503.94,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "mar 10 de ago de 21",
+      "monto": 19392.04,
+      "tipo": "comision"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "dom 01/ago 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 02/ago 21", "monto": 480, "tipo": "verdu, futbol" },
+    { "fecha": "mar 03/ago 21", "monto": 150, "tipo": "pan abue, costuras" },
+    { "fecha": "mié 04/ago 21", "monto": 1270, "tipo": "lomo birra" },
+    { "fecha": "jue 05/ago 21", "monto": 310, "tipo": "huevos pan" },
+    { "fecha": "vie 06/ago 21", "monto": 1100, "tipo": "pelu, pastis, bartbijos" },
+    { "fecha": "sáb 07/ago 21", "monto": 1570, "tipo": "lomo y birra" },
+    { "fecha": "dom 08/ago 21", "monto": 110, "tipo": "pan" },
+    { "fecha": "lun 09/ago 21", "monto": 1100, "tipo": "lomocordo" },
+    { "fecha": "mar 10/ago 21", "monto": 2260, "tipo": "asado" },
+    { "fecha": "mié 11/ago 21", "monto": 560, "tipo": "viaje y propinas" },
+    { "fecha": "jue 12/ago 21", "monto": 1220, "tipo": "lomo birra" },
+    { "fecha": "vie 13/ago 21", "monto": 320, "tipo": "taxi aeropuerto" },
+    { "fecha": "sáb 14/ago 21", "monto": 350, "tipo": "frutas y verduras" },
+    { "fecha": "dom 15/ago 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 16/ago 21", "monto": 1100, "tipo": "lomo" },
+    { "fecha": "mar 17/ago 21", "monto": 100, "tipo": "avena" },
+    { "fecha": "mié 18/ago 21", "monto": 400, "tipo": "pan abue birra y sche" },
+    { "fecha": "jue 19/ago 21", "monto": 2040, "tipo": "verduraas, lomo birra" },
+    { "fecha": "vie 20/ago 21", "monto": 800, "tipo": "asado" },
+    { "fecha": "sáb 21/ago 21", "monto": 1100, "tipo": "lomo" },
+    { "fecha": "dom 22/ago 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 23/ago 21", "monto": 1520, "tipo": "joda" },
+    { "fecha": "mar 24/ago 21", "monto": 20, "tipo": "pan" },
+    { "fecha": "mié 25/ago 21", "monto": 1980, "tipo": "dni, pintasjuan, lomo" },
+    { "fecha": "jue 26/ago 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 27/ago 21", "monto": 200, "tipo": "tomates" },
+    { "fecha": "sáb 28/ago 21", "monto": 1260, "tipo": "lomo" },
+    { "fecha": "dom 29/ago 21", "monto": 650, "tipo": "futbol y fiambre" },
+    { "fecha": "lun 30/ago 21", "monto": 500, "tipo": "cerveza y fiambre" },
+    { "fecha": "mar 31/ago 21", "monto": 400, "tipo": "verduleria" }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "gastos": [
+    {
+      "fecha": "lun 5 de jul de 21",
+      "monto": 1814,
+      "tipo": "super"
+    },
+    {
+      "fecha": "mar 6 de jul de 21",
+      "monto": 1140,
+      "tipo": "pollo y huevos"
+    },
+    {
+      "fecha": "sáb 17 de jul de 21",
+      "monto": 1410,
+      "tipo": "pollo y huevos"
+    },
+    {
+      "fecha": "vie 16 de jul de 21",
+      "monto": 1200,
+      "tipo": "pastis café"
+    },
+    {
+      "fecha": "jue 22 de jul de 21",
+      "monto": 1140,
+      "tipo": "bici"
+    },
+    {
+      "fecha": "dom 25 de jul de 21",
+      "monto": 1230,
+      "tipo": "pollo y huevos"
+    },
+    {
+      "fecha": "sáb 24 de jul de 21",
+      "monto": 1170,
+      "tipo": "laburo"
+    },
+    {
+      "fecha": "mié 28 de jul de 21",
+      "monto": 1200,
+      "tipo": "reloj"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "jue 1 de jul de 21",
+      "monto": 3146.26,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "sáb 10 de jul de 21",
+      "monto": 21000,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "jue 8 de jul de 21",
+      "monto": 1653,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "lun 28 de jun de 21",
+      "monto": 4934.31,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "jue 8 de jul de 21",
+      "monto": 2500,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "jue 1 de jul de 21",
+      "monto": 10779.16,
+      "tipo": "auto"
+    },
+    {
+      "fecha": "mar 22 de jun de 21",
+      "monto": 1865,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "vie 2 de jul de 21",
+      "monto": 622.6,
+      "tipo": "comision(?)"
+    },
+    {
+      "fecha": "mar 22 de jun de 21",
+      "monto": 573,
+      "tipo": "gas"
+    },
+    {
+      "fecha": "mié 14 de jul de 21",
+      "monto": 5204.55,
+      "tipo": "luz"
+    },
+    {
+      "fecha": "jue 15 de jul de 21",
+      "monto": 959.09,
+      "tipo": "gas"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "jue 1 de jul de 21",
+      "monto": 72926.28,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "jue 1 de jul de 21",
+      "monto": 22743.13,
+      "tipo": "Aguinaldo"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "jue 01/jul 21", "monto": 350, "tipo": "pelu" },
+    { "fecha": "vie 02/jul 21", "monto": 600, "tipo": "futbol birras" },
+    { "fecha": "sáb 03/jul 21", "monto": 650, "tipo": "asad termo" },
+    { "fecha": "dom 04/jul 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 05/jul 21", "monto": 700, "tipo": "prode futbol pan" },
+    { "fecha": "mar 06/jul 21", "monto": 1700, "tipo": "lomocon papas y papas" },
+    { "fecha": "mié 07/jul 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 08/jul 21", "monto": 430, "tipo": "inscripción torneo" },
+    { "fecha": "vie 09/jul 21", "monto": 1500, "tipo": "futbol asado" },
+    { "fecha": "sáb 10/jul 21", "monto": 0, "tipo": "" },
+    { "fecha": "dom 11/jul 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 12/jul 21", "monto": 720, "tipo": "mac" },
+    { "fecha": "mar 13/jul 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 14/jul 21", "monto": 1070, "tipo": "lomocon papas y papas" },
+    { "fecha": "jue 15/jul 21", "monto": 300, "tipo": "naranjas y bananas" },
+    { "fecha": "vie 16/jul 21", "monto": 100, "tipo": "papas" },
+    { "fecha": "sáb 17/jul 21", "monto": 400, "tipo": "birra y coca" },
+    { "fecha": "dom 18/jul 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 19/jul 21", "monto": 0, "tipo": "" },
+    { "fecha": "mar 20/jul 21", "monto": 440, "tipo": "bananas tomates papas" },
+    { "fecha": "mié 21/jul 21", "monto": 1550, "tipo": "tabaco pelu lomo con papas" },
+    { "fecha": "jue 22/jul 21", "monto": 560, "tipo": "lomo y cocoa" },
+    { "fecha": "vie 23/jul 21", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 24/jul 21", "monto": 0, "tipo": "" },
+    { "fecha": "dom 25/jul 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 26/jul 21", "monto": 80, "tipo": "pan" },
+    { "fecha": "mar 27/jul 21", "monto": 1100, "tipo": "lomo con papas" },
+    { "fecha": "mié 28/jul 21", "monto": 350, "tipo": "frutas y verduras" },
+    { "fecha": "jue 29/jul 21", "monto": 540, "tipo": "tabaco y lillos" },
+    { "fecha": "vie 30/jul 21", "monto": 450, "tipo": "tubol y birra" },
+    { "fecha": "sáb 31/jul 21", "monto": 1570, "tipo": "lomo y birra" }
+  ]
+}

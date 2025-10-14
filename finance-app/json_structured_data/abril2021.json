@@ -1,0 +1,125 @@
+{
+  "gastos": [
+    {
+      "fecha": "lun 19 de abr de 21",
+      "monto": 6600,
+      "tipo": "suplementos"
+    },
+    {
+      "fecha": "lun 19 de abr de 21",
+      "monto": 1600,
+      "tipo": "remeras"
+    },
+    {
+      "fecha": "lun 19 de abr de 21",
+      "monto": -6600,
+      "tipo": "(de moto)"
+    },
+    {
+      "fecha": "lun 19 de abr de 21",
+      "monto": -1600,
+      "tipo": "(de moto)"
+    },
+    {
+      "fecha": "jue 8 de abr de 21",
+      "monto": 4000,
+      "tipo": "super"
+    },
+    {
+      "fecha": "lun 12 de abr de 21",
+      "monto": 1300,
+      "tipo": "pollo y huevos"
+    },
+    {
+      "fecha": "vie 23 de abr de 21",
+      "monto": 1000,
+      "tipo": "pollo y huevos"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "lun 5 de abr de 21",
+      "monto": 3176.6,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "vie 9 de abr de 21",
+      "monto": 19000,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "vie 9 de abr de 21",
+      "monto": 2000,
+      "tipo": "expensas"
+    },
+    {
+      "fecha": "lun 5 de abr de 21",
+      "monto": 4251,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "lun 5 de abr de 21",
+      "monto": 4500,
+      "tipo": "teléfono"
+    },
+    {
+      "fecha": "lun 5 de abr de 21",
+      "monto": 2400,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "lun 5 de abr de 21",
+      "monto": 10802,
+      "tipo": "auto"
+    },
+    {
+      "fecha": "vie 9 de abr de 21",
+      "monto": 385.49,
+      "tipo": "gas"
+    },
+    {
+      "fecha": "vie 9 de abr de 21",
+      "monto": 1725.5,
+      "tipo": "internet"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "jue 1 de abr de 21",
+      "monto": 59819.77,
+      "tipo": "sueldo"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "jue 01/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 02/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 03/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "dom 04/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 05/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "mar 06/abr 21", "monto": 3000, "tipo": "varios" },
+    { "fecha": "mié 07/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 08/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 09/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 10/abr 21", "monto": 110, "tipo": "papas y pan" },
+    { "fecha": "dom 11/abr 21", "monto": 1160, "tipo": "lomo con papas" },
+    { "fecha": "lun 12/abr 21", "monto": 250, "tipo": "futbol" },
+    { "fecha": "mar 13/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 14/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 15/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 16/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 17/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "dom 18/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 19/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "mar 20/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 21/abr 21", "monto": 1000, "tipo": "varios" },
+    { "fecha": "jue 22/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 23/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 24/abr 21", "monto": 600, "tipo": "birra" },
+    { "fecha": "dom 25/abr 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 26/abr 21", "monto": 1000, "tipo": "lomo con papas" },
+    { "fecha": "mar 27/abr 21", "monto": 400, "tipo": "yerba" },
+    { "fecha": "mié 28/abr 21", "monto": 500, "tipo": "tabaco y papaz" },
+    { "fecha": "jue 29/abr 21", "monto": 200, "tipo": "mila pan" },
+    { "fecha": "vie 30/abr 21", "monto": 0, "tipo": "" }
+  ]
+}

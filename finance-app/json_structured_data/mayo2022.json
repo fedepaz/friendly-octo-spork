@@ -1,0 +1,195 @@
+{
+  "gastos": [
+    {
+      "fecha": "vie 29 de abr de 22",
+      "monto": 0,
+      "tipo": "regalo viru"
+    },
+    {
+      "fecha": "sáb 30 de abr de 22",
+      "monto": 0,
+      "tipo": "asado"
+    },
+    {
+      "fecha": "dom 15 de may de 22",
+      "monto": 3600,
+      "tipo": "madre pago"
+    },
+    {
+      "fecha": "vie 6 de may de 22",
+      "monto": 1000,
+      "tipo": "torneo aero"
+    },
+    {
+      "fecha": "lun 9 de may de 22",
+      "monto": 770,
+      "tipo": "ferreteria"
+    },
+    {
+      "fecha": "jue 12 de may de 22",
+      "monto": 41487.07,
+      "tipo": "cubiertas pap"
+    },
+    {
+      "fecha": "mié 11 de may de 22",
+      "monto": 9000,
+      "tipo": "marimba"
+    },
+    {
+      "fecha": "vie 13 de may de 22",
+      "monto": 450,
+      "tipo": "pegamento"
+    },
+    {
+      "fecha": "vie 27 de may de 22",
+      "monto": 2200,
+      "tipo": "gomeria"
+    },
+    {
+      "fecha": "mar 3 de may de 22",
+      "monto": 1450,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "mar 3 de may de 22",
+      "monto": 720,
+      "tipo": "avena tomate queso"
+    },
+    {
+      "fecha": "lun 9 de may de 22",
+      "monto": 1210,
+      "tipo": "frutas y verduras"
+    },
+    {
+      "fecha": "lun 9 de may de 22",
+      "monto": 1430,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "vie 13 de may de 22",
+      "monto": 1570,
+      "tipo": "super"
+    },
+    {
+      "fecha": "lun 16 de may de 22",
+      "monto": 1580,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "lun 16 de may de 22",
+      "monto": 500,
+      "tipo": "frutas y verduras"
+    },
+    {
+      "fecha": "lun 23 de may de 22",
+      "monto": 1550,
+      "tipo": "mila frutas y huevos"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "lun 9 de may de 22",
+      "monto": 31800,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "dom 1 de may de 22",
+      "monto": 3093.13,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "dom 1 de may de 22",
+      "monto": 10735.82,
+      "tipo": "prestamo meja"
+    },
+    {
+      "fecha": "dom 15 de may de 22",
+      "monto": 5612.75,
+      "tipo": "bici"
+    },
+    {
+      "fecha": "dom 15 de may de 22",
+      "monto": 2040,
+      "tipo": "botines"
+    },
+    {
+      "fecha": "dom 15 de may de 22",
+      "monto": 2300,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "lun 9 de may de 22",
+      "monto": 0,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "lun 23 de may de 22",
+      "monto": 3000,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "lun 16 de may de 22",
+      "monto": 0,
+      "tipo": "luz"
+    },
+    {
+      "fecha": "lun 9 de may de 22",
+      "monto": 3755,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "sáb 21 de may de 22",
+      "monto": 0,
+      "tipo": "gas"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "dom 1 de may de 22",
+      "monto": 134437.43,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "dom 1 de may de 22",
+      "monto": 2678,
+      "tipo": ""
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "dom 01/may 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 02/may 22", "monto": 0, "tipo": "" },
+    { "fecha": "mar 03/may 22", "monto": 0, "tipo": "" },
+    { "fecha": "mié 04/may 22", "monto": 100, "tipo": "pan" },
+    { "fecha": "jue 05/may 22", "monto": 0, "tipo": "" },
+    { "fecha": "vie 06/may 22", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 07/may 22", "monto": 0, "tipo": "" },
+    { "fecha": "dom 08/may 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 09/may 22", "monto": 800, "tipo": "futbol pelu" },
+    { "fecha": "mar 10/may 22", "monto": 0, "tipo": "" },
+    { "fecha": "mié 11/may 22", "monto": 0, "tipo": "" },
+    { "fecha": "jue 12/may 22", "monto": 300, "tipo": "futbol" },
+    { "fecha": "vie 13/may 22", "monto": 750, "tipo": "pan helado" },
+    { "fecha": "sáb 14/may 22", "monto": 2450, "tipo": "lomo birra" },
+    { "fecha": "dom 15/may 22", "monto": 2000, "tipo": "nafta" },
+    { "fecha": "lun 16/may 22", "monto": 300, "tipo": "" },
+    { "fecha": "mar 17/may 22", "monto": 1000, "tipo": "asado" },
+    { "fecha": "mié 18/may 22", "monto": 250, "tipo": "birra" },
+    { "fecha": "jue 19/may 22", "monto": 0, "tipo": "" },
+    { "fecha": "vie 20/may 22", "monto": 700, "tipo": "nafta pan huevos" },
+    { "fecha": "sáb 21/may 22", "monto": 3250, "tipo": "varios" },
+    { "fecha": "dom 22/may 22", "monto": 2450, "tipo": "misa" },
+    { "fecha": "lun 23/may 22", "monto": 2100, "tipo": "nafta" },
+    { "fecha": "mar 24/may 22", "monto": 550, "tipo": "pan tortas" },
+    { "fecha": "mié 25/may 22", "monto": 1450, "tipo": "lomo birra" },
+    { "fecha": "jue 26/may 22", "monto": 1850, "tipo": "varios" },
+    { "fecha": "vie 27/may 22", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 28/may 22", "monto": 650, "tipo": "tabao varios" },
+    { "fecha": "dom 29/may 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 30/may 22", "monto": 300, "tipo": "futbol" },
+    { "fecha": "mar 31/may 22", "monto": 130, "tipo": "varios" }
+  ],
+  "saldos": [
+    { "banco": 1811.07 },
+    { "efectivo": 1171 }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "gastos": [
+    {
+      "fecha": "vie 8 de jul de 22",
+      "monto": 5500,
+      "tipo": "suple"
+    },
+    {
+      "fecha": "vie 1 de jul de 22",
+      "monto": 14000,
+      "tipo": "despedida"
+    },
+    {
+      "fecha": "vie 8 de jul de 22",
+      "monto": 30000,
+      "tipo": "auto"
+    },
+    {
+      "fecha": "sáb 2 de jul de 22",
+      "monto": 2000,
+      "tipo": "pollo, tomates"
+    },
+    {
+      "fecha": "sáb 2 de jul de 22",
+      "monto": 940,
+      "tipo": "frutas"
+    },
+    {
+      "fecha": "mar 5 de jul de 22",
+      "monto": 560,
+      "tipo": "limpieza"
+    },
+    {
+      "fecha": "dom 10 de jul de 22",
+      "monto": 700,
+      "tipo": "huevos"
+    },
+    {
+      "fecha": "lun 11 de jul de 22",
+      "monto": 4340,
+      "tipo": "pollo, tomates,super"
+    },
+    {
+      "fecha": "jue 14 de jul de 22",
+      "monto": 550,
+      "tipo": "milas"
+    },
+    {
+      "fecha": "sáb 16 de jul de 22",
+      "monto": 1540,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "mar 26 de jul de 22",
+      "monto": 1630,
+      "tipo": "pollo"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "jue 14 de jul de 22",
+      "monto": 31800,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "vie 1 de jul de 22",
+      "monto": 3093.13,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "vie 1 de jul de 22",
+      "monto": 10735.82,
+      "tipo": "prestamo meja"
+    },
+    {
+      "fecha": "vie 7 de ene de 22",
+      "monto": 3324,
+      "tipo": "calefactor"
+    },
+    {
+      "fecha": "mié 6 de jul de 22",
+      "monto": 7733.29,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "sáb 2 de jul de 22",
+      "monto": 8665.62,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "mar 5 de jul de 22",
+      "monto": 3500,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "mar 19 de jul de 22",
+      "monto": 1380.99,
+      "tipo": "gas"
+    },
+    {
+      "fecha": "mié 6 de jul de 22",
+      "monto": 1000,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "mar 19 de jul de 22",
+      "monto": 1597.49,
+      "tipo": "luz"
+    },
+    {
+      "fecha": "vie 1 de jul de 22",
+      "monto": 11500,
+      "tipo": "prestamo new"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "vie 1 de jul de 22",
+      "monto": 142614,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "mié 6 de jul de 22",
+      "monto": 34117.37,
+      "tipo": "aguinaldo"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "vie 01/jul 22", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 02/jul 22", "monto": 700, "tipo": "aceite auto" },
+    { "fecha": "dom 03/jul 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 04/jul 22", "monto": 1080, "tipo": "pan futbol y filtros" },
+    { "fecha": "mar 05/jul 22", "monto": 500, "tipo": "pan birra papas" },
+    { "fecha": "mié 06/jul 22", "monto": 310, "tipo": "birra" },
+    { "fecha": "jue 07/jul 22", "monto": 100, "tipo": "pan" },
+    { "fecha": "vie 08/jul 22", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 09/jul 22", "monto": 1690, "tipo": "asado, nafta, birra" },
+    { "fecha": "dom 10/jul 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 11/jul 22", "monto": 350, "tipo": "futbol" },
+    { "fecha": "mar 12/jul 22", "monto": 0, "tipo": "" },
+    { "fecha": "mié 13/jul 22", "monto": 1300, "tipo": "" },
+    { "fecha": "jue 14/jul 22", "monto": 190, "tipo": "birras" },
+    { "fecha": "vie 15/jul 22", "monto": 800, "tipo": "pelu, pan, papas" },
+    { "fecha": "sáb 16/jul 22", "monto": 100, "tipo": "pan abu" },
+    { "fecha": "dom 17/jul 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 18/jul 22", "monto": 260, "tipo": "pan" },
+    { "fecha": "mar 19/jul 22", "monto": 290, "tipo": "birra" },
+    { "fecha": "mié 20/jul 22", "monto": 1300, "tipo": "asado" },
+    { "fecha": "jue 21/jul 22", "monto": 1890, "tipo": "asado" },
+    { "fecha": "vie 22/jul 22", "monto": 400, "tipo": "pan" },
+    { "fecha": "sáb 23/jul 22", "monto": 2470, "tipo": "asado tabaco" },
+    { "fecha": "dom 24/jul 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 25/jul 22", "monto": 0, "tipo": "" },
+    { "fecha": "mar 26/jul 22", "monto": 0, "tipo": "" },
+    { "fecha": "mié 27/jul 22", "monto": 0, "tipo": "" },
+    { "fecha": "jue 28/jul 22", "monto": 50, "tipo": "pan" },
+    { "fecha": "vie 29/jul 22", "monto": 300, "tipo": "coca" },
+    { "fecha": "sáb 30/jul 22", "monto": 100, "tipo": "pan" },
+    { "fecha": "dom 31/jul 22", "monto": 0, "tipo": "" }
+  ],
+  "saldos": [
+    { "banco": 913.79 },
+    { "efectivo": 0 }
+  ]
+}

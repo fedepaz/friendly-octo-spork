@@ -1,0 +1,96 @@
+{
+  "gastos": [
+    {
+      "fecha": "sáb 8 de ago de 20",
+      "monto": 4000,
+      "tipo": "auto"
+    },
+    { "fecha": "mie 5 de ago de 20", "monto": 3000, "tipo": "municiones" },
+    {
+      "fecha": "sáb 1 de ago de 20",
+      "monto": 16.29,
+      "tipo": "intereses"
+    },
+    {
+      "fecha": "sáb 1 de ago de 20",
+      "monto": 3.42,
+      "tipo": "iva"
+    },
+    {
+      "fecha": "sáb 22 de ago de 20",
+      "monto": 4400,
+      "tipo": "suplementos"
+    },
+    {
+      "fecha": "sáb 22 de ago de 20",
+      "monto": -10000,
+      "tipo": "lala"
+    },
+    {
+      "fecha": "jue 27 de ago de 20",
+      "monto": 6050,
+      "tipo": "zapas"
+    },
+    {
+      "fecha": "sáb 15 de ago de 20",
+      "monto": 1830,
+      "tipo": "super"
+    },
+    {
+      "fecha": "mar 18 de ago de 20",
+      "monto": 3477.11,
+      "tipo": "farmacia"
+    },
+    {
+      "fecha": "mar 25 de ago de 20",
+      "monto": 500,
+      "tipo": "barbijos"
+    }
+  ],
+  "pagos": [
+    { "fecha": "sáb 1 de ago de 20", "monto": 3246.28, "tipo": "préstamo" },
+    { "fecha": "vie 7 de ago de 20", "monto": 4000, "tipo": "abuela" },
+    { "fecha": "dom 9 de ago de 20", "monto": 2000, "tipo": "telefono" },
+    { "fecha": "mar 4 de ago de 20", "monto": 2260, "tipo": "osde" },
+    { "fecha": "lun 10 de ago de 20", "monto": 1367, "tipo": "sef/moto" },
+    { "fecha": "mié 5 de ago de 20", "monto": 2000, "tipo": "gym" },
+    { "fecha": "mar 4 de ago de 20", "monto": 1150, "tipo": "agua" }
+  ],
+  "ingresos": [
+    { "fecha": "sáb 1 de ago de 20", "monto": 48497.27, "tipo": "sueldo" },
+    { "fecha": "sáb 1 de ago de 20", "monto": 1.89, "tipo": "otros" }
+  ],
+  "gastosDiarios": [
+    { "fecha": "sáb 01/ago 20", "monto": 620, "tipo": "tiro" },
+    { "fecha": "dom 02/ago 20", "monto": 550, "tipo": "helado" },
+    { "fecha": "lun 03/ago 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 04/ago 20", "monto": 0, "tipo": "" },
+    { "fecha": "mié 05/ago 20", "monto": 260, "tipo": "limpieza" },
+    { "fecha": "jue 06/ago 20", "monto": 820, "tipo": "lomo" },
+    { "fecha": "vie 07/ago 20", "monto": 170, "tipo": "pan/varios" },
+    { "fecha": "sáb 08/ago 20", "monto": 500, "tipo": "nafta meha" },
+    { "fecha": "dom 09/ago 20", "monto": 0, "tipo": "" },
+    { "fecha": "lun 10/ago 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 11/ago 20", "monto": 0, "tipo": "" },
+    { "fecha": "mié 12/ago 20", "monto": 500, "tipo": "nafta meha" },
+    { "fecha": "jue 13/ago 20", "monto": 0, "tipo": "" },
+    { "fecha": "vie 14/ago 20", "monto": 260, "tipo": "birras" },
+    { "fecha": "sáb 15/ago 20", "monto": 0, "tipo": "" },
+    { "fecha": "dom 16/ago 20", "monto": 500, "tipo": "nafta meha" },
+    { "fecha": "lun 17/ago 20", "monto": 600, "tipo": "tacos" },
+    { "fecha": "mar 18/ago 20", "monto": 180, "tipo": "filtros" },
+    { "fecha": "mié 19/ago 20", "monto": 580, "tipo": "lomo, papas, birra" },
+    { "fecha": "jue 20/ago 20", "monto": 0, "tipo": "" },
+    { "fecha": "vie 21/ago 20", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 22/ago 20", "monto": 440, "tipo": "pan/varios" },
+    { "fecha": "dom 23/ago 20", "monto": 500, "tipo": "nafta meha" },
+    { "fecha": "lun 24/ago 20", "monto": 400, "tipo": "ferretería" },
+    { "fecha": "mar 25/ago 20", "monto": 0, "tipo": "" },
+    { "fecha": "mié 26/ago 20", "monto": 0, "tipo": "" },
+    { "fecha": "jue 27/ago 20", "monto": 400, "tipo": "lomo, papas, birra" },
+    { "fecha": "vie 28/ago 20", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 29/ago 20", "monto": 0, "tipo": "" },
+    { "fecha": "dom 30/ago 20", "monto": 0, "tipo": "" },
+    { "fecha": "lun 31/ago 20", "monto": 0, "tipo": "" }
+  ]
+}

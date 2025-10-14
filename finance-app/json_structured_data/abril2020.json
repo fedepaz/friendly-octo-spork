@@ -1,0 +1,35 @@
+{
+  "gastos": [
+    { "fecha": "mié 1 de abr de 20", "monto": 4000, "concepto": "pistola" },
+    { "fecha": "mié 1 de abr de 20", "monto": 3500, "concepto": "fono marisa" },
+    { "fecha": "mié 1 de abr de 20", "monto": 500, "concepto": "nafta" },
+    { "fecha": "vie 3 de abr de 20", "monto": 800, "concepto": "nafta" },
+    { "fecha": "jue 2 de abr de 20", "monto": 660, "concepto": "" },
+    { "fecha": "vie 3 de abr de 20", "monto": 880, "concepto": "" },
+    { "fecha": "lun 6 de abr de 20", "monto": 660, "concepto": "" },
+    { "fecha": "mar 7 de abr de 20", "monto": 1624, "concepto": "super" },
+    { "fecha": "mié 15 de abr de 20", "monto": 1300, "concepto": "marimba" },
+    { "fecha": "dom 12 de abr de 20", "monto": 2200, "concepto": "remera" },
+    { "fecha": "sáb 11 de abr de 20", "monto": 3000, "concepto": "prote" },
+    { "fecha": "mié 8 de abr de 20", "monto": 1500, "concepto": "compu" },
+    { "fecha": "mié 15 de abr de 20", "monto": 2000, "concepto": "nafta" },
+    { "fecha": "mié 15 de abr de 20", "monto": 1790.64, "concepto": "varios" },
+    { "fecha": "mié 15 de abr de 20", "monto": 4000, "concepto": "barra" }
+  ],
+  "pagos": [
+    {
+      "fecha": "vie 27 de mar de 20",
+      "monto": 7772.08,
+      "concepto": "adelanto"
+    },
+    { "fecha": "mié 1 de abr de 20", "monto": 4988.21, "concepto": "osde" },
+    { "fecha": "mié 1 de abr de 20", "monto": 4064.04, "concepto": "osde" },
+    { "fecha": "mié 1 de abr de 20", "monto": 1024.54, "concepto": "agua" },
+    { "fecha": "lun 6 de abr de 20", "monto": 3000, "concepto": "telefono" },
+    { "fecha": "lun 6 de abr de 20", "monto": 3277.8, "concepto": "prestamo" },
+    { "fecha": "jue 2 de abr de 20", "monto": 6000, "concepto": "abuela" }
+  ],
+  "ingresos": [
+    { "fecha": "lun 30 de mar de 20", "monto": 48497.27, "concepto": "sueldo" }
+  ]
+}

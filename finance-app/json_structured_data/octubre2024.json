@@ -1,0 +1,621 @@
+{
+  "gastos": [
+    {
+      "fecha": "2024-10-01",
+      "monto": 105262.7,
+      "tipo": "mastercard"
+    },
+    {
+      "fecha": "2024-10-01",
+      "monto": 178201.1,
+      "tipo": "visa"
+    },
+    {
+      "fecha": "2024-10-03",
+      "monto": 60000.0,
+      "tipo": "marimba"
+    },
+    {
+      "fecha": "2024-10-01",
+      "monto": 20000.0,
+      "tipo": "nata"
+    },
+    {
+      "fecha": "2024-10-14",
+      "monto": 29000.0,
+      "tipo": "filtroAceite"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "2024-10-10",
+      "monto": 240000.0,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "2024-10-01",
+      "monto": 10148.55,
+      "tipo": "prestamo meja"
+    },
+    {
+      "fecha": "2024-10-01",
+      "monto": 10457.98,
+      "tipo": "prestamo new"
+    },
+    {
+      "fecha": "2024-10-01",
+      "monto": 11046.62,
+      "tipo": "prestamo fibra"
+    },
+    {
+      "fecha": "2024-10-01",
+      "monto": 13651.89,
+      "tipo": "prestamoBsAS"
+    },
+    {
+      "fecha": "2024-10-07",
+      "monto": 13095.64,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "2024-10-02",
+      "monto": 25000.0,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "2024-10-02",
+      "monto": 28500.0,
+      "tipo": "Osde | dientes"
+    },
+    {
+      "fecha": "2024-10-10",
+      "monto": 10620.0,
+      "tipo": "agua"
+    },
+    {
+      "fecha": "2024-10-10",
+      "monto": 8700.0,
+      "tipo": "edesur"
+    },
+    {
+      "fecha": "2024-10-10",
+      "monto": 25000.0,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "2024-10-07",
+      "monto": 1236.48,
+      "tipo": "sancoSeguro"
+    },
+    {
+      "fecha": "2024-10-10",
+      "monto": 30000.0,
+      "tipo": "gas"
+    },
+    {
+      "fecha": "2024-10-10",
+      "monto": -157160.0,
+      "tipo": "eze"
+    },
+    {
+      "fecha": "2024-10-10",
+      "monto": -7160.0,
+      "tipo": "retro"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "2024-10-01",
+      "monto": 1136036.44,
+      "tipo": "sueldo"
+    }
+  ],
+  "gastosDiarios": [
+    {
+      "fecha": "2024-10-01",
+      "monto": 2000.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "2024-10-02",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-10-03",
+      "monto": 1500.0,
+      "tipo": "pan"
+    },
+    {
+      "fecha": "2024-10-04",
+      "monto": 5000.0,
+      "tipo": "pelu"
+    },
+    {
+      "fecha": "2024-10-05",
+      "monto": 16600.0,
+      "tipo": "subeLomoPa"
+    },
+    {
+      "fecha": "2024-10-06",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-10-07",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-10-08",
+      "monto": 2000.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "2024-10-09",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-10-10",
+      "monto": 8350.0,
+      "tipo": "panQuraTe"
+    },
+    {
+      "fecha": "2024-10-11",
+      "monto": 8595.99,
+      "tipo": "quraSube"
+    },
+    {
+      "fecha": "2024-10-12",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-10-13",
+      "monto": 9900.0,
+      "tipo": "subePizza"
+    },
+    {
+      "fecha": "2024-10-14",
+      "monto": 1300.0,
+      "tipo": "aire"
+    },
+    {
+      "fecha": "2024-10-15",
+      "monto": 5200.0,
+      "tipo": "mila"
+    },
+    {
+      "fecha": "2024-10-16",
+      "monto": 2000.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "2024-10-17",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-10-18",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-10-19",
+      "monto": 2000.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "2024-10-20",
+      "monto": 3000.0,
+      "tipo": "subeBru"
+    },
+    {
+      "fecha": "2024-10-21",
+      "monto": 4620.0,
+      "tipo": "birra"
+    },
+    {
+      "fecha": "2024-10-22",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-10-23",
+      "monto": 15700.0,
+      "tipo": "milaPapasUber"
+    },
+    {
+      "fecha": "2024-10-24",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-10-25",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-10-26",
+      "monto": 9100.0,
+      "tipo": "almuerzoSab"
+    },
+    {
+      "fecha": "2024-10-27",
+      "monto": 9800.0,
+      "tipo": "subeUberTorti"
+    },
+    {
+      "fecha": "2024-10-28",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-10-29",
+      "monto": 13300.0,
+      "tipo": "birrasRiver"
+    },
+    {
+      "fecha": "2024-10-30",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-10-31",
+      "monto": 2000.0,
+      "tipo": "sube"
+    }
+  ],
+  "saldos": [
+    {
+      "saldoMercadoPago": 11301.22
+    },
+    {
+      "saldoBanco": 612.12
+    },
+    {
+      "efectivo": 900.0
+    }
+  ],
+  "gastosTarjeta": [
+    {
+      "fecha": "cuatro/seis",
+      "monto": 16866.5,
+      "tipo": "camisetaAfa"
+    },
+    {
+      "fecha": "tres/seis",
+      "monto": 15313.5,
+      "tipo": "armario"
+    },
+    {
+      "fecha": "tres/tres",
+      "monto": 33054.5,
+      "tipo": "filaVarios"
+    },
+    {
+      "fecha": "tres/tres",
+      "monto": 16000.0,
+      "tipo": "vinos"
+    },
+    {
+      "fecha": "tres/tres",
+      "monto": 24028.2,
+      "tipo": "easy"
+    }
+  ],
+  "gastosTarjetaExc": [],
+  "gastosTarjetaVisa": [
+    {
+      "fecha": "seis/seis",
+      "monto": 24958.34,
+      "tipo": "suple"
+    },
+    {
+      "fecha": "cuatro/seis",
+      "monto": 12209.83,
+      "tipo": "chaleco"
+    },
+    {
+      "fecha": "cuatro/seis",
+      "monto": 6854.59,
+      "tipo": "tabacoMayo"
+    },
+    {
+      "fecha": "dos/tres",
+      "monto": 34996.67,
+      "tipo": "proteWorkUp"
+    },
+    {
+      "fecha": "dos/cuatro",
+      "monto": 18318.44,
+      "tipo": "easy"
+    },
+    {
+      "fecha": "",
+      "monto": 3999.0,
+      "tipo": "nivel6"
+    },
+    {
+      "fecha": "dos/seis",
+      "monto": 17264.77,
+      "tipo": "tabacoJulio"
+    },
+    {
+      "fecha": "uno/nueve",
+      "monto": 18491.4,
+      "tipo": "pasajes"
+    },
+    {
+      "fecha": "",
+      "monto": 3058.16,
+      "tipo": "plasplas"
+    },
+    {
+      "fecha": "uno/seis",
+      "monto": 22466.7,
+      "tipo": "zaps"
+    },
+    {
+      "fecha": "uno/seis",
+      "monto": 15583.2,
+      "tipo": "auris"
+    }
+  ],
+  "rendimientos": [
+    {
+      "reserva": "alquiler",
+      "ganado": 4573.6
+    },
+    {
+      "reserva": "autito",
+      "ganado": 1755.61
+    },
+    {
+      "reserva": "emergencia",
+      "ganado": 1755.58
+    },
+    {
+      "reserva": "semanaCua",
+      "ganado": 1779.3
+    },
+    {
+      "reserva": "semanaTres",
+      "ganado": 1390.54
+    },
+    {
+      "reserva": "semanaDos",
+      "ganado": 853.58
+    },
+    {
+      "reserva": "teléfono",
+      "ganado": 40.4
+    },
+    {
+      "reserva": "dentista",
+      "ganado": 30.37
+    },
+    {
+      "reserva": "osde",
+      "ganado": 154.31
+    },
+    {
+      "reserva": "agua",
+      "ganado": 469.27
+    }
+  ],
+  "gastosExtras": [
+    {
+      "fecha": "2024-10-01",
+      "monto": 594332.8,
+      "tipo": "dolar blue"
+    },
+    {
+      "fecha": "2024-10-02",
+      "monto": 427457.16,
+      "tipo": "1250"
+    },
+    {
+      "fecha": "2024-10-03",
+      "monto": 120900.0,
+      "tipo": "minDolar"
+    },
+    {
+      "fecha": "2024-10-04",
+      "monto": 1142689.96,
+      "tipo": "914"
+    },
+    {
+      "fecha": "2024-10-06",
+      "monto": 594332.8,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-10-01",
+      "monto": 21280.0,
+      "tipo": "polloHuevos"
+    },
+    {
+      "fecha": "2024-10-06",
+      "monto": 19920.0,
+      "tipo": "verduPolloPan"
+    },
+    {
+      "fecha": "2024-10-12",
+      "monto": 28700.0,
+      "tipo": "super"
+    },
+    {
+      "fecha": "2024-10-12",
+      "monto": 16419.0,
+      "tipo": "super"
+    },
+    {
+      "fecha": "2024-10-12",
+      "monto": 20510.0,
+      "tipo": "limpiezaKiosk"
+    },
+    {
+      "fecha": "2024-10-16",
+      "monto": 20880.0,
+      "tipo": "verduPolloPan"
+    },
+    {
+      "fecha": "2024-10-18",
+      "monto": 8900.0,
+      "tipo": "panPolloSal"
+    },
+    {
+      "fecha": "2024-10-21",
+      "monto": 14000.0,
+      "tipo": "polloMila"
+    },
+    {
+      "fecha": "2024-10-22",
+      "monto": 15960.0,
+      "tipo": "avenaFrutasQues"
+    },
+    {
+      "fecha": "2024-10-26",
+      "monto": 6540.0,
+      "tipo": "panPelu"
+    },
+    {
+      "fecha": "2024-10-28",
+      "monto": 19200.0,
+      "tipo": "polloPapaPan"
+    },
+    {
+      "fecha": "2024-10-31",
+      "monto": 9560.0,
+      "tipo": "birras"
+    }
+  ],
+  "intmp": [
+    {
+      "fecha": "2024-10-01",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-02",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-03",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-04",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-05",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-06",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-07",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-08",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-09",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-10",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-11",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-12",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-13",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-14",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-15",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-16",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-17",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-18",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-19",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-20",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-21",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-22",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-23",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-24",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-25",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-26",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-27",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-28",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-29",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-30",
+      "monto": 0.0
+    },
+    {
+      "fecha": "2024-10-31",
+      "monto": 0.0
+    }
+  ]
+}

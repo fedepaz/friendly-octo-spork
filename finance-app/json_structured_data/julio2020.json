@@ -1,0 +1,59 @@
+{
+  "gastos": [
+    { "fecha": "jue 30 de jul de 20", "monto": 5000, "tipo": "auto" },
+    { "fecha": "mar 21 de jul de 20", "monto": 10000, "tipo": "tattoo" },
+    { "fecha": "jue 2 de jul de 20", "monto": 4000, "tipo": "mari mori" },
+    { "fecha": "mié 1 de jul de 20", "monto": 284.07, "tipo": "intereses" },
+    { "fecha": "mar 14 de jul de 20", "monto": 5300, "tipo": "suple" },
+    { "fecha": "sáb 18 de jul de 20", "monto": 2550, "tipo": "super" }
+  ],
+  "pagos": [
+    { "fecha": "mié 1 de jul de 20", "monto": 3254.8, "tipo": "préstamo" },
+    { "fecha": "jue 2 de jul de 20", "monto": 6000, "tipo": "abuela" },
+    { "fecha": "dom 5 de jul de 20", "monto": 1200, "tipo": "telefono" },
+    { "fecha": "jue 2 de jul de 20", "monto": 4272, "tipo": "osde" },
+    { "fecha": "jue 2 de jul de 20", "monto": 1600, "tipo": "gym" },
+    { "fecha": "jue 16 de jul de 20", "monto": 1400, "tipo": "sef/moto" }
+  ],
+  "ingresos": [
+    { "fecha": "mié 1 de jul de 20", "monto": 47800, "tipo": "sueldo" },
+    { "fecha": "mié 1 de jul de 20", "monto": 16000, "tipo": "aguinaldo" }
+  ],
+  "gastosDiarios": [
+    { "fecha": "mié 1 de jul de 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 2 de jul de 20", "monto": 400, "tipo": "helado" },
+    { "fecha": "mar 3 de jul de 20", "monto": 450, "tipo": "helado" },
+    { "fecha": "mar 4 de jul de 20", "monto": 350, "tipo": "nafta ktm" },
+    { "fecha": "mar 5 de jul de 20", "monto": 300, "tipo": "Lomito 2" },
+    { "fecha": "mar 6 de jul de 20", "monto": 500, "tipo": "tabaco" },
+    { "fecha": "mar 7 de jul de 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 8 de jul de 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 9 de jul de 20", "monto": 1000, "tipo": "varios" },
+    { "fecha": "mar 10 de jul de 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 11 de jul de 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 12 de jul de 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 13 de jul de 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 14 de jul de 20", "monto": 1000, "tipo": "tabaco" },
+    { "fecha": "mar 15 de jul de 20", "monto": 800, "tipo": "compu" },
+    { "fecha": "mar 16 de jul de 20", "monto": 250, "tipo": "pelu" },
+    { "fecha": "mar 17 de jul de 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 18 de jul de 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 19 de jul de 20", "monto": 1100, "tipo": "lentejas" },
+    { "fecha": "mar 20 de jul de 20", "monto": 750, "tipo": "cargador" },
+    { "fecha": "mar 21 de jul de 20", "monto": 1200, "tipo": "comilona" },
+    { "fecha": "mar 22 de jul de 20", "monto": 150, "tipo": "bici" },
+    { "fecha": "mar 23 de jul de 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 24 de jul de 20", "monto": 600, "tipo": "crema" },
+    { "fecha": "mar 25 de jul de 20", "monto": 510, "tipo": "lomo" },
+    { "fecha": "mar 26 de jul de 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 27 de jul de 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 28 de jul de 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 29 de jul de 20", "monto": 0, "tipo": "" },
+    {
+      "fecha": "mar 30 de jul de 20",
+      "monto": 750,
+      "tipo": "naftameha, varios"
+    },
+    { "fecha": "mar 31 de jul de 20", "monto": 1337.18, "tipo": "varios" }
+  ]
+}

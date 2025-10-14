@@ -1,0 +1,57 @@
+{
+  "gastos": [
+    { "fecha": "mar 3 de nov de 20", "monto": 2491, "tipo": "Máquina corte" },
+    { "fecha": "sáb 31 de oct de 20", "monto": 192.02, "tipo": "intereses" },
+    { "fecha": "sáb 31 de oct de 20", "monto": 40.74, "tipo": "iva" },
+    { "fecha": "mar 3 de nov de 20", "monto": 3615, "tipo": "varios" },
+    { "fecha": "lun 9 de nov de 20", "monto": 2165, "tipo": "bici" },
+    { "fecha": "mié 11 de nov de 20", "monto": 1500, "tipo": "bici" },
+    { "fecha": "vie 13 de nov de 20", "monto": 122.22, "tipo": "whisky" },
+    { "fecha": "mar 24 de nov de 20", "monto": 4451, "tipo": "bici" },
+    { "fecha": "sáb 31 de oct de 20", "monto": 3000, "tipo": "?" }
+  ],
+  "pagos": [
+    { "fecha": "sab 31 de oct de 20", "monto": 3221.95, "tipo": "préstamo" },
+    { "fecha": "lun 2 de nov de 20", "monto": 10529.55, "tipo": "abuela" },
+    { "fecha": "dom 8 de nov de 20", "monto": 1200, "tipo": "telefono" },
+    { "fecha": "jue 26 de nov de 20", "monto": 3989.07, "tipo": "osde" },
+    { "fecha": "mié 11 de nov de 20", "monto": 1367, "tipo": "sef/moto" },
+    { "fecha": "mar 3 de nov de 20", "monto": 2000, "tipo": "gym" },
+    { "fecha": "sáb 31 de oct de 20", "monto": 10836.34, "tipo": "auto" }
+  ],
+  "ingresos": [
+    { "fecha": "sáb 31 de oct de 20", "monto": 58068.66, "tipo": "sueldo" }
+  ],
+  "gastosDiarios": [
+    { "fecha": "dom 01/nov 20", "monto": 1800, "tipo": "britta, helado" },
+    { "fecha": "lun 02/nov 20", "monto": 1339, "tipo": "super y tabaco" },
+    { "fecha": "mar 03/nov 20", "monto": 500, "tipo": "pinchaduras" },
+    { "fecha": "mié 04/nov 20", "monto": 500, "tipo": "bananas futbol" },
+    { "fecha": "jue 05/nov 20", "monto": 300, "tipo": "café diego" },
+    { "fecha": "vie 06/nov 20", "monto": 540, "tipo": "barbijos" },
+    { "fecha": "sáb 07/nov 20", "monto": 1000, "tipo": "juanma" },
+    { "fecha": "dom 08/nov 20", "monto": 0, "tipo": "" },
+    { "fecha": "lun 09/nov 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 10/nov 20", "monto": 200, "tipo": "futbol" },
+    { "fecha": "mie 11/nov 20", "monto": 200, "tipo": "huevos" },
+    { "fecha": "jue 12/nov 20", "monto": 720, "tipo": "lomo, papa, cervez" },
+    { "fecha": "vie 13/nov 20", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 14/nov 20", "monto": 0, "tipo": "" },
+    { "fecha": "dom 15/nov 20", "monto": 0, "tipo": "" },
+    { "fecha": "lun 16/nov 20", "monto": 1000, "tipo": "bici futbol" },
+    { "fecha": "mar 17/nov 20", "monto": 1000, "tipo": "asado" },
+    { "fecha": "mié 18/nov 20", "monto": 0, "tipo": "" },
+    { "fecha": "jue 19/nov 20", "monto": 0, "tipo": "" },
+    { "fecha": "vie 20/nov 20", "monto": 370, "tipo": "limpieza" },
+    { "fecha": "sáb 21/nov 20", "monto": 0, "tipo": "" },
+    { "fecha": "dom 22/nov 20", "monto": 0, "tipo": "" },
+    { "fecha": "lun 23/nov 20", "monto": 380, "tipo": "futbol" },
+    { "fecha": "mar 24/nov 20", "monto": 0, "tipo": "" },
+    { "fecha": "mié 25/nov 20", "monto": 350, "tipo": "futbol" },
+    { "fecha": "jue 26/nov 20", "monto": 650, "tipo": "tabaco" },
+    { "fecha": "vie 27/nov 20", "monto": 750, "tipo": "lomo, papa, cervez" },
+    { "fecha": "sáb 28/nov 20", "monto": 0, "tipo": "" },
+    { "fecha": "dom 29/nov 20", "monto": 640.51, "tipo": "" },
+    { "fecha": "lun 30/nov 20", "monto": 0, "tipo": "" }
+  ]
+}

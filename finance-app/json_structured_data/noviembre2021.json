@@ -1,0 +1,170 @@
+{
+  "gastos": [
+    {
+      "fecha": "sáb 30 de oct de 21",
+      "monto": 5500,
+      "tipo": "jalowin"
+    },
+    {
+      "fecha": "lun 1 de nov de 21",
+      "monto": 400,
+      "tipo": "inscripcion"
+    },
+    {
+      "fecha": "lun 1 de nov de 21",
+      "monto": 2750,
+      "tipo": "muslera"
+    },
+    {
+      "fecha": "lun 1 de nov de 21",
+      "monto": 3870,
+      "tipo": "super"
+    },
+    {
+      "fecha": "mié 3 de nov de 21",
+      "monto": 1900,
+      "tipo": "la konga"
+    },
+    {
+      "fecha": "vie 5 de nov de 21",
+      "monto": 1050,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "vie 12 de nov de 21",
+      "monto": 1646,
+      "tipo": "stickers"
+    },
+    {
+      "fecha": "jue 18 de nov de 21",
+      "monto": 590,
+      "tipo": "limpieza"
+    },
+    {
+      "fecha": "jue 18 de nov de 21",
+      "monto": 1008,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "sáb 27 de nov de 21",
+      "monto": 1230,
+      "tipo": "pollo y mila"
+    },
+    {
+      "fecha": "sáb 27 de nov de 21",
+      "monto": 9400,
+      "tipo": "suple"
+    },
+    {
+      "fecha": "lun 29 de nov de 21",
+      "monto": 1749.08,
+      "tipo": "(?)"
+    },
+    {
+      "fecha": "lun 29 de nov de 21",
+      "monto": 2980,
+      "tipo": "super"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "sáb 30 de oct de 21",
+      "monto": 3104,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "mar 9 de nov de 21",
+      "monto": 21000,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "jue 4 de nov de 21",
+      "monto": 2343.82,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "lun 1 de nov de 21",
+      "monto": 5241.17,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "jue 4 de nov de 21",
+      "monto": 2200,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "sáb 30 de oct de 21",
+      "monto": 10745,
+      "tipo": "auto"
+    },
+    {
+      "fecha": "lun 1 de nov de 21",
+      "monto": 2250,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "lun 1 de nov de 21",
+      "monto": 904,
+      "tipo": "comision(?)"
+    },
+    {
+      "fecha": "jue 4 de nov de 21",
+      "monto": 5612.75,
+      "tipo": "bici"
+    },
+    {
+      "fecha": "jue 4 de nov de 21",
+      "monto": 2753,
+      "tipo": "borcegos"
+    },
+    {
+      "fecha": "lun 1 de nov de 21",
+      "monto": 408.23,
+      "tipo": "luz"
+    },
+    {
+      "fecha": "jue 11 de nov de 21",
+      "monto": 815.95,
+      "tipo": "luz"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "sáb 30 de oct de 21",
+      "monto": 108578,
+      "tipo": "sueldo"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "lun 01/nov 21", "monto": 1730, "tipo": "futbol lomo" },
+    { "fecha": "mar 02/nov 21", "monto": 300, "tipo": "fruta y verdura" },
+    { "fecha": "mié 03/nov 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 04/nov 21", "monto": 50, "tipo": "pan" },
+    { "fecha": "vie 05/nov 21", "monto": 920, "tipo": "fulbo y frutas" },
+    { "fecha": "sáb 06/nov 21", "monto": 460, "tipo": "tabaco lillos pan" },
+    { "fecha": "dom 07/nov 21", "monto": 2110, "tipo": "fernet y taxi" },
+    { "fecha": "lun 08/nov 21", "monto": 0, "tipo": "" },
+    { "fecha": "mar 09/nov 21", "monto": 1970, "tipo": "huevos pan lomo" },
+    { "fecha": "mié 10/nov 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 11/nov 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 12/nov 21", "monto": 900, "tipo": "lomo con papas y helado" },
+    { "fecha": "sáb 13/nov 21", "monto": 490, "tipo": "pan birra coca" },
+    { "fecha": "dom 14/nov 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 15/nov 21", "monto": 50, "tipo": "pan" },
+    { "fecha": "mar 16/nov 21", "monto": 1400, "tipo": "lomo birra" },
+    { "fecha": "mié 17/nov 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 18/nov 21", "monto": 1210, "tipo": "furtas verduras" },
+    { "fecha": "vie 19/nov 21", "monto": 2600, "tipo": "joda futbol" },
+    { "fecha": "sáb 20/nov 21", "monto": 72.82, "tipo": "" },
+    { "fecha": "dom 21/nov 21", "monto": 100, "tipo": "pan" },
+    { "fecha": "lun 22/nov 21", "monto": 1470, "tipo": "lomo birra" },
+    { "fecha": "mar 23/nov 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 24/nov 21", "monto": 1400, "tipo": "birra lomo y cabify" },
+    { "fecha": "jue 25/nov 21", "monto": 1485, "tipo": "costi" },
+    { "fecha": "vie 26/nov 21", "monto": 1260, "tipo": "fiambre aceite tomate papa fitbol" },
+    { "fecha": "sáb 27/nov 21", "monto": 50, "tipo": "pan" },
+    { "fecha": "dom 28/nov 21", "monto": 700, "tipo": "propina helado" },
+    { "fecha": "lun 29/nov 21", "monto": 1040, "tipo": "huevos pan avena futbol frutas" },
+    { "fecha": "mar 30/nov 21", "monto": 0, "tipo": "" }
+  ]
+}

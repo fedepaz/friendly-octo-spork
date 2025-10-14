@@ -1,0 +1,198 @@
+{
+  "gastos": [
+    {
+      "fecha": "mié 4 de ene de 23",
+      "monto": 51442.28,
+      "tipo": "tarjeta"
+    },
+    {
+      "fecha": "jue 5 de ene de 23",
+      "monto": 33500,
+      "tipo": "suplementos"
+    },
+    {
+      "fecha": "mié 25 de ene de 23",
+      "monto": 8000,
+      "tipo": "flete"
+    },
+    {
+      "fecha": "sáb 28 de ene de 23",
+      "monto": 1400,
+      "tipo": "pastis"
+    },
+    {
+      "fecha": "lun 30 de ene de 23",
+      "monto": 48750,
+      "tipo": "rescición"
+    },
+    {
+      "fecha": "mar 31 de ene de 23",
+      "monto": 1000,
+      "tipo": "huevos"
+    },
+    {
+      "fecha": "mar 24 de ene de 23",
+      "monto": 1120,
+      "tipo": "frutas"
+    },
+    {
+      "fecha": "lun 2 de ene de 23",
+      "monto": 5080,
+      "tipo": "pollo y verdu"
+    },
+    {
+      "fecha": "mié 4 de ene de 23",
+      "monto": 3396.06,
+      "tipo": "super"
+    },
+    {
+      "fecha": "mar 10 de ene de 23",
+      "monto": 950,
+      "tipo": "toma huevos"
+    },
+    {
+      "fecha": "jue 12 de ene de 23",
+      "monto": 2700,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "sáb 14 de ene de 23",
+      "monto": 1640,
+      "tipo": "frutas"
+    },
+    {
+      "fecha": "lun 16 de ene de 23",
+      "monto": 600,
+      "tipo": "verdus"
+    },
+    {
+      "fecha": "mié 18 de ene de 23",
+      "monto": 3708.03,
+      "tipo": "super"
+    },
+    {
+      "fecha": "sáb 21 de ene de 23",
+      "monto": 3000,
+      "tipo": "pollo"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "vie 6 de ene de 23",
+      "monto": 31800,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "dom 1 de ene de 23",
+      "monto": 10582.68,
+      "tipo": "prestamo meja"
+    },
+    {
+      "fecha": "dom 1 de ene de 23",
+      "monto": 11166.63,
+      "tipo": "prestamo new"
+    },
+    {
+      "fecha": "dom 1 de ene de 23",
+      "monto": 12632.53,
+      "tipo": "prestamo fibra"
+    },
+    {
+      "fecha": "mié 28 de dic de 22",
+      "monto": 13199.34,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "lun 2 de ene de 23",
+      "monto": 5000,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "vie 13 de ene de 23",
+      "monto": 2903.47,
+      "tipo": "luz"
+    },
+    {
+      "fecha": "jue 5 de ene de 23",
+      "monto": 1058.08,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "vie 20 de ene de 23",
+      "monto": 815.02,
+      "tipo": "gas"
+    },
+    {
+      "fecha": "mié 1 de feb de 23",
+      "monto": -5216,
+      "tipo": "Sobrante(?)"
+    },
+    {
+      "fecha": "mié 28 de dic de 22",
+      "monto": -13199.34,
+      "tipo": "pagadoDic"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "dom 1 de ene de 23",
+      "monto": 177354.38,
+      "tipo": "sueldo"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "dom 01/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "lun 02/ene 23", "monto": 1800, "tipo": "tabaco" },
+    { "fecha": "mar 03/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "mié 04/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "jue 05/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "vie 06/ene 23", "monto": 700, "tipo": "pelu" },
+    { "fecha": "sáb 07/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "dom 08/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "lun 09/ene 23", "monto": 3000, "tipo": "futbol varios" },
+    { "fecha": "mar 10/ene 23", "monto": 850, "tipo": "farmacia" },
+    { "fecha": "mié 11/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "jue 12/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "vie 13/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 14/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "dom 15/ene 23", "monto": 600, "tipo": "birra" },
+    { "fecha": "lun 16/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "mar 17/ene 23", "monto": 2360, "tipo": "lomo birra" },
+    { "fecha": "mié 18/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "jue 19/ene 23", "monto": 2490, "tipo": "birras varias" },
+    { "fecha": "vie 20/ene 23", "monto": 140, "tipo": "pan" },
+    { "fecha": "sáb 21/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "dom 22/ene 23", "monto": 400, "tipo": "pan" },
+    { "fecha": "lun 23/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "mar 24/ene 23", "monto": 700, "tipo": "pelu" },
+    { "fecha": "mié 25/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "jue 26/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "vie 27/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 28/ene 23", "monto": 970, "tipo": "tortitas varios" },
+    { "fecha": "dom 29/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "lun 30/ene 23", "monto": 0, "tipo": "" },
+    { "fecha": "mar 31/ene 23", "monto": 0, "tipo": "" }
+  ],
+  "saldos": [
+    { "banco": 31802.59 },
+    { "efectivo": 560 }
+  ],
+  "gastosTarjeta": [
+    { "fecha": "ocho/nueve", "monto": 3324, "tipo": "calefactor" },
+    { "fecha": "siete/doce", "monto": 970.41, "tipo": "GAFAS" },
+    { "fecha": "seis/doce", "monto": 1631.16, "tipo": "jetsmart" },
+    { "fecha": "seis/seis", "monto": 1527.4, "tipo": "boxers" },
+    { "fecha": "cinco/seis", "monto": 2165, "tipo": "borregos" },
+    { "fecha": "cuatro/seis", "monto": 2341.25, "tipo": "luces" },
+    { "fecha": "cuatro/seis", "monto": 4995, "tipo": "camisetas" },
+    { "fecha": "tres/seis", "monto": 2586.5, "tipo": "starfeet" },
+    { "fecha": "dos/tres", "monto": 6909.73, "tipo": "zapasmias" },
+    { "fecha": "dos/tres", "monto": 1870.01, "tipo": "ortopedia" },
+    { "fecha": "dos/tres", "monto": 3229.33, "tipo": "mediasChetas" },
+    { "fecha": "vie 25 de nov de 22", "monto": 7411, "tipo": "asado" },
+    { "fecha": "mié 7 de dic de 22", "monto": 9732.63, "tipo": "super" }
+  ],
+  "gastosTarjetaExc": [
+    { "fecha": "sáb 7 de ene de 23", "monto": 1713, "tipo": "pedidosya" }
+  ]
+}

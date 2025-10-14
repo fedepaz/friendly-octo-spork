@@ -1,0 +1,64 @@
+{
+  "gastos": [
+    {
+      "fecha": "sáb 4 de dic de 21",
+      "monto": 527.82,
+      "tipo": "¿?"
+    },
+    {
+      "fecha": "sáb 4 de dic de 21",
+      "monto": 110.6,
+      "tipo": "¿?"
+    },
+    {
+      "fecha": "lun 11 de ene de 21",
+      "monto": 3750.0,
+      "tipo": "calza, pantalon"
+    },
+    {
+      "fecha": "lun 11 de ene de 21",
+      "monto": 200.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "lun 11 de ene de 21",
+      "monto": 70.0,
+      "tipo": ""
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "vie 1 de ene de 21",
+      "monto": 3204.0,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "mié 6 de ene de 21",
+      "monto": 7300.0,
+      "tipo": "abuela"
+    },
+    {
+      "fecha": "sáb 9 de ene de 21",
+      "monto": 1150.0,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "vie 1 de ene de 21",
+      "monto": 10823.0,
+      "tipo": "auto"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "vie 1 de ene de 21",
+      "monto": 65277.0,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "250",
+      "monto": 20.0,
+      "tipo": "31"
+    }
+  ],
+  "gastosDiarios": []
+}

@@ -1,0 +1,116 @@
+{
+  "gastos": [
+    {
+      "fecha": "lun 10 de may de 21",
+      "monto": 1700,
+      "tipo": "pollo aceite"
+    },
+    {
+      "fecha": "mar 18 de may de 21",
+      "monto": 900,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "lun 31 de may de 21",
+      "monto": 900,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "lun 31 de may de 21",
+      "monto": 2730,
+      "tipo": "super"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "lun 3 de may de 21",
+      "monto": 3166.77,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "mar 11 de may de 21",
+      "monto": 21000,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "mié 5 de may de 21",
+      "monto": 3091,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "lun 3 de may de 21",
+      "monto": 4353.18,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "mié 5 de may de 21",
+      "monto": 2500,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "lun 3 de may de 21",
+      "monto": 10795.16,
+      "tipo": "auto"
+    },
+    {
+      "fecha": "jue 29 de abr de 21",
+      "monto": 1725,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "lun 3 de may de 21",
+      "monto": 750,
+      "tipo": "comision(?)"
+    },
+    {
+      "fecha": "lun 10 de may de 21",
+      "monto": 650,
+      "tipo": "luz"
+    },
+    {
+      "fecha": "jue 13 de may de 21",
+      "monto": 1499.28,
+      "tipo": "luz"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "vie 30 de abr de 21",
+      "monto": 61477.25,
+      "tipo": "sueldo"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "sáb 01/may 21", "monto": 0, "tipo": "" },
+    { "fecha": "dom 02/may 21", "monto": 610, "tipo": "helado" },
+    { "fecha": "lun 03/may 21", "monto": 300, "tipo": "frutas y verduras" },
+    { "fecha": "mar 04/may 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 05/may 21", "monto": 60, "tipo": "pan" },
+    { "fecha": "jue 06/may 21", "monto": 910, "tipo": "cena con diego" },
+    { "fecha": "vie 07/may 21", "monto": 470, "tipo": "pan verduras fubol" },
+    { "fecha": "sáb 08/may 21", "monto": 1000, "tipo": "lomo" },
+    { "fecha": "dom 09/may 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 10/may 21", "monto": 1100, "tipo": "pan frutas futbol focos" },
+    { "fecha": "mar 11/may 21", "monto": 350, "tipo": "tabaco" },
+    { "fecha": "mié 12/may 21", "monto": 1000, "tipo": "lomo" },
+    { "fecha": "jue 13/may 21", "monto": 130, "tipo": "pan y papas" },
+    { "fecha": "vie 14/may 21", "monto": 950, "tipo": "filtros y aritos" },
+    { "fecha": "sáb 15/may 21", "monto": 1270, "tipo": "lomo y birras" },
+    { "fecha": "dom 16/may 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 17/may 21", "monto": 1070, "tipo": "pan y verduras futbol" },
+    { "fecha": "mar 18/may 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 19/may 21", "monto": 50, "tipo": "pan" },
+    { "fecha": "jue 20/may 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 21/may 21", "monto": 1240, "tipo": "futbol y lomo" },
+    { "fecha": "sáb 22/may 21", "monto": 840, "tipo": "cerveza pan y huevos" },
+    { "fecha": "dom 23/may 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 24/may 21", "monto": 750, "tipo": "lomo" },
+    { "fecha": "mar 25/may 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 26/may 21", "monto": 300, "tipo": "milanesas y pan" },
+    { "fecha": "jue 27/may 21", "monto": 2700, "tipo": "nafta y lomo" },
+    { "fecha": "vie 28/may 21", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 29/may 21", "monto": 470, "tipo": "pan, queso, tomates" },
+    { "fecha": "dom 30/may 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 31/may 21", "monto": 500, "tipo": "huevos y futbol" }
+  ]
+}

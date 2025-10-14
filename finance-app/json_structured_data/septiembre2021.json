@@ -1,0 +1,175 @@
+{
+  "gastos": [
+    {
+      "fecha": "mar 17 de ago de 21",
+      "monto": 3000,
+      "tipo": "señaMary"
+    },
+    {
+      "fecha": "mié 25 de ago de 21",
+      "monto": 3540,
+      "tipo": "10remeras pantalon"
+    },
+    {
+      "fecha": "jue 26 de ago de 21",
+      "monto": 1330,
+      "tipo": "super"
+    },
+    {
+      "fecha": "jue 26 de ago de 21",
+      "monto": 1640,
+      "tipo": "medias negras"
+    },
+    {
+      "fecha": "jue 26 de ago de 21",
+      "monto": 880,
+      "tipo": "ferreteria curso"
+    },
+    {
+      "fecha": "jue 26 de ago de 21",
+      "monto": -10390,
+      "tipo": "pagado ia"
+    },
+    {
+      "fecha": "jue 2 de sep de 21",
+      "monto": 3950,
+      "tipo": "botiquin"
+    },
+    {
+      "fecha": "vie 3 de sep de 21",
+      "monto": 2000,
+      "tipo": "cumple mama"
+    },
+    {
+      "fecha": "vie 3 de sep de 21",
+      "monto": 310,
+      "tipo": "mochi y cordones"
+    },
+    {
+      "fecha": "sáb 4 de sep de 21",
+      "monto": 2900,
+      "tipo": "super"
+    },
+    {
+      "fecha": "sáb 4 de sep de 21",
+      "monto": 5500,
+      "tipo": "pasajes"
+    },
+    {
+      "fecha": "lun 27 de sep de 21",
+      "monto": 76811,
+      "tipo": "devolución"
+    },
+    {
+      "fecha": "dom 26 de sep de 21",
+      "monto": 65632.73,
+      "tipo": "gastos curso"
+    },
+    {
+      "fecha": "mié 29 de sep de 21",
+      "monto": 1300,
+      "tipo": "pollo"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "mié 1 de sep de 21",
+      "monto": 3126.12,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "mié 1 de sep de 21",
+      "monto": 21000,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "jue 23 de sep de 21",
+      "monto": 1298,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "mar 21 de sep de 21",
+      "monto": 4488.86,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "mié 1 de sep de 21",
+      "monto": 10762.91,
+      "tipo": "auto"
+    },
+    {
+      "fecha": "mar 21 de sep de 21",
+      "monto": 2099.5,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "mar 21 de sep de 21",
+      "monto": 750,
+      "tipo": "comision(?)"
+    },
+    {
+      "fecha": "jue 23 de sep de 21",
+      "monto": 6000,
+      "tipo": "bici"
+    },
+    {
+      "fecha": "mar 21 de sep de 21",
+      "monto": 4409.81,
+      "tipo": "luz"
+    },
+    {
+      "fecha": "mar 21 de sep de 21",
+      "monto": 793.9,
+      "tipo": "gas"
+    },
+    {
+      "fecha": "mar 21 de sep de 21",
+      "monto": 2470,
+      "tipo": "internet"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "mié 1 de sep de 21",
+      "monto": 84501.21,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "mié 1 de sep de 21",
+      "monto": 118651.62,
+      "tipo": ""
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "mié 01/sep 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 02/sep 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 03/sep 21", "monto": 1420, "tipo": "birra lomo y pan" },
+    { "fecha": "sáb 04/sep 21", "monto": 700, "tipo": "farmacia" },
+    { "fecha": "dom 05/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "lun 06/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "mar 07/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "mié 08/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "jue 09/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "vie 10/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "sáb 11/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "dom 12/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "lun 13/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "mar 14/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "mié 15/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "jue 16/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "vie 17/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "sáb 18/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "dom 19/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "lun 20/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "mar 21/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "mié 22/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "jue 23/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "vie 24/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "sáb 25/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "dom 26/sep 21", "monto": 0, "tipo": "curso" },
+    { "fecha": "lun 27/sep 21", "monto": 250, "tipo": "futbol" },
+    { "fecha": "mar 28/sep 21", "monto": 1710, "tipo": "tabaco, birra y lomo" },
+    { "fecha": "mié 29/sep 21", "monto": 540, "tipo": "limpieza, pan" },
+    { "fecha": "jue 30/sep 21", "monto": 1450, "tipo": "pan, lomo, birra" }
+  ]
+}

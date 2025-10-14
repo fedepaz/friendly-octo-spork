@@ -1,0 +1,561 @@
+{
+  "gastos": [
+    {
+      "fecha": "mié 3 de abr de 24",
+      "monto": 91500.0,
+      "tipo": "mastercard"
+    },
+    {
+      "fecha": "mié 3 de abr de 24",
+      "monto": 247471.13,
+      "tipo": "visa"
+    },
+    {
+      "fecha": "lun 1 de abr de 24",
+      "monto": 30000.0,
+      "tipo": "marimba"
+    },
+    {
+      "fecha": "lun 8 de abr de 24",
+      "monto": 25000.0,
+      "tipo": "marimba"
+    },
+    {
+      "fecha": "vie 12 de abr de 24",
+      "monto": 75000.0,
+      "tipo": "tattoo"
+    },
+    {
+      "fecha": "vie 12 de abr de 24",
+      "monto": 15000.0,
+      "tipo": "cremaTattoo"
+    },
+    {
+      "fecha": "mié 17 de abr de 24",
+      "monto": 3800.0,
+      "tipo": "pomada"
+    },
+    {
+      "fecha": "mié 17 de abr de 24",
+      "monto": 15000.0,
+      "tipo": "dentista"
+    },
+    {
+      "fecha": "mar 9 de abr de 24",
+      "monto": 14329.0,
+      "tipo": "escudos"
+    },
+    {
+      "fecha": "sáb 20 de abr de 24",
+      "monto": 2200.0,
+      "tipo": "alicate"
+    },
+    {
+      "fecha": "dom 28 de abr de 24",
+      "monto": 3230.0,
+      "tipo": "super"
+    },
+    {
+      "fecha": "lun 29 de abr de 24",
+      "monto": 5500.0,
+      "tipo": "comilona"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "mar 9 de abr de 24",
+      "monto": 93000.0,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "jue 28 de mar de 24",
+      "monto": 10303.93,
+      "tipo": "prestamo meja"
+    },
+    {
+      "fecha": "jue 28 de mar de 24",
+      "monto": 10638.76,
+      "tipo": "prestamo new"
+    },
+    {
+      "fecha": "jue 28 de mar de 24",
+      "monto": 11620.98,
+      "tipo": "prestamo fibra"
+    },
+    {
+      "fecha": "vie 12 de abr de 24",
+      "monto": 64312.42,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "jue 28 de mar de 24",
+      "monto": 6746.28,
+      "tipo": "fonoMovi"
+    },
+    {
+      "fecha": "mar 23 de abr de 24",
+      "monto": 3338.64,
+      "tipo": "agua"
+    },
+    {
+      "fecha": "jue 28 de mar de 24",
+      "monto": 3301.36,
+      "tipo": "edesur"
+    },
+    {
+      "fecha": "jue 28 de mar de 24",
+      "monto": 13990.0,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "mar 9 de abr de 24",
+      "monto": 3589.0,
+      "tipo": "poliza"
+    },
+    {
+      "fecha": "jue 28 de mar de 24",
+      "monto": 3226.81,
+      "tipo": "gas"
+    },
+    {
+      "fecha": "mié 6 de mar de 24",
+      "monto": -80500.0,
+      "tipo": "lollaGlen"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "vie 1 de sep de 23",
+      "monto": 797912.65,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "",
+      "monto": 13137.01,
+      "tipo": "inversiones"
+    },
+    {
+      "fecha": "",
+      "monto": 40724.0,
+      "tipo": "sobrante"
+    }
+  ],
+  "gastosDiarios": [
+    {
+      "fecha": "lun 01/abr 24",
+      "monto": 4017.0,
+      "tipo": "birraPan"
+    },
+    {
+      "fecha": "mié 03/abr 24",
+      "monto": 2000.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "jue 04/abr 24",
+      "monto": 3500.0,
+      "tipo": "pelu"
+    },
+    {
+      "fecha": "sáb 06/abr 24",
+      "monto": 4000.0,
+      "tipo": "birras"
+    },
+    {
+      "fecha": "mar 09/abr 24",
+      "monto": 1000.0,
+      "tipo": "gomas"
+    },
+    {
+      "fecha": "vie 12/abr 24",
+      "monto": 4700.0,
+      "tipo": "fotoTabaco"
+    },
+    {
+      "fecha": "sáb 13/abr 24",
+      "monto": 2000.0,
+      "tipo": "rifa"
+    },
+    {
+      "fecha": "dom 14/abr 24",
+      "monto": 1000.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "lun 15/abr 24",
+      "monto": 3500.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "mié 17/abr 24",
+      "monto": 17350.0,
+      "tipo": "comiJoaco"
+    },
+    {
+      "fecha": "lun 22/abr 24",
+      "monto": 2000.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "vie 26/abr 24",
+      "monto": 2600.0,
+      "tipo": "tabaco"
+    },
+    {
+      "fecha": "mar 30/abr 24",
+      "monto": 3600.0,
+      "tipo": "farmacia"
+    }
+  ],
+  "saldos": [
+    {
+      "mercadoPago": 1858.45
+    },
+    {
+      "banco": 568.91
+    },
+    {
+      "efectivo": 776.01
+    }
+  ],
+  "gastosTarjeta": [
+    {
+      "fecha": "mié 6 de mar de 24",
+      "monto": 80500.0,
+      "tipo": "lollaGlen"
+    },
+    {
+      "fecha": "vie 15 de mar de 24",
+      "monto": 11000.0,
+      "tipo": "lollaDoll"
+    }
+  ],
+  "gastosTarjetaExc": [
+    {
+      "fecha": "vie 29 de mar de 24",
+      "monto": 6165.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "mar 2 de abr de 24",
+      "monto": 6350.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "sáb 6 de abr de 24",
+      "monto": 12650.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "jue 11 de abr de 24",
+      "monto": 12670.0,
+      "tipo": "pedidosYa"
+    }
+  ],
+  "gastosTarjetaVisa": [
+    {
+      "fecha": "siete/doce",
+      "monto": 21958.33,
+      "tipo": "brackets"
+    },
+    {
+      "fecha": "siete/doce",
+      "monto": 1657.35,
+      "tipo": "jetSmart"
+    },
+    {
+      "fecha": "seis/seis",
+      "monto": 1367.0,
+      "tipo": "medias"
+    },
+    {
+      "fecha": "cinco/seis",
+      "monto": 21665.0,
+      "tipo": "mochi"
+    },
+    {
+      "fecha": "tres/seis",
+      "monto": 4524.0,
+      "tipo": "farmacia"
+    },
+    {
+      "fecha": "tres/tres",
+      "monto": 21388.8,
+      "tipo": "suple"
+    },
+    {
+      "fecha": "tres/tres",
+      "monto": 21305.26,
+      "tipo": "tabaco"
+    },
+    {
+      "fecha": "tres/seis",
+      "monto": 2569.43,
+      "tipo": "espejoMeha"
+    },
+    {
+      "fecha": "tres/tres",
+      "monto": 3266.33,
+      "tipo": "repuestoPhi"
+    },
+    {
+      "fecha": "dos/tres",
+      "monto": 19138.29,
+      "tipo": "patente"
+    },
+    {
+      "fecha": "jue 22 de feb de 24",
+      "monto": 21999.3,
+      "tipo": "nafta"
+    },
+    {
+      "fecha": "vie 23 de feb de 24",
+      "monto": 5980.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "mar 27 de feb de 24",
+      "monto": 6165.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "jue 7 de mar de 24",
+      "monto": 19178.02,
+      "tipo": "nafta"
+    },
+    {
+      "fecha": "vie 8 de mar de 24",
+      "monto": 12290.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "mar 12 de mar de 24",
+      "monto": 11190.0,
+      "tipo": "super"
+    },
+    {
+      "fecha": "mié 13 de mar de 24",
+      "monto": 6165.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "sáb 16 de mar de 24",
+      "monto": 39500.0,
+      "tipo": "macLolla"
+    },
+    {
+      "fecha": "mié 20 de mar de 24",
+      "monto": 6165.0,
+      "tipo": "pedidosYa"
+    }
+  ],
+  "rendimientos": [
+    {
+      "reserva": "agua",
+      "ganado": 157.45
+    },
+    {
+      "reserva": "osde",
+      "ganado": 1369.33
+    },
+    {
+      "reserva": "semanaTer",
+      "ganado": 787.45
+    },
+    {
+      "reserva": "semanaCua",
+      "ganado": 1942.76
+    },
+    {
+      "reserva": "alquiler",
+      "ganado": 1710.2
+    },
+    {
+      "reserva": "dentista",
+      "ganado": 532.05
+    },
+    {
+      "reserva": "Emergencia",
+      "ganado": 4735.86
+    }
+  ],
+  "gastosExtras": [
+    {
+      "fecha": "dom 31 de mar de 24",
+      "monto": 13080.0,
+      "tipo": "super"
+    },
+    {
+      "fecha": "lun 1 de abr de 24",
+      "monto": 6400.0,
+      "tipo": "verdus"
+    },
+    {
+      "fecha": "lun 1 de abr de 24",
+      "monto": 39286.11,
+      "tipo": "COTO"
+    },
+    {
+      "fecha": "mié 3 de abr de 24",
+      "monto": 13135.0,
+      "tipo": "asare"
+    },
+    {
+      "fecha": "vie 5 de abr de 24",
+      "monto": 3330.0,
+      "tipo": "verdus"
+    },
+    {
+      "fecha": "sáb 6 de abr de 24",
+      "monto": 4300.0,
+      "tipo": "verdus"
+    },
+    {
+      "fecha": "lun 8 de abr de 24",
+      "monto": 11446.0,
+      "tipo": "polloHuevos"
+    },
+    {
+      "fecha": "mar 9 de abr de 24",
+      "monto": 3130.0,
+      "tipo": "verdus"
+    },
+    {
+      "fecha": "jue 11 de abr de 24",
+      "monto": 12902.0,
+      "tipo": "verdusPollo"
+    },
+    {
+      "fecha": "jue 11 de abr de 24",
+      "monto": 11030.0,
+      "tipo": "super"
+    },
+    {
+      "fecha": "lun 15 de abr de 24",
+      "monto": 8304.0,
+      "tipo": "polloPan"
+    },
+    {
+      "fecha": "mié 17 de abr de 24",
+      "monto": 14719.0,
+      "tipo": "polloVerdus"
+    },
+    {
+      "fecha": "vie 19 de abr de 24",
+      "monto": 4500.0,
+      "tipo": "huevos"
+    },
+    {
+      "fecha": "dom 21 de abr de 24",
+      "monto": 2150.0,
+      "tipo": "papas"
+    },
+    {
+      "fecha": "dom 21 de abr de 24",
+      "monto": 13460.0,
+      "tipo": "polloPan"
+    },
+    {
+      "fecha": "mié 24 de abr de 24",
+      "monto": 1900.0,
+      "tipo": "aceite"
+    },
+    {
+      "fecha": "mié 24 de abr de 24",
+      "monto": 21070.0,
+      "tipo": "super"
+    },
+    {
+      "fecha": "jue 25 de abr de 24",
+      "monto": 17444.0,
+      "tipo": "polloHuevos"
+    },
+    {
+      "fecha": "vie 26 de abr de 24",
+      "monto": 5000.0,
+      "tipo": "fiambVarios"
+    }
+  ],
+  "intmp": [
+    {
+      "fecha": "mié 03/abr 24",
+      "monto": 3.4
+    },
+    {
+      "fecha": "jue 04/abr 24",
+      "monto": 31.09
+    },
+    {
+      "fecha": "vie 05/abr 24",
+      "monto": 6.02
+    },
+    {
+      "fecha": "lun 08/abr 24",
+      "monto": 18.2
+    },
+    {
+      "fecha": "mar 09/abr 24",
+      "monto": 9.32
+    },
+    {
+      "fecha": "mié 10/abr 24",
+      "monto": 6.6
+    },
+    {
+      "fecha": "jue 11/abr 24",
+      "monto": 3.44
+    },
+    {
+      "fecha": "vie 12/abr 24",
+      "monto": 3.14
+    },
+    {
+      "fecha": "lun 15/abr 24",
+      "monto": 12.61
+    },
+    {
+      "fecha": "mar 16/abr 24",
+      "monto": 1.84
+    },
+    {
+      "fecha": "mié 17/abr 24",
+      "monto": 4.76
+    },
+    {
+      "fecha": "jue 18/abr 24",
+      "monto": 4.76
+    },
+    {
+      "fecha": "vie 19/abr 24",
+      "monto": 3.16
+    },
+    {
+      "fecha": "lun 22/abr 24",
+      "monto": 9.46
+    },
+    {
+      "fecha": "mar 23/abr 24",
+      "monto": 4.51
+    },
+    {
+      "fecha": "mié 24/abr 24",
+      "monto": 1.33
+    },
+    {
+      "fecha": "jue 25/abr 24",
+      "monto": 1.17
+    },
+    {
+      "fecha": "vie 26/abr 24",
+      "monto": 1.12
+    },
+    {
+      "fecha": "lun 29/abr 24",
+      "monto": 5.18
+    },
+    {
+      "fecha": "mar 30/abr 24",
+      "monto": 0.65
+    }
+  ]
+}

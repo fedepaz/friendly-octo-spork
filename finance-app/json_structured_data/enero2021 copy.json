@@ -1,0 +1,57 @@
+{
+  "gastos": [
+    { "fecha": "sab 4 de ene de 21", "monto": 527.82, "tipo": "¿?" },
+    { "fecha": "sáb 4 de ene de 21", "monto": 110.6, "tipo": "¿?" },
+    {
+      "fecha": "lun 11 de ene de 21",
+      "monto": 3750,
+      "tipo": "calza, pantalon"
+    },
+    { "fecha": "vie 1 de ene de 21", "monto": 24300, "tipo": "¿?" },
+    { "fecha": "vie 1 de ene de 21", "monto": 200, "tipo": "¿?" },
+    { "fecha": "vie 1 de ene de 21", "monto": 70, "tipo": "¿?" }
+  ],
+  "pagos": [
+    { "fecha": "vie 1 de ene de 21", "monto": 3204, "tipo": "préstamo" },
+    { "fecha": "mié 6 de ene de 21", "monto": 7300, "tipo": "abuela" },
+    { "fecha": "sáb 9 de ene de 21", "monto": 1150, "tipo": "telefono" },
+    { "fecha": "mar 5 de ene de 21", "monto": 2000, "tipo": "gym" },
+    { "fecha": "vie 1 de ene de 21", "monto": 10823, "tipo": "auto" }
+  ],
+  "ingresos": [
+    { "fecha": "vie 1 de ene de 21", "monto": 65277, "tipo": "sueldo" }
+  ],
+  "gastosDiarios": [
+    { "fecha": "vie 01/ene 21", "monto": 735, "tipo": "vino" },
+    { "fecha": "sáb 02/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "dom 03/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 04/ene 21", "monto": 500, "tipo": "futbol y café chico" },
+    { "fecha": "mar 05/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 06/ene 21", "monto": 2196, "tipo": "super" },
+    { "fecha": "jue 07/ene 21", "monto": 560, "tipo": "volde y yerba" },
+    { "fecha": "vie 08/ene 21", "monto": 1000, "tipo": "lomo café y mas" },
+    { "fecha": "sáb 09/ene 21", "monto": 350, "tipo": "frutas" },
+    { "fecha": "dom 10/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 11/ene 21", "monto": 200, "tipo": "futrbo" },
+    { "fecha": "mar 12/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 13/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 14/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 15/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 16/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "dom 17/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 18/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "mar 19/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 20/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 21/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 22/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 23/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "dom 24/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 25/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "mar 26/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 27/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 28/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 29/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 30/ene 21", "monto": 0, "tipo": "" },
+    { "fecha": "dom 31/ene 21", "monto": 0, "tipo": "" }
+  ]
+}

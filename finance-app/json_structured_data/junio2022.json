@@ -1,0 +1,134 @@
+{
+  "gastos": [
+    {
+      "fecha": "jue 2 de jun de 22",
+      "monto": 1890,
+      "tipo": "transporte"
+    },
+    {
+      "fecha": "jue 2 de jun de 22",
+      "monto": 3600,
+      "tipo": "gomero"
+    },
+    {
+      "fecha": "mié 8 de jun de 22",
+      "monto": 700,
+      "tipo": "aceite meha"
+    },
+    {
+      "fecha": "jue 9 de jun de 22",
+      "monto": 2500,
+      "tipo": "dentista"
+    },
+    {
+      "fecha": "mar 21 de jun de 22",
+      "monto": 1500,
+      "tipo": "dentista"
+    },
+    {
+      "fecha": "lun 6 de jun de 22",
+      "monto": 35000,
+      "tipo": "auto"
+    },
+    {
+      "fecha": "jue 2 de jun de 22",
+      "monto": 1780,
+      "tipo": "tomate fiambre, etc"
+    },
+    {
+      "fecha": "jue 2 de jun de 22",
+      "monto": 2390,
+      "tipo": "pollo huevos"
+    },
+    {
+      "fecha": "sáb 4 de jun de 22",
+      "monto": 400,
+      "tipo": "verduras"
+    },
+    {
+      "fecha": "jue 9 de jun de 22",
+      "monto": 2100,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "lun 13 de jun de 22",
+      "monto": 1080,
+      "tipo": "huevos varios"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "jue 2 de jun de 22",
+      "monto": 31800,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "mié 1 de jun de 22",
+      "monto": 3093.13,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "mié 1 de jun de 22",
+      "monto": 10735.82,
+      "tipo": "prestamo meja"
+    },
+    {
+      "fecha": "jue 2 de jun de 22",
+      "monto": 3000,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "mié 1 de jun de 22",
+      "monto": 11500,
+      "tipo": "prestamo new"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "mié 1 de jun de 22",
+      "monto": 150528.31,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "mié 1 de jun de 22",
+      "monto": 10156.57,
+      "tipo": ""
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "mié 01/jun 22", "monto": 1200, "tipo": "lomo" },
+    { "fecha": "jue 02/jun 22", "monto": 2000, "tipo": "nafta" },
+    { "fecha": "vie 03/jun 22", "monto": 2000, "tipo": "tabaco" },
+    { "fecha": "sáb 04/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "dom 05/jun 22", "monto": 300, "tipo": "pan" },
+    { "fecha": "lun 06/jun 22", "monto": 3100, "tipo": "nafta futbol" },
+    { "fecha": "mar 07/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "mié 08/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "jue 09/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "vie 10/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 11/jun 22", "monto": 2350, "tipo": "lomo birra" },
+    { "fecha": "dom 12/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 13/jun 22", "monto": 350, "tipo": "futbol" },
+    { "fecha": "mar 14/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "mié 15/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "jue 16/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "vie 17/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 18/jun 22", "monto": 300, "tipo": "mec" },
+    { "fecha": "dom 19/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 20/jun 22", "monto": 100, "tipo": "x" },
+    { "fecha": "mar 21/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "mié 22/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "jue 23/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "vie 24/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 25/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "dom 26/jun 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 27/jun 22", "monto": 600, "tipo": "futbol, birra" },
+    { "fecha": "mar 28/jun 22", "monto": 2500, "tipo": "varios" },
+    { "fecha": "mié 29/jun 22", "monto": 890, "tipo": "pelu birra" },
+    { "fecha": "jue 30/jun 22", "monto": 1350, "tipo": "tabaco, pan,  pastis" }
+  ],
+  "saldos": [
+    { "banco": 551.27 },
+    { "efectivo": 10 }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "gastos": [
+    { "fecha": "jue 4 de jun de 20", "monto": 13000, "tipo": "auto" },
+    { "fecha": "lun 1 de jun de 20", "monto": 357.63, "tipo": "intereses ade" },
+    { "fecha": "jue 18 de jun de 20", "monto": 900, "tipo": "oxido" },
+    { "fecha": "lun 8 de jun de 20", "monto": 2900, "tipo": "trx" }
+  ],
+  "pagos": [
+    { "fecha": "lun 1 de jun de 20", "monto": 3262.69, "tipo": "préstamo" },
+    { "fecha": "lun 1 de jun de 20", "monto": 6000, "tipo": "abuela" },
+    { "fecha": "lun 1 de jun de 20", "monto": 1500, "tipo": "telefono" },
+    { "fecha": "lun 1 de jun de 20", "monto": 3989.07, "tipo": "osde" },
+    { "fecha": "jue 18 de jun de 20", "monto": 1000, "tipo": "gym" }
+  ],
+  "ingresos": [
+    { "fecha": "lun 1 de jun de 20", "monto": 41494.37, "tipo": "sueldo" }
+  ],
+  "gastosDiarios": [
+    { "fecha": "lun 1 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 2 de jun de 20", "monto": 450, "tipo": "bici" },
+    { "fecha": "mar 3 de jun de 20", "monto": 700, "tipo": "lomo" },
+    { "fecha": "mar 4 de jun de 20", "monto": 260, "tipo": "ferretería" },
+    { "fecha": "may 5 de jun de 20", "monto": 900, "tipo": "asado" },
+    { "fecha": "may 6 de jun de 20", "monto": 310, "tipo": "bici" },
+    { "fecha": "may 7 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 8 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 9 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 10 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 11 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 12 de jun de 20", "monto": 560, "tipo": "asado" },
+    { "fecha": "may 13 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 14 de jun de 20", "monto": 790, "tipo": "tabaco" },
+    { "fecha": "may 15 de jun de 20", "monto": 900, "tipo": "comilona" },
+    { "fecha": "may 16 de jun de 20", "monto": 200, "tipo": "pelu" },
+    { "fecha": "may 17 de jun de 20", "monto": 500, "tipo": "nafta ktm" },
+    { "fecha": "may 18 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 19 de jun de 20", "monto": 360, "tipo": "" },
+    { "fecha": "may 20 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 21 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 22 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 23 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 24 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 25 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 26 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 27 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 28 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 29 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 30 de jun de 20", "monto": 0, "tipo": "" },
+    { "fecha": "may 31 de jun de 20", "monto": 0, "tipo": "" }
+  ]
+}

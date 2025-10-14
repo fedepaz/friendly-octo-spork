@@ -1,0 +1,166 @@
+{
+  "gastos": [
+    {
+      "fecha": "vie 1 de oct de 21",
+      "monto": 8500,
+      "tipo": "prote"
+    },
+    {
+      "fecha": "vie 1 de oct de 21",
+      "monto": 2800,
+      "tipo": "cipio"
+    },
+    {
+      "fecha": "vie 1 de oct de 21",
+      "monto": 1600,
+      "tipo": "creatina"
+    },
+    {
+      "fecha": "vie 1 de oct de 21",
+      "monto": 1300,
+      "tipo": "hera cade bic"
+    },
+    {
+      "fecha": "lun 4 de oct de 21",
+      "monto": 2747.5,
+      "tipo": "super"
+    },
+    {
+      "fecha": "vie 8 de oct de 21",
+      "monto": 1430,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "mar 19 de oct de 21",
+      "monto": 1290,
+      "tipo": "pollo y huevos"
+    },
+    {
+      "fecha": "vie 29 de oct de 21",
+      "monto": 1500,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "sáb 9 de oct de 21",
+      "monto": 2000,
+      "tipo": "almuerzo mama"
+    },
+    {
+      "fecha": "vie 8 de oct de 21",
+      "monto": 800,
+      "tipo": "pantaloon"
+    },
+    {
+      "fecha": "vie 15 de oct de 21",
+      "monto": 500,
+      "tipo": "luces bici"
+    },
+    {
+      "fecha": "capaz los encuentre",
+      "monto": 3000,
+      "tipo": "???"
+    },
+    {
+      "fecha": "vie 22 de oct de 21",
+      "monto": 500,
+      "tipo": "casino"
+    },
+    {
+      "fecha": "lun 25 de oct de 21",
+      "monto": 500,
+      "tipo": "pantaloon"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "vie 1 de oct de 21",
+      "monto": 3115.36,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "mar 12 de oct de 21",
+      "monto": 21000,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "sáb 9 de oct de 21",
+      "monto": 1298,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "vie 1 de oct de 21",
+      "monto": 5088.12,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "vie 1 de oct de 21",
+      "monto": 2200,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "mié 13 de oct de 21",
+      "monto": 1800,
+      "tipo": "box"
+    },
+    {
+      "fecha": "vie 1 de oct de 21",
+      "monto": 10754.17,
+      "tipo": "auto"
+    },
+    {
+      "fecha": "vie 1 de oct de 21",
+      "monto": 750,
+      "tipo": "comision(?)"
+    },
+    {
+      "fecha": "sáb 9 de oct de 21",
+      "monto": 6000,
+      "tipo": "bici"
+    },
+    {
+      "fecha": "mar 19 de oct de 21",
+      "monto": 798.44,
+      "tipo": "gas"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "vie 1 de oct de 21",
+      "monto": 92814.34,
+      "tipo": "sueldo"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "vie 01/oct 21", "monto": 925, "tipo": "tabaco. Frutas" },
+    { "fecha": "sáb 02/oct 21", "monto": 0, "tipo": "" },
+    { "fecha": "dom 03/oct 21", "monto": 1590, "tipo": "birra y lomo" },
+    { "fecha": "lun 04/oct 21", "monto": 660, "tipo": "frutas y futbol" },
+    { "fecha": "mar 05/oct 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 06/oct 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 07/oct 21", "monto": 827, "tipo": "almuerzo markos" },
+    { "fecha": "vie 08/oct 21", "monto": 200, "tipo": "tomates" },
+    { "fecha": "sáb 09/oct 21", "monto": 50, "tipo": "pan" },
+    { "fecha": "dom 10/oct 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 11/oct 21", "monto": 0, "tipo": "" },
+    { "fecha": "mar 12/oct 21", "monto": 580, "tipo": "tomates y cerverxas" },
+    { "fecha": "mié 13/oct 21", "monto": 200, "tipo": "tomates" },
+    { "fecha": "jue 14/oct 21", "monto": 50, "tipo": "pan" },
+    { "fecha": "vie 15/oct 21", "monto": 430, "tipo": "mila de pollo" },
+    { "fecha": "sáb 16/oct 21", "monto": 1400, "tipo": "fernet y cerve" },
+    { "fecha": "dom 17/oct 21", "monto": 1500, "tipo": "mila con papas" },
+    { "fecha": "lun 18/oct 21", "monto": 0, "tipo": "" },
+    { "fecha": "mar 19/oct 21", "monto": 1640, "tipo": "furtas y tabaco" },
+    { "fecha": "mié 20/oct 21", "monto": 100, "tipo": "pan" },
+    { "fecha": "jue 21/oct 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 22/oct 21", "monto": 1200, "tipo": "futbol y asado" },
+    { "fecha": "sáb 23/oct 21", "monto": 490, "tipo": "pna, mila, avena, papas" },
+    { "fecha": "dom 24/oct 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 25/oct 21", "monto": 250, "tipo": "futbol" },
+    { "fecha": "mar 26/oct 21", "monto": 50, "tipo": "pan" },
+    { "fecha": "mié 27/oct 21", "monto": 500, "tipo": "varios" },
+    { "fecha": "jue 28/oct 21", "monto": 4000, "tipo": "joda" },
+    { "fecha": "vie 29/oct 21", "monto": 500, "tipo": "futbol" },
+    { "fecha": "sáb 30/oct 21", "monto": 195, "tipo": "" },
+    { "fecha": "dom 31/oct 21", "monto": 0, "tipo": "" }
+  ]
+}

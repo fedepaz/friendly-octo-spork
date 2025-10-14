@@ -1,0 +1,547 @@
+{
+  "gastos": [
+    {
+      "fecha": "2024-08-07",
+      "monto": 159051.04,
+      "tipo": "mastercard"
+    },
+    {
+      "fecha": "2024-08-07",
+      "monto": 91637.43,
+      "tipo": "visa"
+    },
+    {
+      "fecha": "2024-08-05",
+      "monto": 20490.53,
+      "tipo": "deudaAgua"
+    },
+    {
+      "fecha": "2024-08-10",
+      "monto": 7000.0,
+      "tipo": "cuentaRipio"
+    },
+    {
+      "fecha": "2024-08-13",
+      "monto": 7000.0,
+      "tipo": "reapasadores"
+    },
+    {
+      "fecha": "2024-08-14",
+      "monto": 10000.0,
+      "tipo": "modista"
+    },
+    {
+      "fecha": "2024-08-19",
+      "monto": 68000.0,
+      "tipo": "estudios"
+    },
+    {
+      "fecha": "2024-08-23",
+      "monto": 28000.0,
+      "tipo": "modista"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "2024-08-07",
+      "monto": 250368.0,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "2024-08-01",
+      "monto": 10203.73,
+      "tipo": "prestamo meja"
+    },
+    {
+      "fecha": "2024-08-01",
+      "monto": 10523.02,
+      "tipo": "prestamo new"
+    },
+    {
+      "fecha": "2024-08-01",
+      "monto": 11262.01,
+      "tipo": "prestamo fibra"
+    },
+    {
+      "fecha": "2024-08-01",
+      "monto": 13983.6,
+      "tipo": "prestamoBsAS"
+    },
+    {
+      "fecha": "2024-08-06",
+      "monto": 10596.48,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "2024-08-05",
+      "monto": 10994.18,
+      "tipo": "agua"
+    },
+    {
+      "fecha": "2024-08-05",
+      "monto": 8806.87,
+      "tipo": "edesur"
+    },
+    {
+      "fecha": "2024-08-01",
+      "monto": 25589.98,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "",
+      "monto": 1500.0,
+      "tipo": "comision(?)"
+    },
+    {
+      "fecha": "2024-08-02",
+      "monto": 4952.0,
+      "tipo": "poliza"
+    },
+    {
+      "fecha": "2024-08-01",
+      "monto": 43693.63,
+      "tipo": "gas"
+    },
+    {
+      "fecha": "2024-08-20",
+      "monto": -3481.4,
+      "tipo": "eze"
+    },
+    {
+      "fecha": "2024-08-28",
+      "monto": 30000.0,
+      "tipo": "eze"
+    },
+    {
+      "fecha": "2024-08-31",
+      "monto": -9794.0,
+      "tipo": "(?)"
+    },
+    {
+      "fecha": "",
+      "monto": -172202.33,
+      "tipo": "eze"
+    },
+    {
+      "fecha": "",
+      "monto": 172202.33,
+      "tipo": "retro"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "2023-09-01",
+      "monto": 964936.2,
+      "tipo": "sueldo"
+    }
+  ],
+  "gastosDiarios": [
+    {
+      "fecha": "2024-08-01",
+      "monto": 5.41,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-08-02",
+      "monto": 24040.0,
+      "tipo": "vierness"
+    },
+    {
+      "fecha": "2024-08-03",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-08-04",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-08-05",
+      "monto": 2000.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "2024-08-06",
+      "monto": 8800.0,
+      "tipo": "pan"
+    },
+    {
+      "fecha": "2024-08-07",
+      "monto": 8.04,
+      "tipo": "minDolar"
+    },
+    {
+      "fecha": "2024-08-08",
+      "monto": 2000.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "2024-08-09",
+      "monto": 9.32,
+      "tipo": "porHora"
+    },
+    {
+      "fecha": "2024-08-10",
+      "monto": 8200.0,
+      "tipo": "subeBirras"
+    },
+    {
+      "fecha": "2024-08-11",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-08-12",
+      "monto": 15.03,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-08-13",
+      "monto": 2.23,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-08-14",
+      "monto": 10280.0,
+      "tipo": "subeBirras"
+    },
+    {
+      "fecha": "2024-08-15",
+      "monto": 5000.0,
+      "tipo": "peluca"
+    },
+    {
+      "fecha": "2024-08-16",
+      "monto": 7.26,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-08-17",
+      "monto": 1150.0,
+      "tipo": "pan"
+    },
+    {
+      "fecha": "2024-08-18",
+      "monto": 7000.0,
+      "tipo": "subeAsdo"
+    },
+    {
+      "fecha": "2024-08-19",
+      "monto": 6.59,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-08-20",
+      "monto": 2.3,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-08-21",
+      "monto": 2000.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "2024-08-22",
+      "monto": 4800.0,
+      "tipo": "milaFritas"
+    },
+    {
+      "fecha": "2024-08-23",
+      "monto": 2000.0,
+      "tipo": "panCasero"
+    },
+    {
+      "fecha": "2024-08-24",
+      "monto": 14900.0,
+      "tipo": "yerbaSubeRoti"
+    },
+    {
+      "fecha": "2024-08-25",
+      "monto": 0.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-08-26",
+      "monto": 11.45,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-08-27",
+      "monto": 5.65,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-08-28",
+      "monto": 11600.0,
+      "tipo": "pizzas"
+    },
+    {
+      "fecha": "2024-08-29",
+      "monto": 2000.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "2024-08-30",
+      "monto": 3.43,
+      "tipo": "total"
+    }
+  ],
+  "saldos": [
+    {
+      "saldoMercadoPago": 5356.93
+    },
+    {
+      "saldoBanco": 0.13
+    },
+    {
+      "efectivo": 0.0
+    }
+  ],
+  "gastosTarjeta": [
+    {
+      "fecha": "dos/tres",
+      "monto": 14262.33,
+      "tipo": "creatina"
+    },
+    {
+      "fecha": "dos/seis",
+      "monto": 16866.5,
+      "tipo": "camisetaAfa"
+    },
+    {
+      "fecha": "2024-06-19",
+      "monto": 13417.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "2024-06-20",
+      "monto": 6245.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "2024-06-21",
+      "monto": 12019.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "2024-06-28",
+      "monto": 7545.0,
+      "tipo": "pedidosYa"
+    },
+    {
+      "fecha": "uno/seis",
+      "monto": 15314.0,
+      "tipo": "armario"
+    },
+    {
+      "fecha": "uno/tres",
+      "monto": 33054.5,
+      "tipo": "filaVarios"
+    },
+    {
+      "fecha": "uno/tres",
+      "monto": 16000.0,
+      "tipo": "vinos"
+    },
+    {
+      "fecha": "uno/tres",
+      "monto": 24028.2,
+      "tipo": "easy"
+    },
+    {
+      "fecha": "2024-08-07",
+      "monto": 299.5,
+      "tipo": "diferencia"
+    }
+  ],
+  "gastosTarjetaExc": [],
+  "gastosTarjetaVisa": [
+    {
+      "fecha": "once/doce",
+      "monto": 21958.33,
+      "tipo": "brackets"
+    },
+    {
+      "fecha": "once/doce",
+      "monto": 1657.44,
+      "tipo": "jetSmart"
+    },
+    {
+      "fecha": "cuatro/seis",
+      "monto": 24998.33,
+      "tipo": "mochi"
+    },
+    {
+      "fecha": "dos/seis",
+      "monto": 12210.0,
+      "tipo": "chaleco"
+    },
+    {
+      "fecha": "dos/seis",
+      "monto": 6854.6,
+      "tipo": "tabacoMayo"
+    },
+    {
+      "fecha": "2024-06-21",
+      "monto": 20000.0,
+      "tipo": "nafta"
+    },
+    {
+      "fecha": "",
+      "monto": 3999.0,
+      "tipo": "nivel6"
+    },
+    {
+      "fecha": "2024-08-07",
+      "monto": -40.28,
+      "tipo": "diferencia"
+    }
+  ],
+  "rendimientos": [
+    {
+      "reserva": "agua",
+      "ganado": 40.04
+    },
+    {
+      "reserva": "alquiler",
+      "ganado": 1502.89
+    },
+    {
+      "reserva": "autito",
+      "ganado": 1265.64
+    },
+    {
+      "reserva": "dentista",
+      "ganado": 439.12
+    },
+    {
+      "reserva": "edesur",
+      "ganado": 44.08
+    },
+    {
+      "reserva": "osde",
+      "ganado": 1244.36
+    },
+    {
+      "reserva": "semanaCua",
+      "ganado": 2049.26
+    },
+    {
+      "reserva": "semanaDos",
+      "ganado": 392.93
+    },
+    {
+      "reserva": "semanaTres",
+      "ganado": 897.02
+    }
+  ],
+  "gastosExtras": [
+    {
+      "fecha": "2024-08-01",
+      "monto": 509005.99,
+      "tipo": "dolar blue"
+    },
+    {
+      "fecha": "2024-08-02",
+      "monto": 419198.1,
+      "tipo": "1300"
+    },
+    {
+      "fecha": "2024-08-03",
+      "monto": 106950.0,
+      "tipo": "minDolar"
+    },
+    {
+      "fecha": "2024-08-04",
+      "monto": 1035154.09,
+      "tipo": "796"
+    },
+    {
+      "fecha": "2024-08-05",
+      "monto": 146.75,
+      "tipo": "dolar blue"
+    },
+    {
+      "fecha": "2024-08-06",
+      "monto": 1300.0,
+      "tipo": ""
+    },
+    {
+      "fecha": "2024-08-07",
+      "monto": 0.0,
+      "tipo": "varios"
+    },
+    {
+      "fecha": "2024-08-03",
+      "monto": 12507.0,
+      "tipo": "polloPapas"
+    },
+    {
+      "fecha": "2024-08-05",
+      "monto": 6900.0,
+      "tipo": "avenaFrutas"
+    },
+    {
+      "fecha": "2024-08-07",
+      "monto": 12000.0,
+      "tipo": "polloHuevoPa"
+    },
+    {
+      "fecha": "2024-08-09",
+      "monto": 2400.0,
+      "tipo": "panJamon"
+    },
+    {
+      "fecha": "2024-08-11",
+      "monto": 16400.0,
+      "tipo": "polloPapasDomPan"
+    },
+    {
+      "fecha": "2024-08-15",
+      "monto": 15700.0,
+      "tipo": "polloHuevoPa"
+    },
+    {
+      "fecha": "2024-08-15",
+      "monto": 1650.0,
+      "tipo": "panMayo"
+    },
+    {
+      "fecha": "2024-08-18",
+      "monto": 4950.0,
+      "tipo": "yerba"
+    },
+    {
+      "fecha": "2024-08-19",
+      "monto": 7690.0,
+      "tipo": "papaVaris"
+    },
+    {
+      "fecha": "2024-08-21",
+      "monto": 7300.0,
+      "tipo": "pollHuev"
+    },
+    {
+      "fecha": "2024-08-23",
+      "monto": 6500.0,
+      "tipo": "huevosPapa"
+    },
+    {
+      "fecha": "2024-08-25",
+      "monto": 8260.0,
+      "tipo": "panPollo"
+    },
+    {
+      "fecha": "2024-08-26",
+      "monto": 3970.0,
+      "tipo": "panBirr"
+    },
+    {
+      "fecha": "2024-08-27",
+      "monto": 11600.0,
+      "tipo": "papasFruPoll"
+    }
+  ],
+  "intmp": []
+}

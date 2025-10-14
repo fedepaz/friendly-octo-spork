@@ -1,0 +1,205 @@
+{
+  "gastos": [
+    {
+      "fecha": "sáb 4 de dic de 21",
+      "monto": 1000,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "dom 5 de dic de 21",
+      "monto": 8400,
+      "tipo": "marimba"
+    },
+    {
+      "fecha": "sáb 11 de dic de 21",
+      "monto": 15590,
+      "tipo": "navidad"
+    },
+    {
+      "fecha": "jue 16 de dic de 21",
+      "monto": 3900,
+      "tipo": "relojes"
+    },
+    {
+      "fecha": "jue 16 de dic de 21",
+      "monto": 1120,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "jue 16 de dic de 21",
+      "monto": 2000,
+      "tipo": "osteo"
+    },
+    {
+      "fecha": "sáb 18 de dic de 21",
+      "monto": 2600,
+      "tipo": "electrónica"
+    },
+    {
+      "fecha": "sáb 18 de dic de 21",
+      "monto": 800,
+      "tipo": "aceite"
+    },
+    {
+      "fecha": "vie 17 de dic de 21",
+      "monto": 2000,
+      "tipo": "raspberry"
+    },
+    {
+      "fecha": "lun 20 de dic de 21",
+      "monto": 1500,
+      "tipo": "protector"
+    },
+    {
+      "fecha": "lun 20 de dic de 21",
+      "monto": 9040,
+      "tipo": "filtro de agua pro"
+    },
+    {
+      "fecha": "mié 22 de dic de 21",
+      "monto": 1200,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "mié 22 de dic de 21",
+      "monto": 1920,
+      "tipo": "carnet"
+    },
+    {
+      "fecha": "mié 22 de dic de 21",
+      "monto": 4159,
+      "tipo": "teclado"
+    },
+    {
+      "fecha": "vie 24 de dic de 21",
+      "monto": 3500,
+      "tipo": "coolers pro"
+    },
+    {
+      "fecha": "mar 28 de dic de 21",
+      "monto": 1060,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "jue 30 de dic de 21",
+      "monto": 2810,
+      "tipo": "carnet"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "mié 1 de dic de 21",
+      "monto": 3093.13,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "mar 7 de dic de 21",
+      "monto": 21000,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "mar 7 de dic de 21",
+      "monto": 1790,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "vie 3 de dic de 21",
+      "monto": 6157.17,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "vie 10 de dic de 21",
+      "monto": 2200,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "mié 1 de dic de 21",
+      "monto": 10735.82,
+      "tipo": "auto"
+    },
+    {
+      "fecha": "vie 3 de dic de 21",
+      "monto": 2502,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "mar 7 de dic de 21",
+      "monto": 5612.75,
+      "tipo": "bici"
+    },
+    {
+      "fecha": "mar 7 de dic de 21",
+      "monto": 2753,
+      "tipo": "zapas"
+    },
+    {
+      "fecha": "vie 3 de dic de 21",
+      "monto": 427.37,
+      "tipo": "gas"
+    },
+    {
+      "fecha": "jue 16 de dic de 21",
+      "monto": 983.36,
+      "tipo": "luz"
+    },
+    {
+      "fecha": "mié 1 de dic de 21",
+      "monto": 935.77,
+      "tipo": "comision(?)"
+    },
+    {
+      "fecha": "jue 16 de dic de 21",
+      "monto": 430.7,
+      "tipo": "gas"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "mié 1 de dic de 21",
+      "monto": 114572.8,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "mié 15 de dic de 21",
+      "monto": 30150.46,
+      "tipo": "aguinaldo"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "mié 01/dic 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 02/dic 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 03/dic 21", "monto": 650, "tipo": "papa tomate pan FUTBOL" },
+    { "fecha": "sáb 04/dic 21", "monto": 1900, "tipo": "lomo y cerveza" },
+    { "fecha": "dom 05/dic 21", "monto": 50, "tipo": "pan" },
+    { "fecha": "lun 06/dic 21", "monto": 0, "tipo": "" },
+    { "fecha": "mar 07/dic 21", "monto": 600, "tipo": "huevos bananas tomates" },
+    { "fecha": "mié 08/dic 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 09/dic 21", "monto": 700, "tipo": "tabaco pan" },
+    { "fecha": "vie 10/dic 21", "monto": 1790, "tipo": "lomo y cerveza" },
+    { "fecha": "sáb 11/dic 21", "monto": 100, "tipo": "verduras" },
+    { "fecha": "dom 12/dic 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 13/dic 21", "monto": 0, "tipo": "" },
+    { "fecha": "mar 14/dic 21", "monto": 40, "tipo": "pan" },
+    { "fecha": "mié 15/dic 21", "monto": 650, "tipo": "mila, tomate, birra" },
+    { "fecha": "jue 16/dic 21", "monto": 90, "tipo": "estacionamiento" },
+    { "fecha": "vie 17/dic 21", "monto": 2030, "tipo": "futbol loo papas" },
+    { "fecha": "sáb 18/dic 21", "monto": 300, "tipo": "frutas y pan" },
+    { "fecha": "dom 19/dic 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 20/dic 21", "monto": 1850, "tipo": "super peluquero huevos tomates futbol" },
+    { "fecha": "mar 21/dic 21", "monto": 250, "tipo": "lillos pan" },
+    { "fecha": "mié 22/dic 21", "monto": 1350, "tipo": "cumple meli aparte" },
+    { "fecha": "jue 23/dic 21", "monto": 1136, "tipo": "cumple meli" },
+    { "fecha": "vie 24/dic 21", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 25/dic 21", "monto": 0, "tipo": "" },
+    { "fecha": "dom 26/dic 21", "monto": 110, "tipo": "pan" },
+    { "fecha": "lun 27/dic 21", "monto": 1910, "tipo": "tomates futbol lomo" },
+    { "fecha": "mar 28/dic 21", "monto": 470, "tipo": "avena frutas" },
+    { "fecha": "mié 29/dic 21", "monto": 1720, "tipo": "tabaco futbol asado" },
+    { "fecha": "jue 30/dic 21", "monto": 530, "tipo": "tomates huevos" },
+    { "fecha": "vie 31/dic 21", "monto": 1357, "tipo": "" }
+  ],
+  "saldos": [
+    { "banco": -19947.58 },
+    { "efectivo": 0 }
+  ]
+}

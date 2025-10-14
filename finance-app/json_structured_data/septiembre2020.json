@@ -1,0 +1,53 @@
+{
+  "gastos": [
+    { "fecha": "mar 15 de sep", "monto": 3600, "tipo": "bici" },
+    { "fecha": "jue 17 de sep", "monto": 10000, "tipo": "tatau" },
+    { "fecha": "mié 2 de sep", "monto": 13000, "tipo": "mari mori" },
+    { "fecha": "lun 7 de sep", "monto": 5600, "tipo": "lentes rusty" },
+    { "fecha": "mar 1 de sep", "monto": 2000, "tipo": "manguera ab" },
+    { "fecha": "jue 3 de sep", "monto": -8000, "tipo": "Juanma" },
+    { "fecha": "sáb 12 de sep", "monto": 1000, "tipo": "Limpieza" },
+    { "fecha": "mar 15 de sep", "monto": 1770, "tipo": "misc" }
+  ],
+  "pagos": [
+    { "fecha": "mar 1 de sep", "monto": 3238.77, "tipo": "préstamo" },
+    { "fecha": "jue 3 de sep", "monto": 6000, "tipo": "abuela" },
+    { "fecha": "sáb 5 de sep", "monto": 2000, "tipo": "teléfono" },
+    { "fecha": "jue 27 de ago", "monto": 3989.07, "tipo": "osde" },
+    { "fecha": "mar 25 de ago", "monto": 1367, "tipo": "sef/moto" },
+    { "fecha": "mié 2 de sep", "monto": 2000, "tipo": "gym" }
+  ],
+  "ingresos": [{ "fecha": "mar 1 de sep", "monto": 47452, "tipo": "sueldo" }],
+  "gastosDiarios": [
+    { "fecha": "mar 01/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "mié 02/sep 20", "monto": 40, "tipo": "tortitas" },
+    { "fecha": "jue 03/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "vie 04/sep 20", "monto": 1300, "tipo": "britta" },
+    { "fecha": "sáb 05/sep 20", "monto": 1220, "tipo": "medias" },
+    { "fecha": "dom 06/sep 20", "monto": 1000, "tipo": "tabaco" },
+    { "fecha": "lun 07/sep 20", "monto": 1000, "tipo": "super" },
+    { "fecha": "mar 08/sep 20", "monto": -160, "tipo": "lomo+abu" },
+    { "fecha": "mié 09/sep 20", "monto": 900, "tipo": "candado" },
+    { "fecha": "jue 10/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "vie 11/sep 20", "monto": 750, "tipo": "vacunas" },
+    { "fecha": "sáb 12/sep 20", "monto": 362.22, "tipo": "Varios" },
+    { "fecha": "dom 13/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "lun 14/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 15/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "mié 16/sep 20", "monto": 260, "tipo": "birras" },
+    { "fecha": "jue 17/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "vie 18/sep 20", "monto": 1000, "tipo": "inflador" },
+    { "fecha": "sáb 19/sep 20", "monto": 900, "tipo": "tabaco/nafta fz" },
+    { "fecha": "dom 20/sep 20", "monto": 200, "tipo": "birras" },
+    { "fecha": "lun 21/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 22/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "mié 23/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "jue 24/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "vie 25/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 26/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "dom 27/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "lun 28/sep 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 29/sep 20", "monto": 1000, "tipo": "protector solar" },
+    { "fecha": "mié 30/sep 20", "monto": 0, "tipo": "" }
+  ]
+}

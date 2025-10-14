@@ -1,0 +1,64 @@
+{
+  "gastos": [
+    { "fecha": "mié 6 de may de 20", "monto": 5000, "concepto": "moto" },
+    { "fecha": "sáb 2 de may de 20", "monto": 20000, "concepto": "auto" },
+    { "fecha": "jue 7 de may de 20", "monto": 5000, "concepto": "marimba" },
+    {
+      "fecha": "vie 1 de may de 20",
+      "monto": 279.59,
+      "concepto": "intereses des"
+    },
+    { "fecha": "vie 1 de may de 20", "monto": 3270.31, "concepto": "préstamo" },
+    { "fecha": "lun 11 de may de 20", "monto": 820, "concepto": "pistola" },
+    { "fecha": "lun 11 de may de 20", "monto": 350, "concepto": "aguapsa" }
+  ],
+
+  "pagos": [
+    { "fecha": "vie 1 de may de 20", "monto": 3270.31, "concepto": "préstamo" },
+    { "fecha": "mar 5 de may de 20", "monto": 6500, "concepto": "abuela" },
+    { "fecha": "sáb 2 de may de 20", "monto": 4135, "concepto": "osde" },
+    { "fecha": "dom 10 de may de 20", "monto": 3000, "concepto": "telefono" }
+  ],
+  "ingresos": [
+    { "fecha": "vie 1 de may de 20", "monto": 53148.78, "concepto": "sueldo" },
+    { "fecha": "", "monto": 886.24, "concepto": "" }
+  ],
+
+  "gastosDiarios": [
+    { "fecha": "vie 1 de may de 20", "monto": 400, "concepto": "nafta fz" },
+    { "fecha": "sáb 2 de may de 20", "monto": 425, "concepto": "limpieza" },
+    { "fecha": "dom 3 de may de 20", "monto": 530, "concepto": "lomo" },
+    { "fecha": "lun 5 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "mar 6 de may de 20", "monto": 800, "concepto": "bici" },
+    { "fecha": "mié 7 de may de 20", "monto": 520, "concepto": "nafta ktm" },
+    { "fecha": "jue 8 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "vie 9 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "sáb 10 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "dom 11 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "lun 12 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "mar 13 de may de 20", "monto": 500, "concepto": "bici pelu" },
+    { "fecha": "mié 14 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "jue 15 de may de 20", "monto": 100, "concepto": "" },
+    { "fecha": "vie 16 de may de 20", "monto": 490, "concepto": "helado" },
+    { "fecha": "sáb 17 de may de 20", "monto": 300, "concepto": "nafta ktm" },
+    { "fecha": "dom 18 de may de 20", "monto": 500, "concepto": "fernet" },
+    { "fecha": "lun 19 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "mar 20 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "mié 21 de may de 20", "monto": 200, "concepto": "pinchadura" },
+    {
+      "fecha": "jue 22 de may de 20",
+      "monto": 610,
+      "concepto": "fernet y forro"
+    },
+    { "fecha": "vie 23 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "sáb 24 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "dom 25 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "lun 26 de may de 20", "monto": 500, "concepto": "nafta ktm" },
+    { "fecha": "mar 27 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "mié 28 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "jue 29 de may de 20", "monto": 500, "concepto": "lomo" },
+    { "fecha": "vie 30 de may de 20", "monto": 650, "concepto": "asado" },
+    { "fecha": "sáb 31 de may de 20", "monto": 0, "concepto": "" },
+    { "fecha": "dom 1 de jun de 20", "monto": 0, "concepto": "" }
+  ]
+}

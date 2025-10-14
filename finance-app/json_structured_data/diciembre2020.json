@@ -1,0 +1,64 @@
+{
+  "gastos": [
+    { "fecha": "mie 16 de dic de 20", "monto": 5800, "tipo": "prote" },
+    { "fecha": "mar 1 de dic de 20", "monto": 97.62, "tipo": "intereses" },
+    { "fecha": "mar 1 de dic de 20", "monto": 20.56, "tipo": "intereses" },
+    { "fecha": "mié 2 de dic de 20", "monto": 110.92, "tipo": "intereses" },
+    { "fecha": "lun 14 de dic de 20", "monto": 2000, "tipo": "dentista" },
+    { "fecha": "mié 16 de dic de 20", "monto": 1400, "tipo": "pre" },
+    { "fecha": "mié 16 de dic de 20", "monto": 53.59, "tipo": "intereses" },
+    { "fecha": "mié 16 de dic de 20", "monto": 11.25, "tipo": "intereses" },
+    {
+      "fecha": "jue 10 de dic de 20",
+      "monto": 2385.69,
+      "tipo": "super, birra"
+    },
+    { "fecha": "sáb 19/dic 20", "monto": 1078, "tipo": "vino diego" }
+  ],
+  "pagos": [
+    { "fecha": "mar 1 de dic de 20", "monto": 3213.26, "tipo": "préstamo" },
+    { "fecha": "vie 4 de dic de 20", "monto": 10000, "tipo": "abuela" },
+    { "fecha": "jue 10 de dic de 20", "monto": 1300, "tipo": "telefono" },
+    { "fecha": "mar 1 de dic de 20", "monto": 3989.07, "tipo": "osde" },
+    { "fecha": "mar 1 de dic de 20", "monto": 3710.65, "tipo": "osde" },
+    { "fecha": "jue 10 de dic de 20", "monto": 2000, "tipo": "gym" },
+    { "fecha": "mar 1 de dic de 20", "monto": 10830.02, "tipo": "auto" }
+  ],
+  "ingresos": [
+    { "fecha": "mar 1 de dic de 20", "monto": 57257.01, "tipo": "sueldo" },
+    { "fecha": "vie 18 de dic de 20", "monto": 18840.79, "tipo": "aguinaldo" }
+  ],
+  "gastosDiarios": [
+    { "fecha": "mar 01/dic 20", "monto": 0, "tipo": "" },
+    { "fecha": "mié 02/dic 20", "monto": 220, "tipo": "futbol" },
+    { "fecha": "jue 03/dic 20", "monto": 826, "tipo": "vinos" },
+    { "fecha": "vie 04/dic 20", "monto": 940, "tipo": "asado" },
+    { "fecha": "sáb 05/dic 20", "monto": 760, "tipo": "lomo, papas, birra" },
+    { "fecha": "dom 06/dic 20", "monto": 500, "tipo": "helado" },
+    { "fecha": "lun 07/dic 20", "monto": 160, "tipo": "lillos" },
+    { "fecha": "mar 08/dic 20", "monto": 500, "tipo": "frutas" },
+    { "fecha": "mié 09/dic 20", "monto": 300, "tipo": "tabaco" },
+    { "fecha": "jue 10/dic 20", "monto": 0, "tipo": "" },
+    { "fecha": "vie 11/dic 20", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 12/dic 20", "monto": 0, "tipo": "" },
+    { "fecha": "dom 13/dic 20", "monto": 1000, "tipo": "asado" },
+    { "fecha": "lun 14/dic 20", "monto": 350, "tipo": "frutas" },
+    { "fecha": "mar 15/dic 20", "monto": 0, "tipo": "" },
+    { "fecha": "mié 16/dic 20", "monto": 260, "tipo": "bici" },
+    { "fecha": "jue 17/dic 20", "monto": 450, "tipo": "helado" },
+    { "fecha": "vie 18/dic 20", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 19/dic 20", "monto": 0, "tipo": "" },
+    { "fecha": "dom 20/dic 20", "monto": 0, "tipo": "" },
+    { "fecha": "lun 21/dic 20", "monto": 200, "tipo": "futbol" },
+    { "fecha": "mar 22/dic 20", "monto": 220, "tipo": "frutas" },
+    { "fecha": "mié 23/dic 20", "monto": 750, "tipo": "lomo, papas, birra" },
+    { "fecha": "jue 24/dic 20", "monto": 620, "tipo": "cena navidad" },
+    { "fecha": "vie 25/dic 20", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 26/dic 20", "monto": 1000, "tipo": "birras, helado" },
+    { "fecha": "dom 27/dic 20", "monto": 0, "tipo": "" },
+    { "fecha": "lun 28/dic 20", "monto": 0, "tipo": "" },
+    { "fecha": "mar 29/dic 20", "monto": 700, "tipo": "lomo, papas, birra" },
+    { "fecha": "mié 30/dic 20", "monto": 610, "tipo": "frutas, limpieza" },
+    { "fecha": "jue 31/dic 20", "monto": 300, "tipo": "fer" }
+  ]
+}

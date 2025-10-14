@@ -1,0 +1,529 @@
+{
+  "gastos": [
+    {
+      "fecha": "",
+      "monto": 0.0,
+      "tipo": "mastercard"
+    },
+    {
+      "fecha": "mié 5 de mar de 25",
+      "monto": 134366.27,
+      "tipo": "visa"
+    },
+    {
+      "fecha": "sáb 1 de mar de 25",
+      "monto": 45499.39,
+      "tipo": "notebook(4/12)"
+    },
+    {
+      "fecha": "sáb 1 de mar de 25",
+      "monto": 8493.12,
+      "tipo": "mallaRelog(2/6)"
+    },
+    {
+      "fecha": "sáb 1 de mar de 25",
+      "monto": 8510.6,
+      "tipo": "cajaMisterio(3/6)"
+    },
+    {
+      "fecha": "sáb 1 de mar de 25",
+      "monto": 39279.39,
+      "tipo": "suple(1/3)"
+    },
+    {
+      "fecha": "sáb 1 de mar de 25",
+      "monto": 17014.0,
+      "tipo": "tabaco(1/6)"
+    },
+    {
+      "fecha": "mar 11 de mar de 25",
+      "monto": 18000.0,
+      "tipo": "memoriaSD"
+    },
+    {
+      "fecha": "",
+      "monto": 50000.0,
+      "tipo": "paracaidas"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "lun 10 de mar de 25",
+      "monto": 380000.0,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "lun 10 de mar de 25",
+      "monto": 10620.0,
+      "tipo": "agua"
+    },
+    {
+      "fecha": "lun 10 de mar de 25",
+      "monto": 8700.0,
+      "tipo": "edesur"
+    },
+    {
+      "fecha": "lun 10 de mar de 25",
+      "monto": 25000.0,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "lun 10 de mar de 25",
+      "monto": 30000.0,
+      "tipo": "gas"
+    },
+    {
+      "fecha": "dom 9 de mar de 25",
+      "monto": 30836.91,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "lun 10 de mar de 25",
+      "monto": 40500.0,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "sáb 1 de mar de 25",
+      "monto": 9993.91,
+      "tipo": "prestamoMeja"
+    },
+    {
+      "fecha": "",
+      "monto": -67258.0,
+      "tipo": "ahorro"
+    },
+    {
+      "fecha": "",
+      "monto": -227160.0,
+      "tipo": "eze"
+    },
+    {
+      "fecha": "",
+      "monto": 2840.0,
+      "tipo": "retro"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "sáb 1 de mar de 25",
+      "monto": 962006.83,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "",
+      "monto": 5771.55,
+      "tipo": "inversiones"
+    }
+  ],
+  "gastosDiarios": [
+    {
+      "fecha": "mar 04/mar 25",
+      "monto": 15800.0,
+      "tipo": "subeMila"
+    },
+    {
+      "fecha": "mié 05/mar 25",
+      "monto": 1680.0,
+      "tipo": "pan"
+    },
+    {
+      "fecha": "jue 06/mar 25",
+      "monto": 18000.0,
+      "tipo": "subeMilaBirras"
+    },
+    {
+      "fecha": "vie 07/mar 25",
+      "monto": 13300.0,
+      "tipo": "milaLaVuelta"
+    },
+    {
+      "fecha": "sáb 08/mar 25",
+      "monto": 14000.0,
+      "tipo": "subeMila"
+    },
+    {
+      "fecha": "mié 12/mar 25",
+      "monto": 2000.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "jue 13/mar 25",
+      "monto": 3200.0,
+      "tipo": "panSube"
+    },
+    {
+      "fecha": "vie 14/mar 25",
+      "monto": 11889.0,
+      "tipo": "milaPedidosY"
+    },
+    {
+      "fecha": "dom 16/mar 25",
+      "monto": 10900.0,
+      "tipo": "subeMila"
+    },
+    {
+      "fecha": "mar 18/mar 25",
+      "monto": 13800.0,
+      "tipo": "milaLaVuelta"
+    },
+    {
+      "fecha": "jue 20/mar 25",
+      "monto": 3050.0,
+      "tipo": "subePan"
+    },
+    {
+      "fecha": "vie 21/mar 25",
+      "monto": 5200.0,
+      "tipo": "subaYerba"
+    },
+    {
+      "fecha": "sáb 22/mar 25",
+      "monto": 1312.0,
+      "tipo": "pan"
+    },
+    {
+      "fecha": "dom 23/mar 25",
+      "monto": 19800.0,
+      "tipo": "comilonaDom"
+    },
+    {
+      "fecha": "lun 24/mar 25",
+      "monto": 2000.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "mar 25/mar 25",
+      "monto": 1500.0,
+      "tipo": "pan"
+    },
+    {
+      "fecha": "mié 26/mar 25",
+      "monto": 17700.0,
+      "tipo": "futbol"
+    },
+    {
+      "fecha": "jue 27/mar 25",
+      "monto": 1300.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "vie 28/mar 25",
+      "monto": 13300.0,
+      "tipo": "milaLaVuelta"
+    },
+    {
+      "fecha": "sáb 29/mar 25",
+      "monto": 2000.0,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "lun 31/mar 25",
+      "monto": 7200.0,
+      "tipo": "panPelu"
+    }
+  ],
+  "saldos": [
+    {
+      "saldoMercadoPago": 15802.81
+    },
+    {
+      "saldoBanco": 55.18
+    },
+    "efectivo"
+  ],
+  "gastosTarjeta": [],
+  "gastosTarjetaExc": [],
+  "gastosTarjetaVisa": [
+    {
+      "fecha": "disney+",
+      "monto": 15299.0,
+      "tipo": "nivel6"
+    },
+    {
+      "fecha": "dos/doce",
+      "monto": 5425.0,
+      "tipo": "shortsRosario"
+    },
+    {
+      "fecha": "tres/doce",
+      "monto": 1249.92,
+      "tipo": "mouse"
+    },
+    {
+      "fecha": "tres/seis",
+      "monto": 19830.0,
+      "tipo": "blancoNegro"
+    },
+    {
+      "fecha": "cuatro/doce",
+      "monto": 4915.75,
+      "tipo": "bermudaAdidas"
+    },
+    {
+      "fecha": "cinco/seis",
+      "monto": 9867.2,
+      "tipo": "camisa"
+    },
+    {
+      "fecha": "seis/seis",
+      "monto": 22466.7,
+      "tipo": "zaps"
+    },
+    {
+      "fecha": "seis/nueve",
+      "monto": 18493.92,
+      "tipo": "pasajes"
+    },
+    {
+      "fecha": "seis/seis",
+      "monto": 15583.17,
+      "tipo": "auris"
+    },
+    {
+      "fecha": "tres/tres",
+      "monto": 11666.67,
+      "tipo": "correaje"
+    },
+    {
+      "fecha": "uno/treinta",
+      "monto": 9571.6,
+      "tipo": "monitor"
+    },
+    {
+      "fecha": "",
+      "monto": -2.65,
+      "tipo": ""
+    }
+  ],
+  "rendimientos": [
+    {
+      "reserva": "emergencia",
+      "ganado": 0.0
+    },
+    {
+      "reserva": "dentista",
+      "ganado": 1421.48
+    },
+    {
+      "reserva": "semanaCuatro",
+      "ganado": 1329.42
+    },
+    {
+      "reserva": "osde",
+      "ganado": 687.43
+    },
+    {
+      "reserva": "semanaTres",
+      "ganado": 691.43
+    },
+    {
+      "reserva": "semanaDos",
+      "ganado": 199.86
+    },
+    {
+      "reserva": "gym",
+      "ganado": 171.69
+    },
+    {
+      "reserva": "alquiler",
+      "ganado": 975.19
+    },
+    {
+      "reserva": "telefono",
+      "ganado": 56.52
+    }
+  ],
+  "gastosExtras": [
+    {
+      "fecha": "sáb 1 de mar de 25",
+      "monto": 8100.0,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "dom 2 de mar de 25",
+      "monto": 11400.0,
+      "tipo": "asado"
+    },
+    {
+      "fecha": "mié 5 de feb de 25",
+      "monto": 50980.0,
+      "tipo": "limpieza"
+    },
+    {
+      "fecha": "vie 7 de mar de 25",
+      "monto": 11870.0,
+      "tipo": "frutasPollo"
+    },
+    {
+      "fecha": "dom 9 de mar de 25",
+      "monto": 3080.0,
+      "tipo": "varios"
+    },
+    {
+      "fecha": "mar 11 de mar de 25",
+      "monto": 25700.0,
+      "tipo": "polloPan"
+    },
+    {
+      "fecha": "mar 18 de mar de 25",
+      "monto": 2000.0,
+      "tipo": "pan"
+    },
+    {
+      "fecha": "mié 19 de mar de 25",
+      "monto": 24180.0,
+      "tipo": "frutasPollo"
+    },
+    {
+      "fecha": "lun 24 de mar de 25",
+      "monto": 5570.0,
+      "tipo": "fiambre"
+    },
+    {
+      "fecha": "mié 26 de mar de 25",
+      "monto": 14008.0,
+      "tipo": "comida"
+    },
+    {
+      "fecha": "jue 27 de mar de 25",
+      "monto": 22380.0,
+      "tipo": "frutasPollo"
+    },
+    {
+      "fecha": "sáb 29 de mar de 25",
+      "monto": 6600.0,
+      "tipo": "panFiambre"
+    },
+    {
+      "fecha": "lun 31 de mar de 25",
+      "monto": 27930.0,
+      "tipo": "cenaFlaco"
+    }
+  ],
+  "intmp": [
+    {
+      "fecha": "sáb 01/mar 25",
+      "monto": 0.0
+    },
+    {
+      "fecha": "dom 02/mar 25",
+      "monto": 0.0
+    },
+    {
+      "fecha": "lun 03/mar 25",
+      "monto": 0.0
+    },
+    {
+      "fecha": "mar 04/mar 25",
+      "monto": 0.0
+    },
+    {
+      "fecha": "mié 05/mar 25",
+      "monto": 69.81
+    },
+    {
+      "fecha": "jue 06/mar 25",
+      "monto": 0.83
+    },
+    {
+      "fecha": "vie 07/mar 25",
+      "monto": 7.65
+    },
+    {
+      "fecha": "sáb 08/mar 25",
+      "monto": 0.0
+    },
+    {
+      "fecha": "dom 09/mar 25",
+      "monto": 0.0
+    },
+    {
+      "fecha": "lun 10/mar 25",
+      "monto": 3.01
+    },
+    {
+      "fecha": "mar 11/mar 25",
+      "monto": 0.76
+    },
+    {
+      "fecha": "mié 12/mar 25",
+      "monto": 4.98
+    },
+    {
+      "fecha": "jue 13/mar 25",
+      "monto": 6.5
+    },
+    {
+      "fecha": "vie 14/mar 25",
+      "monto": 5.7
+    },
+    {
+      "fecha": "sáb 15/mar 25",
+      "monto": 0.0
+    },
+    {
+      "fecha": "dom 16/mar 25",
+      "monto": 0.0
+    },
+    {
+      "fecha": "lun 17/mar 25",
+      "monto": 12.95
+    },
+    {
+      "fecha": "mar 18/mar 25",
+      "monto": 0.13
+    },
+    {
+      "fecha": "mié 19/mar 25",
+      "monto": 3.8
+    },
+    {
+      "fecha": "jue 20/mar 25",
+      "monto": 15.48
+    },
+    {
+      "fecha": "vie 21/mar 25",
+      "monto": 8.69
+    },
+    {
+      "fecha": "sáb 22/mar 25",
+      "monto": 0.0
+    },
+    {
+      "fecha": "dom 23/mar 25",
+      "monto": 0.0
+    },
+    {
+      "fecha": "lun 24/mar 25",
+      "monto": 0.0
+    },
+    {
+      "fecha": "mar 25/mar 25",
+      "monto": 26.08
+    },
+    {
+      "fecha": "mié 26/mar 25",
+      "monto": 2.77
+    },
+    {
+      "fecha": "jue 27/mar 25",
+      "monto": 0.04
+    },
+    {
+      "fecha": "vie 28/mar 25",
+      "monto": 3.91
+    },
+    {
+      "fecha": "sáb 29/mar 25",
+      "monto": 0.0
+    },
+    {
+      "fecha": "dom 30/mar 25",
+      "monto": 0.0
+    },
+    {
+      "fecha": "lun 31/mar 25",
+      "monto": 8.92
+    }
+  ]
+}

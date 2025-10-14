@@ -1,0 +1,195 @@
+{
+  "gastos": [
+    {
+      "fecha": "mar 1 de mar de 22",
+      "monto": 7888,
+      "tipo": "repuestos"
+    },
+    {
+      "fecha": "mié 2 de mar de 22",
+      "monto": 300,
+      "tipo": "frenos bici"
+    },
+    {
+      "fecha": "vie 4 de mar de 22",
+      "monto": 11200,
+      "tipo": "prote crea"
+    },
+    {
+      "fecha": "lun 14 de mar de 22",
+      "monto": 13320.36,
+      "tipo": "ram's"
+    },
+    {
+      "fecha": "lun 14 de mar de 22",
+      "monto": 2575.8,
+      "tipo": "(?)"
+    },
+    {
+      "fecha": "jue 17 de mar de 22",
+      "monto": 2200,
+      "tipo": "bici"
+    },
+    {
+      "fecha": "jue 17 de mar de 22",
+      "monto": 450,
+      "tipo": "baño"
+    },
+    {
+      "fecha": "dom 27 de mar de 22",
+      "monto": 4000,
+      "tipo": "cumple nat"
+    },
+    {
+      "fecha": "sáb 5 de mar de 22",
+      "monto": 300,
+      "tipo": "fiambre"
+    },
+    {
+      "fecha": "mar 8 de mar de 22",
+      "monto": 1700,
+      "tipo": "pollo y huevos"
+    },
+    {
+      "fecha": "mar 15 de mar de 22",
+      "monto": 1220,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "mar 22 de mar de 22",
+      "monto": 1880,
+      "tipo": "combo tabaco"
+    },
+    {
+      "fecha": "lun 21 de mar de 22",
+      "monto": 750,
+      "tipo": "huevos y tomates"
+    },
+    {
+      "fecha": "mar 22 de mar de 22",
+      "monto": 650,
+      "tipo": "yerba"
+    },
+    {
+      "fecha": "vie 25 de mar de 22",
+      "monto": 1520,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "mar 29 de mar de 22",
+      "monto": 1100,
+      "tipo": "frutas fiambres"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "mié 2 de mar de 22",
+      "monto": 3057.94,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "mié 9 de mar de 22",
+      "monto": 31800,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "mié 2 de mar de 22",
+      "monto": 2335,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "mié 2 de mar de 22",
+      "monto": 6917.19,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "mié 2 de mar de 22",
+      "monto": 2500,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "lun 7 de mar de 22",
+      "monto": 2200,
+      "tipo": "boxing club"
+    },
+    {
+      "fecha": "mié 2 de mar de 22",
+      "monto": 10705.97,
+      "tipo": "auto"
+    },
+    {
+      "fecha": "mié 2 de mar de 22",
+      "monto": 2817,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "mié 2 de mar de 22",
+      "monto": 5612.75,
+      "tipo": "bici"
+    },
+    {
+      "fecha": "mié 2 de mar de 22",
+      "monto": 2753,
+      "tipo": "zapas"
+    },
+    {
+      "fecha": "lun 14 de mar de 22",
+      "monto": 1157.07,
+      "tipo": "luz"
+    },
+    {
+      "fecha": "vie 4 de mar de 22",
+      "monto": 904.12,
+      "tipo": "comision(?)"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "dom 1 de may de 22",
+      "monto": 111650.22,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "vie 25 de mar de 22",
+      "monto": 5000,
+      "tipo": "mama"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "mar 01/mar 22", "monto": 2480, "tipo": "lomo birras" },
+    { "fecha": "mié 02/mar 22", "monto": 1460, "tipo": "futbol helado" },
+    { "fecha": "jue 03/mar 22", "monto": 0, "tipo": "" },
+    { "fecha": "vie 04/mar 22", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 05/mar 22", "monto": 4060, "tipo": "salida" },
+    { "fecha": "dom 06/mar 22", "monto": 790, "tipo": "cabify" },
+    { "fecha": "lun 07/mar 22", "monto": 2000, "tipo": "lomo" },
+    { "fecha": "mar 08/mar 22", "monto": 0, "tipo": "" },
+    { "fecha": "mié 09/mar 22", "monto": 350, "tipo": "pan futbol" },
+    { "fecha": "jue 10/mar 22", "monto": 2090, "tipo": "asado" },
+    { "fecha": "vie 11/mar 22", "monto": 50, "tipo": "pan" },
+    { "fecha": "sáb 12/mar 22", "monto": 100, "tipo": "pan" },
+    { "fecha": "dom 13/mar 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 14/mar 22", "monto": 1260, "tipo": "futbol birras pelu" },
+    { "fecha": "mar 15/mar 22", "monto": 70, "tipo": "mayo" },
+    { "fecha": "mié 16/mar 22", "monto": 360, "tipo": "futbol pan" },
+    { "fecha": "jue 17/mar 22", "monto": 460, "tipo": "birras" },
+    { "fecha": "vie 18/mar 22", "monto": 1070, "tipo": "helado papas pan" },
+    { "fecha": "sáb 19/mar 22", "monto": 2080, "tipo": "filtos pan y jamon y queso fernet zero" },
+    { "fecha": "dom 20/mar 22", "monto": 340, "tipo": "" },
+    { "fecha": "lun 21/mar 22", "monto": 50, "tipo": "pan" },
+    { "fecha": "mar 22/mar 22", "monto": 0, "tipo": "" },
+    { "fecha": "mié 23/mar 22", "monto": 0, "tipo": "" },
+    { "fecha": "jue 24/mar 22", "monto": 0, "tipo": "" },
+    { "fecha": "vie 25/mar 22", "monto": 590, "tipo": "pan fiambre" },
+    { "fecha": "sáb 26/mar 22", "monto": 800, "tipo": "birras" },
+    { "fecha": "dom 27/mar 22", "monto": 100, "tipo": "algo" },
+    { "fecha": "lun 28/mar 22", "monto": 0, "tipo": "" },
+    { "fecha": "mar 29/mar 22", "monto": 0, "tipo": "" },
+    { "fecha": "mié 30/mar 22", "monto": 30, "tipo": "" },
+    { "fecha": "jue 31/mar 22", "monto": 120, "tipo": "pan y tortas" }
+  ],
+  "saldos": [
+    { "banco": 54.04 },
+    { "efectivo": 900 }
+  ]
+}

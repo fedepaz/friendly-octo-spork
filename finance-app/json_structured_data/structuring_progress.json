@@ -1,0 +1,289 @@
+{
+  "column_types": {
+    "1": "gastos",
+    "2": "pagos",
+    "3": "ingresos",
+    "4": "gastosDiarios",
+    "5": "saldos",
+    "6": "gastosTarjeta",
+    "7": "gastosTarjetaExc",
+    "8": "gastosTarjetaVisa",
+    "9": "rendimientos",
+    "10": "gastosExtras",
+    "11": "intmp"
+  },
+  "files": {
+    "abril2020_2020.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3]
+    },
+    "mayo2020_2020.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "junio2020_2020.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "julio2020_2020.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "agosto2020_2020.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "septiembre2020_2020.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "octubre2020_2020.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "noviembre2020_2020.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "diciembre2020_2020.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "enero2021_2020.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "enero2021_2021.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "febrero2021_2021.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "marzo2021_2021.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "abril2021_2021.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "mayo2021_2021.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "junio2021_2021.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "julio2021_2021.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "agosto2021_2021.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "septiembre2021_2021.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "octubre2021_2021.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "noviembre2021_2021.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4]
+    },
+    "diciembre2021_2021.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5]
+    },
+    "enero2022_2022.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5]
+    },
+    "febrero2022_2022.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5]
+    },
+    "marzo2022_2022.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5]
+    },
+    "abril2022_2022.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5]
+    },
+    "mayo2022_2022.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5]
+    },
+    "junio2022_2022.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5]
+    },
+    "julio2022_2022.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5]
+    },
+    "agosto2022_2022.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6]
+    },
+    "septiembre2022_2022.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7]
+    },
+    "octubre2022_2022.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7]
+    },
+    "noviembre2022_2022.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7]
+    },
+    "diciembre2022_2022.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7]
+    },
+    "enero2023_2023.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7]
+    },
+    "febrero2023_2023.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7]
+    },
+    "marzo2023_2023.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7]
+    },
+    "abril2023_2023.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7]
+    },
+    "mayo2023_2023.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7]
+    },
+    "junio2023_2023.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7]
+    },
+    "julio2023_2023.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7]
+    },
+    "agosto2023_2023.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7]
+    },
+    "septiembre2023_2023.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8]
+    },
+    "octubre2023_2023.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    "noviembre2023_2023.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    "diciembre2023_2023.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    },
+    "enero2024_2024.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    },
+    "febrero2024_2024.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    },
+    "marzo2024_2024.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    },
+    "abril2024_2024.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    },
+    "mayo2024_2024.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    },
+    "junio2024_2024.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    },
+    "julio2024_2024.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    },
+    "agosto2024_2024.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    },
+    "septiembre2024_2024.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    },
+    "octubre2024_2024.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    },
+    "noviembre2024_2024.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    },
+    "diciembre2024_2024.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    },
+    "enero2025_2025.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 8, 9, 10, 11]
+    },
+    "febrero2025_2025.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 8, 9, 10, 11]
+    },
+    "marzo2025_2025.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 8, 9, 10, 11]
+    },
+    "abril2025_2025.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 8, 9, 10, 11]
+    },
+    "mayo2025_2025.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 6, 8, 9, 10, 11]
+    },
+    "junio2025_2025.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 8, 9, 10, 11]
+    },
+    "julio2025_2025.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 8, 9, 10, 11]
+    },
+    "agosto2025_2025.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 8, 9, 10, 11]
+    },
+    "septiembre2025_2025.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 8, 9, 10, 11]
+    },
+    "octubre2025_2025.csv": {
+      "checked": true,
+      "columns_used": [1, 2, 3, 4, 5, 8, 9, 10, 11]
+    }
+  }
+}

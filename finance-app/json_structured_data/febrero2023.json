@@ -1,0 +1,212 @@
+{
+  "gastos": [
+    {
+      "fecha": "mié 1 de feb de 23",
+      "monto": 57646.78,
+      "tipo": "tarjeta"
+    },
+    {
+      "fecha": "sáb 4 de feb de 23",
+      "monto": 5350,
+      "tipo": "casoriomeli"
+    },
+    {
+      "fecha": "lun 6 de feb de 23",
+      "monto": 31500,
+      "tipo": "mehari"
+    },
+    {
+      "fecha": "lun 6 de feb de 23",
+      "monto": 5000,
+      "tipo": "juanma"
+    },
+    {
+      "fecha": "lun 6 de feb de 23",
+      "monto": 6000,
+      "tipo": "aire abu"
+    },
+    {
+      "fecha": "jue 9 de feb de 23",
+      "monto": 13500,
+      "tipo": "mehari"
+    },
+    {
+      "fecha": "vie 10 de feb de 23",
+      "monto": 950,
+      "tipo": "pantalon"
+    },
+    {
+      "fecha": "lun 13 de feb de 23",
+      "monto": 1950,
+      "tipo": "tafirol"
+    },
+    {
+      "fecha": "mié 15 de feb de 23",
+      "monto": 50000,
+      "tipo": "armadopedro"
+    },
+    {
+      "fecha": "vie 17 de feb de 23",
+      "monto": 10000,
+      "tipo": "armadopedro"
+    },
+    {
+      "fecha": "mié 1 de feb de 23",
+      "monto": 4011.98,
+      "tipo": "super"
+    },
+    {
+      "fecha": "mar 3 de ene de 23",
+      "monto": 2150,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "mar 7 de feb de 23",
+      "monto": 678,
+      "tipo": "frutas"
+    },
+    {
+      "fecha": "vie 10 de feb de 23",
+      "monto": 1600,
+      "tipo": "carne"
+    },
+    {
+      "fecha": "sáb 11 de feb de 23",
+      "monto": 1670,
+      "tipo": "verduras"
+    },
+    {
+      "fecha": "mié 15 de feb de 23",
+      "monto": 5472.88,
+      "tipo": "super"
+    },
+    {
+      "fecha": "mié 15 de feb de 23",
+      "monto": 2120,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "jue 23 de feb de 23",
+      "monto": 1100,
+      "tipo": "huevos"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "lun 30 de ene de 23",
+      "monto": 48750,
+      "tipo": "rescición"
+    },
+    {
+      "fecha": "mié 1 de feb de 23",
+      "monto": 10568.01,
+      "tipo": "prestamo meja"
+    },
+    {
+      "fecha": "mié 1 de feb de 23",
+      "monto": 11160.49,
+      "tipo": "prestamo new"
+    },
+    {
+      "fecha": "mié 1 de feb de 23",
+      "monto": 12614.95,
+      "tipo": "prestamo fibra"
+    },
+    {
+      "fecha": "mié 1 de feb de 23",
+      "monto": 11551.36,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "vie 3 de feb de 23",
+      "monto": 6000,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "vie 17 de feb de 23",
+      "monto": 1409.99,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "jue 23 de feb de 23",
+      "monto": -15900,
+      "tipo": "(?)"
+    },
+    {
+      "fecha": "lun 30 de ene de 23",
+      "monto": -24.43,
+      "tipo": "cometa"
+    },
+    {
+      "fecha": "lun 30 de ene de 23",
+      "monto": -48750,
+      "tipo": "mes pasado"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "mié 1 de feb de 23",
+      "monto": 243406.47,
+      "tipo": "sueldo"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "mié 01/feb 23", "monto": 0, "tipo": "" },
+    { "fecha": "jue 02/feb 23", "monto": 1600, "tipo": "birras" },
+    { "fecha": "vie 03/feb 23", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 04/feb 23", "monto": 0, "tipo": "" },
+    { "fecha": "dom 05/feb 23", "monto": 160, "tipo": "pan" },
+    { "fecha": "lun 06/feb 23", "monto": 500, "tipo": "futbol" },
+    { "fecha": "mar 07/feb 23", "monto": 0, "tipo": "" },
+    { "fecha": "mié 08/feb 23", "monto": 0, "tipo": "" },
+    { "fecha": "jue 09/feb 23", "monto": 0, "tipo": "" },
+    { "fecha": "vie 10/feb 23", "monto": 2140, "tipo": "" },
+    { "fecha": "sáb 11/feb 23", "monto": 0, "tipo": "" },
+    { "fecha": "dom 12/feb 23", "monto": 2700, "tipo": "lomo papas birra" },
+    { "fecha": "lun 13/feb 23", "monto": 0, "tipo": "" },
+    { "fecha": "mar 14/feb 23", "monto": 700, "tipo": "pan tortitas" },
+    { "fecha": "mié 15/feb 23", "monto": 0, "tipo": "" },
+    { "fecha": "jue 16/feb 23", "monto": 1480, "tipo": "cafe" },
+    { "fecha": "vie 17/feb 23", "monto": 600, "tipo": "pan" },
+    { "fecha": "sáb 18/feb 23", "monto": 3000, "tipo": "lomo papas birra" },
+    { "fecha": "dom 19/feb 23", "monto": 0, "tipo": "" },
+    { "fecha": "lun 20/feb 23", "monto": 430, "tipo": "cerveza" },
+    { "fecha": "mar 21/feb 23", "monto": 200, "tipo": "pan" },
+    { "fecha": "mié 22/feb 23", "monto": 500, "tipo": "cerveza" },
+    { "fecha": "jue 23/feb 23", "monto": 1570, "tipo": "arito pelu" },
+    { "fecha": "vie 24/feb 23", "monto": 500, "tipo": "birras" },
+    { "fecha": "sáb 25/feb 23", "monto": 500, "tipo": "pan" },
+    { "fecha": "dom 26/feb 23", "monto": 500, "tipo": "birras" },
+    { "fecha": "lun 27/feb 23", "monto": 1000, "tipo": "pan futbol" },
+    { "fecha": "mar 28/feb 23", "monto": 3000, "tipo": "lomo papas birra" }
+  ],
+  "saldos": [
+    { "banco": 6699.91 },
+    { "efectivo": 2600 }
+  ],
+  "gastosTarjeta": [
+    { "fecha": "nueve/nueve", "monto": 3324, "tipo": "calefactor" },
+    { "fecha": "siete/doce", "monto": 1631.16, "tipo": "jetsmart" },
+    { "fecha": "ocho/doce", "monto": 970.41, "tipo": "GAFAS" },
+    { "fecha": "seis/seis", "monto": 2165, "tipo": "borregos" },
+    { "fecha": "cinco/seis", "monto": 2341.25, "tipo": "luces" },
+    { "fecha": "cinco/seis", "monto": 4995, "tipo": "camisetas" },
+    { "fecha": "cuatro/seis", "monto": 2586.5, "tipo": "starfeet" },
+    { "fecha": "tres/tres", "monto": 1870.01, "tipo": "ortopedia" },
+    { "fecha": "tres/tres", "monto": 6909.73, "tipo": "zapasmias" },
+    { "fecha": "tres/tres", "monto": 3229.33, "tipo": "mediasChetas" },
+    { "fecha": "uno/seis", "monto": 1827.35, "tipo": "maflabici" },
+    { "fecha": "uno/tres", "monto": 3212.69, "tipo": "masha" },
+    { "fecha": "mar 27 de dic de 22", "monto": 14608.46, "tipo": "lompa" },
+    { "fecha": "mié 28 de dic de 22", "monto": 4244.46, "tipo": "super" },
+    { "fecha": "jue 22 de dic de 22", "monto": 1417.66, "tipo": "pedidosya" },
+    { "fecha": "mié 4 de ene de 23", "monto": 3396.06, "tipo": "super" },
+    { "fecha": "sáb 7 de ene de 23", "monto": 1713, "tipo": "pedidosya" },
+    { "fecha": "jue 7 de dic de 23", "monto": -1946.4, "tipo": "super" },
+    { "fecha": "jue 28 de dic de 23", "monto": -848.89, "tipo": "super" }
+  ],
+  "gastosTarjetaExc": [
+    { "fecha": "lun 6 de feb de 23", "monto": 3354, "tipo": "pedidosYa" },
+    { "fecha": "mar 21 de feb de 23", "monto": 2764, "tipo": "pedidosYa" }
+  ]
+}

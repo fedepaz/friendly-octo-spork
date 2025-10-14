@@ -1,0 +1,258 @@
+{
+  "gastos": [
+    {
+      "fecha": "sáb 1 de abr de 23",
+      "monto": 48070.12,
+      "tipo": "tarjeta"
+    },
+    {
+      "fecha": "sáb 1 de abr de 23",
+      "monto": 50000,
+      "tipo": "plazoFijo"
+    },
+    {
+      "fecha": "sáb 1 de abr de 23",
+      "monto": 35000,
+      "tipo": "anticipoAlqui"
+    },
+    {
+      "fecha": "lun 3 de abr de 23",
+      "monto": 100000,
+      "tipo": "mehaLuces"
+    },
+    {
+      "fecha": "lun 3 de abr de 23",
+      "monto": 265000,
+      "tipo": "mudanzaP1"
+    },
+    {
+      "fecha": "lun 3 de abr de 23",
+      "monto": 15480,
+      "tipo": "pasajeCole"
+    },
+    {
+      "fecha": "lun 3 de abr de 23",
+      "monto": 1800,
+      "tipo": "varios"
+    },
+    {
+      "fecha": "mié 5 de abr de 23",
+      "monto": 7200,
+      "tipo": "remisSube"
+    },
+    {
+      "fecha": "mié 5 de abr de 23",
+      "monto": 35000,
+      "tipo": "alqui2da"
+    },
+    {
+      "fecha": "mié 5 de abr de 23",
+      "monto": 1060,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "jue 6 de abr de 23",
+      "monto": 4300,
+      "tipo": "quepiEscudo"
+    },
+    {
+      "fecha": "jue 13 de abr de 23",
+      "monto": 2200,
+      "tipo": "sube"
+    },
+    {
+      "fecha": "lun 17 de abr de 23",
+      "monto": 5041,
+      "tipo": "farmacia"
+    },
+    {
+      "fecha": "mar 18 de abr de 23",
+      "monto": 10120,
+      "tipo": "marimba"
+    },
+    {
+      "fecha": "mié 12 de abr de 23",
+      "monto": 2840,
+      "tipo": "chino"
+    },
+    {
+      "fecha": "mié 5 de abr de 23",
+      "monto": 6230,
+      "tipo": "mcChino"
+    },
+    {
+      "fecha": "jue 6 de abr de 23",
+      "monto": 9200,
+      "tipo": "frutaCreaDiet"
+    },
+    {
+      "fecha": "jue 6 de abr de 23",
+      "monto": 2620,
+      "tipo": "polloPan"
+    },
+    {
+      "fecha": "dom 9 de abr de 23",
+      "monto": 2620,
+      "tipo": "frutas"
+    },
+    {
+      "fecha": "vie 21 de abr de 23",
+      "monto": 3030,
+      "tipo": "varios"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "vie 6 de ene de 23",
+      "monto": 31800,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "sáb 1 de abr de 23",
+      "monto": 10537.2,
+      "tipo": "prestamo meja"
+    },
+    {
+      "fecha": "sáb 1 de abr de 23",
+      "monto": 11147.46,
+      "tipo": "prestamo new"
+    },
+    {
+      "fecha": "sáb 1 de abr de 23",
+      "monto": 12576.35,
+      "tipo": "prestamo fibra"
+    },
+    {
+      "fecha": "sáb 1 de abr de 23",
+      "monto": 15742.3,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "lun 13 de mar de 23",
+      "monto": 1455.01,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "dom 9 de abr de 23",
+      "monto": 2500,
+      "tipo": "mercadoPago"
+    },
+    {
+      "fecha": "lun 17 de abr de 23",
+      "monto": 20000,
+      "tipo": "seña"
+    },
+    {
+      "fecha": "dom 23 de abr de 23",
+      "monto": 2479.39,
+      "tipo": "internetAbuela"
+    },
+    {
+      "fecha": "mar 25 de abr de 23",
+      "monto": 14807.63,
+      "tipo": "osdeMayo"
+    },
+    {
+      "fecha": "lun 13 de mar de 23",
+      "monto": -1455.01,
+      "tipo": "telefono"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "vie 1 de sep de 23",
+      "monto": 325203.7,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "vie 1 de sep de 23",
+      "monto": 21315.07,
+      "tipo": "plazo fijo"
+    },
+    {
+      "fecha": "vie 1 de sep de 23",
+      "monto": 625542.22,
+      "tipo": "pase"
+    },
+    {
+      "fecha": "cobro",
+      "monto": 480000,
+      "tipo": ""
+    },
+    {
+      "fecha": "costoFactura",
+      "monto": 25000,
+      "tipo": ""
+    },
+    {
+      "fecha": "costoMudanza",
+      "monto": 0,
+      "tipo": ""
+    },
+    {
+      "fecha": "Pago",
+      "monto": 265000,
+      "tipo": ""
+    },
+    {
+      "fecha": "Sobrante",
+      "monto": 215000,
+      "tipo": ""
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "sáb 01/abr 23", "monto": 3250, "tipo": "lomoBirra" },
+    { "fecha": "dom 02/abr 23", "monto": 650, "tipo": "birra" },
+    { "fecha": "lun 03/abr 23", "monto": 500, "tipo": "milas" },
+    { "fecha": "mar 04/abr 23", "monto": 800, "tipo": "variosTermin" },
+    { "fecha": "mié 05/abr 23", "monto": 1520, "tipo": "cafe" },
+    { "fecha": "jue 06/abr 23", "monto": 280, "tipo": "" },
+    { "fecha": "vie 07/abr 23", "monto": 4100, "tipo": "joda" },
+    { "fecha": "sáb 08/abr 23", "monto": 3300, "tipo": "varios" },
+    { "fecha": "dom 09/abr 23", "monto": 200, "tipo": "pan" },
+    { "fecha": "lun 10/abr 23", "monto": 1090, "tipo": "pan" },
+    { "fecha": "mar 11/abr 23", "monto": 0, "tipo": "" },
+    { "fecha": "mié 12/abr 23", "monto": 3400, "tipo": "milas" },
+    { "fecha": "jue 13/abr 23", "monto": 1550, "tipo": "queso tom" },
+    { "fecha": "vie 14/abr 23", "monto": 15830, "tipo": "joda" },
+    { "fecha": "sáb 15/abr 23", "monto": 1590, "tipo": "varios" },
+    { "fecha": "dom 16/abr 23", "monto": 3700, "tipo": "festi" },
+    { "fecha": "lun 17/abr 23", "monto": 1460, "tipo": "yerbaSube" },
+    { "fecha": "mar 18/abr 23", "monto": 0, "tipo": "" },
+    { "fecha": "mié 19/abr 23", "monto": 1390, "tipo": "huevosSube" },
+    { "fecha": "jue 20/abr 23", "monto": 2600, "tipo": "cafeFrutas" },
+    { "fecha": "vie 21/abr 23", "monto": 2840, "tipo": "birraArroz" },
+    { "fecha": "sáb 22/abr 23", "monto": 500, "tipo": "mercadoPago" },
+    { "fecha": "dom 23/abr 23", "monto": 210, "tipo": "pan" },
+    { "fecha": "lun 24/abr 23", "monto": 0, "tipo": "" },
+    { "fecha": "mar 25/abr 23", "monto": 3400, "tipo": "milasVerdu" },
+    { "fecha": "mié 26/abr 23", "monto": 3900, "tipo": "peluCanPicaHuevoVar" },
+    { "fecha": "jue 27/abr 23", "monto": 0, "tipo": "" },
+    { "fecha": "vie 28/abr 23", "monto": 5220, "tipo": "cervezaLomo" },
+    { "fecha": "sáb 29/abr 23", "monto": 0, "tipo": "" },
+    { "fecha": "dom 30/abr 23", "monto": 0, "tipo": "" }
+  ],
+  "saldos": [
+    { "banco": 60915.12 },
+    { "efectivo": 163520 }
+  ],
+  "gastosTarjeta": [
+    { "fecha": "nueve/doce", "monto": 1631.16, "tipo": "jetsmart" },
+    { "fecha": "diez/doce", "monto": 970.41, "tipo": "GAFAS" },
+    { "fecha": "seis/seis", "monto": 2586.5, "tipo": "starfeet" },
+    { "fecha": "tres/seis", "monto": 1827.35, "tipo": "maflabici" },
+    { "fecha": "tres/tres", "monto": 3212.69, "tipo": "masha" },
+    { "fecha": "dos/seis", "monto": 2163.33, "tipo": "calzasBIci" },
+    { "fecha": "jue 23 de feb de 23", "monto": 19998, "tipo": "CeluAbu" },
+    { "fecha": "uno/doce", "monto": 3541.67, "tipo": "bateriaAuto" },
+    { "fecha": "lun 27 de feb de 23", "monto": 2400, "tipo": "telo" },
+    { "fecha": "lun 27 de feb de 23", "monto": 737.57, "tipo": "cabi" },
+    { "fecha": "una/tres", "monto": 4829.84, "tipo": "cintaBici" },
+    { "fecha": "vie 3 de feb de 23", "monto": 1263.1, "tipo": "cabi" },
+    { "fecha": "una/tres", "monto": 2908.5, "tipo": "CortosNoBra" }
+  ],
+  "gastosTarjetaExc": [
+    { "fecha": "dom 2 de abr de 23", "monto": 4569, "tipo": "pedidosYa" },
+    { "fecha": "jue 6 de abr de 23", "monto": 2700, "tipo": "milas" }
+  ]
+}

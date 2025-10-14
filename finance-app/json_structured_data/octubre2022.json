@@ -1,0 +1,256 @@
+{
+  "gastos": [
+    {
+      "fecha": "mié 5 de oct de 22",
+      "monto": 43849.06,
+      "tipo": "tarjeta"
+    },
+    {
+      "fecha": "mar 4 de oct de 22",
+      "monto": 12030,
+      "tipo": "meha viejo"
+    },
+    {
+      "fecha": "mié 12 de oct de 22",
+      "monto": 22530.17,
+      "tipo": "dolares vicky"
+    },
+    {
+      "fecha": "lun 17 de oct de 22",
+      "monto": 10000,
+      "tipo": "marimba"
+    },
+    {
+      "fecha": "mar 18 de oct de 22",
+      "monto": 3672.55,
+      "tipo": "medicamentos"
+    },
+    {
+      "fecha": "mar 18 de oct de 22",
+      "monto": -22531,
+      "tipo": "devo viky"
+    },
+    {
+      "fecha": "sáb 22 de oct de 22",
+      "monto": 2600,
+      "tipo": "(?)"
+    },
+    {
+      "fecha": "jue 27 de oct de 22",
+      "monto": 20000,
+      "tipo": "mehari fibra"
+    },
+    {
+      "fecha": "dom 23 de oct de 22",
+      "monto": 4800.23,
+      "tipo": "super"
+    },
+    {
+      "fecha": "dom 23 de oct de 22",
+      "monto": 1270,
+      "tipo": "tabaco"
+    },
+    {
+      "fecha": "dom 2 de oct de 22",
+      "monto": 2705,
+      "tipo": "frutas huevo taba"
+    },
+    {
+      "fecha": "lun 3 de oct de 22",
+      "monto": 2900,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "lun 10 de oct de 22",
+      "monto": 1020,
+      "tipo": "mila pan"
+    },
+    {
+      "fecha": "mié 12 de oct de 22",
+      "monto": 5060,
+      "tipo": "varios"
+    },
+    {
+      "fecha": "vie 14 de oct de 22",
+      "monto": 2060,
+      "tipo": "pollo"
+    },
+    {
+      "fecha": "mar 18 de oct de 22",
+      "monto": 560,
+      "tipo": "verdu pan"
+    },
+    {
+      "fecha": "mié 19 de oct de 22",
+      "monto": 1180,
+      "tipo": "verdu pan"
+    },
+    {
+      "fecha": "lun 24 de oct de 22",
+      "monto": 2820,
+      "tipo": "pollo verdu"
+    }
+  ],
+  "pagos": [
+    {
+      "fecha": "sáb 8 de oct de 22",
+      "monto": 31800,
+      "tipo": "alquler"
+    },
+    {
+      "fecha": "sáb 1 de oct de 22",
+      "monto": 11183.67,
+      "tipo": "prestamo new"
+    },
+    {
+      "fecha": "sáb 1 de oct de 22",
+      "monto": 10623.94,
+      "tipo": "prestamo meja"
+    },
+    {
+      "fecha": "sáb 1 de oct de 22",
+      "monto": 5612.75,
+      "tipo": "bici"
+    },
+    {
+      "fecha": "sáb 1 de oct de 22",
+      "monto": 2343.82,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "mar 4 de oct de 22",
+      "monto": 5000,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "mié 5 de oct de 22",
+      "monto": 1000,
+      "tipo": "internet"
+    },
+    {
+      "fecha": "vie 7 de oct de 22",
+      "monto": 10581.42,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "mié 12 de oct de 22",
+      "monto": 75,
+      "tipo": "mercado pag"
+    },
+    {
+      "fecha": "mié 12 de oct de 22",
+      "monto": -1000,
+      "tipo": "zapasmatre"
+    },
+    {
+      "fecha": "vie 14 de oct de 22",
+      "monto": 2002.38,
+      "tipo": "gas"
+    },
+    {
+      "fecha": "sáb 22 de oct de 22",
+      "monto": -3000,
+      "tipo": "zapsmias"
+    },
+    {
+      "fecha": "sáb 22 de oct de 22",
+      "monto": 2169.97,
+      "tipo": "coop electri"
+    },
+    {
+      "fecha": "mar 25 de oct de 22",
+      "monto": 10581.42,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "mié 12 de oct de 22",
+      "monto": -17600,
+      "tipo": "Despedida-fallida"
+    },
+    {
+      "fecha": "sáb 1 de oct de 22",
+      "monto": -7956.57,
+      "tipo": "madre"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "lun 1 de ago de 22",
+      "monto": 205062.68,
+      "tipo": "sueldo"
+    },
+    {
+      "fecha": "lun 24 de oct de 22",
+      "monto": 64191.68,
+      "tipo": "plazofijo"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "sáb 01/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "dom 02/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 03/oct 22", "monto": 400, "tipo": "futbol" },
+    { "fecha": "mar 04/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "mié 05/oct 22", "monto": 330, "tipo": "birra" },
+    { "fecha": "jue 06/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "vie 07/oct 22", "monto": 1830, "tipo": "lomo papas" },
+    { "fecha": "sáb 08/oct 22", "monto": 100, "tipo": "pan" },
+    { "fecha": "dom 09/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 10/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "mar 11/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "mié 12/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "jue 13/oct 22", "monto": 50, "tipo": "pan" },
+    { "fecha": "vie 14/oct 22", "monto": 1600, "tipo": "fernet" },
+    { "fecha": "sáb 15/oct 22", "monto": 2080, "tipo": "Birras-parque" },
+    { "fecha": "dom 16/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 17/oct 22", "monto": 100, "tipo": "orina" },
+    { "fecha": "mar 18/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "mié 19/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "jue 20/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "vie 21/oct 22", "monto": 1000, "tipo": "aceite coca" },
+    { "fecha": "sáb 22/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "dom 23/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 24/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "mar 25/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "mié 26/oct 22", "monto": 100, "tipo": "pan" },
+    { "fecha": "jue 27/oct 22", "monto": 330, "tipo": "birra" },
+    { "fecha": "vie 28/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 29/oct 22", "monto": 260, "tipo": "pan" },
+    { "fecha": "dom 30/oct 22", "monto": 0, "tipo": "" },
+    { "fecha": "lun 31/oct 22", "monto": 0, "tipo": "" }
+  ],
+  "saldos": [
+    { "banco": 124439.43 },
+    { "efectivo": 200 }
+  ],
+  "gastosTarjeta": [
+    { "fecha": "dom 28 de ago de 22", "monto": 1369, "tipo": "pedidoya" },
+    { "fecha": "mar 30 de ago de 22", "monto": 5471, "tipo": "asado(efec)" },
+    { "fecha": "sáb 3 de sep de 22", "monto": 1177, "tipo": "pedidoya" },
+    { "fecha": "lun 5 de sep de 22", "monto": 1079, "tipo": "pedidoya" },
+    { "fecha": "mié 7 de sep de 22", "monto": 1230.34, "tipo": "nafta" },
+    { "fecha": "mié 7 de sep de 22", "monto": 1251, "tipo": "pedidoya" },
+    { "fecha": "dom 11 de sep de 22", "monto": 1500, "tipo": "helado" },
+    { "fecha": "sáb 17 de sep de 22", "monto": 1800, "tipo": "nafta" },
+    { "fecha": "sáb 17 de sep de 22", "monto": 1257, "tipo": "pedidoya" },
+    { "fecha": "lun 19 de sep de 22", "monto": 1540, "tipo": "pedidoya" },
+    { "fecha": "lun 19 de sep de 22", "monto": 711.5, "tipo": "intereses" },
+    { "fecha": "uno/seis", "monto": 4995, "tipo": "camisetas" },
+    { "fecha": "uno/seis", "monto": 2341.25, "tipo": "luces" },
+    { "fecha": "dos/seis", "monto": 2165, "tipo": "borregos" },
+    { "fecha": "cinco/nueve", "monto": 3324, "tipo": "calefactor" },
+    { "fecha": "tres/doce", "monto": 1631.16, "tipo": "jetsmart" },
+    { "fecha": "cuatro/seis", "monto": 985, "tipo": "chromecast" },
+    { "fecha": "tres/seis", "monto": 1527.4, "tipo": "boxers" },
+    { "fecha": "tres/tres", "monto": 3777, "tipo": "joggineta" },
+    { "fecha": "cuatro/doce", "monto": 970.41, "tipo": "GAFAS" },
+    { "fecha": "cuatro/seis", "monto": 3747, "tipo": "PARLANTE" }
+  ],
+  "gastosTarjetaExc": [
+    { "fecha": "mié 12 de oct de 22", "monto": 1598, "tipo": "pedidoya" },
+    { "fecha": "vie 14 de oct de 22", "monto": 1829, "tipo": "pedidoya" },
+    { "fecha": "sáb 15 de oct de 22", "monto": 2088, "tipo": "pedidoya" },
+    { "fecha": "lun 24 de oct de 22", "monto": 1197, "tipo": "pedidosya" },
+    { "fecha": "dom 23 de oct de 22", "monto": 2279, "tipo": "pedidosya" },
+    { "fecha": "jue 27 de oct de 22", "monto": 2829, "tipo": "pedidosya" }
+  ]
+}

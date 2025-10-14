@@ -1,0 +1,77 @@
+{
+  "gastos": [],
+  "pagos": [
+    {
+      "fecha": "lun 1 de feb de 21",
+      "monto": 3195.32,
+      "tipo": "préstamo"
+    },
+    {
+      "fecha": "lun 1 de feb de 21",
+      "monto": 10000,
+      "tipo": "abuela"
+    },
+    {
+      "fecha": "lun 1 de feb de 21",
+      "monto": 2000,
+      "tipo": "telefono"
+    },
+    {
+      "fecha": "lun 1 de feb de 21",
+      "monto": 2528.54,
+      "tipo": "osde"
+    },
+    {
+      "fecha": "lun 1 de feb de 21",
+      "monto": 2000,
+      "tipo": "gym"
+    },
+    {
+      "fecha": "lun 1 de feb de 21",
+      "monto": 5000,
+      "tipo": "gastos Varios"
+    },
+    {
+      "fecha": "lun 1 de feb de 21",
+      "monto": 10816.75,
+      "tipo": "auto"
+    }
+  ],
+  "ingresos": [
+    {
+      "fecha": "vie 29 de ene de 21",
+      "monto": 58884.85,
+      "tipo": "sueldo"
+    }
+  ],
+  "gastosDiarios": [
+    { "fecha": "lun 01/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "mar 02/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 03/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 04/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 05/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 06/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "dom 07/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "lun 08/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "mar 09/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 10/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 11/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 12/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 13/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "dom 14/feb 21", "monto": 10000, "tipo": "" },
+    { "fecha": "lun 15/feb 21", "monto": 3500, "tipo": "" },
+    { "fecha": "mar 16/feb 21", "monto": 3750, "tipo": "" },
+    { "fecha": "mié 17/feb 21", "monto": 1500, "tipo": "" },
+    { "fecha": "jue 18/feb 21", "monto": 4900, "tipo": "" },
+    { "fecha": "vie 19/feb 21", "monto": 2000, "tipo": "" },
+    { "fecha": "sáb 20/feb 21", "monto": 14000, "tipo": "" },
+    { "fecha": "dom 21/feb 21", "monto": 3900, "tipo": "" },
+    { "fecha": "lun 22/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "mar 23/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "mié 24/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "jue 25/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "vie 26/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "sáb 27/feb 21", "monto": 0, "tipo": "" },
+    { "fecha": "dom 28/feb 21", "monto": 0, "tipo": "" }
+  ]
+}
