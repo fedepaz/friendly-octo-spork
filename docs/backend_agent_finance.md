@@ -27,11 +27,11 @@ You are an expert Backend Engineer specializing in Bun runtime, Hono framework, 
 **Hono Patterns**:
 ```typescript
 // Route organization
-app.get('/expenses', handler);        // List
-app.post('/expenses', handler);       // Create
-app.get('/expenses/:id', handler);    // Read
-app.put('/expenses/:id', handler);    // Update
-app.delete('/expenses/:id', handler); // Delete
+app.get('/transactions', handler);        // List
+app.post('/transactions', handler);       // Create
+app.get('/transactions/:id', handler);    // Read
+app.put('/transactions/:id', handler);    // Update
+app.delete('/transactions/:id', handler); // Delete
 
 // Middleware
 app.use('*', logger());
@@ -42,7 +42,7 @@ app.use('/api/*', errorHandler);
 **Prisma Patterns**:
 ```typescript
 // Always include userId filter
-const expenses = await prisma.expense.findMany({
+const transactions = await prisma.transaction.findMany({
   where: { userId },
   include: { category: true },
   orderBy: { date: 'desc' }
@@ -50,8 +50,9 @@ const expenses = await prisma.expense.findMany({
 
 // Use transactions for multi-table operations
 await prisma.$transaction([
-  prisma.expense.create({ data: expenseData }),
-  prisma.budget.update({ where: { id }, data: { spent: { increment: amount } } })
+  prisma.transaction.create({ data: transactionData }),
+  // Example of updating a balance after a transaction
+  // prisma.balance.update({ where: { userId: userId, date: startOfMonth }, data: { amount: { increment: amount } } })
 ]);
 ```
 
@@ -62,7 +63,7 @@ import { clerkMiddleware, getAuth } from '@hono/clerk-auth';
 
 app.use('*', clerkMiddleware());
 
-app.get('/api/expenses', async (c) => {
+app.get('/api/transactions', async (c) => {
   const auth = getAuth(c);
   if (!auth?.userId) {
     return c.json({ error: 'Unauthorized' }, 401);
@@ -81,7 +82,7 @@ app.get('/api/expenses', async (c) => {
 
 1. **Create Migration**:
 ```bash
-bunx prisma migrate dev --name add_expense_table
+bunx prisma migrate dev --name initial_schema
 ```
 
 2. **Review Generated SQL**:
@@ -105,7 +106,7 @@ bunx prisma generate
 5. **Update TypeScript Types**:
 ```typescript
 // Prisma auto-generates types
-import { Expense, Payment, Category } from '@prisma/client';
+import { User, Transaction, DailyExpense, Balance, CardExpense, InvestmentReturn, ExtraExpense, Category } from '@prisma/client';
 ```
 
 ### Rollback Strategy
@@ -257,179 +258,59 @@ export class ExpenseController {
 }
 ```
 
-### 2. Prisma Schema Design
 
-**Complete Schema Example**:
-```prisma
-// prisma/schema.prisma
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-generator client {
-  provider = "prisma-client-js"
-}
-
-model User {
-  id        String    @id
-  email     String    @unique
-  expenses  Expense[]
-  payments  Payment[]
-  budgets   Budget[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-
-model Expense {
-  id        String   @id @default(cuid())
-  date      DateTime
-  amount    Decimal  @db.Decimal(10, 2)
-  concept   String   @db.VarChar(255)
-  
-  categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id])
-  
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
-  @@index([userId, date(sort: Desc)])
-  @@index([userId, categoryId])
-  @@index([userId, createdAt])
-}
-
-model Payment {
-  id          String   @id @default(cuid())
-  date        DateTime
-  amount      Decimal  @db.Decimal(10, 2)
-  concept     String   @db.VarChar(255)
-  isRecurring Boolean  @default(false)
-  frequency   String?  @db.VarChar(50) // monthly, weekly, etc.
-  
-  categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id])
-
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  @@index([userId, date(sort: Desc)])
-  @@index([userId, isRecurring])
-  @@index([categoryId])
-}
-
-model Budget {
-  id        String   @id @default(cuid())
-  month     DateTime // First day of month
-  
-  categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id])
-
-  limit     Decimal  @db.Decimal(10, 2)
-  spent     Decimal  @db.Decimal(10, 2) @default(0)
-  
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
-  @@unique([userId, month, categoryId])
-  @@index([userId, month])
-  @@index([categoryId])
-}
-
-model Category {
-  id          Int      @id @default(autoincrement())
-  nombre      String   @unique
-  
-  ingresos    Expense[]
-  gastos      Payment[]
-  pagos       Budget[]
-
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-```
 
 ### 3. Validation Schemas (Zod)
 
 **Schema Definitions**:
 ```typescript
-// src/schemas/expense.ts
+// src/schemas/transaction.ts
 import { z } from 'zod';
+import { TransactionType } from '../generated/prisma';
 
-export const expenseSchema = z.object({
+export const transactionSchema = z.object({
   date: z.string().datetime().or(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)),
   amount: z.number().positive().or(z.string().transform(Number)),
   concept: z.string().min(1).max(255),
-  category: z.string().min(1).max(100)
+  type: z.nativeEnum(TransactionType),
+  category: z.string().min(1).max(100).optional()
 });
 
-export const updateExpenseSchema = expenseSchema.partial();
+export const updateTransactionSchema = transactionSchema.partial();
 
-export const expenseFilterSchema = z.object({
+export const transactionFilterSchema = z.object({
   startDate: z.string().datetime().optional(),
   endDate: z.string().datetime().optional(),
+  type: z.nativeEnum(TransactionType).optional(),
   category: z.string().optional(),
   limit: z.string().transform(Number).optional(),
   offset: z.string().transform(Number).optional()
 });
 
-export type ExpenseInput = z.infer<typeof expenseSchema>;
-export type ExpenseFilter = z.infer<typeof expenseFilterSchema>;
+export type TransactionInput = z.infer<typeof transactionSchema>;
+export type TransactionFilter = z.infer<typeof transactionFilterSchema>;
 ```
 
 ### 4. Business Logic
 
 **Service Layer Pattern**:
 ```typescript
-// src/services/expenseService.ts
+// src/services/transactionService.ts
 import { prisma } from '../lib/prisma';
-import type { ExpenseInput } from '../schemas/expense';
+import type { TransactionInput } from '../schemas/transaction';
 
-export class ExpenseService {
-  async createExpense(userId: string, data: ExpenseInput) {
-    // Business logic: Update budget when creating expense
-    return await prisma.$transaction(async (tx) => {
-      const expense = await tx.expense.create({
-        data: {
-          ...data,
-          userId,
-          amount: new Prisma.Decimal(data.amount)
-        }
-      });
-      
-      // Update monthly budget
-      const month = new Date(data.date);
-      month.setDate(1);
-      month.setHours(0, 0, 0, 0);
-      
-      await tx.budget.update({
-        where: {
-          userId_month_category: {
-            userId,
-            month,
-            category: data.category
-          }
-        },
-        data: {
-          spent: { increment: data.amount }
-        }
-      }).catch(() => {
-        // Budget doesn't exist, that's okay
-      });
-      
-      return expense;
+export class TransactionService {
+  async createTransaction(userId: string, data: TransactionInput) {
+    return await prisma.transaction.create({
+      data: {
+        ...data,
+        userId,
+        amount: new Prisma.Decimal(data.amount)
+      }
     });
   }
   
-  async getMonthlyReport(userId: string, month: Date) {
+  async getMonthlyTransactions(userId: string, month: Date) {
     const startOfMonth = new Date(month);
     startOfMonth.setDate(1);
     startOfMonth.setHours(0, 0, 0, 0);
@@ -439,7 +320,7 @@ export class ExpenseService {
     endOfMonth.setDate(0);
     endOfMonth.setHours(23, 59, 59, 999);
     
-    const expenses = await prisma.expense.findMany({
+    const transactions = await prisma.transaction.findMany({
       where: {
         userId,
         date: {
@@ -451,8 +332,8 @@ export class ExpenseService {
     });
     
     // Aggregate by category
-    const byCategory = await prisma.expense.groupBy({
-      by: ['category'],
+    const byCategory = await prisma.transaction.groupBy({
+      by: ['categoryId'],
       where: {
         userId,
         date: {
@@ -465,9 +346,9 @@ export class ExpenseService {
     });
     
     return {
-      expenses,
+      transactions,
       summary: {
-        total: expenses.reduce((sum, e) => sum + Number(e.amount), 0),
+        total: transactions.reduce((sum, t) => sum + Number(t.amount), 0),
         byCategory
       }
     };
@@ -479,31 +360,31 @@ export class ExpenseService {
 
 **Component Templates**:
 ```typescript
-// src/components/ExpenseRow.tsx
-import type { Expense } from '@prisma/client';
+// src/components/TransactionRow.tsx
+import type { Transaction } from '@prisma/client';
 
-export function ExpenseRow({ expense }: { expense: Expense }) {
+export function TransactionRow({ transaction }: { transaction: Transaction }) {
   return (
-    <tr id={`expense-${expense.id}`}>
-      <td>{new Date(expense.date).toLocaleDateString()}</td>
-      <td>{expense.concept}</td>
-      <td>{expense.category}</td>
-      <td class="text-end">${Number(expense.amount).toFixed(2)}</td>
+    <tr id={`transaction-${transaction.id}`}>
+      <td>{new Date(transaction.date).toLocaleDateString()}</td>
+      <td>{transaction.concept}</td>
+      <td>{transaction.type}</td>
+      <td class="text-end">${Number(transaction.amount).toFixed(2)}</td>
       <td class="text-end">
         <button 
           class="btn btn-sm btn-ghost-secondary"
-          hx-get={`/api/expenses/${expense.id}/edit`}
-          hx-target={`#expense-${expense.id}`}
+          hx-get={`/api/transactions/${transaction.id}/edit`}
+          hx-target={`#transaction-${transaction.id}`}
           hx-swap="outerHTML"
         >
           Edit
         </button>
         <button 
           class="btn btn-sm btn-ghost-danger"
-          hx-delete={`/api/expenses/${expense.id}`}
-          hx-target={`#expense-${expense.id}`}
+          hx-delete={`/api/transactions/${transaction.id}`}
+          hx-target={`#transaction-${transaction.id}`}
           hx-swap="outerHTML swap:1s"
-          hx-confirm="Delete this expense?"
+          hx-confirm="Delete this transaction?"
         >
           Delete
         </button>
@@ -512,18 +393,18 @@ export function ExpenseRow({ expense }: { expense: Expense }) {
   );
 }
 
-// src/components/ExpenseList.tsx
-export function ExpenseList({ 
-  expenses, 
+// src/components/TransactionList.tsx
+export function TransactionList({ 
+  transactions,
   total 
 }: { 
-  expenses: Expense[]; 
+  transactions: Transaction[]; 
   total: number;
 }) {
   return (
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Expenses ({total})</h3>
+        <h3 class="card-title">Transactions ({total})</h3>
       </div>
       <div class="table-responsive">
         <table class="table table-vcenter card-table">
@@ -531,14 +412,14 @@ export function ExpenseList({
             <tr>
               <th>Date</th>
               <th>Concept</th>
-              <th>Category</th>
+              <th>Type</th>
               <th class="text-end">Amount</th>
               <th class="text-end">Actions</th>
             </tr>
           </thead>
-          <tbody id="expense-list">
-            {expenses.map(expense => (
-              <ExpenseRow expense={expense} />
+          <tbody id="transaction-list">
+            {transactions.map(transaction => (
+              <TransactionRow transaction={transaction} />
             ))}
           </tbody>
         </table>
@@ -589,63 +470,22 @@ export async function errorHandler(c: Context, next: Next) {
 
 ### 7. Performance Optimization
 
-**Query Optimization**:
-```typescript
-// Use select to limit returned fields
-const expenses = await prisma.expense.findMany({
-  where: { userId },
-  select: {
-    id: true,
-    date: true,
-    amount: true,
-    concept: true,
-    category: true
-  }
-});
-
-// Use cursor-based pagination for large datasets
-const expenses = await prisma.expense.findMany({
-  where: { userId },
-  take: 50,
-  skip: 1,
-  cursor: { id: lastId },
-  orderBy: { date: 'desc' }
-});
-```
-
-**Caching Strategy**:
-```typescript
-// src/lib/cache.ts
-const cache = new Map<string, { data: any; expires: number }>();
-
-export function cached<T>(
-  key: string,
-  fn: () => Promise<T>,
-  ttl: number = 60000
-): Promise<T> {
-  const cached = cache.get(key);
+**Database Optimization**:
+```prisma
+// Common queries to optimize
+model Transaction {
+  // ... fields ...
   
-  if (cached && cached.expires > Date.now()) {
-    return Promise.resolve(cached.data);
-  }
-  
-  return fn().then(data => {
-    cache.set(key, { data, expires: Date.now() + ttl });
-    return data;
-  });
+  @@index([userId, date(sort: Desc)]) // List by date
+  @@index([userId, categoryId, date]) // Filter by category
 }
-
-// Usage
-app.get('/api/categories', async (c) => {
-  const categories = await cached(
-    'categories',
-    () => prisma.category.findMany(),
-    300000 // 5 minutes
-  );
-  
-  return c.json(categories);
-});
 ```
+
+**HTMX Optimization**:
+- Partial page updates (only send changed HTML)
+- Lazy loading for large lists
+- Debounce search inputs
+
 
 ### 8. Main Application Setup
 
@@ -657,10 +497,7 @@ import { logger } from 'hono/logger';
 import { cors } from 'hono/cors';
 import { clerkMiddleware } from '@hono/clerk-auth';
 
-import expenseRoutes from './routes/expenses';
-import paymentRoutes from './routes/payments';
-import reportRoutes from './routes/reports';
-import { errorHandler } from './middleware/errorHandler';
+import transactionRoutes from './routes/transactions';
 
 const app = new Hono();
 
@@ -676,9 +513,7 @@ app.onError(errorHandler);
 app.get('/health', (c) => c.json({ status: 'ok' }));
 
 // Mount routes
-app.route('/api/expenses', expenseRoutes);
-app.route('/api/payments', paymentRoutes);
-app.route('/api/reports', reportRoutes);
+app.route('/api/transactions', transactionRoutes);
 
 // Static files (for development)
 app.get('*', async (c) => {
@@ -731,40 +566,41 @@ export default {
 
 ## Testing Approach
 
-**Unit Tests** (src/services/expenseService.test.ts):
+**Unit Tests** (src/services/transactionService.test.ts):
 ```typescript
 import { describe, it, expect, beforeEach } from 'bun:test';
-import { ExpenseService } from './expenseService';
+import { TransactionService } from './transactionService';
 
-describe('ExpenseService', () => {
+describe('TransactionService', () => {
   beforeEach(async () => {
     // Clean database
-    await prisma.expense.deleteMany();
+    await prisma.transaction.deleteMany();
   });
   
-  it('should create expense and update budget', async () => {
-    const service = new ExpenseService();
-    const expense = await service.createExpense('user123', {
+  it('should create transaction', async () => {
+    const service = new TransactionService();
+    const transaction = await service.createTransaction('user123', {
       date: new Date(),
       amount: 50.00,
       concept: 'Lunch',
+      type: 'EXPENSE',
       category: 'food'
     });
     
-    expect(expense).toBeDefined();
-    expect(expense.amount).toBe(50.00);
+    expect(transaction).toBeDefined();
+    expect(transaction.amount).toBe(50.00);
   });
 });
 ```
 
-**Integration Tests** (src/routes/expenses.test.ts):
+**Integration Tests** (src/routes/transactions.test.ts):
 ```typescript
 import { describe, it, expect } from 'bun:test';
 import app from '../index';
 
-describe('Expense API', () => {
-  it('should list expenses for authenticated user', async () => {
-    const res = await app.request('/api/expenses', {
+describe('Transaction API', () => {
+  it('should list transactions for authenticated user', async () => {
+    const res = await app.request('/api/transactions', {
       headers: {
         'Authorization': 'Bearer test-token'
       }

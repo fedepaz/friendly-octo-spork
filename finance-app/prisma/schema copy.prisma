@@ -1,0 +1,335 @@
+// This is your Prisma schema file,
+// Schema Prisma Minimalista - Versión Inicial
+// Expandir según necesites más funcionalidades
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// CORE MODELS
+// ============================================================================
+
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  email     String   @unique
+  
+  // Relations
+  expenses       Expense[]
+  payments       Payment[]
+  incomes        Income[]
+  dailyExpenses  DailyExpense[]
+  balances       Balance[]
+  cardExpenses   CardExpense[]
+  investments    InvestmentReturn[]
+  extraExpenses  ExtraExpense[]
+  dailyReturns   DailyReturn[]
+  categories     Category[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([clerkId])
+}
+
+// ============================================================================
+// TRANSACTION TYPES (Main Tables)
+// ============================================================================
+
+// GASTOS - General Expenses
+model Expense {
+  id      String   @id @default(cuid())
+  fecha   DateTime
+  monto   Decimal  @db.Decimal(12, 2)
+  tipo    String   @db.VarChar(255) // concepto in old data
+  
+  // Category relationship
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id])
+  
+  // User relationship
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Metadata
+  source      String   @default("manual") // manual, imported, api
+  originalData Json?   // Store original JSON for reference
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([userId, fecha(sort: Desc)])
+  @@index([userId, categoryId])
+  @@index([tipo])
+}
+
+// PAGOS - Payments (bills, subscriptions, loans)
+model Payment {
+  id      String   @id @default(cuid())
+  fecha   DateTime
+  monto   Decimal  @db.Decimal(12, 2)
+  tipo    String   @db.VarChar(255) // alquiler, agua, prestamo, etc.
+  
+  // Payment characteristics
+  isRecurring Boolean @default(false)
+  frequency   String? @db.VarChar(50) // monthly, weekly, yearly
+  
+  // Category relationship
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id])
+  
+  // User relationship
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Metadata
+  source       String   @default("manual")
+  originalData Json?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([userId, fecha(sort: Desc)])
+  @@index([userId, isRecurring])
+  @@index([tipo])
+}
+
+// INGRESOS - Income
+model Income {
+  id      String   @id @default(cuid())
+  fecha   DateTime
+  monto   Decimal  @db.Decimal(12, 2)
+  tipo    String   @db.VarChar(255) // sueldo, inversiones, etc.
+  
+  // Category relationship
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id])
+  
+  // User relationship
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Metadata
+  source       String   @default("manual")
+  originalData Json?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([userId, fecha(sort: Desc)])
+  @@index([tipo])
+}
+
+// GASTOS DIARIOS - Daily Expenses
+model DailyExpense {
+  id      String   @id @default(cuid())
+  fecha   DateTime
+  monto   Decimal  @db.Decimal(12, 2)
+  tipo    String   @db.VarChar(255) // pan, nafta, birra, etc.
+  
+  // Category relationship
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id])
+  
+  // User relationship
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Metadata
+  source       String   @default("manual")
+  originalData Json?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([userId, fecha(sort: Desc)])
+  @@index([tipo])
+}
+
+// GASTOS EXTRAS - Extra/Irregular Expenses
+model ExtraExpense {
+  id      String   @id @default(cuid())
+  fecha   DateTime
+  monto   Decimal  @db.Decimal(12, 2)
+  tipo    String   @db.VarChar(255)
+  
+  // Category relationship
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id])
+  
+  // User relationship
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Metadata
+  source       String   @default("manual")
+  originalData Json?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([userId, fecha(sort: Desc)])
+  @@index([tipo])
+}
+
+// ============================================================================
+// CARD EXPENSES (Credit/Debit Cards)
+// ============================================================================
+
+model CardExpense {
+  id         String   @id @default(cuid())
+  fecha      DateTime
+  monto      Decimal  @db.Decimal(12, 2)
+  tipo       String   @db.VarChar(255) // description
+  
+  // Card details
+  cardType   String   @db.VarChar(50) // visa, mastercard, exc
+  
+  // Installment details (cuotas)
+  hasInstallments Boolean  @default(false)
+  currentInstallment Int?  // 1, 2, 3...
+  totalInstallments  Int?  // 3, 6, 12...
+  
+  // Category relationship
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id])
+  
+  // User relationship
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Metadata
+  source       String   @default("manual")
+  originalData Json?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([userId, fecha(sort: Desc)])
+  @@index([userId, cardType])
+  @@index([hasInstallments])
+}
+
+// ============================================================================
+// BALANCES & INVESTMENTS
+// ============================================================================
+
+// SALDOS - Account Balances (snapshots)
+model Balance {
+  id        String   @id @default(cuid())
+  fecha     DateTime // date of snapshot
+  
+  // Account types
+  accountType String  @db.VarChar(100) // mercadopago, banco, efectivo
+  saldo       Decimal @db.Decimal(12, 2)
+  
+  // User relationship
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([userId, fecha, accountType])
+  @@index([userId, fecha(sort: Desc)])
+  @@index([accountType])
+}
+
+// RENDIMIENTOS - Investment Returns
+model InvestmentReturn {
+  id       String   @id @default(cuid())
+  fecha    DateTime // date of calculation
+  reserva  String   @db.VarChar(100) // autito, emergencia, tarjeta, etc.
+  ganado   Decimal  @db.Decimal(12, 2)
+  
+  // User relationship
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([userId, fecha, reserva])
+  @@index([userId, fecha(sort: Desc)])
+  @@index([reserva])
+}
+
+// INTMP - Daily Interest/Returns (temporary interest?)
+model DailyReturn {
+  id     String   @id @default(cuid())
+  fecha  DateTime @unique
+  monto  Decimal  @db.Decimal(12, 2)
+  
+  // User relationship
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([userId, fecha])
+  @@index([userId, fecha(sort: Desc)])
+}
+
+// ============================================================================
+// SUPPORT MODELS
+// ============================================================================
+
+// CATEGORIES - Flexible categorization system
+model Category {
+  id     Int    @id @default(autoincrement())
+  nombre String @unique @db.VarChar(100)
+  tipo   String @db.VarChar(50) // expense, payment, income, daily, extra, card
+  
+  // Icon/color for UI
+  icon  String? @db.VarChar(50)
+  color String? @db.VarChar(7) // hex color
+  
+  // Relations
+  expenses       Expense[]
+  payments       Payment[]
+  incomes        Income[]
+  dailyExpenses  DailyExpense[]
+  cardExpenses   CardExpense[]
+  extraExpenses  ExtraExpense[]
+  
+  // User relationship (for custom categories)
+  userId  String?
+  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([tipo])
+  @@index([userId])
+}
+
+// ============================================================================
+// MIGRATION TRACKING
+// ============================================================================
+
+// Track which JSON files have been imported
+model ImportLog {
+  id         String   @id @default(cuid())
+  filename   String   @unique // abril2020.json
+  
+  // Import details
+  recordsImported Int
+  status          String   @db.VarChar(50) // success, failed, partial
+  errorMessage    String?  @db.Text
+  
+  // Original data backup
+  originalData Json
+  
+  importedAt DateTime @default(now())
+  
+  @@index([status])
+  @@index([importedAt(sort: Desc)])
+}

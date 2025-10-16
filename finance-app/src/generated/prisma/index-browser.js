@@ -120,55 +120,82 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.MesScalarFieldEnum = {
+exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  año: 'año',
-  mes: 'mes',
-  fechaInicio: 'fechaInicio',
-  fechaFin: 'fechaFin',
-  totalIngresos: 'totalIngresos',
-  totalGastos: 'totalGastos',
-  totalPagos: 'totalPagos',
-  saldoFinal: 'saldoFinal',
+  email: 'email',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
-  nombre: 'nombre',
+  name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.IngresoScalarFieldEnum = {
+exports.Prisma.TransactionScalarFieldEnum = {
   id: 'id',
-  mesId: 'mesId',
-  fecha: 'fecha',
-  monto: 'monto',
-  concepto: 'concepto',
+  date: 'date',
+  amount: 'amount',
+  concept: 'concept',
+  type: 'type',
+  userId: 'userId',
   categoryId: 'categoryId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
-exports.Prisma.GastoScalarFieldEnum = {
+exports.Prisma.DailyExpenseScalarFieldEnum = {
   id: 'id',
-  mesId: 'mesId',
-  fecha: 'fecha',
-  monto: 'monto',
-  concepto: 'concepto',
-  categoryId: 'categoryId',
-  createdAt: 'createdAt'
+  date: 'date',
+  amount: 'amount',
+  type: 'type',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
-exports.Prisma.PagoScalarFieldEnum = {
+exports.Prisma.BalanceScalarFieldEnum = {
   id: 'id',
-  mesId: 'mesId',
-  fecha: 'fecha',
-  monto: 'monto',
-  concepto: 'concepto',
-  categoryId: 'categoryId',
-  createdAt: 'createdAt'
+  date: 'date',
+  mercadoPagoBalance: 'mercadoPagoBalance',
+  bankBalance: 'bankBalance',
+  cashBalance: 'cashBalance',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CardExpenseScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  amount: 'amount',
+  type: 'type',
+  cardType: 'cardType',
+  installments: 'installments',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.InvestmentReturnScalarFieldEnum = {
+  id: 'id',
+  reserve: 'reserve',
+  amount: 'amount',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ExtraExpenseScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  amount: 'amount',
+  type: 'type',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -181,13 +208,25 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+exports.TransactionType = exports.$Enums.TransactionType = {
+  INCOME: 'INCOME',
+  EXPENSE: 'EXPENSE',
+  PAYMENT: 'PAYMENT'
+};
 
 exports.Prisma.ModelName = {
-  Mes: 'Mes',
+  User: 'User',
   Category: 'Category',
-  Ingreso: 'Ingreso',
-  Gasto: 'Gasto',
-  Pago: 'Pago'
+  Transaction: 'Transaction',
+  DailyExpense: 'DailyExpense',
+  Balance: 'Balance',
+  CardExpense: 'CardExpense',
+  InvestmentReturn: 'InvestmentReturn',
+  ExtraExpense: 'ExtraExpense'
 };
 
 /**

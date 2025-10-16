@@ -45,8 +45,8 @@ Start with systematic brainstorming:
 - Hono route organization (RESTful endpoints)
 - Prisma schema design (normalized data model)
 
-**Data Architecture**:
-- Entity modeling (Expense, Payment, Category, Budget)
+Data Architecture:
+- Entity modeling (User, Transaction, DailyExpense, Balance, CardExpense, InvestmentReturn, ExtraExpense, Category)
 - Relationships and foreign keys
 - Indexes for common queries
 - Soft deletes vs hard deletes
@@ -106,27 +106,34 @@ For each entity, define:
 
 **Entity Template**:
 ```prisma
-model EntityName {
+model Transaction {
   // Primary Key
-  id        String   @id @default(cuid())
+  id          String          @id @default(cuid())
   
   // Required Fields
-  field1    Type
-  field2    Type
-  
-  // Optional Fields
-  field3    Type?
+  date        DateTime
+  amount      Decimal         @db.Decimal(12, 2)
+  concept     String
+  type        TransactionType
   
   // Relationships
-  relatedEntity   Entity  @relation(fields: [entityId], references: [id])
-  entityId        String
+  userId      String
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId  Int?
+  category    Category?       @relation(fields: [categoryId], references: [id])
   
   // Timestamps
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
   
   // Indexes
-  @@index([field1, field2])
+  @@index([userId, date])
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+  PAYMENT
 }
 ```
 
@@ -347,94 +354,95 @@ PORT="3000"
 ### Prisma Schema
 ```prisma
 model User {
-  id        String    @id
-  expenses  Expense[]
-  payments  Payment[]
+  id        String    @id @default(cuid())
+  email     String    @unique
+  transactions Transaction[]
   createdAt DateTime  @default(now())
-}
-
-model Expense {
-  id        String   @id @default(cuid())
-  date      DateTime
-  amount    Decimal  @db.Decimal(10, 2)
-  concept   String   @db.VarChar(255)
-  
-  categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id])
-  
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
-  @@index([userId, date(sort: Desc)])
-  @@index([userId, categoryId])
+  updatedAt DateTime  @updatedAt
 }
 
 model Category {
   id          Int      @id @default(autoincrement())
-  nombre      String   @unique
-  
-  ingresos    Ingreso[]
-  gastos      Gasto[]
-  pagos       Pago[]
-
+  name        String   @unique
+  transactions Transaction[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Transaction {
+  id          String          @id @default(cuid())
+  date        DateTime
+  amount      Decimal         @db.Decimal(12, 2)
+  concept     String
+  type        TransactionType
+  userId      String
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId  Int?
+  category    Category?       @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@index([userId, date])
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+  PAYMENT
 }
 ```
 
 ### Hono API
 ```typescript
-// src/routes/expenses.ts
+// src/routes/transactions.ts
 import { Hono } from 'hono';
 import { zValidator } from '@hono/zod-validator';
-import { expenseSchema } from '../schemas/expense';
+import { transactionSchema } from '../schemas/transaction';
 
 const app = new Hono();
 
-// List expenses
+// List transactions
 app.get('/', async (c) => {
   const userId = c.get('userId');
-  const { startDate, endDate, category } = c.req.query();
+  const { startDate, endDate, type, category } = c.req.query();
   
-  const expenses = await prisma.expense.findMany({
+  const transactions = await prisma.transaction.findMany({
     where: {
       userId,
       date: {
         gte: startDate,
         lte: endDate
       },
-      category
+      type: type as TransactionType,
+      category: { name: category }
     },
     orderBy: { date: 'desc' }
   });
   
-  return c.html(<ExpenseList expenses={expenses} />);
+  return c.html(<TransactionList transactions={transactions} />);
 });
 
-// Create expense
-app.post('/', zValidator('form', expenseSchema), async (c) => {
+// Create transaction
+app.post('/', zValidator('form', transactionSchema), async (c) => {
   const userId = c.get('userId');
   const data = c.req.valid('form');
   
-  const expense = await prisma.expense.create({
+  const transaction = await prisma.transaction.create({
     data: { ...data, userId }
   });
   
-  return c.html(<ExpenseRow expense={expense} />);
+  return c.html(<TransactionRow transaction={transaction} />);
 });
 ```
 
 ### HTMX Template
 ```tsx
-// src/components/ExpenseForm.tsx
-export function ExpenseForm() {
+// src/components/TransactionForm.tsx
+export function TransactionForm() {
   return (
     <form 
-      hx-post="/api/expenses"
-      hx-target="#expense-list"
+      hx-post="/api/transactions"
+      hx-target="#transaction-list"
       hx-swap="afterbegin"
       class="card"
     >
@@ -453,16 +461,17 @@ export function ExpenseForm() {
             <input type="text" name="concept" class="form-control" required />
           </div>
           <div class="col-md-2">
-            <label class="form-label">Category</label>
-            <select name="category" class="form-select" required>
+            <label class="form-label">Type</label>
+            <select name="type" class="form-select" required>
               <option value="">Select...</option>
-              <option value="food">Food</option>
-              <option value="transport">Transport</option>
+              <option value="INCOME">Income</option>
+              <option value="EXPENSE">Expense</option>
+              <option value="PAYMENT">Payment</option>
             </select>
           </div>
         </div>
         <button type="submit" class="btn btn-primary mt-3">
-          Add Expense
+          Add Transaction
         </button>
       </div>
     </form>

@@ -12,7 +12,7 @@ The project is built with Bun, Hono, Hono's JSX for templating, Prisma, and Tail
         2.  `bun run --hot src/index.tsx`: This runs the Hono application with hot reloading.
 *   **Dependencies**:
     *   `hono`: The web framework.
-    *   `@prisma/client` and `prisma`: The ORM for database access.
+    *   `@prisma/client` and `prisma`: The ORM for database access, now including `User`, `Transaction`, `DailyExpense`, `Balance`, `CardExpense`, `InvestmentReturn`, and `ExtraExpense` models.
     *   `htmx.org`: For handling frontend interactions and partial page updates.
     *   `tabler-ui`, `@tabler/icons`, `@tabler/icons-webfont`: For the UI components and icons.
 *   **Dev Dependencies**:
@@ -46,7 +46,7 @@ This file is the heart of the application and contains several key implementatio
 
 ```typescript
 import { Hono } from "hono";
-import dashboardRoutes from "./api/dashboard.routes";
+import transactionRoutes from "./api/transactions.routes";
 import { serveStatic } from "hono/bun";
 import { jsxRenderer } from "hono/jsx-renderer";
 import Layout from "./components/layout";
@@ -63,8 +63,8 @@ app.use(
 // Serve the compiled stylesheet
 app.use("/output.css", serveStatic({ root: "./dist/static" }));
 
-// Register the dashboard routes
-app.route("/", dashboardRoutes);
+// Register the transaction routes
+app.route("/transactions", transactionRoutes);
 
 export default {
   port: 3001,
@@ -165,7 +165,7 @@ To get the database up and running, we use Docker Compose to manage a PostgreSQL
 
     ```bash
     cd finance-app
-    bunx prisma migrate dev --name init
+    bunx prisma migrate dev --name initial-schema
     ```
 
 *   **Verifying the Database Setup:**
@@ -174,4 +174,4 @@ To get the database up and running, we use Docker Compose to manage a PostgreSQL
     ```bash
     sudo docker exec -it finance-app-db psql -U user -d finance-app -c "\\dt"
     ```
-    You should see a list of tables including `Category`, `Gasto`, `Ingreso`, `Mes`, `Pago`, and `_prisma_migrations`.
+    You should see a list of tables including `User`, `Transaction`, `DailyExpense`, `Balance`, `CardExpense`, `InvestmentReturn`, `ExtraExpense`, `Category`, and `_prisma_migrations`.
