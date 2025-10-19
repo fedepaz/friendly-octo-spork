@@ -94,78 +94,53 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  email: 'email',
+  name: 'name',
+  email: 'email'
+};
+
+exports.Prisma.AccountScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  type: 'type',
+  currency: 'currency',
+  balance: 'balance',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
   name: 'name',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  type: 'type',
+  color: 'color'
+};
+
+exports.Prisma.RecurrenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  frequency: 'frequency',
+  totalParts: 'totalParts',
+  currentPart: 'currentPart',
+  startDate: 'startDate',
+  nextDate: 'nextDate',
+  active: 'active'
 };
 
 exports.Prisma.TransactionScalarFieldEnum = {
   id: 'id',
-  date: 'date',
-  amount: 'amount',
-  concept: 'concept',
-  type: 'type',
   userId: 'userId',
+  type: 'type',
+  amount: 'amount',
+  date: 'date',
+  description: 'description',
   categoryId: 'categoryId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.DailyExpenseScalarFieldEnum = {
-  id: 'id',
-  date: 'date',
-  amount: 'amount',
-  type: 'type',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.BalanceScalarFieldEnum = {
-  id: 'id',
-  date: 'date',
-  mercadoPagoBalance: 'mercadoPagoBalance',
-  bankBalance: 'bankBalance',
-  cashBalance: 'cashBalance',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.CardExpenseScalarFieldEnum = {
-  id: 'id',
-  date: 'date',
-  amount: 'amount',
-  type: 'type',
-  cardType: 'cardType',
-  installments: 'installments',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.InvestmentReturnScalarFieldEnum = {
-  id: 'id',
-  reserve: 'reserve',
-  amount: 'amount',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.ExtraExpenseScalarFieldEnum = {
-  id: 'id',
-  date: 'date',
-  amount: 'amount',
-  type: 'type',
-  userId: 'userId',
+  sourceAccountId: 'sourceAccountId',
+  targetAccountId: 'targetAccountId',
+  recurrenceId: 'recurrenceId',
+  metadata: 'metadata',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -173,6 +148,11 @@ exports.Prisma.ExtraExpenseScalarFieldEnum = {
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -184,21 +164,54 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
 exports.TransactionType = exports.$Enums.TransactionType = {
   INCOME: 'INCOME',
   EXPENSE: 'EXPENSE',
-  PAYMENT: 'PAYMENT'
+  TRANSFER: 'TRANSFER',
+  INVESTMENT: 'INVESTMENT',
+  RETURN: 'RETURN'
+};
+
+exports.AccountType = exports.$Enums.AccountType = {
+  BANK: 'BANK',
+  WALLET: 'WALLET',
+  CASH: 'CASH',
+  CARD: 'CARD',
+  INVESTMENT: 'INVESTMENT'
+};
+
+exports.Currency = exports.$Enums.Currency = {
+  ARS: 'ARS',
+  USD: 'USD',
+  USDT: 'USDT'
+};
+
+exports.CategoryType = exports.$Enums.CategoryType = {
+  GASTO: 'GASTO',
+  PAGO: 'PAGO',
+  INGRESO: 'INGRESO',
+  RENDIMIENTO: 'RENDIMIENTO'
+};
+
+exports.RecurrenceType = exports.$Enums.RecurrenceType = {
+  MONTHLY: 'MONTHLY',
+  WEEKLY: 'WEEKLY',
+  YEARLY: 'YEARLY',
+  INSTALLMENT: 'INSTALLMENT'
 };
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Account: 'Account',
   Category: 'Category',
-  Transaction: 'Transaction',
-  DailyExpense: 'DailyExpense',
-  Balance: 'Balance',
-  CardExpense: 'CardExpense',
-  InvestmentReturn: 'InvestmentReturn',
-  ExtraExpense: 'ExtraExpense'
+  Recurrence: 'Recurrence',
+  Transaction: 'Transaction'
 };
 /**
  * Create the Client
@@ -239,6 +252,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -247,13 +261,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// Proposed prisma.schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id                String             @id @default(cuid())\n  email             String             @unique\n  transactions      Transaction[]\n  dailyExpenses     DailyExpense[]\n  balances          Balance[]\n  cardExpenses      CardExpense[]\n  investmentReturns InvestmentReturn[]\n  extraExpenses     ExtraExpense[]\n  createdAt         DateTime           @default(now())\n  updatedAt         DateTime           @updatedAt\n}\n\nmodel Category {\n  id           Int           @id @default(autoincrement())\n  name         String        @unique\n  transactions Transaction[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Transaction {\n  id         String          @id @default(cuid())\n  date       DateTime\n  amount     Decimal         @db.Decimal(12, 2)\n  concept    String\n  type       TransactionType\n  userId     String\n  user       User            @relation(fields: [userId], references: [id], onDelete: Cascade)\n  categoryId Int?\n  category   Category?       @relation(fields: [categoryId], references: [id])\n  createdAt  DateTime        @default(now())\n  updatedAt  DateTime        @updatedAt\n\n  @@index([userId, date])\n}\n\nmodel DailyExpense {\n  id        String   @id @default(cuid())\n  date      DateTime\n  amount    Decimal  @db.Decimal(12, 2)\n  type      String?\n  userId    String\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([userId, date])\n}\n\nmodel Balance {\n  id                 String   @id @default(cuid())\n  date               DateTime\n  mercadoPagoBalance Decimal? @db.Decimal(12, 2)\n  bankBalance        Decimal? @db.Decimal(12, 2)\n  cashBalance        Decimal? @db.Decimal(12, 2)\n  userId             String\n  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  createdAt          DateTime @default(now())\n  updatedAt          DateTime @updatedAt\n\n  @@index([userId, date])\n}\n\nmodel CardExpense {\n  id           String   @id @default(cuid())\n  date         DateTime\n  amount       Decimal  @db.Decimal(12, 2)\n  type         String?\n  cardType     String // e.g., \"mastercard\", \"visa\"\n  installments String? // e.g., \"11/12\"\n  userId       String\n  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n\n  @@index([userId, date])\n}\n\nmodel InvestmentReturn {\n  id        String   @id @default(cuid())\n  reserve   String\n  amount    Decimal  @db.Decimal(12, 2)\n  userId    String\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([userId])\n}\n\nmodel ExtraExpense {\n  id        String   @id @default(cuid())\n  date      DateTime\n  amount    Decimal  @db.Decimal(12, 2)\n  type      String?\n  userId    String\n  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([userId, date])\n}\n\nenum TransactionType {\n  INCOME\n  EXPENSE\n  PAYMENT\n}\n",
-  "inlineSchemaHash": "7707f889a76cb735b62b2561f86cd1e22c460f2a4e3cd5105c00ee4a9372446e",
+  "inlineSchema": "// Proposed prisma.schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id           Int           @id @default(autoincrement())\n  name         String\n  email        String?       @unique\n  transactions Transaction[]\n  accounts     Account[]\n  categories   Category[]\n  recurrences  Recurrence[]\n}\n\nmodel Account {\n  id        Int         @id @default(autoincrement())\n  userId    Int\n  name      String\n  type      AccountType\n  currency  Currency\n  balance   Decimal     @default(0)\n  createdAt DateTime    @default(now())\n  updatedAt DateTime    @updatedAt\n\n  user             User          @relation(fields: [userId], references: [id])\n  // relaciones dobles (origen/destino) para transferencias internas\n  transactionsFrom Transaction[] @relation(\"SourceAccount\")\n  transactionsTo   Transaction[] @relation(\"TargetAccount\")\n}\n\nmodel Category {\n  id           Int           @id @default(autoincrement())\n  userId       Int\n  name         String\n  type         CategoryType\n  color        String? // opcional para UI\n  user         User          @relation(fields: [userId], references: [id])\n  transactions Transaction[]\n}\n\nmodel Recurrence {\n  id          Int            @id @default(autoincrement())\n  userId      Int\n  name        String\n  frequency   RecurrenceType\n  totalParts  Int?\n  currentPart Int?\n  startDate   DateTime\n  nextDate    DateTime?\n  active      Boolean        @default(true)\n\n  user         User          @relation(fields: [userId], references: [id])\n  transactions Transaction[]\n}\n\nmodel Transaction {\n  id              Int             @id @default(autoincrement())\n  userId          Int\n  type            TransactionType\n  amount          Decimal\n  date            DateTime\n  description     String?\n  categoryId      Int?\n  sourceAccountId Int?\n  targetAccountId Int?\n  recurrenceId    Int?\n  metadata        Json? // cuotas, tasas, observaciones\n  createdAt       DateTime        @default(now())\n  updatedAt       DateTime        @updatedAt\n\n  user          User        @relation(fields: [userId], references: [id])\n  category      Category?   @relation(fields: [categoryId], references: [id])\n  sourceAccount Account?    @relation(\"SourceAccount\", fields: [sourceAccountId], references: [id])\n  targetAccount Account?    @relation(\"TargetAccount\", fields: [targetAccountId], references: [id])\n  recurrence    Recurrence? @relation(fields: [recurrenceId], references: [id])\n}\n\n// -------- ENUMS --------\n\nenum TransactionType {\n  INCOME\n  EXPENSE\n  TRANSFER\n  INVESTMENT\n  RETURN\n}\n\nenum AccountType {\n  BANK\n  WALLET\n  CASH\n  CARD\n  INVESTMENT\n}\n\nenum Currency {\n  ARS\n  USD\n  USDT\n}\n\nenum CategoryType {\n  GASTO\n  PAGO\n  INGRESO\n  RENDIMIENTO\n}\n\nenum RecurrenceType {\n  MONTHLY\n  WEEKLY\n  YEARLY\n  INSTALLMENT\n}\n",
+  "inlineSchemaHash": "f4bb4e9a86550347108305b77e4faaef759530ff21a0132f489b6bb6bc91074b",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transactions\",\"kind\":\"object\",\"type\":\"Transaction\",\"relationName\":\"TransactionToUser\"},{\"name\":\"dailyExpenses\",\"kind\":\"object\",\"type\":\"DailyExpense\",\"relationName\":\"DailyExpenseToUser\"},{\"name\":\"balances\",\"kind\":\"object\",\"type\":\"Balance\",\"relationName\":\"BalanceToUser\"},{\"name\":\"cardExpenses\",\"kind\":\"object\",\"type\":\"CardExpense\",\"relationName\":\"CardExpenseToUser\"},{\"name\":\"investmentReturns\",\"kind\":\"object\",\"type\":\"InvestmentReturn\",\"relationName\":\"InvestmentReturnToUser\"},{\"name\":\"extraExpenses\",\"kind\":\"object\",\"type\":\"ExtraExpense\",\"relationName\":\"ExtraExpenseToUser\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Category\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transactions\",\"kind\":\"object\",\"type\":\"Transaction\",\"relationName\":\"CategoryToTransaction\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Transaction\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"concept\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"TransactionType\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"TransactionToUser\"},{\"name\":\"categoryId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToTransaction\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"DailyExpense\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"DailyExpenseToUser\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Balance\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"mercadoPagoBalance\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"bankBalance\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"cashBalance\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"BalanceToUser\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"CardExpense\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"cardType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"installments\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CardExpenseToUser\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"InvestmentReturn\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"reserve\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"InvestmentReturnToUser\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"ExtraExpense\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ExtraExpenseToUser\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transactions\",\"kind\":\"object\",\"type\":\"Transaction\",\"relationName\":\"TransactionToUser\"},{\"name\":\"accounts\",\"kind\":\"object\",\"type\":\"Account\",\"relationName\":\"AccountToUser\"},{\"name\":\"categories\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToUser\"},{\"name\":\"recurrences\",\"kind\":\"object\",\"type\":\"Recurrence\",\"relationName\":\"RecurrenceToUser\"}],\"dbName\":null},\"Account\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"AccountType\"},{\"name\":\"currency\",\"kind\":\"enum\",\"type\":\"Currency\"},{\"name\":\"balance\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AccountToUser\"},{\"name\":\"transactionsFrom\",\"kind\":\"object\",\"type\":\"Transaction\",\"relationName\":\"SourceAccount\"},{\"name\":\"transactionsTo\",\"kind\":\"object\",\"type\":\"Transaction\",\"relationName\":\"TargetAccount\"}],\"dbName\":null},\"Category\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"CategoryType\"},{\"name\":\"color\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"CategoryToUser\"},{\"name\":\"transactions\",\"kind\":\"object\",\"type\":\"Transaction\",\"relationName\":\"CategoryToTransaction\"}],\"dbName\":null},\"Recurrence\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"frequency\",\"kind\":\"enum\",\"type\":\"RecurrenceType\"},{\"name\":\"totalParts\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"currentPart\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"startDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"nextDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"RecurrenceToUser\"},{\"name\":\"transactions\",\"kind\":\"object\",\"type\":\"Transaction\",\"relationName\":\"RecurrenceToTransaction\"}],\"dbName\":null},\"Transaction\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"TransactionType\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"date\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"categoryId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"sourceAccountId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"targetAccountId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"recurrenceId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"metadata\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"TransactionToUser\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToTransaction\"},{\"name\":\"sourceAccount\",\"kind\":\"object\",\"type\":\"Account\",\"relationName\":\"SourceAccount\"},{\"name\":\"targetAccount\",\"kind\":\"object\",\"type\":\"Account\",\"relationName\":\"TargetAccount\"},{\"name\":\"recurrence\",\"kind\":\"object\",\"type\":\"Recurrence\",\"relationName\":\"RecurrenceToTransaction\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

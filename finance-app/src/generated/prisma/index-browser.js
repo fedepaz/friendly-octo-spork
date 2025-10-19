@@ -122,78 +122,53 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  email: 'email',
+  name: 'name',
+  email: 'email'
+};
+
+exports.Prisma.AccountScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  type: 'type',
+  currency: 'currency',
+  balance: 'balance',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
   name: 'name',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  type: 'type',
+  color: 'color'
+};
+
+exports.Prisma.RecurrenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  frequency: 'frequency',
+  totalParts: 'totalParts',
+  currentPart: 'currentPart',
+  startDate: 'startDate',
+  nextDate: 'nextDate',
+  active: 'active'
 };
 
 exports.Prisma.TransactionScalarFieldEnum = {
   id: 'id',
-  date: 'date',
-  amount: 'amount',
-  concept: 'concept',
-  type: 'type',
   userId: 'userId',
+  type: 'type',
+  amount: 'amount',
+  date: 'date',
+  description: 'description',
   categoryId: 'categoryId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.DailyExpenseScalarFieldEnum = {
-  id: 'id',
-  date: 'date',
-  amount: 'amount',
-  type: 'type',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.BalanceScalarFieldEnum = {
-  id: 'id',
-  date: 'date',
-  mercadoPagoBalance: 'mercadoPagoBalance',
-  bankBalance: 'bankBalance',
-  cashBalance: 'cashBalance',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.CardExpenseScalarFieldEnum = {
-  id: 'id',
-  date: 'date',
-  amount: 'amount',
-  type: 'type',
-  cardType: 'cardType',
-  installments: 'installments',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.InvestmentReturnScalarFieldEnum = {
-  id: 'id',
-  reserve: 'reserve',
-  amount: 'amount',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.ExtraExpenseScalarFieldEnum = {
-  id: 'id',
-  date: 'date',
-  amount: 'amount',
-  type: 'type',
-  userId: 'userId',
+  sourceAccountId: 'sourceAccountId',
+  targetAccountId: 'targetAccountId',
+  recurrenceId: 'recurrenceId',
+  metadata: 'metadata',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -201,6 +176,11 @@ exports.Prisma.ExtraExpenseScalarFieldEnum = {
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -212,21 +192,54 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+exports.AccountType = exports.$Enums.AccountType = {
+  BANK: 'BANK',
+  WALLET: 'WALLET',
+  CASH: 'CASH',
+  CARD: 'CARD',
+  INVESTMENT: 'INVESTMENT'
+};
+
+exports.Currency = exports.$Enums.Currency = {
+  ARS: 'ARS',
+  USD: 'USD',
+  USDT: 'USDT'
+};
+
+exports.CategoryType = exports.$Enums.CategoryType = {
+  GASTO: 'GASTO',
+  PAGO: 'PAGO',
+  INGRESO: 'INGRESO',
+  RENDIMIENTO: 'RENDIMIENTO'
+};
+
+exports.RecurrenceType = exports.$Enums.RecurrenceType = {
+  MONTHLY: 'MONTHLY',
+  WEEKLY: 'WEEKLY',
+  YEARLY: 'YEARLY',
+  INSTALLMENT: 'INSTALLMENT'
+};
+
 exports.TransactionType = exports.$Enums.TransactionType = {
   INCOME: 'INCOME',
   EXPENSE: 'EXPENSE',
-  PAYMENT: 'PAYMENT'
+  TRANSFER: 'TRANSFER',
+  INVESTMENT: 'INVESTMENT',
+  RETURN: 'RETURN'
 };
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Account: 'Account',
   Category: 'Category',
-  Transaction: 'Transaction',
-  DailyExpense: 'DailyExpense',
-  Balance: 'Balance',
-  CardExpense: 'CardExpense',
-  InvestmentReturn: 'InvestmentReturn',
-  ExtraExpense: 'ExtraExpense'
+  Recurrence: 'Recurrence',
+  Transaction: 'Transaction'
 };
 
 /**
