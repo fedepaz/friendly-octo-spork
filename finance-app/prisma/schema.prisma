@@ -6,14 +6,14 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
 }
 
 model User {
-  id           Int            @id @default(autoincrement())
+  id           String         @id @default(cuid())
   name         String
-  email        String?         @unique
+  email        String?        @unique
   transactions Transaction[]
   accounts     Account[]
   categories   Category[]
@@ -22,7 +22,7 @@ model User {
 
 model Account {
   id          Int           @id @default(autoincrement())
-  userId      Int
+  userId      String
   name        String
   type        AccountType
   currency    Currency
@@ -38,7 +38,7 @@ model Account {
 
 model Category {
   id       Int             @id @default(autoincrement())
-  userId   Int
+  userId   String
   name     String
   type     CategoryType
   color    String?          // opcional para UI
@@ -48,7 +48,7 @@ model Category {
 
 model Recurrence {
   id          Int           @id @default(autoincrement())
-  userId      Int
+  userId      String
   name        String
   frequency   RecurrenceType
   totalParts  Int?
@@ -63,7 +63,7 @@ model Recurrence {
 
 model Transaction {
   id              Int          @id @default(autoincrement())
-  userId          Int
+  userId          String
   type            TransactionType
   amount          Decimal
   date            DateTime
@@ -91,6 +91,7 @@ enum TransactionType {
   TRANSFER
   INVESTMENT
   RETURN
+  PAYMENT
 }
 
 enum AccountType {

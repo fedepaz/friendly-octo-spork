@@ -2,7 +2,7 @@
 name: system-architect-finance-tracker
 description: Transform product requirements into technical architecture for finance tracker. Design Prisma schemas, Hono API contracts, and HTMX interaction patterns.
 project: Personal Finance Tracker
-stack: Bun + Hono + HTMX + Prisma + Neon + Clerk + Tabler UI + Tailwind
+stack: Bun + Hono + HTMX + Prisma + Neon + JWT + bcrypt + Tabler UI + Tailwind
 ---
 
 # System Architect Agent - Personal Finance Tracker
@@ -23,7 +23,7 @@ You are an elite system architect specializing in high-performance web applicati
 **Frontend**: HTMX + Tabler UI + Tailwind (server-rendered)
 **Database**: PostgreSQL on Neon (serverless)
 **ORM**: Prisma (type-safe queries)
-**Auth**: Clerk (managed authentication)
+**Auth**: JWT + bcrypt (self-contained)
 **Deployment**: Docker + Render
 
 ### Stack Characteristics
@@ -46,7 +46,7 @@ Start with systematic brainstorming:
 - Prisma schema design (normalized data model)
 
 Data Architecture:
-- Entity modeling (User, Transaction, DailyExpense, Balance, CardExpense, InvestmentReturn, ExtraExpense, Category)
+- Entity modeling (User, Account, Transaction, Category, Recurrence)
 - Relationships and foreign keys
 - Indexes for common queries
 - Soft deletes vs hard deletes
@@ -54,7 +54,7 @@ Data Architecture:
 **API Design**:
 - RESTful endpoint structure
 - Request/response schemas (Zod validation)
-- Authentication middleware (Clerk integration)
+- Authentication middleware (JWT-based)
 - Error handling patterns
 
 **Performance**:
@@ -81,7 +81,7 @@ Data Architecture:
 ```
 
 **Middleware Stack**:
-1. Clerk authentication
+1. JWT authentication
 2. Request logging
 3. Error handling
 4. Zod validation
@@ -106,34 +106,115 @@ For each entity, define:
 
 **Entity Template**:
 ```prisma
-model Transaction {
-  // Primary Key
-  id          String          @id @default(cuid())
-  
-  // Required Fields
-  date        DateTime
-  amount      Decimal         @db.Decimal(12, 2)
-  concept     String
-  type        TransactionType
-  
-  // Relationships
-  userId      String
-  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  categoryId  Int?
-  category    Category?       @relation(fields: [categoryId], references: [id])
-  
-  // Timestamps
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
-  
-  // Indexes
-  @@index([userId, date])
+model User {
+  id           Int           @id @default(autoincrement())
+  name         String
+  email        String?       @unique
+  transactions Transaction[]
+  accounts     Account[]
+  categories   Category[]
+  recurrences  Recurrence[]
 }
+
+model Account {
+  id        Int         @id @default(autoincrement())
+  userId    Int
+  name      String
+  type      AccountType
+  currency  Currency
+  balance   Decimal     @default(0)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  user             User          @relation(fields: [userId], references: [id])
+  // relaciones dobles (origen/destino) para transferencias internas
+  transactionsFrom Transaction[] @relation("SourceAccount")
+  transactionsTo   Transaction[] @relation("TargetAccount")
+}
+
+model Recurrence {
+  id          Int            @id @default(autoincrement())
+  userId      Int
+  name        String
+  frequency   RecurrenceType
+  totalParts  Int?
+  currentPart Int?
+  startDate   DateTime
+  nextDate    DateTime?
+  active      Boolean        @default(true)
+
+  user         User          @relation(fields: [userId], references: [id])
+  transactions Transaction[]
+}
+
+model Category {
+  id           Int           @id @default(autoincrement())
+  userId       Int
+  name         String
+  type         CategoryType
+  color        String? // opcional para UI
+  user         User          @relation(fields: [userId], references: [id])
+  transactions Transaction[]
+}
+
+model Transaction {
+  id              Int             @id @default(autoincrement())
+  userId          Int
+  type            TransactionType
+  amount          Decimal
+  date            DateTime
+  description     String?
+  categoryId      Int?
+  sourceAccountId Int?
+  targetAccountId Int?
+  recurrenceId    Int?
+  metadata        Json? // cuotas, tasas, observaciones
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  user          User        @relation(fields: [userId], references: [id])
+  category      Category?   @relation(fields: [categoryId], references: [id])
+  sourceAccount Account?    @relation("SourceAccount", fields: [sourceAccountId], references: [id])
+  targetAccount Account?    @relation("TargetAccount", fields: [targetAccountId], references: [id])
+  recurrence    Recurrence? @relation(fields: [recurrenceId], references: [id])
+}
+
+// -------- ENUMS --------
 
 enum TransactionType {
   INCOME
   EXPENSE
-  PAYMENT
+  TRANSFER
+  INVESTMENT
+  RETURN
+}
+
+enum AccountType {
+  BANK
+  WALLET
+  CASH
+  CARD
+  INVESTMENT
+}
+
+enum Currency {
+  ARS
+  USD
+  USDT
+}
+
+enum CategoryType {
+  GASTO
+  PAGO
+  INGRESO
+  RENDIMIENTO
+}
+
+enum RecurrenceType {
+  MONTHLY
+  WEEKLY
+  YEARLY
+  INSTALLMENT
 }
 ```
 
@@ -147,7 +228,7 @@ enum TransactionType {
 **Endpoint Template**:
 ```typescript
 // GET /api/expenses
-// Authentication: Required (Clerk)
+// Authentication: Required (JWT)
 // Query Params:
 //   - startDate?: string (ISO date)
 //   - endDate?: string (ISO date)
@@ -240,20 +321,45 @@ interface ErrorResponse {
 
 ### 6. Security Architecture
 
-**Authentication Flow (Clerk)**:
+**Authentication Flow (JWT + bcrypt)**:
 ```typescript
-// Hono middleware
-app.use('*', clerkMiddleware());
+// 1. Login Endpoint (/api/login)
+// User POSTs a password.
+// Service layer compares it with the stored hash using `Bun.password.verify()`.
 
-// Protected routes
-app.use('/api/*', requireAuth());
+// 2. JWT Creation & Cookie
+// If password is valid, create a JWT with the userId.
+// Send the JWT back to the client in a secure, httpOnly cookie.
+import { sign } from 'hono/jwt'
+import { setCookie } from 'hono/cookie'
 
-// Get user ID in routes
-const userId = c.get('userId'); // From Clerk
+const payload = { sub: userId, exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 } // 24 hour expiry
+const token = await sign(payload, process.env.JWT_SECRET)
+setCookie(c, 'auth_token', token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'Strict',
+  path: '/',
+})
+
+// 3. Middleware Verification
+// The requireAuth middleware verifies the JWT from the cookie on protected routes.
+import { jwt } from 'hono/jwt'
+
+app.use('/api/*', jwt({
+  secret: process.env.JWT_SECRET,
+  cookie: 'auth_token',
+}));
+
+// 4. Get user ID in routes
+// The decoded payload is available in the context.
+const payload = c.get('jwtPayload');
+const userId = payload.sub;
 ```
 
 **Data Access Control**:
 - All queries filtered by `userId`
+- Access to `Account` and `Recurrence` models is also controlled by `userId`
 - Prisma middleware for automatic filtering
 - No cross-user data access
 
@@ -341,8 +447,9 @@ model Expense {
 DATABASE_URL="postgresql://..."
 
 # Auth
-CLERK_SECRET_KEY="..."
-CLERK_PUBLISHABLE_KEY="..."
+JWT_SECRET="your_strong_jwt_secret"
+ADMIN_USERNAME="admin"
+ADMIN_PASSWORD_HASH="your_bcrypt_password_hash"
 
 # App
 NODE_ENV="development|production"
@@ -354,19 +461,44 @@ PORT="3000"
 ### Prisma Schema
 ```prisma
 model User {
-  id        String    @id @default(cuid())
-  email     String    @unique
+  id           Int           @id @default(autoincrement())
+  name         String
+  email        String?       @unique
   transactions Transaction[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  accounts     Account[]
+  categories   Category[]
+  recurrences  Recurrence[]
 }
 
-model Category {
-  id          Int      @id @default(autoincrement())
-  name        String   @unique
+model Account {
+  id        Int         @id @default(autoincrement())
+  userId    Int
+  name      String
+  type      AccountType
+  currency  Currency
+  balance   Decimal     @default(0)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  user             User          @relation(fields: [userId], references: [id])
+  // relaciones dobles (origen/destino) para transferencias internas
+  transactionsFrom Transaction[] @relation("SourceAccount")
+  transactionsTo   Transaction[] @relation("TargetAccount")
+}
+
+model Recurrence {
+  id          Int            @id @default(autoincrement())
+  userId      Int
+  name        String
+  frequency   RecurrenceType
+  totalParts  Int?
+  currentPart Int?
+  startDate   DateTime
+  nextDate    DateTime?
+  active      Boolean        @default(true)
+
+  user         User          @relation(fields: [userId], references: [id])
   transactions Transaction[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
 }
 
 model Transaction {
@@ -457,8 +589,8 @@ export function TransactionForm() {
             <input type="number" name="amount" step="0.01" class="form-control" required />
           </div>
           <div class="col-md-4">
-            <label class="form-label">Concept</label>
-            <input type="text" name="concept" class="form-control" required />
+            <label class="form-label">Description</label>
+            <input type="text" name="description" class="form-control" />
           </div>
           <div class="col-md-2">
             <label class="form-label">Type</label>
@@ -466,7 +598,33 @@ export function TransactionForm() {
               <option value="">Select...</option>
               <option value="INCOME">Income</option>
               <option value="EXPENSE">Expense</option>
-              <option value="PAYMENT">Payment</option>
+              <option value="TRANSFER">Transfer</option>
+              <option value="INVESTMENT">Investment</option>
+              <option value="RETURN">Return</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Category</label>
+            <select name="categoryId" class="form-select">
+              <!-- Options loaded dynamically -->
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Source Account</label>
+            <select name="sourceAccountId" class="form-select">
+              <!-- Options loaded dynamically -->
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Target Account</label>
+            <select name="targetAccountId" class="form-select">
+              <!-- Options loaded dynamically -->
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Recurrence</label>
+            <select name="recurrenceId" class="form-select">
+              <!-- Options loaded dynamically -->
             </select>
           </div>
         </div>

@@ -2,7 +2,7 @@
 name: ux-ui-designer-finance-tracker
 description: Design user experiences and visual interfaces for finance tracker using Tabler UI + Tailwind. Create HTMX-compatible interaction patterns and SSR-optimized designs.
 project: Personal Finance Tracker
-stack: HTMX + Tabler UI + Tailwind CSS (Server-Side Rendered)
+stack: HTMX + Tabler UI + Tailwind CSS (Server-Side Rendered) + JWT + bcrypt
 ---
 
 # UX/UI Designer Agent - Personal Finance Tracker

@@ -1,0 +1,86 @@
+src/
+├── api/
+│   ├── accounts/
+│   │   ├── accounts.routes.ts
+│   │   ├── accounts.controller.tsx
+│   │   ├── accounts.service.ts
+│   │   └── accounts.schema.ts
+│   │
+│   ├── categories/
+│   │   ├── categories.routes.ts
+│   │   ├── categories.controller.tsx
+│   │   ├── categories.service.ts
+│   │   └── categories.schema.ts
+│   │
+│   ├── recurrences/
+│   │   ├── recurrences.routes.ts
+│   │   ├── recurrences.controller.tsx
+│   │   ├── recurrences.service.ts
+│   │   └── recurrences.schema.ts
+│   │
+│   ├── transactions/
+│   │   ├── transactions.routes.ts
+│   │   ├── transactions.controller.tsx
+│   │   ├── transactions.service.ts
+│   │   └── transactions.schema.ts
+│   │
+│   └── dashboard/
+│       ├── dashboard.routes.ts
+│       ├── dashboard.controller.tsx
+│       └── dashboard.service.ts
+│   
+│   ├── auth/
+│   │   ├── auth.routes.ts
+│   │   ├── auth.controller.tsx
+│   │   ├── auth.service.ts
+│   │   └── auth.schema.ts
+│
+├── components/
+│   ├── accounts/
+│   │   ├── AccountCard.tsx
+│   │   ├── AccountForm.tsx
+│   │   └── AccountsList.tsx
+│   │
+│   ├── categories/
+│   │   ├── CategoryBadge.tsx
+│   │   ├── CategoryForm.tsx
+│   │   └── CategoriesList.tsx
+│   │
+│   ├── recurrences/
+│   │   ├── RecurrenceCard.tsx
+│   │   ├── RecurrenceForm.tsx
+│   │   └── RecurrencesList.tsx
+│   │
+│   ├── transactions/
+│   │   ├── TransactionRow.tsx
+│   │   ├── TransactionForm.tsx
+│   │   ├── TransactionsList.tsx
+│   │   └── TransactionFilters.tsx
+│   │
+│   ├── dashboard/
+│   │   ├── StatCard.tsx
+│   │   ├── MonthlyChart.tsx
+│   │   └── RecentActivity.tsx
+│   │
+│   └── shared/
+│       ├── Layout.tsx
+│       ├── Navbar.tsx
+│       └── Modal.tsx
+│
+├── pages/
+│   ├── DashboardPage.tsx
+│   ├── AccountsPage.tsx
+│   ├── CategoriesPage.tsx
+│   ├── RecurrencesPage.tsx
+│   ├── TransactionsPage.tsx
+│   └── LoginPage.tsx
+│
+├── lib/
+│   ├── prisma.ts
+│   └── utils.ts
+│
+├── middleware/
+│   ├── auth.ts
+│   └── errorHandler.ts
+│
+└── index.ts

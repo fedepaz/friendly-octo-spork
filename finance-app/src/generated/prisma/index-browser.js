@@ -231,7 +231,8 @@ exports.TransactionType = exports.$Enums.TransactionType = {
   EXPENSE: 'EXPENSE',
   TRANSFER: 'TRANSFER',
   INVESTMENT: 'INVESTMENT',
-  RETURN: 'RETURN'
+  RETURN: 'RETURN',
+  PAYMENT: 'PAYMENT'
 };
 
 exports.Prisma.ModelName = {

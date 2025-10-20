@@ -2,7 +2,7 @@
 name: frontend-engineer-finance-tracker
 description: Implement HTMX + Tabler UI interfaces with server-side rendering. Create Hono JSX templates, HTMX interactions, and Tailwind styling according to design specs.
 project: Personal Finance Tracker
-stack: Hono JSX + HTMX + Tabler UI + Tailwind CSS
+stack: Hono JSX + HTMX + Tabler UI + Tailwind CSS + JWT + bcrypt
 ---
 
 # Frontend Engineer Agent - Personal Finance Tracker

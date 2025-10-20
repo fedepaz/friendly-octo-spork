@@ -18,6 +18,8 @@ Your testing approach changes based on what you're testing:
 - Prisma database operations
 - Business logic and calculations
 - Authentication/authorization flows
+- Data migration process and data integrity
+- New Prisma models (Account, Recurrence) and their interactions
 
 ### Frontend Testing Context  
 - HTMX interactions
@@ -54,55 +56,69 @@ describe('Expense API', () => {
   beforeEach(async () => {
     // Setup test user and data
     testUserId = 'test-user-123';
-    await prisma.expense.deleteMany({ where: { userId: testUserId } });
+    await prisma.transaction.deleteMany({ where: { userId: testUserId } });
+    await prisma.account.deleteMany({ where: { userId: testUserId } });
+    await prisma.category.deleteMany({ where: { userId: testUserId } });
+    await prisma.recurrence.deleteMany({ where: { userId: testUserId } });
+    await prisma.user.deleteMany({ where: { id: testUserId } });
   });
   
   afterEach(async () => {
     // Cleanup
-    await prisma.expense.deleteMany({ where: { userId: testUserId } });
+    await prisma.transaction.deleteMany({ where: { userId: testUserId } });
+    await prisma.account.deleteMany({ where: { userId: testUserId } });
+    await prisma.category.deleteMany({ where: { userId: testUserId } });
+    await prisma.recurrence.deleteMany({ where: { userId: testUserId } });
+    await prisma.user.deleteMany({ where: { id: testUserId } });
   });
   
   describe('POST /api/expenses', () => {
     it('should create expense with valid data', async () => {
+      const user = await prisma.user.create({ data: { id: testUserId, name: 'Test User' } });
+      const category = await prisma.category.create({ data: { userId: user.id, name: 'Lunch', type: 'EXPENSE' } });
+      const account = await prisma.account.create({ data: { userId: user.id, name: 'Cash', type: 'CASH', currency: 'ARS' } });
+
       const res = await app.request('/api/expenses', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getTestToken(testUserId)}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           date: '2025-10-06',
           amount: 27.04,
-          concept: 'Lunch',
-          categoryId: 1 // Assuming category with ID 1 exists
+          description: 'Lunch',
+          categoryId: category.id,
+          sourceAccountId: account.id
         })
       });
       
       expect(res.status).toBe(201);
       
-      const expense = await prisma.expense.findFirst({
-        where: { userId: testUserId }
+      const transaction = await prisma.transaction.findFirst({
+        where: { userId: user.id }
       });
       
-      expect(expense).toBeDefined();
-      expect(expense?.concept).toBe('Lunch');
-      expect(Number(expense?.amount)).toBe(27.04);
+      expect(transaction).toBeDefined();
+      expect(transaction?.description).toBe('Lunch');
+      expect(Number(transaction?.amount)).toBe(27.04);
     });
     
     it('should reject invalid amount', async () => {
-      const foodCategory = await prisma.category.create({ data: { nombre: 'food' } });
+      const user = await prisma.user.create({ data: { id: testUserId, name: 'Test User' } });
+      const category = await prisma.category.create({ data: { userId: user.id, name: 'Food', type: 'EXPENSE' } });
+      const account = await prisma.account.create({ data: { userId: user.id, name: 'Cash', type: 'CASH', currency: 'ARS' } });
 
       const res = await app.request('/api/expenses', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getTestToken(testUserId)}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           date: '2025-10-06',
           amount: -10, // Invalid: negative
-          concept: 'Test',
-          categoryId: foodCategory.id
+          description: 'Test',
+          categoryId: category.id,
+          sourceAccountId: account.id
         })
       });
       
@@ -112,15 +128,18 @@ describe('Expense API', () => {
     });
     
     it('should require authentication', async () => {
-      const foodCategory = await prisma.category.create({ data: { nombre: 'food' } });
+      const user = await prisma.user.create({ data: { id: testUserId, name: 'Test User' } });
+      const category = await prisma.category.create({ data: { userId: user.id, name: 'Food', type: 'EXPENSE' } });
+      const account = await prisma.account.create({ data: { userId: user.id, name: 'Cash', type: 'CASH', currency: 'ARS' } });
 
       const res = await app.request('/api/expenses', {
         method: 'POST',
         body: JSON.stringify({
           date: '2025-10-06',
           amount: 10,
-          concept: 'Test',
-          categoryId: foodCategory.id
+          description: 'Test',
+          categoryId: category.id,
+          sourceAccountId: account.id
         })
       });
       
@@ -130,45 +149,50 @@ describe('Expense API', () => {
   
   describe('GET /api/expenses', () => {
     it('should list user expenses only', async () => {
-      const foodCategory = await prisma.category.create({ data: { nombre: 'food' } });
-      const transportCategory = await prisma.category.create({ data: { nombre: 'transport' } });
+      const user = await prisma.user.create({ data: { id: testUserId, name: 'Test User' } });
+      const foodCategory = await prisma.category.create({ data: { userId: user.id, name: 'food', type: 'EXPENSE' } });
+      const transportCategory = await prisma.category.create({ data: { userId: user.id, name: 'transport', type: 'EXPENSE' } });
+      const account = await prisma.account.create({ data: { userId: user.id, name: 'Cash', type: 'CASH', currency: 'ARS' } });
 
       // Create expenses for test user
-      await prisma.expense.createMany({
+      await prisma.transaction.createMany({
         data: [
           {
-            userId: testUserId,
+            userId: user.id,
             date: new Date('2025-10-01'),
             amount: 50,
-            concept: 'Expense 1',
-            categoryId: foodCategory.id
+            description: 'Expense 1',
+            categoryId: foodCategory.id,
+            sourceAccountId: account.id,
+            type: 'EXPENSE'
           },
           {
-            userId: testUserId,
+            userId: user.id,
             date: new Date('2025-10-02'),
             amount: 30,
-            concept: 'Expense 2',
-            categoryId: transportCategory.id
+            description: 'Expense 2',
+            categoryId: transportCategory.id,
+            sourceAccountId: account.id,
+            type: 'EXPENSE'
           }
         ]
       });
       
       // Create expense for different user
-      await prisma.expense.create({
+      const otherUser = await prisma.user.create({ data: { id: 'other-user', name: 'Other User' } });
+      await prisma.transaction.create({
         data: {
-          userId: 'other-user',
+          userId: otherUser.id,
           date: new Date('2025-10-01'),
           amount: 100,
-          concept: 'Other User Expense',
-          categoryId: foodCategory.id
+          description: 'Other User Expense',
+          categoryId: foodCategory.id,
+          sourceAccountId: account.id,
+          type: 'EXPENSE'
         }
       });
       
-      const res = await app.request('/api/expenses', {
-        headers: {
-          'Authorization': `Bearer ${getTestToken(testUserId)}`
-        }
-      });
+      const res = await app.request('/api/expenses', {});
       
       expect(res.status).toBe(200);
       const html = await res.text();
@@ -182,21 +206,19 @@ describe('Expense API', () => {
     });
     
     it('should filter by category', async () => {
-      const foodCategory = await prisma.category.create({ data: { nombre: 'food' } });
-      const transportCategory = await prisma.category.create({ data: { nombre: 'transport' } });
+      const user = await prisma.user.create({ data: { id: testUserId, name: 'Test User' } });
+      const foodCategory = await prisma.category.create({ data: { userId: user.id, name: 'food', type: 'EXPENSE' } });
+      const transportCategory = await prisma.category.create({ data: { userId: user.id, name: 'transport', type: 'EXPENSE' } });
+      const account = await prisma.account.create({ data: { userId: user.id, name: 'Cash', type: 'CASH', currency: 'ARS' } });
 
-      await prisma.expense.createMany({
+      await prisma.transaction.createMany({
         data: [
-          { userId: testUserId, date: new Date(), amount: 50, concept: 'Food', categoryId: foodCategory.id },
-          { userId: testUserId, date: new Date(), amount: 30, concept: 'Bus', categoryId: transportCategory.id }
+          { userId: user.id, date: new Date(), amount: 50, description: 'Food', categoryId: foodCategory.id, sourceAccountId: account.id, type: 'EXPENSE' },
+          { userId: user.id, date: new Date(), amount: 30, description: 'Bus', categoryId: transportCategory.id, sourceAccountId: account.id, type: 'EXPENSE' }
         ]
       });
       
-      const res = await app.request(`/api/expenses?categoryId=${foodCategory.id}`, {
-        headers: {
-          'Authorization': `Bearer ${getTestToken(testUserId)}`
-        }
-      });
+      const res = await app.request(`/api/expenses?categoryId=${foodCategory.id}`);
       
       const html = await res.text();
       expect(html).toContain('Food');
@@ -204,20 +226,18 @@ describe('Expense API', () => {
     });
     
     it('should filter by date range', async () => {
-      const foodCategory = await prisma.category.create({ data: { nombre: 'food' } });
+      const user = await prisma.user.create({ data: { id: testUserId, name: 'Test User' } });
+      const foodCategory = await prisma.category.create({ data: { userId: user.id, name: 'food', type: 'EXPENSE' } });
+      const account = await prisma.account.create({ data: { userId: user.id, name: 'Cash', type: 'CASH', currency: 'ARS' } });
 
-      await prisma.expense.createMany({
+      await prisma.transaction.createMany({
         data: [
-          { userId: testUserId, date: new Date('2025-10-01'), amount: 50, concept: 'Old', categoryId: foodCategory.id },
-          { userId: testUserId, date: new Date('2025-10-15'), amount: 30, concept: 'New', categoryId: foodCategory.id }
+          { userId: user.id, date: new Date('2025-10-01'), amount: 50, description: 'Old', categoryId: foodCategory.id, sourceAccountId: account.id, type: 'EXPENSE' },
+          { userId: user.id, date: new Date('2025-10-15'), amount: 30, description: 'New', categoryId: foodCategory.id, sourceAccountId: account.id, type: 'EXPENSE' }
         ]
       });
       
-      const res = await app.request('/api/expenses?startDate=2025-10-10', {
-        headers: {
-          'Authorization': `Bearer ${getTestToken(testUserId)}`
-        }
-      });
+      const res = await app.request('/api/expenses?startDate=2025-10-10');
       
       const html = await res.text();
       expect(html).not.toContain('Old');
@@ -227,59 +247,66 @@ describe('Expense API', () => {
   
   describe('PUT /api/expenses/:id', () => {
     it('should update own expense', async () => {
-      const foodCategory = await prisma.category.create({ data: { nombre: 'food' } });
+      const user = await prisma.user.create({ data: { id: testUserId, name: 'Test User' } });
+      const foodCategory = await prisma.category.create({ data: { userId: user.id, name: 'food', type: 'EXPENSE' } });
+      const account = await prisma.account.create({ data: { userId: user.id, name: 'Cash', type: 'CASH', currency: 'ARS' } });
 
-      const expense = await prisma.expense.create({
+      const transaction = await prisma.transaction.create({
         data: {
-          userId: testUserId,
+          userId: user.id,
           date: new Date(),
           amount: 50,
-          concept: 'Original',
-          categoryId: foodCategory.id
+          description: 'Original',
+          categoryId: foodCategory.id,
+          sourceAccountId: account.id,
+          type: 'EXPENSE'
         }
       });
       
-      const res = await app.request(`/api/expenses/${expense.id}`, {
+      const res = await app.request(`/api/expenses/${transaction.id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getTestToken(testUserId)}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          concept: 'Updated'
+          description: 'Updated'
         })
       });
       
       expect(res.status).toBe(200);
       
-      const updated = await prisma.expense.findUnique({
-        where: { id: expense.id }
+      const updated = await prisma.transaction.findUnique({
+        where: { id: transaction.id }
       });
       
-      expect(updated?.concept).toBe('Updated');
+      expect(updated?.description).toBe('Updated');
     });
     
     it('should not update other user expense', async () => {
-      const foodCategory = await prisma.category.create({ data: { nombre: 'food' } });
+      const user = await prisma.user.create({ data: { id: testUserId, name: 'Test User' } });
+      const foodCategory = await prisma.category.create({ data: { userId: user.id, name: 'food', type: 'EXPENSE' } });
+      const account = await prisma.account.create({ data: { userId: user.id, name: 'Cash', type: 'CASH', currency: 'ARS' } });
 
-      const expense = await prisma.expense.create({
+      const otherUser = await prisma.user.create({ data: { id: 'other-user', name: 'Other User' } });
+      const transaction = await prisma.transaction.create({
         data: {
-          userId: 'other-user',
+          userId: otherUser.id,
           date: new Date(),
           amount: 50,
-          concept: 'Other',
-          categoryId: foodCategory.id
+          description: 'Other',
+          categoryId: foodCategory.id,
+          sourceAccountId: account.id,
+          type: 'EXPENSE'
         }
       });
       
-      const res = await app.request(`/api/expenses/${expense.id}`, {
+      const res = await app.request(`/api/expenses/${transaction.id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getTestToken(testUserId)}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          concept: 'Hacked'
+          description: 'Hacked'
         })
       });
       
@@ -289,29 +316,30 @@ describe('Expense API', () => {
   
   describe('DELETE /api/expenses/:id', () => {
     it('should delete own expense', async () => {
-      const foodCategory = await prisma.category.create({ data: { nombre: 'food' } });
+      const user = await prisma.user.create({ data: { id: testUserId, name: 'Test User' } });
+      const foodCategory = await prisma.category.create({ data: { userId: user.id, name: 'food', type: 'EXPENSE' } });
+      const account = await prisma.account.create({ data: { userId: user.id, name: 'Cash', type: 'CASH', currency: 'ARS' } });
 
-      const expense = await prisma.expense.create({
+      const transaction = await prisma.transaction.create({
         data: {
-          userId: testUserId,
+          userId: user.id,
           date: new Date(),
           amount: 50,
-          concept: 'To Delete',
-          categoryId: foodCategory.id
+          description: 'To Delete',
+          categoryId: foodCategory.id,
+          sourceAccountId: account.id,
+          type: 'EXPENSE'
         }
       });
       
-      const res = await app.request(`/api/expenses/${expense.id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${getTestToken(testUserId)}`
-        }
+      const res = await app.request(`/api/expenses/${transaction.id}`, {
+        method: 'DELETE'
       });
       
       expect(res.status).toBe(204);
       
-      const deleted = await prisma.expense.findUnique({
-        where: { id: expense.id }
+      const deleted = await prisma.transaction.findUnique({
+        where: { id: transaction.id }
       });
       
       expect(deleted).toBeNull();
@@ -319,12 +347,6 @@ describe('Expense API', () => {
   });
 });
 
-// Test helpers
-function getTestToken(userId: string): string {
-  // Mock Clerk token for testing
-  // In real tests, use Clerk test API
-  return `test-token-${userId}`;
-}
 ```
 
 ### Business Logic Testing
@@ -337,37 +359,45 @@ import { prisma } from '../../src/lib/prisma';
 
 describe('BudgetService', () => {
   let service: BudgetService;
-  let testUserId: string;
+  let testUserId: number;
   
   beforeEach(async () => {
-    testUserId = 'test-user-123';
+    await prisma.transaction.deleteMany();
+    await prisma.account.deleteMany();
+    await prisma.category.deleteMany();
+    await prisma.recurrence.deleteMany();
+    await prisma.user.deleteMany();
+
+    const user = await prisma.user.create({ data: { name: 'Test User' } });
+    testUserId = user.id;
     service = new BudgetService();
-    
-    // Clean test data
-    await prisma.expense.deleteMany({ where: { userId: testUserId } });
-    await prisma.budget.deleteMany({ where: { userId: testUserId } });
   });
   
   describe('calculateMonthlySpending', () => {
     it('should calculate total spending for month', async () => {
-      const foodCategory = await prisma.category.create({ data: { nombre: 'food' } });
-      const transportCategory = await prisma.category.create({ data: { nombre: 'transport' } });
+      const foodCategory = await prisma.category.create({ data: { userId: testUserId, name: 'food', type: 'EXPENSE' } });
+      const transportCategory = await prisma.category.create({ data: { userId: testUserId, name: 'transport', type: 'EXPENSE' } });
+      const account = await prisma.account.create({ data: { userId: testUserId, name: 'Cash', type: 'CASH', currency: 'ARS' } });
 
-      await prisma.expense.createMany({
+      await prisma.transaction.createMany({
         data: [
           {
             userId: testUserId,
             date: new Date('2025-10-05'),
             amount: 100,
-            concept: 'Test 1',
-            categoryId: foodCategory.id
+            description: 'Test 1',
+            categoryId: foodCategory.id,
+            sourceAccountId: account.id,
+            type: 'EXPENSE'
           },
           {
             userId: testUserId,
             date: new Date('2025-10-10'),
             amount: 50,
-            concept: 'Test 2',
-            categoryId: transportCategory.id
+            description: 'Test 2',
+            categoryId: transportCategory.id,
+            sourceAccountId: account.id,
+            type: 'EXPENSE'
           }
         ]
       });
@@ -381,23 +411,28 @@ describe('BudgetService', () => {
     });
     
     it('should not include previous month expenses', async () => {
-      const foodCategory = await prisma.category.create({ data: { nombre: 'food' } });
+      const foodCategory = await prisma.category.create({ data: { userId: testUserId, name: 'food', type: 'EXPENSE' } });
+      const account = await prisma.account.create({ data: { userId: testUserId, name: 'Cash', type: 'CASH', currency: 'ARS' } });
 
-      await prisma.expense.createMany({
+      await prisma.transaction.createMany({
         data: [
           {
             userId: testUserId,
             date: new Date('2025-09-30'), // Previous month
             amount: 100,
-            concept: 'Old',
-            categoryId: foodCategory.id
+            description: 'Old',
+            categoryId: foodCategory.id,
+            sourceAccountId: account.id,
+            type: 'EXPENSE'
           },
           {
             userId: testUserId,
             date: new Date('2025-10-01'), // Current month
             amount: 50,
-            concept: 'New',
-            categoryId: foodCategory.id
+            description: 'New',
+            categoryId: foodCategory.id,
+            sourceAccountId: account.id,
+            type: 'EXPENSE'
           }
         ]
       });
@@ -413,7 +448,8 @@ describe('BudgetService', () => {
   
   describe('getBudgetStatus', () => {
     it('should return budget status with remaining amount', async () => {
-      const foodCategory = await prisma.category.create({ data: { nombre: 'food' } });
+      const foodCategory = await prisma.category.create({ data: { userId: testUserId, name: 'food', type: 'EXPENSE' } });
+      const account = await prisma.account.create({ data: { userId: testUserId, name: 'Cash', type: 'CASH', currency: 'ARS' } });
 
       // Set budget
       await prisma.budget.create({
@@ -429,7 +465,7 @@ describe('BudgetService', () => {
       const status = await service.getBudgetStatus(
         testUserId,
         new Date('2025-10-01'),
-        foodCategory.nombre
+        foodCategory.name
       );
       
       expect(status.limit).toBe(500);
@@ -440,7 +476,8 @@ describe('BudgetService', () => {
     });
     
     it('should detect over budget status', async () => {
-      const foodCategory = await prisma.category.create({ data: { nombre: 'food' } });
+      const foodCategory = await prisma.category.create({ data: { userId: testUserId, name: 'food', type: 'EXPENSE' } });
+      const account = await prisma.account.create({ data: { userId: testUserId, name: 'Cash', type: 'CASH', currency: 'ARS' } });
 
       await prisma.budget.create({
         data: {
@@ -455,7 +492,7 @@ describe('BudgetService', () => {
       const status = await service.getBudgetStatus(
         testUserId,
         new Date('2025-10-01'),
-        foodCategory.nombre
+        foodCategory.name
       );
       
       expect(status.remaining).toBe(-100);
@@ -465,7 +502,7 @@ describe('BudgetService', () => {
 });
 ```
 
-## Frontend Testing (HTMX + HTML)
+### Frontend Testing (HTMX + HTML)
 
 ### Component HTML Testing
 
@@ -473,23 +510,33 @@ describe('BudgetService', () => {
 // tests/components/ExpenseRow.test.ts
 import { describe, it, expect } from 'bun:test';
 import { ExpenseRow } from '../../src/components/ExpenseRow';
-import type { Expense } from '@prisma/client';
+import type { Transaction, Category, Account } from '@prisma/client';
 
 describe('ExpenseRow Component', () => {
   it('should render expense data correctly', () => {
-    const expense: Expense & { category: Category } = {
-      id: '123',
-      userId: 'user-1',
+    const user = { id: 1, name: 'Test User' };
+    const category: Category = { id: 1, userId: user.id, name: 'food', type: 'EXPENSE', color: 'blue' };
+    const account: Account = { id: 1, userId: user.id, name: 'Cash', type: 'CASH', currency: 'ARS', balance: 0, createdAt: new Date(), updatedAt: new Date() };
+
+    const transaction: Transaction & { category: Category, sourceAccount: Account } = {
+      id: 1,
+      userId: user.id,
       date: new Date('2025-10-06'),
       amount: new Prisma.Decimal('27.04'),
-      concept: 'Lunch at cafe',
-      categoryId: 1,
-      category: { id: 1, nombre: 'food', createdAt: new Date(), updatedAt: new Date() },
+      description: 'Lunch at cafe',
+      categoryId: category.id,
+      category: category,
+      sourceAccountId: account.id,
+      sourceAccount: account,
+      targetAccountId: null,
+      recurrenceId: null,
+      type: 'EXPENSE',
+      metadata: null,
       createdAt: new Date(),
       updatedAt: new Date()
     };
     
-    const html = ExpenseRow({ expense });
+    const html = ExpenseRow({ transaction });
     
     // Check content
     expect(html).toContain('Lunch at cafe');
@@ -497,29 +544,33 @@ describe('ExpenseRow Component', () => {
     expect(html).toContain('food');
     
     // Check HTMX attributes
-    expect(html).toContain('hx-get="/api/expenses/123/edit"');
-    expect(html).toContain('hx-delete="/api/expenses/123"');
+    expect(html).toContain('hx-get="/api/expenses/1/edit"');
+    expect(html).toContain('hx-delete="/api/expenses/1"');
     expect(html).toContain('hx-target="closest tr"');
   });
   
-  it('should format date correctly', () => {
-    const expense = createTestExpense({
-      date: new Date('2025-10-06')
-    });
+  it('should format date correctly', async () => {
+    const user = { id: 1, name: 'Test User' };
+    const category: Category = { id: 1, userId: user.id, name: 'food', type: 'EXPENSE', color: 'blue' };
+    const account: Account = { id: 1, userId: user.id, name: 'Cash', type: 'CASH', currency: 'ARS', balance: 0, createdAt: new Date(), updatedAt: new Date() };
+
+    const transaction = createTestTransaction({ date: new Date('2025-10-06'), userId: user.id, categoryId: category.id, sourceAccountId: account.id, type: 'EXPENSE' });
     
-    const html = ExpenseRow({ expense });
+    const html = ExpenseRow({ transaction });
     expect(html).toContain('Oct 6'); // Or your date format
   });
   
   it('should apply correct category badge color', async () => {
-    const foodCategory = await prisma.category.create({ data: { nombre: 'food' } });
-    const transportCategory = await prisma.category.create({ data: { nombre: 'transport' } });
+    const user = await prisma.user.create({ data: { id: 1, name: 'Test User' } });
+    const foodCategory = await prisma.category.create({ data: { userId: user.id, name: 'food', type: 'EXPENSE', color: 'yellow' } });
+    const transportCategory = await prisma.category.create({ data: { userId: user.id, name: 'transport', type: 'EXPENSE', color: 'blue' } });
+    const account = await prisma.account.create({ data: { userId: user.id, name: 'Cash', type: 'CASH', currency: 'ARS' } });
 
-    const foodExpense = createTestExpense({ categoryId: foodCategory.id, category: foodCategory });
-    const transportExpense = createTestExpense({ categoryId: transportCategory.id, category: transportCategory });
+    const foodTransaction = createTestTransaction({ categoryId: foodCategory.id, category: foodCategory, userId: user.id, sourceAccountId: account.id, type: 'EXPENSE' });
+    const transportTransaction = createTestTransaction({ categoryId: transportCategory.id, category: transportCategory, userId: user.id, sourceAccountId: account.id, type: 'EXPENSE' });
     
-    expect(ExpenseRow({ expense: foodExpense })).toContain('bg-yellow');
-    expect(ExpenseRow({ expense: transportExpense })).toContain('bg-blue');
+    expect(ExpenseRow({ transaction: foodTransaction })).toContain('bg-yellow');
+    expect(ExpenseRow({ transaction: transportTransaction })).toContain('bg-blue');
   });
 });
 ```
@@ -544,9 +595,12 @@ describe('Expense Form HTMX Interactions', () => {
           <form hx-post="/api/expenses" hx-target="#expense-list">
             <input name="date" value="2025-10-06">
             <input name="amount" value="27.04">
-            <input name="concept" value="Test">
+            <input name="description" value="Test">
             <select name="categoryId">
               <option value="1" selected>Food</option>
+            </select>
+            <select name="sourceAccountId">
+              <option value="1" selected>Cash</option>
             </select>
             <button type="submit">Add</button>
           </form>
@@ -568,11 +622,12 @@ describe('Expense Form HTMX Interactions', () => {
     const form = document.querySelector('form');
     const inputs = form?.querySelectorAll('input, select');
     
-    expect(inputs?.length).toBeGreaterThanOrEqual(4);
+    expect(inputs?.length).toBeGreaterThanOrEqual(5);
     expect(form?.querySelector('[name="date"]')).toBeDefined();
     expect(form?.querySelector('[name="amount"]')).toBeDefined();
-    expect(form?.querySelector('[name="concept"]')).toBeDefined();
+    expect(form?.querySelector('[name="description"]')).toBeDefined();
     expect(form?.querySelector('[name="categoryId"]')).toBeDefined();
+    expect(form?.querySelector('[name="sourceAccountId"]')).toBeDefined();
   });
 });
 ```
@@ -594,8 +649,9 @@ test.describe('Expense Tracking Flow', () => {
     // Fill expense form
     await page.fill('[name="date"]', '2025-10-06');
     await page.fill('[name="amount"]', '27.04');
-    await page.fill('[name="concept"]', 'E2E Test Lunch');
+    await page.fill('[name="description"]', 'E2E Test Lunch');
     await page.selectOption('[name="categoryId"]', '1');
+    await page.selectOption('[name="sourceAccountId"]', '1');
     
     // Submit form
     await page.click('button[type="submit"]');
@@ -619,10 +675,10 @@ test.describe('Expense Tracking Flow', () => {
     await firstRow.locator('button:has-text("Edit")').click();
     
     // Wait for inline edit mode
-    await page.waitForSelector('tr input[name="concept"]');
+    await page.waitForSelector('tr input[name="description"]');
     
-    // Update concept
-    await page.fill('tr input[name="concept"]', 'Updated Concept');
+    // Update description
+    await page.fill('tr input[name="description"]', 'Updated Concept');
     await page.selectOption('tr select[name="categoryId"]', '2');
     
     // Save
@@ -655,7 +711,7 @@ test.describe('Expense Tracking Flow', () => {
     await page.goto('http://localhost:3000/expenses');
     
     const firstRow = page.locator('#expense-list tr').first();
-    const concept = await firstRow.locator('td').nth(1).textContent();
+    const description = await firstRow.locator('td').nth(1).textContent();
     
     // Setup dialog handler
     page.on('dialog', dialog => dialog.accept());
@@ -664,10 +720,10 @@ test.describe('Expense Tracking Flow', () => {
     await firstRow.locator('button:has-text("Delete")').click();
     
     // Wait for row to disappear
-    await page.waitForSelector(`#expense-list tr:has-text("${concept}")`, { state: 'detached' });
+    await page.waitForSelector(`#expense-list tr:has-text("${description}")`, { state: 'detached' });
     
     // Verify expense gone
-    await expect(page.locator(`#expense-list tr:has-text("${concept}")`)).not.toBeVisible();
+    await expect(page.locator(`#expense-list tr:has-text("${description}")`)).not.toBeVisible();
   });
   
   test('should show validation errors', async ({ page }) => {
@@ -745,6 +801,12 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  // Clean database
+  await prisma.transaction.deleteMany();
+  await prisma.account.deleteMany();
+  await prisma.category.deleteMany();
+  await prisma.recurrence.deleteMany();
+  await prisma.user.deleteMany();
   // Disconnect Prisma
   await prisma.$disconnect();
 });

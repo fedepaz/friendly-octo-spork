@@ -72,35 +72,35 @@ When the user asks me to **commit, push, or otherwise save new work**, I will ex
 ## Agent Roster
 
 ### 1. Product Manager
-- **Name:** `product-manager-finance-tracker`
+- **Name:** `pm_agent_finance`
 - **Description:** Transform finance tracking requirements into structured product plans. Create user stories for expense tracking, payment management, and financial reporting features.
 
 ### 2. System Architect
-- **Name:** `system-architect-finance-tracker`
+- **Name:** `architect_agent_finance`
 - **Description:** Transform product requirements into technical architecture for finance tracker. Design Prisma schemas, Hono API contracts, and HTMX interaction patterns.
 
 ### 3. Backend Engineer
-- **Name:** `backend-engineer-finance-tracker`
+- **Name:** `backend_agent_finance`
 - **Description:** Implement Hono APIs, Prisma models, and business logic for finance tracker. Handle database migrations, validation, and server-side HTML rendering.
 
 ### 4. Frontend Engineer
-- **Name:** `frontend-engineer-finance-tracker`
+- **Name:** `frontend_agent_finance`
 - **Description:** Implement HTMX + Tabler UI interfaces with server-side rendering. Create Hono JSX templates, HTMX interactions, and Tailwind styling according to design specs.
 
 ### 5. DevOps Engineer
-- **Name:** `devops-engineer-finance-tracker`
+- **Name:** `devops_agent_finance`
 - **Description:** Handle containerization, deployment, and infrastructure for finance tracker. Focus on Docker setup and Render deployment with Neon database.
 
 ### 6. QA & Test Engineer
-- **Name:** `qa-test-engineer-finance-tracker`
+- **Name:** `qa_agent_finance`
 - **Description:** Test automation for Bun + Hono + HTMX stack. Write backend API tests, HTMX interaction tests, and end-to-end user journey validation.
 
 ### 7. Security Analyst
-- **Name:** `security-analyst-finance-tracker`
+- **Name:** `security_agent_finance`
 - **Description:** Security analysis for Bun + Hono + Prisma + Clerk stack. Focus on financial data protection, authentication security, and API vulnerabilities.
 
 ### 8. UX/UI Designer
-- **Name:** `ux-ui-designer-finance-tracker`
+- **Name:** `ux_agent_finance`
 - **Description:** Design user experiences and visual interfaces for finance tracker using Tabler UI + Tailwind. Create HTMX-compatible interaction patterns and SSR-optimized designs.
 
 ---

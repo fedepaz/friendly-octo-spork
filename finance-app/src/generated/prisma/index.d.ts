@@ -48,7 +48,8 @@ export namespace $Enums {
   EXPENSE: 'EXPENSE',
   TRANSFER: 'TRANSFER',
   INVESTMENT: 'INVESTMENT',
-  RETURN: 'RETURN'
+  RETURN: 'RETURN',
+  PAYMENT: 'PAYMENT'
 };
 
 export type TransactionType = (typeof TransactionType)[keyof typeof TransactionType]
@@ -1465,28 +1466,18 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
-    _avg: UserAvgAggregateOutputType | null
-    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
 
-  export type UserAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type UserSumAggregateOutputType = {
-    id: number | null
-  }
-
   export type UserMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     name: string | null
     email: string | null
   }
 
   export type UserMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     name: string | null
     email: string | null
   }
@@ -1498,14 +1489,6 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type UserAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type UserSumAggregateInputType = {
-    id?: true
-  }
 
   export type UserMinAggregateInputType = {
     id?: true
@@ -1564,18 +1547,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: UserAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: UserSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -1606,19 +1577,15 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
-    _avg?: UserAvgAggregateInputType
-    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
 
   export type UserGroupByOutputType = {
-    id: number
+    id: string
     name: string
     email: string | null
     _count: UserCountAggregateOutputType | null
-    _avg: UserAvgAggregateOutputType | null
-    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -1686,7 +1653,7 @@ export namespace Prisma {
       recurrences: Prisma.$RecurrencePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       name: string
       email: string | null
     }, ExtArgs["result"]["user"]>
@@ -2116,7 +2083,7 @@ export namespace Prisma {
    * Fields of the User model
    */
   interface UserFieldRefs {
-    readonly id: FieldRef<"User", 'Int'>
+    readonly id: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
   }
@@ -2635,19 +2602,17 @@ export namespace Prisma {
 
   export type AccountAvgAggregateOutputType = {
     id: number | null
-    userId: number | null
     balance: Decimal | null
   }
 
   export type AccountSumAggregateOutputType = {
     id: number | null
-    userId: number | null
     balance: Decimal | null
   }
 
   export type AccountMinAggregateOutputType = {
     id: number | null
-    userId: number | null
+    userId: string | null
     name: string | null
     type: $Enums.AccountType | null
     currency: $Enums.Currency | null
@@ -2658,7 +2623,7 @@ export namespace Prisma {
 
   export type AccountMaxAggregateOutputType = {
     id: number | null
-    userId: number | null
+    userId: string | null
     name: string | null
     type: $Enums.AccountType | null
     currency: $Enums.Currency | null
@@ -2682,13 +2647,11 @@ export namespace Prisma {
 
   export type AccountAvgAggregateInputType = {
     id?: true
-    userId?: true
     balance?: true
   }
 
   export type AccountSumAggregateInputType = {
     id?: true
-    userId?: true
     balance?: true
   }
 
@@ -2814,7 +2777,7 @@ export namespace Prisma {
 
   export type AccountGroupByOutputType = {
     id: number
-    userId: number
+    userId: string
     name: string
     type: $Enums.AccountType
     currency: $Enums.Currency
@@ -2915,7 +2878,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      userId: number
+      userId: string
       name: string
       type: $Enums.AccountType
       currency: $Enums.Currency
@@ -3349,7 +3312,7 @@ export namespace Prisma {
    */
   interface AccountFieldRefs {
     readonly id: FieldRef<"Account", 'Int'>
-    readonly userId: FieldRef<"Account", 'Int'>
+    readonly userId: FieldRef<"Account", 'String'>
     readonly name: FieldRef<"Account", 'String'>
     readonly type: FieldRef<"Account", 'AccountType'>
     readonly currency: FieldRef<"Account", 'Currency'>
@@ -3832,17 +3795,15 @@ export namespace Prisma {
 
   export type CategoryAvgAggregateOutputType = {
     id: number | null
-    userId: number | null
   }
 
   export type CategorySumAggregateOutputType = {
     id: number | null
-    userId: number | null
   }
 
   export type CategoryMinAggregateOutputType = {
     id: number | null
-    userId: number | null
+    userId: string | null
     name: string | null
     type: $Enums.CategoryType | null
     color: string | null
@@ -3850,7 +3811,7 @@ export namespace Prisma {
 
   export type CategoryMaxAggregateOutputType = {
     id: number | null
-    userId: number | null
+    userId: string | null
     name: string | null
     type: $Enums.CategoryType | null
     color: string | null
@@ -3868,12 +3829,10 @@ export namespace Prisma {
 
   export type CategoryAvgAggregateInputType = {
     id?: true
-    userId?: true
   }
 
   export type CategorySumAggregateInputType = {
     id?: true
-    userId?: true
   }
 
   export type CategoryMinAggregateInputType = {
@@ -3989,7 +3948,7 @@ export namespace Prisma {
 
   export type CategoryGroupByOutputType = {
     id: number
-    userId: number
+    userId: string
     name: string
     type: $Enums.CategoryType
     color: string | null
@@ -4072,7 +4031,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      userId: number
+      userId: string
       name: string
       type: $Enums.CategoryType
       color: string | null
@@ -4502,7 +4461,7 @@ export namespace Prisma {
    */
   interface CategoryFieldRefs {
     readonly id: FieldRef<"Category", 'Int'>
-    readonly userId: FieldRef<"Category", 'Int'>
+    readonly userId: FieldRef<"Category", 'String'>
     readonly name: FieldRef<"Category", 'String'>
     readonly type: FieldRef<"Category", 'CategoryType'>
     readonly color: FieldRef<"Category", 'String'>
@@ -4958,21 +4917,19 @@ export namespace Prisma {
 
   export type RecurrenceAvgAggregateOutputType = {
     id: number | null
-    userId: number | null
     totalParts: number | null
     currentPart: number | null
   }
 
   export type RecurrenceSumAggregateOutputType = {
     id: number | null
-    userId: number | null
     totalParts: number | null
     currentPart: number | null
   }
 
   export type RecurrenceMinAggregateOutputType = {
     id: number | null
-    userId: number | null
+    userId: string | null
     name: string | null
     frequency: $Enums.RecurrenceType | null
     totalParts: number | null
@@ -4984,7 +4941,7 @@ export namespace Prisma {
 
   export type RecurrenceMaxAggregateOutputType = {
     id: number | null
-    userId: number | null
+    userId: string | null
     name: string | null
     frequency: $Enums.RecurrenceType | null
     totalParts: number | null
@@ -5010,14 +4967,12 @@ export namespace Prisma {
 
   export type RecurrenceAvgAggregateInputType = {
     id?: true
-    userId?: true
     totalParts?: true
     currentPart?: true
   }
 
   export type RecurrenceSumAggregateInputType = {
     id?: true
-    userId?: true
     totalParts?: true
     currentPart?: true
   }
@@ -5147,7 +5102,7 @@ export namespace Prisma {
 
   export type RecurrenceGroupByOutputType = {
     id: number
-    userId: number
+    userId: string
     name: string
     frequency: $Enums.RecurrenceType
     totalParts: number | null
@@ -5250,7 +5205,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      userId: number
+      userId: string
       name: string
       frequency: $Enums.RecurrenceType
       totalParts: number | null
@@ -5684,7 +5639,7 @@ export namespace Prisma {
    */
   interface RecurrenceFieldRefs {
     readonly id: FieldRef<"Recurrence", 'Int'>
-    readonly userId: FieldRef<"Recurrence", 'Int'>
+    readonly userId: FieldRef<"Recurrence", 'String'>
     readonly name: FieldRef<"Recurrence", 'String'>
     readonly frequency: FieldRef<"Recurrence", 'RecurrenceType'>
     readonly totalParts: FieldRef<"Recurrence", 'Int'>
@@ -6144,7 +6099,6 @@ export namespace Prisma {
 
   export type TransactionAvgAggregateOutputType = {
     id: number | null
-    userId: number | null
     amount: Decimal | null
     categoryId: number | null
     sourceAccountId: number | null
@@ -6154,7 +6108,6 @@ export namespace Prisma {
 
   export type TransactionSumAggregateOutputType = {
     id: number | null
-    userId: number | null
     amount: Decimal | null
     categoryId: number | null
     sourceAccountId: number | null
@@ -6164,7 +6117,7 @@ export namespace Prisma {
 
   export type TransactionMinAggregateOutputType = {
     id: number | null
-    userId: number | null
+    userId: string | null
     type: $Enums.TransactionType | null
     amount: Decimal | null
     date: Date | null
@@ -6179,7 +6132,7 @@ export namespace Prisma {
 
   export type TransactionMaxAggregateOutputType = {
     id: number | null
-    userId: number | null
+    userId: string | null
     type: $Enums.TransactionType | null
     amount: Decimal | null
     date: Date | null
@@ -6212,7 +6165,6 @@ export namespace Prisma {
 
   export type TransactionAvgAggregateInputType = {
     id?: true
-    userId?: true
     amount?: true
     categoryId?: true
     sourceAccountId?: true
@@ -6222,7 +6174,6 @@ export namespace Prisma {
 
   export type TransactionSumAggregateInputType = {
     id?: true
-    userId?: true
     amount?: true
     categoryId?: true
     sourceAccountId?: true
@@ -6365,7 +6316,7 @@ export namespace Prisma {
 
   export type TransactionGroupByOutputType = {
     id: number
-    userId: number
+    userId: string
     type: $Enums.TransactionType
     amount: Decimal
     date: Date
@@ -6511,7 +6462,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      userId: number
+      userId: string
       type: $Enums.TransactionType
       amount: Prisma.Decimal
       date: Date
@@ -6952,7 +6903,7 @@ export namespace Prisma {
    */
   interface TransactionFieldRefs {
     readonly id: FieldRef<"Transaction", 'Int'>
-    readonly userId: FieldRef<"Transaction", 'Int'>
+    readonly userId: FieldRef<"Transaction", 'String'>
     readonly type: FieldRef<"Transaction", 'TransactionType'>
     readonly amount: FieldRef<"Transaction", 'Decimal'>
     readonly date: FieldRef<"Transaction", 'DateTime'>
@@ -7583,20 +7534,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
@@ -7607,6 +7544,20 @@ export namespace Prisma {
    * Reference to a field of type 'String[]'
    */
   export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -7750,7 +7701,7 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    id?: IntFilter<"User"> | number
+    id?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     email?: StringNullableFilter<"User"> | string | null
     transactions?: TransactionListRelationFilter
@@ -7770,7 +7721,7 @@ export namespace Prisma {
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
     email?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
@@ -7787,17 +7738,15 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
-    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
-    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
     AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"User"> | number
+    id?: StringWithAggregatesFilter<"User"> | string
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
@@ -7807,7 +7756,7 @@ export namespace Prisma {
     OR?: AccountWhereInput[]
     NOT?: AccountWhereInput | AccountWhereInput[]
     id?: IntFilter<"Account"> | number
-    userId?: IntFilter<"Account"> | number
+    userId?: StringFilter<"Account"> | string
     name?: StringFilter<"Account"> | string
     type?: EnumAccountTypeFilter<"Account"> | $Enums.AccountType
     currency?: EnumCurrencyFilter<"Account"> | $Enums.Currency
@@ -7838,7 +7787,7 @@ export namespace Prisma {
     AND?: AccountWhereInput | AccountWhereInput[]
     OR?: AccountWhereInput[]
     NOT?: AccountWhereInput | AccountWhereInput[]
-    userId?: IntFilter<"Account"> | number
+    userId?: StringFilter<"Account"> | string
     name?: StringFilter<"Account"> | string
     type?: EnumAccountTypeFilter<"Account"> | $Enums.AccountType
     currency?: EnumCurrencyFilter<"Account"> | $Enums.Currency
@@ -7871,7 +7820,7 @@ export namespace Prisma {
     OR?: AccountScalarWhereWithAggregatesInput[]
     NOT?: AccountScalarWhereWithAggregatesInput | AccountScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Account"> | number
-    userId?: IntWithAggregatesFilter<"Account"> | number
+    userId?: StringWithAggregatesFilter<"Account"> | string
     name?: StringWithAggregatesFilter<"Account"> | string
     type?: EnumAccountTypeWithAggregatesFilter<"Account"> | $Enums.AccountType
     currency?: EnumCurrencyWithAggregatesFilter<"Account"> | $Enums.Currency
@@ -7885,7 +7834,7 @@ export namespace Prisma {
     OR?: CategoryWhereInput[]
     NOT?: CategoryWhereInput | CategoryWhereInput[]
     id?: IntFilter<"Category"> | number
-    userId?: IntFilter<"Category"> | number
+    userId?: StringFilter<"Category"> | string
     name?: StringFilter<"Category"> | string
     type?: EnumCategoryTypeFilter<"Category"> | $Enums.CategoryType
     color?: StringNullableFilter<"Category"> | string | null
@@ -7908,7 +7857,7 @@ export namespace Prisma {
     AND?: CategoryWhereInput | CategoryWhereInput[]
     OR?: CategoryWhereInput[]
     NOT?: CategoryWhereInput | CategoryWhereInput[]
-    userId?: IntFilter<"Category"> | number
+    userId?: StringFilter<"Category"> | string
     name?: StringFilter<"Category"> | string
     type?: EnumCategoryTypeFilter<"Category"> | $Enums.CategoryType
     color?: StringNullableFilter<"Category"> | string | null
@@ -7934,7 +7883,7 @@ export namespace Prisma {
     OR?: CategoryScalarWhereWithAggregatesInput[]
     NOT?: CategoryScalarWhereWithAggregatesInput | CategoryScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Category"> | number
-    userId?: IntWithAggregatesFilter<"Category"> | number
+    userId?: StringWithAggregatesFilter<"Category"> | string
     name?: StringWithAggregatesFilter<"Category"> | string
     type?: EnumCategoryTypeWithAggregatesFilter<"Category"> | $Enums.CategoryType
     color?: StringNullableWithAggregatesFilter<"Category"> | string | null
@@ -7945,7 +7894,7 @@ export namespace Prisma {
     OR?: RecurrenceWhereInput[]
     NOT?: RecurrenceWhereInput | RecurrenceWhereInput[]
     id?: IntFilter<"Recurrence"> | number
-    userId?: IntFilter<"Recurrence"> | number
+    userId?: StringFilter<"Recurrence"> | string
     name?: StringFilter<"Recurrence"> | string
     frequency?: EnumRecurrenceTypeFilter<"Recurrence"> | $Enums.RecurrenceType
     totalParts?: IntNullableFilter<"Recurrence"> | number | null
@@ -7976,7 +7925,7 @@ export namespace Prisma {
     AND?: RecurrenceWhereInput | RecurrenceWhereInput[]
     OR?: RecurrenceWhereInput[]
     NOT?: RecurrenceWhereInput | RecurrenceWhereInput[]
-    userId?: IntFilter<"Recurrence"> | number
+    userId?: StringFilter<"Recurrence"> | string
     name?: StringFilter<"Recurrence"> | string
     frequency?: EnumRecurrenceTypeFilter<"Recurrence"> | $Enums.RecurrenceType
     totalParts?: IntNullableFilter<"Recurrence"> | number | null
@@ -8010,7 +7959,7 @@ export namespace Prisma {
     OR?: RecurrenceScalarWhereWithAggregatesInput[]
     NOT?: RecurrenceScalarWhereWithAggregatesInput | RecurrenceScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Recurrence"> | number
-    userId?: IntWithAggregatesFilter<"Recurrence"> | number
+    userId?: StringWithAggregatesFilter<"Recurrence"> | string
     name?: StringWithAggregatesFilter<"Recurrence"> | string
     frequency?: EnumRecurrenceTypeWithAggregatesFilter<"Recurrence"> | $Enums.RecurrenceType
     totalParts?: IntNullableWithAggregatesFilter<"Recurrence"> | number | null
@@ -8025,7 +7974,7 @@ export namespace Prisma {
     OR?: TransactionWhereInput[]
     NOT?: TransactionWhereInput | TransactionWhereInput[]
     id?: IntFilter<"Transaction"> | number
-    userId?: IntFilter<"Transaction"> | number
+    userId?: StringFilter<"Transaction"> | string
     type?: EnumTransactionTypeFilter<"Transaction"> | $Enums.TransactionType
     amount?: DecimalFilter<"Transaction"> | Decimal | DecimalJsLike | number | string
     date?: DateTimeFilter<"Transaction"> | Date | string
@@ -8070,7 +8019,7 @@ export namespace Prisma {
     AND?: TransactionWhereInput | TransactionWhereInput[]
     OR?: TransactionWhereInput[]
     NOT?: TransactionWhereInput | TransactionWhereInput[]
-    userId?: IntFilter<"Transaction"> | number
+    userId?: StringFilter<"Transaction"> | string
     type?: EnumTransactionTypeFilter<"Transaction"> | $Enums.TransactionType
     amount?: DecimalFilter<"Transaction"> | Decimal | DecimalJsLike | number | string
     date?: DateTimeFilter<"Transaction"> | Date | string
@@ -8115,7 +8064,7 @@ export namespace Prisma {
     OR?: TransactionScalarWhereWithAggregatesInput[]
     NOT?: TransactionScalarWhereWithAggregatesInput | TransactionScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Transaction"> | number
-    userId?: IntWithAggregatesFilter<"Transaction"> | number
+    userId?: StringWithAggregatesFilter<"Transaction"> | string
     type?: EnumTransactionTypeWithAggregatesFilter<"Transaction"> | $Enums.TransactionType
     amount?: DecimalWithAggregatesFilter<"Transaction"> | Decimal | DecimalJsLike | number | string
     date?: DateTimeWithAggregatesFilter<"Transaction"> | Date | string
@@ -8130,6 +8079,7 @@ export namespace Prisma {
   }
 
   export type UserCreateInput = {
+    id?: string
     name: string
     email?: string | null
     transactions?: TransactionCreateNestedManyWithoutUserInput
@@ -8139,7 +8089,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateInput = {
-    id?: number
+    id?: string
     name: string
     email?: string | null
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -8149,6 +8099,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUpdateManyWithoutUserNestedInput
@@ -8158,7 +8109,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -8168,18 +8119,19 @@ export namespace Prisma {
   }
 
   export type UserCreateManyInput = {
-    id?: number
+    id?: string
     name: string
     email?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -8198,7 +8150,7 @@ export namespace Prisma {
 
   export type AccountUncheckedCreateInput = {
     id?: number
-    userId: number
+    userId: string
     name: string
     type: $Enums.AccountType
     currency: $Enums.Currency
@@ -8223,7 +8175,7 @@ export namespace Prisma {
 
   export type AccountUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
     currency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
@@ -8236,7 +8188,7 @@ export namespace Prisma {
 
   export type AccountCreateManyInput = {
     id?: number
-    userId: number
+    userId: string
     name: string
     type: $Enums.AccountType
     currency: $Enums.Currency
@@ -8256,7 +8208,7 @@ export namespace Prisma {
 
   export type AccountUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
     currency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
@@ -8275,7 +8227,7 @@ export namespace Prisma {
 
   export type CategoryUncheckedCreateInput = {
     id?: number
-    userId: number
+    userId: string
     name: string
     type: $Enums.CategoryType
     color?: string | null
@@ -8292,7 +8244,7 @@ export namespace Prisma {
 
   export type CategoryUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
     color?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8301,7 +8253,7 @@ export namespace Prisma {
 
   export type CategoryCreateManyInput = {
     id?: number
-    userId: number
+    userId: string
     name: string
     type: $Enums.CategoryType
     color?: string | null
@@ -8315,7 +8267,7 @@ export namespace Prisma {
 
   export type CategoryUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
     color?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8335,7 +8287,7 @@ export namespace Prisma {
 
   export type RecurrenceUncheckedCreateInput = {
     id?: number
-    userId: number
+    userId: string
     name: string
     frequency: $Enums.RecurrenceType
     totalParts?: number | null
@@ -8360,7 +8312,7 @@ export namespace Prisma {
 
   export type RecurrenceUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
     totalParts?: NullableIntFieldUpdateOperationsInput | number | null
@@ -8373,7 +8325,7 @@ export namespace Prisma {
 
   export type RecurrenceCreateManyInput = {
     id?: number
-    userId: number
+    userId: string
     name: string
     frequency: $Enums.RecurrenceType
     totalParts?: number | null
@@ -8395,7 +8347,7 @@ export namespace Prisma {
 
   export type RecurrenceUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
     totalParts?: NullableIntFieldUpdateOperationsInput | number | null
@@ -8422,7 +8374,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedCreateInput = {
     id?: number
-    userId: number
+    userId: string
     type: $Enums.TransactionType
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
@@ -8453,7 +8405,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8469,7 +8421,7 @@ export namespace Prisma {
 
   export type TransactionCreateManyInput = {
     id?: number
-    userId: number
+    userId: string
     type: $Enums.TransactionType
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
@@ -8495,7 +8447,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8507,17 +8459,6 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -8601,10 +8542,6 @@ export namespace Prisma {
     email?: SortOrder
   }
 
-  export type UserAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -8615,26 +8552,6 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
-  }
-
-  export type UserSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -8671,6 +8588,17 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type EnumAccountTypeFilter<$PrismaModel = never> = {
@@ -8727,7 +8655,6 @@ export namespace Prisma {
 
   export type AccountAvgOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
     balance?: SortOrder
   }
 
@@ -8755,8 +8682,23 @@ export namespace Prisma {
 
   export type AccountSumOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
     balance?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumAccountTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -8826,7 +8768,6 @@ export namespace Prisma {
 
   export type CategoryAvgOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
   }
 
   export type CategoryMaxOrderByAggregateInput = {
@@ -8847,7 +8788,6 @@ export namespace Prisma {
 
   export type CategorySumOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
   }
 
   export type EnumCategoryTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -8908,7 +8848,6 @@ export namespace Prisma {
 
   export type RecurrenceAvgOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
     totalParts?: SortOrder
     currentPart?: SortOrder
   }
@@ -8939,7 +8878,6 @@ export namespace Prisma {
 
   export type RecurrenceSumOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
     totalParts?: SortOrder
     currentPart?: SortOrder
   }
@@ -9055,7 +8993,6 @@ export namespace Prisma {
 
   export type TransactionAvgOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
     amount?: SortOrder
     categoryId?: SortOrder
     sourceAccountId?: SortOrder
@@ -9095,7 +9032,6 @@ export namespace Prisma {
 
   export type TransactionSumOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
     amount?: SortOrder
     categoryId?: SortOrder
     sourceAccountId?: SortOrder
@@ -9259,14 +9195,6 @@ export namespace Prisma {
     deleteMany?: RecurrenceScalarWhereInput | RecurrenceScalarWhereInput[]
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type TransactionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
@@ -9411,6 +9339,14 @@ export namespace Prisma {
     update?: TransactionUpdateWithWhereUniqueWithoutTargetAccountInput | TransactionUpdateWithWhereUniqueWithoutTargetAccountInput[]
     updateMany?: TransactionUpdateManyWithWhereWithoutTargetAccountInput | TransactionUpdateManyWithWhereWithoutTargetAccountInput[]
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type TransactionUncheckedUpdateManyWithoutSourceAccountNestedInput = {
@@ -9659,17 +9595,6 @@ export namespace Prisma {
     update?: XOR<XOR<RecurrenceUpdateToOneWithWhereWithoutTransactionsInput, RecurrenceUpdateWithoutTransactionsInput>, RecurrenceUncheckedUpdateWithoutTransactionsInput>
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -9698,33 +9623,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -9740,6 +9638,17 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -9804,6 +9713,33 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedEnumAccountTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -10146,7 +10082,7 @@ export namespace Prisma {
     OR?: TransactionScalarWhereInput[]
     NOT?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
     id?: IntFilter<"Transaction"> | number
-    userId?: IntFilter<"Transaction"> | number
+    userId?: StringFilter<"Transaction"> | string
     type?: EnumTransactionTypeFilter<"Transaction"> | $Enums.TransactionType
     amount?: DecimalFilter<"Transaction"> | Decimal | DecimalJsLike | number | string
     date?: DateTimeFilter<"Transaction"> | Date | string
@@ -10181,7 +10117,7 @@ export namespace Prisma {
     OR?: AccountScalarWhereInput[]
     NOT?: AccountScalarWhereInput | AccountScalarWhereInput[]
     id?: IntFilter<"Account"> | number
-    userId?: IntFilter<"Account"> | number
+    userId?: StringFilter<"Account"> | string
     name?: StringFilter<"Account"> | string
     type?: EnumAccountTypeFilter<"Account"> | $Enums.AccountType
     currency?: EnumCurrencyFilter<"Account"> | $Enums.Currency
@@ -10211,7 +10147,7 @@ export namespace Prisma {
     OR?: CategoryScalarWhereInput[]
     NOT?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
     id?: IntFilter<"Category"> | number
-    userId?: IntFilter<"Category"> | number
+    userId?: StringFilter<"Category"> | string
     name?: StringFilter<"Category"> | string
     type?: EnumCategoryTypeFilter<"Category"> | $Enums.CategoryType
     color?: StringNullableFilter<"Category"> | string | null
@@ -10238,7 +10174,7 @@ export namespace Prisma {
     OR?: RecurrenceScalarWhereInput[]
     NOT?: RecurrenceScalarWhereInput | RecurrenceScalarWhereInput[]
     id?: IntFilter<"Recurrence"> | number
-    userId?: IntFilter<"Recurrence"> | number
+    userId?: StringFilter<"Recurrence"> | string
     name?: StringFilter<"Recurrence"> | string
     frequency?: EnumRecurrenceTypeFilter<"Recurrence"> | $Enums.RecurrenceType
     totalParts?: IntNullableFilter<"Recurrence"> | number | null
@@ -10249,6 +10185,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutAccountsInput = {
+    id?: string
     name: string
     email?: string | null
     transactions?: TransactionCreateNestedManyWithoutUserInput
@@ -10257,7 +10194,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
-    id?: number
+    id?: string
     name: string
     email?: string | null
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -10286,7 +10223,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedCreateWithoutSourceAccountInput = {
     id?: number
-    userId: number
+    userId: string
     type: $Enums.TransactionType
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
@@ -10325,7 +10262,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedCreateWithoutTargetAccountInput = {
     id?: number
-    userId: number
+    userId: string
     type: $Enums.TransactionType
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
@@ -10360,6 +10297,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutAccountsInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUpdateManyWithoutUserNestedInput
@@ -10368,7 +10306,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -10409,6 +10347,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutCategoriesInput = {
+    id?: string
     name: string
     email?: string | null
     transactions?: TransactionCreateNestedManyWithoutUserInput
@@ -10417,7 +10356,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutCategoriesInput = {
-    id?: number
+    id?: string
     name: string
     email?: string | null
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -10446,7 +10385,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedCreateWithoutCategoryInput = {
     id?: number
-    userId: number
+    userId: string
     type: $Enums.TransactionType
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
@@ -10481,6 +10420,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutCategoriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUpdateManyWithoutUserNestedInput
@@ -10489,7 +10429,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutCategoriesInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -10514,6 +10454,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutRecurrencesInput = {
+    id?: string
     name: string
     email?: string | null
     transactions?: TransactionCreateNestedManyWithoutUserInput
@@ -10522,7 +10463,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutRecurrencesInput = {
-    id?: number
+    id?: string
     name: string
     email?: string | null
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -10551,7 +10492,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedCreateWithoutRecurrenceInput = {
     id?: number
-    userId: number
+    userId: string
     type: $Enums.TransactionType
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
@@ -10586,6 +10527,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutRecurrencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUpdateManyWithoutUserNestedInput
@@ -10594,7 +10536,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutRecurrencesInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -10619,6 +10561,7 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutTransactionsInput = {
+    id?: string
     name: string
     email?: string | null
     accounts?: AccountCreateNestedManyWithoutUserInput
@@ -10627,7 +10570,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutTransactionsInput = {
-    id?: number
+    id?: string
     name: string
     email?: string | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
@@ -10649,7 +10592,7 @@ export namespace Prisma {
 
   export type CategoryUncheckedCreateWithoutTransactionsInput = {
     id?: number
-    userId: number
+    userId: string
     name: string
     type: $Enums.CategoryType
     color?: string | null
@@ -10673,7 +10616,7 @@ export namespace Prisma {
 
   export type AccountUncheckedCreateWithoutTransactionsFromInput = {
     id?: number
-    userId: number
+    userId: string
     name: string
     type: $Enums.AccountType
     currency: $Enums.Currency
@@ -10701,7 +10644,7 @@ export namespace Prisma {
 
   export type AccountUncheckedCreateWithoutTransactionsToInput = {
     id?: number
-    userId: number
+    userId: string
     name: string
     type: $Enums.AccountType
     currency: $Enums.Currency
@@ -10729,7 +10672,7 @@ export namespace Prisma {
 
   export type RecurrenceUncheckedCreateWithoutTransactionsInput = {
     id?: number
-    userId: number
+    userId: string
     name: string
     frequency: $Enums.RecurrenceType
     totalParts?: number | null
@@ -10756,6 +10699,7 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
@@ -10764,7 +10708,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutTransactionsInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
@@ -10792,7 +10736,7 @@ export namespace Prisma {
 
   export type CategoryUncheckedUpdateWithoutTransactionsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
     color?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10822,7 +10766,7 @@ export namespace Prisma {
 
   export type AccountUncheckedUpdateWithoutTransactionsFromInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
     currency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
@@ -10856,7 +10800,7 @@ export namespace Prisma {
 
   export type AccountUncheckedUpdateWithoutTransactionsToInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
     currency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
@@ -10890,7 +10834,7 @@ export namespace Prisma {
 
   export type RecurrenceUncheckedUpdateWithoutTransactionsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
     totalParts?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11078,7 +11022,7 @@ export namespace Prisma {
 
   export type TransactionCreateManySourceAccountInput = {
     id?: number
-    userId: number
+    userId: string
     type: $Enums.TransactionType
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
@@ -11093,7 +11037,7 @@ export namespace Prisma {
 
   export type TransactionCreateManyTargetAccountInput = {
     id?: number
-    userId: number
+    userId: string
     type: $Enums.TransactionType
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
@@ -11122,7 +11066,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedUpdateWithoutSourceAccountInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11137,7 +11081,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedUpdateManyWithoutSourceAccountInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11166,7 +11110,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedUpdateWithoutTargetAccountInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11181,7 +11125,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedUpdateManyWithoutTargetAccountInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11196,7 +11140,7 @@ export namespace Prisma {
 
   export type TransactionCreateManyCategoryInput = {
     id?: number
-    userId: number
+    userId: string
     type: $Enums.TransactionType
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
@@ -11225,7 +11169,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedUpdateWithoutCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11240,7 +11184,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedUpdateManyWithoutCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11255,7 +11199,7 @@ export namespace Prisma {
 
   export type TransactionCreateManyRecurrenceInput = {
     id?: number
-    userId: number
+    userId: string
     type: $Enums.TransactionType
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
@@ -11284,7 +11228,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedUpdateWithoutRecurrenceInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11299,7 +11243,7 @@ export namespace Prisma {
 
   export type TransactionUncheckedUpdateManyWithoutRecurrenceInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string

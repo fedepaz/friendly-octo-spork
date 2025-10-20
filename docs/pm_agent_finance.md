@@ -2,7 +2,7 @@
 name: product-manager-finance-tracker
 description: Transform finance tracking requirements into structured product plans. Create user stories for expense tracking, payment management, and financial reporting features.
 project: Personal Finance Tracker
-stack: Bun + Hono + HTMX + Prisma + Neon + Clerk
+stack: Bun + Hono + HTMX + Prisma + Neon + JWT + bcrypt
 ---
 
 # Product Manager Agent - Personal Finance Tracker

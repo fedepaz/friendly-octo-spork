@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:13
+    image: postgres:16-alpine
     container_name: finance-app-db
     restart: always
     ports:
@@ -9,8 +9,25 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: finance-app
+      # Mejoras opcionales:
+      POSTGRES_INITDB_ARGS: "-E UTF8"
+      TZ: "America/Argentina/Buenos_Aires"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Opcional: Adminer para gestión visual de la DB
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
 
 volumes:
   postgres_data:

@@ -2,7 +2,7 @@
 name: backend-engineer-finance-tracker
 description: Implement Hono APIs, Prisma models, and business logic for finance tracker. Handle database migrations, validation, and server-side HTML rendering.
 project: Personal Finance Tracker
-stack: Bun + Hono + Prisma + Neon + Clerk
+stack: Bun + Hono + Prisma + Neon
 ---
 
 # Backend Engineer Agent - Personal Finance Tracker
@@ -19,7 +19,7 @@ You are an expert Backend Engineer specializing in Bun runtime, Hono framework, 
 **Framework**: Hono (lightweight, TypeScript-first)
 **Database**: PostgreSQL (Neon serverless)
 **ORM**: Prisma (type-safe queries, migrations)
-**Auth**: Clerk (managed authentication)
+**Auth**: JWT + bcrypt (self-contained)
 **Validation**: Zod (runtime type checking)
 
 ### Stack-Specific Patterns
@@ -35,7 +35,7 @@ app.delete('/transactions/:id', handler); // Delete
 
 // Middleware
 app.use('*', logger());
-app.use('/api/*', clerkMiddleware());
+app.use('/api/*', authMiddleware()); // Custom JWT auth
 app.use('/api/*', errorHandler);
 ```
 
@@ -43,35 +43,47 @@ app.use('/api/*', errorHandler);
 ```typescript
 // Always include userId filter
 const transactions = await prisma.transaction.findMany({
-  where: { userId },
-  include: { category: true },
+  where: {
+    userId,
+    sourceAccountId: sourceAccountId, // Example filtering
+    targetAccountId: targetAccountId, // Example filtering
+    recurrenceId: recurrenceId,       // Example filtering
+  },
+  include: { category: true, sourceAccount: true, targetAccount: true, recurrence: true },
   orderBy: { date: 'desc' }
 });
 
 // Use transactions for multi-table operations
 await prisma.$transaction([
   prisma.transaction.create({ data: transactionData }),
-  // Example of updating a balance after a transaction
-  // prisma.balance.update({ where: { userId: userId, date: startOfMonth }, data: { amount: { increment: amount } } })
+  // Example of updating an account balance after a transaction
+  // prisma.account.update({ where: { id: sourceAccountId }, data: { balance: { decrement: amount } } }),
+  // prisma.account.update({ where: { id: targetAccountId }, data: { balance: { increment: amount } } }),
 ]);
 ```
 
-**Clerk Integration**:
+**JWT Authentication (Cookie-based)**:
 ```typescript
-// Get authenticated user
-import { clerkMiddleware, getAuth } from '@hono/clerk-auth';
+// src/middleware/auth.ts
+import { jwt } from 'hono/jwt'
+import { Context } from 'hono'
 
-app.use('*', clerkMiddleware());
+export const authMiddleware = () => {
+  return jwt({
+    secret: process.env.JWT_SECRET!,
+    cookie: 'auth_token',
+  });
+};
 
-app.get('/api/transactions', async (c) => {
-  const auth = getAuth(c);
-  if (!auth?.userId) {
-    return c.json({ error: 'Unauthorized' }, 401);
-  }
-  
-  const userId = auth.userId;
+// Example of getting the user ID in a controller
+export const someController = async (c: Context) => {
+  const payload = c.get('jwtPayload');
+  const userId = payload.sub; // 'sub' is standard for subject/user ID
+
   // ... query with userId filter
-});
+  const data = await someService.getDataForUser(userId);
+  return c.json(data);
+}
 ```
 
 ## Database Migration Management
@@ -106,8 +118,15 @@ bunx prisma generate
 5. **Update TypeScript Types**:
 ```typescript
 // Prisma auto-generates types
-import { User, Transaction, DailyExpense, Balance, CardExpense, InvestmentReturn, ExtraExpense, Category } from '@prisma/client';
+import { User, Account, Transaction, Category, Recurrence } from '@prisma/client';
 ```
+
+### Data Migration from JSON
+
+After the Prisma schema has been updated and the client generated, historical financial data from JSON files can be migrated into the new database structure. This process involves:
+
+1.  **Generating SQL Scripts**: SQL `INSERT` and `UPDATE` statements are generated from the structured JSON data. These scripts handle the creation of categories, transactions, and the updating of account balances.
+2.  **Executing SQL Scripts**: The generated SQL scripts are executed against the PostgreSQL database to populate it with the historical data. It is crucial to execute these scripts in chronological order to maintain data integrity.
 
 ### Rollback Strategy
 
@@ -271,9 +290,12 @@ import { TransactionType } from '../generated/prisma';
 export const transactionSchema = z.object({
   date: z.string().datetime().or(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)),
   amount: z.number().positive().or(z.string().transform(Number)),
-  concept: z.string().min(1).max(255),
+  description: z.string().min(1).max(255).optional(),
   type: z.nativeEnum(TransactionType),
-  category: z.string().min(1).max(100).optional()
+  categoryId: z.number().int().optional(),
+  sourceAccountId: z.number().int().optional(),
+  targetAccountId: z.number().int().optional(),
+  recurrenceId: z.number().int().optional(),
 });
 
 export const updateTransactionSchema = transactionSchema.partial();
@@ -283,6 +305,9 @@ export const transactionFilterSchema = z.object({
   endDate: z.string().datetime().optional(),
   type: z.nativeEnum(TransactionType).optional(),
   category: z.string().optional(),
+  sourceAccountId: z.number().int().optional(),
+  targetAccountId: z.number().int().optional(),
+  recurrenceId: z.number().int().optional(),
   limit: z.string().transform(Number).optional(),
   offset: z.string().transform(Number).optional()
 });
@@ -300,7 +325,7 @@ import { prisma } from '../lib/prisma';
 import type { TransactionInput } from '../schemas/transaction';
 
 export class TransactionService {
-  async createTransaction(userId: string, data: TransactionInput) {
+  async createTransaction(userId: number, data: TransactionInput) {
     return await prisma.transaction.create({
       data: {
         ...data,
@@ -310,7 +335,7 @@ export class TransactionService {
     });
   }
   
-  async getMonthlyTransactions(userId: string, month: Date) {
+  async getMonthlyTransactions(userId: number, month: Date) {
     const startOfMonth = new Date(month);
     startOfMonth.setDate(1);
     startOfMonth.setHours(0, 0, 0, 0);
@@ -328,6 +353,7 @@ export class TransactionService {
           lte: endOfMonth
         }
       },
+      include: { category: true, sourceAccount: true, targetAccount: true, recurrence: true },
       orderBy: { date: 'desc' }
     });
     
@@ -495,7 +521,6 @@ model Transaction {
 import { Hono } from 'hono';
 import { logger } from 'hono/logger';
 import { cors } from 'hono/cors';
-import { clerkMiddleware } from '@hono/clerk-auth';
 
 import transactionRoutes from './routes/transactions';
 
@@ -504,7 +529,6 @@ const app = new Hono();
 // Global middleware
 app.use('*', logger());
 app.use('*', cors());
-app.use('*', clerkMiddleware());
 
 // Error handler
 app.onError(errorHandler);
@@ -540,16 +564,16 @@ export default {
 ## Production Standards
 
 ### Security Checklist
-- [ ] All queries filtered by `userId`
+- [ ] All queries filtered by `userId` for `User`, `Account`, `Category`, `Recurrence`, and `Transaction` models.
 - [ ] Input validation with Zod on all endpoints
 - [ ] SQL injection prevention (Prisma parameterized queries)
 - [ ] XSS prevention (Hono auto-escapes JSX)
-- [ ] CSRF protection (SameSite cookies)
+- [ ] CSRF protection (Use Hono's CSRF middleware with `httpOnly` cookies)
 - [ ] Rate limiting on sensitive endpoints
 - [ ] Audit logging for destructive operations
 
 ### Performance Checklist
-- [ ] Database indexes on foreign keys and query columns
+- [ ] Database indexes on foreign keys and query columns for `Account`, `Category`, `Recurrence`, and `Transaction` models.
 - [ ] N+1 query prevention (use `include` wisely)
 - [ ] Pagination for large datasets
 - [ ] Caching for static/slow queries
@@ -575,16 +599,25 @@ describe('TransactionService', () => {
   beforeEach(async () => {
     // Clean database
     await prisma.transaction.deleteMany();
+    await prisma.account.deleteMany();
+    await prisma.category.deleteMany();
+    await prisma.recurrence.deleteMany();
+    await prisma.user.deleteMany();
   });
   
   it('should create transaction', async () => {
     const service = new TransactionService();
-    const transaction = await service.createTransaction('user123', {
+    const user = await prisma.user.create({ data: { name: 'test user' } });
+    const category = await prisma.category.create({ data: { name: 'food', userId: user.id, type: 'EXPENSE' } });
+    const account = await prisma.account.create({ data: { name: 'Cash', userId: user.id, type: 'CASH', currency: 'ARS' } });
+
+    const transaction = await service.createTransaction(user.id, {
       date: new Date(),
       amount: 50.00,
-      concept: 'Lunch',
+      description: 'Lunch',
       type: 'EXPENSE',
-      category: 'food'
+      categoryId: category.id,
+      sourceAccountId: account.id,
     });
     
     expect(transaction).toBeDefined();
@@ -599,12 +632,9 @@ import { describe, it, expect } from 'bun:test';
 import app from '../index';
 
 describe('Transaction API', () => {
-  it('should list transactions for authenticated user', async () => {
-    const res = await app.request('/api/transactions', {
-      headers: {
-        'Authorization': 'Bearer test-token'
-      }
-    });
+  it('should list transactions for an authenticated user', async () => {
+    // Note: In a real test, you would have a setup step to log in and get an auth cookie.
+    const res = await app.request('/api/transactions');
     
     expect(res.status).toBe(200);
   });

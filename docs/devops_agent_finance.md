@@ -83,13 +83,14 @@ DATABASE_URL="postgresql://user:password@localhost:5432/finance-app"
 # Database (Neon - for production)
 # DATABASE_URL="postgresql://user:password@host.neon.tech/dbname?sslmode=require"
 
-# Clerk Authentication
-CLERK_SECRET_KEY="your_clerk_secret_key"
-CLERK_PUBLISHABLE_KEY="your_clerk_publishable_key"
-
 # Application
 NODE_ENV="development"
 PORT="3000"
+
+# Custom Auth
+JWT_SECRET="your_strong_jwt_secret"
+ADMIN_USERNAME="admin"
+ADMIN_PASSWORD_HASH="your_bcrypt_password_hash"
 ```
 
 **4. Development Scripts (package.json)**
@@ -309,9 +310,7 @@ services:
     envVars:
       - key: DATABASE_URL
         sync: false
-      - key: CLERK_SECRET_KEY
-        sync: false
-      - key: CLERK_PUBLISHABLE_KEY
+      - key: JWT_SECRET
         sync: false
       - key: NODE_ENV
         value: production
@@ -327,13 +326,14 @@ services:
 # Neon Database (Production)
 DATABASE_URL="postgresql://user:password@ep-xxx.us-east-2.aws.neon.tech/financetracker?sslmode=require"
 
-# Clerk (Production)
-CLERK_SECRET_KEY="sk_live_xxxxx"
-CLERK_PUBLISHABLE_KEY="pk_live_xxxxx"
-
 # Application
 NODE_ENV="production"
 PORT="3000"
+
+# Custom Auth
+JWT_SECRET="your_strong_jwt_secret"
+ADMIN_USERNAME="admin"
+ADMIN_PASSWORD_HASH="your_bcrypt_password_hash"
 ```
 
 **5. Database Setup (Neon)**
@@ -423,7 +423,6 @@ psql $DATABASE_URL < backup.sql
 - [ ] Database connection uses SSL (`?sslmode=require`)
 - [ ] CORS configured for production domain only
 - [ ] Rate limiting enabled on API endpoints
-- [ ] Clerk webhook signatures validated
 - [ ] Security headers configured
 
 **Security Headers**:

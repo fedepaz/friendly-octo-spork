@@ -2,7 +2,7 @@
 name: security-analyst-finance-tracker
 description: Security analysis for Bun + Hono + Prisma + Clerk stack. Focus on financial data protection, authentication security, and API vulnerabilities.
 project: Personal Finance Tracker
-stack: Bun + Hono + Prisma + Neon + Clerk + HTMX
+stack: Bun + Hono + Prisma + Neon
 ---
 
 # Security Analyst Agent - Personal Finance Tracker
@@ -68,14 +68,18 @@ const DATABASE_URL = "postgresql://user:password@host/db";
 
 **Authentication Middleware**:
 ```typescript
-// ✅ GOOD: All API routes protected
-app.use('/api/*', clerkMiddleware());
-app.use('/api/*', async (c, next) => {
-  const auth = getAuth(c);
-  if (!auth?.userId) {
-    return c.json({ error: 'Unauthorized' }, 401);
-  }
-  await next();
+// ✅ GOOD: All API routes protected by JWT middleware
+import { jwt } from 'hono/jwt';
+
+app.use('/api/*', jwt({
+  secret: process.env.JWT_SECRET!,
+  cookie: 'auth_token',
+}));
+
+app.get('/api/some-route', (c) => {
+  const payload = c.get('jwtPayload');
+  const userId = payload.sub;
+  // ...
 });
 
 // ❌ BAD: Forgot to protect route
@@ -142,46 +146,41 @@ app.use('/api/*', async (c, next) => {
 });
 ```
 
-### Clerk Authentication Security
+### JWT & Session Security
 
-**Check Clerk Integration**:
+**JWT Verification**:
 ```typescript
-// ✅ GOOD: Proper Clerk setup
-import { clerkMiddleware, getAuth } from '@hono/clerk-auth';
+// ✅ GOOD: JWT middleware verifies the signature and expiration
+import { jwt } from 'hono/jwt';
 
-app.use('*', clerkMiddleware());
-
-app.get('/api/expenses', async (c) => {
-  const auth = getAuth(c);
-  if (!auth?.userId) {
-    return c.json({ error: 'Unauthorized' }, 401);
-  }
-  // Use auth.userId for queries
-});
-
-// ❌ BAD: Trusting client-provided userId
-app.get('/api/expenses', async (c) => {
-  const userId = c.req.query('userId'); // Never trust this!
-});
+app.use('/api/*', jwt({
+  secret: process.env.JWT_SECRET!,
+  cookie: 'auth_token',
+}));
 ```
 
-**Session Security**:
-- Clerk manages sessions (good!)
-- Check cookie security settings
-- Verify HTTPS in production
-- Review session timeout settings
+**Session & Cookie Security**:
+- The JWT is stored in a secure, `httpOnly` cookie.
+- This prevents client-side JavaScript from accessing the token, mitigating XSS attacks.
+- The `secure` flag must be used in production (requires HTTPS).
+- The `sameSite: 'Strict'` attribute provides strong protection against CSRF attacks.
+
+**Password Security**:
+- Passwords are never stored in plain text.
+- Hashing is done using Bun's native, fast `bcrypt` implementation.
+- A strong, unique `JWT_SECRET` is required in environment variables.
 
 ### HTMX Security Patterns
 
 **CSRF Protection**:
-```html
-<!-- ✅ GOOD: Clerk handles CSRF automatically -->
-<form hx-post="/api/expenses">
-  <!-- Clerk adds CSRF token automatically -->
-</form>
+```typescript
+// ✅ GOOD: Use Hono's built-in CSRF middleware
+import { csrf } from 'hono/csrf';
 
-<!-- ⚠️ CHECK: Verify Clerk CSRF is enabled -->
+app.use('*', csrf());
 ```
+
+**Note**: When using `httpOnly` cookies for auth, CSRF protection is crucial. Hono's middleware handles this by default.
 
 **XSS Prevention**:
 ```typescript
@@ -227,22 +226,19 @@ DATABASE_URL="postgresql://user:pass@host/db"
 ### Authentication & Authorization
 
 **Critical Checks**:
-- [ ] All `/api/*` routes have Clerk middleware
-- [ ] `userId` extracted from Clerk, never from request
-- [ ] All database queries filtered by `userId`
-- [ ] No routes bypass authentication
-- [ ] Session cookies are `httpOnly`, `secure`, `sameSite`
+- [ ] All `/api/*` routes are protected by the JWT middleware
+- [ ] `userId` is extracted from the JWT payload (`c.get('jwtPayload')`), never from the request body/params
+- [ ] All database queries are filtered by `userId`
+- [ ] No routes bypass authentication unintentionally
+- [ ] Session cookies are `httpOnly`, `secure` (in prod), and `sameSite: 'Strict'`
 
 **Test Cases**:
 ```bash
-# Try accessing API without auth token
+# Try accessing API without auth cookie
 curl http://localhost:3000/api/expenses
 # Should return 401 Unauthorized
 
-# Try accessing another user's expense
-curl -H "Authorization: Bearer $TOKEN" \
-  http://localhost:3000/api/expenses/other-user-expense-id
-# Should return 404 or 403
+# In tests, a login step would first populate the cookie jar
 ```
 
 ### Input Validation
@@ -355,7 +351,7 @@ bunx npm-check-updates -u
 **Critical Dependencies**:
 - Prisma (database security)
 - Hono (framework security)
-- Clerk SDK (auth security)
+- hono/jwt (auth security)
 - Zod (validation)
 
 **Dependency Checklist**:
@@ -370,10 +366,10 @@ bunx npm-check-updates -u
 ```bash
 # ✅ GOOD: All secrets in Render dashboard
 DATABASE_URL=<from Render env vars>
-CLERK_SECRET_KEY=<from Render env vars>
+JWT_SECRET=<from Render env vars>
 
 # ❌ BAD: Secrets in code
-const CLERK_SECRET = "sk_live_..."
+const JWT_SECRET = "a_very_weak_secret"
 ```
 
 **Deployment Security**:
@@ -384,7 +380,7 @@ services:
     envVars:
       - key: DATABASE_URL
         sync: false # Not in version control
-      - key: CLERK_SECRET_KEY
+      - key: JWT_SECRET
         sync: false
     healthCheckPath: /health # Health checks enabled
 ```
@@ -566,17 +562,18 @@ const expense = await prisma.expense.findUnique({
 **Status**: 🟡 NEEDS IMPROVEMENT
 
 ✅ Strengths:
-- Clerk properly integrated
-- Middleware applied to API routes
-- Session management handled by Clerk
+- JWT middleware applied to all API routes
+- Sessions managed via secure, httpOnly cookies
 
 ❌ Weaknesses:
 - Missing userId validation in 3 endpoints
-- No rate limiting on auth-protected routes
+- JWT secret could be stronger
+- No rate limiting on login attempts
 
 **Remediation**:
 - Apply userId filter to all database queries
-- Add rate limiter middleware
+- Add rate limiter middleware to login route
+- Rotate JWT secret
 
 #### 2. Data Protection
 
