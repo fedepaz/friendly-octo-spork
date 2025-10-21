@@ -35,8 +35,10 @@ app.delete('/transactions/:id', handler); // Delete
 
 // Middleware
 app.use('*', logger());
-app.use('/api/*', authMiddleware()); // Custom JWT auth
-app.use('/api/*', errorHandler);
+app.use('*', cors());
+app.use('/api/*', jwt({ secret: process.env.JWT_SECRET!, cookie: "auth_token" }));
+app.use('/api/*', requireAuth);
+app.onError(errorHandler);
 ```
 
 **Prisma Patterns**:
@@ -68,11 +70,24 @@ await prisma.$transaction([
 import { jwt } from 'hono/jwt'
 import { Context } from 'hono'
 
-export const authMiddleware = () => {
-  return jwt({
-    secret: process.env.JWT_SECRET!,
-    cookie: 'auth_token',
-  });
+export const requireAuth = async (c: any, next: any) => {
+  const token = getCookie(c, "auth_token");
+  if (!token) {
+    return c.redirect("/login");
+  }
+
+  try {
+    const payload = c.get("jwtPayload");
+    if (!payload || !payload.sub) {
+      return c.redirect("/login");
+    }
+    c.set("userId", payload.sub);
+  } catch (e) {
+    console.error("JWT verification failed:", e);
+    return c.redirect("/login");
+  }
+
+  await next();
 };
 
 // Example of getting the user ID in a controller
@@ -325,7 +340,7 @@ import { prisma } from '../lib/prisma';
 import type { TransactionInput } from '../schemas/transaction';
 
 export class TransactionService {
-  async createTransaction(userId: number, data: TransactionInput) {
+  async createTransaction(userId: string, data: TransactionInput) {
     return await prisma.transaction.create({
       data: {
         ...data,
@@ -335,7 +350,7 @@ export class TransactionService {
     });
   }
   
-  async getMonthlyTransactions(userId: number, month: Date) {
+  async getMonthlyTransactions(userId: string, month: Date) {
     const startOfMonth = new Date(month);
     startOfMonth.setDate(1);
     startOfMonth.setHours(0, 0, 0, 0);
@@ -607,7 +622,7 @@ describe('TransactionService', () => {
   
   it('should create transaction', async () => {
     const service = new TransactionService();
-    const user = await prisma.user.create({ data: { name: 'test user' } });
+    const user = await prisma.user.create({ data: { name: 'test user', id: 'test-user-id' } });
     const category = await prisma.category.create({ data: { name: 'food', userId: user.id, type: 'EXPENSE' } });
     const account = await prisma.account.create({ data: { name: 'Cash', userId: user.id, type: 'CASH', currency: 'ARS' } });
 

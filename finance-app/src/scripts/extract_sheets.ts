@@ -37,7 +37,7 @@ function parsearNombreHoja(nombre: string): { mes: number; año: number } {
 // FUNCIÓN PRINCIPAL
 // ============================================
 
-async function extractSheets(
+function extractSheets(
   inputFilePath: string,
   outputCsvDir: string,
   outputJsonDir: string
@@ -87,7 +87,7 @@ async function extractSheets(
     const sheet = workbook.Sheets[sheetName];
     const csvData = XLSX.utils.sheet_to_csv(sheet); // Convert sheet to CSV string
 
-    const cleanSheetName = sheetName.replace(/[^a-zA-Z0-9_\-]/g, "_"); // Clean for filename
+    const cleanSheetName = sheetName.replace(/[^a-zA-Z0-9_-]/g, "_"); // Clean for filename
     const csvFileName = `${cleanSheetName.toLowerCase()}_${año}.csv`;
     const csvFilePath = path.join(outputCsvDir, csvFileName);
 

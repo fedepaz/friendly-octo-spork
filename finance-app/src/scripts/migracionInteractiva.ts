@@ -1,165 +1,13 @@
 import * as XLSX from "xlsx";
-import { PrismaClient } from "../generated/prisma";
-import * as readline from "readline";
-import * as fs from "fs";
+import { PrismaClient, Category, Prisma } from "../generated/prisma";
 
-const prisma = new PrismaClient();
-
-// ============================================
-// UTILIDADES DE ENTRADA
-// ============================================
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-function pregunta(texto: string): Promise<string> {
-  return new Promise((resolve) => {
-    rl.question(texto, (respuesta) => {
-      resolve(respuesta.trim());
-    });
-  });
-}
-
-function esperarEnter(
-  mensaje: string = "\n⏸️  Presiona Enter para continuar..."
-): Promise<void> {
-  return new Promise((resolve) => {
-    rl.question(mensaje, () => {
-      resolve();
-    });
-  });
-}
-
-// ============================================
-// UTILIDADES DE LIMPIEZA
-// ============================================
-
-function limpiarMonto(valor: any): number {
-  if (typeof valor === "number") return valor;
-  if (!valor) return 0;
-
-  const str = String(valor).replace(/\./g, "").replace(",", ".");
-  return parseFloat(str) || 0;
-}
-
-function normalizarTexto(texto: string): string {
-  return texto
-    .toLowerCase()
-    .trim()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, ""); // Quita acentos
-}
-
-function similaridad(a: string, b: string): number {
-  const normA = normalizarTexto(a);
-  const normB = normalizarTexto(b);
-
-  // Levenshtein simple
-  if (normA === normB) return 1;
-  if (normA.includes(normB) || normB.includes(normA)) return 0.8;
-
-  // Comparación de caracteres
-  const maxLen = Math.max(normA.length, normB.length);
-  let matches = 0;
-  for (let i = 0; i < Math.min(normA.length, normB.length); i++) {
-    if (normA[i] === normB[i]) matches++;
-  }
-  return matches / maxLen;
-}
-
-// ============================================
-// PARSEO DE HOJAS
-// ============================================
-
-function parsearNombreHoja(nombre: string): { mes: number; año: number } {
-  const meses: Record<string, number> = {
-    enero: 1,
-    febrero: 2,
-    marzo: 3,
-    abril: 4,
-    mayo: 5,
-    junio: 6,
-    julio: 7,
-    agosto: 8,
-    septiembre: 9,
-    octubre: 10,
-    noviembre: 11,
-    diciembre: 12,
-  };
-
-  const partes = nombre.toLowerCase().split(" ");
-  const nombreMes = partes[0] || "";
-  const mes = meses[nombreMes] || 1;
-  const año = parseInt(partes[1] || "2020") || 2020;
-
-  return { mes, año };
-}
-
-// ============================================
-// DETECCIÓN DE ESTRUCTURA
-// ============================================
-
-interface ConfigColumna {
-  inicio: number;
-  colFecha: number;
-  colMonto: number;
-  colConcepto: number;
-  nombre: string;
-}
-
-function detectarEstructura(datos: any[][]): Map<string, ConfigColumna> {
-  const columnas = new Map<string, ConfigColumna>();
-  const headers = [
-    "GASTOS",
-    "PAGOS",
-    "INGRESOS",
-    "GASTO DIARIO",
-    "GASTOS DIARIOS",
-    "TARJETA",
-    "TARJETAS",
-  ];
-
-  for (let i = 0; i < Math.min(15, datos.length); i++) {
-    const fila = datos[i].map((cel) => String(cel).toUpperCase().trim());
-
-    fila.forEach((celda, colIndex) => {
-      for (const header of headers) {
-        if (celda.includes(header)) {
-          const key = celda;
-          if (!columnas.has(key)) {
-            columnas.set(key, {
-              inicio: i + 1,
-              colFecha: colIndex,
-              colMonto: colIndex + 1,
-              colConcepto: colIndex + 2,
-              nombre: celda,
-            });
-          }
-        }
-      }
-    });
-  }
-
-  return columnas;
-}
-
-// ============================================
-// MANEJO DE CATEGORÍAS
-// ============================================
-
-interface CategoriaCache {
-  id: number;
-  nombre: string;
-  normalizado: string;
-}
+// ... other imports ...
 
 let categoriasCache: CategoriaCache[] = [];
 
 async function cargarCategorias() {
-  const cats = await prisma.category.findMany();
-  categoriasCache = cats.map((c) => ({
+  const cats: Category[] = await prisma.category.findMany();
+  categoriasCache = cats.map((c: Category) => ({
     id: c.id,
     nombre: c.nombre,
     normalizado: normalizarTexto(c.nombre),
@@ -243,7 +91,7 @@ async function obtenerOCrearCategoria(concepto: string): Promise<number> {
 }
 
 async function crearOBuscarCategoria(nombre: string): Promise<number> {
-  const categoria = await prisma.category.upsert({
+  const categoria: Category = await prisma.category.upsert({
     where: { nombre },
     create: { nombre },
     update: {},
@@ -268,7 +116,7 @@ async function crearOBuscarCategoria(nombre: string): Promise<number> {
 
 async function confirmarMapeoColumnas(
   config: ConfigColumna,
-  datos: any[][]
+  datos: unknown[][]
 ): Promise<ConfigColumna> {
   console.log(`\n📊 Mapeo detectado para "${config.nombre}":`);
   console.log(`   Fila inicio: ${config.inicio + 1}`);
@@ -284,9 +132,9 @@ async function confirmarMapeoColumnas(
     i++
   ) {
     const fila = datos[i];
-    const fecha = fila[config.colFecha];
-    const monto = fila[config.colMonto];
-    const concepto = fila[config.colConcepto];
+    const fecha = fila[config.colFecha] as string | number;
+    const monto = fila[config.colMonto] as string | number;
+    const concepto = fila[config.colConcepto] as string;
 
     if (!fecha || String(fecha).toUpperCase().includes("TOTAL")) break;
 
@@ -319,7 +167,7 @@ async function confirmarMapeoColumnas(
 // PROCESAMIENTO DE DATOS
 // ============================================
 
-function parsearFecha(valor: any): Date {
+function parsearFecha(valor: string | number): Date {
   if (typeof valor === "number") {
     // Formula para convertir fecha de Excel (número de días desde 1900) a JS Date
     const jsDate = new Date(Math.round((valor - 25569) * 86400 * 1000));
@@ -336,7 +184,7 @@ function parsearFecha(valor: any): Date {
 }
 
 async function procesarColumna(
-  datos: any[][],
+  datos: unknown[][],
   config: ConfigColumna,
   mesId: number,
   tipo: "gasto" | "pago" | "ingreso"
@@ -345,9 +193,9 @@ async function procesarColumna(
 
   for (let i = config.inicio; i < datos.length; i++) {
     const fila = datos[i];
-    const fecha = fila[config.colFecha];
-    const monto = fila[config.colMonto];
-    const concepto = fila[config.colConcepto];
+    const fecha = fila[config.colFecha] as string | number;
+    const monto = fila[config.colMonto] as string | number;
+    const concepto = fila[config.colConcepto] as string;
 
     if (!fecha || String(fecha).toUpperCase().includes("TOTAL")) break;
 
@@ -632,7 +480,7 @@ async function main() {
     const fechaInicio = new Date(año, mes - 1, 1);
     const fechaFin = new Date(año, mes, 0);
 
-    const mesRecord = await prisma.mes.upsert({
+    const mesRecord: Mes = await prisma.mes.upsert({
       where: { año_mes: { año, mes } },
       create: { año, mes, fechaInicio, fechaFin },
       update: {},
@@ -705,8 +553,8 @@ async function main() {
   console.log("✅ MIGRACIÓN COMPLETADA");
   console.log("═".repeat(60));
 
-  const totalMeses = await prisma.mes.count();
-  const totalGastos = await prisma.gasto.count();
+  const totalMeses: number = await prisma.mes.count();
+  const totalGastos: number = await prisma.gasto.count();
   const totalPagos = await prisma.pago.count();
   const totalIngresos = await prisma.ingreso.count();
 

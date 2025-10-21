@@ -39,8 +39,8 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 // Graceful shutdown
-process.on("beforeExit", async () => {
-  await prisma.$disconnect();
+process.on("beforeExit", () => {
+  void prisma.$disconnect();
 });
 
 // Re-export Prisma enums for centralized access

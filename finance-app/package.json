@@ -4,7 +4,8 @@
     "dev": "concurrently \"bun run watch:css\" \"bun run --hot src/index.tsx\"",
     "watch:css": " tailwindcss -i ./src/styles/main.css -o ./dist/static/output.css --watch",
     "build:css": "tailwindcss -i ./src/styles/main.css -o ./dist/static/output.css",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "bun test"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.7.4",

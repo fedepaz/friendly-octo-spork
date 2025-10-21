@@ -107,7 +107,7 @@ For each entity, define:
 **Entity Template**:
 ```prisma
 model User {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(cuid())
   name         String
   email        String?       @unique
   transactions Transaction[]
@@ -118,7 +118,7 @@ model User {
 
 model Account {
   id        Int         @id @default(autoincrement())
-  userId    Int
+  userId    String
   name      String
   type      AccountType
   currency  Currency
@@ -134,7 +134,7 @@ model Account {
 
 model Recurrence {
   id          Int            @id @default(autoincrement())
-  userId      Int
+  userId      String
   name        String
   frequency   RecurrenceType
   totalParts  Int?
@@ -149,7 +149,7 @@ model Recurrence {
 
 model Category {
   id           Int           @id @default(autoincrement())
-  userId       Int
+  userId       String
   name         String
   type         CategoryType
   color        String? // opcional para UI
@@ -159,7 +159,7 @@ model Category {
 
 model Transaction {
   id              Int             @id @default(autoincrement())
-  userId          Int
+  userId          String
   type            TransactionType
   amount          Decimal
   date            DateTime
@@ -187,6 +187,7 @@ enum TransactionType {
   TRANSFER
   INVESTMENT
   RETURN
+  PAYMENT
 }
 
 enum AccountType {
@@ -461,7 +462,7 @@ PORT="3000"
 ### Prisma Schema
 ```prisma
 model User {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(cuid())
   name         String
   email        String?       @unique
   transactions Transaction[]
@@ -472,7 +473,7 @@ model User {
 
 model Account {
   id        Int         @id @default(autoincrement())
-  userId    Int
+  userId    String
   name      String
   type      AccountType
   currency  Currency
@@ -488,7 +489,7 @@ model Account {
 
 model Recurrence {
   id          Int            @id @default(autoincrement())
-  userId      Int
+  userId      String
   name        String
   frequency   RecurrenceType
   totalParts  Int?

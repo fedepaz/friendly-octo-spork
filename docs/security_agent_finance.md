@@ -76,6 +76,14 @@ app.use('/api/*', jwt({
   cookie: 'auth_token',
 }));
 
+app.use('/api/*', async (c, next) => {
+  if (c.req.path === "/api/auth/login") {
+    await next();
+    return;
+  }
+  await requireAuth(c, next);
+});
+
 app.get('/api/some-route', (c) => {
   const payload = c.get('jwtPayload');
   const userId = payload.sub;
@@ -150,13 +158,15 @@ app.use('/api/*', async (c, next) => {
 
 **JWT Verification**:
 ```typescript
-// ✅ GOOD: JWT middleware verifies the signature and expiration
+// ✅ GOOD: JWT middleware verifies the signature and expiration, and requireAuth ensures proper user context
 import { jwt } from 'hono/jwt';
 
 app.use('/api/*', jwt({
   secret: process.env.JWT_SECRET!,
   cookie: 'auth_token',
 }));
+
+app.use('/api/*', requireAuth);
 ```
 
 **Session & Cookie Security**:
@@ -226,7 +236,7 @@ DATABASE_URL="postgresql://user:pass@host/db"
 ### Authentication & Authorization
 
 **Critical Checks**:
-- [ ] All `/api/*` routes are protected by the JWT middleware
+- [ ] All `/api/*` routes (except `/api/auth/login`) are protected by the JWT middleware and `requireAuth`
 - [ ] `userId` is extracted from the JWT payload (`c.get('jwtPayload')`), never from the request body/params
 - [ ] All database queries are filtered by `userId`
 - [ ] No routes bypass authentication unintentionally

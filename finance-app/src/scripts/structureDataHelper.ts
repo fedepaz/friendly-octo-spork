@@ -73,7 +73,7 @@ function parseFilename(filename: string): { year: number; month: number } {
 
 
 async function main() {
-  let progress = await loadProgress();
+  const progress = await loadProgress();
   const allCsvFiles = (await fs.readdir(CSV_DIR)).filter(f => f.endsWith('.csv'));
 
   // Sort files chronologically
