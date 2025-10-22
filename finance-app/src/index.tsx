@@ -1,77 +1,57 @@
-// src/index.ts
 import { Hono } from "hono";
+import { serveStatic } from "hono/bun";
+import { jsxRenderer } from "hono/jsx-renderer";
+import Layout from "./components/shared/Layout";
+import { jwtMiddleware, redirectIfAuth, requireAuth } from "./middleware/auth";
+import accountsRoutes from "./api/accounts/accounts.routes";
 import { logger } from "hono/logger";
 import { cors } from "hono/cors";
-
-// Import middleware
-import { errorHandler } from "./middleware/errorHandler";
+import authRoutes from "./api/auth/auth.routes";
 
 const app = new Hono();
 
-// ============================================
-// GLOBAL MIDDLEWARE
-// ============================================
+/**
+  Global Middlewares
+ */
 
-// Logger
 app.use("*", logger());
+app.use("*", cors());
 
-// CORS
+// Middleware to wrap all routes in the Layout component
 app.use(
-  "*",
-  cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
-    credentials: true,
+  jsxRenderer(({ children }) => {
+    return <Layout>{children}</Layout>;
   })
 );
 
-// ============================================
-// PUBLIC ROUTES
-// ============================================
+// Serve the compiled stylesheet
+app.use("/output.css", serveStatic({ root: "./dist/static" }));
 
-// Health check
-app.get("/health", (c) => {
-  return c.json({
-    status: "ok",
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || "development",
-  });
-});
+// Public routes: login should NOT use JWT middleware
+app.use("/login", redirectIfAuth); // ← redirect if already logged in
 
-// ============================================
-// ERROR HANDLER (must be last)
-// ============================================
-app.onError(errorHandler);
+// Protected API routes
+app.use("/api/*", jwtMiddleware, requireAuth);
 
-// 404 Handler
+// Mount the API routes
+app.route("/", authRoutes);
+app.route("/api/accounts", accountsRoutes);
+
+// Basic root route
 app.notFound((c) => {
-  return c.render(
-    <div class="page page-center">
-      <div class="container-tight py-4">
-        <div class="empty">
-          <div class="empty-header">404</div>
-          <p class="empty-title">Page not found</p>
-          <p class="empty-subtitle text-muted">
-            The page you're looking for doesn't exist.
-          </p>
-          <div class="empty-action">
-            <a href="/dashboard" class="btn btn-primary">
-              Go to dashboard
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return c.json({ error: "Not found" }, 404);
 });
 
-// ============================================
-// START SERVER
-// ============================================
+app.onError((err, c) => {
+  console.error("Global error:", err);
+  return c.json({ error: "Internal server error" }, 500);
+});
+
+const port = parseInt(process.env.PORT || "3000");
+
+console.log(`Listening on port ${port}`);
+
 export default {
-  port: process.env.PORT || 3000,
+  port,
   fetch: app.fetch,
 };
-
-console.log(
-  `🚀 Server running on http://localhost:${process.env.PORT || 3000}`
-);

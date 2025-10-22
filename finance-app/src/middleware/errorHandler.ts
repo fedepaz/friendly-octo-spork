@@ -10,7 +10,7 @@ export const errorHandler = (err: Error, c: Context) => {
     return c.json(
       {
         error: "Validation failed",
-        details: err.errors,
+        details: err.errors.map((e: { path: (string | number)[], message: string }) => ({ path: e.path, message: e.message })),
       },
       400
     );
@@ -28,8 +28,7 @@ export const errorHandler = (err: Error, c: Context) => {
 
   // Prisma errors
   if (err instanceof PrismaClientKnownRequestError) {
-    const prismaError = err;
-    if (prismaError.code === "P2002") {
+    if (err.code === "P2002") {
       return c.json(
         {
           error: "A record with this value already exists",
@@ -37,7 +36,7 @@ export const errorHandler = (err: Error, c: Context) => {
         409
       );
     }
-    if (prismaError.code === "P2025") {
+    if (err.code === "P2025") {
       return c.json(
         {
           error: "Record not found",
