@@ -1,4 +1,0 @@
-- [x] Update `docs/system_architect_finance.md` to detail the new Prisma schema and its implications for data architecture.
-- [x] Update `docs/backend_engineer_finance.md` to describe the data migration process and its impact on backend logic.
-- [x] Update `docs/qa_test_engineer_finance.md` with new testing strategies for the migrated data and schema.
-- [x] Update `docs/guides/data-structuring-rules.md` to reflect the new data mapping and currency handling.

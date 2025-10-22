@@ -7,6 +7,7 @@ import { setCookie } from "hono/cookie";
 import { loginSchema } from "./auth.schema";
 import { LoginPage } from "@/pages/LoginPage";
 import Layout from "@/components/shared/Layout";
+import { ErrorPage } from "@/pages/ErrorPage";
 
 export class AuthController {
   private authService = new AuthService();
@@ -14,16 +15,10 @@ export class AuthController {
     try {
       return c.render(<LoginPage />);
     } catch (error) {
-      console.error("Error rendering login page:", error);
-      return c.json(
-        {
-          error: "Internal Server Error",
-          message:
-            error instanceof Error
-              ? error.message
-              : "An unknown error occurred",
-        },
-        500
+      const message = error instanceof Error ? error.message : "Unknown error";
+      const stack = error instanceof Error ? error.stack : undefined;
+      return c.render(
+        <ErrorPage message={message} stack={stack} statusCode={500} />
       );
     }
   };
@@ -32,9 +27,8 @@ export class AuthController {
     try {
       const body = await c.req.parseBody();
       const email = body.email as string;
-      const plainPassword = body.plainPassword as string;
-      console.log("Email and password:");
-      console.log(email, plainPassword);
+      const plainPassword = body.password as string;
+
       const safeParsed = loginSchema.safeParse({ email, plainPassword });
 
       if (!safeParsed.success) {
@@ -55,17 +49,10 @@ export class AuthController {
 
       return c.render(<Layout />);
     } catch (error) {
-      console.error("Error logging in:", error);
-      return c.json(
-        {
-          error: "Internal Server Error",
-          message:
-            error instanceof Error
-              ? error.message
-              : "An unknown error occurred",
-        },
-        500
-      );
+      const message = error instanceof Error ? error.message : "Unknown error";
+      const stack = error instanceof Error ? error.stack : undefined;
+
+      return c.render(<ErrorPage message={message} stack={stack} />);
     }
   };
 }

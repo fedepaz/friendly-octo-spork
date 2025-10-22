@@ -20,7 +20,7 @@ export class AuthService {
 
     const isPasswordValid = await password.verify(
       plainPassword,
-      user.passwordHash as string
+      user.passwordHash
     );
 
     if (!isPasswordValid) {

@@ -27,8 +27,10 @@ const Layout: FC<LayoutProps> = (props) => {
       </head>
       <body>
         <div class="page">
-          <div class="mx-auto w-full min-h-screen bg-gray-100">
-            <div class="container-xl">${props.children}</div>
+          <div class="mx-auto w-full min-h-screen bg-gray-100 p-4">
+            <div class="mx-auto w-full min-h-screen bg-gray-100">
+              <div class="container-xl">${props.children}</div>
+            </div>
           </div>
         </div>
       </body>

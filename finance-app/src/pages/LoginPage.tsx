@@ -19,7 +19,7 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
             {error}
           </div>
         )}
-        <form hx-post="/login" class="card card-md">
+        <form method="post" action="/login" class="card card-md">
           <div class="card-body">
             <div class="mb-3">
               <label class="form-label">Email</label>

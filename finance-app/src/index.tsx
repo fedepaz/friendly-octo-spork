@@ -7,6 +7,7 @@ import accountsRoutes from "./api/accounts/accounts.routes";
 import { logger } from "hono/logger";
 import { cors } from "hono/cors";
 import authRoutes from "./api/auth/auth.routes";
+import { ErrorPage } from "./pages/ErrorPage";
 
 const app = new Hono();
 
@@ -28,6 +29,7 @@ app.use(
 app.use("/output.css", serveStatic({ root: "./dist/static" }));
 
 // Public routes: login should NOT use JWT middleware
+app.use("/", redirectIfAuth);
 app.use("/login", redirectIfAuth); // ← redirect if already logged in
 
 // Protected API routes
@@ -43,8 +45,16 @@ app.notFound((c) => {
 });
 
 app.onError((err, c) => {
-  console.error("Global error:", err);
-  return c.json({ error: "Internal server error" }, 500);
+  const message = err instanceof Error ? err.message : "Unknown error";
+  const stack = err instanceof Error ? err.stack : undefined;
+
+  // For API requests, return JSON error
+  if (c.req.path.startsWith("/api")) {
+    return c.json({ error: message, stack });
+  }
+
+  // For page requests, render the ErrorPage
+  return c.render(<ErrorPage message={message} stack={stack} />);
 });
 
 const port = parseInt(process.env.PORT || "3000");

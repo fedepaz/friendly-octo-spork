@@ -7,6 +7,7 @@ import type {
   GetAccountsFilterInput,
 } from "./accounts.schema";
 import { AccountList } from "@/components/accounts/AccountsList";
+import { ErrorPage } from "@/pages/ErrorPage";
 
 export class AccountsController {
   private accountService = new AccountsService();
@@ -18,28 +19,11 @@ export class AccountsController {
       const query = c.req.query() as GetAccountsFilterInput;
       const accounts = await this.accountService.getAccounts(userId, query);
 
-      const isHtmx = c.req.header("HX-Request") === "true";
-
-      if (isHtmx) {
-        return c.html(<AccountList accounts={accounts} />);
-      } else {
-        return c.json({
-          data: accounts,
-          total: accounts.length,
-        });
-      }
+      return c.render(<AccountList accounts={accounts} />);
     } catch (error) {
-      console.error("Error fetching accounts:", error);
-      return c.json(
-        {
-          error: "Internal Server Error",
-          message:
-            error instanceof Error
-              ? error.message
-              : "An unknown error occurred",
-        },
-        500
-      );
+      const message = error instanceof Error ? error.message : "Unknown error";
+      const stack = error instanceof Error ? error.stack : undefined;
+      return c.render(<ErrorPage message={message} stack={stack} />);
     }
   };
 
@@ -52,30 +36,12 @@ export class AccountsController {
 
       const account = await this.accountService.createAccount(userId, data);
 
-      const isHtmx = c.req.header("HX-Request") === "true";
-      if (isHtmx) {
-        const accounts = await this.accountService.getAccounts(userId);
-        return c.html(<AccountList accounts={accounts} />);
-      } else {
-        return c.json(
-          {
-            data: account,
-          },
-          201
-        );
-      }
+      const accounts = await this.accountService.getAccounts(userId);
+      return c.render(<AccountList accounts={accounts} />);
     } catch (error) {
-      console.error("Error creating account:", error);
-      return c.json(
-        {
-          error: "Internal Server Error",
-          message:
-            error instanceof Error
-              ? error.message
-              : "An unknown error occurred",
-        },
-        500
-      );
+      const message = error instanceof Error ? error.message : "Unknown error";
+      const stack = error instanceof Error ? error.stack : undefined;
+      return c.render(<ErrorPage message={message} stack={stack} />);
     }
   };
 }
