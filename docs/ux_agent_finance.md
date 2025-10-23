@@ -35,62 +35,55 @@ You are a world-class UX/UI Designer specializing in data-heavy financial applic
 
 ## Design System (Tabler UI Based)
 
-#### Visual Design Principles
+#### Visual Design Principles: Neo-Brutalism
 
-The visual design of the application should be light, simple, and data-focused. The goal is to create an interface that is easy to use and understand, without unnecessary distractions.
+The application has adopted a **Neo-Brutalism** design language. This modern aesthetic prioritizes functionality, clarity, and a strong, honest presentation of components.
 
-*   **Minimalism**: Use only the necessary elements. Avoid clutter, excessive borders, and heavy shadows.
-*   **Clarity**: The primary focus should be on the financial data. Use clear typography and a simple color palette to make the data easy to read and understand.
-*   **Consistency**: Use Tabler UI components and Tailwind CSS utilities consistently throughout the application. Prefer the default, simpler versions of the Tabler UI components.
-*   **Whitespace**: Use whitespace effectively to create a sense of balance and to guide the user's eye. Don't cram too many elements together.
-*   **Purposeful Color**: Use color sparingly. The primary color should be reserved for key actions. Use semantic colors (success, danger, warning) for status indicators.
+*   **High Contrast**: The theme uses a high-contrast color palette (e.g., pure black and white) to ensure readability and a bold visual impact. Dark mode is enabled by default.
+*   **Hard Shadows**: Instead of soft, blurry shadows, the design uses solid, hard-edged shadows to create a sense of depth and a distinct, layered feel.
+*   **Sharp Corners**: Components use sharp corners (`border-radius: 0px`) to maintain a raw, blocky, and functional appearance.
+*   **System Fonts**: The design relies on modern system fonts for a clean, fast, and native feel.
+*   **Function Over Form**: While the aesthetic is strong, the primary goal is to create a user interface that is clear, efficient, and easy to navigate.
 
-### 1. Color System (Tabler + Custom)
+### 1. Color System (CSS Variables)
 
-*Note: To maintain a clean interface, use the primary color for a limited number of key actions. Most actions should use the default, more subtle button styles.*
+The entire color system is managed via CSS variables defined in `Layout.tsx` and consumed by Tailwind CSS. This allows for easy theming and consistency.
 
-**Using Tabler's Built-in Colors**:
+**Core Palette (Dark Mode Default):**
 ```css
-/* Primary Actions */
---tblr-primary: #206bc4;      /* Main CTAs, links */
---tblr-primary-lt: #e6f2ff;   /* Hover backgrounds */
-
-/* Semantic Colors (Tabler provides) */
---tblr-success: #2fb344;      /* Positive balance, completed */
---tblr-danger: #d63939;       /* Over budget, errors */
---tblr-warning: #f59f00;      /* Approaching limits */
---tblr-info: #4299e1;         /* Informational messages */
-
-/* Custom Finance Colors */
---expense-red: #ef4444;       /* Expenses, debits */
---income-green: #10b981;      /* Income, credits */
---neutral-gray: #6b7280;      /* Neutral categories */
+/* in :root */
+--background: #000000;
+--foreground: #ffffff;
+--card: #333333;
+--card-foreground: #ffffff;
+--border: #ffffff;
+--input: #ffffff;
 ```
 
-**Accessibility**: All Tabler colors meet WCAG AA (Tabler is pre-audited)
-
-### 2. Typography System (Tabler Defaults)
-
-**Font Stack**: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial`
-
-**Type Scale** (Use Tabler's built-in classes):
-```html
-<!-- Headers -->
-<h1 class="page-title">Monthly Overview</h1>          <!-- 1.75rem, bold -->
-<h2 class="card-title">Recent Expenses</h2>           <!-- 1.125rem, semibold -->
-<h3 class="subheader">October 2025</h3>               <!-- 0.875rem, uppercase -->
-
-<!-- Body Text -->
-<p class="text-muted">Secondary information</p>       <!-- 0.875rem, gray -->
-<span class="badge">Food</span>                       <!-- Category labels -->
-<code class="text-monospace">$1,234.56</code>        <!-- Numbers -->
+**Accent Colors:**
+```css
+--primary: #ff6666;
+--primary-foreground: #000000;
+--secondary: #ffff33;
+--secondary-foreground: #000000;
+--accent: #3399ff;
+--accent-foreground: #000000;
 ```
 
-**Financial Number Display**:
-- Always use monospace for amounts: `text-monospace`
-- Right-align numbers in tables: `text-end`
-- Bold large totals: `fw-bold`
-- Color-code: expenses red, income green
+**Usage in Components:**
+Components should use the Tailwind utility classes that are mapped to these variables (e.g., `bg-background`, `text-foreground`, `border-border`, `bg-primary`).
+
+### 2. Typography System
+
+The typography is designed for clarity and a modern, technical feel.
+
+**Font Stack (via CSS Variables):**
+- **Sans-serif**: `var(--font-sans)` (DM Sans, sans-serif)
+- **Monospace**: `var(--font-mono)` (Space Mono, monospace)
+
+**Usage in Components:**
+- Use `font-sans` for all general UI text.
+- Use `font-mono` for all numerical data (amounts, dates) to ensure alignment and readability in tables.
 
 ### 3. Spacing & Layout (Tabler Grid)
 

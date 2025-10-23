@@ -320,6 +320,39 @@ interface ErrorResponse {
 </div>
 ```
 
+### 5.1. Project Architecture: Vertical Slicing
+
+This project follows a **Vertical Slicing** (or **Feature-Based**) architecture. This is a modern and highly scalable pattern where code is organized by feature rather than by file type.
+
+**Core Principle**: All files related to a single feature—including backend API, frontend components, and pages—are grouped together. This improves code cohesion and makes the application easier to develop, scale, and maintain.
+
+**Directory Structure for a Feature (e.g., "Accounts"):**
+```
+src/
+├── api/
+│   └── accounts/
+│       ├── accounts.routes.ts
+│       ├── accounts.controller.tsx
+│       ├── accounts.service.ts
+│       └── accounts.schema.ts
+├── components/
+│   └── accounts/
+│       ├── AccountsList.tsx
+│       └── AccountForm.tsx
+└── pages/
+    └── AccountsPage.tsx
+```
+
+- **`api/{feature}`**: Contains all backend logic.
+  - **`.routes.ts`**: Defines the Hono API endpoints for the feature.
+  - **`.controller.tsx`**: Handles HTTP requests and responses, and renders JSX components.
+  - **`.service.ts`**: Contains the core business logic and database interactions (Prisma).
+  - **`.schema.ts`**: Defines Zod validation schemas for the feature's data.
+- **`components/{feature}`**: Contains reusable JSX components specific to the feature.
+- **`pages/{Feature}Page.tsx`**: The main page component that assembles the feature's UI.
+
+This structure is the standard for this project and must be followed for all new feature development.
+
 ### 6. Security Architecture
 
 **Authentication Flow (JWT + bcrypt)**:

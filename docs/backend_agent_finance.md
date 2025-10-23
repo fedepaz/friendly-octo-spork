@@ -159,6 +159,8 @@ bunx prisma migrate dev --name rollback_expense_table
 
 To ensure the backend code is organized, testable, and maintainable, all new features should follow a three-layered pattern: **Routes**, **Controllers**, and **Services**.
 
+This project uses a **Vertical Slicing** approach. All backend code for a specific feature (e.g., "accounts", "categories") must be co-located within its own directory under `src/api/{feature-name}/`. This includes its routes, controller, service, and schemas.
+
 *   **Routes (`.routes.ts` files):**
     *   **Responsibility**: Define the Hono routes and map them to the appropriate controller functions.
     *   This layer should be as simple as possible, containing no business logic.

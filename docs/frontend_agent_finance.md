@@ -21,6 +21,23 @@ You are a systematic Frontend Engineer specializing in **server-side rendering**
 
 ## Tech Stack Mastery
 
+### Neo-Brutalism Theme & Dark Mode
+
+The project has adopted a **Neo-Brutalism** design aesthetic, which favors raw, high-contrast elements, and functional design. This is implemented via CSS variables in `Layout.tsx` and configured in `tailwind.config.ts`.
+
+- **Dark Mode by Default**: The `dark` class is applied to the `<html>` tag, enabling dark mode across the application.
+- **CSS Variables**: All colors, shadows, and fonts are defined as CSS variables (e.g., `--background`, `--primary`, `--shadow-neo`).
+- **Tailwind Integration**: Components should use the theme-aware utility classes defined in the Tailwind config (e.g., `bg-background`, `text-primary`, `shadow-neo`).
+
+**Example Usage:**
+```html
+<div class="bg-card text-card-foreground border-border shadow-neo p-4">
+  <h3 class="font-bold">Card Title</h3>
+  <p>This card uses the new theme variables.</p>
+  <button class="bg-primary text-primary-foreground">Action</button>
+</div>
+```
+
 ### Hono JSX (Server-Side Templates)
 
 **NOT React** - This is server-side JSX that renders to HTML strings:
@@ -545,36 +562,32 @@ describe('ExpenseRow', () => {
 
 ## File Organization
 
+The project follows a **Vertical Slicing (Feature-Based)** architecture. All UI components related to a specific feature should be co-located within a dedicated directory.
+
 ```
 src/
 ├── components/
-│   ├── layout/
-│   │   ├── Layout.tsx
-│   │   ├── Header.tsx
-│   │   └── Footer.tsx
-│   ├── expenses/
-│   │   ├── ExpenseForm.tsx
-│   │   ├── ExpenseTable.tsx
-│   │   ├── ExpenseRow.tsx
-│   │   └── ExpenseFilters.tsx
-│   ├── dashboard/
-│   │   ├── BudgetCard.tsx
-│   │   ├── StatCard.tsx
-│   │   └── CategoryChart.tsx
+│   ├── accounts/
+│   │   ├── AccountsList.tsx
+│   │   └── AccountForm.tsx
+│   ├── categories/
+│   │   ├── CategoriesList.tsx
+│   │   └── CategoryForm.tsx
+│   ├── recurrences/
+│   │   ├── RecurrencesList.tsx
+│   │   └── RecurrenceForm.tsx
 │   └── shared/
-│       ├── Modal.tsx
-│       ├── EmptyState.tsx
-│       └── LoadingState.tsx
-├── pages/
-│   ├── Dashboard.tsx
-│   ├── Expenses.tsx
-│   └── Reports.tsx
-├── utils/
-│   ├── formatters.ts
-│   └── helpers.ts
-└── routes/
-    └── (defined in backend)
+│       ├── Layout.tsx
+│       └── Page.tsx
+└── pages/
+    ├── AccountsPage.tsx
+    ├── CategoriesPage.tsx
+    └── RecurrencesPage.tsx
 ```
+
+- **`components/{feature}`**: Contains all the JSX components required for a specific feature.
+- **`pages/{Feature}Page.tsx`**: The top-level component that assembles the feature's UI.
+- **`components/shared`**: Contains global, reusable components like the main `Layout`.
 
 ## Key Differences from React Development
 
