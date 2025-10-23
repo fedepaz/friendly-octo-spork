@@ -1,3 +1,5 @@
+// src/schemas/createAccountSchema.ts
+
 import { z } from "zod";
 import { AccountType, Currency } from "../../generated/prisma";
 

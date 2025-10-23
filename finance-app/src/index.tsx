@@ -9,6 +9,7 @@ import { cors } from "hono/cors";
 import authRoutes from "./api/auth/auth.routes";
 import { ErrorPage } from "./pages/ErrorPage";
 import categoriesRoutes from "./api/categories/categories.routes";
+import recurrencesRoutes from "./api/recurrences/recurrences.routes";
 
 const app = new Hono();
 
@@ -40,6 +41,7 @@ app.use("/api/*", jwtMiddleware, requireAuth);
 app.route("/", authRoutes);
 app.route("/api/accounts", accountsRoutes);
 app.route("/api/categories", categoriesRoutes);
+app.route("/api/recurrences", recurrencesRoutes);
 
 // Basic root route
 app.notFound((c) => {
