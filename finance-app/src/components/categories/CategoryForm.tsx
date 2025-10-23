@@ -1,6 +1,12 @@
-// src/components/accounts/AccountForm.tsx
+// src/components/categories/CategoryForm.tsx
 
-export function AccountForm() {
+import type { Category } from "@/generated/prisma";
+
+export function CategoryForm({ category }: { category?: Category }) {
+  if (!category) {
+    return null;
+  }
+
   return (
     <div
       id="modal-backdrop"
@@ -11,67 +17,49 @@ export function AccountForm() {
         class="bg-white rounded-lg p-6 w-full max-w-md"
         onclick="event.stopPropagation()"
       >
-        <h3 class="text-xl font-bold mb-4">Create New Account</h3>
+        <h3 class="text-xl font-bold mb-4">Edit Category</h3>
 
         <form
-          hx-post="/api/accounts"
-          hx-target="#accounts-list"
-          hx-swap="innerHTML"
+          hx-put={`/api/categories/${category.id}`}
+          hx-target="#category-modal"
+          hx-swap="outerHTML"
           hx-on--after-request="if(event.detail.successful) document.getElementById('modal-backdrop').remove()"
           class="space-y-4"
         >
           <div>
-            <label class="block text-sm font-medium mb-1">Account Name</label>
+            <label class="block text-sm font-medium mb-1">Category Name</label>
             <input
               type="text"
               name="name"
               required
               class="w-full border rounded px-3 py-2"
-              placeholder="e.g., Main Checking"
+              value={category.name}
+              placeholder="e.g., Groceries"
             />
           </div>
 
           <div>
-            <label class="block text-sm font-medium mb-1">Account Type</label>
+            <label class="block text-sm font-medium mb-1">Category Type</label>
             <select
               name="type"
               required
               class="w-full border rounded px-3 py-2"
             >
               <option value="">Select type...</option>
-              <option value="BANK">Bank Account</option>
-              <option value="WALLET">Digital Wallet</option>
-              <option value="CASH">Cash</option>
-              <option value="CARD">Credit Card</option>
-              <option value="INVESTMENT">Investment</option>
+              <option value="EXPENSE">Expense</option>
+              <option value="INCOME">Income</option>
+              <option value="TRANSFER">Transfer</option>
+              <option value="REVENUE">Revenue</option>
             </select>
           </div>
 
           <div>
-            <label class="block text-sm font-medium mb-1">Currency</label>
-            <select
-              name="currency"
-              required
-              class="w-full border rounded px-3 py-2"
-            >
-              <option value="">Select currency...</option>
-              <option value="ARS">ARS (Argentine Peso)</option>
-              <option value="USD">USD (US Dollar)</option>
-              <option value="USDT">USDT (Tether)</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium mb-1">
-              Initial Balance
-            </label>
+            <label class="block text-sm font-medium mb-1">Color</label>
             <input
-              type="number"
-              name="balance"
-              step="0.01"
-              required
+              type="color"
+              name="color"
               class="w-full border rounded px-3 py-2"
-              placeholder="0.00"
+              value={category?.color || ""}
             />
           </div>
 

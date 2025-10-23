@@ -15,7 +15,7 @@ export const createAccountSchema = z.object({
   balance: z.number().optional().default(0),
 });
 
-export const getAccountsFilterSchema = z.object({
+export const accountFilterSchema = z.object({
   type: z
     .nativeEnum(AccountType, {
       error: () => ({ message: "Invalid account type" }),
@@ -29,4 +29,4 @@ export const getAccountsFilterSchema = z.object({
 });
 
 export type CreateAccountInput = z.infer<typeof createAccountSchema>;
-export type GetAccountsFilterInput = z.infer<typeof getAccountsFilterSchema>;
+export type AccountFilterInput = z.infer<typeof accountFilterSchema>;

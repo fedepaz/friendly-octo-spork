@@ -1,12 +1,11 @@
+// src/api/accounts/accounts.service.ts
+
 import type { Prisma } from "@/generated/prisma";
 import { prisma } from "../../lib/prisma";
-import type {
-  CreateAccountInput,
-  GetAccountsFilterInput,
-} from "./accounts.schema";
+import type { CreateAccountInput, AccountFilterInput } from "./accounts.schema";
 
 export class AccountsService {
-  async getAccounts(userId: string, filters?: GetAccountsFilterInput) {
+  async getAccounts(userId: string, filters?: AccountFilterInput) {
     const where: Prisma.AccountWhereInput = {
       userId,
       ...(filters?.type && { type: filters.type }),

@@ -1,6 +1,6 @@
 // src/api/auth/auth.controller.tsx
 
-import { Context } from "hono";
+import type { Context } from "hono";
 import { AuthService } from "./auth.service";
 
 import { setCookie } from "hono/cookie";
@@ -47,7 +47,7 @@ export class AuthController {
         path: "/",
       });
 
-      return c.render(<Layout />);
+      return c.redirect("/dashboard");
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";
       const stack = error instanceof Error ? error.stack : undefined;
