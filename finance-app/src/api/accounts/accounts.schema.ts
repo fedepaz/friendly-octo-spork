@@ -3,6 +3,15 @@
 import { z } from "zod";
 import { AccountType, Currency } from "../../generated/prisma";
 
+export const accountSchema = z.object({
+  id: z.number(),
+  userId: z.string(),
+  name: z.string(),
+  type: z.nativeEnum(AccountType),
+  currency: z.nativeEnum(Currency),
+  balance: z.number(),
+});
+
 export const createAccountSchema = z.object({
   name: z
     .string()

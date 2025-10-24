@@ -1,29 +1,51 @@
 // src/components/categories/CategoryBadge.tsx
 
 import type { Category } from "@/generated/prisma";
+import type { FC } from "hono/jsx";
 
-const categoryTypeIcons: Record<string, string> = {
-  EXPENSE: "💸",
-  INCOME: "💳",
-  TRANSFER: "💸",
-  REVENUE: "💸",
-};
+export const CategoryBadge: FC<{ category: Category }> = ({ category }) => {
+  const getTypeColor = (type: string) => {
+    switch (type) {
+      case "GASTO":
+        return "destructive";
+      case "PAGO":
+        return "secondary";
+      case "INGRESO":
+        return "success";
+      case "RENDIMIENTO":
+        return "accent";
+      default:
+        return "muted";
+    }
+  };
 
-const categoryTypeColors: Record<string, string> = {
-  EXPENSE: "bg-red-100 text-red-800",
-  INCOME: "bg-green-100 text-green-800",
-  TRANSFER: "bg-yellow-100 text-yellow-800",
-  REVENUE: "bg-blue-100 text-blue-800",
-};
+  const color = category.color || `var(--${getTypeColor(category.type)})`;
 
-export function CategoryBadge({ category }: { category: Category }) {
   return (
     <span
-      class={`badge ${categoryTypeColors[category.type]} me-2`}
-      style={category.color ? { backgroundColor: category.color } : undefined}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "8px",
+        padding: "8px 16px",
+        border: `2px solid ${color}`,
+        background: `${color}20`,
+        color: color,
+        fontSize: "14px",
+        fontWeight: "700",
+        textTransform: "uppercase",
+        letterSpacing: "0.5px",
+      }}
     >
-      {categoryTypeIcons[category.type]}
+      <span
+        style={{
+          width: "12px",
+          height: "12px",
+          background: color,
+          border: "2px solid var(--border)",
+        }}
+      />
       {category.name}
     </span>
   );
-}
+};

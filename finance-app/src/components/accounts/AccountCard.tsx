@@ -1,73 +1,92 @@
 // src/components/accounts/AccountCard.tsx
 
 import type { Account } from "@/generated/prisma";
+import type { FC } from "hono/jsx";
 
-const accountTypeIcons: Record<string, string> = {
-  BANK: "🏦",
-  WALLET: "👛",
-  CASH: "💵",
-  CARD: "💳",
-  INVESTMENT: "📈",
-};
+export const AccountCard: FC<{ account: Account }> = ({ account }) => {
+  const getTypeColor = (type: string) => {
+    switch (type) {
+      case "BANK":
+        return "accent";
+      case "CASH":
+        return "success";
+      case "CARD":
+        return "primary";
+      case "INVESTMENT":
+        return "secondary";
+      default:
+        return "muted";
+    }
+  };
 
-const accountTypeColors: Record<string, string> = {
-  BANK: "bg-blue-100 text-blue-800",
-  WALLET: "bg-purple-100 text-purple-800",
-  CASH: "bg-green-100 text-green-800",
-  CARD: "bg-orange-100 text-orange-800",
-  INVESTMENT: "bg-indigo-100 text-indigo-800",
-};
-
-export function AccountCard({ account }: { account: Account }) {
   return (
-    <div id={`account-${account.id}`} class="card">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-start">
-          <div>
-            <h3 class="card-title mb-1">
-              <span class="me-2">{accountTypeIcons[account.type]}</span>
-              {account.name}
-            </h3>
-            <span class={`badge ${accountTypeColors[account.type]} me-2`}>
-              {account.type}
-            </span>
-            <span class="badge bg-secondary">{account.currency}</span>
-          </div>
-          <div class="text-end">
-            <div class="h2 mb-0">
-              {account.currency} {Number(account.balance).toFixed(2)}
-            </div>
-            <div class="text-muted small">Balance</div>
-          </div>
+    <div className="neo-card">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          marginBottom: "16px",
+        }}
+      >
+        <div>
+          <h3
+            className="font-bold uppercase"
+            style={{
+              fontSize: "18px",
+              letterSpacing: "0.5px",
+              marginBottom: "4px",
+            }}
+          >
+            {account.name}
+          </h3>
+          <span
+            className={`text-${getTypeColor(account.type)}`}
+            style={{
+              padding: "2px 8px",
+              border: "2px solid currentColor",
+              fontSize: "10px",
+              fontWeight: "700",
+              textTransform: "uppercase",
+            }}
+          >
+            {account.type}
+          </span>
         </div>
-        <div class="mt-3 d-flex gap-2">
-          <button
-            class="btn btn-sm btn-outline-primary"
-            hx-get={`/api/accounts/${account.id}`}
-            hx-target="#account-modal"
-            hx-swap="innerHTML"
-          >
-            View Details
-          </button>
-          <button
-            class="btn btn-sm btn-outline-secondary"
-            hx-get={`/api/accounts/${account.id}/edit`}
-            hx-target={`#account-${account.id}`}
-            hx-swap="outerHTML"
-          >
-            Edit
-          </button>
-          <button
-            class="btn btn-sm btn-outline-danger"
-            hx-delete={`/api/accounts/${account.id}`}
-            hx-target={`#account-${account.id}`}
-            hx-swap="outerHTML swap:1s"
-            hx-confirm="Are you sure you want to delete this account?"
-          >
-            Delete
-          </button>
-        </div>
+        <span
+          className="text-muted text-mono font-bold"
+          style={{ fontSize: "14px" }}
+        >
+          {account.currency}
+        </span>
+      </div>
+
+      <div
+        className={`text-mono font-bold ${
+          account.balance >= 0 ? "text-success" : "text-destructive"
+        }`}
+        style={{ fontSize: "32px", marginBottom: "16px" }}
+      >
+        ${Math.abs(account.balance).toFixed(2)}
+      </div>
+
+      <div style={{ display: "flex", gap: "8px" }}>
+        <button
+          className="neo-btn neo-btn-small neo-btn-secondary"
+          hx-get={`/api/accounts/${account.id}/edit`}
+          hx-target="#modal-content"
+          style={{ flex: 1 }}
+        >
+          Edit
+        </button>
+        <button
+          className="neo-btn neo-btn-small neo-btn-destructive"
+          hx-delete={`/api/accounts/${account.id}`}
+          hx-confirm="Delete this account? This action cannot be undone."
+        >
+          Delete
+        </button>
       </div>
     </div>
   );
-}
+};

@@ -23,7 +23,7 @@ You are a systematic Frontend Engineer specializing in **server-side rendering**
 
 ### Neo-Brutalism Theme & Dark Mode
 
-The project has adopted a **Neo-Brutalism** design aesthetic, which favors raw, high-contrast elements, and functional design. This is implemented via CSS variables in `Layout.tsx` and configured in `tailwind.config.ts`.
+The project has adopted a **Neo-Brutalism** design aesthetic, which favors raw, high-contrast elements, and functional design. This is implemented via CSS variables in `finance-app/src/styles/neobrutalism.css` and configured in `tailwind.config.ts`.
 
 - **Dark Mode by Default**: The `dark` class is applied to the `<html>` tag, enabling dark mode across the application.
 - **CSS Variables**: All colors, shadows, and fonts are defined as CSS variables (e.g., `--background`, `--primary`, `--shadow-neo`).

@@ -10,6 +10,8 @@ import authRoutes from "./api/auth/auth.routes";
 import { ErrorPage } from "./pages/ErrorPage";
 import categoriesRoutes from "./api/categories/categories.routes";
 import recurrencesRoutes from "./api/recurrences/recurrences.routes";
+import dashboardRoutes from "./api/dashboard/dashboard.routes";
+import { DashboardPage } from "./pages/DashboardPage";
 
 const app = new Hono();
 
@@ -22,8 +24,8 @@ app.use("*", cors());
 
 // Middleware to wrap all routes in the Layout component
 app.use(
-  jsxRenderer(({ children }) => {
-    return <Layout>{children}</Layout>;
+  jsxRenderer(({ children, activeNavItem }) => {
+    return <Layout activeNavItem={activeNavItem}>{children}</Layout>;
   })
 );
 
@@ -31,21 +33,27 @@ app.use(
 app.use("/output.css", serveStatic({ root: "./dist/static" }));
 
 // Public routes: login should NOT use JWT middleware
-app.use("/", redirectIfAuth);
-app.use("/login", redirectIfAuth); // ← redirect if already logged in
+app.use("/");
+app.use("/login"); // ← redirect if already logged in
 
 // Protected API routes
-app.use("/api/*", jwtMiddleware, requireAuth);
+app.use("/*", jwtMiddleware, requireAuth);
 
 // Mount the API routes
 app.route("/", authRoutes);
-app.route("/api/accounts", accountsRoutes);
-app.route("/api/categories", categoriesRoutes);
-app.route("/api/recurrences", recurrencesRoutes);
+app.route("/accounts", accountsRoutes);
+app.route("/categories", categoriesRoutes);
+app.route("/recurrences", recurrencesRoutes);
+
+app.route("/dashboard", dashboardRoutes);
 
 // Basic root route
 app.notFound((c) => {
-  return c.json({ error: "Not found" }, 404);
+  if (c.req.path.startsWith("/api")) {
+    return c.json({ error: "Not found" }, 404);
+  }
+
+  return c.render(<ErrorPage message="Not found" statusCode={404} />);
 });
 
 app.onError((err, c) => {

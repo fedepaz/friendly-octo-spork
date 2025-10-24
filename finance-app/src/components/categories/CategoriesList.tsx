@@ -6,49 +6,37 @@ import { CategoryBadge } from "./CategoryBadge";
 export function CategoriesList({ categories }: { categories: Category[] }) {
   if (categories.length === 0) {
     return (
-      <div id="categories-list" class="text-center py-5">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="icon icon-lg text-muted mb-3"
-          width="48"
-          height="48"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-          stroke="currentColor"
-          fill="none"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <rect x="3" y="5" width="18" height="14" rx="2" />
-          <line x1="3" y1="10" x2="21" y2="10" />
-          <line x1="7" y1="15" x2="7.01" y2="15" />
-          <line x1="11" y1="15" x2="13" y2="15" />
-        </svg>
-        <h3 class="text-muted">No categories yet</h3>
-        <p class="text-muted">
-          Create your first category to start tracking your finances.
+      <div id="categories-list" class="neo-card text-center p-12">
+        <div class="text-6xl mb-4">📋</div>
+        <h3 class="text-2xl font-bold mb-2">NO CATEGORIES YET</h3>
+        <p class="text-muted-foreground mb-6">
+          CREATE YOUR FIRST CATEGORY TO START TRACKING YOUR FINANCES.
         </p>
+        <button 
+          class="neo-btn bg-primary text-primary-foreground"
+          hx-get="/api/categories/new"
+          hx-target="#modal-content"
+          hx-swap="innerHTML"
+          data-toggle="modal"
+          data-target="#htmx-modal"
+        >
+          CREATE CATEGORY
+        </button>
       </div>
     );
   }
 
   return (
-    <div id="categories-list" class="row row-cards">
+    <div id="categories-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {categories.map((category) => (
-        <div class="col-md-6 col-lg-4">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <h3 class="card-title mb-1">
-                    <span class="me-2">
-                      <CategoryBadge category={category} />
-                    </span>
-                    {category.name}
-                  </h3>
-                  <span class="badge bg-secondary">{category.type}</span>
-                </div>
+        <div class="neo-card">
+          <div class="p-6">
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="text-xl font-bold mb-2">
+                  <CategoryBadge category={category} />
+                </h3>
+                <span class="inline-block bg-muted text-muted-foreground px-2 py-1 text-xs font-bold uppercase">{category.type}</span>
               </div>
             </div>
           </div>

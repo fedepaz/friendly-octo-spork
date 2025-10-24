@@ -3,60 +3,54 @@
 import type { FC } from "hono/jsx";
 
 import type { Account } from "@/generated/prisma";
-import { AccountsList } from "@/components/accounts/AccountsList";
+import { AccountCard } from "@/components/accounts/AccountCard";
 
-interface AccountsPageProps {
+interface AccountsPageData {
   accounts: Account[];
 }
 
-export const AccountsPage: FC<AccountsPageProps> = ({ accounts }) => {
+export const AccountsPage: FC<AccountsPageData> = ({ accounts }) => {
   return (
     <>
-      <div class="neo-card p-6 mb-4">
-        <h1 class="text-2xl font-bold mb-4">Finance Dashboard</h1>
-        <div class="flex gap-2 mb-4">
-          <button class="neo-btn">Primary Action</button>
-          <button class="neo-btn neo-btn-secondary">Secondary</button>
-          <button class="neo-btn neo-btn-accent">Accent</button>
-        </div>
-        <input
-          type="text"
-          class="neo-input w-full"
-          placeholder="Enter amount..."
-        />
-      </div>
-
-      <div class="bg-neo-card text-neo-foreground border-neo border-2 shadow-neo p-6 rounded-none">
-        <h2 class="text-xl font-bold">Another Card</h2>
-        <p class="mt-2">This uses the theme variables via Tailwind classes.</p>
-      </div>
-      <div class="container-xl">
-        <div class="page-header d-print-none">
-          <div class="row align-items-center">
-            <div class="col">
-              <h2 class="page-title">Accounts</h2>
-            </div>
-          </div>
-        </div>
-        <div class="page-body">
-          <AccountsList accounts={accounts} />
-        </div>
-
-        {/* Modal container for HTMX */}
-        <div
-          id="modals-here"
-          class="modal modal-blur fade"
-          style="display: none"
-          aria-hidden="true"
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "32px",
+        }}
+      >
+        <h1
+          className="font-bold uppercase"
+          style={{ fontSize: "48px", letterSpacing: "1px" }}
         >
-          <div
-            class="modal-dialog modal-lg modal-dialog-centered"
-            role="document"
-          >
-            <div class="modal-content"></div>
-          </div>
-        </div>
+          Accounts
+        </h1>
+        <button className="neo-btn neo-btn-primary">Add Account</button>
       </div>
+
+      {accounts.length === 0 ? (
+        <div className="neo-card text-center" style={{ padding: "64px 24px" }}>
+          <div style={{ fontSize: "64px", marginBottom: "16px" }}>💳</div>
+          <h3 className="font-bold uppercase mb-2" style={{ fontSize: "24px" }}>
+            No Accounts Yet
+          </h3>
+          <p className="text-muted mb-6" style={{ fontSize: "16px" }}>
+            Create your first account to start tracking your finances.
+          </p>
+          <button className="neo-btn neo-btn-primary">
+            Add Your First Account
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 grid-cols-2-md grid-cols-3-md">
+          {accounts.map((account) => (
+            <AccountCard key={account.id} account={account} />
+          ))}
+        </div>
+      )}
+
+      <div id="modal-content"></div>
     </>
   );
 };

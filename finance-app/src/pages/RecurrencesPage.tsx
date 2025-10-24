@@ -11,32 +11,31 @@ interface RecurrencesPageProps {
 
 export const RecurrencesPage: FC<RecurrencesPageProps> = ({ recurrences }) => {
   return (
-    <div class="container-xl">
-      <div class="page-header d-print-none">
-        <div class="row align-items-center">
-          <div class="col">
-            <h2 class="page-title">Recurrences</h2>
+    <>
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold uppercase">Recurrences</h1>
+        <button
+          class="neo-btn"
+          hx-get="/api/recurrences/new"
+          hx-target="#modal-content"
+          hx-swap="innerHTML"
+          data-toggle="modal"
+          data-target="#htmx-modal"
+        >
+          NEW RECURRENCE
+        </button>
+      </div>
+
+      <RecurrencesList recurrences={recurrences} />
+
+      {/* Modal container for HTMX */}
+      <div id="htmx-modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div id="modal-content" class="modal-content neo-card">
+            {/* Content will be loaded here by HTMX */}
           </div>
         </div>
       </div>
-      <div class="page-body">
-        <RecurrencesList recurrences={recurrences} />
-      </div>
-
-      {/* Modal container for HTMX */}
-      <div
-        id="modals-here"
-        class="modal modal-blur fade"
-        style="display: none"
-        aria-hidden="true"
-      >
-        <div
-          class="modal-dialog modal-lg modal-dialog-centered"
-          role="document"
-        >
-          <div class="modal-content"></div>
-        </div>
-      </div>
-    </div>
+    </>
   );
 };

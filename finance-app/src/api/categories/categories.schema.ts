@@ -3,6 +3,14 @@
 import { z } from "zod";
 import { CategoryType } from "../../generated/prisma";
 
+export const categorySchema = z.object({
+  id: z.number(),
+  userId: z.string(),
+  name: z.string(),
+  type: z.nativeEnum(CategoryType),
+  color: z.string().optional(),
+});
+
 export const createCategorySchema = z.object({
   name: z
     .string()

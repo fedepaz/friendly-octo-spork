@@ -16,7 +16,7 @@ export async function requireAuth(c: Context, next: Next) {
   const payload = c.get("jwtPayload") as { sub: string };
 
   if (!payload) {
-    return c.json({ error: "Unauthorized" }, 401);
+    return c.redirect("/login");
   }
 
   await next();
@@ -32,6 +32,8 @@ export async function redirectIfAuth(c: Context, next: Next) {
         // If token is valid, redirect to the dashboard
         return c.redirect("/dashboard");
       }
+
+      return c.redirect("/login");
     } catch (error) {
       // Invalid token, proceed to show the login page
       console.error("Invalid token during redirect check:", error);
