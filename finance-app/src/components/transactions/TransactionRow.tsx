@@ -20,11 +20,11 @@ interface TransactionRowProps {
   };
 }
 
-const typeColorMap: Record<string, string> = {
-  INCOME: "primary",
-  EXPENSE: "destructive",
-  TRANSFER: "accent",
-  PAYMENT: "secondary",
+const typeStyleMap: Record<string, { bg: string; text: string; border: string; amountText: string }> = {
+  INCOME: { bg: "bg-primary/20", text: "text-primary-foreground", border: "border-primary", amountText: "text-primary-foreground" },
+  EXPENSE: { bg: "bg-destructive/20", text: "text-destructive-foreground", border: "border-destructive", amountText: "text-destructive-foreground" },
+  TRANSFER: { bg: "bg-accent/20", text: "text-accent-foreground", border: "border-accent", amountText: "text-accent-foreground" },
+  PAYMENT: { bg: "bg-secondary/20", text: "text-secondary-foreground", border: "border-secondary", amountText: "text-secondary-foreground" },
 };
 
 export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {
@@ -33,7 +33,7 @@ export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {
     month: "short",
     day: "numeric",
   });
-  const color = typeColorMap[transaction.type] || "muted";
+  const typeStyles = typeStyleMap[transaction.type] || { bg: "bg-muted/20", text: "text-muted-foreground", border: "border-muted", amountText: "text-muted-foreground" };
 
   return (
     <tr
@@ -43,12 +43,12 @@ export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {
       <td class="p-4 text-sm">{formattedDate}</td>
       <td class="p-4 text-sm">
         <span
-          class={`inline-flex items-center gap-2 px-2 py-1 border-2 border-${color} bg-${color}/20 text-${color} text-xs font-bold uppercase tracking-wider`}
+          class={`inline-flex items-center gap-2 px-2 py-1 border-2 ${typeStyles.border} ${typeStyles.bg} ${typeStyles.text} text-xs font-bold uppercase tracking-wider`}
         >
           {transaction.type}
         </span>
       </td>
-      <td class={`p-4 font-mono text-right`}>
+      <td class={`p-4 font-mono text-right ${typeStyles.amountText}`}>
         {transaction.sourceAccount?.currency ||
           transaction.targetAccount?.currency ||
           "USD"}{" "}

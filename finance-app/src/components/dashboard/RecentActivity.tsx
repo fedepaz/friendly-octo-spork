@@ -40,7 +40,7 @@ export const RecentActivity: FC<RecentActivityProps> = ({ recentActivity }) => {
   return (
     <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6">
       <h3 class="text-xl font-bold uppercase tracking-wider mb-4">RECENT ACTIVITY</h3>
-      <div class="overflow-x-auto">
+      <div class="border-2 border-border shadow-[var(--shadow)] overflow-hidden">
         <table class="w-full table-auto">
           <thead class="bg-primary text-primary-foreground uppercase text-left">
             <tr>
@@ -54,7 +54,7 @@ export const RecentActivity: FC<RecentActivityProps> = ({ recentActivity }) => {
               <th class="p-4 font-bold text-right">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="bg-card">
             {recentActivity.map((transaction) => (
               <TransactionRow transaction={transaction} />
             ))}

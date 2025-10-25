@@ -15,15 +15,6 @@ const Layout: FC<LayoutProps> = (props) => {
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Finance App</title>
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@$ICONS_VERSION/dist/tabler-icons.min.css"
-        />
-        <!-- Tabler UI CSS -->
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler.min.css"
-        />
         <!-- Tailwind CSS -->
         <link rel="stylesheet" href="/output.css" />
       </head>

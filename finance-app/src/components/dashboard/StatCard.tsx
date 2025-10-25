@@ -31,7 +31,7 @@ export const StatCard: FC<StatCardProps> = ({
       <div class="text-sm font-semibold uppercase text-muted-foreground mb-2">
         {title}
       </div>
-      <div class={`text-4xl font-bold font-mono mb-2 text-${color}`}>
+      <div class={`text-4xl font-bold font-mono mb-2 text-${color}-foreground`}>
         {value}
       </div>
       {subtitle && (

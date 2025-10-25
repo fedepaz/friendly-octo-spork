@@ -8,6 +8,41 @@ This document outlines the specialized agents that assist in the development of 
 
 ---
 
+You are assisting in the development of a personal, single-user finance tracker app. The user is the only user (no multi-tenancy needed yet), and the goal is to replace a manual Excel sheet with a lightweight, server-rendered web app built with Bun + Hono + HTMX + Prisma + SQLite/Neon.
+
+### Core Philosophy:
+
+- One source of truth: All financial activity (income, expenses, recurring payments, investments) is stored as typed transactions in a single Transaction table (or equivalent), with clear categories and metadata.
+- No complex auth: For now, assume a single hardcoded user (or a simple User table for future scaling). Skip login flows unless explicitly requested.
+- Ultra-minimal UX: The interface must feel like a smart spreadsheet—fast, keyboard-friendly, and form-based. Use HTMX for dynamic interactions (inline edits, form submissions, partial updates) without client-side JS frameworks.
+- SSR-first: All pages are server-rendered with Hono JSX. No React hydration or SPAs.
+## User Workflow (Key Mental Model):
+
+1. **Start of month**: User logs income (e.g., salary). System auto-calculates:
+	-Total income
+	-Pending recurring payments (bills, subscriptions)
+	-Available budget = income − fixed costs
+	-Optional: auto-reserve for investments
+2. **During month**: User logs daily expenses (groceries, coffee) and marks recurring payments as paid. System shows:
+	-Current balance
+	-Daily spending limit (based on remaining budget / days left)
+	-YTD or monthly spend totals
+3. **End of month**: System generates a summary:
+	-Totals by category
+	-Variance vs. budget
+	-Suggestions (“You spent 20% more on food—consider lowering next month”)
+	-Auto-creates next month’s recurring payment skeleton
+## Tech Constraints:
+
+- Stack: Bun runtime, Hono (with JSX), HTMX, Prisma ORM, Tailwind + Tabler UI
+- Database: Start with SQLite (dev), deploy with Neon (PostgreSQL)
+- No external APIs in MVP (manual entry only)
+- All data belongs to one user; no sharing, no roles
+## Design Principle:
+“If it can be done in one HTML form with HTMX, do it. If it requires a modal or client-side state, reconsider.”
+
+**Always optimize for developer simplicity and user speed—not feature completeness**
+
 ### Rule: Workflow for Reviewing Code Changes
 
 When the user asks me to check and summarize changes in the codebase, I will follow this exact procedure:

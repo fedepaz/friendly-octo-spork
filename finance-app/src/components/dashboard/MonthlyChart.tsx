@@ -38,11 +38,12 @@ export const MonthlyChart: FC<MonthlyChartProps> = ({ chartData }) => {
                   y={y}
                   width={barWidth}
                   height={barHeight}
-                  class="fill-primary hover:fill-accent transition-colors duration-150"
+                  fill="var(--primary)"
+                  class="hover:fill-accent transition-colors duration-150"
                   rx="0"
                   ry="0"
                 />
-                <text x={x + barWidth / 2} y={chartHeight - 5} class="text-xs fill-muted-foreground text-center" text-anchor="middle">
+                <text x={x + barWidth / 2} y={chartHeight - 5} class="text-xs fill-muted-foreground" text-anchor="middle">
                   {new Date(dataPoint.date).getDate()}
                 </text>
               </g>

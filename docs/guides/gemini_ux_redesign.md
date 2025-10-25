@@ -56,16 +56,20 @@ font-serif              // Serif font for special emphasis
 
 ### ❌ NEVER Use:
 - Hardcoded colors: `bg-red-500`, `text-blue-600`, `border-gray-300`
+- Dynamic class generation with partial semantic token names (e.g., `text-${color}` should be `text-primary-foreground`)
+- External icon libraries (e.g., Tabler Icons)
 - Custom CSS classes: `.neo-btn`, `.custom-card`, `.my-component`
 - Inline styles with hardcoded values: `style="color: #ff0000"`
 - Rounded corners other than theme default: `rounded-lg` (theme uses 0px radius)
 
 ### ✅ ALWAYS Use:
 - Semantic tokens: `bg-primary`, `text-foreground`, `bg-card`
+- Use full semantic foreground tokens for text colors (e.g., `text-primary-foreground`)
 - Tailwind utilities: `border-2`, `px-6`, `py-3`, `font-bold`
 - CSS variable shadows: `shadow-[var(--shadow)]`
 - Responsive prefixes: `md:grid-cols-2`, `lg:text-4xl`
 - Transition utilities: `transition-all duration-150`
+- SVG fill colors: Use CSS variables directly (e.g., `fill="var(--primary)"`)
 
 ## Component Patterns
 

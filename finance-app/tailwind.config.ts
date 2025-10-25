@@ -18,6 +18,8 @@ const config: Config = {
         "accent-foreground": "var(--accent-foreground)",
         destructive: "var(--destructive)",
         "destructive-foreground": "var(--destructive-foreground)",
+        muted: "var(--muted)",
+        "muted-foreground": "var(--muted-foreground)",
         border: "var(--border)",
         input: "var(--input)",
         ring: "var(--ring)",

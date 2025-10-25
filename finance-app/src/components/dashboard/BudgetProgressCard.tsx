@@ -42,7 +42,7 @@ export const BudgetProgressCard: FC<BudgetProgressCardProps> = ({
       </div>
 
       <div class="mt-4">
-        <span class={`font-mono font-bold text-lg ${isOverBudget ? "text-destructive" : "text-primary"}`}>
+        <span class={`font-mono font-bold text-lg ${isOverBudget ? "text-destructive-foreground" : "text-primary-foreground"}`}>
           {currency}
           {Math.abs(remaining).toFixed(2)}
         </span>

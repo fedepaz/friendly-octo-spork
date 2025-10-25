@@ -15,7 +15,7 @@ const NavLink: FC<NavLinkProps> = ({ href, active, children }) => (
       transition-all duration-150
       ${active
         ? "bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)]"
-        : "hover:bg-muted hover:-translate-y-0.5"
+        : "border-2 border-border shadow-[var(--shadow)] hover:bg-muted hover:-translate-y-0.5"
       }
     `}
     aria-label={`Navigate to ${children}`}

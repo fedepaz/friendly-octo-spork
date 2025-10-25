@@ -51,13 +51,19 @@ export function CategoryForm({ category }: { category?: Category }) {
 
         <div>
           <label for="color" class="block text-sm font-semibold uppercase mb-2">Color</label>
-          <input
-            type="color"
+          <select
             name="color"
             id="color"
             class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
             value={category?.color || ""}
-          />
+          >
+            <option value="">SELECT COLOR...</option>
+            <option value="primary">PRIMARY</option>
+            <option value="secondary">SECONDARY</option>
+            <option value="accent">ACCENT</option>
+            <option value="destructive">DESTRUCTIVE</option>
+            <option value="muted">MUTED</option>
+          </select>
         </div>
 
         <div class="flex gap-2 justify-end mt-6">

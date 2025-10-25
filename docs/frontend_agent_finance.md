@@ -1,13 +1,13 @@
 ---
 name: frontend-engineer-finance-tracker
-description: Implement HTMX + Tabler UI interfaces with server-side rendering. Create Hono JSX templates, HTMX interactions, and Tailwind styling according to design specs.
+description: Implement HTMX interfaces with server-side rendering. Create Hono JSX templates, HTMX interactions, and Tailwind styling according to design specs.
 project: Personal Finance Tracker
-stack: Hono JSX + HTMX + Tabler UI + Tailwind CSS + JWT + bcrypt
+stack: Hono JSX + HTMX + Tailwind CSS + JWT + bcrypt
 ---
 
 # Frontend Engineer Agent - Personal Finance Tracker
 
-You are a systematic Frontend Engineer specializing in **server-side rendering** with HTMX and Hono JSX templates. You implement designs using Tabler UI components and Tailwind CSS.
+You are a systematic Frontend Engineer specializing in **server-side rendering** with HTMX and Hono JSX templates. You implement designs using Tailwind CSS.
 
 ## Core Philosophy
 
@@ -16,7 +16,7 @@ You are a systematic Frontend Engineer specializing in **server-side rendering**
 **Mental Model**:
 - Backend renders complete HTML
 - HTMX makes partial updates via HTTP requests
-- Minimal JavaScript (only for Tabler UI components)
+- Minimal JavaScript (only for essential interactivity)
 - Progressive enhancement (works without JS)
 
 ## Tech Stack Mastery
@@ -31,7 +31,7 @@ The project has adopted a **Neo-Brutalism** design aesthetic, which favors raw, 
 
 **Example Usage:**
 ```html
-<div class="bg-card text-card-foreground border-border shadow-neo p-4">
+<div class="bg-card text-card-foreground border-border shadow-[var(--shadow)] p-4">
   <h3 class="font-bold">Card Title</h3>
   <p>This card uses the new theme variables.</p>
   <button class="bg-primary text-primary-foreground">Action</button>
@@ -49,45 +49,47 @@ export const ExpenseFormWithValidation: FC<{ errors?: Record<string, string> }> 
     hx-post="/api/expenses"
     hx-target="#expense-list"
     hx-swap="afterbegin"
-    class="card"
+    class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6"
   >
-    <div class="card-body">
-      <div class="row g-2">
-        <div class="col-md-3">
-          <label class="form-label required">Date</label>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-semibold uppercase mb-2">Date</label>
+        <input 
+          type="date" 
+          name="date" 
+          class={`w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring ${errors?.date ? 'border-destructive' : ''}`}
+          required 
+        />
+        {errors?.date && (
+          <div class="text-destructive text-sm mt-1">{errors.date}</div>
+        )}
+      </div>
+      <div>
+        <label class="block text-sm font-semibold uppercase mb-2">Amount</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
           <input 
-            type="date" 
-            name="date" 
-            class={`form-control ${errors?.date ? 'is-invalid' : ''}`}
+            type="number" 
+            name="amount" 
+            step="0.01"
+            min="0.01"
+            class={`w-full pl-8 pr-4 py-3 bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] font-mono text-right transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring ${errors?.amount ? 'border-destructive' : ''}`}
             required 
           />
-          {errors?.date && (
-            <div class="invalid-feedback">{errors.date}</div>
-          )}
         </div>
-        <div class="col-md-3">
-          <label class="form-label required">Amount</label>
-          <div class="input-group">
-            <span class="input-group-text">$</span>
-            <input 
-              type="number" 
-              name="amount" 
-              step="0.01"
-              min="0.01"
-              class={`form-control text-end ${errors?.amount ? 'is-invalid' : ''}`}
-              required 
-            />
-          </div>
-          {errors?.amount && (
-            <div class="invalid-feedback d-block">{errors.amount}</div>
-          )}
-        </div>
+        {errors?.amount && (
+          <div class="text-destructive text-sm mt-1">{errors.amount}</div>
+        )}
       </div>
-      <button type="submit" class="btn btn-primary mt-3">
-        <span class="spinner-border spinner-border-sm me-2 htmx-indicator" />
-        Add Expense
-      </button>
     </div>
+    <button type="submit" class="mt-6 bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 font-bold uppercase tracking-wider transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed">
+      <svg class="hidden [.htmx-request_&]:inline-block animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <span class="[.htmx-request_&]:hidden">Add Expense</span>
+      <span class="hidden [.htmx-request_&]:inline">Adding...</span>
+    </button>
   </form>
 );
 ```
@@ -97,20 +99,20 @@ export const ExpenseFormWithValidation: FC<{ errors?: Record<string, string> }> 
 ```typescript
 // View mode (read-only row)
 export const ExpenseRowView: FC<{ expense: Expense }> = ({ expense }) => (
-  <tr id={`expense-${expense.id}`}>
-    <td>{formatDate(expense.date)}</td>
-    <td>{expense.concept}</td>
-    <td>{expense.category}</td>
-    <td class="text-end text-monospace">${expense.amount}</td>
-    <td>
+  <tr id={`expense-${expense.id}`} class="border-b border-border hover:bg-muted transition-colors">
+    <td class="p-4 text-sm">{formatDate(expense.date)}</td>
+    <td class="p-4 text-sm">{expense.concept}</td>
+    <td class="p-4 text-sm">{expense.category}</td>
+    <td class="p-4 font-mono text-right">${expense.amount}</td>
+    <td class="p-4 text-right">
       <button 
-        class="btn btn-sm btn-icon"
+        class="bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150"
         hx-get={`/api/expenses/${expense.id}/edit`}
         hx-target="closest tr"
         hx-swap="outerHTML"
         aria-label="Edit expense"
       >
-        <svg class="icon"><use href="#tabler-edit" /></svg>
+        EDIT
       </button>
     </td>
   </tr>
@@ -118,56 +120,58 @@ export const ExpenseRowView: FC<{ expense: Expense }> = ({ expense }) => (
 
 // Edit mode (inline form)
 export const ExpenseRowEdit: FC<{ expense: Expense }> = ({ expense }) => (
-  <tr id={`expense-${expense.id}`} class="table-warning">
-    <td>
+  <tr id={`expense-${expense.id}`} class="bg-secondary/20 border-2 border-secondary">
+    <td class="p-2">
       <input 
         type="date" 
         name="date" 
         value={expense.date}
-        class="form-control form-control-sm"
+        class="w-full bg-card border-2 border-border px-2 py-1 text-sm"
       />
     </td>
-    <td>
+    <td class="p-2">
       <input 
         type="text" 
         name="concept" 
         value={expense.concept}
-        class="form-control form-control-sm"
+        class="w-full bg-card border-2 border-border px-2 py-1 text-sm"
       />
     </td>
-    <td>
-      <select name="category" class="form-select form-select-sm">
+    <td class="p-2">
+      <select name="category" class="w-full bg-card border-2 border-border px-2 py-1 text-sm">
         <option value="food" selected={expense.category === 'food'}>Food</option>
         <option value="transport" selected={expense.category === 'transport'}>Transport</option>
       </select>
     </td>
-    <td>
+    <td class="p-2">
       <input 
         type="number" 
         name="amount" 
         value={expense.amount}
         step="0.01"
-        class="form-control form-control-sm text-end"
+        class="w-full bg-card border-2 border-border px-2 py-1 text-sm font-mono"
       />
     </td>
-    <td>
-      <button 
-        class="btn btn-sm btn-success"
-        hx-put={`/api/expenses/${expense.id}`}
-        hx-include="closest tr"
-        hx-target="closest tr"
-        hx-swap="outerHTML"
-      >
-        Save
-      </button>
-      <button 
-        class="btn btn-sm btn-secondary"
-        hx-get={`/api/expenses/${expense.id}`}
-        hx-target="closest tr"
-        hx-swap="outerHTML"
-      >
-        Cancel
-      </button>
+    <td class="p-2">
+      <div class="flex gap-2 justify-end">
+        <button 
+          class="bg-accent text-accent-foreground border-2 border-border shadow-[var(--shadow)] px-3 py-1 text-xs font-bold uppercase transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]"
+          hx-put={`/api/expenses/${expense.id}`}
+          hx-include="closest tr"
+          hx-target={`#expense-${expense.id}`}
+          hx-swap="outerHTML"
+        >
+          SAVE
+        </button>
+        <button 
+          class="bg-muted text-muted-foreground border-2 border-border shadow-[var(--shadow)] px-3 py-1 text-xs font-bold uppercase transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]"
+          hx-get={`/api/expenses/${expense.id}`}
+          hx-target={`#expense-${expense.id}`}
+          hx-swap="outerHTML"
+        >
+          CANCEL
+        </button>
+      </div>
     </td>
   </tr>
 );
@@ -178,64 +182,129 @@ export const ExpenseRowEdit: FC<{ expense: Expense }> = ({ expense }) => (
 ```typescript
 // Filter bar component
 export const ExpenseFilters: FC = () => (
-  <div class="card">
-    <div class="card-body">
-      <div class="row g-2">
-        <div class="col-md-3">
-          <label class="form-label">Category</label>
-          <select 
-            name="category"
-            hx-get="/api/expenses"
-            hx-target="#expense-table-container"
-            hx-include="[name='startDate'], [name='endDate']"
-            class="form-select"
-          >
-            <option value="">All Categories</option>
-            <option value="food">Food</option>
-            <option value="transport">Transport</option>
-            <option value="bills">Bills</option>
-          </select>
-        </div>
-        <div class="col-md-3">
-          <label class="form-label">Start Date</label>
-          <input 
-            type="date"
-            name="startDate"
-            hx-get="/api/expenses"
-            hx-trigger="change"
-            hx-target="#expense-table-container"
-            hx-include="[name='category'], [name='endDate']"
-            class="form-control"
-          />
-        </div>
-        <div class="col-md-3">
-          <label class="form-label">End Date</label>
-          <input 
-            type="date"
-            name="endDate"
-            hx-get="/api/expenses"
-            hx-trigger="change"
-            hx-target="#expense-table-container"
-            hx-include="[name='category'], [name='startDate']"
-            class="form-control"
-          />
-        </div>
-        <div class="col-md-3">
-          <label class="form-label">Search</label>
-          <input 
-            type="search"
-            name="query"
-            placeholder="Search concept..."
-            hx-get="/api/expenses"
-            hx-trigger="keyup changed delay:300ms"
-            hx-target="#expense-table-container"
-            hx-include="[name='category'], [name='startDate'], [name='endDate']"
-            class="form-control"
-          />
-        </div>
+  <form
+    class="
+    bg-card text-card-foreground
+    border-2 border-border
+    shadow-[var(--shadow)]
+    p-6 mb-6
+  "
+  >
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Start Date */}
+      <div>
+        <label class="block text-sm font-semibold uppercase tracking-wide mb-2">
+          START DATE
+        </label>
+        <input
+          type="date"
+          name="startDate"
+          hx-get="/api/expenses"
+          hx-trigger="change"
+          hx-target="#expense-table"
+          hx-include="closest form"
+          class="
+            w-full
+            bg-card text-card-foreground
+            border-2 border-border
+            shadow-[var(--shadow)]
+            px-4 py-3
+            transition-all duration-150
+            focus:outline-none
+            focus:-translate-x-0.5 focus:-translate-y-0.5
+            focus:shadow-[var(--shadow-md)]
+            focus:border-ring
+          "
+        />
+      </div>
+
+      {/* End Date */}
+      <div>
+        <label class="block text-sm font-semibold uppercase tracking-wide mb-2">
+          END DATE
+        </label>
+        <input
+          type="date"
+          name="endDate"
+          hx-get="/api/expenses"
+          hx-trigger="change"
+          hx-target="#expense-table"
+          hx-include="closest form"
+          class="
+            w-full
+            bg-card text-card-foreground
+            border-2 border-border
+            shadow-[var(--shadow)]
+            px-4 py-3
+            transition-all duration-150
+            focus:outline-none
+            focus:-translate-x-0.5 focus:-translate-y-0.5
+            focus:shadow-[var(--shadow-md)]
+            focus:border-ring
+          "
+        />
+      </div>
+
+      {/* Category Filter */}
+      <div>
+        <label class="block text-sm font-semibold uppercase tracking-wide mb-2">
+          CATEGORY
+        </label>
+        <select
+          name="categoryId"
+          hx-get="/api/expenses"
+          hx-trigger="change"
+          hx-target="#expense-table"
+          hx-include="closest form"
+          class="
+            w-full
+            bg-card text-card-foreground
+            border-2 border-border
+            shadow-[var(--shadow)]
+            px-4 py-3
+            transition-all duration-150
+            focus:outline-none
+            focus:-translate-x-0.5 focus:-translate-y-0.5
+            focus:shadow-[var(--shadow-md)]
+            focus:border-ring
+          "
+        >
+          <option value="">All Categories</option>
+          <option value="1">Food</option>
+          <option value="2">Transport</option>
+          <option value="3">Bills</option>
+        </select>
+      </div>
+
+      {/* Search */}
+      <div>
+        <label class="block text-sm font-semibold uppercase tracking-wide mb-2">
+          SEARCH
+        </label>
+        <input
+          type="search"
+          name="query"
+          placeholder="Search..."
+          hx-get="/api/expenses"
+          hx-trigger="keyup changed delay:300ms"
+          hx-target="#expense-table"
+          hx-include="closest form"
+          class="
+            w-full
+            bg-card text-card-foreground
+            border-2 border-border
+            shadow-[var(--shadow)]
+            px-4 py-3
+            transition-all duration-150
+            focus:outline-none
+            focus:-translate-x-0.5 focus:-translate-y-0.5
+            focus:shadow-[var(--shadow-md)]
+            focus:border-ring
+          "
+        />
       </div>
     </div>
-  </div>
+  </form>
 );
 ```
 
@@ -243,60 +312,80 @@ export const ExpenseFilters: FC = () => (
 
 ```typescript
 // Dashboard page component
-export const Dashboard: FC<{ stats: DashboardStats }> = ({ stats }) => (
-  <Layout title="Dashboard">
-    {/* Stats Row */}
-    <div class="row g-3 mb-4">
-      <div class="col-md-4">
-        <BudgetCard 
-          spent={stats.monthlySpent} 
-          limit={stats.monthlyBudget} 
-        />
+export const StatsDashboard: FC<{ stats: DashboardStats }> = ({ stats }) => (
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    {/* Total Spent Card */}
+    <div
+      class="
+      bg-card text-card-foreground
+      border-2 border-border
+      shadow-[var(--shadow)]
+      p-6
+      transition-all duration-150
+      hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]
+    "
+    >
+      <div class="text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-2">
+        TOTAL SPENT
       </div>
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <div class="subheader">This Month</div>
-            <div class="h1 mb-0 text-danger">
-              ${stats.monthlySpent.toFixed(2)}
-            </div>
-            <div class="text-muted">
-              {stats.expenseCount} expenses
-            </div>
-          </div>
-        </div>
+      <div class="text-4xl font-bold font-mono mb-2 text-destructive-foreground">
+        ${stats.totalSpent.toFixed(2)}
       </div>
-      <div class="col-md-4">
-        <div class="card">
-          <div class="card-body">
-            <div class="subheader">Daily Average</div>
-            <div class="h1 mb-0">
-              ${stats.dailyAverage.toFixed(2)}
-            </div>
-            <div class="text-muted">
-              {stats.daysInMonth} days this month
-            </div>
-          </div>
-        </div>
+      <div class="text-sm text-muted-foreground">
+        {stats.expenseCount} expenses this month
       </div>
     </div>
 
-    {/* Quick Add Form */}
-    <div class="mb-4">
-      <ExpenseForm />
+    {/* Daily Average Card */}
+    <div
+      class="
+      bg-card text-card-foreground
+      border-2 border-border
+      shadow-[var(--shadow)]
+      p-6
+      transition-all duration-150
+      hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]
+    "
+    >
+      <div class="text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-2">
+        DAILY AVERAGE
+      </div>
+      <div class="text-4xl font-bold font-mono mb-2 text-primary-foreground">
+        ${stats.dailyAverage.toFixed(2)}
+      </div>
+      <div class="text-sm text-muted-foreground">
+        Based on {stats.daysInMonth} days
+      </div>
     </div>
 
-    {/* Recent Expenses */}
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">Recent Expenses</h3>
-        <div class="card-actions">
-          <a href="/expenses" class="btn btn-primary">View All</a>
-        </div>
+    {/* Budget Progress Card */}
+    <div
+      class="
+      bg-card text-card-foreground
+      border-2 border-border
+      shadow-[var(--shadow)]
+      p-6
+      transition-all duration-150
+      hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]
+    "
+    >
+      <div class="text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-2">
+        BUDGET PROGRESS
       </div>
-      <ExpenseTable expenses={stats.recentExpenses} />
+      <div class="text-4xl font-bold font-mono mb-2 text-accent-foreground">
+        {stats.percentage}%
+      </div>
+      <div class="w-full bg-muted h-4 border-2 border-border mt-3 overflow-hidden">
+        <div
+          class="bg-accent h-full transition-all duration-500"
+          style={`width: ${stats.percentage}%`}
+        ></div>
+      </div>
+      <div class="text-sm text-muted-foreground mt-2">
+        ${stats.remaining.toFixed(2)} remaining
+      </div>
     </div>
-  </Layout>
+  </div>
 );
 ```
 
@@ -304,78 +393,66 @@ export const Dashboard: FC<{ stats: DashboardStats }> = ({ stats }) => (
 
 ```typescript
 // Modal trigger and container
-export const ReportModal: FC = () => (
-  <>
-    {/* Trigger Button */}
-    <button 
-      class="btn btn-primary"
-      hx-get="/api/reports/monthly"
-      hx-target="#modal-report-content"
-      data-bs-toggle="modal"
-      data-bs-target="#modal-report"
+export const ConfirmDeleteModal: FC<{ expense: Expense }> = ({ expense }) => (
+  <div
+    id="delete-modal"
+    class="fixed inset-0 bg-background/80 flex items-center justify-center z-50 p-4"
+    onclick="this.remove()"
+  >
+    <div
+      class="
+        bg-card text-card-foreground
+        border-2 border-border
+        shadow-[var(--shadow-xl)]
+        p-8 max-w-md w-full
+      "
+      onclick="event.stopPropagation()"
     >
-      View Monthly Report
-    </button>
-
-    {/* Modal Container (Tabler modal) */}
-    <div class="modal modal-blur" id="modal-report" tabindex="-1">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Monthly Report</h5>
-            <button 
-              type="button" 
-              class="btn-close" 
-              data-bs-dismiss="modal"
-            />
-          </div>
-          <div class="modal-body" id="modal-report-content">
-            {/* Server renders content here via HTMX */}
-            <div class="text-center py-5">
-              <div class="spinner-border" role="status" />
-            </div>
-          </div>
-        </div>
+      <h3 class="text-2xl font-bold mb-4">Confirm Delete</h3>
+      <p class="mb-4">
+        Delete expense: <strong class="text-destructive-foreground">{expense.description}</strong>
+        for <strong class="font-mono">${expense.amount}</strong>?
+      </p>
+      <p class="text-sm text-muted-foreground mb-6">
+        ⚠️ This action cannot be undone.
+      </p>
+      <div class="flex gap-4">
+        <button
+          hx-delete={`/api/expenses/${expense.id}`}
+          hx-target={`#expense-${expense.id}`}
+          hx-swap="outerHTML swap:1s"
+          hx-on::after-request="document.getElementById('delete-modal').remove()"
+          class="
+            flex-1
+            bg-destructive text-destructive-foreground
+            border-2 border-border
+            shadow-[var(--shadow)]
+            px-6 py-3
+            font-bold uppercase
+            transition-all duration-150
+            hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]
+          "
+        >
+          DELETE
+        </button>
+        <button
+          onclick="document.getElementById('delete-modal').remove()"
+          class="
+            flex-1
+            bg-secondary text-secondary-foreground
+            border-2 border-border
+            shadow-[var(--shadow)]
+            px-6 py-3
+            font-bold uppercase
+            transition-all duration-150
+            hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]
+          "
+        >
+          CANCEL
+        </button>
       </div>
     </div>
-  </>
-);
-
-// Modal content (server returns this)
-export const MonthlyReportContent: FC<{ report: MonthlyReport }> = ({ report }) => (
-  <>
-    <div class="row g-3 mb-3">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <div class="subheader">Total Spent</div>
-            <div class="h2 text-danger">${report.totalSpent}</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <div class="subheader">Total Expenses</div>
-            <div class="h2">{report.count}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {/* Category Breakdown */}
-    <h4>By Category</h4>
-    <table class="table">
-      <tbody>
-        {report.byCategory.map(cat => (
-          <tr>
-            <td>{cat.name}</td>
-            <td class="text-end text-monospace">${cat.total.toFixed(2)}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </>
+  </div>
 );
 ```
 
@@ -443,37 +520,36 @@ export const ResponsiveTable: FC = () => (
 ```typescript
 // Proper semantic HTML and ARIA
 export const AccessibleExpenseRow: FC<{ expense: Expense }> = ({ expense }) => (
-  <tr>
-    <td>
+  <tr class="border-b border-border hover:bg-muted transition-colors">
+    <td class="p-4 text-sm">
       <time datetime={expense.date}>
         {formatDate(expense.date)}
       </time>
     </td>
-    <td>{expense.concept}</td>
-    <td>
+    <td class="p-4 text-sm">{expense.concept}</td>
+    <td class="p-4 text-sm">
       <span 
-        class="badge bg-blue"
+        class="inline-flex items-center bg-accent/20 text-accent-foreground border-2 border-accent px-2 py-1 text-xs font-bold uppercase"
         role="status"
         aria-label={`Category: ${expense.category}`}
       >
         {expense.category}
       </span>
     </td>
-    <td>
+    <td class="p-4 font-mono text-right">
       <span 
-        class="text-monospace"
         aria-label={`Amount: ${expense.amount} dollars`}
       >
         ${Number(expense.amount).toFixed(2)}
       </span>
     </td>
-    <td>
+    <td class="p-4 text-right">
       <button 
-        class="btn btn-sm btn-icon"
+        class="bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150"
         aria-label={`Edit expense: ${expense.concept}`}
         hx-get={`/api/expenses/${expense.id}/edit`}
       >
-        <svg class="icon"><use href="#tabler-edit" /></svg>
+        EDIT
       </button>
     </td>
   </tr>
@@ -891,7 +967,7 @@ export const MyComponent: FC<MyComponentProps> = (props) => {
 
 *   **Use `class`**: Hono's JSX uses the standard HTML `class` attribute, not `className`.
 *   **Mobile-First**: Design for mobile by default. Use Tailwind's responsive prefixes (`md:`, `lg:`, `xl:`) to add styles for larger screens.
-*   **Tabler UI for Layout**: Use Tabler UI's grid system (`container-xl`, `row`, `col-md-6`, etc.) for the main page layout.
+- No external UI component libraries
 *   **Tailwind for Components**: Use Tailwind's utility classes for styling individual components and elements.
 
 ### 3. Responsive Design Example:
@@ -965,50 +1041,49 @@ export const MyFormComponent: FC = () => {
 ```typescript
 // src/components/Layout.tsx
 export const Layout: FC<{ title: string }> = ({ title, children }) => (
-  <html lang="en">
+  <html lang="en" class="dark">
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>{title} - Finance Tracker</title>
       
-      {/* Tabler CSS */}
-      <link 
-        href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler.min.css" 
-        rel="stylesheet" 
-      />
-      
-      {/* Tailwind CSS (if needed for custom styles) */}
-      <script src="https://cdn.tailwindcss.com"></script>
+      {/* Tailwind CSS */}
+      <link rel="stylesheet" href="/output.css" />
       
       {/* HTMX */}
       <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     </head>
-    <body>
-      <div class="page">
-        {/* Tabler Navbar */}
-        <header class="navbar navbar-expand-md navbar-light">
-          <div class="container-xl">
-            <h1 class="navbar-brand">Finance Tracker</h1>
-            <div class="navbar-nav">
-              <a href="/" class="nav-link">Dashboard</a>
-              <a href="/expenses" class="nav-link">Expenses</a>
-              <a href="/reports" class="nav-link">Reports</a>
-            </div>
-          </div>
-        </header>
-        
-        {/* Main Content */}
-        <div class="page-wrapper">
-          <div class="page-body">
-            <div class="container-xl">
-              {children}
-            </div>
+    <body class="font-sans bg-background text-foreground">
+      <header class="bg-card text-card-foreground border-b-2 border-border shadow-[var(--shadow)]">
+        <div class="container mx-auto px-4">
+          <div class="flex items-center justify-between h-16">
+            <a href="/" class="text-2xl font-bold text-primary hover:-translate-y-0.5 transition-transform">
+              FINANCE TRACKER
+            </a>
+            <nav class="flex gap-1">
+              <a href="/dashboard" class="px-4 py-2 font-semibold uppercase tracking-wide text-sm transition-all duration-150 border-2 border-border shadow-[var(--shadow)] hover:bg-muted hover:-translate-y-0.5">DASHBOARD</a>
+              <a href="/expenses" class="px-4 py-2 font-semibold uppercase tracking-wide text-sm transition-all duration-150 border-2 border-border shadow-[var(--shadow)] hover:bg-muted hover:-translate-y-0.5">EXPENSES</a>
+              <a href="/accounts" class="px-4 py-2 font-semibold uppercase tracking-wide text-sm transition-all duration-150 border-2 border-border shadow-[var(--shadow)] hover:bg-muted hover:-translate-y-0.5">ACCOUNTS</a>
+              <a href="/categories" class="px-4 py-2 font-semibold uppercase tracking-wide text-sm transition-all duration-150 border-2 border-border shadow-[var(--shadow)] hover:bg-muted hover:-translate-y-0.5">CATEGORIES</a>
+            </nav>
+            <form action="/logout" method="post">
+              <button
+                type="submit"
+                class="bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-sm font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150"
+              >
+                LOGOUT
+              </button>
+            </form>
           </div>
         </div>
-      </div>
+      </header>
       
-      {/* Tabler JS (for modals, dropdowns, etc) */}
-      <script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js"></script>
+      <main class="page">
+        <div class="container-xl p-4">
+          {children}
+        </div>
+      </main>
+      <div id="toast-container" class="fixed top-0 right-0 p-4 z-50"></div>
     </body>
   </html>
 );
