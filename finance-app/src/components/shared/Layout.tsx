@@ -10,7 +10,7 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = (props) => {
   return html` <!DOCTYPE html>
-    <html class="dark">
+    <html lang="en" class="dark">
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,27 +26,12 @@ const Layout: FC<LayoutProps> = (props) => {
         />
         <!-- Tailwind CSS -->
         <link rel="stylesheet" href="/output.css" />
-
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
       </head>
-      <body class="bg-background text-foreground font-sans">
+      <body class="font-sans bg-background text-foreground">
         ${(<Navbar activeNavItem={props.activeNavItem} />)}
-        <div class="page">
-          <div class="mx-auto w-full min-h-screen p-4">
-            <div class="mx-auto w-full min-h-screen">
-              <div class="container-xl">${props.children}</div>
-            </div>
-          </div>
-        </div>
+        <main class="page">
+          <div class="container-xl p-4">${props.children}</div>
+        </main>
         <div id="toast-container" class="fixed top-0 right-0 p-4 z-50"></div>
       </body>
     </html>`;

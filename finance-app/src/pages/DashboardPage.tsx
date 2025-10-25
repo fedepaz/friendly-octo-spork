@@ -14,21 +14,41 @@ interface DashboardData {
   expenseCount: number;
 }
 
+import { BudgetProgressCard } from "@/components/dashboard/BudgetProgressCard";
+import { StatCard } from "@/components/dashboard/StatCard";
+import { TransactionForm } from "@/components/transactions/TransactionForm";
+import { TransactionTable } from "@/components/transactions/TransactionsTable";
+import type { Account, Category, Transaction } from "@/generated/prisma";
+import type { FC } from "hono/jsx";
+
+interface DashboardData {
+  monthlySpent: number;
+  monthlyBudget: number;
+  dailyAverage: number;
+  expenseCount: number;
+  categories: Category[];
+  accounts: Account[];
+  recentTransactions: Transaction[];
+}
+
+const RecentTransactions: FC<{ transactions: Transaction[] }> = ({ transactions }) => (
+  <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-2xl font-bold uppercase tracking-wider">Recent Transactions</h2>
+      <a href="/transactions" class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-sm font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150">
+        View All
+      </a>
+    </div>
+    <TransactionTable transactions={transactions} />
+  </div>
+);
+
 export const DashboardPage: FC<{ data: DashboardData }> = ({ data }) => (
   <>
-    <h1
-      className="font-bold uppercase mb-8"
-      style={{ fontSize: "48px", letterSpacing: "1px" }}
-    >
-      Dashboard
-    </h1>
+    <h1 class="text-4xl font-bold uppercase tracking-wider mb-8">Dashboard</h1>
 
-    {/* Stats Grid */}
-    <div className="grid grid-cols-1 grid-cols-2-md grid-cols-3-md mb-8">
-      <BudgetProgressCard
-        spent={data.monthlySpent}
-        limit={data.monthlyBudget}
-      />
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+      <BudgetProgressCard spent={data.monthlySpent} limit={data.monthlyBudget} />
       <StatCard
         title="This Month"
         value={`$${data.monthlySpent.toFixed(2)}`}
@@ -43,33 +63,8 @@ export const DashboardPage: FC<{ data: DashboardData }> = ({ data }) => (
       />
     </div>
 
-    {/* Quick Add Form */}
     <TransactionForm categories={data.categories} accounts={data.accounts} />
 
-    {/* Recent Transactions */}
-    <div className="neo-card">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "24px",
-        }}
-      >
-        <h2
-          className="font-bold uppercase"
-          style={{ fontSize: "24px", letterSpacing: "0.5px" }}
-        >
-          Recent Transactions
-        </h2>
-        <a
-          href="/transactions"
-          className="neo-btn neo-btn-small neo-btn-accent"
-        >
-          View All
-        </a>
-      </div>
-      <TransactionTable transactions={data.recentTransactions} />
-    </div>
+    <RecentTransactions transactions={data.recentTransactions} />
   </>
 );

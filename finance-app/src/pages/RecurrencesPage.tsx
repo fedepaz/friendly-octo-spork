@@ -9,13 +9,21 @@ interface RecurrencesPageProps {
   recurrences: Recurrence[];
 }
 
+import type { FC } from "hono/jsx";
+import type { Recurrence } from "@/generated/prisma";
+import { RecurrencesList } from "@/components/recurrences/RecurrencesList";
+
+interface RecurrencesPageProps {
+  recurrences: Recurrence[];
+}
+
 export const RecurrencesPage: FC<RecurrencesPageProps> = ({ recurrences }) => {
   return (
     <>
       <div class="flex justify-between items-center mb-8">
-        <h1 class="text-4xl font-bold uppercase">Recurrences</h1>
+        <h1 class="text-4xl font-bold uppercase tracking-wider">Recurrences</h1>
         <button
-          class="neo-btn"
+          class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 font-bold uppercase tracking-wider transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
           hx-get="/api/recurrences/new"
           hx-target="#modal-content"
           hx-swap="innerHTML"
@@ -27,15 +35,6 @@ export const RecurrencesPage: FC<RecurrencesPageProps> = ({ recurrences }) => {
       </div>
 
       <RecurrencesList recurrences={recurrences} />
-
-      {/* Modal container for HTMX */}
-      <div id="htmx-modal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div id="modal-content" class="modal-content neo-card">
-            {/* Content will be loaded here by HTMX */}
-          </div>
-        </div>
-      </div>
     </>
   );
 };

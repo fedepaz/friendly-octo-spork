@@ -9,41 +9,53 @@ interface AccountsPageData {
   accounts: Account[];
 }
 
+import type { FC } from "hono/jsx";
+import type { Account } from "@/generated/prisma";
+import { AccountCard } from "@/components/accounts/AccountCard";
+
+interface AccountsPageData {
+  accounts: Account[];
+}
+
+const EmptyState: FC = () => (
+  <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-16 text-center">
+    <div class="text-6xl mb-4">💳</div>
+    <h3 class="text-2xl font-bold uppercase tracking-wider mb-2">No Accounts Yet</h3>
+    <p class="text-muted-foreground mb-6">Create your first account to start tracking your finances.</p>
+    <button
+      class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 font-bold uppercase tracking-wider transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
+      hx-get="/accounts/new"
+      hx-target="#modal-content"
+      hx-swap="innerHTML"
+      data-toggle="modal"
+      data-target="#htmx-modal"
+    >
+      Add Your First Account
+    </button>
+  </div>
+);
+
 export const AccountsPage: FC<AccountsPageData> = ({ accounts }) => {
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "32px",
-        }}
-      >
-        <h1
-          className="font-bold uppercase"
-          style={{ fontSize: "48px", letterSpacing: "1px" }}
+      <div class="flex items-center justify-between mb-8">
+        <h1 class="text-4xl font-bold uppercase tracking-wider">Accounts</h1>
+        <button
+          class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 font-bold uppercase tracking-wider transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
+          hx-get="/accounts/new"
+          hx-target="#modal-content"
+          hx-swap="innerHTML"
+          data-toggle="modal"
+          data-target="#htmx-modal"
         >
-          Accounts
-        </h1>
-        <button className="neo-btn neo-btn-primary">Add Account</button>
+          Add Account
+        </button>
       </div>
 
       {accounts.length === 0 ? (
-        <div className="neo-card text-center" style={{ padding: "64px 24px" }}>
-          <div style={{ fontSize: "64px", marginBottom: "16px" }}>💳</div>
-          <h3 className="font-bold uppercase mb-2" style={{ fontSize: "24px" }}>
-            No Accounts Yet
-          </h3>
-          <p className="text-muted mb-6" style={{ fontSize: "16px" }}>
-            Create your first account to start tracking your finances.
-          </p>
-          <button className="neo-btn neo-btn-primary">
-            Add Your First Account
-          </button>
-        </div>
+        <EmptyState />
       ) : (
-        <div className="grid grid-cols-1 grid-cols-2-md grid-cols-3-md">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {accounts.map((account) => (
             <AccountCard key={account.id} account={account} />
           ))}

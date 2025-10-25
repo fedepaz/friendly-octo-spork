@@ -15,6 +15,21 @@ interface TransactionFormProps {
   errors?: Record<string, string>;
 }
 
+import type { FC } from "hono/jsx";
+import type {
+  Transaction,
+  Category,
+  Account,
+  Recurrence,
+} from "@/generated/prisma";
+
+interface TransactionFormProps {
+  categories: Category[];
+  accounts: Account[];
+
+  errors?: Record<string, string>;
+}
+
 export const TransactionForm: FC<TransactionFormProps> = ({
   categories = [],
   accounts = [],
@@ -25,132 +40,81 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     hx-target="#transaction-list"
     hx-swap="afterbegin"
     hx-on--after-request="this.reset()"
-    className="neo-card mb-8"
+    class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 mb-8"
   >
-    <h3
-      className="font-bold uppercase mb-6"
-      style={{ fontSize: "20px", letterSpacing: "0.5px" }}
-    >
-      Add Transaction
-    </h3>
+    <h3 class="text-xl font-bold uppercase tracking-wider mb-6">Add Transaction</h3>
 
-    <div className="grid grid-cols-1 grid-cols-2-md grid-cols-4-lg">
-      {/* Date */}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <div>
-        <label
-          className="uppercase font-bold mb-2"
-          style={{ display: "block", fontSize: "14px", letterSpacing: "0.5px" }}
-        >
-          Date
-        </label>
+        <label for="date" class="block text-sm font-semibold uppercase mb-2">Date</label>
         <input
           type="date"
           name="date"
-          className="neo-input"
+          id="date"
+          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           defaultValue={new Date().toISOString().split("T")[0]}
           required
         />
-        {errors.date && (
-          <div className="text-destructive mt-2" style={{ fontSize: "12px" }}>
-            {errors.date}
-          </div>
-        )}
+        {errors.date && <div class="text-destructive mt-2 text-xs">{errors.date}</div>}
       </div>
 
-      {/* Amount */}
       <div>
-        <label
-          className="uppercase font-bold mb-2"
-          style={{ display: "block", fontSize: "14px", letterSpacing: "0.5px" }}
-        >
-          Amount
-        </label>
-        <div style={{ position: "relative" }}>
-          <span
-            style={{
-              position: "absolute",
-              left: "16px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              fontFamily: "var(--font-mono)",
-              fontWeight: "700",
-            }}
-          >
-            $
-          </span>
+        <label for="amount" class="block text-sm font-semibold uppercase mb-2">Amount</label>
+        <div class="relative">
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 font-mono font-bold">$</span>
           <input
             type="number"
             name="amount"
+            id="amount"
             step="0.01"
             min="0.01"
-            className="neo-input text-right text-mono"
-            style={{ paddingLeft: "32px" }}
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-right font-mono transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring pl-8"
             placeholder="0.00"
             required
           />
         </div>
-        {errors.amount && (
-          <div className="text-destructive mt-2" style={{ fontSize: "12px" }}>
-            {errors.amount}
-          </div>
-        )}
+        {errors.amount && <div class="text-destructive mt-2 text-xs">{errors.amount}</div>}
       </div>
 
-      {/* Description */}
       <div>
-        <label
-          className="uppercase font-bold mb-2"
-          style={{ display: "block", fontSize: "14px", letterSpacing: "0.5px" }}
-        >
-          Description
-        </label>
+        <label for="description" class="block text-sm font-semibold uppercase mb-2">Description</label>
         <input
           type="text"
           name="description"
-          className="neo-input"
+          id="description"
+          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           placeholder="What was this for?"
           required
         />
-        {errors.description && (
-          <div className="text-destructive mt-2" style={{ fontSize: "12px" }}>
-            {errors.description}
-          </div>
-        )}
+        {errors.description && <div class="text-destructive mt-2 text-xs">{errors.description}</div>}
       </div>
 
-      {/* Type */}
       <div>
-        <label
-          className="uppercase font-bold mb-2"
-          style={{ display: "block", fontSize: "14px", letterSpacing: "0.5px" }}
+        <label for="type" class="block text-sm font-semibold uppercase mb-2">Type</label>
+        <select
+          name="type"
+          id="type"
+          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+          required
         >
-          Type
-        </label>
-        <select name="type" className="neo-input" required>
           <option value="">Select...</option>
           <option value="INCOME">Income</option>
           <option value="EXPENSE">Expense</option>
           <option value="TRANSFER">Transfer</option>
           <option value="PAYMENT">Payment</option>
         </select>
-        {errors.type && (
-          <div className="text-destructive mt-2" style={{ fontSize: "12px" }}>
-            {errors.type}
-          </div>
-        )}
+        {errors.type && <div class="text-destructive mt-2 text-xs">{errors.type}</div>}
       </div>
     </div>
 
-    <div className="grid grid-cols-1 grid-cols-2-md mt-4">
-      {/* Category */}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
       <div>
-        <label
-          className="uppercase font-bold mb-2"
-          style={{ display: "block", fontSize: "14px", letterSpacing: "0.5px" }}
+        <label for="categoryId" class="block text-sm font-semibold uppercase mb-2">Category</label>
+        <select
+          name="categoryId"
+          id="categoryId"
+          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
         >
-          Category
-        </label>
-        <select name="categoryId" className="neo-input">
           <option value="">None</option>
           {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>
@@ -160,15 +124,13 @@ export const TransactionForm: FC<TransactionFormProps> = ({
         </select>
       </div>
 
-      {/* Account */}
       <div>
-        <label
-          className="uppercase font-bold mb-2"
-          style={{ display: "block", fontSize: "14px", letterSpacing: "0.5px" }}
+        <label for="sourceAccountId" class="block text-sm font-semibold uppercase mb-2">Account</label>
+        <select
+          name="sourceAccountId"
+          id="sourceAccountId"
+          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
         >
-          Account
-        </label>
-        <select name="sourceAccountId" className="neo-input">
           <option value="">None</option>
           {accounts.map((acc) => (
             <option key={acc.id} value={acc.id}>
@@ -179,15 +141,16 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       </div>
     </div>
 
-    <button type="submit" className="neo-btn neo-btn-primary mt-6">
+    <button
+      type="submit"
+      class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 font-bold uppercase tracking-wider transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+    >
       <svg
-        className="htmx-indicator animate-spin"
-        width="20"
-        height="20"
+        class="htmx-indicator animate-spin h-5 w-5 mr-2 hidden"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2"
+        stroke-width="2"
       >
         <path d="M21 12a9 9 0 1 1-6.219-8.56" />
       </svg>

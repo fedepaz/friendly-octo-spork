@@ -3,48 +3,24 @@
 import type { Category } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
 
-export const CategoryBadge: FC<{ category: Category }> = ({ category }) => {
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case "GASTO":
-        return "destructive";
-      case "PAGO":
-        return "secondary";
-      case "INGRESO":
-        return "success";
-      case "RENDIMIENTO":
-        return "accent";
-      default:
-        return "muted";
-    }
-  };
+import type { Category } from "@/generated/prisma";
+import type { FC } from "hono/jsx";
 
-  const color = category.color || `var(--${getTypeColor(category.type)})`;
+const typeColorMap: Record<string, string> = {
+  GASTO: "destructive",
+  PAGO: "secondary",
+  INGRESO: "primary",
+  RENDIMIENTO: "accent",
+};
+
+export const CategoryBadge: FC<{ category: Category }> = ({ category }) => {
+  const color = typeColorMap[category.type] || "muted";
 
   return (
     <span
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "8px",
-        padding: "8px 16px",
-        border: `2px solid ${color}`,
-        background: `${color}20`,
-        color: color,
-        fontSize: "14px",
-        fontWeight: "700",
-        textTransform: "uppercase",
-        letterSpacing: "0.5px",
-      }}
+      class={`inline-flex items-center gap-2 px-4 py-2 border-2 border-${color} bg-${color}/20 text-${color} text-sm font-bold uppercase tracking-wider`}
     >
-      <span
-        style={{
-          width: "12px",
-          height: "12px",
-          background: color,
-          border: "2px solid var(--border)",
-        }}
-      />
+      <span class={`w-3 h-3 bg-${color} border-2 border-border`} />
       {category.name}
     </span>
   );

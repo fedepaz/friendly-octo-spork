@@ -7,14 +7,23 @@ interface TransactionFiltersProps {
   recurrences: Recurrence[];
 }
 
+import type { FC } from "hono/jsx";
+import type { Category, Account, Recurrence } from "@/generated/prisma";
+
+interface TransactionFiltersProps {
+  categories: Category[];
+  accounts: Account[];
+  recurrences: Recurrence[];
+}
+
 export const TransactionFilters: FC<TransactionFiltersProps> = ({
   categories,
   accounts,
   recurrences,
 }) => {
   return (
-    <div class="neo-card p-6 mb-6">
-      <h3 class="text-xl font-bold uppercase mb-4">FILTER TRANSACTIONS</h3>
+    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 mb-8">
+      <h3 class="text-xl font-bold uppercase tracking-wider mb-4">FILTER TRANSACTIONS</h3>
       <form
         hx-get="/api/transactions"
         hx-target="#transactions-list"
@@ -23,26 +32,29 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
       >
         <div>
-          <label class="block text-sm font-semibold uppercase mb-2">Start Date</label>
+          <label for="startDate" class="block text-sm font-semibold uppercase mb-2">Start Date</label>
           <input
             type="date"
             name="startDate"
-            class="neo-input w-full bg-card text-card-foreground"
+            id="startDate"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           />
         </div>
         <div>
-          <label class="block text-sm font-semibold uppercase mb-2">End Date</label>
+          <label for="endDate" class="block text-sm font-semibold uppercase mb-2">End Date</label>
           <input
             type="date"
             name="endDate"
-            class="neo-input w-full bg-card text-card-foreground"
+            id="endDate"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           />
         </div>
         <div>
-          <label class="block text-sm font-semibold uppercase mb-2">Type</label>
+          <label for="type" class="block text-sm font-semibold uppercase mb-2">Type</label>
           <select
             name="type"
-            class="neo-input w-full bg-card text-card-foreground"
+            id="type"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           >
             <option value="">ALL TYPES</option>
             <option value="INCOME">INCOME</option>
@@ -54,10 +66,11 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           </select>
         </div>
         <div>
-          <label class="block text-sm font-semibold uppercase mb-2">Category</label>
+          <label for="categoryId" class="block text-sm font-semibold uppercase mb-2">Category</label>
           <select
             name="categoryId"
-            class="neo-input w-full bg-card text-card-foreground"
+            id="categoryId"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           >
             <option value="">ALL CATEGORIES</option>
             {categories.map((cat) => (
@@ -66,10 +79,11 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           </select>
         </div>
         <div>
-          <label class="block text-sm font-semibold uppercase mb-2">Source Account</label>
+          <label for="sourceAccountId" class="block text-sm font-semibold uppercase mb-2">Source Account</label>
           <select
             name="sourceAccountId"
-            class="neo-input w-full bg-card text-card-foreground"
+            id="sourceAccountId"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           >
             <option value="">ALL SOURCE ACCOUNTS</option>
             {accounts.map((acc) => (
@@ -78,10 +92,11 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           </select>
         </div>
         <div>
-          <label class="block text-sm font-semibold uppercase mb-2">Target Account</label>
+          <label for="targetAccountId" class="block text-sm font-semibold uppercase mb-2">Target Account</label>
           <select
             name="targetAccountId"
-            class="neo-input w-full bg-card text-card-foreground"
+            id="targetAccountId"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           >
             <option value="">ALL TARGET ACCOUNTS</option>
             {accounts.map((acc) => (
@@ -90,10 +105,11 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           </select>
         </div>
         <div>
-          <label class="block text-sm font-semibold uppercase mb-2">Recurrence</label>
+          <label for="recurrenceId" class="block text-sm font-semibold uppercase mb-2">Recurrence</label>
           <select
             name="recurrenceId"
-            class="neo-input w-full bg-card text-card-foreground"
+            id="recurrenceId"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           >
             <option value="">ALL RECURRENCES</option>
             {recurrences.map((rec) => (

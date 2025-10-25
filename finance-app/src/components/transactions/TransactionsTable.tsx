@@ -7,21 +7,25 @@ interface TransactionTableProps {
   transactions: Transaction[];
 }
 
-export const TransactionTable: FC<TransactionTableProps> = ({
-  transactions,
-}) => {
+import type { FC } from "hono/jsx";
+import type { Transaction } from "@/generated/prisma";
+import { TransactionRow } from "./TransactionRow";
+
+interface TransactionTableProps {
+  transactions: Transaction[];
+}
+
+const EmptyState: FC = () => (
+  <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-16 text-center">
+    <div class="text-6xl mb-4">📋</div>
+    <h3 class="text-2xl font-bold uppercase tracking-wider mb-2">No Transactions Yet</h3>
+    <p class="text-muted-foreground mb-6">Start tracking your finances by adding your first transaction above.</p>
+  </div>
+);
+
+export const TransactionTable: FC<TransactionTableProps> = ({ transactions }) => {
   if (transactions.length === 0) {
-    return (
-      <div className="neo-card text-center" style={{ padding: "64px 24px" }}>
-        <div style={{ fontSize: "64px", marginBottom: "16px" }}>📋</div>
-        <h3 className="font-bold uppercase mb-2" style={{ fontSize: "24px" }}>
-          No Transactions Yet
-        </h3>
-        <p className="text-muted" style={{ fontSize: "16px" }}>
-          Start tracking your finances by adding your first transaction above.
-        </p>
-      </div>
-    );
+    return <EmptyState />;
   }
 
   const total = transactions.reduce((sum, t) => {
@@ -31,16 +35,18 @@ export const TransactionTable: FC<TransactionTableProps> = ({
   }, 0);
 
   return (
-    <div style={{ overflowX: "auto" }}>
-      <table className="neo-table">
-        <thead>
+    <div class="border-2 border-border shadow-[var(--shadow-lg)] overflow-hidden">
+      <table class="w-full">
+        <thead class="bg-primary text-primary-foreground">
           <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Type</th>
-            <th>Category</th>
-            <th className="text-right">Amount</th>
-            <th style={{ width: "200px" }}>Actions</th>
+            <th class="p-4 text-left font-bold uppercase">Date</th>
+            <th class="p-4 text-left font-bold uppercase">Type</th>
+            <th class="p-4 text-right font-bold uppercase">Amount</th>
+            <th class="p-4 text-left font-bold uppercase">Description</th>
+            <th class="p-4 text-left font-bold uppercase">Category</th>
+            <th class="p-4 text-left font-bold uppercase">Source Account</th>
+            <th class="p-4 text-left font-bold uppercase">Target Account</th>
+            <th class="p-4 text-right font-bold uppercase" style={{ width: "200px" }}>Actions</th>
           </tr>
         </thead>
         <tbody id="transaction-list">
@@ -49,13 +55,11 @@ export const TransactionTable: FC<TransactionTableProps> = ({
           ))}
         </tbody>
         <tfoot>
-          <tr style={{ background: "var(--muted)" }}>
-            <th colSpan={4} className="text-right uppercase">
-              Total Balance
-            </th>
+          <tr class="bg-muted">
+            <th colSpan={7} class="p-4 text-right font-bold uppercase">Total Balance</th>
             <th
-              className={`text-right text-mono ${
-                total >= 0 ? "text-success" : "text-destructive"
+              class={`p-4 font-mono text-right ${
+                total >= 0 ? "text-primary" : "text-destructive"
               }`}
             >
               ${Math.abs(total).toFixed(2)}

@@ -8,6 +8,14 @@ interface BudgetProgressCardProps {
   currency?: string;
 }
 
+import type { FC } from "hono/jsx";
+
+interface BudgetProgressCardProps {
+  spent: number;
+  limit: number;
+  currency?: string;
+}
+
 export const BudgetProgressCard: FC<BudgetProgressCardProps> = ({
   spent,
   limit,
@@ -18,54 +26,27 @@ export const BudgetProgressCard: FC<BudgetProgressCardProps> = ({
   const isOverBudget = remaining < 0;
 
   return (
-    <div className="neo-card">
-      <div
-        className="text-muted uppercase font-bold mb-2"
-        style={{ fontSize: "14px", letterSpacing: "0.5px" }}
-      >
-        Monthly Budget
-      </div>
-      <div className="text-mono font-bold mb-4" style={{ fontSize: "28px" }}>
+    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6">
+      <div class="text-muted-foreground uppercase font-bold mb-2 text-sm tracking-wider">Monthly Budget</div>
+      <div class="font-mono font-bold mb-4 text-3xl">
         {currency}
         {spent.toFixed(2)} / {currency}
         {limit.toFixed(2)}
       </div>
 
-      {/* Progress Bar */}
-      <div
-        style={{
-          width: "100%",
-          height: "24px",
-          background: "var(--muted)",
-          border: "2px solid var(--border)",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
+      <div class="w-full h-6 bg-muted border-2 border-border relative overflow-hidden">
         <div
-          style={{
-            width: `${percentage}%`,
-            height: "100%",
-            background:
-              percentage > 90 ? "var(--destructive)" : "var(--success)",
-            transition: "width 0.3s ease-out",
-          }}
+          style={{ width: `${percentage}%` }}
+          class={`h-full transition-all duration-300 ${percentage > 90 ? "bg-destructive" : "bg-primary"}`}
         />
       </div>
 
-      <div className="mt-4">
-        <span
-          className={`text-mono font-bold ${
-            isOverBudget ? "text-destructive" : "text-success"
-          }`}
-          style={{ fontSize: "18px" }}
-        >
+      <div class="mt-4">
+        <span class={`font-mono font-bold text-lg ${isOverBudget ? "text-destructive" : "text-primary"}`}>
           {currency}
           {Math.abs(remaining).toFixed(2)}
         </span>
-        <span className="text-muted" style={{ marginLeft: "8px" }}>
-          {isOverBudget ? "over budget" : "remaining"}
-        </span>
+        <span class="text-muted-foreground ml-2">{isOverBudget ? "over budget" : "remaining"}</span>
       </div>
     </div>
   );
