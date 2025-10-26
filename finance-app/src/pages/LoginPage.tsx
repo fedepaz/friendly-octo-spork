@@ -6,12 +6,6 @@ interface LoginPageProps {
   error?: string;
 }
 
-import type { FC } from "hono/jsx";
-
-interface LoginPageProps {
-  error?: string;
-}
-
 export const LoginPage: FC<LoginPageProps> = ({ error }) => {
   return (
     <div class="flex items-center justify-center min-h-screen bg-background">
@@ -20,7 +14,11 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
           <h2 class="text-3xl font-bold text-primary">FINANCE TRACKER</h2>
           <p class="text-muted-foreground">SIGN IN TO CONTINUE</p>
         </div>
-        <form method="post" action="/login" class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6">
+        <form
+          method="post"
+          action="/login"
+          class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6"
+        >
           {error && (
             <div
               class="bg-destructive text-destructive-foreground border-2 border-border p-3 mb-3"
@@ -31,7 +29,10 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
             </div>
           )}
           <div class="mb-4">
-            <label for="email" class="block text-sm font-semibold uppercase mb-2">
+            <label
+              for="email"
+              class="block text-sm font-semibold uppercase mb-2"
+            >
               Email
             </label>
             <input
@@ -45,7 +46,10 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
             />
           </div>
           <div class="mb-4">
-            <label for="password" class="block text-sm font-semibold uppercase mb-2">
+            <label
+              for="password"
+              class="block text-sm font-semibold uppercase mb-2"
+            >
               Password
             </label>
             <input

@@ -2,20 +2,7 @@
 
 import { BudgetProgressCard } from "@/components/dashboard/BudgetProgressCard";
 import { StatCard } from "@/components/dashboard/StatCard";
-import { TransactionForm } from "@/components/transactions/TransactionForm";
-import { TransactionTable } from "@/components/transactions/TransactionsTable";
-import type { Account, Category, Transaction } from "@/generated/prisma";
-import type { FC } from "hono/jsx";
-
-interface DashboardData {
-  monthlySpent: number;
-  monthlyBudget: number;
-  dailyAverage: number;
-  expenseCount: number;
-}
-
-import { BudgetProgressCard } from "@/components/dashboard/BudgetProgressCard";
-import { StatCard } from "@/components/dashboard/StatCard";
+import Layout from "@/components/shared/Layout";
 import { TransactionForm } from "@/components/transactions/TransactionForm";
 import { TransactionTable } from "@/components/transactions/TransactionsTable";
 import type { Account, Category, Transaction } from "@/generated/prisma";
@@ -31,11 +18,18 @@ interface DashboardData {
   recentTransactions: Transaction[];
 }
 
-const RecentTransactions: FC<{ transactions: Transaction[] }> = ({ transactions }) => (
+const RecentTransactions: FC<{ transactions: Transaction[] }> = ({
+  transactions,
+}) => (
   <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6">
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-2xl font-bold uppercase tracking-wider">Recent Transactions</h2>
-      <a href="/transactions" class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-sm font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150">
+      <h2 class="text-2xl font-bold uppercase tracking-wider">
+        Recent Transactions
+      </h2>
+      <a
+        href="/transactions"
+        class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-sm font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150"
+      >
         View All
       </a>
     </div>
@@ -44,11 +38,14 @@ const RecentTransactions: FC<{ transactions: Transaction[] }> = ({ transactions 
 );
 
 export const DashboardPage: FC<{ data: DashboardData }> = ({ data }) => (
-  <>
+  <Layout activeNavItem="/dashboard">
     <h1 class="text-4xl font-bold uppercase tracking-wider mb-8">Dashboard</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-      <BudgetProgressCard spent={data.monthlySpent} limit={data.monthlyBudget} />
+      <BudgetProgressCard
+        spent={data.monthlySpent}
+        limit={data.monthlyBudget}
+      />
       <StatCard
         title="This Month"
         value={`$${data.monthlySpent.toFixed(2)}`}
@@ -66,5 +63,5 @@ export const DashboardPage: FC<{ data: DashboardData }> = ({ data }) => (
     <TransactionForm categories={data.categories} accounts={data.accounts} />
 
     <RecentTransactions transactions={data.recentTransactions} />
-  </>
+  </Layout>
 );

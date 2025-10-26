@@ -9,22 +9,34 @@ interface TransactionRowProps {
   };
 }
 
-import type { FC } from "hono/jsx";
-import type { Transaction, Category, Account } from "@/generated/prisma";
-
-interface TransactionRowProps {
-  transaction: Transaction & {
-    category?: Category;
-    sourceAccount?: Account;
-    targetAccount?: Account;
-  };
-}
-
-const typeStyleMap: Record<string, { bg: string; text: string; border: string; amountText: string }> = {
-  INCOME: { bg: "bg-primary/20", text: "text-primary-foreground", border: "border-primary", amountText: "text-primary-foreground" },
-  EXPENSE: { bg: "bg-destructive/20", text: "text-destructive-foreground", border: "border-destructive", amountText: "text-destructive-foreground" },
-  TRANSFER: { bg: "bg-accent/20", text: "text-accent-foreground", border: "border-accent", amountText: "text-accent-foreground" },
-  PAYMENT: { bg: "bg-secondary/20", text: "text-secondary-foreground", border: "border-secondary", amountText: "text-secondary-foreground" },
+const typeStyleMap: Record<
+  string,
+  { bg: string; text: string; border: string; amountText: string }
+> = {
+  INCOME: {
+    bg: "bg-primary/20",
+    text: "text-primary-foreground",
+    border: "border-primary",
+    amountText: "text-primary-foreground",
+  },
+  EXPENSE: {
+    bg: "bg-destructive/20",
+    text: "text-destructive-foreground",
+    border: "border-destructive",
+    amountText: "text-destructive-foreground",
+  },
+  TRANSFER: {
+    bg: "bg-accent/20",
+    text: "text-accent-foreground",
+    border: "border-accent",
+    amountText: "text-accent-foreground",
+  },
+  PAYMENT: {
+    bg: "bg-secondary/20",
+    text: "text-secondary-foreground",
+    border: "border-secondary",
+    amountText: "text-secondary-foreground",
+  },
 };
 
 export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {
@@ -33,7 +45,12 @@ export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {
     month: "short",
     day: "numeric",
   });
-  const typeStyles = typeStyleMap[transaction.type] || { bg: "bg-muted/20", text: "text-muted-foreground", border: "border-muted", amountText: "text-muted-foreground" };
+  const typeStyles = typeStyleMap[transaction.type] || {
+    bg: "bg-muted/20",
+    text: "text-muted-foreground",
+    border: "border-muted",
+    amountText: "text-muted-foreground",
+  };
 
   return (
     <tr

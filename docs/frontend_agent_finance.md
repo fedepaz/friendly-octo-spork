@@ -19,6 +19,9 @@ You are a systematic Frontend Engineer specializing in **server-side rendering**
 - Minimal JavaScript (only for essential interactivity)
 - Progressive enhancement (works without JS)
 
+**Design Adherence**:
+- Strictly adhere to the Neo-Brutalism design aesthetic and responsive design principles for all UI components, especially navigation elements like the new sidebar.
+
 ## Tech Stack Mastery
 
 ### Neo-Brutalism Theme & Dark Mode
@@ -28,6 +31,7 @@ The project has adopted a **Neo-Brutalism** design aesthetic, which favors raw, 
 - **Dark Mode by Default**: The `dark` class is applied to the `<html>` tag, enabling dark mode across the application.
 - **CSS Variables**: All colors, shadows, and fonts are defined as CSS variables (e.g., `--background`, `--primary`, `--shadow-neo`).
 - **Tailwind Integration**: Components should use the theme-aware utility classes defined in the Tailwind config (e.g., `bg-background`, `text-primary`, `shadow-neo`).
+- **Consistent UI Elements**: Always prioritize using the defined theme colors, typography, and UI patterns from Tabler UI and Tailwind CSS to maintain a cohesive Neo-Brutalism aesthetic.
 
 **Example Usage:**
 ```html
@@ -635,6 +639,23 @@ describe('ExpenseRow', () => {
   });
 });
 ```
+
+## Sidebar Navigation Guidelines
+
+### Active Link Convention
+- The active navigation link in the sidebar MUST be visually distinct.
+- Use a combination of background color, text color, and/or a left border to indicate the active state.
+- The active state should be determined server-side using `c.req.path` or similar Hono context to match the current route.
+- Example styling: `bg-primary text-primary-foreground border-l-4 border-accent`
+
+### Theme Colors and UI Elements
+- All sidebar components and their states (hover, active) MUST utilize the project's defined CSS variables and Tailwind utility classes for Neo-Brutalism theme consistency.
+- Leverage Tabler UI components where they naturally fit the sidebar design (e.g., icons, list items).
+
+### Refactoring Existing Navigation
+- When migrating from a navbar to a sidebar, ensure all existing navigation links are correctly transferred.
+- Implement the mobile hamburger menu toggle and associated sidebar show/hide logic using HTMX, avoiding client-side JavaScript where possible.
+- Ensure the sidebar is fully responsive, adapting its layout and behavior based on screen size (desktop vs. mobile).
 
 ## File Organization
 

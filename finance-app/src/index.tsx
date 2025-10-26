@@ -1,8 +1,12 @@
 import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
 import { jsxRenderer } from "hono/jsx-renderer";
-import Layout from "./components/shared/Layout";
-import { jwtMiddleware, redirectIfAuth, requireAuth } from "./middleware/auth";
+
+import {
+  jwtMiddleware,
+  refreshTokenIfNeeded,
+  requireAuth,
+} from "./middleware/auth";
 import accountsRoutes from "./api/accounts/accounts.routes";
 import { logger } from "hono/logger";
 import { cors } from "hono/cors";
@@ -11,7 +15,8 @@ import { ErrorPage } from "./pages/ErrorPage";
 import categoriesRoutes from "./api/categories/categories.routes";
 import recurrencesRoutes from "./api/recurrences/recurrences.routes";
 import dashboardRoutes from "./api/dashboard/dashboard.routes";
-import { DashboardPage } from "./pages/DashboardPage";
+import Layout from "./components/shared/Layout";
+import Injection from "./styles/injection";
 
 const app = new Hono();
 
@@ -24,30 +29,38 @@ app.use("*", cors());
 
 // Middleware to wrap all routes in the Layout component
 app.use(
-  jsxRenderer(({ children, activeNavItem }) => {
-    return <Layout activeNavItem={activeNavItem}>{children}</Layout>;
+  jsxRenderer(({ children }) => {
+    return <Injection>{children}</Injection>;
   })
 );
 
 // Serve the compiled stylesheet
 app.use("/output.css", serveStatic({ root: "./dist/static" }));
-
-// Public routes: login should NOT use JWT middleware
-app.use("/");
-app.use("/login"); // ← redirect if already logged in
-
-// Protected API routes
-app.use("/*", jwtMiddleware, requireAuth);
-
-// Mount the API routes
+/**
+ * Public Routes (no authentication required)
+ */
+// Auth routes (login/logout) - these should redirect if already authenticated
 app.route("/", authRoutes);
+
+/**
+ * Protected Routes (authentication required)
+ */
+// Apply auth middleware to all protected routes
+app.use("/dashboard/*", requireAuth, refreshTokenIfNeeded);
+app.use("/accounts/*", requireAuth, refreshTokenIfNeeded);
+app.use("/categories/*", requireAuth, refreshTokenIfNeeded);
+app.use("/recurrences/*", requireAuth, refreshTokenIfNeeded);
+app.use("/api/*", requireAuth, refreshTokenIfNeeded);
+
+// Mount the protected API routes
 app.route("/accounts", accountsRoutes);
 app.route("/categories", categoriesRoutes);
 app.route("/recurrences", recurrencesRoutes);
-
 app.route("/dashboard", dashboardRoutes);
 
-// Basic root route
+/**
+ * Error Handlers
+ */
 app.notFound((c) => {
   if (c.req.path.startsWith("/api")) {
     return c.json({ error: "Not found" }, 404);
