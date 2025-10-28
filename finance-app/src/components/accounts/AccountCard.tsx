@@ -37,14 +37,14 @@ export const AccountCard: FC<{ account: Account }> = ({ account }) => {
   };
 
   return (
-    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-xl)] transition-all">
+    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150">
       <div class="flex justify-between items-start mb-4">
         <div>
-          <h3 class="text-lg font-bold uppercase tracking-wider mb-1">
+          <h3 class="text-lg font-semibold text-foreground mb-1">
             {account.name}
           </h3>
           <span
-            class={`inline-flex items-center gap-2 px-2 py-1 border-2 ${typeStyles.border} ${typeStyles.bg} ${typeStyles.text} text-xs font-bold uppercase tracking-wider`}
+            class={`inline-flex items-center gap-2 px-2 py-1 border-2 ${typeStyles.border} ${typeStyles.bg} ${typeStyles.text} text-xs font-semibold uppercase tracking-wide`}
           >
             {account.type}
           </span>

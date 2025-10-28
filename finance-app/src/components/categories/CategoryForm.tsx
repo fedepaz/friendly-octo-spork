@@ -8,8 +8,8 @@ export function CategoryForm({ category }: { category?: Category }) {
   }
 
   return (
-    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 w-full max-w-md">
-      <h3 class="text-2xl font-bold mb-4 uppercase tracking-wider">
+    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 w-full max-w-md">
+      <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
         EDIT CATEGORY
       </h3>
 
@@ -21,7 +21,7 @@ export function CategoryForm({ category }: { category?: Category }) {
         class="space-y-4"
       >
         <div>
-          <label for="name" class="block text-sm font-semibold uppercase mb-2">
+          <label for="name" class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
             Category Name
           </label>
           <input
@@ -36,7 +36,7 @@ export function CategoryForm({ category }: { category?: Category }) {
         </div>
 
         <div>
-          <label for="type" class="block text-sm font-semibold uppercase mb-2">
+          <label for="type" class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
             Category Type
           </label>
           <select
@@ -74,7 +74,7 @@ export function CategoryForm({ category }: { category?: Category }) {
         </div>
 
         <div>
-          <label for="color" class="block text-sm font-semibold uppercase mb-2">
+          <label for="color" class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
             Color
           </label>
           <select

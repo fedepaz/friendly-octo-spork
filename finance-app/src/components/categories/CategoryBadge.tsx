@@ -42,7 +42,7 @@ export const CategoryBadge: FC<{ category: Category }> = ({ category }) => {
 
   return (
     <span
-      class={`inline-flex items-center gap-2 px-4 py-2 border-2 ${typeStyles.border} ${typeStyles.bg} ${typeStyles.text} text-sm font-bold uppercase tracking-wider`}
+      class={`inline-flex items-center gap-2 px-2 py-1 border-2 ${typeStyles.border} ${typeStyles.bg} ${typeStyles.text} text-xs font-semibold uppercase tracking-wide`}
     >
       <span class={`w-3 h-3 ${typeStyles.dotBg} border-2 border-border`} />
       {category.name}

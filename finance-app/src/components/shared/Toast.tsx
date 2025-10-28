@@ -40,9 +40,9 @@ export const Toast: FC<ToastProps> = ({ message, type }) => {
       class={`
         ${bgColor} ${textColor}
         border-2 ${borderColor}
-        shadow-[var(--shadow-lg)]
+        shadow-[var(--shadow)]
         p-4 rounded-md
-        flex items-center gap-3
+        flex items-center gap-4
         min-w-[300px] max-w-md
         animate-slide-in-right
       `}

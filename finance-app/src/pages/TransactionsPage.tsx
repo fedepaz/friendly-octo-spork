@@ -29,7 +29,7 @@ export const TransactionsPage: FC<{ data?: TransactionsPageData }> = ({
 
   return (
     <Layout activeNavItem="/transactions">
-      <h1 class="text-4xl font-bold uppercase tracking-wider mb-8">
+      <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">
         Transactions
       </h1>
 

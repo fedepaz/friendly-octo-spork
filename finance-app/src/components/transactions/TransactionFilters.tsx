@@ -1,4 +1,4 @@
-// src/components/transactions/TransactionFilters.tsxº
+// src/components/transactions/TransactionFilters.tsx
 
 import type { FC } from "hono/jsx";
 import type { Category, Account, Recurrence } from "@/generated/prisma";
@@ -15,8 +15,8 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
   recurrences,
 }) => {
   return (
-    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 mb-8">
-      <h3 class="text-xl font-bold uppercase tracking-wider mb-4">
+    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 mb-6">
+      <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
         FILTER TRANSACTIONS
       </h3>
       <form
@@ -29,7 +29,7 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
         <div>
           <label
             for="startDate"
-            class="block text-sm font-semibold uppercase mb-2"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
           >
             Start Date
           </label>
@@ -43,7 +43,7 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
         <div>
           <label
             for="endDate"
-            class="block text-sm font-semibold uppercase mb-2"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
           >
             End Date
           </label>
@@ -55,7 +55,7 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           />
         </div>
         <div>
-          <label for="type" class="block text-sm font-semibold uppercase mb-2">
+          <label for="type" class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
             Type
           </label>
           <select
@@ -75,7 +75,7 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
         <div>
           <label
             for="categoryId"
-            class="block text-sm font-semibold uppercase mb-2"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
           >
             Category
           </label>
@@ -93,7 +93,7 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
         <div>
           <label
             for="sourceAccountId"
-            class="block text-sm font-semibold uppercase mb-2"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
           >
             Source Account
           </label>
@@ -111,7 +111,7 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
         <div>
           <label
             for="targetAccountId"
-            class="block text-sm font-semibold uppercase mb-2"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
           >
             Target Account
           </label>
@@ -129,7 +129,7 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
         <div>
           <label
             for="recurrenceId"
-            class="block text-sm font-semibold uppercase mb-2"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
           >
             Recurrence
           </label>

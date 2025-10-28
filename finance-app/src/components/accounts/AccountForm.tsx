@@ -2,8 +2,8 @@
 
 export function AccountForm() {
   return (
-    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 w-full max-w-md">
-      <h3 class="text-2xl font-bold mb-4 uppercase tracking-wider">
+    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 w-full max-w-md">
+      <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
         CREATE NEW ACCOUNT
       </h3>
 
@@ -15,7 +15,7 @@ export function AccountForm() {
         class="space-y-4"
       >
         <div>
-          <label for="name" class="block text-sm font-semibold uppercase mb-2">
+          <label for="name" class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
             Account Name
           </label>
           <input
@@ -29,7 +29,7 @@ export function AccountForm() {
         </div>
 
         <div>
-          <label for="type" class="block text-sm font-semibold uppercase mb-2">
+          <label for="type" class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
             Account Type
           </label>
           <select
@@ -50,7 +50,7 @@ export function AccountForm() {
         <div>
           <label
             for="currency"
-            class="block text-sm font-semibold uppercase mb-2"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
           >
             Currency
           </label>
@@ -70,7 +70,7 @@ export function AccountForm() {
         <div>
           <label
             for="balance"
-            class="block text-sm font-semibold uppercase mb-2"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
           >
             Initial Balance
           </label>

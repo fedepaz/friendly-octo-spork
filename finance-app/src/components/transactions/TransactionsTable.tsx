@@ -11,12 +11,12 @@ interface TransactionTableProps {
 }
 
 const EmptyState: FC = () => (
-  <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-16 text-center">
+  <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-12 text-center">
     <div
       class="text-6xl mb-4"
       dangerouslySetInnerHTML={{ __html: ClipboardIcon }}
     />
-    <h3 class="text-2xl font-bold uppercase tracking-wider mb-2">
+    <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
       No Transactions Yet
     </h3>
     <p class="text-muted-foreground mb-6">
@@ -39,19 +39,19 @@ export const TransactionTable: FC<TransactionTableProps> = ({
   }, 0);
 
   return (
-    <div class="border-2 border-border shadow-[var(--shadow-lg)] overflow-hidden">
+    <div class="border-2 border-border shadow-[var(--shadow)] overflow-hidden">
       <table class="w-full">
         <thead class="bg-primary text-primary-foreground">
           <tr>
-            <th class="p-4 text-left font-bold uppercase">Date</th>
-            <th class="p-4 text-left font-bold uppercase">Type</th>
-            <th class="p-4 text-right font-bold uppercase">Amount</th>
-            <th class="p-4 text-left font-bold uppercase">Description</th>
-            <th class="p-4 text-left font-bold uppercase">Category</th>
-            <th class="p-4 text-left font-bold uppercase">Source Account</th>
-            <th class="p-4 text-left font-bold uppercase">Target Account</th>
+            <th class="p-4 text-left font-bold uppercase tracking-wide">Date</th>
+            <th class="p-4 text-left font-bold uppercase tracking-wide">Type</th>
+            <th class="p-4 text-right font-bold uppercase tracking-wide">Amount</th>
+            <th class="p-4 text-left font-bold uppercase tracking-wide">Description</th>
+            <th class="p-4 text-left font-bold uppercase tracking-wide">Category</th>
+            <th class="p-4 text-left font-bold uppercase tracking-wide">Source Account</th>
+            <th class="p-4 text-left font-bold uppercase tracking-wide">Target Account</th>
             <th
-              class="p-4 text-right font-bold uppercase"
+              class="p-4 text-right font-bold uppercase tracking-wide"
               style={{ width: "200px" }}
             >
               Actions
@@ -65,7 +65,7 @@ export const TransactionTable: FC<TransactionTableProps> = ({
         </tbody>
         <tfoot>
           <tr class="bg-muted">
-            <th colSpan={7} class="p-4 text-right font-bold uppercase">
+            <th colSpan={7} class="p-4 text-right font-bold uppercase tracking-wide">
               Total Balance
             </th>
             <th

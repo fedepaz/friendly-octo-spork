@@ -16,7 +16,7 @@ export const StatCard: FC<StatCardProps> = ({
   color = "primary",
 }) => {
   return (
-    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-xl)] transition-all">
+    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150">
       <div class="text-sm font-semibold uppercase text-muted-foreground mb-2">
         {title}
       </div>

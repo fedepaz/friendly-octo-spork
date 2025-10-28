@@ -25,7 +25,7 @@ const Layout: FC<LayoutProps> = (props) => {
         <header class="lg:hidden flex items-center justify-between p-4 bg-card border-b-2 border-border shadow-[var(--shadow)] z-30">
           <a
             href="/"
-            class="text-2xl font-bold text-primary hover:-translate-y-0.5 transition-transform duration-150 flex items-center gap-2"
+            class="text-4xl md:text-5xl font-bold text-primary hover:-translate-y-0.5 transition-all duration-150 flex items-center gap-2"
           >
             <DollarSignIcon /> FINANCE TRACKER
           </a>
@@ -35,7 +35,7 @@ const Layout: FC<LayoutProps> = (props) => {
         {/* Mobile sidebar - Toggleable */}
         <div
           id="sidebar-container"
-          class="hidden fixed inset-0 bg-black/50 z-40 lg:hidden"
+          class="hidden fixed inset-0 bg-background/80 backdrop-blur-sm z-40 lg:hidden"
         >
           <div class="w-80 h-full" onclick="event.stopPropagation()">
             <Sidebar activeNavItem={props.activeNavItem} isMobile={true} />

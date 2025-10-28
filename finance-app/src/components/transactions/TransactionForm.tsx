@@ -21,15 +21,15 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     hx-target="#transaction-list"
     hx-swap="afterbegin"
     hx-on--after-request="this.reset()"
-    class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 mb-8"
+    class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 mb-6"
   >
-    <h3 class="text-xl font-bold uppercase tracking-wider mb-6">
+    <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
       Add Transaction
     </h3>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <div>
-        <label for="date" class="block text-sm font-semibold uppercase mb-2">
+        <label for="date" class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
           Date
         </label>
         <input
@@ -46,7 +46,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       </div>
 
       <div>
-        <label for="amount" class="block text-sm font-semibold uppercase mb-2">
+        <label for="amount" class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
           Amount
         </label>
         <div class="relative">
@@ -72,7 +72,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       <div>
         <label
           for="description"
-          class="block text-sm font-semibold uppercase mb-2"
+          class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
         >
           Description
         </label>
@@ -90,7 +90,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       </div>
 
       <div>
-        <label for="type" class="block text-sm font-semibold uppercase mb-2">
+        <label for="type" class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
           Type
         </label>
         <select
@@ -115,7 +115,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       <div>
         <label
           for="categoryId"
-          class="block text-sm font-semibold uppercase mb-2"
+          class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
         >
           Category
         </label>
@@ -136,7 +136,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       <div>
         <label
           for="sourceAccountId"
-          class="block text-sm font-semibold uppercase mb-2"
+          class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
         >
           Account
         </label>
@@ -156,7 +156,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       <div>
         <label
           for="recurrenceId"
-          class="block text-sm font-semibold uppercase mb-2"
+          class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
         >
           Recurrence
         </label>

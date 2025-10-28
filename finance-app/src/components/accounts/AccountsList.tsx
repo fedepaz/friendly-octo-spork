@@ -9,13 +9,13 @@ const ClipboardIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height
 const EmptyState: FC = () => (
   <div
     id="accounts-list"
-    class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-16 text-center"
+    class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-12 text-center"
   >
     <div
       class="text-6xl mb-4"
       dangerouslySetInnerHTML={{ __html: ClipboardIcon }}
     />
-    <h3 class="text-2xl font-bold uppercase tracking-wider mb-2">
+    <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
       NO ACCOUNTS YET
     </h3>
     <p class="text-muted-foreground mb-6">
@@ -42,7 +42,7 @@ export function AccountsList({ accounts }: { accounts: Account[] }) {
   return (
     <div
       id="accounts-list"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
     >
       {accounts.map((account) => (
         <AccountCard account={account} />

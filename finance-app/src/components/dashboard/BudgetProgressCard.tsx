@@ -18,7 +18,7 @@ export const BudgetProgressCard: FC<BudgetProgressCardProps> = ({
   const isOverBudget = remaining < 0;
 
   return (
-    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6">
+    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6">
       <div class="text-muted-foreground uppercase font-bold mb-2 text-sm tracking-wider">
         Monthly Budget
       </div>

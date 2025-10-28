@@ -22,8 +22,8 @@ const RecentTransactions: FC<{ transactions: Transaction[] }> = ({
   transactions,
 }) => (
   <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-2xl font-bold uppercase tracking-wider">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-3xl md:text-4xl font-bold text-foreground">
         Recent Transactions
       </h2>
       <a
@@ -39,9 +39,9 @@ const RecentTransactions: FC<{ transactions: Transaction[] }> = ({
 
 export const DashboardPage: FC<{ data: DashboardData }> = ({ data }) => (
   <Layout activeNavItem="/dashboard">
-    <h1 class="text-4xl font-bold uppercase tracking-wider mb-8">Dashboard</h1>
+    <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">Dashboard</h1>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
       <BudgetProgressCard
         spent={data.monthlySpent}
         limit={data.monthlyBudget}
