@@ -1,3 +1,7 @@
+import { CheckIcon } from "../icons/CheckIcon";
+import { AlertTriangleIcon } from "../icons/AlertTriangleIcon";
+import { InfoIcon } from "../icons/InfoIcon";
+import { XIcon } from "../icons/XIcon";
 // src/components/shared/Toast.tsx
 
 import type { FC } from "hono/jsx";
@@ -12,19 +16,19 @@ const toastTypes = {
     bgColor: "bg-accent",
     textColor: "text-accent-foreground",
     borderColor: "border-accent",
-    icon: "✓",
+    icon: <CheckIcon />,
   },
   error: {
     bgColor: "bg-destructive",
     textColor: "text-destructive-foreground",
     borderColor: "border-destructive",
-    icon: "✗",
+    icon: <AlertTriangleIcon />,
   },
   info: {
     bgColor: "bg-primary",
     textColor: "text-primary-foreground",
     borderColor: "border-primary",
-    icon: "ℹ",
+    icon: <InfoIcon />,
   },
 };
 
@@ -62,7 +66,7 @@ export const Toast: FC<ToastProps> = ({ message, type }) => {
         onclick="this.closest('[role=alert]').remove()"
         aria-label="Close toast"
       >
-        ✕
+        <XIcon />
       </button>
     </div>
   );

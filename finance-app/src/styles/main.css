@@ -1,5 +1,9 @@
 @import "tailwindcss";
-@import "./neobrutalism.css";
+@import "./neobrutalism.css"; /* Neo-Brutalism CSS */
+
+html {
+  font-size: 12px; /* Reduced from 16px for a more compact UI */
+}
 
 /* Basic Sidebar Styles */
 .sidebar {

@@ -1,3 +1,4 @@
+import { DollarSignIcon } from "../icons/DollarSignIcon";
 // src/components/shared/Layout.tsx
 
 import { HamburgerMenu } from "./HamburgerMenu";
@@ -24,9 +25,9 @@ const Layout: FC<LayoutProps> = (props) => {
         <header class="lg:hidden flex items-center justify-between p-4 bg-card border-b-2 border-border shadow-[var(--shadow)] z-30">
           <a
             href="/"
-            class="text-2xl font-bold text-primary hover:-translate-y-0.5 transition-transform duration-150"
+            class="text-2xl font-bold text-primary hover:-translate-y-0.5 transition-transform duration-150 flex items-center gap-2"
           >
-            💸 FINANCE TRACKER
+            <DollarSignIcon /> FINANCE TRACKER
           </a>
           <HamburgerMenu onClick="htmx.toggleClass(document.getElementById('sidebar-container'), 'hidden')" />
         </header>

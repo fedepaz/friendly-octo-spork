@@ -1,3 +1,11 @@
+import { DollarSignIcon } from "../icons/DollarSignIcon";
+import { LineChartIcon } from "../icons/LineChartIcon";
+import { WalletIcon } from "../icons/WalletIcon";
+import { LandmarkIcon } from "../icons/LandmarkIcon";
+import { FolderIcon } from "../icons/FolderIcon";
+import { UserIcon } from "../icons/UserIcon";
+import { LightbulbIcon } from "../icons/LightbulbIcon";
+import { XIcon } from "../icons/XIcon";
 // src/components/shared/Sidebar.tsx
 
 import type { FC } from "hono/jsx";
@@ -12,11 +20,11 @@ export const Sidebar: FC<SidebarProps> = ({
   isMobile = false,
 }) => {
   const navLinks = [
-    { href: "/dashboard", label: "Dashboard", icon: "📊" },
-    { href: "/expenses", label: "Expenses", icon: "💰" },
-    { href: "/accounts", label: "Accounts", icon: "🏦" },
-    { href: "/categories", label: "Categories", icon: "📁" },
-    { href: "/profile", label: "Profile", icon: "👤" },
+    { href: "/dashboard", label: "Dashboard", icon: <LineChartIcon /> },
+    { href: "/expenses", label: "Expenses", icon: <WalletIcon /> },
+    { href: "/accounts", label: "Accounts", icon: <LandmarkIcon /> },
+    { href: "/categories", label: "Categories", icon: <FolderIcon /> },
+    { href: "/profile", label: "Profile", icon: <UserIcon /> },
   ];
 
   return (
@@ -35,7 +43,7 @@ export const Sidebar: FC<SidebarProps> = ({
         <a href="/" class="block group">
           <div class="flex items-center gap-3">
             <div class="text-4xl transition-transform duration-150 group-hover:scale-110">
-              💸
+              <DollarSignIcon />
             </div>
             <div>
               <h1 class="text-2xl font-bold text-primary tracking-tight">
@@ -99,7 +107,7 @@ export const Sidebar: FC<SidebarProps> = ({
       <div class="p-4 border-t-2 border-border bg-muted/30">
         <div class="bg-accent/10 border-2 border-accent/30 rounded-md p-4">
           <div class="flex items-start gap-3">
-            <span class="text-2xl">💡</span>
+            <span class="text-2xl"><LightbulbIcon /></span>
             <div>
               <p class="text-xs font-semibold uppercase tracking-wide text-accent mb-1">
                 Pro Tip
@@ -129,7 +137,7 @@ export const Sidebar: FC<SidebarProps> = ({
           "
           aria-label="Close sidebar"
         >
-          ✕
+          <XIcon />
         </button>
       )}
     </aside>

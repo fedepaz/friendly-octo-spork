@@ -42,6 +42,23 @@ The project has adopted a **Neo-Brutalism** design aesthetic, which favors raw, 
 </div>
 ```
 
+### Iconography
+
+- **SVG Icons:** All icons in the application should be SVG components.
+- **Organization:** Icons are stored in `finance-app/src/components/icons`.
+- **Component per Icon:** Each icon should be its own functional component.
+- **Central Export:** All icons are exported from `finance-app/src/components/icons/index.ts` for easy importing.
+
+**Example Usage:**
+```typescript
+import { LandmarkIcon, LineChartIcon } from "../icons";
+
+// ...
+
+<LineChartIcon />
+<LandmarkIcon />
+```
+
 ### Hono JSX (Server-Side Templates)
 
 **NOT React** - This is server-side JSX that renders to HTML strings:
