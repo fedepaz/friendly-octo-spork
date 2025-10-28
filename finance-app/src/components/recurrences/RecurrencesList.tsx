@@ -9,20 +9,20 @@ const ClipboardIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height
 const EmptyState: FC = () => (
   <div
     id="recurrences-list"
-    class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-16 text-center"
+    class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-12 text-center"
   >
     <div
       class="text-6xl mb-4"
       dangerouslySetInnerHTML={{ __html: ClipboardIcon }}
     />
-    <h3 class="text-2xl font-bold uppercase tracking-wider mb-2">
+    <h3 class="text-2xl font-bold mb-2">
       NO RECURRENCES YET
     </h3>
-    <p class="text-muted-foreground mb-6">
+    <p class="text-muted-foreground">
       CREATE YOUR FIRST RECURRENCE TO START TRACKING YOUR FINANCES.
     </p>
     <button
-      class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 font-bold uppercase tracking-wider transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
+      class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 text-base transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
       hx-get="/api/recurrences/new"
       hx-target="#modal-content"
       hx-swap="innerHTML"
@@ -46,7 +46,7 @@ export function RecurrencesList({
   return (
     <div
       id="recurrences-list"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
     >
       {recurrences.map((recurrence) => (
         <RecurrenceCard recurrence={recurrence} />

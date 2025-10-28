@@ -55,10 +55,10 @@ export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {
       id={`transaction-${transaction.id}`}
       class="border-b border-border hover:bg-muted transition-colors duration-150"
     >
-      <td class="p-4 text-sm">{formattedDate}</td>
+      <td class="p-4 text-sm font-mono text-muted-foreground">{formattedDate}</td>
       <td class="p-4 text-sm">
         <span
-          class={`inline-flex items-center gap-2 px-2 py-1 border-2 ${typeStyles.border} ${typeStyles.bg} ${typeStyles.text} text-xs font-bold uppercase tracking-wider`}
+          class={`inline-flex items-center px-2 py-1 border-2 ${typeStyles.border} ${typeStyles.bg} ${typeStyles.text} text-xs font-semibold uppercase tracking-wide`}
         >
           {transaction.type}
         </span>
@@ -67,7 +67,7 @@ export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {
       <td class="p-4 text-sm">{transaction.description || "-"}</td>
       <td class="p-4 text-sm flex gap-2 justify-end">
         <button
-          class="bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150"
+          class="bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-150"
           hx-get={`/api/transactions/${transaction.id}/edit`}
           hx-target="#modal-content"
           hx-swap="innerHTML"
@@ -78,7 +78,7 @@ export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {
           EDIT
         </button>
         <button
-          class="bg-destructive text-destructive-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150"
+          class="bg-destructive text-destructive-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-150"
           hx-delete={`/api/transactions/${transaction.id}`}
           hx-target={`#transaction-${transaction.id}`}
           hx-swap="outerHTML swap:1s"

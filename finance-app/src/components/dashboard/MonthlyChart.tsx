@@ -14,7 +14,7 @@ export const MonthlyChart: FC<MonthlyChartProps> = ({ chartData }) => {
 
   return (
     <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6">
-      <h3 class="text-xl font-bold uppercase tracking-wider mb-4">
+      <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
         MONTHLY OVERVIEW
       </h3>
       <div class="overflow-x-auto">

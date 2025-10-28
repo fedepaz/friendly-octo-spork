@@ -9,3 +9,6 @@ export * from "./CheckIcon";
 export * from "./AlertTriangleIcon";
 export * from "./InfoIcon";
 export * from "./DollarSignIcon";
+export * from "./TrendingUpIcon";
+export * from "./CalendarDaysIcon";
+export * from "./CalendarIcon";

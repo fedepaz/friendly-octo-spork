@@ -16,7 +16,7 @@ export function RecurrenceCard({ recurrence }: { recurrence: Recurrence }) {
     >
       <div class="flex justify-between items-start">
         <div>
-          <h3 class="text-xl font-bold mb-2 flex items-center">
+          <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2 flex items-center">
             <span
               class="mr-2"
             >
@@ -24,7 +24,7 @@ export function RecurrenceCard({ recurrence }: { recurrence: Recurrence }) {
             </span>
             {recurrence.name}
           </h3>
-          <span class="inline-block bg-muted text-muted-foreground px-2 py-1 text-xs font-bold uppercase">
+          <span class="inline-flex items-center px-2 py-1 text-xs font-semibold uppercase tracking-wide bg-muted text-muted-foreground">
             {recurrence.frequency}
           </span>
         </div>
@@ -34,7 +34,7 @@ export function RecurrenceCard({ recurrence }: { recurrence: Recurrence }) {
       </div>
       <div class="mt-4 flex gap-2">
         <button
-          class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150"
+          class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-150"
           hx-get={`/api/recurrences/${recurrence.id}`}
           hx-target="#modal-content"
           hx-swap="innerHTML"
@@ -45,7 +45,7 @@ export function RecurrenceCard({ recurrence }: { recurrence: Recurrence }) {
           VIEW
         </button>
         <button
-          class="bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150"
+          class="bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-150"
           hx-get={`/api/recurrences/${recurrence.id}/edit`}
           hx-target={`#recurrence-${recurrence.id}`}
           hx-swap="outerHTML"
@@ -54,7 +54,7 @@ export function RecurrenceCard({ recurrence }: { recurrence: Recurrence }) {
           EDIT
         </button>
         <button
-          class="bg-destructive text-destructive-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150"
+          class="bg-destructive text-destructive-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-150"
           hx-delete={`/api/recurrences/${recurrence.id}`}
           hx-confirm="Are you sure you want to delete this recurrence?"
           aria-label={`Delete ${recurrence.name}`}

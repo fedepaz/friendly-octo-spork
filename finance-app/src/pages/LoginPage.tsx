@@ -11,8 +11,8 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
     <div class="flex items-center justify-center min-h-screen bg-background">
       <div class="max-w-sm w-full p-4">
         <div class="text-center mb-4">
-          <h2 class="text-3xl font-bold text-primary">FINANCE TRACKER</h2>
-          <p class="text-muted-foreground">SIGN IN TO CONTINUE</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-3">FINANCE TRACKER</h2>
+          <p class="text-sm text-muted-foreground">SIGN IN TO CONTINUE</p>
         </div>
         <form
           method="post"
@@ -21,7 +21,7 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
         >
           {error && (
             <div
-              class="bg-destructive text-destructive-foreground border-2 border-border p-3 mb-3"
+              class="bg-destructive text-destructive-foreground border-2 border-border p-3 mb-4"
               role="alert"
               aria-live="assertive"
             >
@@ -30,8 +30,7 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
           )}
           <div class="mb-4">
             <label
-              for="email"
-              class="block text-sm font-semibold uppercase mb-2"
+              class="block text-sm font-semibold uppercase text-foreground mb-2"
             >
               Email
             </label>
@@ -39,7 +38,7 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
               type="email"
               name="email"
               id="email"
-              class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+              class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
               placeholder="messi@miamifc.com"
               required
               aria-describedby="email-error"
@@ -48,7 +47,7 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
           <div class="mb-4">
             <label
               for="password"
-              class="block text-sm font-semibold uppercase mb-2"
+              class="block text-sm font-semibold uppercase text-foreground mb-2"
             >
               Password
             </label>
@@ -56,7 +55,7 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
               type="password"
               name="password"
               id="password"
-              class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+              class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
               placeholder="••••••••"
               required
               aria-describedby="password-error"
@@ -65,7 +64,7 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
           <div class="mt-6">
             <button
               type="submit"
-              class="w-full bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 font-bold uppercase tracking-wider transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
+              class="w-full bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 text-base transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
             >
               SIGN IN
             </button>

@@ -46,10 +46,10 @@ export const Sidebar: FC<SidebarProps> = ({
               <DollarSignIcon />
             </div>
             <div>
-              <h1 class="text-2xl font-bold text-primary tracking-tight">
+              <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">
                 FINANCE
               </h1>
-              <p class="text-sm text-muted-foreground uppercase tracking-wider">
+              <p class="text-sm text-muted-foreground">
                 Tracker
               </p>
             </div>
@@ -79,8 +79,8 @@ export const Sidebar: FC<SidebarProps> = ({
                 border-2
                 ${
                   isActive
-                    ? "bg-primary text-primary-foreground border-primary shadow-[var(--shadow)]"
-                    : "bg-card text-foreground border-transparent hover:bg-muted hover:border-border hover:-translate-x-0.5 hover:shadow-[var(--shadow-sm)]"
+                    ? "bg-primary text-primary-foreground border-primary shadow-[var(--shadow)] active:translate-x-1 active:translate-y-1 active:shadow-none"
+                    : "bg-card text-foreground border-transparent shadow-[var(--shadow)] hover:bg-muted hover:border-border hover:-translate-x-0.5 hover:shadow-[var(--shadow-sm)] active:translate-x-1 active:translate-y-1 active:shadow-none"
                 }
               `}
               aria-current={isActive ? "page" : undefined}
@@ -109,10 +109,10 @@ export const Sidebar: FC<SidebarProps> = ({
           <div class="flex items-start gap-3">
             <span class="text-2xl"><LightbulbIcon /></span>
             <div>
-              <p class="text-xs font-semibold uppercase tracking-wide text-accent mb-1">
+              <p class="text-sm font-semibold uppercase tracking-wide text-foreground">
                 Pro Tip
               </p>
-              <p class="text-xs text-muted-foreground leading-relaxed">
+              <p class="text-xs text-muted-foreground">
                 Track daily expenses to stay within budget
               </p>
             </div>
@@ -133,7 +133,9 @@ export const Sidebar: FC<SidebarProps> = ({
             flex items-center justify-center
             font-bold text-xl
             transition-all duration-150
+            shadow-[var(--shadow)]
             hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow)]
+            active:translate-x-1 active:translate-y-1 active:shadow-none
           "
           aria-label="Close sidebar"
         >

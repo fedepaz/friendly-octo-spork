@@ -18,9 +18,9 @@ const Injection: FC<injectionProps> = ({ children }) => {
         <!-- HTMX -->
         <script src="https://unpkg.com/htmx.org@1.9.10"></script>
       </head>
-      <body class="font-sans bg-background text-foreground flex">
-        <main class="page flex-1">${children}</main>
-        <div id="toast-container" class="fixed top-0 right-0 p-4 z-50"></div>
+      <body class="bg-background text-foreground">
+        <main>${children}</main>
+        <div id="toast-container" class="fixed top-4 right-4 p-4 z-50 space-y-2"></div>
       </body>
     </html>`;
 };

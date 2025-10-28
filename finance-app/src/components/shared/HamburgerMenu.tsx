@@ -5,20 +5,17 @@ import type { FC } from "hono/jsx";
 export const HamburgerMenu: FC = () => {
   return (
     <button
-      class="hamburger-menu"
+      class="p-3 w-12 h-12 rounded-md flex flex-col items-center justify-center gap-1 bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none"
       hx-on:click="
-        const sidebar = document.getElementById('sidebar-container').querySelector('.sidebar');
-        const backdrop = document.getElementById('sidebar-backdrop');
-        sidebar.classList.toggle('hidden');
-        backdrop.classList.toggle('visible');
+        htmx.toggleClass(document.getElementById('sidebar-container'), 'hidden');
       "
       aria-label="Toggle navigation"
       aria-expanded="false"
       aria-controls="sidebar-container"
     >
-      <div class="hamburger-line"></div>
-      <div class="hamburger-line"></div>
-      <div class="hamburger-line"></div>
+      <div class="w-6 h-0.5 bg-primary-foreground"></div>
+      <div class="w-6 h-0.5 bg-primary-foreground"></div>
+      <div class="w-6 h-0.5 bg-primary-foreground"></div>
     </button>
   );
 };

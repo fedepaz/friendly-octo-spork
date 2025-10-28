@@ -21,14 +21,14 @@ interface DashboardData {
 const RecentTransactions: FC<{ transactions: Transaction[] }> = ({
   transactions,
 }) => (
-  <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6">
+  <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-4">
     <div class="flex items-center justify-between mb-3">
-      <h2 class="text-3xl md:text-4xl font-bold text-foreground">
+      <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
         Recent Transactions
       </h2>
       <a
         href="/transactions"
-        class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-sm font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150"
+        class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-sm font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-150"
       >
         View All
       </a>

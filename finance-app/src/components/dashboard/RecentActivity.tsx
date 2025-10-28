@@ -13,12 +13,12 @@ interface RecentActivityProps {
 }
 
 const EmptyState: FC = () => (
-  <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-16 text-center">
+  <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-12 text-center">
     <div class="text-6xl mb-4">✨</div>
-    <h3 class="text-2xl font-bold uppercase tracking-wider mb-2">
+    <h3 class="text-2xl font-bold mb-2">
       NO RECENT ACTIVITY
     </h3>
-    <p class="text-muted-foreground mb-6">
+    <p class="text-muted-foreground">
       ADD SOME TRANSACTIONS TO SEE YOUR RECENT ACTIVITY HERE.
     </p>
   </div>
@@ -31,12 +31,12 @@ export const RecentActivity: FC<RecentActivityProps> = ({ recentActivity }) => {
 
   return (
     <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6">
-      <h3 class="text-xl font-bold uppercase tracking-wider mb-4">
+      <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
         RECENT ACTIVITY
       </h3>
       <div class="border-2 border-border shadow-[var(--shadow)] overflow-hidden">
         <table class="w-full table-auto">
-          <thead class="bg-primary text-primary-foreground uppercase text-left">
+          <thead class="bg-primary text-primary-foreground uppercase text-left text-sm">
             <tr>
               <th class="p-4 font-bold">Date</th>
               <th class="p-4 font-bold">Type</th>

@@ -37,7 +37,7 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
             type="date"
             name="startDate"
             id="startDate"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           />
         </div>
         <div>
@@ -50,8 +50,7 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           <input
             type="date"
             name="endDate"
-            id="endDate"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           />
         </div>
         <div>
@@ -61,7 +60,7 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           <select
             name="type"
             id="type"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           >
             <option value="">ALL TYPES</option>
             <option value="INCOME">INCOME</option>
@@ -82,7 +81,7 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           <select
             name="categoryId"
             id="categoryId"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           >
             <option value="">ALL CATEGORIES</option>
             {categories.map((cat) => (
@@ -99,8 +98,7 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           </label>
           <select
             name="sourceAccountId"
-            id="sourceAccountId"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           >
             <option value="">ALL SOURCE ACCOUNTS</option>
             {accounts.map((acc) => (
@@ -117,8 +115,7 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           </label>
           <select
             name="targetAccountId"
-            id="targetAccountId"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           >
             <option value="">ALL TARGET ACCOUNTS</option>
             {accounts.map((acc) => (
@@ -136,7 +133,7 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           <select
             name="recurrenceId"
             id="recurrenceId"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           >
             <option value="">ALL RECURRENCES</option>
             {recurrences.map((rec) => (

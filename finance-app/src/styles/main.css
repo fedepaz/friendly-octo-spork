@@ -1,8 +1,38 @@
 @import "tailwindcss";
-@import "./neobrutalism.css"; /* Neo-Brutalism CSS */
+@import "./t3chat.css"; /* T3Chat CSS */
 
 html {
   font-size: 12px; /* Reduced from 16px for a more compact UI */
+}
+
+/* Base Styles */
+* {
+  border-color: rgb(var(--color-border));
+}
+
+body {
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  font-family: var(--font-sans);
+}
+
+/* HTMX Loading Indicators */
+.htmx-indicator {
+  display: none;
+}
+
+.htmx-request .htmx-indicator {
+  display: inline-block;
+}
+
+.htmx-request.htmx-indicator {
+  display: inline-block;
+}
+
+/* Focus Styles */
+:focus-visible {
+  outline: 2px solid rgb(var(--color-ring));
+  outline-offset: 2px;
 }
 
 /* Basic Sidebar Styles */

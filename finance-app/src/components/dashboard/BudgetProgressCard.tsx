@@ -19,10 +19,10 @@ export const BudgetProgressCard: FC<BudgetProgressCardProps> = ({
 
   return (
     <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6">
-      <div class="text-muted-foreground uppercase font-bold mb-2 text-sm tracking-wider">
+      <div class="text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
         Monthly Budget
       </div>
-      <div class="font-mono font-bold mb-4 text-3xl">
+      <div class="font-mono font-bold text-3xl mb-4">
         {currency}
         {spent.toFixed(2)} / {currency}
         {limit.toFixed(2)}
@@ -48,7 +48,7 @@ export const BudgetProgressCard: FC<BudgetProgressCardProps> = ({
           {currency}
           {Math.abs(remaining).toFixed(2)}
         </span>
-        <span class="text-muted-foreground ml-2">
+        <span class="text-sm text-muted-foreground ml-2">
           {isOverBudget ? "over budget" : "remaining"}
         </span>
       </div>

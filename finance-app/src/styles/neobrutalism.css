@@ -199,33 +199,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-/* Base Styles */
-* {
-  border-color: rgb(var(--color-border));
-}
-
-body {
-  background-color: rgb(var(--color-background));
-  color: rgb(var(--color-foreground));
-  font-family: var(--font-sans);
-}
-
-/* HTMX Loading Indicators */
-.htmx-indicator {
-  display: none;
-}
-
-.htmx-request .htmx-indicator {
-  display: inline-block;
-}
-
-.htmx-request.htmx-indicator {
-  display: inline-block;
-}
-
-/* Focus Styles */
-:focus-visible {
-  outline: 2px solid rgb(var(--color-ring));
-  outline-offset: 2px;
-}

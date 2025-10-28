@@ -19,7 +19,7 @@ const EmptyState: FC = () => (
     <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
       No Transactions Yet
     </h3>
-    <p class="text-muted-foreground mb-6">
+    <p class="text-muted-foreground">
       Start tracking your finances by adding your first transaction above.
     </p>
   </div>
@@ -41,7 +41,7 @@ export const TransactionTable: FC<TransactionTableProps> = ({
   return (
     <div class="border-2 border-border shadow-[var(--shadow)] overflow-hidden">
       <table class="w-full">
-        <thead class="bg-primary text-primary-foreground">
+        <thead class="bg-primary text-primary-foreground text-sm">
           <tr>
             <th class="p-4 text-left font-bold uppercase tracking-wide">Date</th>
             <th class="p-4 text-left font-bold uppercase tracking-wide">Type</th>
@@ -65,11 +65,11 @@ export const TransactionTable: FC<TransactionTableProps> = ({
         </tbody>
         <tfoot>
           <tr class="bg-muted">
-            <th colSpan={7} class="p-4 text-right font-bold uppercase tracking-wide">
+            <th colSpan={7} class="p-4 text-right font-bold uppercase tracking-wide text-sm">
               Total Balance
             </th>
             <th
-              class={`p-4 font-mono text-right ${
+              class={`p-4 font-mono text-right text-sm ${
                 total >= 0
                   ? "text-primary-foreground"
                   : "text-destructive-foreground"
