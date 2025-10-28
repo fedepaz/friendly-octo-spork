@@ -1,3 +1,5 @@
+// src/styles/injection.tsx
+
 import { html } from "hono/html";
 import type { FC } from "hono/jsx";
 interface injectionProps {

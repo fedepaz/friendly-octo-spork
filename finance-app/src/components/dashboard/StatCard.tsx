@@ -6,17 +6,6 @@ interface StatCardProps {
   title: string;
   value: number | string;
   subtitle?: string;
-  color?: string;
-  description?: string;
-  valueColorClass?: string;
-}
-
-import type { FC } from "hono/jsx";
-
-interface StatCardProps {
-  title: string;
-  value: number | string;
-  subtitle?: string;
   color?: "primary" | "secondary" | "accent" | "destructive" | "muted";
 }
 
@@ -34,9 +23,7 @@ export const StatCard: FC<StatCardProps> = ({
       <div class={`text-4xl font-bold font-mono mb-2 text-${color}-foreground`}>
         {value}
       </div>
-      {subtitle && (
-        <div class="text-sm text-muted-foreground">{subtitle}</div>
-      )}
+      {subtitle && <div class="text-sm text-muted-foreground">{subtitle}</div>}
     </div>
   );
 };

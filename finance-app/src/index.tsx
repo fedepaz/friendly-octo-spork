@@ -17,6 +17,7 @@ import recurrencesRoutes from "./api/recurrences/recurrences.routes";
 import dashboardRoutes from "./api/dashboard/dashboard.routes";
 import Layout from "./components/shared/Layout";
 import Injection from "./styles/injection";
+import transactionsRoutes from "./api/transactions/transactions.routes";
 
 const app = new Hono();
 
@@ -27,7 +28,7 @@ const app = new Hono();
 app.use("*", logger());
 app.use("*", cors());
 
-// Middleware to wrap all routes in the Layout component
+// Middleware to inject the global styles
 app.use(
   jsxRenderer(({ children }) => {
     return <Injection>{children}</Injection>;
@@ -50,12 +51,14 @@ app.use("/dashboard/*", requireAuth, refreshTokenIfNeeded);
 app.use("/accounts/*", requireAuth, refreshTokenIfNeeded);
 app.use("/categories/*", requireAuth, refreshTokenIfNeeded);
 app.use("/recurrences/*", requireAuth, refreshTokenIfNeeded);
+app.use("/transactions/*", requireAuth, refreshTokenIfNeeded);
 app.use("/api/*", requireAuth, refreshTokenIfNeeded);
 
 // Mount the protected API routes
 app.route("/accounts", accountsRoutes);
 app.route("/categories", categoriesRoutes);
 app.route("/recurrences", recurrencesRoutes);
+app.route("/transactions", transactionsRoutes);
 app.route("/dashboard", dashboardRoutes);
 
 /**

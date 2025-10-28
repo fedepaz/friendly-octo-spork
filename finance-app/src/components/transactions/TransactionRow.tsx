@@ -1,12 +1,10 @@
+// src/components/transactions/TransactionRow.tsx
+
 import type { FC } from "hono/jsx";
 import type { Transaction, Category, Account } from "@/generated/prisma";
 
 interface TransactionRowProps {
-  transaction: Transaction & {
-    category?: Category;
-    sourceAccount?: Account;
-    targetAccount?: Account;
-  };
+  transaction: Transaction;
 }
 
 const typeStyleMap: Record<
@@ -65,16 +63,8 @@ export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {
           {transaction.type}
         </span>
       </td>
-      <td class={`p-4 font-mono text-right ${typeStyles.amountText}`}>
-        {transaction.sourceAccount?.currency ||
-          transaction.targetAccount?.currency ||
-          "USD"}{" "}
-        {Number(transaction.amount).toFixed(2)}
-      </td>
+
       <td class="p-4 text-sm">{transaction.description || "-"}</td>
-      <td class="p-4 text-sm">{transaction.category?.name || "-"}</td>
-      <td class="p-4 text-sm">{transaction.sourceAccount?.name || "-"}</td>
-      <td class="p-4 text-sm">{transaction.targetAccount?.name || "-"}</td>
       <td class="p-4 text-sm flex gap-2 justify-end">
         <button
           class="bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150"

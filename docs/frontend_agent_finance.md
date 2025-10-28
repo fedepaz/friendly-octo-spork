@@ -642,20 +642,21 @@ describe('ExpenseRow', () => {
 
 ## Sidebar Navigation Guidelines
 
+### Responsive Behavior
+- **Desktop:** The sidebar is permanently visible on the left side of the screen.
+- **Mobile:** The sidebar is hidden by default and can be toggled open with a hamburger menu icon. When open, it appears as an overlay with a backdrop.
+
 ### Active Link Convention
 - The active navigation link in the sidebar MUST be visually distinct.
-- Use a combination of background color, text color, and/or a left border to indicate the active state.
-- The active state should be determined server-side using `c.req.path` or similar Hono context to match the current route.
-- Example styling: `bg-primary text-primary-foreground border-l-4 border-accent`
+- The current implementation uses a combination of `bg-primary`, `text-primary-foreground`, and a `shadow-[var(--shadow)]` to highlight the active link.
+- The active state is determined server-side and passed to the component via the `activeNavItem` prop.
 
 ### Theme Colors and UI Elements
 - All sidebar components and their states (hover, active) MUST utilize the project's defined CSS variables and Tailwind utility classes for Neo-Brutalism theme consistency.
-- Leverage Tabler UI components where they naturally fit the sidebar design (e.g., icons, list items).
+- The sidebar includes icons for each navigation link, a prominent header, and a "Pro Tip" section in the footer.
 
-### Refactoring Existing Navigation
-- When migrating from a navbar to a sidebar, ensure all existing navigation links are correctly transferred.
-- Implement the mobile hamburger menu toggle and associated sidebar show/hide logic using HTMX, avoiding client-side JavaScript where possible.
-- Ensure the sidebar is fully responsive, adapting its layout and behavior based on screen size (desktop vs. mobile).
+### Mobile Toggle
+- The mobile hamburger menu toggle and associated sidebar show/hide logic are implemented using HTMX and inline JavaScript, avoiding the need for a client-side JavaScript framework.
 
 ## File Organization
 
@@ -1060,54 +1061,70 @@ export const MyFormComponent: FC = () => {
 ### Pattern 1: Layout Structure
 
 ```typescript
-// src/components/Layout.tsx
-export const Layout: FC<{ title: string }> = ({ title, children }) => (
-  <html lang="en" class="dark">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>{title} - Finance Tracker</title>
-      
-      {/* Tailwind CSS */}
-      <link rel="stylesheet" href="/output.css" />
-      
-      {/* HTMX */}
-      <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-    </head>
-    <body class="font-sans bg-background text-foreground">
-      <header class="bg-card text-card-foreground border-b-2 border-border shadow-[var(--shadow)]">
-        <div class="container mx-auto px-4">
-          <div class="flex items-center justify-between h-16">
-            <a href="/" class="text-2xl font-bold text-primary hover:-translate-y-0.5 transition-transform">
-              FINANCE TRACKER
-            </a>
-            <nav class="flex gap-1">
-              <a href="/dashboard" class="px-4 py-2 font-semibold uppercase tracking-wide text-sm transition-all duration-150 border-2 border-border shadow-[var(--shadow)] hover:bg-muted hover:-translate-y-0.5">DASHBOARD</a>
-              <a href="/expenses" class="px-4 py-2 font-semibold uppercase tracking-wide text-sm transition-all duration-150 border-2 border-border shadow-[var(--shadow)] hover:bg-muted hover:-translate-y-0.5">EXPENSES</a>
-              <a href="/accounts" class="px-4 py-2 font-semibold uppercase tracking-wide text-sm transition-all duration-150 border-2 border-border shadow-[var(--shadow)] hover:bg-muted hover:-translate-y-0.5">ACCOUNTS</a>
-              <a href="/categories" class="px-4 py-2 font-semibold uppercase tracking-wide text-sm transition-all duration-150 border-2 border-border shadow-[var(--shadow)] hover:bg-muted hover:-translate-y-0.5">CATEGORIES</a>
-            </nav>
-            <form action="/logout" method="post">
-              <button
-                type="submit"
-                class="bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-sm font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150"
-              >
-                LOGOUT
-              </button>
-            </form>
+// src/components/shared/Layout.tsx
+import { HamburgerMenu } from "./HamburgerMenu";
+import { Sidebar } from "./Sidebar";
+import type { FC, PropsWithChildren } from "hono/jsx";
+
+interface LayoutProps {
+  activeNavItem?: string;
+}
+
+const Layout: FC<LayoutProps> = (props) => {
+  return (
+    <div class="flex h-screen bg-background">
+      {/* Desktop Sidebar - Always visible on large screens */}
+      <div id="sidebar-container" class="hidden lg:block">
+        <Sidebar activeNavItem={props.activeNavItem} />
+      </div>
+
+      {/* Main content area */}
+      <div class="flex-1 flex flex-col overflow-hidden">
+        {/* Mobile header - Only visible on small screens */}
+        <header class="lg:hidden flex items-center justify-between p-4 bg-card border-b-2 border-border shadow-[var(--shadow)] z-30">
+          <a
+            href="/"
+            class="text-2xl font-bold text-primary hover:-translate-y-0.5 transition-transform duration-150"
+          >
+            💸 FINANCE TRACKER
+          </a>
+          <HamburgerMenu />
+        </header>
+
+        {/* Mobile sidebar - Toggleable */}
+        <div
+          id="sidebar-backdrop"
+          class="hidden fixed inset-0 bg-black/50 z-40 lg:hidden"
+          hx-on:click="
+            const sidebar = document.getElementById('sidebar-container').querySelector('.sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            sidebar.classList.add('hidden');
+            backdrop.classList.add('hidden');
+          "
+        >
+          <div class="w-80 h-full" onclick="event.stopPropagation()">
+            <Sidebar activeNavItem={props.activeNavItem} isMobile={true} />
           </div>
         </div>
-      </header>
-      
-      <main class="page">
-        <div class="container-xl p-4">
-          {children}
-        </div>
-      </main>
-      <div id="toast-container" class="fixed top-0 right-0 p-4 z-50"></div>
-    </body>
-  </html>
-);
+
+        {/* Main content */}
+        <main class="flex-1 overflow-y-auto bg-background">
+          <div class="container mx-auto p-4 md:p-6 lg:p-8 max-w-7xl">
+            {props.children}
+          </div>
+        </main>
+      </div>
+
+      {/* Toast container */}
+      <div
+        id="toast-container"
+        class="fixed top-4 right-4 p-4 z-50 space-y-2"
+      ></div>
+    </div>
+  );
+};
+
+export default Layout;
 ```
 
 ### Pattern 2: Form Handling with Validation

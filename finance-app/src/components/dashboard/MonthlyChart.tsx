@@ -6,12 +6,6 @@ interface MonthlyChartProps {
   chartData: { date: string; amount: number }[];
 }
 
-import type { FC } from "hono/jsx";
-
-interface MonthlyChartProps {
-  chartData: { date: string; amount: number }[];
-}
-
 export const MonthlyChart: FC<MonthlyChartProps> = ({ chartData }) => {
   const maxAmount = Math.max(...chartData.map((d) => d.amount));
   const chartHeight = 200;
@@ -20,12 +14,16 @@ export const MonthlyChart: FC<MonthlyChartProps> = ({ chartData }) => {
 
   return (
     <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6">
-      <h3 class="text-xl font-bold uppercase tracking-wider mb-4">MONTHLY OVERVIEW</h3>
+      <h3 class="text-xl font-bold uppercase tracking-wider mb-4">
+        MONTHLY OVERVIEW
+      </h3>
       <div class="overflow-x-auto">
         <svg
           width={chartData.length * (barWidth + barSpacing)}
           height={chartHeight}
-          viewBox={`0 0 ${chartData.length * (barWidth + barSpacing)} ${chartHeight}`}
+          viewBox={`0 0 ${
+            chartData.length * (barWidth + barSpacing)
+          } ${chartHeight}`}
         >
           {chartData.map((dataPoint, index) => {
             const barHeight = (dataPoint.amount / maxAmount) * chartHeight;
@@ -43,7 +41,12 @@ export const MonthlyChart: FC<MonthlyChartProps> = ({ chartData }) => {
                   rx="0"
                   ry="0"
                 />
-                <text x={x + barWidth / 2} y={chartHeight - 5} class="text-xs fill-muted-foreground" text-anchor="middle">
+                <text
+                  x={x + barWidth / 2}
+                  y={chartHeight - 5}
+                  class="text-xs fill-muted-foreground"
+                  text-anchor="middle"
+                >
                   {new Date(dataPoint.date).getDate()}
                 </text>
               </g>
@@ -51,7 +54,9 @@ export const MonthlyChart: FC<MonthlyChartProps> = ({ chartData }) => {
           })}
         </svg>
       </div>
-      <p class="text-sm text-muted-foreground mt-4">Daily transaction amounts for the month.</p>
+      <p class="text-sm text-muted-foreground mt-4">
+        Daily transaction amounts for the month.
+      </p>
     </div>
   );
 };

@@ -1,17 +1,24 @@
-import { FC } from 'hono/jsx';
+// src/components/shared/HamburgerMenu.tsx
 
-export const HamburgerMenu: FC<{ onClick: string }> = ({ onClick }) => {
+import type { FC } from "hono/jsx";
+
+export const HamburgerMenu: FC = () => {
   return (
     <button
       class="hamburger-menu"
-      hx-on:click={onClick}
+      hx-on:click="
+        const sidebar = document.getElementById('sidebar-container').querySelector('.sidebar');
+        const backdrop = document.getElementById('sidebar-backdrop');
+        sidebar.classList.toggle('hidden');
+        backdrop.classList.toggle('visible');
+      "
       aria-label="Toggle navigation"
-      aria-expanded="false" // This will be toggled by HTMX
+      aria-expanded="false"
       aria-controls="sidebar-container"
     >
-      <div class="line"></div>
-      <div class="line"></div>
-      <div class="line"></div>
+      <div class="hamburger-line"></div>
+      <div class="hamburger-line"></div>
+      <div class="hamburger-line"></div>
     </button>
   );
 };

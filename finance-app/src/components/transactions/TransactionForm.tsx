@@ -1,38 +1,19 @@
 // src/components/transactions/TransactionForm.tsx
 
 import type { FC } from "hono/jsx";
-import type {
-  Transaction,
-  Category,
-  Account,
-  Recurrence,
-} from "@/generated/prisma";
+import type { Category, Account, Recurrence } from "@/generated/prisma";
 
 interface TransactionFormProps {
   categories: Category[];
   accounts: Account[];
-
-  errors?: Record<string, string>;
-}
-
-import type { FC } from "hono/jsx";
-import type {
-  Transaction,
-  Category,
-  Account,
-  Recurrence,
-} from "@/generated/prisma";
-
-interface TransactionFormProps {
-  categories: Category[];
-  accounts: Account[];
-
+  recurrences: Recurrence[];
   errors?: Record<string, string>;
 }
 
 export const TransactionForm: FC<TransactionFormProps> = ({
   categories = [],
   accounts = [],
+  recurrences = [],
   errors = {},
 }) => (
   <form
@@ -42,11 +23,15 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     hx-on--after-request="this.reset()"
     class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 mb-8"
   >
-    <h3 class="text-xl font-bold uppercase tracking-wider mb-6">Add Transaction</h3>
+    <h3 class="text-xl font-bold uppercase tracking-wider mb-6">
+      Add Transaction
+    </h3>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <div>
-        <label for="date" class="block text-sm font-semibold uppercase mb-2">Date</label>
+        <label for="date" class="block text-sm font-semibold uppercase mb-2">
+          Date
+        </label>
         <input
           type="date"
           name="date"
@@ -55,13 +40,19 @@ export const TransactionForm: FC<TransactionFormProps> = ({
           defaultValue={new Date().toISOString().split("T")[0]}
           required
         />
-        {errors.date && <div class="text-destructive mt-2 text-xs">{errors.date}</div>}
+        {errors.date && (
+          <div class="text-destructive mt-2 text-xs">{errors.date}</div>
+        )}
       </div>
 
       <div>
-        <label for="amount" class="block text-sm font-semibold uppercase mb-2">Amount</label>
+        <label for="amount" class="block text-sm font-semibold uppercase mb-2">
+          Amount
+        </label>
         <div class="relative">
-          <span class="absolute left-4 top-1/2 -translate-y-1/2 font-mono font-bold">$</span>
+          <span class="absolute left-4 top-1/2 -translate-y-1/2 font-mono font-bold">
+            $
+          </span>
           <input
             type="number"
             name="amount"
@@ -73,11 +64,18 @@ export const TransactionForm: FC<TransactionFormProps> = ({
             required
           />
         </div>
-        {errors.amount && <div class="text-destructive mt-2 text-xs">{errors.amount}</div>}
+        {errors.amount && (
+          <div class="text-destructive mt-2 text-xs">{errors.amount}</div>
+        )}
       </div>
 
       <div>
-        <label for="description" class="block text-sm font-semibold uppercase mb-2">Description</label>
+        <label
+          for="description"
+          class="block text-sm font-semibold uppercase mb-2"
+        >
+          Description
+        </label>
         <input
           type="text"
           name="description"
@@ -86,11 +84,15 @@ export const TransactionForm: FC<TransactionFormProps> = ({
           placeholder="What was this for?"
           required
         />
-        {errors.description && <div class="text-destructive mt-2 text-xs">{errors.description}</div>}
+        {errors.description && (
+          <div class="text-destructive mt-2 text-xs">{errors.description}</div>
+        )}
       </div>
 
       <div>
-        <label for="type" class="block text-sm font-semibold uppercase mb-2">Type</label>
+        <label for="type" class="block text-sm font-semibold uppercase mb-2">
+          Type
+        </label>
         <select
           name="type"
           id="type"
@@ -103,13 +105,20 @@ export const TransactionForm: FC<TransactionFormProps> = ({
           <option value="TRANSFER">Transfer</option>
           <option value="PAYMENT">Payment</option>
         </select>
-        {errors.type && <div class="text-destructive mt-2 text-xs">{errors.type}</div>}
+        {errors.type && (
+          <div class="text-destructive mt-2 text-xs">{errors.type}</div>
+        )}
       </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
       <div>
-        <label for="categoryId" class="block text-sm font-semibold uppercase mb-2">Category</label>
+        <label
+          for="categoryId"
+          class="block text-sm font-semibold uppercase mb-2"
+        >
+          Category
+        </label>
         <select
           name="categoryId"
           id="categoryId"
@@ -125,7 +134,12 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       </div>
 
       <div>
-        <label for="sourceAccountId" class="block text-sm font-semibold uppercase mb-2">Account</label>
+        <label
+          for="sourceAccountId"
+          class="block text-sm font-semibold uppercase mb-2"
+        >
+          Account
+        </label>
         <select
           name="sourceAccountId"
           id="sourceAccountId"
@@ -135,6 +149,26 @@ export const TransactionForm: FC<TransactionFormProps> = ({
           {accounts.map((acc) => (
             <option key={acc.id} value={acc.id}>
               {acc.name}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label
+          for="recurrenceId"
+          class="block text-sm font-semibold uppercase mb-2"
+        >
+          Recurrence
+        </label>
+        <select
+          name="recurrenceId"
+          id="recurrenceId"
+          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+        >
+          <option value="">None</option>
+          {recurrences.map((rec) => (
+            <option key={rec.id} value={rec.id}>
+              {rec.name}
             </option>
           ))}
         </select>

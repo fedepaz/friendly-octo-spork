@@ -1,11 +1,4 @@
-import type { FC } from "hono/jsx";
-import type { Category, Account, Recurrence } from "@/generated/prisma";
-
-interface TransactionFiltersProps {
-  categories: Category[];
-  accounts: Account[];
-  recurrences: Recurrence[];
-}
+// src/components/transactions/TransactionFilters.tsxº
 
 import type { FC } from "hono/jsx";
 import type { Category, Account, Recurrence } from "@/generated/prisma";
@@ -23,7 +16,9 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
 }) => {
   return (
     <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 mb-8">
-      <h3 class="text-xl font-bold uppercase tracking-wider mb-4">FILTER TRANSACTIONS</h3>
+      <h3 class="text-xl font-bold uppercase tracking-wider mb-4">
+        FILTER TRANSACTIONS
+      </h3>
       <form
         hx-get="/api/transactions"
         hx-target="#transactions-list"
@@ -32,7 +27,12 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
       >
         <div>
-          <label for="startDate" class="block text-sm font-semibold uppercase mb-2">Start Date</label>
+          <label
+            for="startDate"
+            class="block text-sm font-semibold uppercase mb-2"
+          >
+            Start Date
+          </label>
           <input
             type="date"
             name="startDate"
@@ -41,7 +41,12 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           />
         </div>
         <div>
-          <label for="endDate" class="block text-sm font-semibold uppercase mb-2">End Date</label>
+          <label
+            for="endDate"
+            class="block text-sm font-semibold uppercase mb-2"
+          >
+            End Date
+          </label>
           <input
             type="date"
             name="endDate"
@@ -50,7 +55,9 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           />
         </div>
         <div>
-          <label for="type" class="block text-sm font-semibold uppercase mb-2">Type</label>
+          <label for="type" class="block text-sm font-semibold uppercase mb-2">
+            Type
+          </label>
           <select
             name="type"
             id="type"
@@ -66,7 +73,12 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           </select>
         </div>
         <div>
-          <label for="categoryId" class="block text-sm font-semibold uppercase mb-2">Category</label>
+          <label
+            for="categoryId"
+            class="block text-sm font-semibold uppercase mb-2"
+          >
+            Category
+          </label>
           <select
             name="categoryId"
             id="categoryId"
@@ -79,7 +91,12 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           </select>
         </div>
         <div>
-          <label for="sourceAccountId" class="block text-sm font-semibold uppercase mb-2">Source Account</label>
+          <label
+            for="sourceAccountId"
+            class="block text-sm font-semibold uppercase mb-2"
+          >
+            Source Account
+          </label>
           <select
             name="sourceAccountId"
             id="sourceAccountId"
@@ -92,7 +109,12 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           </select>
         </div>
         <div>
-          <label for="targetAccountId" class="block text-sm font-semibold uppercase mb-2">Target Account</label>
+          <label
+            for="targetAccountId"
+            class="block text-sm font-semibold uppercase mb-2"
+          >
+            Target Account
+          </label>
           <select
             name="targetAccountId"
             id="targetAccountId"
@@ -105,7 +127,12 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           </select>
         </div>
         <div>
-          <label for="recurrenceId" class="block text-sm font-semibold uppercase mb-2">Recurrence</label>
+          <label
+            for="recurrenceId"
+            class="block text-sm font-semibold uppercase mb-2"
+          >
+            Recurrence
+          </label>
           <select
             name="recurrenceId"
             id="recurrenceId"

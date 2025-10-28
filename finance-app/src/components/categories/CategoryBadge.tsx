@@ -1,20 +1,44 @@
 // src/components/categories/CategoryBadge.tsx
-
 import type { Category } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
 
-import type { Category } from "@/generated/prisma";
-import type { FC } from "hono/jsx";
-
-const typeStyleMap: Record<string, { bg: string; text: string; border: string; dotBg: string }> = {
-  GASTO: { bg: "bg-destructive/20", text: "text-destructive-foreground", border: "border-destructive", dotBg: "bg-destructive" },
-  PAGO: { bg: "bg-secondary/20", text: "text-secondary-foreground", border: "border-secondary", dotBg: "bg-secondary" },
-  INGRESO: { bg: "bg-primary/20", text: "text-primary-foreground", border: "border-primary", dotBg: "bg-primary" },
-  RENDIMIENTO: { bg: "bg-accent/20", text: "text-accent-foreground", border: "border-accent", dotBg: "bg-accent" },
+const typeStyleMap: Record<
+  string,
+  { bg: string; text: string; border: string; dotBg: string }
+> = {
+  GASTO: {
+    bg: "bg-destructive/20",
+    text: "text-destructive-foreground",
+    border: "border-destructive",
+    dotBg: "bg-destructive",
+  },
+  PAGO: {
+    bg: "bg-secondary/20",
+    text: "text-secondary-foreground",
+    border: "border-secondary",
+    dotBg: "bg-secondary",
+  },
+  INGRESO: {
+    bg: "bg-primary/20",
+    text: "text-primary-foreground",
+    border: "border-primary",
+    dotBg: "bg-primary",
+  },
+  RENDIMIENTO: {
+    bg: "bg-accent/20",
+    text: "text-accent-foreground",
+    border: "border-accent",
+    dotBg: "bg-accent",
+  },
 };
 
 export const CategoryBadge: FC<{ category: Category }> = ({ category }) => {
-  const typeStyles = typeStyleMap[category.type] || { bg: "bg-muted/20", text: "text-muted-foreground", border: "border-muted", dotBg: "bg-muted" };
+  const typeStyles = typeStyleMap[category.type] || {
+    bg: "bg-muted/20",
+    text: "text-muted-foreground",
+    border: "border-muted",
+    dotBg: "bg-muted",
+  };
 
   return (
     <span

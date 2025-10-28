@@ -1,3 +1,5 @@
+// src/pages/TransactionsPage.tsx
+
 import { TransactionForm } from "@/components/transactions/TransactionForm";
 import { TransactionTable } from "@/components/transactions/TransactionsTable";
 import { TransactionFilters } from "@/components/transactions/TransactionFilters";
@@ -11,11 +13,7 @@ import type { FC } from "hono/jsx";
 import Layout from "@/components/shared/Layout";
 
 interface TransactionsPageData {
-  transactions: (Transaction & {
-    category?: Category;
-    sourceAccount?: Account;
-    targetAccount?: Account;
-  })[];
+  transactions: Transaction[];
   categories: Category[];
   accounts: Account[];
   recurrences: Recurrence[];
@@ -35,7 +33,11 @@ export const TransactionsPage: FC<{ data?: TransactionsPageData }> = ({
         Transactions
       </h1>
 
-      <TransactionForm categories={categories} accounts={accounts} />
+      <TransactionForm
+        categories={categories}
+        accounts={accounts}
+        recurrences={recurrences}
+      />
 
       <TransactionFilters
         categories={categories}

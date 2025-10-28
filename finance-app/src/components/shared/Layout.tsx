@@ -1,4 +1,4 @@
-import { html } from "hono/html";
+// src/components/shared/Layout.tsx
 
 import { HamburgerMenu } from "./HamburgerMenu";
 import { Sidebar } from "./Sidebar";
@@ -11,42 +11,50 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = (props) => {
-  return html` <!DOCTYPE html>
-    <html lang="en" class="dark">
-      <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Finance App</title>
-        <!-- Tailwind CSS -->
-        <link rel="stylesheet" href="/output.css" />
-        <!-- HTMX -->
-        <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-      </head>
-      <body class="font-sans bg-background text-foreground flex">
-        <div id="sidebar-container" class="lg:block hidden">
-          ${(<Sidebar activeNavItem={props.activeNavItem} />)}
-        </div>
-        <div class="flex-1 flex flex-col">
-          <header
-            class="lg:hidden flex items-center justify-between p-4 bg-card border-b-2 border-border shadow-[var(--shadow)]"
-          >
-            <a
-              href="/"
-              class="text-2xl font-bold text-primary hover:-translate-y-0.5 transition-transform"
-            >
-              FINANCE TRACKER
-            </a>
-            ${(
-              <HamburgerMenu onClick="htmx.toggleClass(document.getElementById('sidebar-container'), 'hidden')" />
-            )}
-          </header>
-          <main class="page flex-1">
-            <div class="container-xl p-4">${props.children}</div>
-          </main>
-        </div>
-        <div id="toast-container" class="fixed top-0 right-0 p-4 z-50"></div>
-      </body>
-    </html>`;
-};
+  return (
+    <div class="flex h-screen bg-background">
+      {/* Desktop Sidebar - Always visible on large screens */}
+      <div id="sidebar-container" class="hidden lg:block">
+        <Sidebar activeNavItem={props.activeNavItem} />
+      </div>
 
+      {/* Main content area */}
+      <div class="flex-1 flex flex-col overflow-hidden">
+        {/* Mobile header - Only visible on small screens */}
+        <header class="lg:hidden flex items-center justify-between p-4 bg-card border-b-2 border-border shadow-[var(--shadow)] z-30">
+          <a
+            href="/"
+            class="text-2xl font-bold text-primary hover:-translate-y-0.5 transition-transform duration-150"
+          >
+            💸 FINANCE TRACKER
+          </a>
+          <HamburgerMenu onClick="htmx.toggleClass(document.getElementById('sidebar-container'), 'hidden')" />
+        </header>
+
+        {/* Mobile sidebar - Toggleable */}
+        <div
+          id="sidebar-container"
+          class="hidden fixed inset-0 bg-black/50 z-40 lg:hidden"
+        >
+          <div class="w-80 h-full" onclick="event.stopPropagation()">
+            <Sidebar activeNavItem={props.activeNavItem} isMobile={true} />
+          </div>
+        </div>
+
+        {/* Main content */}
+        <main class="flex-1 overflow-y-auto bg-background">
+          <div class="container mx-auto p-4 md:p-6 lg:p-8 max-w-7xl">
+            {props.children}
+          </div>
+        </main>
+      </div>
+
+      {/* Toast container */}
+      <div
+        id="toast-container"
+        class="fixed top-4 right-4 p-4 z-50 space-y-2"
+      ></div>
+    </div>
+  );
+};
 export default Layout;
