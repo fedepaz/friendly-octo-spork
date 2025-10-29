@@ -1,3 +1,5 @@
+// docs/design/design-conventions.md
+
 # Design Conventions & Style Guide
 
 ## Typography Scale & Usage
@@ -500,7 +502,7 @@ class="bg-card border-2 border-border shadow-[var(--shadow)] p-8"
 
 // Interactive Card (Hover Effect)
 // Use for: Clickable cards, selectable items
-class="bg-card border-2 border-border shadow-[var(--shadow)] p-6 
+class="bg-card border-2 border-border shadow-[var(--shadow)] p-6
        transition-all duration-150
        hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]
        cursor-pointer"
@@ -547,15 +549,21 @@ class="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs"
 
 ---
 
-## Responsive Breakpoints
+## Responsive Breakpoints & Mobile-First Design
+
+**CRITICAL RULE**: Every component MUST be responsive. Always start with mobile (320px) and progressively enhance.
+
+### Breakpoint Scale
 
 ```tsx
-// Mobile First Approach (always start with mobile base)
+// Mobile First Approach (ALWAYS start with mobile base, no prefix needed)
+// Base: 320px-639px (Mobile phones)
+class="text-base grid-cols-1 w-full"
 
 // sm: 640px+ (Large phones)
 class="text-base sm:text-lg"
 
-// md: 768px+ (Tablets)
+// md: 768px+ (Tablets) - MOST IMPORTANT BREAKPOINT
 class="grid-cols-1 md:grid-cols-2"
 
 // lg: 1024px+ (Laptops)
@@ -566,6 +574,331 @@ class="container xl:max-w-7xl"
 
 // 2xl: 1536px+ (Large desktops)
 class="p-8 2xl:p-12"
+```
+
+### Required Responsive Patterns
+
+**EVERY component must follow these patterns:**
+
+#### 1. Container Padding (REQUIRED)
+
+```tsx
+// Page containers MUST have responsive padding
+class="container mx-auto px-4 md:px-6 lg:px-8"
+
+// Never use fixed padding on containers
+❌ class="container mx-auto p-6"
+✅ class="container mx-auto px-4 md:px-6 lg:px-8"
+```
+
+#### 2. Grid Layouts (REQUIRED)
+
+```tsx
+// Stats Dashboard (3 columns desktop, 1 on mobile)
+class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6"
+
+// Content Grid (4 columns desktop, 2 tablet, 1 mobile)
+class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+
+// Form Grid (2 columns tablet+, 1 mobile)
+class="grid grid-cols-1 md:grid-cols-2 gap-4"
+
+// Never use fixed grid-cols without responsive breakpoints
+❌ class="grid grid-cols-3 gap-4"
+✅ class="grid grid-cols-1 md:grid-cols-3 gap-4"
+```
+
+#### 3. Typography Scaling (REQUIRED)
+
+```tsx
+// All headings MUST scale responsively
+// H1 - Page titles
+class="text-4xl md:text-5xl lg:text-6xl font-bold"
+
+// H2 - Section headers
+class="text-3xl md:text-4xl lg:text-5xl font-bold"
+
+// H3 - Subsection headers
+class="text-2xl md:text-3xl lg:text-4xl font-bold"
+
+// H4 - Component titles
+class="text-xl md:text-2xl font-semibold"
+
+// Body text (can scale on large screens)
+class="text-base lg:text-lg"
+
+// Never use fixed text sizes for headings
+❌ class="text-4xl font-bold"
+✅ class="text-4xl md:text-5xl font-bold"
+```
+
+#### 4. Button Widths (REQUIRED)
+
+```tsx
+// Buttons MUST be full-width on mobile, auto on desktop
+class="w-full md:w-auto px-6 py-3"
+
+// Button groups stack on mobile, inline on desktop
+class="flex flex-col md:flex-row gap-2"
+
+// Never use fixed width buttons without mobile consideration
+❌ class="px-6 py-3"
+✅ class="w-full md:w-auto px-6 py-3"
+```
+
+#### 5. Table Responsiveness (REQUIRED)
+
+```tsx
+// Essential columns (always visible)
+<th class="p-4">Date</th>
+<th class="p-4">Amount</th>
+
+// Non-essential columns (hidden on mobile)
+<th class="p-4 hidden md:table-cell">Description</th>
+<th class="p-4 hidden lg:table-cell">Category</th>
+
+// Actions column (always visible, compact on mobile)
+<th class="p-2 md:p-4 text-right">Actions</th>
+
+// Table container MUST scroll on mobile
+<div class="overflow-x-auto">
+  <table class="w-full min-w-[600px]">
+    ...
+  </table>
+</div>
+```
+
+#### 6. Flex Direction (REQUIRED)
+
+```tsx
+// Stack on mobile, row on desktop
+class="flex flex-col md:flex-row gap-4"
+
+// Reverse on mobile (image on top)
+class="flex flex-col-reverse md:flex-row gap-4"
+
+// Center on mobile, left-align on desktop
+class="text-center md:text-left"
+
+// Stack form actions on mobile
+class="flex flex-col md:flex-row gap-2 md:gap-4"
+```
+
+#### 7. Spacing Scale (REQUIRED)
+
+```tsx
+// Responsive gaps and padding
+class="gap-4 md:gap-6"          // Tighter on mobile
+class="p-4 md:p-6 lg:p-8"       // Progressive padding
+class="space-y-4 md:space-y-6"  // Vertical spacing
+class="mb-6 md:mb-8 lg:mb-12"   // Section margins
+```
+
+#### 8. Hidden/Visible Elements (REQUIRED)
+
+```tsx
+// Hide on mobile, show on desktop
+class="hidden md:block"
+class="hidden lg:flex"
+
+// Show on mobile only
+class="block md:hidden"
+
+// Compact mobile menu, full on desktop
+<nav class="md:hidden">Mobile Menu</nav>
+<nav class="hidden md:flex">Desktop Nav</nav>
+```
+
+### Complete Responsive Component Examples
+
+#### Responsive Page Layout
+
+```tsx
+<div class="min-h-screen bg-background">
+  {/* Header - Responsive padding */}
+  <header class="sticky top-0 z-50 bg-card border-b-2 border-border px-4 md:px-6 lg:px-8 py-4">
+    <div class="container mx-auto flex items-center justify-between">
+      <h1 class="text-2xl md:text-3xl font-bold">Finance Tracker</h1>
+      {/* Mobile menu icon, hidden on desktop */}
+      <button class="md:hidden p-2">☰</button>
+      {/* Desktop nav, hidden on mobile */}
+      <nav class="hidden md:flex gap-4">...</nav>
+    </div>
+  </header>
+
+  {/* Main content - Responsive container */}
+  <main class="container mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-8 lg:py-12">
+    {/* Page title - Scales with screen size */}
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8">
+      Dashboard
+    </h1>
+
+    {/* Stats grid - 1 col mobile, 3 cols desktop */}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">...</div>
+
+    {/* Content sections - Responsive spacing */}
+    <div class="space-y-6 md:space-y-8">...</div>
+  </main>
+</div>
+```
+
+#### Responsive Form
+
+```tsx
+<form class="bg-card border-2 border-border shadow-[var(--shadow)] p-4 md:p-6">
+  {/* Form grid - 1 col mobile, 2 cols tablet, 4 cols desktop */}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div>
+      <label class="block text-sm font-semibold uppercase mb-2">DATE</label>
+      <input class="w-full px-4 py-3 bg-card border-2 border-border" />
+    </div>
+
+    <div>
+      <label class="block text-sm font-semibold uppercase mb-2">AMOUNT</label>
+      <input class="w-full px-4 py-3 bg-card border-2 border-border" />
+    </div>
+
+    {/* Description takes 2 columns on desktop */}
+    <div class="md:col-span-2">
+      <label class="block text-sm font-semibold uppercase mb-2">
+        DESCRIPTION
+      </label>
+      <input class="w-full px-4 py-3 bg-card border-2 border-border" />
+    </div>
+  </div>
+
+  {/* Action buttons - Stack on mobile, inline on desktop */}
+  <div class="flex flex-col md:flex-row gap-2 md:gap-4 mt-6">
+    <button class="w-full md:w-auto bg-primary text-primary-foreground px-6 py-3">
+      SAVE
+    </button>
+    <button class="w-full md:w-auto bg-secondary text-secondary-foreground px-6 py-3">
+      CANCEL
+    </button>
+  </div>
+</form>
+```
+
+#### Responsive Table
+
+```tsx
+<div class="border-2 border-border shadow-[var(--shadow)] overflow-x-auto">
+  <table class="w-full min-w-[600px]">
+    <thead class="bg-primary text-primary-foreground">
+      <tr>
+        {/* Always visible */}
+        <th class="p-2 md:p-4 text-left text-xs md:text-sm font-bold uppercase">
+          Date
+        </th>
+        {/* Hidden on mobile */}
+        <th class="p-2 md:p-4 text-left text-xs md:text-sm font-bold uppercase hidden md:table-cell">
+          Description
+        </th>
+        {/* Hidden on mobile and tablet */}
+        <th class="p-2 md:p-4 text-left text-xs md:text-sm font-bold uppercase hidden lg:table-cell">
+          Category
+        </th>
+        {/* Always visible */}
+        <th class="p-2 md:p-4 text-right text-xs md:text-sm font-bold uppercase">
+          Amount
+        </th>
+        {/* Always visible, compact on mobile */}
+        <th class="p-2 md:p-4 text-right text-xs md:text-sm font-bold uppercase">
+          Actions
+        </th>
+      </tr>
+    </thead>
+    <tbody class="bg-card">
+      <tr class="border-b border-border">
+        <td class="p-2 md:p-4 text-xs md:text-sm">2025-10-28</td>
+        <td class="p-2 md:p-4 text-xs md:text-sm hidden md:table-cell">
+          Grocery shopping
+        </td>
+        <td class="p-2 md:p-4 text-xs md:text-sm hidden lg:table-cell">
+          <span class="bg-accent px-2 py-1 text-xs">FOOD</span>
+        </td>
+        <td class="p-2 md:p-4 text-xs md:text-sm font-mono text-right">
+          $123.45
+        </td>
+        <td class="p-2 md:p-4">
+          <div class="flex flex-col md:flex-row gap-1 md:gap-2 justify-end">
+            <button class="bg-secondary px-2 md:px-3 py-1 text-xs">EDIT</button>
+            <button class="bg-destructive px-2 md:px-3 py-1 text-xs">
+              DELETE
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+```
+
+#### Responsive Card Grid
+
+```tsx
+{
+  /* Auto-fit grid - Cards automatically adjust to screen width */
+}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+  <div class="bg-card border-2 border-border shadow-[var(--shadow)] p-4 md:p-6">
+    <h3 class="text-xl md:text-2xl font-bold mb-2">Card Title</h3>
+    <p class="text-sm md:text-base text-muted-foreground">
+      Card content adapts to screen size
+    </p>
+  </div>
+</div>;
+```
+
+### Mobile-First Testing Checklist
+
+Before considering any component complete, test at these widths:
+
+- [ ] **320px** - Smallest mobile (iPhone SE)
+- [ ] **375px** - Standard mobile (iPhone 12)
+- [ ] **768px** - Tablet portrait (iPad)
+- [ ] **1024px** - Tablet landscape / Small laptop
+- [ ] **1440px** - Desktop
+- [ ] **1920px** - Large desktop
+
+### Common Responsive Mistakes to Avoid
+
+```tsx
+// ❌ WRONG - Fixed grid without breakpoints
+class="grid grid-cols-3 gap-4"
+
+// ✅ CORRECT - Responsive grid
+class="grid grid-cols-1 md:grid-cols-3 gap-4"
+
+// ❌ WRONG - Fixed text size
+class="text-4xl font-bold"
+
+// ✅ CORRECT - Scaling text
+class="text-4xl md:text-5xl font-bold"
+
+// ❌ WRONG - Fixed button width
+class="px-6 py-3"
+
+// ✅ CORRECT - Full width on mobile
+class="w-full md:w-auto px-6 py-3"
+
+// ❌ WRONG - Fixed container padding
+class="container mx-auto p-6"
+
+// ✅ CORRECT - Responsive padding
+class="container mx-auto px-4 md:px-6 lg:px-8"
+
+// ❌ WRONG - All table columns visible
+<th class="p-4">Category</th>
+
+// ✅ CORRECT - Hide non-essential columns
+<th class="p-4 hidden lg:table-cell">Category</th>
+
+// ❌ WRONG - Fixed flex direction
+class="flex gap-4"
+
+// ✅ CORRECT - Stack on mobile
+class="flex flex-col md:flex-row gap-4"
 ```
 
 ---
@@ -595,7 +928,7 @@ class="active:translate-x-1 active:translate-y-1 active:shadow-none"
 
 // Focus Effects
 // Use for: All focusable elements
-class="focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 
+class="focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5
        focus:shadow-[var(--shadow-md)] focus:border-ring"
 
 // Loading Spinner
