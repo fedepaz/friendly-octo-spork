@@ -2,6 +2,7 @@
 
 import type { Account } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
+import { Button } from "@/components/shared/Button"; // New import
 
 const typeStyleMap: Record<
   string,
@@ -37,14 +38,14 @@ export const AccountCard: FC<{ account: Account }> = ({ account }) => {
   };
 
   return (
-    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150">
+    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 rounded-none hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150">
       <div class="flex justify-between items-start mb-4">
         <div>
-          <h3 class="text-lg font-semibold text-foreground mb-2">
+          <h3 class="text-lg md:text-xl font-semibold text-foreground mb-2">
             {account.name}
           </h3>
           <span
-            class={`inline-flex items-center px-2 py-1 text-xs font-semibold uppercase tracking-wide border-2 ${typeStyles.border} ${typeStyles.bg} ${typeStyles.text}`}
+            class={`inline-flex items-center px-2 py-1 text-xs font-semibold uppercase tracking-wide rounded-none border-2 ${typeStyles.border} ${typeStyles.bg} ${typeStyles.text}`}
           >
             {account.type}
           </span>
@@ -55,7 +56,7 @@ export const AccountCard: FC<{ account: Account }> = ({ account }) => {
       </div>
 
       <div
-        class={`font-mono font-bold text-3xl ${
+        class={`font-mono font-bold text-3xl md:text-4xl ${
           account.balance >= 0
             ? "text-primary-foreground"
             : "text-destructive-foreground"
@@ -65,22 +66,24 @@ export const AccountCard: FC<{ account: Account }> = ({ account }) => {
       </div>
 
       <div class="flex gap-2">
-        <button
-          class="bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-150 flex-1"
-          hx-get={`/api/accounts/${account.id}/edit`}
-          hx-target="#modal-content"
+        <Button
+          type="button" // Explicitly set type to "button"
+          class="flex-1 bg-secondary text-secondary-foreground"
+          hxGet={`/api/accounts/${account.id}/edit`}
+          hxTarget="#modal-content"
           aria-label={`Edit ${account.name}`}
         >
           Edit
-        </button>
-        <button
-          class="bg-destructive text-destructive-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-150"
-          hx-delete={`/api/accounts/${account.id}`}
-          hx-confirm="Delete this account? This action cannot be undone."
+        </Button>
+        <Button
+          type="button" // Explicitly set type to "button"
+          class="bg-destructive text-destructive-foreground"
+          hxDelete={`/api/accounts/${account.id}`}
+          hxConfirm="Delete this account? This action cannot be undone."
           aria-label={`Delete ${account.name}`}
         >
           Delete
-        </button>
+        </Button>
       </div>
     </div>
   );

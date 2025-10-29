@@ -1,6 +1,7 @@
 // src/components/categories/CategoryForm.tsx
 
 import { CategoryType, type Category } from "@/generated/prisma";
+import { Button } from "@/components/shared/Button"; // New import
 
 export function CategoryForm({ category }: { category?: Category }) {
   if (!category) {
@@ -8,7 +9,7 @@ export function CategoryForm({ category }: { category?: Category }) {
   }
 
   return (
-    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 w-full max-w-md">
+    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 w-full max-w-md rounded-none">
       <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
         EDIT CATEGORY
       </h3>
@@ -29,7 +30,7 @@ export function CategoryForm({ category }: { category?: Category }) {
             name="name"
             id="name"
             required
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
             value={category.name}
             placeholder="e.g., Groceries"
           />
@@ -43,7 +44,7 @@ export function CategoryForm({ category }: { category?: Category }) {
             name="type"
             id="type"
             required
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
           >
             <option value="">SELECT TYPE...</option>
             <option
@@ -80,7 +81,7 @@ export function CategoryForm({ category }: { category?: Category }) {
           <select
             name="color"
             id="color"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
             value={category?.color || ""}
           >
             <option value="">SELECT COLOR...</option>
@@ -93,20 +94,21 @@ export function CategoryForm({ category }: { category?: Category }) {
         </div>
 
         <div class="flex gap-2 justify-end mt-6">
-          <button
-            type="button"
-            data-hx-on-click="this.closest('[x-data]').__x.$data.open = false"
-            class="bg-muted text-muted-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 text-base transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
+          <Button
+            type="button" // Explicitly set type to "button"
+            onClick="this.closest('[x-data]').__x.$data.open = false" // Using onClick for Alpine.js
+            class="bg-muted text-muted-foreground"
           >
             CANCEL
-          </button>
-          <button
+          </Button>
+          <Button
             type="submit"
-            class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 text-base transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
+            class="bg-primary text-primary-foreground"
           >
             <svg
               class="htmx-indicator animate-spin h-5 w-5 mr-2 hidden"
               viewBox="0 0 24 24"
+              aria-label="Loading" // Added aria-label for accessibility
             >
               <circle
                 class="opacity-25"
@@ -123,7 +125,7 @@ export function CategoryForm({ category }: { category?: Category }) {
               ></path>
             </svg>
             SAVE
-          </button>
+          </Button>
         </div>
       </form>
     </div>

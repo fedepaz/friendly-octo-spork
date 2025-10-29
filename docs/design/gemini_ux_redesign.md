@@ -90,3 +90,116 @@ export const ComponentName: FC = () => (
   </div>
 );
 ```
+
+# AUDIT CHECKLIST
+
+## 1. Typography Audit
+
+Check EVERY heading and text element
+
+## 2. Spacing Audit
+
+Check ALL padding, margins, and gaps
+
+## 3. Color Usage Audit
+
+Check ALL background and text colors
+
+## 4. Button Audit
+
+Check ALL buttons follow size conventions
+
+## 5. Input Audit
+
+Check ALL form inputs
+
+## 6. Card Audit
+
+Check ALL cards
+
+## 7. Responsive Design Audit
+
+Check ALL layouts are mobile-first, but allow for flexible breakpoints to fit all devices
+
+## 8. Component-Specific Audit
+
+### Tables
+
+### Badges
+
+### Empty States
+
+## 9. Accessibility Audit
+
+- [ ] All buttons have proper semantic HTML (`<button>`, not `<div onclick>`)
+- [ ] All icon-only buttons have `aria-label`
+- [ ] All form inputs have `<label>` elements
+- [ ] All interactive elements have focus states
+- [ ] All required fields marked with asterisk
+- [ ] All error messages linked with `aria-describedby`
+
+## 10. Animation Audit
+
+## Start Analysis
+
+Please analyze all components in:
+
+---
+
+[ ] categories/CategoryBadge.tsx
+[ ] categories/CategoryForm.tsx
+[ ] categories/CategoriesList.tsx
+[ ] CategoriesPage.tsx
+
+---
+
+[ ] accounts/AccountsList.tsx
+[ ] accounts/AccountForm.tsx
+[ ] accounts/AccountCard.tsx
+[ ] AccountsPage.tsx
+
+---
+
+[ ] recurrences/RecurrencesList.tsx
+[ ] recurrences/RecurrenceForm.tsx
+[ ] recurrences/RecurrenceCard.tsx
+[ ] RecurrencesPage.tsx
+
+---
+
+[ ] transactions/TransactionsTable.tsx
+[ ] transactions/TransactionRow.tsx
+[ ] transactions/TransactionForm.tsx
+[ ] transactions/TransactionFilters.tsx
+[ ] TransactionsPage.tsx
+
+---
+
+[ ] dashboard/StatCard.tsx
+[ ] dashboard/RecentActivity.tsx
+[ ] dashboard/MonthlyChart.tsx
+[ ] dashboard/BudgetProgressCard.tsx
+[ ] DashboardPage.tsx
+
+---
+
+[ ] shared/Button.tsx
+[ ] shared/LinkButton.tsx
+[ ] shared/Icon.tsx
+[ ] shared/Toast.tsx
+[ ] shared/Modal.tsx
+[ ] shared/Sidebar.tsx
+[ ] shared/HamburgerMenu.tsx
+[ ] shared/Layout.tsx
+[ ] ErrorPage.tsx
+[ ] LoginPage.tsx
+[ ] ProfilePage.tsx
+
+# START AUDIT
+
+Begin with the first file. For each file:
+
+1. Show audit summary
+2. Provide updated code
+3. Explain changes
+4. Move to next file

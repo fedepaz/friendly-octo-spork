@@ -2,6 +2,7 @@
 
 import type { FC } from "hono/jsx";
 import type { Category, Account, Recurrence } from "@/generated/prisma";
+import { Button } from "@/components/shared/Button"; // New import
 
 interface TransactionFormProps {
   categories: Category[];
@@ -21,7 +22,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     hx-target="#transaction-list"
     hx-swap="afterbegin"
     hx-on--after-request="this.reset()"
-    class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 mb-6"
+    class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 mb-6 rounded-none"
   >
     <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
       Add Transaction
@@ -36,7 +37,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
           type="date"
           name="date"
           id="date"
-          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
           defaultValue={new Date().toISOString().split("T")[0]}
           required
         />
@@ -59,7 +60,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
             id="amount"
             step="0.01"
             min="0.01"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base text-right font-mono transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring pl-8"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base text-right font-mono transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring pl-8 rounded-none"
             placeholder="0.00"
             required
           />
@@ -80,7 +81,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
           type="text"
           name="description"
           id="description"
-          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
           placeholder="What was this for?"
           required
         />
@@ -96,7 +97,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
         <select
           name="type"
           id="type"
-          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
           required
         >
           <option value="">Select...</option>
@@ -107,8 +108,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
         </select>
         {errors.type && (
           <div class="text-destructive mt-2 text-xs">{errors.type}</div>
-        )}
-      </div>
+        )}\n      </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
@@ -122,7 +122,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
         <select
           name="categoryId"
           id="categoryId"
-          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
         >
           <option value="">None</option>
           {categories.map((cat) => (
@@ -143,7 +143,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
         <select
           name="sourceAccountId"
           id="sourceAccountId"
-          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
         >
           <option value="">None</option>
           {accounts.map((acc) => (
@@ -163,7 +163,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
         <select
           name="recurrenceId"
           id="recurrenceId"
-          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
         >
           <option value="">None</option>
           {recurrences.map((rec) => (
@@ -175,9 +175,9 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       </div>
     </div>
 
-    <button
+    <Button
       type="submit"
-      class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 text-base transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+      class="bg-primary text-primary-foreground mt-6"
     >
       <svg
         class="htmx-indicator animate-spin h-5 w-5 mr-2 hidden"
@@ -185,10 +185,11 @@ export const TransactionForm: FC<TransactionFormProps> = ({
         fill="none"
         stroke="currentColor"
         stroke-width="2"
+        aria-label="Loading" // Added aria-label for accessibility
       >
         <path d="M21 12a9 9 0 1 1-6.219-8.56" />
       </svg>
       Add Transaction
-    </button>
+    </Button>
   </form>
 );

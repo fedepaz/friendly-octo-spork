@@ -1,5 +1,6 @@
 // src/pages/ErrorPage.tsx
 
+import { LinkButton } from "@/components/shared/LinkButton"; // New import
 import type { FC } from "hono/jsx";
 
 interface ErrorPageProps {
@@ -16,7 +17,7 @@ export const ErrorPage: FC<ErrorPageProps> = ({ message, stack, statusCode }) =>
           <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-3">ERROR {statusCode || 500}</h2>
           <p class="text-sm text-muted-foreground">AN UNEXPECTED ERROR OCCURRED.</p>
         </div>
-        <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6">
+        <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 rounded-none">
           <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">{message}</h3>
           {stack && (
             <pre class="text-xs text-muted-foreground mb-6">
@@ -24,9 +25,9 @@ export const ErrorPage: FC<ErrorPageProps> = ({ message, stack, statusCode }) =>
             </pre>
           )}
           <div class="mt-6">
-            <a href="/" class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 text-base transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed w-full">
+            <LinkButton href="/" class="w-full"> {/* Using LinkButton component */}
               GO TO HOME
-            </a>
+            </LinkButton>
           </div>
         </div>
       </div>

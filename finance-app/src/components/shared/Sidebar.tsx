@@ -1,11 +1,5 @@
-import { DollarSignIcon } from "../icons/DollarSignIcon";
-import { LineChartIcon } from "../icons/LineChartIcon";
-import { WalletIcon } from "../icons/WalletIcon";
-import { LandmarkIcon } from "../icons/LandmarkIcon";
-import { FolderIcon } from "../icons/FolderIcon";
-import { UserIcon } from "../icons/UserIcon";
-import { LightbulbIcon } from "../icons/LightbulbIcon";
-import { XIcon } from "../icons/XIcon";
+import { Icon } from "./Icon"; // New import
+import { Button } from "./Button"; // New import
 // src/components/shared/Sidebar.tsx
 
 import type { FC } from "hono/jsx";
@@ -20,11 +14,11 @@ export const Sidebar: FC<SidebarProps> = ({
   isMobile = false,
 }) => {
   const navLinks = [
-    { href: "/dashboard", label: "Dashboard", icon: <LineChartIcon /> },
-    { href: "/expenses", label: "Expenses", icon: <WalletIcon /> },
-    { href: "/accounts", label: "Accounts", icon: <LandmarkIcon /> },
-    { href: "/categories", label: "Categories", icon: <FolderIcon /> },
-    { href: "/profile", label: "Profile", icon: <UserIcon /> },
+    { href: "/dashboard", label: "Dashboard", icon: "line-chart" },
+    { href: "/expenses", label: "Expenses", icon: "wallet" },
+    { href: "/accounts", label: "Accounts", icon: "landmark" },
+    { href: "/categories", label: "Categories", icon: "folder" },
+    { href: "/profile", label: "Profile", icon: "user" },
   ];
 
   return (
@@ -35,23 +29,22 @@ export const Sidebar: FC<SidebarProps> = ({
         border-r-2 border-border
         shadow-[var(--shadow)]
         flex flex-col
+        rounded-none
         ${isMobile ? "relative" : ""}
       `}
     >
       {/* Sidebar Header */}
-      <div class="p-6 border-b-2 border-border bg-primary/5">
+      <div class="p-6 border-b-2 border-border bg-primary/5 rounded-none">
         <a href="/" class="block group">
           <div class="flex items-center gap-3">
             <div class="text-4xl transition-transform duration-150 group-hover:scale-110">
-              <DollarSignIcon />
+              <Icon name="dollar-sign" />
             </div>
             <div>
               <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">
                 FINANCE
               </h1>
-              <p class="text-sm text-muted-foreground">
-                Tracker
-              </p>
+              <p class="text-sm text-muted-foreground">Tracker</p>
             </div>
           </div>
         </a>
@@ -73,7 +66,7 @@ export const Sidebar: FC<SidebarProps> = ({
                 group
                 flex items-center gap-3
                 px-4 py-3
-                rounded-md
+                rounded-none // Added rounded-none
                 text-sm font-semibold uppercase tracking-wide
                 transition-all duration-150
                 border-2
@@ -92,7 +85,7 @@ export const Sidebar: FC<SidebarProps> = ({
                   ${isActive ? "scale-110" : "group-hover:scale-110"}
                 `}
               >
-                {link.icon}
+                <Icon name={link.icon} />
               </span>
               <span class="flex-1">{link.label}</span>
               {isActive && (
@@ -104,10 +97,12 @@ export const Sidebar: FC<SidebarProps> = ({
       </nav>
 
       {/* Sidebar Footer */}
-      <div class="p-4 border-t-2 border-border bg-muted/30">
-        <div class="bg-accent/10 border-2 border-accent/30 rounded-md p-4">
+      <div class="p-4 border-t-2 border-border bg-muted/30 rounded-none">
+        <div class="bg-accent/10 border-2 border-accent/30 rounded-none p-4">
           <div class="flex items-start gap-3">
-            <span class="text-2xl"><LightbulbIcon /></span>
+            <span class="text-2xl">
+              <Icon name="lightbulb" />
+            </span>
             <div>
               <p class="text-sm font-semibold uppercase tracking-wide text-foreground">
                 Pro Tip
@@ -122,14 +117,15 @@ export const Sidebar: FC<SidebarProps> = ({
 
       {/* Mobile close button */}
       {isMobile && (
-        <button
-          onclick="document.getElementById('sidebar-container').classList.add('hidden')"
+        <Button
+          type="button" // Explicitly set type to "button"
+          onClick="document.getElementById('mobile-sidebar-container').classList.add('hidden')"
           class="
             absolute top-4 right-4
             bg-destructive text-destructive-foreground
             border-2 border-border
             w-10 h-10
-            rounded-md
+            rounded-none // Added rounded-none
             flex items-center justify-center
             font-bold text-xl
             transition-all duration-150
@@ -139,8 +135,8 @@ export const Sidebar: FC<SidebarProps> = ({
           "
           aria-label="Close sidebar"
         >
-          <XIcon />
-        </button>
+          <Icon name="x" />
+        </Button>
       )}
     </aside>
   );

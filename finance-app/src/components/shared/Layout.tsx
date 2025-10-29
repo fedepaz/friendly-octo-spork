@@ -1,8 +1,6 @@
-import { DollarSignIcon } from "../icons/DollarSignIcon";
-// src/components/shared/Layout.tsx
-
 import { HamburgerMenu } from "./HamburgerMenu";
 import { Sidebar } from "./Sidebar";
+import { Icon } from "./Icon"; // New import
 import type { FC } from "hono/jsx";
 
 interface LayoutProps {
@@ -15,26 +13,26 @@ const Layout: FC<LayoutProps> = (props) => {
   return (
     <div class="flex h-screen bg-background">
       {/* Desktop Sidebar - Always visible on large screens */}
-      <div id="sidebar-container" class="hidden lg:block">
+      <div id="desktop-sidebar-container" class="hidden lg:block"> {/* Renamed ID */}
         <Sidebar activeNavItem={props.activeNavItem} />
       </div>
 
       {/* Main content area */}
       <div class="flex-1 flex flex-col overflow-hidden">
         {/* Mobile header - Only visible on small screens */}
-        <header class="lg:hidden flex items-center justify-between p-4 bg-card border-b-2 border-border shadow-[var(--shadow)] z-30">
+        <header class="lg:hidden flex items-center justify-between p-4 bg-card border-b-2 border-border shadow-[var(--shadow)] z-30 rounded-none">
           <a
             href="/"
-            class="text-4xl md:text-5xl font-bold text-foreground mb-4 hover:-translate-y-0.5 transition-all duration-150 flex items-center gap-2"
+            class="text-4xl md:text-5xl font-bold text-foreground mb-4 hover:-translate-y-0.5 transition-all duration-150 flex items-center gap-2 rounded-none"
           >
-            <DollarSignIcon /> FINANCE TRACKER
+            <Icon name="dollar-sign" /> FINANCE TRACKER
           </a>
-          <HamburgerMenu onClick="htmx.toggleClass(document.getElementById('sidebar-container'), 'hidden')" />
+          <HamburgerMenu onClick="htmx.toggleClass(document.getElementById('mobile-sidebar-container'), 'hidden')" />
         </header>
 
         {/* Mobile sidebar - Toggleable */}
         <div
-          id="sidebar-container"
+          id="mobile-sidebar-container" // Renamed ID
           class="hidden fixed inset-0 bg-background/80 backdrop-blur-sm z-40 lg:hidden"
         >
           <div class="w-80 h-full" onclick="event.stopPropagation()">

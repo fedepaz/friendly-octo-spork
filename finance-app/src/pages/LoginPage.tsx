@@ -1,5 +1,6 @@
 //src/pages/LoginPage.tsx
 
+import { Button } from "@/components/shared/Button"; // New import
 import type { FC } from "hono/jsx";
 
 interface LoginPageProps {
@@ -17,11 +18,11 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
         <form
           method="post"
           action="/login"
-          class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6"
+          class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 rounded-none"
         >
           {error && (
             <div
-              class="bg-destructive text-destructive-foreground border-2 border-border p-3 mb-4"
+              class="bg-destructive text-destructive-foreground border-2 border-border p-3 mb-4 rounded-none"
               role="alert"
               aria-live="assertive"
             >
@@ -38,7 +39,7 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
               type="email"
               name="email"
               id="email"
-              class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+              class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
               placeholder="messi@miamifc.com"
               required
               aria-describedby="email-error"
@@ -55,19 +56,16 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
               type="password"
               name="password"
               id="password"
-              class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+              class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
               placeholder="••••••••"
               required
               aria-describedby="password-error"
             />
           </div>
           <div class="mt-6">
-            <button
-              type="submit"
-              class="w-full bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 text-base transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+            <Button type="submit" class="w-full"> {/* Using Button component */}
               SIGN IN
-            </button>
+            </Button>
           </div>
         </form>
       </div>

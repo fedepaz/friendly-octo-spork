@@ -3,19 +3,15 @@
 import type { Transaction } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
 import { TransactionRow } from "./TransactionRow";
-
-const ClipboardIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>`;
+import { Icon } from "@/components/shared/Icon"; // New import
 
 interface TransactionTableProps {
   transactions: Transaction[];
 }
 
 const EmptyState: FC = () => (
-  <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-12 text-center">
-    <div
-      class="text-6xl mb-4"
-      dangerouslySetInnerHTML={{ __html: ClipboardIcon }}
-    />
+  <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-12 text-center rounded-none">
+    <Icon name="clipboard" class="text-6xl mb-4" aria-label="No transactions icon" />
     <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
       No Transactions Yet
     </h3>
@@ -39,7 +35,7 @@ export const TransactionTable: FC<TransactionTableProps> = ({
   }, 0);
 
   return (
-    <div class="border-2 border-border shadow-[var(--shadow)] overflow-hidden">
+    <div class="border-2 border-border shadow-[var(--shadow)] overflow-hidden rounded-none">
       <table class="w-full">
         <thead class="bg-primary text-primary-foreground text-sm">
           <tr>
@@ -51,8 +47,7 @@ export const TransactionTable: FC<TransactionTableProps> = ({
             <th class="p-4 text-left font-bold uppercase tracking-wide">Source Account</th>
             <th class="p-4 text-left font-bold uppercase tracking-wide">Target Account</th>
             <th
-              class="p-4 text-right font-bold uppercase tracking-wide"
-              style={{ width: "200px" }}
+              class="p-4 text-right font-bold uppercase tracking-wide w-[200px]"
             >
               Actions
             </th>

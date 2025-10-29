@@ -2,6 +2,7 @@
 
 import type { FC } from "hono/jsx";
 import type { Transaction, Category, Account } from "@/generated/prisma";
+import { Button } from "@/components/shared/Button"; // New import
 
 interface TransactionRowProps {
   transaction: Transaction;
@@ -58,7 +59,7 @@ export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {
       <td class="p-4 text-sm font-mono text-muted-foreground">{formattedDate}</td>
       <td class="p-4 text-sm">
         <span
-          class={`inline-flex items-center px-2 py-1 border-2 ${typeStyles.border} ${typeStyles.bg} ${typeStyles.text} text-xs font-semibold uppercase tracking-wide`}
+          class={`inline-flex items-center px-2 py-1 border-2 ${typeStyles.border} ${typeStyles.bg} ${typeStyles.text} text-xs font-semibold uppercase tracking-wide rounded-none`}
         >
           {transaction.type}
         </span>
@@ -66,27 +67,29 @@ export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {
 
       <td class="p-4 text-sm">{transaction.description || "-"}</td>
       <td class="p-4 text-sm flex gap-2 justify-end">
-        <button
-          class="bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-150"
-          hx-get={`/api/transactions/${transaction.id}/edit`}
-          hx-target="#modal-content"
-          hx-swap="innerHTML"
-          data-toggle="modal"
-          data-target="#htmx-modal"
+        <Button
+          type="button" // Explicitly set type to "button"
+          class="bg-secondary text-secondary-foreground"
+          hxGet={`/api/transactions/${transaction.id}/edit`}
+          hxTarget="#modal-content"
+          hxSwap="innerHTML"
+          dataToggle="modal"
+          dataTarget="#htmx-modal"
           aria-label={`Edit transaction ${transaction.description}`}
         >
           EDIT
-        </button>
-        <button
-          class="bg-destructive text-destructive-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-150"
-          hx-delete={`/api/transactions/${transaction.id}`}
-          hx-target={`#transaction-${transaction.id}`}
-          hx-swap="outerHTML swap:1s"
-          hx-confirm="Are you sure you want to delete this transaction?"
+        </Button>
+        <Button
+          type="button" // Explicitly set type to "button"
+          class="bg-destructive text-destructive-foreground"
+          hxDelete={`/api/transactions/${transaction.id}`}
+          hxTarget={`#transaction-${transaction.id}`}
+          hxSwap="outerHTML swap:1s"
+          hxConfirm="Are you sure you want to delete this transaction?"
           aria-label={`Delete transaction ${transaction.description}`}
         >
-          DELETE
-        </button>
+        DELETE
+        </Button>
       </td>
     </tr>
   );

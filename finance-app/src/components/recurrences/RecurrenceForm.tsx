@@ -1,8 +1,10 @@
 // src/components/recurrences/RecurrenceForm.tsx
 
+import { Button } from "@/components/shared/Button"; // New import
+
 export function RecurrenceForm() {
   return (
-    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 w-full max-w-md">
+    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 w-full max-w-md rounded-none">
       <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
         CREATE NEW RECURRENCE
       </h3>
@@ -23,7 +25,7 @@ export function RecurrenceForm() {
             name="name"
             id="name"
             required
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
             placeholder="e.g., Monthly Bills"
           />
         </div>
@@ -39,7 +41,7 @@ export function RecurrenceForm() {
             name="frequency"
             id="frequency"
             required
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
           >
             <option value="">SELECT TYPE...</option>
             <option value="MONTHLY">MONTHLY</option>
@@ -59,7 +61,7 @@ export function RecurrenceForm() {
           <input
             type="number"
             name="totalParts"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
             placeholder="e.g., 12"
           />
         </div>
@@ -74,7 +76,7 @@ export function RecurrenceForm() {
           <input
             type="number"
             name="currentPart"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
             placeholder="e.g., 1"
           />
         </div>
@@ -91,7 +93,7 @@ export function RecurrenceForm() {
             name="startDate"
             id="startDate"
             required
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
             placeholder="e.g., 2023-01-01"
           />
         </div>
@@ -108,26 +110,27 @@ export function RecurrenceForm() {
             name="nextDate"
             id="nextDate"
             required
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
             placeholder="e.g., 2023-01-01"
           />
         </div>
 
         <div class="flex gap-2 justify-end mt-6">
-          <button
+          <Button
             type="button"
-            data-hx-on-click="this.closest('[x-data]').__x.$data.open = false"
-            class="bg-muted text-muted-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 text-base transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick="this.closest('[x-data]').__x.$data.open = false" // Using onClick for Alpine.js
+            class="bg-muted text-muted-foreground"
           >
             CANCEL
-          </button>
-          <button
+          </Button>
+          <Button
             type="submit"
-            class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 text-base transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
+            class="bg-primary text-primary-foreground"
           >
             <svg
               class="htmx-indicator animate-spin h-5 w-5 mr-2 hidden"
               viewBox="0 0 24 24"
+              aria-label="Loading" // Added aria-label for accessibility
             >
               <circle
                 class="opacity-25"
@@ -144,7 +147,7 @@ export function RecurrenceForm() {
               ></path>
             </svg>
             SAVE
-          </button>
+          </Button>
         </div>
       </form>
     </div>

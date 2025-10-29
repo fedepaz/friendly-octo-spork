@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "./t3chat.css"; /* T3Chat CSS */
+@import "./neobrutalism.css"; /* T3Chat CSS */
 
 html {
   font-size: 12px; /* Reduced from 16px for a more compact UI */

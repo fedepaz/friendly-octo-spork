@@ -2,6 +2,8 @@
 
 import { CategoryBadge } from "@/components/categories/CategoryBadge";
 import Layout from "@/components/shared/Layout";
+import { Button } from "@/components/shared/Button"; // New import
+import { Icon } from "@/components/shared/Icon"; // New import
 import type { Category } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
 
@@ -9,13 +11,11 @@ interface CategoriesPageData {
   categories: Category[];
 }
 
-const TagIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tag"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414L12.586 22a2 2 0 0 0 2.828 0l7.172-7.172a2 2 0 0 0 0-2.828L12.586 2.586z"/><circle cx="7" cy="7" r="1"/></svg>`;
-
 const EmptyState: FC = () => (
-  <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-12 text-center">
-    <div class="text-6xl mb-4" dangerouslySetInnerHTML={{ __html: TagIcon }} />
+  <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-12 text-center rounded-none">
+    <Icon name="tag" class="text-6xl mb-4" aria-label="No categories icon" />
 
-    <h3 class="text-2xl font-bold mb-2">
+    <h3 class="text-2xl md:text-3xl font-bold mb-2">
       No Categories Yet
     </h3>
 
@@ -23,16 +23,16 @@ const EmptyState: FC = () => (
       Create categories to organize your transactions.
     </p>
 
-    <button
-      class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 text-base transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
-      hx-get="/categories/new"
-      hx-target="#modal-content"
-      hx-swap="innerHTML"
-      data-toggle="modal"
-      data-target="#htmx-modal"
+    <Button
+      type="button" // Explicitly set type to "button"
+      hxGet="/categories/new"
+      hxTarget="#modal-content"
+      hxSwap="innerHTML"
+      dataToggle="modal"
+      dataTarget="#htmx-modal"
     >
       Add Your First Category
-    </button>
+    </Button>
   </div>
 );
 
@@ -48,16 +48,16 @@ export const CategoriesPage: FC<{ data?: CategoriesPageData }> = ({ data }) => {
     <Layout activeNavItem="/categories">
       <div class="flex items-center justify-between mb-8">
         <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">Categories</h1>
-        <button
-          class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-6 py-3 text-base transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] active:translate-x-1 active:translate-y-1 active:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
-          hx-get="/categories/new"
-          hx-target="#modal-content"
-          hx-swap="innerHTML"
-          data-toggle="modal"
-          data-target="#htmx-modal"
+        <Button
+          type="button" // Explicitly set type to "button"
+          hxGet="/categories/new"
+          hxTarget="#modal-content"
+          hxSwap="innerHTML"
+          dataToggle="modal"
+          dataTarget="#htmx-modal"
         >
           Add Category
-        </button>
+        </Button>
       </div>
 
       {categories.length === 0 ? (
@@ -67,7 +67,9 @@ export const CategoriesPage: FC<{ data?: CategoriesPageData }> = ({ data }) => {
           {Object.entries(groupedCategories).map(([type, cats]) => (
             <div
               key={type}
-              class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6"
+              class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 rounded-none
+                transition-all duration-150
+                hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]"
             >
               <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
                 {type}
