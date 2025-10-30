@@ -1,9 +1,9 @@
 // src/components/shared/LinkButton.tsx
-import type { FC } from "hono/jsx";
+import type { Child, FC } from "hono/jsx";
 
 interface LinkButtonProps {
   href: string;
-  children: string | JSX.Element | JSX.Element[];
+  children: Child;
   class?: string; // Allow additional classes to be passed
 }
 

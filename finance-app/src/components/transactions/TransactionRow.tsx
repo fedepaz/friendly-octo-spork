@@ -56,7 +56,9 @@ export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {
       id={`transaction-${transaction.id}`}
       class="border-b border-border hover:bg-muted transition-colors duration-150"
     >
-      <td class="p-4 text-sm font-mono text-muted-foreground">{formattedDate}</td>
+      <td class="p-4 text-sm font-mono text-muted-foreground">
+        {formattedDate}
+      </td>
       <td class="p-4 text-sm">
         <span
           class={`inline-flex items-center px-2 py-1 border-2 ${typeStyles.border} ${typeStyles.bg} ${typeStyles.text} text-xs font-semibold uppercase tracking-wide rounded-none`}
@@ -82,13 +84,13 @@ export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {
         <Button
           type="button" // Explicitly set type to "button"
           class="bg-destructive text-destructive-foreground"
-          hxDelete={`/api/transactions/${transaction.id}`}
+          hx-delete={`/api/transactions/${transaction.id}`}
           hxTarget={`#transaction-${transaction.id}`}
           hxSwap="outerHTML swap:1s"
-          hxConfirm="Are you sure you want to delete this transaction?"
+          hx-confirm="Are you sure you want to delete this transaction?"
           aria-label={`Delete transaction ${transaction.description}`}
         >
-        DELETE
+          DELETE
         </Button>
       </td>
     </tr>

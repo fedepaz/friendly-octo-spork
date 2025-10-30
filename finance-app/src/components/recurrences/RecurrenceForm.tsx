@@ -17,7 +17,10 @@ export function RecurrenceForm() {
         class="space-y-4"
       >
         <div>
-          <label for="name" class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
+          <label
+            for="name"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
+          >
             Recurrence Name
           </label>
           <input
@@ -118,15 +121,12 @@ export function RecurrenceForm() {
         <div class="flex gap-2 justify-end mt-6">
           <Button
             type="button"
-            onClick="this.closest('[x-data]').__x.$data.open = false" // Using onClick for Alpine.js
+            hx-on:click="this.closest('[x-data]').__x.$data.open = false" // Using onClick for Alpine.js
             class="bg-muted text-muted-foreground"
           >
             CANCEL
           </Button>
-          <Button
-            type="submit"
-            class="bg-primary text-primary-foreground"
-          >
+          <Button type="submit" class="bg-primary text-primary-foreground">
             <svg
               class="htmx-indicator animate-spin h-5 w-5 mr-2 hidden"
               viewBox="0 0 24 24"

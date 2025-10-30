@@ -22,7 +22,7 @@ export function RecurrenceCard({ recurrence }: { recurrence: Recurrence }) {
         <div>
           <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2 flex items-center">
             <span class="mr-2">
-              <Icon name={recurrenceTypeIcons[recurrence.frequency]} />
+              <Icon name={recurrenceTypeIcons[recurrence.frequency] || ""} />
             </span>
             {recurrence.name}
           </h3>
@@ -60,8 +60,8 @@ export function RecurrenceCard({ recurrence }: { recurrence: Recurrence }) {
         <Button
           type="button" // Explicitly set type to "button"
           class="bg-destructive text-destructive-foreground"
-          hxDelete={`/api/recurrences/${recurrence.id}`}
-          hxConfirm="Are you sure you want to delete this recurrence?"
+          hx-delete={`/api/recurrences/${recurrence.id}`}
+          hx-confirm="Are you sure you want to delete this recurrence?"
           aria-label={`Delete ${recurrence.name}`}
         >
           DELETE

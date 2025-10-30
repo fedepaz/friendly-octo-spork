@@ -50,7 +50,9 @@ export const Toast: FC<ToastProps> = ({ message, type }) => {
       hx-swap-oob="true"
       hx-on--after-load="setTimeout(() => this.remove(), 5000)"
     >
-      <span class="text-2xl font-bold flex-shrink-0"><Icon name={iconName} /></span>
+      <span class="text-2xl font-bold flex-shrink-0">
+        <Icon name={iconName} />
+      </span>
       <span class="flex-1 font-semibold text-sm">{message}</span>
       <Button
         type="button" // Explicitly set type to "button"
@@ -64,7 +66,7 @@ export const Toast: FC<ToastProps> = ({ message, type }) => {
           active:translate-x-1 active:translate-y-1 active:shadow-none
           rounded-none
         `}
-        onClick="this.closest('[role=alert]').remove()"
+        hx-on:click="this.closest('[role=alert]').remove()"
         aria-label="Close toast"
       >
         <Icon name="x" />

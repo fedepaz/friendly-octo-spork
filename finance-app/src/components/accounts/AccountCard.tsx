@@ -50,36 +50,34 @@ export const AccountCard: FC<{ account: Account }> = ({ account }) => {
             {account.type}
           </span>
         </div>
-        <span class="font-mono font-bold">
-          {account.currency}
-        </span>
+        <span class="font-mono font-bold">{account.currency}</span>
       </div>
 
       <div
         class={`font-mono font-bold text-3xl md:text-4xl ${
-          account.balance >= 0
+          Number(account.balance) >= 0
             ? "text-primary-foreground"
             : "text-destructive-foreground"
         }`}
       >
-        ${Math.abs(account.balance).toFixed(2)}
+        ${Number(account.balance).toFixed(2)}
       </div>
 
       <div class="flex gap-2">
         <Button
-          type="button" // Explicitly set type to "button"
+          type="button"
           class="flex-1 bg-secondary text-secondary-foreground"
-          hxGet={`/api/accounts/${account.id}/edit`}
-          hxTarget="#modal-content"
+          hx-get={`/api/accounts/${account.id}/edit`}
+          hx-target="#modal-content"
           aria-label={`Edit ${account.name}`}
         >
           Edit
         </Button>
         <Button
-          type="button" // Explicitly set type to "button"
+          type="button"
           class="bg-destructive text-destructive-foreground"
-          hxDelete={`/api/accounts/${account.id}`}
-          hxConfirm="Delete this account? This action cannot be undone."
+          hx-delete={`/api/accounts/${account.id}`}
+          hx-confirm="Delete this account? This action cannot be undone."
           aria-label={`Delete ${account.name}`}
         >
           Delete

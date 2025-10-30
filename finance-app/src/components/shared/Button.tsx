@@ -1,8 +1,8 @@
 // src/components/shared/Button.tsx
-import type { FC } from "hono/jsx";
+import type { Child, FC } from "hono/jsx";
 
 interface ButtonProps {
-  children: string | JSX.Element | JSX.Element[];
+  children: Child;
   onClick?: () => void;
   hxGet?: string;
   hxTarget?: string;

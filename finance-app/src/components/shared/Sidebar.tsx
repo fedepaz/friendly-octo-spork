@@ -15,10 +15,9 @@ export const Sidebar: FC<SidebarProps> = ({
 }) => {
   const navLinks = [
     { href: "/dashboard", label: "Dashboard", icon: "line-chart" },
-    { href: "/expenses", label: "Expenses", icon: "wallet" },
+    { href: "/transactions", label: "Transactions", icon: "wallet" },
     { href: "/accounts", label: "Accounts", icon: "landmark" },
     { href: "/categories", label: "Categories", icon: "folder" },
-    { href: "/profile", label: "Profile", icon: "user" },
   ];
 
   return (
@@ -66,7 +65,7 @@ export const Sidebar: FC<SidebarProps> = ({
                 group
                 flex items-center gap-3
                 px-4 py-3
-                rounded-none // Added rounded-none
+                rounded-none 
                 text-sm font-semibold uppercase tracking-wide
                 transition-all duration-150
                 border-2
@@ -119,13 +118,13 @@ export const Sidebar: FC<SidebarProps> = ({
       {isMobile && (
         <Button
           type="button" // Explicitly set type to "button"
-          onClick="document.getElementById('mobile-sidebar-container').classList.add('hidden')"
+          hx-on:click="document.getElementById('mobile-sidebar-container').classList.add('hidden')"
           class="
             absolute top-4 right-4
             bg-destructive text-destructive-foreground
             border-2 border-border
             w-10 h-10
-            rounded-none // Added rounded-none
+            rounded-none
             flex items-center justify-center
             font-bold text-xl
             transition-all duration-150
