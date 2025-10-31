@@ -50,6 +50,7 @@ Data Architecture:
 - Relationships and foreign keys
 - Indexes for common queries
 - Soft deletes vs hard deletes
+- Ensure database schema designs enable and enforce the data integrity and immutability principles outlined in the Database-Centric Workflow Guide (docs/guides/database_workflow.md).
 
 **API Design**:
 - RESTful endpoint structure
