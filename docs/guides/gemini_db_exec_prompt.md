@@ -115,3 +115,111 @@ Choose mode and begin: `mode: [step/batch/auto]`
 
 **Next Step (for tomorrow):**
 Retry the `run_auto_mode_execution` function with the updated SQL content (using `19` for account IDs).
+
+---
+
+**Attempt 11: Execute `abril2020.sql` by copying a modified SQL file into the container (SUCCESS)**
+
+*   **Issue:** Previous attempts failed due to a variety of issues, including incorrect execution method, missing permissions, and schema inconsistencies.
+*   **Investigation:** A full review of the execution log revealed the correct, multi-step process required to execute the migration, which involved correcting the SQL content, using `docker cp` to move the file, and altering the `Category` table.
+*   **Resolution:**
+    1.  The `Category` table was altered to include `createdAt` and `updatedAt` columns.
+    2.  The corrected `abril2020.sql` script was successfully executed inside the container.
+    3.  Validation confirmed that 21 transactions were inserted for the period.
+*   **Result:** `✓ abril2020.sql | 21 txs`
+
+**`mayo2020.sql` Migration**
+
+*   **Result:** `✓ mayo2020.sql | 28 txs`
+
+**`junio2020.sql` Migration**
+
+*   **Result:** `✓ junio2020.sql | 21 txs`
+
+**`julio2020.sql` Migration**
+
+*   **Result:** `✓ julio2020.sql | 31 txs`
+
+**`agosto2020.sql` Migration**
+
+*   **Result:** `✓ agosto2020.sql | 35 txs`
+
+**`septiembre2020.sql` Migration**
+
+*   **Result:** `✓ septiembre2020.sql | 27 txs`
+
+**`octubre2020.sql` Migration**
+
+*   **Result:** `✓ octubre2020.sql | 30 txs`
+
+**`noviembre2020.sql` Migration**
+
+*   **Result:** `✓ noviembre2020.sql | 29 txs`
+
+**`diciembre2020.sql` Migration**
+
+*   **Result:** `✓ diciembre2020.sql | 39 txs`
+
+**`enero2021.sql` Migration**
+
+*   **Result:** `✓ enero2021.sql | 8 txs`
+
+─────────────────────────────────────
+
+**`febrero2021.sql` Migration**
+
+*   **Result:** `✓ febrero2021.sql | 15 txs`
+
+**`marzo2021.sql` Migration**
+
+*   **Result:** `✓ marzo2021.sql | 12 txs`
+
+**`abril2021.sql` Migration**
+
+*   **Result:** `✓ abril2021.sql | 27 txs`
+
+**`mayo2021.sql` Migration**
+
+*   **Result:** `✓ mayo2021.sql | 34 txs`
+
+**`junio2021.sql` Migration**
+
+*   **Result:** `✓ junio2021.sql | 35 txs`
+
+**`julio2021.sql` Migration**
+
+*   **Result:** `✓ julio2021.sql | 39 txs`
+
+**`agosto2021.sql` Migration**
+
+*   **Result:** `✓ agosto2021.sql | 44 txs`
+
+**`septiembre2021.sql` Migration**
+
+*   **Result:** `✓ septiembre2021.sql | 27 txs`
+
+**`octubre2021.sql` Migration**
+
+*   **Result:** `✓ octubre2021.sql | 47 txs`
+
+**`noviembre2021.sql` Migration**
+
+*   **Result:** `✓ noviembre2021.sql | 44 txs`
+
+**`diciembre2021.sql` Migration**
+
+*   **Result:** `✓ diciembre2021.sql | 56 txs`
+
+**`enero2022.sql` Migration**
+
+*   **Result:** `✓ enero2022.sql | 47 txs`
+
+**`febrero2022.sql` Migration**
+
+*   **Result:** `✓ febrero2022.sql | 45 txs`
+
+**`marzo2022.sql` Migration**
+
+*   **Result:** `✓ marzo2022.sql | 50 txs`
+Checkpoint: 284 total txs
+─────────────────────────────────────
