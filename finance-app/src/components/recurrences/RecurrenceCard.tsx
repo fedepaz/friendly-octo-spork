@@ -14,19 +14,19 @@ const recurrenceTypeIcons: Record<string, string> = {
 const recurrenceTypeStyles: Record<string, { icon: string; color: string }> = {
   MONTHLY: {
     icon: recurrenceTypeIcons.MONTHLY || "",
-    color: "var(--accent-lavender)",
+    color: "var(--accent)",
   },
   WEEKLY: {
     icon: recurrenceTypeIcons.WEEKLY || "",
-    color: "var(--accent-yellow)",
+    color: "var(--secondary)",
   },
   YEARLY: {
     icon: recurrenceTypeIcons.YEARLY || "",
-    color: "var(--accent-mint)",
+    color: "var(--primary)",
   },
   INSTALLMENT: {
     icon: recurrenceTypeIcons.INSTALLMENT || "",
-    color: "var(--accent-coral)",
+    color: "var(--destructive)",
   },
 };
 
@@ -40,8 +40,12 @@ export function RecurrenceCard({ recurrence }: { recurrence: Recurrence }) {
              hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-xl)]"
     >
       {/* Background Icon */}
-                  {recurrenceTypeStyles[recurrence.frequency]?.icon === "calendar-days" && <CalendarDaysIcon />}
-                  {recurrenceTypeStyles[recurrence.frequency]?.icon === "calendar" && <CalendarIcon />}
+      {recurrenceTypeStyles[recurrence.frequency]?.icon === "calendar-days" && (
+        <CalendarDaysIcon />
+      )}
+      {recurrenceTypeStyles[recurrence.frequency]?.icon === "calendar" && (
+        <CalendarIcon />
+      )}
       <div class="flex justify-between items-start mb-4">
         <div>
           <h3 class="text-xl font-bold uppercase tracking-wider mb-3 flex items-center gap-2">

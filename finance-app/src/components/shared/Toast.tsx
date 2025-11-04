@@ -1,9 +1,8 @@
-import type { FC } from "hono/jsx";
-import { XIcon, CheckIcon, AlertTriangleIcon, InfoIcon } from "../icons";
-import { Button } from "./Button"; // New import
 // src/components/shared/Toast.tsx
 
 import type { FC } from "hono/jsx";
+import { CheckIcon, AlertTriangleIcon, InfoIcon, XIcon } from "../icons";
+import { Button } from "./Button";
 
 interface ToastProps {
   message: string;
@@ -12,9 +11,9 @@ interface ToastProps {
 
 const toastTypes = {
   success: {
-    bgColor: "bg-accent",
-    textColor: "text-accent-foreground",
-    borderColor: "border-accent",
+    bgColor: "bg-primary",
+    textColor: "text-primary-foreground",
+    borderColor: "border-primary",
     iconName: "check", // Using icon name
   },
   error: {
@@ -24,9 +23,9 @@ const toastTypes = {
     iconName: "alert-triangle", // Using icon name
   },
   info: {
-    bgColor: "bg-primary",
-    textColor: "text-primary-foreground",
-    borderColor: "border-primary",
+    bgColor: "bg-accent",
+    textColor: "text-accent-foreground",
+    borderColor: "border-accent",
     iconName: "info", // Using icon name
   },
 };
@@ -53,8 +52,8 @@ export const Toast: FC<ToastProps> = ({ message, type }) => {
     >
       <span class="text-2xl font-bold flex-shrink-0">
         {iconName === "check" && <CheckIcon />}
-      {iconName === "alert-triangle" && <AlertTriangleIcon />}
-      {iconName === "info" && <InfoIcon />}
+        {iconName === "alert-triangle" && <AlertTriangleIcon />}
+        {iconName === "info" && <InfoIcon />}
       </span>
       <span class="flex-1 font-semibold text-sm">{message}</span>
       <Button
@@ -72,7 +71,8 @@ export const Toast: FC<ToastProps> = ({ message, type }) => {
         hx-on:click="this.closest('[role=alert]').remove()"
         aria-label="Close toast"
       >
-                    <XIcon />      </Button>
+        <XIcon />{" "}
+      </Button>
     </div>
   );
 };

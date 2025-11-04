@@ -33,7 +33,7 @@ export const DashboardPage: FC<{ data: DashboardData }> = ({ data }) => (
         title="This Month"
         value={`$${data.monthlySpent.toFixed(2)}`}
         subtitle={`${data.expenseCount} transactions`}
-        color="destructive"
+        color="primary"
       />
       <StatCard
         title="Daily Average"

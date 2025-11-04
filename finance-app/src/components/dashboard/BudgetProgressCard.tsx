@@ -1,7 +1,12 @@
 // src/components/dashboard/BudgetProgressCard.tsx
 
 import type { FC } from "hono/jsx";
-import { AlertTriangleIcon, WalletIcon, SadFaceIcon, HappyFaceIcon } from "../icons";
+import {
+  AlertTriangleIcon,
+  WalletIcon,
+  SadFaceIcon,
+  HappyFaceIcon,
+} from "../icons";
 
 interface BudgetProgressCardProps {
   spent: number;
@@ -27,7 +32,8 @@ export const BudgetProgressCard: FC<BudgetProgressCardProps> = ({
     >
       {/* Background Icon */}
       <div class="absolute top-4 right-4 text-6xl opacity-60">
-                    {isOverBudget ? <AlertTriangleIcon /> : <WalletIcon />}      </div>
+        {isOverBudget ? <AlertTriangleIcon /> : <WalletIcon />}{" "}
+      </div>
 
       <div class="text-xl font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
         Monthly Budget
@@ -36,9 +42,7 @@ export const BudgetProgressCard: FC<BudgetProgressCardProps> = ({
       <div class="font-mono font-bold text-4xl mb-4 flex items-baseline gap-2">
         <span
           class={
-            isOverBudget
-              ? "text-[var(--accent-coral)]"
-              : "text-[var(--accent-mint)]"
+            isOverBudget ? "text-[var(--destructive)]" : "text-[var(--accent)]"
           }
         >
           {currency}
@@ -55,10 +59,10 @@ export const BudgetProgressCard: FC<BudgetProgressCardProps> = ({
           style={{ width: `${percentage}%` }}
           class={`h-full transition-all duration-300 ${
             isOverBudget
-              ? "bg-[var(--accent-coral)]"
+              ? "bg-[var(--destructive)]"
               : percentage > 90
-              ? "bg-[var(--accent-yellow)]"
-              : "bg-[var(--accent-mint)]"
+              ? "bg-[var(--secondary)]"
+              : "bg-[var(--primary)]"
           }`}
         />
       </div>
@@ -68,8 +72,8 @@ export const BudgetProgressCard: FC<BudgetProgressCardProps> = ({
           <span
             class={`font-mono font-bold text-2xl ${
               isOverBudget
-                ? "text-[var(--accent-coral)]"
-                : "text-[var(--accent-mint)]"
+                ? "text-[var(--destructive)]"
+                : "text-[var(--accent)]"
             }`}
           >
             {currency}
@@ -80,7 +84,12 @@ export const BudgetProgressCard: FC<BudgetProgressCardProps> = ({
           </span>
         </div>
         <span class="text-2xl">
-                      {isOverBudget ? <SadFaceIcon /> : <HappyFaceIcon />}        </span>
+          {isOverBudget ? (
+            <SadFaceIcon class="text-[var(--destructive)]" />
+          ) : (
+            <HappyFaceIcon class="text-[var(--accent)]" />
+          )}{" "}
+        </span>
       </div>
     </div>
   );

@@ -9,22 +9,22 @@ const typeStyleMap: Record<
   { bg: string; text: string; border: string; icon: string }
 > = {
   BANK: {
-    bg: "bg-[var(--accent-lavender)]/10",
-    text: "text-[var(--accent-lavender)]",
-    border: "border-[var(--accent-lavender)]",
+    bg: "bg-[var(--accent)]/10",
+    text: "text-[var(--accent)]",
+    border: "border-[var(--accent)]",
     icon: "BankIcon",
   },
   CASH: {
-    bg: "bg-[var(--accent-mint)]/10",
-    text: "text-[var(--accent-mint)]",
-    border: "border-[var(--accent-mint)]",
+    bg: "bg-[var(--primary)]/10",
+    text: "text-[var(--primary)]",
+    border: "border-[var(--primary)]",
     icon: "WalletIcon",
   },
 
   WALLET: {
-    bg: "bg-[var(--accent-yellow)]/10",
-    text: "text-[var(--accent-yellow)]",
-    border: "border-[var(--accent-yellow)]",
+    bg: "bg-[var(--secondary)]/10",
+    text: "text-[var(--secondary)]",
+    border: "border-[var(--secondary)]",
     icon: "WalletIcon",
   },
 };
@@ -96,8 +96,8 @@ export const AccountCard: FC<{ account: Account }> = ({ account }) => {
       <div
         class={`font-mono text-4xl font-bold mb-6 ${
           Number(account.balance) >= 0
-            ? "text-[var(--accent-mint)]"
-            : "text-[var(--accent-coral)]"
+            ? "text-[var(--primary)]"
+            : "text-[var(--destructive)]"
         }`}
       >
         ${Number(account.balance).toFixed(2)}
@@ -105,7 +105,7 @@ export const AccountCard: FC<{ account: Account }> = ({ account }) => {
 
       <div class="flex gap-3">
         <button
-          class="flex-1 bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)]
+          class="flex-1 bg-secondary text-secondary-foreground opacity-80 border-2 border-border shadow-[var(--shadow)]
                  px-6 py-3 font-bold uppercase tracking-wider
                  transition-all duration-150
                  hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]

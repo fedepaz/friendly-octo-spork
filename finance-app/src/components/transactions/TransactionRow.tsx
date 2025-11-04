@@ -14,19 +14,19 @@ const typeStyleMap: Record<
 > = {
   INCOME: {
     bg: "bg-primary/20",
-    text: "text-[var(--accent-mint)]",
+    text: "text-[var(--primary)]",
     border: "border-primary",
-    amountText: "text-[var(--accent-mint)]",
+    amountText: "text-[var(--primary)]",
   },
   EXPENSE: {
     bg: "bg-destructive/20",
-    text: "text-[var(--accent-coral)]",
+    text: "text-[var(--destructive)]",
     border: "border-destructive",
-    amountText: "text-[var(--accent-coral)]",
+    amountText: "text-[var(--destructive)]",
   },
   TRANSFER: {
     bg: "bg-accent/20",
-    text: "text-[var(--accent-lavender)]",
+    text: "text-[var(--accent)]",
     border: "border-accent",
     amountText: "text-accent-foreground",
   },

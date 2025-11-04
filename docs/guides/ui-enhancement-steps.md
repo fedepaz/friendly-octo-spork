@@ -8,10 +8,10 @@ The application currently follows a neo-brutalist design with a monochromatic pa
 
 ```css
 // Add to your CSS variables:
---color-accent-yellow: #ffd700; // For highlighting important numbers
---color-accent-coral: #ff6b6b; // For destructive actions, negative amounts
---color-accent-mint: #98ff98; // For positive amounts, success states
---color-accent-lavender: #e6e6fa; // For secondary information
+--color-secondary: #ffd700; // For highlighting important numbers
+--color-destructive: #ff6b6b; // For destructive actions, negative amounts
+--color-primary: #98ff98; // For positive amounts, success states
+--color-accent: #e6e6fa; // For secondary information
 ```
 
 ## Proposed Enhancements by Page
@@ -27,14 +27,14 @@ The application currently follows a neo-brutalist design with a monochromatic pa
   value={`$${budget}`}
   // Add accent color for remaining amount
   remaining={`$${remaining}`}
-  remainingColor="var(--color-accent-mint)"
+  remainingColor="var(--color-primary)"
 />
 
 <StatCard
   title="This Month"
   value={`$${spent}`}
   // Add accent for overspending
-  valueColor={spent > budget ? "var(--color-accent-coral)" : "inherit"}
+  valueColor={spent > budget ? "var(--color-destructive)" : "inherit"}
 />
 ```
 
@@ -54,7 +54,7 @@ The application currently follows a neo-brutalist design with a monochromatic pa
 <tr class="border-b border-border hover:bg-muted transition-colors">
   <td class="p-4 font-mono">{date}</td>
   <td class="p-4">
-    <span class={amount < 0 ? "text-[var(--color-accent-coral)]" : "text-[var(--color-accent-mint)]"}>
+    <span class={amount < 0 ? "text-[var(--color-destructive)]" : "text-[var(--color-primary)]"}>
       ${Math.abs(amount).toFixed(2)}
     </span>
   </td>
@@ -99,8 +99,8 @@ The application currently follows a neo-brutalist design with a monochromatic pa
   <p
     class={`text-2xl font-mono ${
       account.balance < 0
-        ? "text-[var(--color-accent-coral)]"
-        : "text-[var(--color-accent-mint)]"
+        ? "text-[var(--color-destructive)]"
+        : "text-[var(--color-primary)]"
     }`}
   >
     ${account.balance}
@@ -150,13 +150,11 @@ The application currently follows a neo-brutalist design with a monochromatic pa
 <div class="relative">
   <input
     class={`w-full border-2 ${
-      error ? "border-[var(--color-accent-coral)]" : "border-border"
+      error ? "border-[var(--color-destructive)]" : "border-border"
     }`}
     aria-invalid={error ? "true" : "false"}
   />
-  {error && (
-    <p class="text-sm text-[var(--color-accent-coral)] mt-1">{error}</p>
-  )}
+  {error && <p class="text-sm text-[var(--color-destructive)] mt-1">{error}</p>}
 </div>
 ```
 

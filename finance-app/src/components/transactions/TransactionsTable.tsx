@@ -92,8 +92,8 @@ export const TransactionTable: FC<TransactionTableProps> = ({
               <th
                 class={`p-4 font-mono text-right font-bold text-lg whitespace-nowrap ${
                   total >= 0
-                    ? "text-[var(--accent-mint)]"
-                    : "text-[var(--accent-coral)]"
+                    ? "text-[var(--primary)]"
+                    : "text-[var(--destructive)]"
                 }`}
               >
                 ${Math.abs(total).toFixed(2)}

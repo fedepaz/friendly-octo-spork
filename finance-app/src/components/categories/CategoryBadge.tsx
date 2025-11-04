@@ -8,26 +8,26 @@ const typeStyleMap: Record<
 > = {
   GASTO: {
     bg: "bg-destructive/20",
-    text: "text-[var(--accent-coral)]",
-    border: "border-[var(--accent-coral)]",
-    dotBg: "bg-[var(--accent-coral)]",
+    text: "text-[var(--destructive)]",
+    border: "border-[var(--destructive)]",
+    dotBg: "bg-[var(--destructive)]",
   },
   PAGO: {
     bg: "bg-secondary/20",
-    text: "text-[var(--accent-lavender)]",
-    border: "border-[var(--accent-lavender)]",
-    dotBg: "bg-[var(--accent-lavender)]",
+    text: "text-[var(--accent)]",
+    border: "border-[var(--accent)]",
+    dotBg: "bg-[var(--accent)]",
   },
   INGRESO: {
     bg: "bg-primary/20",
-    text: "text-[var(--accent-mint)]",
-    border: "border-[var(--accent-mint)]",
-    dotBg: "bg-[var(--accent-mint)]",
+    text: "text-[var(--primary)]",
+    border: "border-[var(--primary)]",
+    dotBg: "bg-[var(--primary)]",
   },
   RENDIMIENTO: {
     bg: "bg-accent/20",
-    text: "text-[var(--accent-yellow)]",
-    border: "border-[var(--accent-yellow)]",
+    text: "text-[var(--secondary)]",
+    border: "border-[var(--secondary)]",
     dotBg: "bg-accent",
   },
 };
