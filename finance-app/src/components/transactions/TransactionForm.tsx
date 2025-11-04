@@ -7,7 +7,7 @@ import { Button } from "@/components/shared/Button"; // New import
 interface TransactionFormProps {
   categories: Category[];
   accounts: Account[];
-  recurrences: Recurrence[];
+  recurrences?: Recurrence[];
   errors?: Record<string, string>;
 }
 
@@ -30,7 +30,10 @@ export const TransactionForm: FC<TransactionFormProps> = ({
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <div>
-        <label for="date" class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
+        <label
+          for="date"
+          class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
+        >
           Date
         </label>
         <input
@@ -47,7 +50,10 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       </div>
 
       <div>
-        <label for="amount" class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
+        <label
+          for="amount"
+          class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
+        >
           Amount
         </label>
         <div class="relative">
@@ -91,7 +97,10 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       </div>
 
       <div>
-        <label for="type" class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
+        <label
+          for="type"
+          class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
+        >
           Type
         </label>
         <select
@@ -108,7 +117,8 @@ export const TransactionForm: FC<TransactionFormProps> = ({
         </select>
         {errors.type && (
           <div class="text-destructive mt-2 text-xs">{errors.type}</div>
-        )}\n      </div>
+        )}
+      </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
@@ -175,10 +185,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
       </div>
     </div>
 
-    <Button
-      type="submit"
-      class="bg-primary text-primary-foreground mt-6"
-    >
+    <Button type="submit" class="bg-primary text-primary-foreground mt-6">
       <svg
         class="htmx-indicator animate-spin h-5 w-5 mr-2 hidden"
         viewBox="0 0 24 24"

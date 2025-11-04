@@ -2,31 +2,30 @@
 
 import type { Account } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
-import { Button } from "@/components/shared/Button"; // New import
+import { BankIcon, WalletIcon, CreditCardIcon, TrendingUpIcon } from "../icons";
 
 const typeStyleMap: Record<
   string,
-  { bg: string; text: string; border: string }
+  { bg: string; text: string; border: string; icon: string }
 > = {
   BANK: {
-    bg: "bg-accent/20",
-    text: "text-accent-foreground",
-    border: "border-accent",
+    bg: "bg-[var(--accent-lavender)]/10",
+    text: "text-[var(--accent-lavender)]",
+    border: "border-[var(--accent-lavender)]",
+    icon: "BankIcon",
   },
   CASH: {
-    bg: "bg-primary/20",
-    text: "text-primary-foreground",
-    border: "border-primary",
+    bg: "bg-[var(--accent-mint)]/10",
+    text: "text-[var(--accent-mint)]",
+    border: "border-[var(--accent-mint)]",
+    icon: "WalletIcon",
   },
-  CARD: {
-    bg: "bg-secondary/20",
-    text: "text-secondary-foreground",
-    border: "border-secondary",
-  },
-  INVESTMENT: {
-    bg: "bg-destructive/20",
-    text: "text-destructive-foreground",
-    border: "border-destructive",
+
+  WALLET: {
+    bg: "bg-[var(--accent-yellow)]/10",
+    text: "text-[var(--accent-yellow)]",
+    border: "border-[var(--accent-yellow)]",
+    icon: "WalletIcon",
   },
 };
 
@@ -35,53 +34,100 @@ export const AccountCard: FC<{ account: Account }> = ({ account }) => {
     bg: "bg-muted/20",
     text: "text-muted-foreground",
     border: "border-muted",
+    icon: "CreditCardIcon",
   };
 
   return (
-    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 rounded-none hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150">
-      <div class="flex justify-between items-start mb-4">
+    <div
+      class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 relative overflow-hidden
+                hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-xl)] transition-all duration-150"
+    >
+      {/* Background Icon */}
+      <div class="absolute top-4 right-4 text-6xl opacity-10">
+        {(() => {
+          switch (typeStyles.icon) {
+            case "BankIcon":
+              return <BankIcon />;
+            case "WalletIcon":
+              return <WalletIcon />;
+            case "CreditCardIcon":
+              return <CreditCardIcon />;
+            case "TrendingUpIcon":
+              return <TrendingUpIcon />;
+            default:
+              return null;
+          }
+        })()}
+      </div>
+
+      <div class="flex justify-between items-start mb-6">
         <div>
-          <h3 class="text-lg md:text-xl font-semibold text-foreground mb-2">
+          <h3 class="text-xl font-bold uppercase tracking-wider mb-2">
             {account.name}
           </h3>
           <span
-            class={`inline-flex items-center px-2 py-1 text-xs font-semibold uppercase tracking-wide rounded-none border-2 ${typeStyles.border} ${typeStyles.bg} ${typeStyles.text}`}
+            class={`inline-flex items-center gap-2 px-3 py-1.5 
+                       text-xs font-bold uppercase tracking-wider
+                       ${typeStyles.bg} ${typeStyles.text} border-2 ${typeStyles.border}
+                       shadow-[var(--shadow-sm)]`}
           >
+            {(() => {
+              switch (typeStyles.icon) {
+                case "BankIcon":
+                  return <BankIcon />;
+                case "WalletIcon":
+                  return <WalletIcon />;
+                case "CreditCardIcon":
+                  return <CreditCardIcon />;
+                case "TrendingUpIcon":
+                  return <TrendingUpIcon />;
+                default:
+                  return null;
+              }
+            })()}{" "}
             {account.type}
           </span>
         </div>
-        <span class="font-mono font-bold">{account.currency}</span>
+        <span class="font-mono text-lg font-bold px-3 py-1 bg-secondary/20 border-2 border-border">
+          {account.currency}
+        </span>
       </div>
 
       <div
-        class={`font-mono font-bold text-3xl md:text-4xl ${
+        class={`font-mono text-4xl font-bold mb-6 ${
           Number(account.balance) >= 0
-            ? "text-primary-foreground"
-            : "text-destructive-foreground"
+            ? "text-[var(--accent-mint)]"
+            : "text-[var(--accent-coral)]"
         }`}
       >
         ${Number(account.balance).toFixed(2)}
       </div>
 
-      <div class="flex gap-2">
-        <Button
-          type="button"
-          class="flex-1 bg-secondary text-secondary-foreground"
+      <div class="flex gap-3">
+        <button
+          class="flex-1 bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)]
+                 px-6 py-3 font-bold uppercase tracking-wider
+                 transition-all duration-150
+                 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]
+                 active:translate-x-1 active:translate-y-1 active:shadow-none"
+          hx-get={`/api/accounts/${account.id}/`}
+          hx-target="#modal-content"
+          aria-label={`View ${account.name}`}
+        >
+          View
+        </button>
+        <button
+          class="bg-destructive text-destructive-foreground border-2 border-border shadow-[var(--shadow)]
+                 px-6 py-3 font-bold uppercase tracking-wider
+                 transition-all duration-150
+                 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]
+                 active:translate-x-1 active:translate-y-1 active:shadow-none"
           hx-get={`/api/accounts/${account.id}/edit`}
           hx-target="#modal-content"
           aria-label={`Edit ${account.name}`}
         >
           Edit
-        </Button>
-        <Button
-          type="button"
-          class="bg-destructive text-destructive-foreground"
-          hx-delete={`/api/accounts/${account.id}`}
-          hx-confirm="Delete this account? This action cannot be undone."
-          aria-label={`Delete ${account.name}`}
-        >
-          Delete
-        </Button>
+        </button>
       </div>
     </div>
   );

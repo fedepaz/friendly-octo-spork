@@ -4,15 +4,15 @@ import type { Account } from "@/generated/prisma";
 import { AccountCard } from "./AccountCard";
 import type { FC } from "hono/jsx";
 import { Button } from "@/components/shared/Button"; // New import
-import { Icon } from "@/components/shared/Icon"; // New import
+import { AccountRow } from "./AccountRow";
+import { ClipboardIcon } from "../icons";
 
 const EmptyState: FC = () => (
   <div
     id="accounts-list"
     class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-12 text-center rounded-none"
   >
-    <Icon name="clipboard" class="text-6xl mb-4" aria-label="No accounts icon" />
-    <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
+              <ClipboardIcon class="text-6xl mb-4" aria-label="No accounts icon" />    <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
       NO ACCOUNTS YET
     </h3>
     <p class="text-muted-foreground">

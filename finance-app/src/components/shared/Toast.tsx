@@ -1,4 +1,5 @@
-import { Icon } from "./Icon"; // New import
+import type { FC } from "hono/jsx";
+import { XIcon, CheckIcon, AlertTriangleIcon, InfoIcon } from "../icons";
 import { Button } from "./Button"; // New import
 // src/components/shared/Toast.tsx
 
@@ -51,7 +52,9 @@ export const Toast: FC<ToastProps> = ({ message, type }) => {
       hx-on--after-load="setTimeout(() => this.remove(), 5000)"
     >
       <span class="text-2xl font-bold flex-shrink-0">
-        <Icon name={iconName} />
+        {iconName === "check" && <CheckIcon />}
+      {iconName === "alert-triangle" && <AlertTriangleIcon />}
+      {iconName === "info" && <InfoIcon />}
       </span>
       <span class="flex-1 font-semibold text-sm">{message}</span>
       <Button
@@ -69,8 +72,7 @@ export const Toast: FC<ToastProps> = ({ message, type }) => {
         hx-on:click="this.closest('[role=alert]').remove()"
         aria-label="Close toast"
       >
-        <Icon name="x" />
-      </Button>
+                    <XIcon />      </Button>
     </div>
   );
 };

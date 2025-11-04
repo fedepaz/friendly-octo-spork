@@ -3,7 +3,7 @@
 import type { FC } from "hono/jsx";
 import type { Transaction, Category, Account } from "@/generated/prisma";
 import { TransactionRow } from "@/components/transactions/TransactionRow";
-import { Icon } from "@/components/shared/Icon"; // New import
+import { SparklesIcon } from "../icons";
 
 interface RecentActivityProps {
   recentActivity: (Transaction & {
@@ -15,8 +15,7 @@ interface RecentActivityProps {
 
 const EmptyState: FC = () => (
   <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-12 text-center rounded-none">
-    <Icon name="sparkles" class="text-6xl mb-4" aria-label="No recent activity icon" />
-    <h3 class="text-2xl md:text-3xl font-bold mb-2">
+              <SparklesIcon class="text-6xl mb-4" aria-label="No recent activity icon" />    <h3 class="text-2xl md:text-3xl font-bold mb-2">
       NO RECENT ACTIVITY
     </h3>
     <p class="text-muted-foreground">

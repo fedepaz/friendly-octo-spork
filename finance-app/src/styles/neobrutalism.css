@@ -18,6 +18,12 @@
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
+
+  /* Neo-brutalist accent colors */
+  --accent-yellow: #ffd700;
+  --accent-coral: #ff6b6b;
+  --accent-mint: #98ff98;
+  --accent-lavender: #e6e6fa;
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);

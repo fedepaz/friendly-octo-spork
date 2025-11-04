@@ -1,6 +1,6 @@
+import { DollarSignIcon } from "../icons";
 import { HamburgerMenu } from "./HamburgerMenu";
-import { Sidebar } from "./Sidebar";
-import { Icon } from "./Icon"; // New import
+import { Sidebar } from "./Sidebar"; // New import
 import type { FC } from "hono/jsx";
 
 interface LayoutProps {
@@ -25,7 +25,7 @@ const Layout: FC<LayoutProps> = (props) => {
             href="/"
             class="text-4xl md:text-5xl font-bold text-foreground mb-4 hover:-translate-y-0.5 transition-all duration-150 flex items-center gap-2 rounded-none"
           >
-            <Icon name="dollar-sign" /> FINANCE TRACKER
+            <DollarSignIcon /> FINANCE TRACKER
           </a>
           <HamburgerMenu onClick="htmx.toggleClass(document.getElementById('mobile-sidebar-container'), 'hidden')" />
         </header>

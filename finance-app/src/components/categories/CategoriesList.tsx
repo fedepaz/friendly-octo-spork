@@ -5,15 +5,14 @@ import { CategoryBadge } from "./CategoryBadge";
 
 import type { FC } from "hono/jsx";
 import { Button } from "@/components/shared/Button"; // New import
-import { Icon } from "@/components/shared/Icon"; // New import
+import { CategoryRow } from "./CategoryRow"; import { ClipboardIcon } from "../icons";
 
 const EmptyState: FC = () => (
   <div
     id="categories-list"
     class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-12 text-center rounded-none"
   >
-    <Icon name="clipboard" class="text-6xl mb-4" aria-label="No categories icon" />
-    <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
+              <ClipboardIcon class="text-6xl mb-4" aria-label="No categories icon" />    <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
       NO CATEGORIES YET
     </h3>
     <p class="text-muted-foreground">

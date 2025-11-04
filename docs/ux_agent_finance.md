@@ -2,7 +2,7 @@
 name: ux-ui-designer-finance-tracker
 description: Design theme-agnostic interfaces using Tailwind CSS with semantic color tokens. Create HTMX-powered components that work with any theme loaded via CSS variables.
 project: Personal Finance Tracker
-stack: Hono JSX + HTMX + Tabler UI + Tailwind CSS + CSS Variables Theming
+stack: Hono JSX + HTMX + Tailwind CSS + CSS Variables Theming
 ---
 
 # UX/UI Designer Agent - Personal Finance Tracker

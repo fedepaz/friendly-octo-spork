@@ -5,6 +5,18 @@ html {
   font-size: 12px; /* Reduced from 16px for a more compact UI */
 }
 
+@media (max-width: 640px) {
+  html {
+    font-size: 11px; /* Reduced from 16px for a more compact UI */
+  }
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 14px; /* Reduced from 16px for a more compact UI */
+  }
+}
+
 /* Base Styles */
 * {
   border-color: rgb(var(--color-border));
@@ -14,6 +26,8 @@ body {
   background-color: rgb(var(--color-background));
   color: rgb(var(--color-foreground));
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* HTMX Loading Indicators */

@@ -2,8 +2,8 @@
 
 import { AccountCard } from "@/components/accounts/AccountCard";
 import Layout from "@/components/shared/Layout";
-import { Button } from "@/components/shared/Button"; // New import
-import { Icon } from "@/components/shared/Icon"; // New import
+import { Button } from "@/components/shared/Button";
+import { CreditCardIcon } from "../components/icons";
 import type { Account } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
 
@@ -13,8 +13,7 @@ interface AccountsPageData {
 
 const EmptyState: FC = () => (
   <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-12 text-center rounded-none">
-    <Icon name="credit-card" class="text-6xl mb-4" aria-label="No accounts icon" />
-
+    <CreditCardIcon class="text-6xl mb-4" aria-label="No accounts icon" />
     <h3 class="text-2xl md:text-3xl font-bold mb-2">No Accounts Yet</h3>
 
     <p class="text-muted-foreground mb-6">

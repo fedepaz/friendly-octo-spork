@@ -1,6 +1,7 @@
 import type { Recurrence } from "@/generated/prisma";
 import { Button } from "@/components/shared/Button"; // New import
-import { Icon } from "@/components/shared/Icon"; // New import
+import type { FC } from "hono/jsx";
+import { CalendarDaysIcon, CalendarIcon } from "../icons";
 
 const recurrenceTypeIcons: Record<string, string> = {
   // Changed to use icon names
@@ -10,23 +11,64 @@ const recurrenceTypeIcons: Record<string, string> = {
   INSTALLMENT: "trending-up",
 };
 
+const recurrenceTypeStyles: Record<string, { icon: string; color: string }> = {
+  MONTHLY: {
+    icon: recurrenceTypeIcons.MONTHLY || "",
+    color: "var(--accent-lavender)",
+  },
+  WEEKLY: {
+    icon: recurrenceTypeIcons.WEEKLY || "",
+    color: "var(--accent-yellow)",
+  },
+  YEARLY: {
+    icon: recurrenceTypeIcons.YEARLY || "",
+    color: "var(--accent-mint)",
+  },
+  INSTALLMENT: {
+    icon: recurrenceTypeIcons.INSTALLMENT || "",
+    color: "var(--accent-coral)",
+  },
+};
+
 export function RecurrenceCard({ recurrence }: { recurrence: Recurrence }) {
   return (
     <div
       id={`recurrence-${recurrence.id}`}
-      class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 rounded-none
-        transition-all duration-150
-        hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]"
+      class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 
+             relative overflow-hidden
+             transition-all duration-150
+             hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-xl)]"
     >
-      <div class="flex justify-between items-start">
+      {/* Background Icon */}
+                  {recurrenceTypeStyles[recurrence.frequency]?.icon === "calendar-days" && <CalendarDaysIcon />}
+                  {recurrenceTypeStyles[recurrence.frequency]?.icon === "calendar" && <CalendarIcon />}
+      <div class="flex justify-between items-start mb-4">
         <div>
-          <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2 flex items-center">
-            <span class="mr-2">
-              <Icon name={recurrenceTypeIcons[recurrence.frequency] || ""} />
+          <h3 class="text-xl font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+            <span
+              class="text-2xl"
+              style={{
+                color: recurrenceTypeStyles[recurrence.frequency]?.color,
+              }}
+            >
+              <Icon
+                name={recurrenceTypeStyles[recurrence.frequency]?.icon || ""}
+              />
             </span>
             {recurrence.name}
           </h3>
-          <span class="inline-flex items-center px-2 py-1 text-xs font-semibold uppercase tracking-wide bg-muted text-muted-foreground rounded-none">
+          <span
+            class="inline-flex items-center gap-2 px-3 py-1.5 
+                   text-xs font-bold uppercase tracking-wider
+                   border-2 shadow-[var(--shadow-sm)]"
+            style={{
+              backgroundColor: `${
+                recurrenceTypeStyles[recurrence.frequency]?.color
+              }10`,
+              borderColor: recurrenceTypeStyles[recurrence.frequency]?.color,
+              color: recurrenceTypeStyles[recurrence.frequency]?.color,
+            }}
+          >
             {recurrence.frequency}
           </span>
         </div>

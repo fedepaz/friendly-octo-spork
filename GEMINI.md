@@ -41,6 +41,8 @@ You are assisting in the development of a personal, single-user finance tracker 
 ## Design Principle:
 “If it can be done in one HTML form with HTMX, do it. If it requires a modal or client-side state, reconsider.”
 
+- For icons, always use the `/icons/` methods to ensure consistency and maintainability.
+
 **Always optimize for developer simplicity and user speed—not feature completeness**
 
 ### Rule: Workflow for Reviewing Code Changes

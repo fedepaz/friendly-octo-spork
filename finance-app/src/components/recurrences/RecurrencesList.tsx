@@ -4,15 +4,15 @@ import type { Recurrence } from "@/generated/prisma";
 import { RecurrenceCard } from "./RecurrenceCard";
 import type { FC } from "hono/jsx";
 import { Button } from "@/components/shared/Button"; // New import
-import { Icon } from "@/components/shared/Icon"; // New import
+import { RecurrenceRow } from "./RecurrenceRow";
+import { ClipboardIcon } from "../icons";
 
 const EmptyState: FC = () => (
   <div
     id="recurrences-list"
     class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-12 text-center rounded-none"
   >
-    <Icon name="clipboard" class="text-6xl mb-4" aria-label="No recurrences icon" />
-    <h3 class="text-2xl md:text-3xl font-bold mb-2">
+              <ClipboardIcon class="text-6xl mb-4" aria-label="No recurrences icon" />    <h3 class="text-2xl md:text-3xl font-bold mb-2">
       NO RECURRENCES YET
     </h3>
     <p class="text-muted-foreground">

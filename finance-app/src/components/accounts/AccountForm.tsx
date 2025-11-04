@@ -4,7 +4,7 @@ import { Button } from "@/components/shared/Button"; // New import
 
 export function AccountForm() {
   return (
-    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 w-full max-w-md rounded-none">
+    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 mb-6 rounded-none">
       <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
         CREATE NEW ACCOUNT
       </h3>

@@ -6,13 +6,13 @@ interface StatCardProps {
   title: string;
   value: number | string;
   subtitle?: string;
+  remaining?: string;
   color?: "primary" | "secondary" | "accent" | "destructive" | "muted";
+  valueColor?: string;
+  remainingColor?: string;
 }
 
-const textColorMap: Record<
-  NonNullable<StatCardProps['color']>, // Ensure all possible colors are covered
-  string
-> = {
+const textColorMap: Record<NonNullable<StatCardProps["color"]>, string> = {
   primary: "text-primary-foreground",
   secondary: "text-secondary-foreground",
   accent: "text-accent-foreground",
@@ -25,6 +25,9 @@ export const StatCard: FC<StatCardProps> = ({
   value,
   subtitle,
   color = "primary",
+  valueColor,
+  remaining,
+  remainingColor,
 }) => {
   const textColorClass = textColorMap[color];
 
@@ -33,9 +36,22 @@ export const StatCard: FC<StatCardProps> = ({
       <div class="text-sm font-semibold uppercase tracking-wide text-foreground mb-2">
         {title}
       </div>
-      <div class={`text-4xl md:text-5xl font-bold font-mono ${textColorClass} mb-2`}> {/* Using mapped class */}
+      <div
+        class={`text-4xl md:text-5xl font-bold font-mono ${
+          valueColor || textColorClass
+        } mb-2`}
+      >
         {value}
       </div>
+      {remaining && (
+        <div
+          class={`text-lg font-mono ${
+            remainingColor || "text-[var(--accent-mint)]"
+          } mb-2`}
+        >
+          {remaining} remaining
+        </div>
+      )}
       {subtitle && <div class="text-sm text-muted-foreground">{subtitle}</div>}
     </div>
   );

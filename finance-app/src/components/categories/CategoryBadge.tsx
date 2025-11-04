@@ -8,26 +8,26 @@ const typeStyleMap: Record<
 > = {
   GASTO: {
     bg: "bg-destructive/20",
-    text: "text-destructive-foreground",
-    border: "border-destructive",
-    dotBg: "bg-destructive",
+    text: "text-[var(--accent-coral)]",
+    border: "border-[var(--accent-coral)]",
+    dotBg: "bg-[var(--accent-coral)]",
   },
   PAGO: {
     bg: "bg-secondary/20",
-    text: "text-secondary-foreground",
-    border: "border-secondary",
-    dotBg: "bg-secondary",
+    text: "text-[var(--accent-lavender)]",
+    border: "border-[var(--accent-lavender)]",
+    dotBg: "bg-[var(--accent-lavender)]",
   },
   INGRESO: {
     bg: "bg-primary/20",
-    text: "text-primary-foreground",
-    border: "border-primary",
-    dotBg: "bg-primary",
+    text: "text-[var(--accent-mint)]",
+    border: "border-[var(--accent-mint)]",
+    dotBg: "bg-[var(--accent-mint)]",
   },
   RENDIMIENTO: {
     bg: "bg-accent/20",
-    text: "text-accent-foreground",
-    border: "border-accent",
+    text: "text-[var(--accent-yellow)]",
+    border: "border-[var(--accent-yellow)]",
     dotBg: "bg-accent",
   },
 };
@@ -42,9 +42,14 @@ export const CategoryBadge: FC<{ category: Category }> = ({ category }) => {
 
   return (
     <span
-      class={`inline-flex items-center px-2 py-1 text-xs font-semibold uppercase tracking-wide rounded-none ${typeStyles.bg} ${typeStyles.text} border-2 ${typeStyles.border}`}
+      class={`inline-flex items-center gap-2 px-3 py-1.5 
+              text-xs font-bold uppercase tracking-wide 
+              ${typeStyles.bg} ${typeStyles.text} 
+              border-2 ${typeStyles.border}
+              shadow-[var(--shadow-sm)]
+              hover:-translate-y-0.5 transition-transform`}
     >
-      <span class={`w-3 h-3 rounded-full ${typeStyles.dotBg} border-2 border-border`} />
+      <span class={`w-2 h-2 ${typeStyles.dotBg}`} />
       {category.name}
     </span>
   );

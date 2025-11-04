@@ -2,8 +2,8 @@
 
 import { CategoryBadge } from "@/components/categories/CategoryBadge";
 import Layout from "@/components/shared/Layout";
-import { Button } from "@/components/shared/Button"; // New import
-import { Icon } from "@/components/shared/Icon"; // New import
+import { Button } from "@/components/shared/Button";
+import { TagIcon } from "../components/icons";
 import type { Category } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
 
@@ -13,11 +13,8 @@ interface CategoriesPageData {
 
 const EmptyState: FC = () => (
   <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-12 text-center rounded-none">
-    <Icon name="tag" class="text-6xl mb-4" aria-label="No categories icon" />
-
-    <h3 class="text-2xl md:text-3xl font-bold mb-2">
-      No Categories Yet
-    </h3>
+    <TagIcon class="text-6xl mb-4" aria-label="No categories icon" />
+    <h3 class="text-2xl md:text-3xl font-bold mb-2">No Categories Yet</h3>
 
     <p class="text-muted-foreground mb-6">
       Create categories to organize your transactions.
@@ -47,7 +44,9 @@ export const CategoriesPage: FC<{ data?: CategoriesPageData }> = ({ data }) => {
   return (
     <Layout activeNavItem="/categories">
       <div class="flex items-center justify-between mb-8">
-        <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">Categories</h1>
+        <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          Categories
+        </h1>
         <Button
           type="button" // Explicitly set type to "button"
           hxGet="/categories/new"
@@ -63,7 +62,7 @@ export const CategoriesPage: FC<{ data?: CategoriesPageData }> = ({ data }) => {
       {categories.length === 0 ? (
         <EmptyState />
       ) : (
-        <div class="grid grid-cols-1 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {Object.entries(groupedCategories).map(([type, cats]) => (
             <div
               key={type}

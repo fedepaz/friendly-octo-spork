@@ -1,8 +1,29 @@
-import { Icon } from "./Icon"; // New import
-import { Button } from "./Button"; // New import
 // src/components/shared/Sidebar.tsx
 
 import type { FC } from "hono/jsx";
+import {
+  DollarSignIcon,
+  LightbulbIcon,
+  XIcon,
+  CreditCardIcon,
+  TagIcon,
+  ClipboardIcon,
+  SparklesIcon,
+  AlertTriangleIcon,
+  CalendarDaysIcon,
+  CalendarIcon,
+  CheckIcon,
+  FolderIcon,
+  InfoIcon,
+  LandmarkIcon,
+  LineChartIcon,
+  TrendingUpIcon,
+  UserIcon,
+  WalletIcon,
+  SadFaceIcon,
+  HappyFaceIcon,
+} from "../icons";
+import { Button } from "./Button";
 
 interface SidebarProps {
   activeNavItem?: string;
@@ -34,19 +55,17 @@ export const Sidebar: FC<SidebarProps> = ({
     >
       {/* Sidebar Header */}
       <div class="p-6 border-b-2 border-border bg-primary/5 rounded-none">
-        <a href="/" class="block group">
-          <div class="flex items-center gap-3">
-            <div class="text-4xl transition-transform duration-150 group-hover:scale-110">
-              <Icon name="dollar-sign" />
-            </div>
-            <div>
-              <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">
-                FINANCE
-              </h1>
-              <p class="text-sm text-muted-foreground">Tracker</p>
-            </div>
+        <div class="flex items-center gap-3">
+          <div class="text-4xl transition-transform duration-150 group-hover:scale-110">
+            <DollarSignIcon />
           </div>
-        </a>
+          <div>
+            <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">
+              FINANCE
+            </h1>
+            <p class="text-sm text-muted-foreground">Tracker</p>
+          </div>
+        </div>
       </div>
 
       {/* Navigation */}
@@ -84,7 +103,52 @@ export const Sidebar: FC<SidebarProps> = ({
                   ${isActive ? "scale-110" : "group-hover:scale-110"}
                 `}
               >
-                <Icon name={link.icon} />
+                {(() => {
+                  switch (link.icon) {
+                    case "credit-card":
+                      return <CreditCardIcon />;
+                    case "tag":
+                      return <TagIcon />;
+                    case "clipboard":
+                      return <ClipboardIcon />;
+                    case "sparkles":
+                      return <SparklesIcon />;
+                    case "alert-triangle":
+                      return <AlertTriangleIcon />;
+                    case "calendar-days":
+                      return <CalendarDaysIcon />;
+                    case "calendar":
+                      return <CalendarIcon />;
+                    case "check":
+                      return <CheckIcon />;
+                    case "dollar-sign":
+                      return <DollarSignIcon />;
+                    case "folder":
+                      return <FolderIcon />;
+                    case "info":
+                      return <InfoIcon />;
+                    case "landmark":
+                      return <LandmarkIcon />;
+                    case "lightbulb":
+                      return <LightbulbIcon />;
+                    case "line-chart":
+                      return <LineChartIcon />;
+                    case "trending-up":
+                      return <TrendingUpIcon />;
+                    case "user":
+                      return <UserIcon />;
+                    case "wallet":
+                      return <WalletIcon />;
+                    case "x":
+                      return <XIcon />;
+                    case "sad-face":
+                      return <SadFaceIcon />;
+                    case "happy-face":
+                      return <HappyFaceIcon />;
+                    default:
+                      return null; // Or a default icon
+                  }
+                })()}
               </span>
               <span class="flex-1">{link.label}</span>
               {isActive && (
@@ -100,7 +164,7 @@ export const Sidebar: FC<SidebarProps> = ({
         <div class="bg-accent/10 border-2 border-accent/30 rounded-none p-4">
           <div class="flex items-start gap-3">
             <span class="text-2xl">
-              <Icon name="lightbulb" />
+              <LightbulbIcon />
             </span>
             <div>
               <p class="text-sm font-semibold uppercase tracking-wide text-foreground">
@@ -134,7 +198,7 @@ export const Sidebar: FC<SidebarProps> = ({
           "
           aria-label="Close sidebar"
         >
-          <Icon name="x" />
+          <XIcon />{" "}
         </Button>
       )}
     </aside>
