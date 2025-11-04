@@ -11,6 +11,8 @@ interface ButtonProps {
   dataTarget?: string;
   class?: string; // Allow additional classes to be passed
   type?: "button" | "submit" | "reset"; // Add type attribute for button
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any; // Allow any other props
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -23,6 +25,7 @@ export const Button: FC<ButtonProps> = ({
   dataTarget,
   class: additionalClasses,
   type = "button", // Default to "button"
+  ...props
 }) => {
   return (
     <button
@@ -41,6 +44,7 @@ export const Button: FC<ButtonProps> = ({
       hx-swap={hxSwap}
       data-toggle={dataToggle}
       data-target={dataTarget}
+      {...props}
     >
       {children}
     </button>

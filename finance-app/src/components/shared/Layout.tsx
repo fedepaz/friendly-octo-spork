@@ -1,3 +1,5 @@
+// src/components/shared/Layout.tsx
+
 import { DollarSignIcon } from "../icons";
 import { HamburgerMenu } from "./HamburgerMenu";
 import { Sidebar } from "./Sidebar"; // New import
@@ -13,7 +15,9 @@ const Layout: FC<LayoutProps> = (props) => {
   return (
     <div class="flex h-screen bg-background">
       {/* Desktop Sidebar - Always visible on large screens */}
-      <div id="desktop-sidebar-container" class="hidden lg:block"> {/* Renamed ID */}
+      <div id="desktop-sidebar-container" class="hidden lg:block">
+        {" "}
+        {/* Renamed ID */}
         <Sidebar activeNavItem={props.activeNavItem} />
       </div>
 
@@ -27,13 +31,14 @@ const Layout: FC<LayoutProps> = (props) => {
           >
             <DollarSignIcon /> FINANCE TRACKER
           </a>
-          <HamburgerMenu onClick="htmx.toggleClass(document.getElementById('mobile-sidebar-container'), 'hidden')" />
+          <HamburgerMenu />
         </header>
 
         {/* Mobile sidebar - Toggleable */}
         <div
-          id="mobile-sidebar-container" // Renamed ID
-          class="hidden fixed inset-0 bg-background/80 backdrop-blur-sm z-40 lg:hidden"
+          id="mobile-sidebar-container"
+          class="mobile-sidebar-container"
+          onclick="this.classList.remove('open')"
         >
           <div class="w-80 h-full" onclick="event.stopPropagation()">
             <Sidebar activeNavItem={props.activeNavItem} isMobile={true} />

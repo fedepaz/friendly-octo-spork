@@ -177,30 +177,6 @@ export const Sidebar: FC<SidebarProps> = ({
           </div>
         </div>
       </div>
-
-      {/* Mobile close button */}
-      {isMobile && (
-        <Button
-          type="button" // Explicitly set type to "button"
-          hx-on:click="document.getElementById('mobile-sidebar-container').classList.add('hidden')"
-          class="
-            absolute top-4 right-4
-            bg-destructive text-destructive-foreground
-            border-2 border-border
-            w-10 h-10
-            rounded-none
-            flex items-center justify-center
-            font-bold text-xl
-            transition-all duration-150
-            shadow-[var(--shadow)]
-            hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow)]
-            active:translate-x-1 active:translate-y-1 active:shadow-none
-          "
-          aria-label="Close sidebar"
-        >
-          <XIcon />{" "}
-        </Button>
-      )}
     </aside>
   );
 };

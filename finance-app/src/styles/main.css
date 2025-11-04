@@ -132,3 +132,16 @@ body {
 .animate-slide-in-right {
   animation: slide-in-right 0.3s ease-out;
 }
+
+.mobile-sidebar-container {
+  @apply fixed inset-0 z-40 lg:hidden hidden;
+}
+
+.mobile-sidebar-container.open {
+  @apply block;
+}
+
+.mobile-sidebar {
+  @apply w-80 h-full bg-card text-card-foreground border-r-2 border-border shadow-[var(--shadow)] flex flex-col;
+  animation: slide-in-right 0.3s ease-out;
+}
