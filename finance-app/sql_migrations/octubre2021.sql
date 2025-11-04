@@ -1,218 +1,80 @@
-
--- Migration for octubre2021.json
-
--- Insert Categories
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'cipio', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'cipio' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'creatina', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'creatina' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'hera cade bic', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'hera cade bic' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'almuerzo mama', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'almuerzo mama' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'pantaloon', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'pantaloon' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'luces bici', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'luces bici' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, '???', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = '???' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'casino', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'casino' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'box', 'PAGO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'box' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'tabaco. Frutas', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'tabaco. Frutas' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'frutas y futbol', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'frutas y futbol' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'almuerzo markos', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'almuerzo markos' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'tomates y cerverxas', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'tomates y cerverxas' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'mila de pollo', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'mila de pollo' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'fernet y cerve', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'fernet y cerve' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'mila con papas', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'mila con papas' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'furtas y tabaco', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'furtas y tabaco' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'futbol y asado', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'futbol y asado' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
-INSERT INTO "Category" ("userId", name, type)
-SELECT id, 'pna, mila, avena, papas', 'GASTO'
-FROM "User" WHERE name = 'negritoPaz' AND NOT EXISTS (SELECT 1 FROM "Category" WHERE name = 'pna, mila, avena, papas' AND "userId" = (SELECT id FROM "User" WHERE name = 'negritoPaz'));
-
--- Insert Transactions
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 8500, '2021-10-01', 'prote', (SELECT id FROM "Category" WHERE name = 'prote'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 2800, '2021-10-01', 'cipio', (SELECT id FROM "Category" WHERE name = 'cipio'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 1600, '2021-10-01', 'creatina', (SELECT id FROM "Category" WHERE name = 'creatina'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 1300, '2021-10-01', 'hera cade bic', (SELECT id FROM "Category" WHERE name = 'hera cade bic'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 2747.5, '2021-10-04', 'super', (SELECT id FROM "Category" WHERE name = 'super'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 1430, '2021-10-08', 'pollo', (SELECT id FROM "Category" WHERE name = 'pollo'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 1290, '2021-10-19', 'pollo y huevos', (SELECT id FROM "Category" WHERE name = 'pollo y huevos'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 1500, '2021-10-29', 'pollo', (SELECT id FROM "Category" WHERE name = 'pollo'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 2000, '2021-10-09', 'almuerzo mama', (SELECT id FROM "Category" WHERE name = 'almuerzo mama'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 800, '2021-10-08', 'pantaloon', (SELECT id FROM "Category" WHERE name = 'pantaloon'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 500, '2021-10-15', 'luces bici', (SELECT id FROM "Category" WHERE name = 'luces bici'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 3000, '2021-10-15', '???', (SELECT id FROM "Category" WHERE name = '???'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 500, '2021-10-22', 'casino', (SELECT id FROM "Category" WHERE name = 'casino'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 500, '2021-10-25', 'pantaloon', (SELECT id FROM "Category" WHERE name = 'pantaloon'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 3115.36, '2021-10-01', 'préstamo', (SELECT id FROM "Category" WHERE name = 'préstamo'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 21000, '2021-10-12', 'alquler', (SELECT id FROM "Category" WHERE name = 'alquler'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 1298, '2021-10-09', 'telefono', (SELECT id FROM "Category" WHERE name = 'telefono'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 5088.12, '2021-10-01', 'osde', (SELECT id FROM "Category" WHERE name = 'osde'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 2200, '2021-10-01', 'gym', (SELECT id FROM "Category" WHERE name = 'gym'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 1800, '2021-10-13', 'box', (SELECT id FROM "Category" WHERE name = 'box'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 10754.17, '2021-10-01', 'auto', (SELECT id FROM "Category" WHERE name = 'auto'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 750, '2021-10-01', 'comision(?)', (SELECT id FROM "Category" WHERE name = 'comision(?)'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 6000, '2021-10-09', 'bici', (SELECT id FROM "Category" WHERE name = 'bici'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 798.44, '2021-10-19', 'gas', (SELECT id FROM "Category" WHERE name = 'gas'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "targetAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'INCOME', 92814.34, '2021-10-01', 'sueldo', (SELECT id FROM "Category" WHERE name = 'sueldo'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 925, '2021-10-01', 'tabaco. Frutas', (SELECT id FROM "Category" WHERE name = 'tabaco. Frutas'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 1590, '2021-10-03', 'birra y lomo', (SELECT id FROM "Category" WHERE name = 'birra y lomo'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 660, '2021-10-04', 'frutas y futbol', (SELECT id FROM "Category" WHERE name = 'frutas y futbol'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 827, '2021-10-07', 'almuerzo markos', (SELECT id FROM "Category" WHERE name = 'almuerzo markos'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 200, '2021-10-08', 'tomates', (SELECT id FROM "Category" WHERE name = 'tomates'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 50, '2021-10-09', 'pan', (SELECT id FROM "Category" WHERE name = 'pan'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 580, '2021-10-12', 'tomates y cerverxas', (SELECT id FROM "Category" WHERE name = 'tomates y cerverxas'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 200, '2021-10-13', 'tomates', (SELECT id FROM "Category" WHERE name = 'tomates'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 50, '2021-10-14', 'pan', (SELECT id FROM "Category" WHERE name = 'pan'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 430, '2021-10-15', 'mila de pollo', (SELECT id FROM "Category" WHERE name = 'mila de pollo'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 1400, '2021-10-16', 'fernet y cerve', (SELECT id FROM "Category" WHERE name = 'fernet y cerve'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 1500, '2021-10-17', 'mila con papas', (SELECT id FROM "Category" WHERE name = 'mila con papas'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 1640, '2021-10-19', 'furtas y tabaco', (SELECT id FROM "Category" WHERE name = 'furtas y tabaco'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 100, '2021-10-20', 'pan', (SELECT id FROM "Category" WHERE name = 'pan'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 1200, '2021-10-22', 'futbol y asado', (SELECT id FROM "Category" WHERE name = 'futbol y asado'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 490, '2021-10-23', 'pna, mila, avena, papas', (SELECT id FROM "Category" WHERE name = 'pna, mila, avena, papas'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 250, '2021-10-25', 'futbol', (SELECT id FROM "Category" WHERE name = 'futbol'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 50, '2021-10-26', 'pan', (SELECT id FROM "Category" WHERE name = 'pan'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 500, '2021-10-27', 'varios', (SELECT id FROM "Category" WHERE name = 'varios'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 4000, '2021-10-28', 'joda', (SELECT id FROM "Category" WHERE name = 'joda'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
-
-INSERT INTO "Transaction" ("userId", type, amount, date, description, "categoryId", "sourceAccountId")
-SELECT (SELECT id FROM "User" WHERE name = 'negritoPaz'), 'EXPENSE', 500, '2021-10-29', 'futbol', (SELECT id FROM "Category" WHERE name = 'futbol'), (SELECT id FROM "Account" WHERE name = 'Efectivo');
+-- Insert script for octubre2021.json
+-- Period: 2021-10
+-- Columns used: gastos, pagos, ingresos, gastosDiarios
+
+BEGIN;
+
+-- Helper function to safely find category ID
+CREATE OR REPLACE FUNCTION find_category_id(p_user_id TEXT, p_category_name TEXT, p_category_type "CategoryType")
+RETURNS INT AS $$
+DECLARE
+    v_category_id INT;
+BEGIN
+    SELECT id INTO v_category_id FROM "Category" WHERE "userId" = p_user_id AND name = p_category_name;
+    IF v_category_id IS NULL THEN
+        INSERT INTO "Category" ("userId", name, type) VALUES (p_user_id, p_category_name, p_category_type) RETURNING id INTO v_category_id;
+    END IF;
+    RETURN v_category_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Transactions for 'gastos'
+INSERT INTO "Transaction" (date, amount, description, type, "categoryId", "sourceAccountId", "userId") VALUES
+('2021-10-01', 8500, 'prote', 'EXPENSE', find_category_id($1, 'prote', 'GASTO'), $2, $1),
+('2021-10-01', 2800, 'cipio', 'EXPENSE', find_category_id($1, 'cipio', 'GASTO'), $2, $1),
+('2021-10-01', 1600, 'creatina', 'EXPENSE', find_category_id($1, 'creatina', 'GASTO'), $2, $1),
+('2021-10-01', 1300, 'hera cade bic', 'EXPENSE', find_category_id($1, 'hera cade bic', 'GASTO'), $2, $1),
+('2021-10-04', 2747.5, 'super', 'EXPENSE', find_category_id($1, 'super', 'GASTO'), $2, $1),
+('2021-10-08', 1430, 'pollo', 'EXPENSE', find_category_id($1, 'pollo', 'GASTO'), $2, $1),
+('2021-10-19', 1290, 'pollo y huevos', 'EXPENSE', find_category_id($1, 'pollo y huevos', 'GASTO'), $2, $1),
+('2021-10-29', 1500, 'pollo', 'EXPENSE', find_category_id($1, 'pollo', 'GASTO'), $2, $1),
+('2021-10-09', 2000, 'almuerzo mama', 'EXPENSE', find_category_id($1, 'almuerzo mama', 'GASTO'), $2, $1),
+('2021-10-08', 800, 'pantaloon', 'EXPENSE', find_category_id($1, 'pantaloon', 'GASTO'), $2, $1),
+('2021-10-15', 500, 'luces bici', 'EXPENSE', find_category_id($1, 'luces bici', 'GASTO'), $2, $1),
+('2021-10-22', 500, 'casino', 'EXPENSE', find_category_id($1, 'casino', 'GASTO'), $2, $1),
+('2021-10-25', 500, 'pantaloon', 'EXPENSE', find_category_id($1, 'pantaloon', 'GASTO'), $2, $1);
+
+-- Transactions for 'pagos'
+INSERT INTO "Transaction" (date, amount, description, type, "categoryId", "sourceAccountId", "userId") VALUES
+('2021-10-01', 3115.36, 'préstamo', 'PAYMENT', find_category_id($1, 'préstamo', 'PAGO'), $2, $1),
+('2021-10-12', 21000, 'alquler', 'PAYMENT', find_category_id($1, 'alquler', 'PAGO'), $2, $1),
+('2021-10-09', 1298, 'telefono', 'PAYMENT', find_category_id($1, 'telefono', 'PAGO'), $2, $1),
+('2021-10-01', 5088.12, 'osde', 'PAYMENT', find_category_id($1, 'osde', 'PAGO'), $2, $1),
+('2021-10-01', 2200, 'gym', 'PAYMENT', find_category_id($1, 'gym', 'PAGO'), $2, $1),
+('2021-10-13', 1800, 'box', 'PAYMENT', find_category_id($1, 'box', 'PAGO'), $2, $1),
+('2021-10-01', 10754.17, 'auto', 'PAYMENT', find_category_id($1, 'auto', 'PAGO'), $2, $1),
+('2021-10-01', 750, 'comision(?)', 'PAYMENT', find_category_id($1, 'comision(?)', 'PAGO'), $2, $1),
+('2021-10-09', 6000, 'bici', 'PAYMENT', find_category_id($1, 'bici', 'PAGO'), $2, $1),
+('2021-10-19', 798.44, 'gas', 'PAYMENT', find_category_id($1, 'gas', 'PAGO'), $2, $1);
+
+-- Transactions for 'ingresos'
+INSERT INTO "Transaction" (date, amount, description, type, "categoryId", "targetAccountId", "userId") VALUES
+('2021-10-01', 92814.34, 'sueldo', 'INCOME', find_category_id($1, 'sueldo', 'INGRESO'), $3, $1);
+
+-- Transactions for 'gastosDiarios'
+INSERT INTO "Transaction" (date, amount, description, type, "categoryId", "sourceAccountId", "userId") VALUES
+('2021-10-01', 925, 'tabaco. Frutas', 'EXPENSE', find_category_id($1, 'tabaco. Frutas', 'GASTO'), $2, $1),
+('2021-10-03', 1590, 'birra y lomo', 'EXPENSE', find_category_id($1, 'birra y lomo', 'GASTO'), $2, $1),
+('2021-10-04', 660, 'frutas y futbol', 'EXPENSE', find_category_id($1, 'frutas y futbol', 'GASTO'), $2, $1),
+('2021-10-07', 827, 'almuerzo markos', 'EXPENSE', find_category_id($1, 'almuerzo markos', 'GASTO'), $2, $1),
+('2021-10-08', 200, 'tomates', 'EXPENSE', find_category_id($1, 'tomates', 'GASTO'), $2, $1),
+('2021-10-09', 50, 'pan', 'EXPENSE', find_category_id($1, 'pan', 'GASTO'), $2, $1),
+('2021-10-12', 580, 'tomates y cerverxas', 'EXPENSE', find_category_id($1, 'tomates y cerverxas', 'GASTO'), $2, $1),
+('2021-10-13', 200, 'tomates', 'EXPENSE', find_category_id($1, 'tomates', 'GASTO'), $2, $1),
+('2021-10-14', 50, 'pan', 'EXPENSE', find_category_id($1, 'pan', 'GASTO'), $2, $1),
+('2021-10-15', 430, 'mila de pollo', 'EXPENSE', find_category_id($1, 'mila de pollo', 'GASTO'), $2, $1),
+('2021-10-16', 1400, 'fernet y cerve', 'EXPENSE', find_category_id($1, 'fernet y cerve', 'GASTO'), $2, $1),
+('2021-10-17', 1500, 'mila con papas', 'EXPENSE', find_category_id($1, 'mila con papas', 'GASTO'), $2, $1),
+('2021-10-19', 1640, 'furtas y tabaco', 'EXPENSE', find_category_id($1, 'furtas y tabaco', 'GASTO'), $2, $1),
+('2021-10-20', 100, 'pan', 'EXPENSE', find_category_id($1, 'pan', 'GASTO'), $2, $1),
+('2021-10-22', 1200, 'futbol y asado', 'EXPENSE', find_category_id($1, 'futbol y asado', 'GASTO'), $2, $1),
+('2021-10-23', 490, 'pna, mila, avena, papas', 'EXPENSE', find_category_id($1, 'pna, mila, avena, papas', 'GASTO'), $2, $1),
+('2021-10-25', 250, 'futbol', 'EXPENSE', find_category_id($1, 'futbol', 'GASTO'), $2, $1),
+('2021-10-26', 50, 'pan', 'EXPENSE', find_category_id($1, 'pan', 'GASTO'), $2, $1),
+('2021-10-27', 500, 'varios', 'EXPENSE', find_category_id($1, 'varios', 'GASTO'), $2, $1),
+('2021-10-28', 4000, 'joda', 'EXPENSE', find_category_id($1, 'joda', 'GASTO'), $2, $1),
+('2021-10-29', 500, 'futbol', 'EXPENSE', find_category_id($1, 'futbol', 'GASTO'), $2, $1),
+('2021-10-30', 195, '', 'EXPENSE', find_category_id($1, 'Default Expense', 'GASTO'), $2, $1),
+('2021-10-31', 680, 'lomo y birra', 'EXPENSE', find_category_id($1, 'lomo y birra', 'GASTO'), $2, $1);
+
+COMMIT;

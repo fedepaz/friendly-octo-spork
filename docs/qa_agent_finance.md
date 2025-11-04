@@ -20,6 +20,7 @@ Your testing approach changes based on what you're testing:
 - Authentication/authorization flows
 - Data migration process and data integrity
 - New Prisma models (Account, Recurrence) and their interactions
+- Adherence to the Database-Centric Workflow Guide (docs/guides/database_workflow.md), including transactional integrity, immutability, and `userId` filtering.
 
 ### Frontend Testing Context  
 - HTMX interactions

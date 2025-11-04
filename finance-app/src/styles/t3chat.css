@@ -1,3 +1,5 @@
+@custom-variant dark (&:is(.dark *));
+
 :root {
   --background: oklch(0.9754 0.0084 325.6414);
   --foreground: oklch(0.3257 0.1161 325.0372);
@@ -16,6 +18,12 @@
   --destructive: oklch(0.5248 0.1368 20.8317);
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.8568 0.0829 328.911);
+
+  /* T3Chat Colors */
+  --secondary: oklch(0.8696 0.0675 334.8991);
+  --destructive: oklch(0.5248 0.1368 20.8317);
+  --primary: oklch(0.5316 0.1409 355.1999);
+  --accent: oklch(0.4607 0.1853 4.0994);
   --input: oklch(0.8517 0.0558 336.6002);
   --ring: oklch(0.5916 0.218 0.5844);
   --chart-1: oklch(0.6038 0.2363 344.4657);

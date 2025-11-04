@@ -1,14 +1,12 @@
 // src/components/dashboard/BudgetProgressCard.tsx
 
 import type { FC } from "hono/jsx";
-
-interface BudgetProgressCardProps {
-  spent: number;
-  limit: number;
-  currency?: string;
-}
-
-import type { FC } from "hono/jsx";
+import {
+  AlertTriangleIcon,
+  WalletIcon,
+  SadFaceIcon,
+  HappyFaceIcon,
+} from "../icons";
 
 interface BudgetProgressCardProps {
   spent: number;
@@ -26,27 +24,72 @@ export const BudgetProgressCard: FC<BudgetProgressCardProps> = ({
   const isOverBudget = remaining < 0;
 
   return (
-    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6">
-      <div class="text-muted-foreground uppercase font-bold mb-2 text-sm tracking-wider">Monthly Budget</div>
-      <div class="font-mono font-bold mb-4 text-3xl">
-        {currency}
-        {spent.toFixed(2)} / {currency}
-        {limit.toFixed(2)}
+    <div
+      class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6
+             relative overflow-hidden
+             transition-all duration-150
+             hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-xl)]"
+    >
+      {/* Background Icon */}
+      <div class="absolute top-4 right-4 text-6xl opacity-60">
+        {isOverBudget ? <AlertTriangleIcon /> : <WalletIcon />}{" "}
       </div>
 
-      <div class="w-full h-6 bg-muted border-2 border-border relative overflow-hidden">
+      <div class="text-xl font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
+        Monthly Budget
+      </div>
+
+      <div class="font-mono font-bold text-4xl mb-4 flex items-baseline gap-2">
+        <span
+          class={
+            isOverBudget ? "text-[var(--destructive)]" : "text-[var(--accent)]"
+          }
+        >
+          {currency}
+          {spent.toFixed(2)}
+        </span>
+        <span class="text-muted-foreground text-2xl">
+          / {currency}
+          {limit.toFixed(2)}
+        </span>
+      </div>
+
+      <div class="w-full h-8 bg-secondary/20 border-2 border-border relative overflow-hidden mb-4">
         <div
           style={{ width: `${percentage}%` }}
-          class={`h-full transition-all duration-300 ${percentage > 90 ? "bg-destructive" : "bg-primary"}`}
+          class={`h-full transition-all duration-300 ${
+            isOverBudget
+              ? "bg-[var(--destructive)]"
+              : percentage > 90
+              ? "bg-[var(--secondary)]"
+              : "bg-[var(--primary)]"
+          }`}
         />
       </div>
 
-      <div class="mt-4">
-        <span class={`font-mono font-bold text-lg ${isOverBudget ? "text-destructive-foreground" : "text-primary-foreground"}`}>
-          {currency}
-          {Math.abs(remaining).toFixed(2)}
+      <div class="flex items-center justify-between">
+        <div>
+          <span
+            class={`font-mono font-bold text-2xl ${
+              isOverBudget
+                ? "text-[var(--destructive)]"
+                : "text-[var(--accent)]"
+            }`}
+          >
+            {currency}
+            {Math.abs(remaining).toFixed(2)}
+          </span>
+          <span class="text-sm text-muted-foreground ml-2">
+            {isOverBudget ? "over budget" : "remaining"}
+          </span>
+        </div>
+        <span class="text-2xl">
+          {isOverBudget ? (
+            <SadFaceIcon class="text-[var(--destructive)]" />
+          ) : (
+            <HappyFaceIcon class="text-[var(--accent)]" />
+          )}{" "}
         </span>
-        <span class="text-muted-foreground ml-2">{isOverBudget ? "over budget" : "remaining"}</span>
       </div>
     </div>
   );

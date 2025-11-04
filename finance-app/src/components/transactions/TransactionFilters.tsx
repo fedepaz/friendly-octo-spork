@@ -1,11 +1,4 @@
-import type { FC } from "hono/jsx";
-import type { Category, Account, Recurrence } from "@/generated/prisma";
-
-interface TransactionFiltersProps {
-  categories: Category[];
-  accounts: Account[];
-  recurrences: Recurrence[];
-}
+// src/components/transactions/TransactionFilters.tsx
 
 import type { FC } from "hono/jsx";
 import type { Category, Account, Recurrence } from "@/generated/prisma";
@@ -22,8 +15,10 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
   recurrences,
 }) => {
   return (
-    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 mb-8">
-      <h3 class="text-xl font-bold uppercase tracking-wider mb-4">FILTER TRANSACTIONS</h3>
+    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 mb-6 rounded-none">
+      <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
+        FILTER TRANSACTIONS
+      </h3>
       <form
         hx-get="/api/transactions"
         hx-target="#transactions-list"
@@ -32,29 +27,43 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
       >
         <div>
-          <label for="startDate" class="block text-sm font-semibold uppercase mb-2">Start Date</label>
+          <label
+            for="startDate"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
+          >
+            Start Date
+          </label>
           <input
             type="date"
             name="startDate"
             id="startDate"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
           />
         </div>
         <div>
-          <label for="endDate" class="block text-sm font-semibold uppercase mb-2">End Date</label>
+          <label
+            for="endDate"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
+          >
+            End Date
+          </label>
           <input
             type="date"
             name="endDate"
-            id="endDate"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
           />
         </div>
         <div>
-          <label for="type" class="block text-sm font-semibold uppercase mb-2">Type</label>
+          <label
+            for="type"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
+          >
+            Type
+          </label>
           <select
             name="type"
             id="type"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
           >
             <option value="">ALL TYPES</option>
             <option value="INCOME">INCOME</option>
@@ -66,11 +75,16 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           </select>
         </div>
         <div>
-          <label for="categoryId" class="block text-sm font-semibold uppercase mb-2">Category</label>
+          <label
+            for="categoryId"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
+          >
+            Category
+          </label>
           <select
             name="categoryId"
             id="categoryId"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
           >
             <option value="">ALL CATEGORIES</option>
             {categories.map((cat) => (
@@ -79,11 +93,15 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           </select>
         </div>
         <div>
-          <label for="sourceAccountId" class="block text-sm font-semibold uppercase mb-2">Source Account</label>
+          <label
+            for="sourceAccountId"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
+          >
+            Source Account
+          </label>
           <select
             name="sourceAccountId"
-            id="sourceAccountId"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
           >
             <option value="">ALL SOURCE ACCOUNTS</option>
             {accounts.map((acc) => (
@@ -92,11 +110,15 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           </select>
         </div>
         <div>
-          <label for="targetAccountId" class="block text-sm font-semibold uppercase mb-2">Target Account</label>
+          <label
+            for="targetAccountId"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
+          >
+            Target Account
+          </label>
           <select
             name="targetAccountId"
-            id="targetAccountId"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
           >
             <option value="">ALL TARGET ACCOUNTS</option>
             {accounts.map((acc) => (
@@ -105,11 +127,16 @@ export const TransactionFilters: FC<TransactionFiltersProps> = ({
           </select>
         </div>
         <div>
-          <label for="recurrenceId" class="block text-sm font-semibold uppercase mb-2">Recurrence</label>
+          <label
+            for="recurrenceId"
+            class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
+          >
+            Recurrence
+          </label>
           <select
             name="recurrenceId"
             id="recurrenceId"
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
           >
             <option value="">ALL RECURRENCES</option>
             {recurrences.map((rec) => (

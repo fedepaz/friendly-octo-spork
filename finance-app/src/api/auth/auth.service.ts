@@ -1,9 +1,10 @@
 // src/api/auth/auth.service.ts
 
 import { prisma } from "@/lib/prisma";
-import { generateToken } from "@/lib/jwt";
+
 import { password } from "bun";
 import type { LoginInput } from "./auth.schema";
+import { generateToken } from "@/middleware/auth";
 
 export class AuthService {
   login = async (parameters: LoginInput) => {
