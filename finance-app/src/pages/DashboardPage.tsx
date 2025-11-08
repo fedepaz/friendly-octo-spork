@@ -18,7 +18,11 @@ interface DashboardData {
   recentTransactions: Transaction[];
 }
 
-export const DashboardPage: FC<{ data: DashboardData }> = ({ data }) => (
+interface DashboardPageProps {
+  data: DashboardData;
+}
+
+export const DashboardPage: FC<DashboardPageProps> = ({ data }) => (
   <Layout activeNavItem="/dashboard">
     <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">
       Dashboard

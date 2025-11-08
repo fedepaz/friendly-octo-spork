@@ -1,7 +1,7 @@
 import type { Recurrence } from "@/generated/prisma";
 import { Button } from "@/components/shared/Button"; // New import
 import type { FC } from "hono/jsx";
-import { CalendarDaysIcon, CalendarIcon } from "../icons";
+import { CalendarDaysIcon, CalendarIcon } from "@/components/icons";
 
 const recurrenceTypeIcons: Record<string, string> = {
   // Changed to use icon names
@@ -11,26 +11,38 @@ const recurrenceTypeIcons: Record<string, string> = {
   INSTALLMENT: "trending-up",
 };
 
-const recurrenceTypeStyles: Record<string, { icon: string; color: string }> = {
+const recurrenceTypeStyles: Record<string, { icon: string; textColor: string; bgColor: string; borderColor: string }> = {
   MONTHLY: {
     icon: recurrenceTypeIcons.MONTHLY || "",
-    color: "var(--accent)",
+    textColor: "text-[var(--accent)]",
+    bgColor: "bg-[var(--accent)]/10",
+    borderColor: "border-[var(--accent)]",
   },
   WEEKLY: {
     icon: recurrenceTypeIcons.WEEKLY || "",
-    color: "var(--secondary)",
+    textColor: "text-[var(--secondary)]",
+    bgColor: "bg-[var(--secondary)]/10",
+    borderColor: "border-[var(--secondary)]",
   },
   YEARLY: {
     icon: recurrenceTypeIcons.YEARLY || "",
-    color: "var(--primary)",
+    textColor: "text-[var(--primary)]",
+    bgColor: "bg-[var(--primary)]/10",
+    borderColor: "border-[var(--primary)]",
   },
   INSTALLMENT: {
     icon: recurrenceTypeIcons.INSTALLMENT || "",
-    color: "var(--destructive)",
+    textColor: "text-[var(--destructive)]",
+    bgColor: "bg-[var(--destructive)]/10",
+    borderColor: "border-[var(--destructive)]",
   },
 };
 
-export function RecurrenceCard({ recurrence }: { recurrence: Recurrence }) {
+interface RecurrenceCardProps {
+  recurrence: Recurrence;
+}
+
+export const RecurrenceCard: FC<RecurrenceCardProps> = ({ recurrence }) => {
   return (
     <div
       id={`recurrence-${recurrence.id}`}
@@ -50,28 +62,29 @@ export function RecurrenceCard({ recurrence }: { recurrence: Recurrence }) {
         <div>
           <h3 class="text-xl font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
             <span
-              class="text-2xl"
-              style={{
-                color: recurrenceTypeStyles[recurrence.frequency]?.color,
-              }}
+              class={`text-2xl ${recurrenceTypeStyles[recurrence.frequency]?.textColor}`}
             >
-              <Icon
-                name={recurrenceTypeStyles[recurrence.frequency]?.icon || ""}
-              />
+              {(() => {
+                switch (recurrenceTypeIcons[recurrence.frequency]?.icon) {
+                  case "calendar":
+                    return <CalendarIcon />;
+                  case "calendar-days":
+                    return <CalendarDaysIcon />;
+                  // Add other cases for other icons if needed
+                  default:
+                    return null;
+                }
+              })()}
             </span>
             {recurrence.name}
           </h3>
           <span
-            class="inline-flex items-center gap-2 px-3 py-1.5 
+            class={`inline-flex items-center gap-2 px-3 py-1.5 
                    text-xs font-bold uppercase tracking-wider
-                   border-2 shadow-[var(--shadow-sm)]"
-            style={{
-              backgroundColor: `${
-                recurrenceTypeStyles[recurrence.frequency]?.color
-              }10`,
-              borderColor: recurrenceTypeStyles[recurrence.frequency]?.color,
-              color: recurrenceTypeStyles[recurrence.frequency]?.color,
-            }}
+                   border-2 shadow-[var(--shadow-sm)]
+                   ${recurrenceTypeStyles[recurrence.frequency]?.bgColor}
+                   ${recurrenceTypeStyles[recurrence.frequency]?.borderColor}
+                   ${recurrenceTypeStyles[recurrence.frequency]?.textColor}`}
           >
             {recurrence.frequency}
           </span>

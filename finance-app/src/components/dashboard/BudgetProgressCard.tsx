@@ -6,7 +6,7 @@ import {
   WalletIcon,
   SadFaceIcon,
   HappyFaceIcon,
-} from "../icons";
+} from "@/components/icons";
 
 interface BudgetProgressCardProps {
   spent: number;
@@ -54,10 +54,12 @@ export const BudgetProgressCard: FC<BudgetProgressCardProps> = ({
         </span>
       </div>
 
-      <div class="w-full h-8 bg-secondary/20 border-2 border-border relative overflow-hidden mb-4">
+      <div
+        class="w-full h-8 bg-secondary/20 border-2 border-border relative overflow-hidden mb-4"
+        style={{ '--progress-width': `${percentage}%` }}
+      >
         <div
-          style={{ width: `${percentage}%` }}
-          class={`h-full transition-all duration-300 ${
+          class={`h-full transition-all duration-300 w-[var(--progress-width)] ${
             isOverBudget
               ? "bg-[var(--destructive)]"
               : percentage > 90

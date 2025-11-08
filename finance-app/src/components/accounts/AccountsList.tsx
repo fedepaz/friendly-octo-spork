@@ -1,37 +1,16 @@
 // src/components/accounts/AccountsList.tsx
 
+import type { FC } from "hono/jsx";
 import type { Account } from "@/generated/prisma";
 import { AccountCard } from "./AccountCard";
-import type { FC } from "hono/jsx";
 import { Button } from "@/components/shared/Button"; // New import
-import { AccountRow } from "./AccountRow";
-import { ClipboardIcon } from "../icons";
+import { ClipboardIcon } from "@/components/icons/ClipboardIcon";
 
-const EmptyState: FC = () => (
-  <div
-    id="accounts-list"
-    class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-12 text-center rounded-none"
-  >
-              <ClipboardIcon class="text-6xl mb-4" aria-label="No accounts icon" />    <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
-      NO ACCOUNTS YET
-    </h3>
-    <p class="text-muted-foreground">
-      CREATE YOUR FIRST ACCOUNT TO START TRACKING YOUR FINANCES.
-    </p>
-    <Button
-      type="button" // Explicitly set type to "button"
-      hxGet="/api/accounts/new"
-      hxTarget="#modal-content"
-      hxSwap="innerHTML"
-      dataToggle="modal"
-      dataTarget="#htmx-modal"
-    >
-      CREATE ACCOUNT
-    </Button>
-  </div>
-);
+interface AccountsListProps {
+  accounts: Account[];
+}
 
-export function AccountsList({ accounts }: { accounts: Account[] }) {
+export const AccountsList: FC<AccountsListProps> = ({ accounts }) => {
   if (accounts.length === 0) {
     return <EmptyState />;
   }

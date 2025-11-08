@@ -3,7 +3,7 @@
 import { CategoryBadge } from "@/components/categories/CategoryBadge";
 import Layout from "@/components/shared/Layout";
 import { Button } from "@/components/shared/Button";
-import { TagIcon } from "../components/icons";
+import { TagIcon } from "@/components/icons/TagIcon";
 import type { Category } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
 
@@ -33,7 +33,11 @@ const EmptyState: FC = () => (
   </div>
 );
 
-export const CategoriesPage: FC<{ data?: CategoriesPageData }> = ({ data }) => {
+interface CategoriesPageProps {
+  data?: CategoriesPageData;
+}
+
+export const CategoriesPage: FC<CategoriesPageProps> = ({ data }) => {
   const categories = data?.categories || [];
   const groupedCategories = categories.reduce((acc, cat) => {
     if (!acc[cat.type]) acc[cat.type] = [];

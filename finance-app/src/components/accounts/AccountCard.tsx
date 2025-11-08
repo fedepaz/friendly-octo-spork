@@ -2,7 +2,7 @@
 
 import type { Account } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
-import { BankIcon, WalletIcon, CreditCardIcon, TrendingUpIcon } from "../icons";
+import { BankIcon, WalletIcon, CreditCardIcon, TrendingUpIcon } from "@/components/icons";
 
 const typeStyleMap: Record<
   string,
@@ -29,7 +29,11 @@ const typeStyleMap: Record<
   },
 };
 
-export const AccountCard: FC<{ account: Account }> = ({ account }) => {
+interface AccountCardProps {
+  account: Account;
+}
+
+export const AccountCard: FC<AccountCardProps> = ({ account }) => {
   const typeStyles = typeStyleMap[account.type] || {
     bg: "bg-muted/20",
     text: "text-muted-foreground",

@@ -1,8 +1,8 @@
 // src/pages/TransactionsPage.tsx
 
 import { TransactionForm } from "@/components/transactions/TransactionForm";
-import { TransactionTable } from "@/components/transactions/TransactionsTable";
-import { TransactionFilters } from "@/components/transactions/TransactionFilters";
+import { TransactionTable } from "@/components/transfers/TransactionsTable";
+
 import type {
   Transaction,
   Category,
@@ -19,9 +19,11 @@ interface TransactionsPageData {
   recurrences: Recurrence[];
 }
 
-export const TransactionsPage: FC<{ data?: TransactionsPageData }> = ({
-  data,
-}) => {
+interface TransactionsPageProps {
+  data?: TransactionsPageData;
+}
+
+export const TransactionsPage: FC<TransactionsPageProps> = ({ data }) => {
   const transactions = data?.transactions || [];
   const categories = data?.categories || [];
   const accounts = data?.accounts || [];
@@ -38,16 +40,6 @@ export const TransactionsPage: FC<{ data?: TransactionsPageData }> = ({
         accounts={accounts}
         recurrences={recurrences}
       />
-
-      <TransactionFilters
-        categories={categories}
-        accounts={accounts}
-        recurrences={recurrences}
-      />
-
-      <div id="transaction-table-container">
-        <TransactionTable transactions={transactions} />
-      </div>
     </Layout>
   );
 };

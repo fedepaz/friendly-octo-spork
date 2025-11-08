@@ -3,6 +3,7 @@
 import type { FC } from "hono/jsx";
 import type { Category, Account, Recurrence } from "@/generated/prisma";
 import { Button } from "@/components/shared/Button"; // New import
+import { LoadingSpinnerIcon } from "../icons/LoadingSpinnerIcon";
 
 interface TransactionFormProps {
   categories: Category[];
@@ -186,16 +187,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     </div>
 
     <Button type="submit" class="bg-primary text-primary-foreground mt-6">
-      <svg
-        class="htmx-indicator animate-spin h-5 w-5 mr-2 hidden"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        aria-label="Loading" // Added aria-label for accessibility
-      >
-        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-      </svg>
+      <LoadingSpinnerIcon class="mr-2" />
       Add Transaction
     </Button>
   </form>

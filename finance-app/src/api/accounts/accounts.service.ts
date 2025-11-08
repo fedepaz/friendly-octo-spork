@@ -19,6 +19,14 @@ export class AccountsService {
     return accounts;
   }
 
+  async getAccountById(userId: string, accountId: number) {
+    const account = await prisma.account.findUnique({
+      where: { id: accountId, userId },
+    });
+
+    return account;
+  }
+
   async createAccount(userId: string, data: CreateAccountInput) {
     const account = await prisma.account.create({
       data: {

@@ -1,13 +1,12 @@
 // src/components/shared/Layout.tsx
 
-import { DollarSignIcon } from "../icons";
+import { DollarSignIcon } from "@/components/icons/DollarSignIcon";
 import { HamburgerMenu } from "./HamburgerMenu";
 import { Sidebar } from "./Sidebar"; // New import
 import type { FC } from "hono/jsx";
 
 interface LayoutProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  children?: any;
+  children?: Child;
   activeNavItem?: string;
 }
 
@@ -38,9 +37,9 @@ const Layout: FC<LayoutProps> = (props) => {
         <div
           id="mobile-sidebar-container"
           class="mobile-sidebar-container"
-          onclick="this.classList.remove('open')"
+          hx-on:click="this.classList.remove('open')"
         >
-          <div class="w-80 h-full" onclick="event.stopPropagation()">
+          <div class="w-80 h-full" hx-on:click="event.stopPropagation()">
             <Sidebar activeNavItem={props.activeNavItem} isMobile={true} />
           </div>
         </div>

@@ -1,7 +1,7 @@
 // src/components/shared/Toast.tsx
 
 import type { FC } from "hono/jsx";
-import { CheckIcon, AlertTriangleIcon, InfoIcon, XIcon } from "../icons";
+import { CheckIcon, AlertTriangleIcon, InfoIcon, XIcon } from "@/components/icons";
 import { Button } from "./Button";
 
 interface ToastProps {

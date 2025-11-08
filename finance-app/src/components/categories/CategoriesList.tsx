@@ -5,7 +5,7 @@ import { CategoryBadge } from "./CategoryBadge";
 
 import type { FC } from "hono/jsx";
 import { Button } from "@/components/shared/Button"; // New import
-import { CategoryRow } from "./CategoryRow"; import { ClipboardIcon } from "../icons";
+import { ClipboardIcon } from "@/components/icons/ClipboardIcon";
 
 const EmptyState: FC = () => (
   <div
@@ -31,7 +31,11 @@ const EmptyState: FC = () => (
   </div>
 );
 
-const CategoryCard: FC<{ category: Category }> = ({ category }) => (
+interface CategoryCardProps {
+  category: Category;
+}
+
+const CategoryCard: FC<CategoryCardProps> = ({ category }) => (
   <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 rounded-none
     transition-all duration-150
     hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]"
@@ -49,7 +53,11 @@ const CategoryCard: FC<{ category: Category }> = ({ category }) => (
   </div>
 );
 
-export function CategoriesList({ categories }: { categories: Category[] }) {
+interface CategoriesListProps {
+  categories: Category[];
+}
+
+export const CategoriesList: FC<CategoriesListProps> = ({ categories }) => {
   if (categories.length === 0) {
     return <EmptyState />;
   }

@@ -2,11 +2,7 @@ import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
 import { jsxRenderer } from "hono/jsx-renderer";
 
-import {
-  jwtMiddleware,
-  refreshTokenIfNeeded,
-  requireAuth,
-} from "./middleware/auth";
+import { refreshTokenIfNeeded, requireAuth } from "./middleware/auth";
 import accountsRoutes from "./api/accounts/accounts.routes";
 import { logger } from "hono/logger";
 import { cors } from "hono/cors";
@@ -15,9 +11,9 @@ import { ErrorPage } from "./pages/ErrorPage";
 import categoriesRoutes from "./api/categories/categories.routes";
 import recurrencesRoutes from "./api/recurrences/recurrences.routes";
 import dashboardRoutes from "./api/dashboard/dashboard.routes";
-import Layout from "./components/shared/Layout";
 import Injection from "./styles/injection";
-import transactionsRoutes from "./api/transactions/transactions.routes";
+
+import expensesRoutes from "./api/expenses/expenses.routes";
 
 const app = new Hono();
 
@@ -52,13 +48,14 @@ app.use("/accounts/*", requireAuth, refreshTokenIfNeeded);
 app.use("/categories/*", requireAuth, refreshTokenIfNeeded);
 app.use("/recurrences/*", requireAuth, refreshTokenIfNeeded);
 app.use("/transactions/*", requireAuth, refreshTokenIfNeeded);
+app.use("/expenses/*", requireAuth, refreshTokenIfNeeded);
 app.use("/api/*", requireAuth, refreshTokenIfNeeded);
 
 // Mount the protected API routes
 app.route("/accounts", accountsRoutes);
 app.route("/categories", categoriesRoutes);
 app.route("/recurrences", recurrencesRoutes);
-app.route("/transactions", transactionsRoutes);
+app.route("/expenses", expensesRoutes);
 app.route("/dashboard", dashboardRoutes);
 
 /**

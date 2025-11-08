@@ -18,12 +18,7 @@ const typeStyleMap: Record<
     border: "border-primary",
     amountText: "text-[var(--primary)]",
   },
-  EXPENSE: {
-    bg: "bg-destructive/20",
-    text: "text-[var(--destructive)]",
-    border: "border-destructive",
-    amountText: "text-[var(--destructive)]",
-  },
+
   TRANSFER: {
     bg: "bg-accent/20",
     text: "text-[var(--accent)]",

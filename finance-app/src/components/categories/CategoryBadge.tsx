@@ -32,7 +32,11 @@ const typeStyleMap: Record<
   },
 };
 
-export const CategoryBadge: FC<{ category: Category }> = ({ category }) => {
+interface CategoryBadgeProps {
+  category: Category;
+}
+
+export const CategoryBadge: FC<CategoryBadgeProps> = ({ category }) => {
   const typeStyles = typeStyleMap[category.type] || {
     bg: "bg-muted/20",
     text: "text-muted-foreground",

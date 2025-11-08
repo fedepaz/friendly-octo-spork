@@ -1,11 +1,10 @@
 // src/components/recurrences/RecurrencesList.tsx
 
+import type { FC } from "hono/jsx";
 import type { Recurrence } from "@/generated/prisma";
 import { RecurrenceCard } from "./RecurrenceCard";
-import type { FC } from "hono/jsx";
 import { Button } from "@/components/shared/Button"; // New import
-import { RecurrenceRow } from "./RecurrenceRow";
-import { ClipboardIcon } from "../icons";
+import { ClipboardIcon } from "@/components/icons/ClipboardIcon";
 
 const EmptyState: FC = () => (
   <div
@@ -31,11 +30,11 @@ const EmptyState: FC = () => (
   </div>
 );
 
-export function RecurrencesList({
-  recurrences,
-}: {
+interface RecurrencesListProps {
   recurrences: Recurrence[];
-}) {
+}
+
+export const RecurrencesList: FC<RecurrencesListProps> = ({ recurrences }) => {
   if (recurrences.length === 0) {
     return <EmptyState />;
   }

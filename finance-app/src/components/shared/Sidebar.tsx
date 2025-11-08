@@ -22,7 +22,7 @@ import {
   WalletIcon,
   SadFaceIcon,
   HappyFaceIcon,
-} from "../icons";
+} from "@/components/icons";
 import { Button } from "./Button";
 
 interface SidebarProps {

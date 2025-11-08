@@ -1,13 +1,95 @@
 // src/api/transactions/transactions.service.ts
 
 import { prisma } from "@/lib/prisma";
-import type { CreateTransactionInput } from "./transactions.schema";
-import { Prisma } from "@/generated/prisma";
+import type {
+  CreateTransactionInput,
+  TransactionResponse,
+} from "./transactions.schema";
+import { Prisma, TransactionType, type Transaction } from "@/generated/prisma";
+import { AccountsService } from "../accounts/accounts.service";
 
 export class TransactionsService {
-  async getTransactions(userId: string) {
+  private mapTransactionToResponse(
+    tx: TransactionResponse
+  ): TransactionResponse {
+    return {
+      id: tx.id,
+      type: tx.type,
+      amount: tx.amount.toNumber(), // Decimal → number
+      date: tx.date,
+      description: tx.description,
+      metadata: tx.metadata as Record<string, unknown> | null,
+      createdAt: tx.createdAt,
+      updatedAt: tx.updatedAt,
+
+      // Map category
+      category: tx.category
+        ? {
+            id: tx.category.id,
+            name: tx.category.name,
+            type: tx.category.type,
+            color: tx.category.color,
+          }
+        : null,
+
+      // Map source account
+      sourceAccount: tx.sourceAccount
+        ? {
+            id: tx.sourceAccount.id,
+            name: tx.sourceAccount.name,
+            type: tx.sourceAccount.type,
+            currency: tx.sourceAccount.currency,
+            balance: tx.sourceAccount.balance.toNumber(), // Decimal → number
+          }
+        : null,
+
+      // Map target account
+      targetAccount: tx.targetAccount
+        ? {
+            id: tx.targetAccount.id,
+            name: tx.targetAccount.name,
+            type: tx.targetAccount.type,
+            currency: tx.targetAccount.currency,
+            balance: tx.targetAccount.balance.toNumber(), // Decimal → number
+          }
+        : null,
+
+      // Map recurrence
+      recurrence: tx.recurrence
+        ? {
+            id: tx.recurrence.id,
+            name: tx.recurrence.name,
+            frequency: tx.recurrence.frequency,
+            totalParts: tx.recurrence.totalParts,
+            currentPart: tx.recurrence.currentPart,
+            startDate: tx.recurrence.startDate,
+            nextDate: tx.recurrence.nextDate,
+            active: tx.recurrence.active,
+          }
+        : null,
+    };
+  }
+
+  // Get by trasnsactionType and by month
+  async getTransactionsByType(
+    userId: string,
+    transactionType: TransactionType,
+    filters?: { month?: string }
+  ): Promise<TransactionResponse[]> {
+    const whereClause: Prisma.TransactionWhereInput = {
+      userId,
+      type: transactionType,
+    };
+    if (filters?.month) {
+      const [year, month] = filters.month.split("-");
+      if (!year || !month) return [];
+      whereClause.date = {
+        gte: new Date(+year, +month - 1, 1),
+        lte: new Date(+year, +month, 1),
+      };
+    }
     const transactions = await prisma.transaction.findMany({
-      where: { userId },
+      where: whereClause,
       include: {
         category: true,
         sourceAccount: true,
@@ -17,31 +99,7 @@ export class TransactionsService {
       orderBy: { date: "desc" },
     });
 
-    return transactions;
-  }
-
-  // Get categories for form dropdown
-  async getCategories(userId: string) {
-    return await prisma.category.findMany({
-      where: { userId },
-      orderBy: { name: "asc" },
-    });
-  }
-
-  // Get accounts for form dropdown
-  async getAccounts(userId: string) {
-    return await prisma.account.findMany({
-      where: { userId },
-      orderBy: { name: "asc" },
-    });
-  }
-
-  // Get active recurrences for form dropdown
-  async getActiveRecurrences(userId: string) {
-    return await prisma.recurrence.findMany({
-      where: { userId, active: true },
-      orderBy: { name: "asc" },
-    });
+    return transactions.map((tx) => this.mapTransactionToResponse(tx));
   }
 
   // CREATE transaction with balance updates
@@ -190,79 +248,5 @@ export class TransactionsService {
     }
 
     return next;
-  }
-
-  // DELETE transaction (with balance reversal)
-  async deleteTransaction(userId: string, transactionId: number) {
-    return await prisma.$transaction(async (tx) => {
-      // Get transaction before deleting
-      const transaction = await tx.transaction.findUnique({
-        where: { id: transactionId, userId },
-      });
-
-      if (!transaction) {
-        throw new Error("Transaction not found");
-      }
-
-      // Reverse balance updates
-      switch (transaction.type) {
-        case "EXPENSE":
-        case "PAYMENT":
-          if (transaction.sourceAccountId) {
-            await tx.account.update({
-              where: { id: transaction.sourceAccountId },
-              data: {
-                balance: {
-                  increment: transaction.amount, // Reverse deduction
-                },
-              },
-            });
-          }
-          break;
-
-        case "INCOME":
-        case "RETURN":
-          if (transaction.targetAccountId) {
-            await tx.account.update({
-              where: { id: transaction.targetAccountId },
-              data: {
-                balance: {
-                  decrement: transaction.amount, // Reverse addition
-                },
-              },
-            });
-          }
-          break;
-
-        case "TRANSFER":
-          if (transaction.sourceAccountId && transaction.targetAccountId) {
-            await tx.account.update({
-              where: { id: transaction.sourceAccountId },
-              data: { balance: { increment: transaction.amount } },
-            });
-            await tx.account.update({
-              where: { id: transaction.targetAccountId },
-              data: { balance: { decrement: transaction.amount } },
-            });
-          }
-          break;
-
-        case "INVESTMENT":
-          if (transaction.sourceAccountId) {
-            await tx.account.update({
-              where: { id: transaction.sourceAccountId },
-              data: { balance: { increment: transaction.amount } },
-            });
-          }
-          break;
-      }
-
-      // Delete transaction
-      await tx.transaction.delete({
-        where: { id: transactionId },
-      });
-
-      return transaction;
-    });
   }
 }

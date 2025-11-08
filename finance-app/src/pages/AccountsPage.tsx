@@ -3,7 +3,7 @@
 import { AccountCard } from "@/components/accounts/AccountCard";
 import Layout from "@/components/shared/Layout";
 import { Button } from "@/components/shared/Button";
-import { CreditCardIcon } from "../components/icons";
+import { CreditCardIcon } from "@/components/icons/CreditCardIcon";
 import type { Account } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
 
@@ -32,7 +32,11 @@ const EmptyState: FC = () => (
   </div>
 );
 
-export const AccountsPage: FC<AccountsPageData> = ({ accounts }) => {
+interface AccountsPageProps {
+  accounts: Account[];
+}
+
+export const AccountsPage: FC<AccountsPageProps> = ({ accounts }) => {
   return (
     <Layout activeNavItem="/accounts">
       <div class="flex items-center justify-between mb-8">
