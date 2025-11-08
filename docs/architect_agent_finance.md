@@ -73,6 +73,20 @@ Data Architecture:
 
 **Backend Architecture (Hono)**:
 
+**Modular Transaction Endpoints**:
+The initial `TransactionsService` has been refactored into a more modular and maintainable structure. Instead of a single service handling all transaction types, the logic is now split into dedicated services based on the transaction type. This aligns with the vertical slicing architecture and improves separation of concerns.
+
+- **/api/incomes**: Handles all logic related to `INCOME` transactions.
+- **/api/expenses**: Handles all logic related to `EXPENSE` transactions.
+- **/api/transfers**: Handles all logic related to `TRANSFER` transactions.
+- **/api/investments**: Handles all logic related to `INVESTMENT` transactions.
+- **/api/returns**: Handles all logic related to `RETURN` transactions.
+- **/api/payments**: Handles all logic related to `PAYMENT` transactions.
+
+Each of these modules has its own controller, service, and schema files. The generic helper methods previously in `TransactionsService` (e.g., `getCategories`, `getAccounts`) have been deprecated or moved into these more specific services as needed.
+
+This modular approach also applies to frontend components. For example, the generic `TransactionRow` component has been moved and adapted into more specific components like `transfers/TransactionRow` to handle the unique display requirements of each transaction type.
+
 ```typescript
 // Route structure
 /api
@@ -294,7 +308,6 @@ interface ErrorResponse {
   hx-post="/api/expenses"
   hx-target="#expense-list"
   hx-swap="afterbegin"
-  hx-on::after-request="this.reset()"
 >
   <input type="date" name="date" required />
   <input type="number" name="amount" step="0.01" required />
@@ -304,6 +317,18 @@ interface ErrorResponse {
   </select>
   <button type="submit">Add Expense</button>
 </form>
+
+<!-- Simple UI Toggle Pattern -->
+<button
+  hx-on:click="
+    const sidebar = document.getElementById('mobile-sidebar-container');
+    if (sidebar) {
+      sidebar.classList.toggle('open');
+    }
+  "
+>
+  Toggle Menu
+</button>
 
 <!-- Expense List (target for updates) -->
 <div id="expense-list">

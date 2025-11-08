@@ -240,6 +240,26 @@ class="bg-muted text-muted-foreground"
 
 ---
 
+## Iconography
+
+All icons must be SVG components and imported from the central icon library.
+
+- **Storage Location**: `finance-app/src/components/icons`
+- **Import Path**: Always use the absolute path alias `@/components/icons`.
+
+**Example Usage:**
+
+```tsx
+import { PlusIcon } from "@/components/icons";
+
+<Button>
+  <PlusIcon class="mr-2" />
+  Add Item
+</Button>
+```
+
+---
+
 ## Spacing & Layout Conventions
 
 ### Padding Scale
@@ -939,6 +959,23 @@ class="animate-fade-in"
 
 // Slide In
 class="animate-slide-in-right"
+```
+
+### Loading States
+
+For indicating loading or processing states, use the `LoadingSpinnerIcon` component. It should be placed within buttons and is typically controlled by HTMX's request lifecycle classes.
+
+**Standard Implementation:**
+
+```tsx
+import { LoadingSpinnerIcon } from "@/components/icons/LoadingSpinnerIcon";
+import { Button } from "@/components/shared/Button";
+
+<Button type="submit">
+  <LoadingSpinnerIcon class="mr-2" />
+  <span class="[.htmx-request_&]:hidden">Save</span>
+  <span class="hidden [.htmx-request_&]:inline">Saving...</span>
+</Button>
 ```
 
 ---

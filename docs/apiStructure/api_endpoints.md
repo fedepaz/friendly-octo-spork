@@ -69,7 +69,6 @@
 | POST | `/` | Create new transaction | ✅ |
 | GET | `/:id` | Get transaction details | ✅ |
 | PUT | `/:id` | Update transaction | ✅ |
-| DELETE | `/:id` | Delete transaction | ✅ |
 | GET | `/:id/edit` | Get edit form (HTMX) | ✅ |
 
 **Query Parameters (GET `/`):**

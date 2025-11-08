@@ -53,7 +53,7 @@ You are a systematic Frontend Engineer specializing in **server-side rendering**
 **Example Usage:**
 
 ```typescript
-import { LandmarkIcon, LineChartIcon, PlusIcon, EditIcon } from "../icons";
+import { LandmarkIcon, LineChartIcon, PlusIcon, EditIcon } from "@/components/icons";
 
 export const ExpenseForm: FC = () => (
   <form>
@@ -163,6 +163,85 @@ hx-trigger="click" hx-trigger="change" hx-trigger="keyup changed delay:300ms"
 <!-- Include form data -->
 hx-include="[name='category']" hx-include="closest form"
 ```
+
+### Reusable UI Components
+
+#### Loading Spinner
+
+Use the `LoadingSpinnerIcon` component for indicating loading states, typically within buttons during HTMX requests.
+
+**Example Usage:**
+
+```tsx
+import { LoadingSpinnerIcon } from "@/components/icons/LoadingSpinnerIcon";
+import { Button } from "@/components/shared/Button";
+
+<Button type="submit" class="bg-primary text-primary-foreground">
+  <LoadingSpinnerIcon class="mr-2" />
+  Submit
+</Button>
+```
+
+#### Modal Dialog
+
+A reusable `Modal` component is available for displaying content in a dialog overlay. It is designed to be controlled via HTMX events.
+
+**Component:** `finance-app/src/components/shared/Modal.tsx`
+
+**Example Usage:**
+
+1.  **Triggering the Modal:**
+    A button can open a modal by fetching content from an API and placing it inside the modal target.
+
+    ```tsx
+    <Button
+      hx-get="/api/accounts/new"
+      hx-target="#modal-content"
+      hx-swap="innerHTML"
+      data-toggle="modal"
+      data-target="#htmx-modal"
+    >
+      Create Account
+    </Button>
+    ```
+
+2.  **Modal Structure in Layout:**
+    The main layout should contain the modal structure.
+
+    ```tsx
+    // In your main layout file (e.g., Layout.tsx)
+    <div id="htmx-modal">
+      {/* The modal content will be swapped here */}
+    </div>
+    ```
+
+3.  **API Endpoint Returning Modal Content:**
+    The API endpoint should return the `Modal` component with the form or content to be displayed.
+
+    ```tsx
+    // /api/accounts/new endpoint
+    app.get("/api/accounts/new", (c) => {
+      return c.html(
+        <Modal title="Create New Account" isOpen={true} onClose={() => {}}>
+          <AccountForm />
+        </Modal>
+      );
+    });
+    ```
+
+4.  **Closing the Modal:**
+    The modal can be closed by triggering a `closeModal` event on the modal itself, or by clicking the backdrop.
+
+    ```tsx
+    // Inside the Modal component
+    <button
+      type="button"
+      hx-on:click="htmx.trigger('#htmx-modal', 'closeModal')"
+      aria-label="Close modal"
+    >
+      <XIcon />
+    </button>
+    ```
 
 ### Pattern 1: Inline Editing
 
@@ -339,17 +418,22 @@ export const ExpenseFilters: FC = () => (
 **Example of acceptable client-side JS**:
 
 ```typescript
-// Inline HTMX callback for form reset animation
-<form
-  hx-post="/api/expenses"
-  hx-on::after-request="
-    if(event.detail.successful) {
-      this.reset();
-      this.classList.add('flash-success');
-      setTimeout(() => this.classList.remove('flash-success'), 300);
+// Inline HTMX event handling for simple UI toggles
+<Button
+  type="button"
+  id="hamburger-menu"
+  aria-controls="mobile-sidebar-container"
+  aria-expanded="false"
+  hx-on:click="
+    const sidebar = document.getElementById('mobile-sidebar-container');
+    if (sidebar) {
+      sidebar.classList.toggle('open');
+      this.setAttribute('aria-expanded', sidebar.classList.contains('open'));
     }
   "
 >
+  {/* ... icon bars ... */}
+</Button>
 ```
 
 **What NOT to do**:
