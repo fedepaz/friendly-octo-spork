@@ -36,9 +36,17 @@ export const Sidebar: FC<SidebarProps> = ({
 }) => {
   const navLinks = [
     { href: "/dashboard", label: "Dashboard", icon: "line-chart" },
-    { href: "/transactions", label: "Transactions", icon: "wallet" },
     { href: "/accounts", label: "Accounts", icon: "landmark" },
     { href: "/categories", label: "Categories", icon: "folder" },
+    { href: "/recurrences", label: "Recurrences", icon: "calendar" },
+    { href: "/transactions", label: "Transactions", icon: "wallet" },
+
+    { href: "/incomes", label: "Incomes", icon: "credit-card" },
+    { href: "/expenses", label: "Expenses", icon: "tag" },
+    { href: "/transfers", label: "Transfers", icon: "clipboard" },
+    { href: "/investments", label: "Investments", icon: "sparkles" },
+    { href: "/returns", label: "Returns", icon: "alert-triangle" },
+    { href: "/payments", label: "Payments", icon: "calendar-days" },
   ];
 
   return (

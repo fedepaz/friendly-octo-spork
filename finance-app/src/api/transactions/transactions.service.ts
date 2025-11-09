@@ -1,16 +1,19 @@
 // src/api/transactions/transactions.service.ts
 
-import { prisma } from "@/lib/prisma";
+import {
+  prisma,
+  TRANSACTION_INCLUDES,
+  type TransactionWithRelations,
+} from "@/lib/prisma";
 import type {
   CreateTransactionInput,
   TransactionResponse,
 } from "./transactions.schema";
-import { Prisma, TransactionType, type Transaction } from "@/generated/prisma";
-import { AccountsService } from "../accounts/accounts.service";
+import { Prisma, TransactionType } from "@/generated/prisma";
 
 export class TransactionsService {
   private mapTransactionToResponse(
-    tx: TransactionResponse
+    tx: TransactionWithRelations
   ): TransactionResponse {
     return {
       id: tx.id,
@@ -100,6 +103,22 @@ export class TransactionsService {
     });
 
     return transactions.map((tx) => this.mapTransactionToResponse(tx));
+  }
+
+  // GET transaction by id
+  async getTransactionById(
+    transactionId: number
+  ): Promise<TransactionResponse> {
+    const transaction = await prisma.transaction.findUnique({
+      where: { id: transactionId },
+      include: TRANSACTION_INCLUDES,
+    });
+
+    if (!transaction) {
+      throw new Error(`Transaction with id ${transactionId} not found`);
+      // Or return a default/empty response if your design allows it
+    }
+    return this.mapTransactionToResponse(transaction);
   }
 
   // CREATE transaction with balance updates

@@ -4,9 +4,9 @@ import type { Context } from "hono";
 import type { TransactionsService } from "../transactions/transactions.service";
 import { createExpenseSchema } from "./expenses.schema";
 import { ErrorPage } from "@/pages/ErrorPage";
-import { ExpenseRow } from "@/components/expenses/ExpenseRow";
-import { ExpensesList } from "@/components/expenses/ExpenseList";
-import { ExpensesPage } from "@/pages/ExpensesPage";
+import { TransactionPage } from "@/pages/TransactionsPage";
+import { TransactionList } from "@/components/transactions/TransactionList";
+import { TransactionRow } from "@/components/transactions/TransactionRow";
 
 export class ExpensesController {
   constructor(private transactionService: TransactionsService) {}
@@ -25,7 +25,13 @@ export class ExpensesController {
       );
 
       return c.render(
-        <ExpensesPage expenses={expenses} currentMonth={month} />
+        <TransactionPage
+          transactions={expenses}
+          currentMonth={month}
+          transactionType="expenses"
+          title="Gastos"
+          navItem="/expenses"
+        />
       );
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";
@@ -47,7 +53,13 @@ export class ExpensesController {
         { month }
       );
 
-      return c.html(<ExpensesList expenses={expenses} currentMonth={month} />);
+      return c.html(
+        <TransactionList
+          transactions={expenses}
+          currentMonth={month}
+          transactionType="expenses"
+        />
+      );
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";
       const stack = error instanceof Error ? error.stack : undefined;
@@ -68,13 +80,16 @@ export class ExpensesController {
         return c.render(<ErrorPage message={validationResult.error.message} />);
       }
 
-      const expense = await this.transactionService.createTransaction(
+      const expenseCreated = await this.transactionService.createTransaction(
         userId,
         validationResult.data
       );
 
-      // Return ONLY the new transaction row (HTMX will prepend it)
-      return c.html(<ExpenseRow transaction={expense} />);
+      const expense = await this.transactionService.getTransactionById(
+        expenseCreated.id
+      );
+
+      return c.html(<TransactionRow transaction={expense} />);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";
       const stack = error instanceof Error ? error.stack : undefined;

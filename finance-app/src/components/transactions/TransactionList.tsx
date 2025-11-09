@@ -1,18 +1,19 @@
-// src/components/expenses/ExpenseList.tsx
+// src/components/transactions/TransactionList.tsx
 
-import type { Transaction } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
-import { ExpenseRow } from "./ExpenseRow";
+import { TransactionRow } from "./TransactionRow";
 import type { TransactionResponse } from "@/api/transactions/transactions.schema";
 
-interface ExpenseListProps {
-  expenses: TransactionResponse[];
+interface TransactionListProps {
+  transactions: TransactionResponse[];
   currentMonth: string;
+  transactionType: string; // "expenses", "incomes", "payments", etc.
 }
 
-export const ExpensesList: FC<ExpenseListProps> = ({
-  expenses,
+export const TransactionList: FC<TransactionListProps> = ({
+  transactions,
   currentMonth,
+  transactionType,
 }) => {
   const [year, month] = currentMonth.split("-").map(Number);
 
@@ -51,8 +52,7 @@ export const ExpensesList: FC<ExpenseListProps> = ({
   });
 
   return (
-    // CRITICAL: Wrap everything in the container that matches the target ID
-    <div id="expenses-container">
+    <div id="transactions-container">
       <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6">
         {/* Month Navigation Header */}
         <div class="flex items-center justify-center gap-4 mb-4 text-sm text-muted-foreground">
@@ -61,7 +61,7 @@ export const ExpensesList: FC<ExpenseListProps> = ({
           </h3>
         </div>
 
-        {/* Expenses Table */}
+        {/* Transactions Table */}
         <div class="border-2 border-border shadow-[var(--shadow)] overflow-x-auto">
           <table class="w-full">
             <thead>
@@ -87,9 +87,12 @@ export const ExpensesList: FC<ExpenseListProps> = ({
               </tr>
             </thead>
             <tbody id="transaction-list" class="divide-y-2 divide-border">
-              {expenses.length > 0 &&
-                expenses.map((transaction) => (
-                  <ExpenseRow key={transaction.id} transaction={transaction} />
+              {transactions.length > 0 &&
+                transactions.map((transaction) => (
+                  <TransactionRow
+                    key={transaction.id}
+                    transaction={transaction}
+                  />
                 ))}
             </tbody>
           </table>
@@ -99,8 +102,8 @@ export const ExpensesList: FC<ExpenseListProps> = ({
         <div class="flex items-center justify-center gap-4 mt-4 text-sm text-muted-foreground">
           <button
             class="px-4 py-2 bg-primary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[var(--shadow-lg)] transition-all"
-            hx-get={`/expenses/list?month=${prevMonth}`}
-            hx-target="#expenses-container"
+            hx-get={`/${transactionType}/list?month=${prevMonth}`}
+            hx-target="#transactions-container"
             hx-swap="outerHTML"
           >
             {displayPrevMonth}
@@ -110,8 +113,8 @@ export const ExpensesList: FC<ExpenseListProps> = ({
 
           <button
             class="px-4 py-2 bg-primary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[var(--shadow-lg)] transition-all"
-            hx-get={`/expenses/list?month=${nextMonth}`}
-            hx-target="#expenses-container"
+            hx-get={`/${transactionType}/list?month=${nextMonth}`}
+            hx-target="#transactions-container"
             hx-swap="outerHTML"
           >
             {displayNextMonth}

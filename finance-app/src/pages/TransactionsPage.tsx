@@ -1,45 +1,46 @@
-// src/pages/TransactionsPage.tsx
+// src/pages/TransactionPage.tsx
 
 import { TransactionForm } from "@/components/transactions/TransactionForm";
-import { TransactionTable } from "@/components/transfers/TransactionsTable";
-
-import type {
-  Transaction,
-  Category,
-  Account,
-  Recurrence,
-} from "@/generated/prisma";
+import { TransactionList } from "@/components/transactions/TransactionList";
 import type { FC } from "hono/jsx";
 import Layout from "@/components/shared/Layout";
+import type { TransactionResponse } from "@/api/transactions/transactions.schema";
 
-interface TransactionsPageData {
-  transactions: Transaction[];
-  categories: Category[];
-  accounts: Account[];
-  recurrences: Recurrence[];
+interface TransactionPageProps {
+  transactions: TransactionResponse[];
+  currentMonth: string;
+  transactionType:
+    | "expenses"
+    | "incomes"
+    | "payments"
+    | "investments"
+    | "returns"
+    | "transfers";
+  title: string;
+  navItem: string;
 }
 
-interface TransactionsPageProps {
-  data?: TransactionsPageData;
-}
-
-export const TransactionsPage: FC<TransactionsPageProps> = ({ data }) => {
-  const transactions = data?.transactions || [];
-  const categories = data?.categories || [];
-  const accounts = data?.accounts || [];
-  const recurrences = data?.recurrences || [];
-
+export const TransactionPage: FC<TransactionPageProps> = ({
+  transactions,
+  currentMonth,
+  transactionType,
+  title,
+  navItem,
+}) => {
   return (
-    <Layout activeNavItem="/transactions">
+    <Layout activeNavItem={navItem}>
       <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">
-        Transactions
+        {title}
       </h1>
+      <div id="transactions-container">
+        <TransactionList
+          transactions={transactions}
+          currentMonth={currentMonth}
+          transactionType={transactionType}
+        />
+      </div>
 
-      <TransactionForm
-        categories={categories}
-        accounts={accounts}
-        recurrences={recurrences}
-      />
+      <TransactionForm transactionType={transactionType} />
     </Layout>
   );
 };

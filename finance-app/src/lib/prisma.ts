@@ -1,5 +1,5 @@
 // src/lib/prisma.ts
-import { PrismaClient } from "../generated/prisma";
+import { Prisma, PrismaClient } from "../generated/prisma";
 
 /**
  * Prisma Client Singleton for Local PostgreSQL
@@ -44,7 +44,24 @@ process.on("beforeExit", () => {
 });
 
 // Re-export Prisma enums for centralized access
-export { TransactionType, AccountType, Currency, CategoryType, RecurrenceType } from "../generated/prisma";
+export {
+  TransactionType,
+  AccountType,
+  Currency,
+  CategoryType,
+  RecurrenceType,
+} from "../generated/prisma";
+
+export const TRANSACTION_INCLUDES = {
+  category: true,
+  sourceAccount: true,
+  targetAccount: true,
+  recurrence: true,
+} satisfies Prisma.TransactionInclude;
+
+export type TransactionWithRelations = Prisma.TransactionGetPayload<{
+  include: typeof TRANSACTION_INCLUDES;
+}>;
 
 /**
  * Usage:

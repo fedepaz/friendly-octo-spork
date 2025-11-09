@@ -2,7 +2,7 @@
 
 import type { FC } from "hono/jsx";
 import type { Transaction, Category, Account } from "@/generated/prisma";
-import { TransactionRow } from "@/components/transfers/TransactionRow";
+
 import { SparklesIcon } from "@/components/icons/SparklesIcon";
 
 interface RecentActivityProps {
@@ -47,11 +47,6 @@ export const RecentActivity: FC<RecentActivityProps> = ({ recentActivity }) => {
               <th class="p-4 font-bold text-right">Actions</th>
             </tr>
           </thead>
-          <tbody class="bg-card">
-            {recentActivity.map((transaction) => (
-              <TransactionRow transaction={transaction} />
-            ))}
-          </tbody>
         </table>
       </div>
     </div>

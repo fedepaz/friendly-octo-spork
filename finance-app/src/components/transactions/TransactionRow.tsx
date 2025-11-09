@@ -1,15 +1,14 @@
-// src/components/expenses/ExpenseRow.tsx
+// src/components/transactions/TransactionRow.tsx
 
 import type { FC } from "hono/jsx";
-import type { Transaction } from "@/generated/prisma";
-import { Button } from "@/components/shared/Button"; // New import
+import { Button } from "@/components/shared/Button";
 import type { TransactionResponse } from "@/api/transactions/transactions.schema";
 
-interface ExpenseRowProps {
+interface TransactionRowProps {
   transaction: TransactionResponse;
 }
 
-export const ExpenseRow: FC<ExpenseRowProps> = ({ transaction }) => {
+export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {
   const formattedDate = new Date(transaction.date).toLocaleDateString("en-US", {
     day: "numeric",
   });
@@ -27,18 +26,14 @@ export const ExpenseRow: FC<ExpenseRowProps> = ({ transaction }) => {
         {transaction.amount.toString() || "-"}
       </td>
       <td class="p-4 text-sm text-left">{transaction.description || "-"}</td>
+      <td class="p-4 text-sm text-left">{transaction.category?.name || "-"}</td>
       <td class="p-4 text-sm text-left">
-        {" "}
-        {transaction.category?.name || "-"}
-      </td>
-      <td class="p-4 text-sm text-left">
-        {" "}
         {transaction.sourceAccount?.name || "-"}
       </td>
 
       <td class="p-4 text-sm flex gap-2 justify-center">
         <Button
-          type="button" // Explicitly set type to "button"
+          type="button"
           class="bg-secondary text-secondary-foreground"
           hxGet={`/api/transactions/${transaction.id}/edit`}
           hxTarget="#modal-content"
