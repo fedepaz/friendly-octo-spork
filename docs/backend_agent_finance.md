@@ -51,7 +51,7 @@ const transactions = await prisma.transaction.findMany({
     targetAccountId: targetAccountId, // Example filtering
     recurrenceId: recurrenceId,       // Example filtering
   },
-  include: { category: true, sourceAccount: true, targetAccount: true, recurrence: true },
+  include: TRANSACTION_INCLUDES,
   orderBy: { date: 'desc' }
 });
 
@@ -268,7 +268,7 @@ export default expenseRoutes;
 import { zValidator } from '@hono/zod-validator';
 import { expenseSchema } from '../schemas/expense';
 import { ExpenseService } from './expense.service';
-import { ExpenseRow } from '../components/expenses/ExpenseRow';
+import { TransactionRow } from '../components/transactions/TransactionRow'; // Updated import
 import { Context } from 'hono';
 
 export class ExpenseController {
@@ -288,7 +288,7 @@ export class ExpenseController {
 
       // 3. Use c.html() to return ONLY the HTML for the new table row.
       // This fragment will be inserted into the page by HTMX.
-      return c.html(<ExpenseRow expense={newExpense} />);
+      return c.html(<TransactionRow transaction={newExpense} />); // Updated component name
     }
   ];
 }
@@ -340,6 +340,7 @@ export type TransactionFilter = z.infer<typeof transactionFilterSchema>;
 // src/services/transactionService.ts
 import { prisma } from '../lib/prisma';
 import type { TransactionInput } from '../schemas/transaction';
+import { TRANSACTION_INCLUDES, TransactionWithRelations } from '../lib/prisma';
 
 export class TransactionService {
   async createTransaction(userId: string, data: TransactionInput) {
@@ -352,7 +353,13 @@ export class TransactionService {
     });
   }
   
-  async getMonthlyTransactions(userId: string, month: Date) {
+  async getMonthlyTransactions(userId: string, month: Date): Promise<{
+    transactions: TransactionWithRelations[];
+    summary: {
+      total: number;
+      byCategory: any; // You might want to define a more specific type for this
+    };
+  }> {
     const startOfMonth = new Date(month);
     startOfMonth.setDate(1);
     startOfMonth.setHours(0, 0, 0, 0);
@@ -370,7 +377,7 @@ export class TransactionService {
           lte: endOfMonth
         }
       },
-      include: { category: true, sourceAccount: true, targetAccount: true, recurrence: true },
+      include: TRANSACTION_INCLUDES,
       orderBy: { date: 'desc' }
     });
     
@@ -404,14 +411,16 @@ export class TransactionService {
 **Component Templates**:
 ```typescript
 // src/components/TransactionRow.tsx
-import type { Transaction } from '@prisma/client';
+import type { TransactionWithRelations } from '../lib/prisma';
 
-export function TransactionRow({ transaction }: { transaction: Transaction }) {
+export function TransactionRow({ transaction }: { transaction: TransactionWithRelations }) {
   return (
     <tr id={`transaction-${transaction.id}`}>
       <td>{new Date(transaction.date).toLocaleDateString()}</td>
-      <td>{transaction.concept}</td>
+      <td>{transaction.description}</td>
       <td>{transaction.type}</td>
+      <td>{transaction.category?.name || '-'}</td>
+      <td>{transaction.sourceAccount?.name || '-'}</td>
       <td class="text-end">${Number(transaction.amount).toFixed(2)}</td>
       <td class="text-end">
         <button 
@@ -437,11 +446,13 @@ export function TransactionRow({ transaction }: { transaction: Transaction }) {
 }
 
 // src/components/TransactionList.tsx
+import type { TransactionWithRelations } from '../lib/prisma';
+
 export function TransactionList({ 
   transactions,
   total 
 }: { 
-  transactions: Transaction[]; 
+  transactions: TransactionWithRelations[]; 
   total: number;
 }) {
   return (
@@ -454,8 +465,10 @@ export function TransactionList({
           <thead>
             <tr>
               <th>Date</th>
-              <th>Concept</th>
+              <th>Description</th>
               <th>Type</th>
+              <th>Category</th>
+              <th>Account</th>
               <th class="text-end">Amount</th>
               <th class="text-end">Actions</th>
             </tr>

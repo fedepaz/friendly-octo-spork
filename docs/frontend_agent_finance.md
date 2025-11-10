@@ -70,18 +70,19 @@ export const ExpenseForm: FC = () => (
 **NOT React** - This is server-side JSX that renders to HTML strings:
 
 ```typescript
-// src/components/expenses/ExpenseForm.tsx
+// src/components/transactions/TransactionForm.tsx
 import type { FC } from "hono/jsx";
 import { PlusIcon } from "../icons";
 
-interface ExpenseFormProps {
+interface TransactionFormProps {
+  transactionType: string;
   errors?: Record<string, string>;
 }
 
-export const ExpenseForm: FC<ExpenseFormProps> = ({ errors }) => (
+export const TransactionForm: FC<TransactionFormProps> = ({ transactionType, errors }) => (
   <form
-    hx-post="/api/expenses"
-    hx-target="#expense-list"
+    hx-post={`/${transactionType}`}
+    hx-target="#transaction-list"
     hx-swap="afterbegin"
     class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6"
   >
@@ -128,7 +129,7 @@ export const ExpenseForm: FC<ExpenseFormProps> = ({ errors }) => (
     >
       <span class="inline-flex items-center">
         <PlusIcon class="mr-2" />
-        <span class="[.htmx-request_&]:hidden">Add Expense</span>
+        <span class="[.htmx-request_&]:hidden">Add Transaction</span>
         <span class="hidden [.htmx-request_&]:inline">Adding...</span>
       </span>
     </button>
@@ -249,35 +250,35 @@ A reusable `Modal` component is available for displaying content in a dialog ove
 import type { FC } from "hono/jsx";
 import { EditIcon, SaveIcon, XIcon } from "../icons";
 
-interface Expense {
+interface Transaction {
   id: string;
   date: string;
-  concept: string;
+  description: string;
   category: string;
   amount: number;
 }
 
-interface ExpenseRowViewProps {
-  expense: Expense;
+interface TransactionRowViewProps {
+  transaction: Transaction;
 }
 
 // View mode (read-only row)
-export const ExpenseRowView: FC<ExpenseRowViewProps> = ({ expense }) => (
+export const TransactionRowView: FC<TransactionRowViewProps> = ({ transaction }) => (
   <tr
-    id={`expense-${expense.id}`}
+    id={`transaction-${transaction.id}`}
     class="border-b border-border hover:bg-muted transition-colors"
   >
-    <td class="p-4 text-sm">{formatDate(expense.date)}</td>
-    <td class="p-4 text-sm">{expense.concept}</td>
-    <td class="p-4 text-sm">{expense.category}</td>
-    <td class="p-4 font-mono text-right">${expense.amount}</td>
+    <td class="p-4 text-sm">{formatDate(transaction.date)}</td>
+    <td class="p-4 text-sm">{transaction.description}</td>
+    <td class="p-4 text-sm">{transaction.category}</td>
+    <td class="p-4 font-mono text-right">${transaction.amount}</td>
     <td class="p-4 text-right">
       <button
         class="bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150"
-        hx-get={`/api/expenses/${expense.id}/edit`}
+        hx-get={`/api/transactions/${transaction.id}/edit`}
         hx-target="closest tr"
         hx-swap="outerHTML"
-        aria-label="Edit expense"
+        aria-label="Edit transaction"
       >
         <EditIcon />
       </button>
@@ -285,29 +286,29 @@ export const ExpenseRowView: FC<ExpenseRowViewProps> = ({ expense }) => (
   </tr>
 );
 
-interface ExpenseRowEditProps {
-  expense: Expense;
+interface TransactionRowEditProps {
+  transaction: Transaction;
 }
 
 // Edit mode (inline form)
-export const ExpenseRowEdit: FC<ExpenseRowEditProps> = ({ expense }) => (
+export const TransactionRowEdit: FC<TransactionRowEditProps> = ({ transaction }) => (
   <tr
-    id={`expense-${expense.id}`}
+    id={`transaction-${transaction.id}`}
     class="bg-secondary/20 border-2 border-secondary"
   >
     <td class="p-2">
       <input
         type="date"
         name="date"
-        value={expense.date}
+        value={transaction.date}
         class="w-full bg-card border-2 border-border px-2 py-1 text-sm"
       />
     </td>
     <td class="p-2">
       <input
         type="text"
-        name="concept"
-        value={expense.concept}
+        name="description"
+        value={transaction.description}
         class="w-full bg-card border-2 border-border px-2 py-1 text-sm"
       />
     </td>
@@ -316,10 +317,10 @@ export const ExpenseRowEdit: FC<ExpenseRowEditProps> = ({ expense }) => (
         name="category"
         class="w-full bg-card border-2 border-border px-2 py-1 text-sm"
       >
-        <option value="food" selected={expense.category === "food"}>
+        <option value="food" selected={transaction.category === "food"}>
           Food
         </option>
-        <option value="transport" selected={expense.category === "transport"}>
+        <option value="transport" selected={transaction.category === "transport"}>
           Transport
         </option>
       </select>
@@ -328,7 +329,7 @@ export const ExpenseRowEdit: FC<ExpenseRowEditProps> = ({ expense }) => (
       <input
         type="number"
         name="amount"
-        value={expense.amount}
+        value={transaction.amount}
         step="0.01"
         class="w-full bg-card border-2 border-border px-2 py-1 text-sm font-mono"
       />
@@ -337,17 +338,17 @@ export const ExpenseRowEdit: FC<ExpenseRowEditProps> = ({ expense }) => (
       <div class="flex gap-2 justify-end">
         <button
           class="bg-accent text-accent-foreground border-2 border-border shadow-[var(--shadow)] px-3 py-1 text-xs font-bold uppercase transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]"
-          hx-put={`/api/expenses/${expense.id}`}
+          hx-put={`/api/transactions/${transaction.id}`}
           hx-include="closest tr"
-          hx-target={`#expense-${expense.id}`}
+          hx-target={`#transaction-${transaction.id}`}
           hx-swap="outerHTML"
         >
           <SaveIcon />
         </button>
         <button
           class="bg-muted text-muted-foreground border-2 border-border shadow-[var(--shadow)] px-3 py-1 text-xs font-bold uppercase transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]"
-          hx-get={`/api/expenses/${expense.id}`}
-          hx-target={`#expense-${expense.id}`}
+          hx-get={`/api/transactions/${transaction.id}`}
+          hx-target={`#transaction-${transaction.id}`}
           hx-swap="outerHTML"
         >
           <XIcon />
@@ -364,7 +365,7 @@ export const ExpenseRowEdit: FC<ExpenseRowEditProps> = ({ expense }) => (
 import type { FC } from "hono/jsx";
 import { SearchIcon } from "../icons";
 
-export const ExpenseFilters: FC = () => (
+export const TransactionFilters: FC = () => (
   <form class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 mb-6">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <div>
@@ -374,9 +375,9 @@ export const ExpenseFilters: FC = () => (
         <input
           type="date"
           name="startDate"
-          hx-get="/api/expenses"
+          hx-get="/api/transactions"
           hx-trigger="change"
-          hx-target="#expense-table"
+          hx-target="#transaction-table"
           hx-include="closest form"
           class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
         />
@@ -392,9 +393,9 @@ export const ExpenseFilters: FC = () => (
             type="search"
             name="query"
             placeholder="Search..."
-            hx-get="/api/expenses"
+            hx-get="/api/transactions"
             hx-trigger="keyup changed delay:300ms"
-            hx-target="#expense-table"
+            hx-target="#transaction-table"
             hx-include="closest form"
             class="w-full pl-10 bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
           />
@@ -456,11 +457,11 @@ src/
 │   ├── categories/
 │   │   ├── CategoriesList.tsx
 │   │   └── CategoryForm.tsx
-│   ├── expenses/
-│   │   ├── ExpensesList.tsx
-│   │   ├── ExpenseForm.tsx
-│   │   ├── ExpenseRow.tsx
-│   │   └── ExpenseFilters.tsx
+│   ├── transactions/
+│   │   ├── TransactionList.tsx
+│   │   ├── TransactionForm.tsx
+│   │   ├── TransactionRow.tsx
+│   │   └── TransactionFilters.tsx
 │   ├── icons/
 │   │   ├── index.ts          # Central export
 │   │   ├── PlusIcon.tsx
@@ -474,7 +475,7 @@ src/
 ├── pages/
 │   ├── AccountsPage.tsx
 │   ├── CategoriesPage.tsx
-│   └── ExpensesPage.tsx
+│   └── TransactionsPage.tsx
 └── styles/
     ├── main.css              # Global styles, custom animations
     └── class.css             # Reusable custom classes (if needed)
@@ -550,19 +551,19 @@ export const AccessibleExpenseRow: FC<AccessibleExpenseRowProps> = ({
 
 ```typescript
 import { describe, it, expect } from "bun:test";
-import { ExpenseRow } from "./ExpenseRow";
+import { TransactionRow } from "./TransactionRow";
 
-describe("ExpenseRow", () => {
-  it("renders expense data correctly", () => {
-    const expense = {
+describe("TransactionRow", () => {
+  it("renders transaction data correctly", () => {
+    const transaction = {
       id: "123",
       date: "2025-10-06",
-      concept: "Lunch",
+      description: "Lunch",
       category: "food",
       amount: 27.04,
     };
 
-    const html = ExpenseRow({ expense });
+    const html = TransactionRow({ transaction });
 
     expect(html).toContain("Lunch");
     expect(html).toContain("$27.04");
