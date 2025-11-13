@@ -1,69 +1,68 @@
-// Proposed prisma.schema
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id           String         @id @default(cuid())
+  id           String        @id @default(cuid())
   name         String
+  email        String?       @unique
   passwordHash String
-  email        String?        @unique
-  transactions Transaction[]
   accounts     Account[]
   categories   Category[]
   recurrences  Recurrence[]
+  transactions Transaction[]
 }
 
 model Account {
-  id          Int           @id @default(autoincrement())
-  userId      String
-  name        String
-  type        AccountType
-  currency    Currency
-  balance     Decimal        @default(0)
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-
-  user        User           @relation(fields: [userId], references: [id])
-  // relaciones dobles (origen/destino) para transferencias internas
+  id               Int           @id @default(autoincrement())
+  userId           String
+  name             String
+  type             AccountType
+  currency         Currency
+  balance          Decimal       @default(0)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  user             User          @relation(fields: [userId], references: [id])
   transactionsFrom Transaction[] @relation("SourceAccount")
   transactionsTo   Transaction[] @relation("TargetAccount")
+
+  @@unique([name, userId], map: "account_name_user_unique")
 }
 
 model Category {
-  id       Int             @id @default(autoincrement())
-  userId   String
-  name     String
-  type     CategoryType
-  color    String?          // opcional para UI
-  user     User             @relation(fields: [userId], references: [id])
+  id           Int           @id @default(autoincrement())
+  userId       String
+  name         String
+  type         CategoryType
+  color        String?
+  createdAt    DateTime      @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime      @default(now()) @db.Timestamp(6)
+  user         User          @relation(fields: [userId], references: [id])
   transactions Transaction[]
 }
 
 model Recurrence {
-  id          Int           @id @default(autoincrement())
-  userId      String
-  name        String
-  frequency   RecurrenceType
-  totalParts  Int?
-  currentPart Int?
-  startDate   DateTime
-  nextDate    DateTime?
-  active      Boolean        @default(true)
-
+  id           Int            @id @default(autoincrement())
+  userId       String
+  name         String
+  frequency    RecurrenceType
+  totalParts   Int?
+  currentPart  Int?
+  startDate    DateTime
+  nextDate     DateTime?
+  active       Boolean        @default(true)
   user         User           @relation(fields: [userId], references: [id])
   transactions Transaction[]
 }
 
 model Transaction {
-  id              Int          @id @default(autoincrement())
+  id              Int             @id @default(autoincrement())
   userId          String
   type            TransactionType
   amount          Decimal
@@ -73,18 +72,15 @@ model Transaction {
   sourceAccountId Int?
   targetAccountId Int?
   recurrenceId    Int?
-  metadata        Json?        // cuotas, tasas, observaciones
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
-
-  user          User           @relation(fields: [userId], references: [id])
-  category      Category?      @relation(fields: [categoryId], references: [id])
-  sourceAccount Account?       @relation("SourceAccount", fields: [sourceAccountId], references: [id])
-  targetAccount Account?       @relation("TargetAccount", fields: [targetAccountId], references: [id])
-  recurrence    Recurrence?    @relation(fields: [recurrenceId], references: [id])
+  metadata        Json?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  category        Category?       @relation(fields: [categoryId], references: [id])
+  recurrence      Recurrence?     @relation(fields: [recurrenceId], references: [id])
+  sourceAccount   Account?        @relation("SourceAccount", fields: [sourceAccountId], references: [id])
+  targetAccount   Account?        @relation("TargetAccount", fields: [targetAccountId], references: [id])
+  user            User            @relation(fields: [userId], references: [id])
 }
-
-// -------- ENUMS --------
 
 enum TransactionType {
   INCOME

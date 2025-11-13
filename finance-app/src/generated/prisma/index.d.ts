@@ -1301,17 +1301,17 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    transactions: number
     accounts: number
     categories: number
     recurrences: number
+    transactions: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    transactions?: boolean | UserCountOutputTypeCountTransactionsArgs
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     categories?: boolean | UserCountOutputTypeCountCategoriesArgs
     recurrences?: boolean | UserCountOutputTypeCountRecurrencesArgs
+    transactions?: boolean | UserCountOutputTypeCountTransactionsArgs
   }
 
   // Custom InputTypes
@@ -1323,13 +1323,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the UserCountOutputType
      */
     select?: UserCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TransactionWhereInput
   }
 
   /**
@@ -1351,6 +1344,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountRecurrencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RecurrenceWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TransactionWhereInput
   }
 
 
@@ -1473,22 +1473,22 @@ export namespace Prisma {
   export type UserMinAggregateOutputType = {
     id: string | null
     name: string | null
-    passwordHash: string | null
     email: string | null
+    passwordHash: string | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    passwordHash: string | null
     email: string | null
+    passwordHash: string | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
     name: number
-    passwordHash: number
     email: number
+    passwordHash: number
     _all: number
   }
 
@@ -1496,22 +1496,22 @@ export namespace Prisma {
   export type UserMinAggregateInputType = {
     id?: true
     name?: true
-    passwordHash?: true
     email?: true
+    passwordHash?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
     name?: true
-    passwordHash?: true
     email?: true
+    passwordHash?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
     name?: true
-    passwordHash?: true
     email?: true
+    passwordHash?: true
     _all?: true
   }
 
@@ -1590,8 +1590,8 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: string
     name: string
-    passwordHash: string
     email: string | null
+    passwordHash: string
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1614,42 +1614,42 @@ export namespace Prisma {
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    passwordHash?: boolean
     email?: boolean
-    transactions?: boolean | User$transactionsArgs<ExtArgs>
+    passwordHash?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
     categories?: boolean | User$categoriesArgs<ExtArgs>
     recurrences?: boolean | User$recurrencesArgs<ExtArgs>
+    transactions?: boolean | User$transactionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    passwordHash?: boolean
     email?: boolean
+    passwordHash?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    passwordHash?: boolean
     email?: boolean
+    passwordHash?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
     name?: boolean
-    passwordHash?: boolean
     email?: boolean
+    passwordHash?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "passwordHash" | "email", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "passwordHash", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    transactions?: boolean | User$transactionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
     categories?: boolean | User$categoriesArgs<ExtArgs>
     recurrences?: boolean | User$recurrencesArgs<ExtArgs>
+    transactions?: boolean | User$transactionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1658,16 +1658,16 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      transactions: Prisma.$TransactionPayload<ExtArgs>[]
       accounts: Prisma.$AccountPayload<ExtArgs>[]
       categories: Prisma.$CategoryPayload<ExtArgs>[]
       recurrences: Prisma.$RecurrencePayload<ExtArgs>[]
+      transactions: Prisma.$TransactionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      passwordHash: string
       email: string | null
+      passwordHash: string
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2062,10 +2062,10 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    transactions<T extends User$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     categories<T extends User$categoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     recurrences<T extends User$recurrencesArgs<ExtArgs> = {}>(args?: Subset<T, User$recurrencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecurrencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    transactions<T extends User$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2097,8 +2097,8 @@ export namespace Prisma {
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
-    readonly passwordHash: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
+    readonly passwordHash: FieldRef<"User", 'String'>
   }
     
 
@@ -2487,30 +2487,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.transactions
-   */
-  export type User$transactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Transaction
-     */
-    select?: TransactionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Transaction
-     */
-    omit?: TransactionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TransactionInclude<ExtArgs> | null
-    where?: TransactionWhereInput
-    orderBy?: TransactionOrderByWithRelationInput | TransactionOrderByWithRelationInput[]
-    cursor?: TransactionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TransactionScalarFieldEnum | TransactionScalarFieldEnum[]
-  }
-
-  /**
    * User.accounts
    */
   export type User$accountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2580,6 +2556,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: RecurrenceScalarFieldEnum | RecurrenceScalarFieldEnum[]
+  }
+
+  /**
+   * User.transactions
+   */
+  export type User$transactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transaction
+     */
+    select?: TransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transaction
+     */
+    omit?: TransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionInclude<ExtArgs> | null
+    where?: TransactionWhereInput
+    orderBy?: TransactionOrderByWithRelationInput | TransactionOrderByWithRelationInput[]
+    cursor?: TransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TransactionScalarFieldEnum | TransactionScalarFieldEnum[]
   }
 
   /**
@@ -3820,6 +3820,8 @@ export namespace Prisma {
     name: string | null
     type: $Enums.CategoryType | null
     color: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type CategoryMaxAggregateOutputType = {
@@ -3828,6 +3830,8 @@ export namespace Prisma {
     name: string | null
     type: $Enums.CategoryType | null
     color: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type CategoryCountAggregateOutputType = {
@@ -3836,6 +3840,8 @@ export namespace Prisma {
     name: number
     type: number
     color: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -3854,6 +3860,8 @@ export namespace Prisma {
     name?: true
     type?: true
     color?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type CategoryMaxAggregateInputType = {
@@ -3862,6 +3870,8 @@ export namespace Prisma {
     name?: true
     type?: true
     color?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type CategoryCountAggregateInputType = {
@@ -3870,6 +3880,8 @@ export namespace Prisma {
     name?: true
     type?: true
     color?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -3965,6 +3977,8 @@ export namespace Prisma {
     name: string
     type: $Enums.CategoryType
     color: string | null
+    createdAt: Date
+    updatedAt: Date
     _count: CategoryCountAggregateOutputType | null
     _avg: CategoryAvgAggregateOutputType | null
     _sum: CategorySumAggregateOutputType | null
@@ -3992,6 +4006,8 @@ export namespace Prisma {
     name?: boolean
     type?: boolean
     color?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     transactions?: boolean | Category$transactionsArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -4003,6 +4019,8 @@ export namespace Prisma {
     name?: boolean
     type?: boolean
     color?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["category"]>
 
@@ -4012,6 +4030,8 @@ export namespace Prisma {
     name?: boolean
     type?: boolean
     color?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["category"]>
 
@@ -4021,9 +4041,11 @@ export namespace Prisma {
     name?: boolean
     type?: boolean
     color?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "type" | "color", ExtArgs["result"]["category"]>
+  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "type" | "color" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
   export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     transactions?: boolean | Category$transactionsArgs<ExtArgs>
@@ -4048,6 +4070,8 @@ export namespace Prisma {
       name: string
       type: $Enums.CategoryType
       color: string | null
+      createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["category"]>
     composites: {}
   }
@@ -4478,6 +4502,8 @@ export namespace Prisma {
     readonly name: FieldRef<"Category", 'String'>
     readonly type: FieldRef<"Category", 'CategoryType'>
     readonly color: FieldRef<"Category", 'String'>
+    readonly createdAt: FieldRef<"Category", 'DateTime'>
+    readonly updatedAt: FieldRef<"Category", 'DateTime'>
   }
     
 
@@ -6376,11 +6402,11 @@ export namespace Prisma {
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Transaction$categoryArgs<ExtArgs>
+    recurrence?: boolean | Transaction$recurrenceArgs<ExtArgs>
     sourceAccount?: boolean | Transaction$sourceAccountArgs<ExtArgs>
     targetAccount?: boolean | Transaction$targetAccountArgs<ExtArgs>
-    recurrence?: boolean | Transaction$recurrenceArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6397,11 +6423,11 @@ export namespace Prisma {
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Transaction$categoryArgs<ExtArgs>
+    recurrence?: boolean | Transaction$recurrenceArgs<ExtArgs>
     sourceAccount?: boolean | Transaction$sourceAccountArgs<ExtArgs>
     targetAccount?: boolean | Transaction$targetAccountArgs<ExtArgs>
-    recurrence?: boolean | Transaction$recurrenceArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6418,11 +6444,11 @@ export namespace Prisma {
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Transaction$categoryArgs<ExtArgs>
+    recurrence?: boolean | Transaction$recurrenceArgs<ExtArgs>
     sourceAccount?: boolean | Transaction$sourceAccountArgs<ExtArgs>
     targetAccount?: boolean | Transaction$targetAccountArgs<ExtArgs>
-    recurrence?: boolean | Transaction$recurrenceArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectScalar = {
@@ -6443,35 +6469,35 @@ export namespace Prisma {
 
   export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "type" | "amount" | "date" | "description" | "categoryId" | "sourceAccountId" | "targetAccountId" | "recurrenceId" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["transaction"]>
   export type TransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Transaction$categoryArgs<ExtArgs>
+    recurrence?: boolean | Transaction$recurrenceArgs<ExtArgs>
     sourceAccount?: boolean | Transaction$sourceAccountArgs<ExtArgs>
     targetAccount?: boolean | Transaction$targetAccountArgs<ExtArgs>
-    recurrence?: boolean | Transaction$recurrenceArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type TransactionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Transaction$categoryArgs<ExtArgs>
+    recurrence?: boolean | Transaction$recurrenceArgs<ExtArgs>
     sourceAccount?: boolean | Transaction$sourceAccountArgs<ExtArgs>
     targetAccount?: boolean | Transaction$targetAccountArgs<ExtArgs>
-    recurrence?: boolean | Transaction$recurrenceArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type TransactionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Transaction$categoryArgs<ExtArgs>
+    recurrence?: boolean | Transaction$recurrenceArgs<ExtArgs>
     sourceAccount?: boolean | Transaction$sourceAccountArgs<ExtArgs>
     targetAccount?: boolean | Transaction$targetAccountArgs<ExtArgs>
-    recurrence?: boolean | Transaction$recurrenceArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $TransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Transaction"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
       category: Prisma.$CategoryPayload<ExtArgs> | null
+      recurrence: Prisma.$RecurrencePayload<ExtArgs> | null
       sourceAccount: Prisma.$AccountPayload<ExtArgs> | null
       targetAccount: Prisma.$AccountPayload<ExtArgs> | null
-      recurrence: Prisma.$RecurrencePayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -6881,11 +6907,11 @@ export namespace Prisma {
    */
   export interface Prisma__TransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     category<T extends Transaction$categoryArgs<ExtArgs> = {}>(args?: Subset<T, Transaction$categoryArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    recurrence<T extends Transaction$recurrenceArgs<ExtArgs> = {}>(args?: Subset<T, Transaction$recurrenceArgs<ExtArgs>>): Prisma__RecurrenceClient<$Result.GetResult<Prisma.$RecurrencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     sourceAccount<T extends Transaction$sourceAccountArgs<ExtArgs> = {}>(args?: Subset<T, Transaction$sourceAccountArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     targetAccount<T extends Transaction$targetAccountArgs<ExtArgs> = {}>(args?: Subset<T, Transaction$targetAccountArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    recurrence<T extends Transaction$recurrenceArgs<ExtArgs> = {}>(args?: Subset<T, Transaction$recurrenceArgs<ExtArgs>>): Prisma__RecurrenceClient<$Result.GetResult<Prisma.$RecurrencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7343,6 +7369,25 @@ export namespace Prisma {
   }
 
   /**
+   * Transaction.recurrence
+   */
+  export type Transaction$recurrenceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recurrence
+     */
+    select?: RecurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recurrence
+     */
+    omit?: RecurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecurrenceInclude<ExtArgs> | null
+    where?: RecurrenceWhereInput
+  }
+
+  /**
    * Transaction.sourceAccount
    */
   export type Transaction$sourceAccountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7381,25 +7426,6 @@ export namespace Prisma {
   }
 
   /**
-   * Transaction.recurrence
-   */
-  export type Transaction$recurrenceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Recurrence
-     */
-    select?: RecurrenceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Recurrence
-     */
-    omit?: RecurrenceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RecurrenceInclude<ExtArgs> | null
-    where?: RecurrenceWhereInput
-  }
-
-  /**
    * Transaction without action
    */
   export type TransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7435,8 +7461,8 @@ export namespace Prisma {
   export const UserScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    passwordHash: 'passwordHash',
-    email: 'email'
+    email: 'email',
+    passwordHash: 'passwordHash'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -7461,7 +7487,9 @@ export namespace Prisma {
     userId: 'userId',
     name: 'name',
     type: 'type',
-    color: 'color'
+    color: 'color',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
@@ -7717,23 +7745,23 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
-    passwordHash?: StringFilter<"User"> | string
     email?: StringNullableFilter<"User"> | string | null
-    transactions?: TransactionListRelationFilter
+    passwordHash?: StringFilter<"User"> | string
     accounts?: AccountListRelationFilter
     categories?: CategoryListRelationFilter
     recurrences?: RecurrenceListRelationFilter
+    transactions?: TransactionListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    passwordHash?: SortOrder
     email?: SortOrderInput | SortOrder
-    transactions?: TransactionOrderByRelationAggregateInput
+    passwordHash?: SortOrder
     accounts?: AccountOrderByRelationAggregateInput
     categories?: CategoryOrderByRelationAggregateInput
     recurrences?: RecurrenceOrderByRelationAggregateInput
+    transactions?: TransactionOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7744,17 +7772,17 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
     passwordHash?: StringFilter<"User"> | string
-    transactions?: TransactionListRelationFilter
     accounts?: AccountListRelationFilter
     categories?: CategoryListRelationFilter
     recurrences?: RecurrenceListRelationFilter
+    transactions?: TransactionListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    passwordHash?: SortOrder
     email?: SortOrderInput | SortOrder
+    passwordHash?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -7766,8 +7794,8 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
     name?: StringWithAggregatesFilter<"User"> | string
-    passwordHash?: StringWithAggregatesFilter<"User"> | string
     email?: StringNullableWithAggregatesFilter<"User"> | string | null
+    passwordHash?: StringWithAggregatesFilter<"User"> | string
   }
 
   export type AccountWhereInput = {
@@ -7803,6 +7831,7 @@ export namespace Prisma {
 
   export type AccountWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    name_userId?: AccountNameUserIdCompoundUniqueInput
     AND?: AccountWhereInput | AccountWhereInput[]
     OR?: AccountWhereInput[]
     NOT?: AccountWhereInput | AccountWhereInput[]
@@ -7816,7 +7845,7 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     transactionsFrom?: TransactionListRelationFilter
     transactionsTo?: TransactionListRelationFilter
-  }, "id">
+  }, "id" | "name_userId">
 
   export type AccountOrderByWithAggregationInput = {
     id?: SortOrder
@@ -7857,6 +7886,8 @@ export namespace Prisma {
     name?: StringFilter<"Category"> | string
     type?: EnumCategoryTypeFilter<"Category"> | $Enums.CategoryType
     color?: StringNullableFilter<"Category"> | string | null
+    createdAt?: DateTimeFilter<"Category"> | Date | string
+    updatedAt?: DateTimeFilter<"Category"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     transactions?: TransactionListRelationFilter
   }
@@ -7867,6 +7898,8 @@ export namespace Prisma {
     name?: SortOrder
     type?: SortOrder
     color?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
     transactions?: TransactionOrderByRelationAggregateInput
   }
@@ -7880,6 +7913,8 @@ export namespace Prisma {
     name?: StringFilter<"Category"> | string
     type?: EnumCategoryTypeFilter<"Category"> | $Enums.CategoryType
     color?: StringNullableFilter<"Category"> | string | null
+    createdAt?: DateTimeFilter<"Category"> | Date | string
+    updatedAt?: DateTimeFilter<"Category"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     transactions?: TransactionListRelationFilter
   }, "id">
@@ -7890,6 +7925,8 @@ export namespace Prisma {
     name?: SortOrder
     type?: SortOrder
     color?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: CategoryCountOrderByAggregateInput
     _avg?: CategoryAvgOrderByAggregateInput
     _max?: CategoryMaxOrderByAggregateInput
@@ -7906,6 +7943,8 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Category"> | string
     type?: EnumCategoryTypeWithAggregatesFilter<"Category"> | $Enums.CategoryType
     color?: StringNullableWithAggregatesFilter<"Category"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Category"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Category"> | Date | string
   }
 
   export type RecurrenceWhereInput = {
@@ -8005,11 +8044,11 @@ export namespace Prisma {
     metadata?: JsonNullableFilter<"Transaction">
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeFilter<"Transaction"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
+    recurrence?: XOR<RecurrenceNullableScalarRelationFilter, RecurrenceWhereInput> | null
     sourceAccount?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
     targetAccount?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
-    recurrence?: XOR<RecurrenceNullableScalarRelationFilter, RecurrenceWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type TransactionOrderByWithRelationInput = {
@@ -8026,11 +8065,11 @@ export namespace Prisma {
     metadata?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    user?: UserOrderByWithRelationInput
     category?: CategoryOrderByWithRelationInput
+    recurrence?: RecurrenceOrderByWithRelationInput
     sourceAccount?: AccountOrderByWithRelationInput
     targetAccount?: AccountOrderByWithRelationInput
-    recurrence?: RecurrenceOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type TransactionWhereUniqueInput = Prisma.AtLeast<{
@@ -8050,11 +8089,11 @@ export namespace Prisma {
     metadata?: JsonNullableFilter<"Transaction">
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeFilter<"Transaction"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
+    recurrence?: XOR<RecurrenceNullableScalarRelationFilter, RecurrenceWhereInput> | null
     sourceAccount?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
     targetAccount?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
-    recurrence?: XOR<RecurrenceNullableScalarRelationFilter, RecurrenceWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type TransactionOrderByWithAggregationInput = {
@@ -8100,66 +8139,66 @@ export namespace Prisma {
   export type UserCreateInput = {
     id?: string
     name: string
-    passwordHash: string
     email?: string | null
-    transactions?: TransactionCreateNestedManyWithoutUserInput
+    passwordHash: string
     accounts?: AccountCreateNestedManyWithoutUserInput
     categories?: CategoryCreateNestedManyWithoutUserInput
     recurrences?: RecurrenceCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: string
     name: string
-    passwordHash: string
     email?: string | null
-    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    passwordHash: string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
     recurrences?: RecurrenceUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    passwordHash?: StringFieldUpdateOperationsInput | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     categories?: CategoryUpdateManyWithoutUserNestedInput
     recurrences?: RecurrenceUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    passwordHash?: StringFieldUpdateOperationsInput | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
     recurrences?: RecurrenceUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
     id?: string
     name: string
-    passwordHash: string
     email?: string | null
+    passwordHash: string
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
   }
 
   export type AccountCreateInput = {
@@ -8247,6 +8286,8 @@ export namespace Prisma {
     name: string
     type: $Enums.CategoryType
     color?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     user: UserCreateNestedOneWithoutCategoriesInput
     transactions?: TransactionCreateNestedManyWithoutCategoryInput
   }
@@ -8257,6 +8298,8 @@ export namespace Prisma {
     name: string
     type: $Enums.CategoryType
     color?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     transactions?: TransactionUncheckedCreateNestedManyWithoutCategoryInput
   }
 
@@ -8264,6 +8307,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCategoriesNestedInput
     transactions?: TransactionUpdateManyWithoutCategoryNestedInput
   }
@@ -8274,6 +8319,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions?: TransactionUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
@@ -8283,12 +8330,16 @@ export namespace Prisma {
     name: string
     type: $Enums.CategoryType
     color?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type CategoryUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CategoryUncheckedUpdateManyInput = {
@@ -8297,6 +8348,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RecurrenceCreateInput = {
@@ -8391,11 +8444,11 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTransactionsInput
     category?: CategoryCreateNestedOneWithoutTransactionsInput
+    recurrence?: RecurrenceCreateNestedOneWithoutTransactionsInput
     sourceAccount?: AccountCreateNestedOneWithoutTransactionsFromInput
     targetAccount?: AccountCreateNestedOneWithoutTransactionsToInput
-    recurrence?: RecurrenceCreateNestedOneWithoutTransactionsInput
+    user: UserCreateNestedOneWithoutTransactionsInput
   }
 
   export type TransactionUncheckedCreateInput = {
@@ -8422,11 +8475,11 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTransactionsNestedInput
     category?: CategoryUpdateOneWithoutTransactionsNestedInput
+    recurrence?: RecurrenceUpdateOneWithoutTransactionsNestedInput
     sourceAccount?: AccountUpdateOneWithoutTransactionsFromNestedInput
     targetAccount?: AccountUpdateOneWithoutTransactionsToNestedInput
-    recurrence?: RecurrenceUpdateOneWithoutTransactionsNestedInput
+    user?: UserUpdateOneRequiredWithoutTransactionsNestedInput
   }
 
   export type TransactionUncheckedUpdateInput = {
@@ -8517,12 +8570,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type TransactionListRelationFilter = {
-    every?: TransactionWhereInput
-    some?: TransactionWhereInput
-    none?: TransactionWhereInput
-  }
-
   export type AccountListRelationFilter = {
     every?: AccountWhereInput
     some?: AccountWhereInput
@@ -8541,13 +8588,15 @@ export namespace Prisma {
     none?: RecurrenceWhereInput
   }
 
+  export type TransactionListRelationFilter = {
+    every?: TransactionWhereInput
+    some?: TransactionWhereInput
+    none?: TransactionWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
-  }
-
-  export type TransactionOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type AccountOrderByRelationAggregateInput = {
@@ -8562,25 +8611,29 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type TransactionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    passwordHash?: SortOrder
     email?: SortOrder
+    passwordHash?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    passwordHash?: SortOrder
     email?: SortOrder
+    passwordHash?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    passwordHash?: SortOrder
     email?: SortOrder
+    passwordHash?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -8669,6 +8722,11 @@ export namespace Prisma {
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type AccountNameUserIdCompoundUniqueInput = {
+    name: string
+    userId: string
   }
 
   export type AccountCountOrderByAggregateInput = {
@@ -8793,6 +8851,8 @@ export namespace Prisma {
     name?: SortOrder
     type?: SortOrder
     color?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type CategoryAvgOrderByAggregateInput = {
@@ -8805,6 +8865,8 @@ export namespace Prisma {
     name?: SortOrder
     type?: SortOrder
     color?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type CategoryMinOrderByAggregateInput = {
@@ -8813,6 +8875,8 @@ export namespace Prisma {
     name?: SortOrder
     type?: SortOrder
     color?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type CategorySumOrderByAggregateInput = {
@@ -8994,14 +9058,14 @@ export namespace Prisma {
     isNot?: CategoryWhereInput | null
   }
 
-  export type AccountNullableScalarRelationFilter = {
-    is?: AccountWhereInput | null
-    isNot?: AccountWhereInput | null
-  }
-
   export type RecurrenceNullableScalarRelationFilter = {
     is?: RecurrenceWhereInput | null
     isNot?: RecurrenceWhereInput | null
+  }
+
+  export type AccountNullableScalarRelationFilter = {
+    is?: AccountWhereInput | null
+    isNot?: AccountWhereInput | null
   }
 
   export type TransactionCountOrderByAggregateInput = {
@@ -9104,13 +9168,6 @@ export namespace Prisma {
     _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
-  export type TransactionCreateNestedManyWithoutUserInput = {
-    create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
-    createMany?: TransactionCreateManyUserInputEnvelope
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-  }
-
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -9132,7 +9189,7 @@ export namespace Prisma {
     connect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
   }
 
-  export type TransactionUncheckedCreateNestedManyWithoutUserInput = {
+  export type TransactionCreateNestedManyWithoutUserInput = {
     create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
     createMany?: TransactionCreateManyUserInputEnvelope
@@ -9160,26 +9217,19 @@ export namespace Prisma {
     connect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
   }
 
+  export type TransactionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
+    createMany?: TransactionCreateManyUserInputEnvelope
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
-  }
-
-  export type TransactionUpdateManyWithoutUserNestedInput = {
-    create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
-    upsert?: TransactionUpsertWithWhereUniqueWithoutUserInput | TransactionUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: TransactionCreateManyUserInputEnvelope
-    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    update?: TransactionUpdateWithWhereUniqueWithoutUserInput | TransactionUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: TransactionUpdateManyWithWhereWithoutUserInput | TransactionUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
   }
 
   export type AccountUpdateManyWithoutUserNestedInput = {
@@ -9224,7 +9274,7 @@ export namespace Prisma {
     deleteMany?: RecurrenceScalarWhereInput | RecurrenceScalarWhereInput[]
   }
 
-  export type TransactionUncheckedUpdateManyWithoutUserNestedInput = {
+  export type TransactionUpdateManyWithoutUserNestedInput = {
     create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
     upsert?: TransactionUpsertWithWhereUniqueWithoutUserInput | TransactionUpsertWithWhereUniqueWithoutUserInput[]
@@ -9278,6 +9328,20 @@ export namespace Prisma {
     update?: RecurrenceUpdateWithWhereUniqueWithoutUserInput | RecurrenceUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: RecurrenceUpdateManyWithWhereWithoutUserInput | RecurrenceUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: RecurrenceScalarWhereInput | RecurrenceScalarWhereInput[]
+  }
+
+  export type TransactionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput> | TransactionCreateWithoutUserInput[] | TransactionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutUserInput | TransactionCreateOrConnectWithoutUserInput[]
+    upsert?: TransactionUpsertWithWhereUniqueWithoutUserInput | TransactionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TransactionCreateManyUserInputEnvelope
+    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    update?: TransactionUpdateWithWhereUniqueWithoutUserInput | TransactionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TransactionUpdateManyWithWhereWithoutUserInput | TransactionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
@@ -9542,16 +9606,16 @@ export namespace Prisma {
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutTransactionsInput = {
-    create?: XOR<UserCreateWithoutTransactionsInput, UserUncheckedCreateWithoutTransactionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTransactionsInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type CategoryCreateNestedOneWithoutTransactionsInput = {
     create?: XOR<CategoryCreateWithoutTransactionsInput, CategoryUncheckedCreateWithoutTransactionsInput>
     connectOrCreate?: CategoryCreateOrConnectWithoutTransactionsInput
     connect?: CategoryWhereUniqueInput
+  }
+
+  export type RecurrenceCreateNestedOneWithoutTransactionsInput = {
+    create?: XOR<RecurrenceCreateWithoutTransactionsInput, RecurrenceUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: RecurrenceCreateOrConnectWithoutTransactionsInput
+    connect?: RecurrenceWhereUniqueInput
   }
 
   export type AccountCreateNestedOneWithoutTransactionsFromInput = {
@@ -9566,22 +9630,14 @@ export namespace Prisma {
     connect?: AccountWhereUniqueInput
   }
 
-  export type RecurrenceCreateNestedOneWithoutTransactionsInput = {
-    create?: XOR<RecurrenceCreateWithoutTransactionsInput, RecurrenceUncheckedCreateWithoutTransactionsInput>
-    connectOrCreate?: RecurrenceCreateOrConnectWithoutTransactionsInput
-    connect?: RecurrenceWhereUniqueInput
+  export type UserCreateNestedOneWithoutTransactionsInput = {
+    create?: XOR<UserCreateWithoutTransactionsInput, UserUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTransactionsInput
+    connect?: UserWhereUniqueInput
   }
 
   export type EnumTransactionTypeFieldUpdateOperationsInput = {
     set?: $Enums.TransactionType
-  }
-
-  export type UserUpdateOneRequiredWithoutTransactionsNestedInput = {
-    create?: XOR<UserCreateWithoutTransactionsInput, UserUncheckedCreateWithoutTransactionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTransactionsInput
-    upsert?: UserUpsertWithoutTransactionsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTransactionsInput, UserUpdateWithoutTransactionsInput>, UserUncheckedUpdateWithoutTransactionsInput>
   }
 
   export type CategoryUpdateOneWithoutTransactionsNestedInput = {
@@ -9592,6 +9648,16 @@ export namespace Prisma {
     delete?: CategoryWhereInput | boolean
     connect?: CategoryWhereUniqueInput
     update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutTransactionsInput, CategoryUpdateWithoutTransactionsInput>, CategoryUncheckedUpdateWithoutTransactionsInput>
+  }
+
+  export type RecurrenceUpdateOneWithoutTransactionsNestedInput = {
+    create?: XOR<RecurrenceCreateWithoutTransactionsInput, RecurrenceUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: RecurrenceCreateOrConnectWithoutTransactionsInput
+    upsert?: RecurrenceUpsertWithoutTransactionsInput
+    disconnect?: RecurrenceWhereInput | boolean
+    delete?: RecurrenceWhereInput | boolean
+    connect?: RecurrenceWhereUniqueInput
+    update?: XOR<XOR<RecurrenceUpdateToOneWithWhereWithoutTransactionsInput, RecurrenceUpdateWithoutTransactionsInput>, RecurrenceUncheckedUpdateWithoutTransactionsInput>
   }
 
   export type AccountUpdateOneWithoutTransactionsFromNestedInput = {
@@ -9614,14 +9680,12 @@ export namespace Prisma {
     update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutTransactionsToInput, AccountUpdateWithoutTransactionsToInput>, AccountUncheckedUpdateWithoutTransactionsToInput>
   }
 
-  export type RecurrenceUpdateOneWithoutTransactionsNestedInput = {
-    create?: XOR<RecurrenceCreateWithoutTransactionsInput, RecurrenceUncheckedCreateWithoutTransactionsInput>
-    connectOrCreate?: RecurrenceCreateOrConnectWithoutTransactionsInput
-    upsert?: RecurrenceUpsertWithoutTransactionsInput
-    disconnect?: RecurrenceWhereInput | boolean
-    delete?: RecurrenceWhereInput | boolean
-    connect?: RecurrenceWhereUniqueInput
-    update?: XOR<XOR<RecurrenceUpdateToOneWithWhereWithoutTransactionsInput, RecurrenceUpdateWithoutTransactionsInput>, RecurrenceUncheckedUpdateWithoutTransactionsInput>
+  export type UserUpdateOneRequiredWithoutTransactionsNestedInput = {
+    create?: XOR<UserCreateWithoutTransactionsInput, UserUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTransactionsInput
+    upsert?: UserUpsertWithoutTransactionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTransactionsInput, UserUpdateWithoutTransactionsInput>, UserUncheckedUpdateWithoutTransactionsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -9960,45 +10024,6 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type TransactionCreateWithoutUserInput = {
-    type: $Enums.TransactionType
-    amount: Decimal | DecimalJsLike | number | string
-    date: Date | string
-    description?: string | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    category?: CategoryCreateNestedOneWithoutTransactionsInput
-    sourceAccount?: AccountCreateNestedOneWithoutTransactionsFromInput
-    targetAccount?: AccountCreateNestedOneWithoutTransactionsToInput
-    recurrence?: RecurrenceCreateNestedOneWithoutTransactionsInput
-  }
-
-  export type TransactionUncheckedCreateWithoutUserInput = {
-    id?: number
-    type: $Enums.TransactionType
-    amount: Decimal | DecimalJsLike | number | string
-    date: Date | string
-    description?: string | null
-    categoryId?: number | null
-    sourceAccountId?: number | null
-    targetAccountId?: number | null
-    recurrenceId?: number | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TransactionCreateOrConnectWithoutUserInput = {
-    where: TransactionWhereUniqueInput
-    create: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput>
-  }
-
-  export type TransactionCreateManyUserInputEnvelope = {
-    data: TransactionCreateManyUserInput | TransactionCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
   export type AccountCreateWithoutUserInput = {
     name: string
     type: $Enums.AccountType
@@ -10036,6 +10061,8 @@ export namespace Prisma {
     name: string
     type: $Enums.CategoryType
     color?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     transactions?: TransactionCreateNestedManyWithoutCategoryInput
   }
 
@@ -10044,6 +10071,8 @@ export namespace Prisma {
     name: string
     type: $Enums.CategoryType
     color?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     transactions?: TransactionUncheckedCreateNestedManyWithoutCategoryInput
   }
 
@@ -10090,39 +10119,43 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type TransactionUpsertWithWhereUniqueWithoutUserInput = {
+  export type TransactionCreateWithoutUserInput = {
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    date: Date | string
+    description?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category?: CategoryCreateNestedOneWithoutTransactionsInput
+    recurrence?: RecurrenceCreateNestedOneWithoutTransactionsInput
+    sourceAccount?: AccountCreateNestedOneWithoutTransactionsFromInput
+    targetAccount?: AccountCreateNestedOneWithoutTransactionsToInput
+  }
+
+  export type TransactionUncheckedCreateWithoutUserInput = {
+    id?: number
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    date: Date | string
+    description?: string | null
+    categoryId?: number | null
+    sourceAccountId?: number | null
+    targetAccountId?: number | null
+    recurrenceId?: number | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TransactionCreateOrConnectWithoutUserInput = {
     where: TransactionWhereUniqueInput
-    update: XOR<TransactionUpdateWithoutUserInput, TransactionUncheckedUpdateWithoutUserInput>
     create: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput>
   }
 
-  export type TransactionUpdateWithWhereUniqueWithoutUserInput = {
-    where: TransactionWhereUniqueInput
-    data: XOR<TransactionUpdateWithoutUserInput, TransactionUncheckedUpdateWithoutUserInput>
-  }
-
-  export type TransactionUpdateManyWithWhereWithoutUserInput = {
-    where: TransactionScalarWhereInput
-    data: XOR<TransactionUpdateManyMutationInput, TransactionUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type TransactionScalarWhereInput = {
-    AND?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
-    OR?: TransactionScalarWhereInput[]
-    NOT?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
-    id?: IntFilter<"Transaction"> | number
-    userId?: StringFilter<"Transaction"> | string
-    type?: EnumTransactionTypeFilter<"Transaction"> | $Enums.TransactionType
-    amount?: DecimalFilter<"Transaction"> | Decimal | DecimalJsLike | number | string
-    date?: DateTimeFilter<"Transaction"> | Date | string
-    description?: StringNullableFilter<"Transaction"> | string | null
-    categoryId?: IntNullableFilter<"Transaction"> | number | null
-    sourceAccountId?: IntNullableFilter<"Transaction"> | number | null
-    targetAccountId?: IntNullableFilter<"Transaction"> | number | null
-    recurrenceId?: IntNullableFilter<"Transaction"> | number | null
-    metadata?: JsonNullableFilter<"Transaction">
-    createdAt?: DateTimeFilter<"Transaction"> | Date | string
-    updatedAt?: DateTimeFilter<"Transaction"> | Date | string
+  export type TransactionCreateManyUserInputEnvelope = {
+    data: TransactionCreateManyUserInput | TransactionCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
@@ -10180,6 +10213,8 @@ export namespace Prisma {
     name?: StringFilter<"Category"> | string
     type?: EnumCategoryTypeFilter<"Category"> | $Enums.CategoryType
     color?: StringNullableFilter<"Category"> | string | null
+    createdAt?: DateTimeFilter<"Category"> | Date | string
+    updatedAt?: DateTimeFilter<"Category"> | Date | string
   }
 
   export type RecurrenceUpsertWithWhereUniqueWithoutUserInput = {
@@ -10213,24 +10248,59 @@ export namespace Prisma {
     active?: BoolFilter<"Recurrence"> | boolean
   }
 
+  export type TransactionUpsertWithWhereUniqueWithoutUserInput = {
+    where: TransactionWhereUniqueInput
+    update: XOR<TransactionUpdateWithoutUserInput, TransactionUncheckedUpdateWithoutUserInput>
+    create: XOR<TransactionCreateWithoutUserInput, TransactionUncheckedCreateWithoutUserInput>
+  }
+
+  export type TransactionUpdateWithWhereUniqueWithoutUserInput = {
+    where: TransactionWhereUniqueInput
+    data: XOR<TransactionUpdateWithoutUserInput, TransactionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TransactionUpdateManyWithWhereWithoutUserInput = {
+    where: TransactionScalarWhereInput
+    data: XOR<TransactionUpdateManyMutationInput, TransactionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type TransactionScalarWhereInput = {
+    AND?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+    OR?: TransactionScalarWhereInput[]
+    NOT?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+    id?: IntFilter<"Transaction"> | number
+    userId?: StringFilter<"Transaction"> | string
+    type?: EnumTransactionTypeFilter<"Transaction"> | $Enums.TransactionType
+    amount?: DecimalFilter<"Transaction"> | Decimal | DecimalJsLike | number | string
+    date?: DateTimeFilter<"Transaction"> | Date | string
+    description?: StringNullableFilter<"Transaction"> | string | null
+    categoryId?: IntNullableFilter<"Transaction"> | number | null
+    sourceAccountId?: IntNullableFilter<"Transaction"> | number | null
+    targetAccountId?: IntNullableFilter<"Transaction"> | number | null
+    recurrenceId?: IntNullableFilter<"Transaction"> | number | null
+    metadata?: JsonNullableFilter<"Transaction">
+    createdAt?: DateTimeFilter<"Transaction"> | Date | string
+    updatedAt?: DateTimeFilter<"Transaction"> | Date | string
+  }
+
   export type UserCreateWithoutAccountsInput = {
     id?: string
     name: string
-    passwordHash: string
     email?: string | null
-    transactions?: TransactionCreateNestedManyWithoutUserInput
+    passwordHash: string
     categories?: CategoryCreateNestedManyWithoutUserInput
     recurrences?: RecurrenceCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
     id?: string
     name: string
-    passwordHash: string
     email?: string | null
-    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    passwordHash: string
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
     recurrences?: RecurrenceUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -10246,10 +10316,10 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTransactionsInput
     category?: CategoryCreateNestedOneWithoutTransactionsInput
-    targetAccount?: AccountCreateNestedOneWithoutTransactionsToInput
     recurrence?: RecurrenceCreateNestedOneWithoutTransactionsInput
+    targetAccount?: AccountCreateNestedOneWithoutTransactionsToInput
+    user: UserCreateNestedOneWithoutTransactionsInput
   }
 
   export type TransactionUncheckedCreateWithoutSourceAccountInput = {
@@ -10285,10 +10355,10 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTransactionsInput
     category?: CategoryCreateNestedOneWithoutTransactionsInput
-    sourceAccount?: AccountCreateNestedOneWithoutTransactionsFromInput
     recurrence?: RecurrenceCreateNestedOneWithoutTransactionsInput
+    sourceAccount?: AccountCreateNestedOneWithoutTransactionsFromInput
+    user: UserCreateNestedOneWithoutTransactionsInput
   }
 
   export type TransactionUncheckedCreateWithoutTargetAccountInput = {
@@ -10330,21 +10400,21 @@ export namespace Prisma {
   export type UserUpdateWithoutAccountsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    passwordHash?: StringFieldUpdateOperationsInput | string
     categories?: CategoryUpdateManyWithoutUserNestedInput
     recurrences?: RecurrenceUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    passwordHash?: StringFieldUpdateOperationsInput | string
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
     recurrences?: RecurrenceUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TransactionUpsertWithWhereUniqueWithoutSourceAccountInput = {
@@ -10382,21 +10452,21 @@ export namespace Prisma {
   export type UserCreateWithoutCategoriesInput = {
     id?: string
     name: string
-    passwordHash: string
     email?: string | null
-    transactions?: TransactionCreateNestedManyWithoutUserInput
+    passwordHash: string
     accounts?: AccountCreateNestedManyWithoutUserInput
     recurrences?: RecurrenceCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCategoriesInput = {
     id?: string
     name: string
-    passwordHash: string
     email?: string | null
-    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    passwordHash: string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     recurrences?: RecurrenceUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCategoriesInput = {
@@ -10412,10 +10482,10 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTransactionsInput
+    recurrence?: RecurrenceCreateNestedOneWithoutTransactionsInput
     sourceAccount?: AccountCreateNestedOneWithoutTransactionsFromInput
     targetAccount?: AccountCreateNestedOneWithoutTransactionsToInput
-    recurrence?: RecurrenceCreateNestedOneWithoutTransactionsInput
+    user: UserCreateNestedOneWithoutTransactionsInput
   }
 
   export type TransactionUncheckedCreateWithoutCategoryInput = {
@@ -10457,21 +10527,21 @@ export namespace Prisma {
   export type UserUpdateWithoutCategoriesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    passwordHash?: StringFieldUpdateOperationsInput | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     recurrences?: RecurrenceUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCategoriesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    passwordHash?: StringFieldUpdateOperationsInput | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     recurrences?: RecurrenceUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TransactionUpsertWithWhereUniqueWithoutCategoryInput = {
@@ -10493,21 +10563,21 @@ export namespace Prisma {
   export type UserCreateWithoutRecurrencesInput = {
     id?: string
     name: string
-    passwordHash: string
     email?: string | null
-    transactions?: TransactionCreateNestedManyWithoutUserInput
+    passwordHash: string
     accounts?: AccountCreateNestedManyWithoutUserInput
     categories?: CategoryCreateNestedManyWithoutUserInput
+    transactions?: TransactionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRecurrencesInput = {
     id?: string
     name: string
-    passwordHash: string
     email?: string | null
-    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
+    passwordHash: string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRecurrencesInput = {
@@ -10523,10 +10593,10 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTransactionsInput
     category?: CategoryCreateNestedOneWithoutTransactionsInput
     sourceAccount?: AccountCreateNestedOneWithoutTransactionsFromInput
     targetAccount?: AccountCreateNestedOneWithoutTransactionsToInput
+    user: UserCreateNestedOneWithoutTransactionsInput
   }
 
   export type TransactionUncheckedCreateWithoutRecurrenceInput = {
@@ -10568,21 +10638,21 @@ export namespace Prisma {
   export type UserUpdateWithoutRecurrencesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    transactions?: TransactionUpdateManyWithoutUserNestedInput
+    passwordHash?: StringFieldUpdateOperationsInput | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     categories?: CategoryUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRecurrencesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
-    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+    passwordHash?: StringFieldUpdateOperationsInput | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TransactionUpsertWithWhereUniqueWithoutRecurrenceInput = {
@@ -10601,35 +10671,12 @@ export namespace Prisma {
     data: XOR<TransactionUpdateManyMutationInput, TransactionUncheckedUpdateManyWithoutRecurrenceInput>
   }
 
-  export type UserCreateWithoutTransactionsInput = {
-    id?: string
-    name: string
-    passwordHash: string
-    email?: string | null
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    categories?: CategoryCreateNestedManyWithoutUserInput
-    recurrences?: RecurrenceCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutTransactionsInput = {
-    id?: string
-    name: string
-    passwordHash: string
-    email?: string | null
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
-    recurrences?: RecurrenceUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutTransactionsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutTransactionsInput, UserUncheckedCreateWithoutTransactionsInput>
-  }
-
   export type CategoryCreateWithoutTransactionsInput = {
     name: string
     type: $Enums.CategoryType
     color?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     user: UserCreateNestedOneWithoutCategoriesInput
   }
 
@@ -10639,11 +10686,41 @@ export namespace Prisma {
     name: string
     type: $Enums.CategoryType
     color?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type CategoryCreateOrConnectWithoutTransactionsInput = {
     where: CategoryWhereUniqueInput
     create: XOR<CategoryCreateWithoutTransactionsInput, CategoryUncheckedCreateWithoutTransactionsInput>
+  }
+
+  export type RecurrenceCreateWithoutTransactionsInput = {
+    name: string
+    frequency: $Enums.RecurrenceType
+    totalParts?: number | null
+    currentPart?: number | null
+    startDate: Date | string
+    nextDate?: Date | string | null
+    active?: boolean
+    user: UserCreateNestedOneWithoutRecurrencesInput
+  }
+
+  export type RecurrenceUncheckedCreateWithoutTransactionsInput = {
+    id?: number
+    userId: string
+    name: string
+    frequency: $Enums.RecurrenceType
+    totalParts?: number | null
+    currentPart?: number | null
+    startDate: Date | string
+    nextDate?: Date | string | null
+    active?: boolean
+  }
+
+  export type RecurrenceCreateOrConnectWithoutTransactionsInput = {
+    where: RecurrenceWhereUniqueInput
+    create: XOR<RecurrenceCreateWithoutTransactionsInput, RecurrenceUncheckedCreateWithoutTransactionsInput>
   }
 
   export type AccountCreateWithoutTransactionsFromInput = {
@@ -10702,63 +10779,29 @@ export namespace Prisma {
     create: XOR<AccountCreateWithoutTransactionsToInput, AccountUncheckedCreateWithoutTransactionsToInput>
   }
 
-  export type RecurrenceCreateWithoutTransactionsInput = {
+  export type UserCreateWithoutTransactionsInput = {
+    id?: string
     name: string
-    frequency: $Enums.RecurrenceType
-    totalParts?: number | null
-    currentPart?: number | null
-    startDate: Date | string
-    nextDate?: Date | string | null
-    active?: boolean
-    user: UserCreateNestedOneWithoutRecurrencesInput
+    email?: string | null
+    passwordHash: string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    categories?: CategoryCreateNestedManyWithoutUserInput
+    recurrences?: RecurrenceCreateNestedManyWithoutUserInput
   }
 
-  export type RecurrenceUncheckedCreateWithoutTransactionsInput = {
-    id?: number
-    userId: string
+  export type UserUncheckedCreateWithoutTransactionsInput = {
+    id?: string
     name: string
-    frequency: $Enums.RecurrenceType
-    totalParts?: number | null
-    currentPart?: number | null
-    startDate: Date | string
-    nextDate?: Date | string | null
-    active?: boolean
+    email?: string | null
+    passwordHash: string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
+    recurrences?: RecurrenceUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type RecurrenceCreateOrConnectWithoutTransactionsInput = {
-    where: RecurrenceWhereUniqueInput
-    create: XOR<RecurrenceCreateWithoutTransactionsInput, RecurrenceUncheckedCreateWithoutTransactionsInput>
-  }
-
-  export type UserUpsertWithoutTransactionsInput = {
-    update: XOR<UserUpdateWithoutTransactionsInput, UserUncheckedUpdateWithoutTransactionsInput>
+  export type UserCreateOrConnectWithoutTransactionsInput = {
+    where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutTransactionsInput, UserUncheckedCreateWithoutTransactionsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutTransactionsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutTransactionsInput, UserUncheckedUpdateWithoutTransactionsInput>
-  }
-
-  export type UserUpdateWithoutTransactionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    categories?: CategoryUpdateManyWithoutUserNestedInput
-    recurrences?: RecurrenceUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutTransactionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    passwordHash?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
-    recurrences?: RecurrenceUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CategoryUpsertWithoutTransactionsInput = {
@@ -10776,6 +10819,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCategoriesNestedInput
   }
 
@@ -10785,6 +10830,42 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecurrenceUpsertWithoutTransactionsInput = {
+    update: XOR<RecurrenceUpdateWithoutTransactionsInput, RecurrenceUncheckedUpdateWithoutTransactionsInput>
+    create: XOR<RecurrenceCreateWithoutTransactionsInput, RecurrenceUncheckedCreateWithoutTransactionsInput>
+    where?: RecurrenceWhereInput
+  }
+
+  export type RecurrenceUpdateToOneWithWhereWithoutTransactionsInput = {
+    where?: RecurrenceWhereInput
+    data: XOR<RecurrenceUpdateWithoutTransactionsInput, RecurrenceUncheckedUpdateWithoutTransactionsInput>
+  }
+
+  export type RecurrenceUpdateWithoutTransactionsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
+    totalParts?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: NullableIntFieldUpdateOperationsInput | number | null
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutRecurrencesNestedInput
+  }
+
+  export type RecurrenceUncheckedUpdateWithoutTransactionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
+    totalParts?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: NullableIntFieldUpdateOperationsInput | number | null
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AccountUpsertWithoutTransactionsFromInput = {
@@ -10855,53 +10936,35 @@ export namespace Prisma {
     transactionsFrom?: TransactionUncheckedUpdateManyWithoutSourceAccountNestedInput
   }
 
-  export type RecurrenceUpsertWithoutTransactionsInput = {
-    update: XOR<RecurrenceUpdateWithoutTransactionsInput, RecurrenceUncheckedUpdateWithoutTransactionsInput>
-    create: XOR<RecurrenceCreateWithoutTransactionsInput, RecurrenceUncheckedCreateWithoutTransactionsInput>
-    where?: RecurrenceWhereInput
+  export type UserUpsertWithoutTransactionsInput = {
+    update: XOR<UserUpdateWithoutTransactionsInput, UserUncheckedUpdateWithoutTransactionsInput>
+    create: XOR<UserCreateWithoutTransactionsInput, UserUncheckedCreateWithoutTransactionsInput>
+    where?: UserWhereInput
   }
 
-  export type RecurrenceUpdateToOneWithWhereWithoutTransactionsInput = {
-    where?: RecurrenceWhereInput
-    data: XOR<RecurrenceUpdateWithoutTransactionsInput, RecurrenceUncheckedUpdateWithoutTransactionsInput>
+  export type UserUpdateToOneWithWhereWithoutTransactionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTransactionsInput, UserUncheckedUpdateWithoutTransactionsInput>
   }
 
-  export type RecurrenceUpdateWithoutTransactionsInput = {
+  export type UserUpdateWithoutTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
-    totalParts?: NullableIntFieldUpdateOperationsInput | number | null
-    currentPart?: NullableIntFieldUpdateOperationsInput | number | null
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    active?: BoolFieldUpdateOperationsInput | boolean
-    user?: UserUpdateOneRequiredWithoutRecurrencesNestedInput
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    categories?: CategoryUpdateManyWithoutUserNestedInput
+    recurrences?: RecurrenceUpdateManyWithoutUserNestedInput
   }
 
-  export type RecurrenceUncheckedUpdateWithoutTransactionsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: StringFieldUpdateOperationsInput | string
+  export type UserUncheckedUpdateWithoutTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
-    totalParts?: NullableIntFieldUpdateOperationsInput | number | null
-    currentPart?: NullableIntFieldUpdateOperationsInput | number | null
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    active?: BoolFieldUpdateOperationsInput | boolean
-  }
-
-  export type TransactionCreateManyUserInput = {
-    id?: number
-    type: $Enums.TransactionType
-    amount: Decimal | DecimalJsLike | number | string
-    date: Date | string
-    description?: string | null
-    categoryId?: number | null
-    sourceAccountId?: number | null
-    targetAccountId?: number | null
-    recurrenceId?: number | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
+    recurrences?: RecurrenceUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -10919,6 +10982,8 @@ export namespace Prisma {
     name: string
     type: $Enums.CategoryType
     color?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type RecurrenceCreateManyUserInput = {
@@ -10932,48 +10997,19 @@ export namespace Prisma {
     active?: boolean
   }
 
-  export type TransactionUpdateWithoutUserInput = {
-    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+  export type TransactionCreateManyUserInput = {
+    id?: number
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    date: Date | string
+    description?: string | null
+    categoryId?: number | null
+    sourceAccountId?: number | null
+    targetAccountId?: number | null
+    recurrenceId?: number | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: CategoryUpdateOneWithoutTransactionsNestedInput
-    sourceAccount?: AccountUpdateOneWithoutTransactionsFromNestedInput
-    targetAccount?: AccountUpdateOneWithoutTransactionsToNestedInput
-    recurrence?: RecurrenceUpdateOneWithoutTransactionsNestedInput
-  }
-
-  export type TransactionUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
-    sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
-    targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
-    recurrenceId?: NullableIntFieldUpdateOperationsInput | number | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TransactionUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
-    sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
-    targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
-    recurrenceId?: NullableIntFieldUpdateOperationsInput | number | null
-    metadata?: NullableJsonNullValueInput | InputJsonValue
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -11013,6 +11049,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions?: TransactionUpdateManyWithoutCategoryNestedInput
   }
 
@@ -11021,6 +11059,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions?: TransactionUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
@@ -11029,6 +11069,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
     color?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RecurrenceUpdateWithoutUserInput = {
@@ -11063,6 +11105,50 @@ export namespace Prisma {
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type TransactionUpdateWithoutUserInput = {
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: CategoryUpdateOneWithoutTransactionsNestedInput
+    recurrence?: RecurrenceUpdateOneWithoutTransactionsNestedInput
+    sourceAccount?: AccountUpdateOneWithoutTransactionsFromNestedInput
+    targetAccount?: AccountUpdateOneWithoutTransactionsToNestedInput
+  }
+
+  export type TransactionUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
+    sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    recurrenceId?: NullableIntFieldUpdateOperationsInput | number | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TransactionUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
+    sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    recurrenceId?: NullableIntFieldUpdateOperationsInput | number | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TransactionCreateManySourceAccountInput = {
@@ -11103,10 +11189,10 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTransactionsNestedInput
     category?: CategoryUpdateOneWithoutTransactionsNestedInput
-    targetAccount?: AccountUpdateOneWithoutTransactionsToNestedInput
     recurrence?: RecurrenceUpdateOneWithoutTransactionsNestedInput
+    targetAccount?: AccountUpdateOneWithoutTransactionsToNestedInput
+    user?: UserUpdateOneRequiredWithoutTransactionsNestedInput
   }
 
   export type TransactionUncheckedUpdateWithoutSourceAccountInput = {
@@ -11147,10 +11233,10 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTransactionsNestedInput
     category?: CategoryUpdateOneWithoutTransactionsNestedInput
-    sourceAccount?: AccountUpdateOneWithoutTransactionsFromNestedInput
     recurrence?: RecurrenceUpdateOneWithoutTransactionsNestedInput
+    sourceAccount?: AccountUpdateOneWithoutTransactionsFromNestedInput
+    user?: UserUpdateOneRequiredWithoutTransactionsNestedInput
   }
 
   export type TransactionUncheckedUpdateWithoutTargetAccountInput = {
@@ -11206,10 +11292,10 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTransactionsNestedInput
+    recurrence?: RecurrenceUpdateOneWithoutTransactionsNestedInput
     sourceAccount?: AccountUpdateOneWithoutTransactionsFromNestedInput
     targetAccount?: AccountUpdateOneWithoutTransactionsToNestedInput
-    recurrence?: RecurrenceUpdateOneWithoutTransactionsNestedInput
+    user?: UserUpdateOneRequiredWithoutTransactionsNestedInput
   }
 
   export type TransactionUncheckedUpdateWithoutCategoryInput = {
@@ -11265,10 +11351,10 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTransactionsNestedInput
     category?: CategoryUpdateOneWithoutTransactionsNestedInput
     sourceAccount?: AccountUpdateOneWithoutTransactionsFromNestedInput
     targetAccount?: AccountUpdateOneWithoutTransactionsToNestedInput
+    user?: UserUpdateOneRequiredWithoutTransactionsNestedInput
   }
 
   export type TransactionUncheckedUpdateWithoutRecurrenceInput = {
