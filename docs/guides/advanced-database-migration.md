@@ -34,7 +34,7 @@ Overall Strategy: We will perform the migration in 7 distinct steps, ordered by 
 
 ---
 
-- [ ] **Step 1: Foundational Timestamps & Precision (Lowest Risk)**
+- [x] **Step 1: Foundational Timestamps & Precision (Lowest Risk)**
 
 - Why: Establish audit trails on all models and ensure correct decimal precision for financial values. This is a non-destructive change.
 - Schema Changes (`schema.prisma`):
@@ -49,7 +49,7 @@ Overall Strategy: We will perform the migration in 7 distinct steps, ordered by 
 
 ---
 
-- [ ] **Step 2: Add Indexes & Unique Constraints (Low Risk)**
+- [x] **Step 2: Add Indexes & Unique Constraints (Low Risk)**
 
 - Why: Improve query performance and enforce data integrity by preventing duplicates. This has no impact on existing data.
 - Schema Changes (`schema.prisma`):
@@ -62,12 +62,17 @@ Overall Strategy: We will perform the migration in 7 distinct steps, ordered by 
 1 SELECT tablename, indexname FROM pg_indexes
 2 WHERE tablename IN ('User', 'Account', 'Category', 'Recurrence', 'Transaction');
 
+- Verification (SQL): You can check that the indexes were created correctly with this query. Using the mcp tool postgres
+  provides, you can check the indexes on the tables.
+
+- Update log, including the migration command and the SQL query used to verify the indexes.
+
 ---
 
-- [ ] **Step 3: Introduce New Enums & Simple Transaction Fields (Low-Medium Risk)**
+- [x] **Step 3: Introduce New Enums & Simple Transaction Fields (Low-Medium Risk)**
 
 - Why: Add new categorization fields to the Transaction model. These are simple to backfill with default values.
-- Schema Changes (`schema.prisma`):
+- Schema Changes (`schema.prisma`) from `schema copy.prisma`:
   1.  Create the new BudgetCategory and CardType enums.
   2.  In the Transaction model, add the fields: isBudgetedExpense, budgetCategory, isCardExpense, and cardType.
 - Migration Command:
@@ -82,24 +87,32 @@ Overall Strategy: We will perform the migration in 7 distinct steps, ordered by 
 6 SET "cardType" = 'VISA'
 7 WHERE "metadata"::text ILIKE '%visa%' AND "cardType" IS NULL;
 
+- Verification (SQL): You can check that the default values were applied correctly with this query.
+
+- Update log, including the migration command and the SQL query used to verify the default values.
+
 ---
 
-- [ ] **Step 4: Implement Data Integrity Rules (`onDelete`) (Medium Risk)**
+- [x] **Step 4: Implement Data Integrity Rules (`onDelete`) (Medium Risk)**
 
 - Why: This is a critical step to prevent orphaned records when data is deleted. It defines how the database should behave when a related record is removed.
 - 🔥 WARNING: This change alters data integrity rules. Test cascade deletes in a staging environment before applying to production.
-- Schema Changes (`schema.prisma`):
+- Schema Changes (`schema.prisma`) from `schema copy.prisma`:
   1.  Update all relations in Account, Category, Recurrence, and Transaction to match the onDelete rules from schema copy.prisma (e.g., onDelete: Cascade for user relations, onDelete: SetNull
       for optional relations).
 - Migration Command:
   1 bunx prisma migrate dev --name feat-add-ondelete-rules
 
+- Verification (SQL): You can check that the data integrity rules were applied correctly with this query.
+
+- Update log, including the migration command and the SQL query used to verify the data integrity rules.
+
 ---
 
-- [ ] **Step 5: Enhance Recurrence Model (Part 1 - Metadata & Relations)**
+- [x] **Step 5: Enhance Recurrence Model (Part 1 - Metadata & Relations)**
 
 - Why: Add foundational fields to the Recurrence model that can be backfilled from existing transaction data, making it more descriptive.
-- Schema Changes (`schema.prisma`):
+- Schema Changes (`schema.prisma`) from `schema copy.prisma`:
   1.  In the Recurrence model, add: metadata, isCardExpense, cardType, categoryId, sourceAccountId, and targetAccountId.
   2.  Add the corresponding @relation attributes for the new ID fields.
 - Migration Command:
@@ -116,69 +129,79 @@ Overall Strategy: We will perform the migration in 7 distinct steps, ordered by 
 8 AND t."isCardExpense" = true
 9 AND r."isCardExpense" = false; -- Only update if not already set
 
+- Verification (SQL): You can check that the card expenses were propagated correctly with this query.
+
+- Update log, including the migration command and the SQL query used to verify the card expenses.
+
 ---
 
-- [ ] **Step 6: Enhance Recurrence Model (Part 2 - Financials & Terms) (High Risk)**
+- [x] **Step 6: Enhance Recurrence Model (Part 2 - Financials & Terms) (High Risk)**
 
 - Why: This is a major step that turns Recurrence into a first-class financial entity with its own amount and schedule. The data backfilling is complex and based on estimations from existing
   data.
-- Schema Changes (`schema.prisma`):
+- Schema Changes (`schema.prisma`) from `schema copy.prisma`:
   1.  In the Recurrence model, add: type, amount, totalParts, currentPart, and endDate.
 - Migration Command:
   1 bunx prisma migrate dev --name feat-add-recurrence-financials
 - Data Backfill (SQL):
 
+  1 -- Backfill 'amount' as the average of its associated transactions
+  2 UPDATE "Recurrence" r
+  3 SET amount = (SELECT AVG(amount) FROM "Transaction" t WHERE t."recurrenceId" = r.id)
+  4 WHERE r.amount IS NULL;
+  5
+  6 -- Backfill 'type' as the most frequent transaction type
+  7 UPDATE "Recurrence" r
+  8 SET type = (
+  9 SELECT type FROM "Transaction" t WHERE t."recurrenceId" = r.id
 
-    1     -- Backfill 'amount' as the average of its associated transactions
-    2     UPDATE "Recurrence" r
-    3     SET amount = (SELECT AVG(amount) FROM "Transaction" t WHERE t."recurrenceId" = r.id)
-    4     WHERE r.amount IS NULL;
-    5
-    6     -- Backfill 'type' as the most frequent transaction type
-    7     UPDATE "Recurrence" r
-    8     SET type = (
-    9       SELECT type FROM "Transaction" t WHERE t."recurrenceId" = r.id
-
-10 GROUP BY type ORDER BY COUNT(*) DESC LIMIT 1
+10 GROUP BY type ORDER BY COUNT(\*) DESC LIMIT 1
 11 )
 12 WHERE r.type IS NULL;
 
+-Verification (SQL): You can check that the recurrence type was propagated correctly with this query.
+
+- Update log, including the migration command and the SQL query used to verify the recurrence type.
+
 ---
 
-- [ ] **Step 7: Finalize Transaction-Recurrence Link (Highest Risk)**
+- [x] **Step 7: Finalize Transaction-Recurrence Link (Highest Risk)**
 
 - Why: Create a tight, two-way binding between individual transactions and their parent recurrence, including part numbers and sources.
-- Schema Changes (`schema.prisma`):
+- Schema Changes (`schema.prisma`) from `schema copy.prisma`:
   1.  In the Transaction model, add recurrencePartNumber and source.
 - Migration Command:
   1 bunx prisma migrate dev --name feat-finalize-transaction-recurrence-link
 - Data Backfill (SQL):
 
-
-    1     -- Backfill recurrencePartNumber by ordering transactions by date
-    2     WITH ordered_transactions AS (
-    3       SELECT
-    4         id,
-    5         ROW_NUMBER() OVER (PARTITION BY "recurrenceId" ORDER BY date ASC) AS part_number
-    6       FROM "Transaction"
-    7       WHERE "recurrenceId" IS NOT NULL
-    8     )
-    9     UPDATE "Transaction" t
+  1 -- Backfill recurrencePartNumber by ordering transactions by date
+  2 WITH ordered_transactions AS (
+  3 SELECT
+  4 id,
+  5 ROW_NUMBER() OVER (PARTITION BY "recurrenceId" ORDER BY date ASC) AS part_number
+  6 FROM "Transaction"
+  7 WHERE "recurrenceId" IS NOT NULL
+  8 )
+  9 UPDATE "Transaction" t
 
 10 SET "recurrencePartNumber" = ot.part_number
 11 FROM ordered_transactions ot
 12 WHERE t.id = ot.id;
 
+- Verification (SQL): You can check that the recurrence part number was propagated correctly with this query.
+
+- Update log, including the migration command and the SQL query used to verify the recurrence part number.
+
 ---
 
 Final Post-Migration Checklist
 
-- [ ] **1. Regenerate Prisma Client:**
-    1 bunx prisma generate
+- [x] **1. Regenerate Prisma Client:**
 - [ ] **2. Update Application Code:**
 - [ ] **3. Review & Test:**
 
 ---
+
 ---
 
 ## Migration Log
@@ -186,10 +209,76 @@ Final Post-Migration Checklist
 A log to track attempts, issues, and their resolutions during the migration process.
 
 ---
-**Attempt #1:**
 
-- **Goal:**
-- **Issue:**
+**Attempt #4:**
+
+- **Goal:** Apply "Step 4: Implement Data Integrity Rules (`onDelete`)".
+- **Issue:** None. All `onDelete` rules were already implemented in previous steps.
+- **Resolution:** No schema changes were required. Marked as complete.
+
+**Attempt #2:**
+
+- **Goal:** Apply "Step 2: Add Indexes & Unique Constraints".
+- **Issue:** `prisma migrate dev` failed due to "Drift detected" and unknown field `type` in `Recurrence` model.
 - **Resolution:**
+  1. Removed `@@index([userId, type])` from `Recurrence` model in `schema.prisma`.
+  2. Applied schema changes to the database using `bunx prisma db push`.
+  3. Generated SQL script for changes using `bunx prisma migrate diff`.
+  4. Manually created migration directory and `migration.sql` file.
+  5. Resolved migration using `bunx prisma migrate resolve --applied 20251112224144_feat-add-indexes-and-constraints`.
 
 ---
+
+**Attempt #3:**
+
+- **Goal:** Apply "Step 3: Introduce New Enums & Simple Transaction Fields".
+- **Issue:** `prisma migrate dev` failed due to "Drift detected". `docker exec` command for `cardType` backfill failed due to parsing issues.
+- **Resolution:**
+    1. Applied schema changes to the database using `bunx prisma db push`.
+    2. Generated SQL script for changes using `bunx prisma migrate diff`.
+    3. Manually created migration directory and `migration.sql` file.
+    4. Resolved migration using `bunx prisma migrate resolve --applied 20251112225133_feat-add-budget-and-card-types`.
+    5. Executed data backfill commands, fixing parsing issue for `cardType` backfill.
+
+---
+
+**Attempt #5:**
+
+- **Goal:** Apply "Step 5: Enhance Recurrence Model (Part 1 - Metadata & Relations)".
+- **Issue:** `prisma migrate dev` failed due to "Drift detected" and missing inverse relations in `Category` and `Account` models.
+- **Resolution:**
+    1. Added `recurrences Recurrence[]` to the `Category` model.
+    2. Added `recurrencesFrom Recurrence[] @relation("RecurrenceSource")` and `recurrencesTo Recurrence[] @relation("RecurrenceTarget")` to the `Account` model.
+    3. Applied schema changes to the database using `bunx prisma db push`.
+    4. Generated SQL script for changes using `bunx prisma migrate diff`.
+    5. Manually created migration directory and `migration.sql` file.
+    6. Resolved migration using `bunx prisma migrate resolve --applied 20251112230122_feat-enhance-recurrence-metadata`.
+    7. Executed data backfill command.
+
+---
+
+**Attempt #6:**
+
+- **Goal:** Apply "Step 6: Enhance Recurrence Model (Part 2 - Financials & Terms)".
+- **Issue:** `prisma migrate dev` failed due to "Drift detected".
+- **Resolution:**
+    1. Added `type TransactionType`, `amount Decimal @db.Decimal(15, 2)`, `currentPart Int @default(0)`, and `endDate DateTime?` to the `Recurrence` model.
+    2. Applied schema changes to the database using `bunx prisma db push`.
+    3. Generated SQL script for changes using `bunx prisma migrate diff`.
+    4. Manually created migration directory and `migration.sql` file.
+    5. Resolved migration using `bunx prisma migrate resolve --applied 20251112230630_feat-add-recurrence-financials`.
+    6. Executed data backfill commands.
+
+---
+
+**Attempt #7:**
+
+- **Goal:** Apply "Step 7: Finalize Transaction-Recurrence Link".
+- **Issue:** `prisma migrate dev` failed due to "Drift detected".
+- **Resolution:**
+    1. Added `recurrencePartNumber Int?` and `source String?` to the `Transaction` model.
+    2. Applied schema changes to the database using `bunx prisma db push`.
+    3. Generated SQL script for changes using `bunx prisma migrate diff`.
+    4. Manually created migration directory and `migration.sql` file.
+    5. Resolved migration using `bunx prisma migrate resolve --applied 20251112232841_feat-finalize-transaction-recurrence-link`.
+    6. Executed data backfill command.

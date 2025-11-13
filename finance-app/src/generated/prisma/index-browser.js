@@ -124,7 +124,9 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
-  passwordHash: 'passwordHash'
+  passwordHash: 'passwordHash',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.AccountScalarFieldEnum = {
@@ -152,12 +154,21 @@ exports.Prisma.RecurrenceScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   name: 'name',
+  type: 'type',
+  amount: 'amount',
   frequency: 'frequency',
   totalParts: 'totalParts',
   currentPart: 'currentPart',
   startDate: 'startDate',
   nextDate: 'nextDate',
-  active: 'active'
+  endDate: 'endDate',
+  active: 'active',
+  categoryId: 'categoryId',
+  sourceAccountId: 'sourceAccountId',
+  targetAccountId: 'targetAccountId',
+  isCardExpense: 'isCardExpense',
+  cardType: 'cardType',
+  metadata: 'metadata'
 };
 
 exports.Prisma.TransactionScalarFieldEnum = {
@@ -171,6 +182,12 @@ exports.Prisma.TransactionScalarFieldEnum = {
   sourceAccountId: 'sourceAccountId',
   targetAccountId: 'targetAccountId',
   recurrenceId: 'recurrenceId',
+  recurrencePartNumber: 'recurrencePartNumber',
+  isBudgetedExpense: 'isBudgetedExpense',
+  budgetCategory: 'budgetCategory',
+  isCardExpense: 'isCardExpense',
+  cardType: 'cardType',
+  source: 'source',
   metadata: 'metadata',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -222,13 +239,6 @@ exports.CategoryType = exports.$Enums.CategoryType = {
   RENDIMIENTO: 'RENDIMIENTO'
 };
 
-exports.RecurrenceType = exports.$Enums.RecurrenceType = {
-  MONTHLY: 'MONTHLY',
-  WEEKLY: 'WEEKLY',
-  YEARLY: 'YEARLY',
-  INSTALLMENT: 'INSTALLMENT'
-};
-
 exports.TransactionType = exports.$Enums.TransactionType = {
   INCOME: 'INCOME',
   EXPENSE: 'EXPENSE',
@@ -236,6 +246,29 @@ exports.TransactionType = exports.$Enums.TransactionType = {
   INVESTMENT: 'INVESTMENT',
   RETURN: 'RETURN',
   PAYMENT: 'PAYMENT'
+};
+
+exports.RecurrenceType = exports.$Enums.RecurrenceType = {
+  MONTHLY: 'MONTHLY',
+  WEEKLY: 'WEEKLY',
+  YEARLY: 'YEARLY',
+  INSTALLMENT: 'INSTALLMENT'
+};
+
+exports.CardType = exports.$Enums.CardType = {
+  VISA: 'VISA',
+  MASTERCARD: 'MASTERCARD',
+  AMEX: 'AMEX',
+  MAESTRO: 'MAESTRO'
+};
+
+exports.BudgetCategory = exports.$Enums.BudgetCategory = {
+  DAILY_EXPENSES: 'DAILY_EXPENSES',
+  FOOD_GROCERIES: 'FOOD_GROCERIES',
+  ENTERTAINMENT: 'ENTERTAINMENT',
+  TRANSPORTATION: 'TRANSPORTATION',
+  HEALTH: 'HEALTH',
+  UTILITIES: 'UTILITIES'
 };
 
 exports.Prisma.ModelName = {

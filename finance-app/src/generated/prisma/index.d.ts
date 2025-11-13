@@ -94,6 +94,28 @@ export const RecurrenceType: {
 
 export type RecurrenceType = (typeof RecurrenceType)[keyof typeof RecurrenceType]
 
+
+export const BudgetCategory: {
+  DAILY_EXPENSES: 'DAILY_EXPENSES',
+  FOOD_GROCERIES: 'FOOD_GROCERIES',
+  ENTERTAINMENT: 'ENTERTAINMENT',
+  TRANSPORTATION: 'TRANSPORTATION',
+  HEALTH: 'HEALTH',
+  UTILITIES: 'UTILITIES'
+};
+
+export type BudgetCategory = (typeof BudgetCategory)[keyof typeof BudgetCategory]
+
+
+export const CardType: {
+  VISA: 'VISA',
+  MASTERCARD: 'MASTERCARD',
+  AMEX: 'AMEX',
+  MAESTRO: 'MAESTRO'
+};
+
+export type CardType = (typeof CardType)[keyof typeof CardType]
+
 }
 
 export type TransactionType = $Enums.TransactionType
@@ -115,6 +137,14 @@ export const CategoryType: typeof $Enums.CategoryType
 export type RecurrenceType = $Enums.RecurrenceType
 
 export const RecurrenceType: typeof $Enums.RecurrenceType
+
+export type BudgetCategory = $Enums.BudgetCategory
+
+export const BudgetCategory: typeof $Enums.BudgetCategory
+
+export type CardType = $Enums.CardType
+
+export const CardType: typeof $Enums.CardType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1361,11 +1391,15 @@ export namespace Prisma {
   export type AccountCountOutputType = {
     transactionsFrom: number
     transactionsTo: number
+    recurrencesFrom: number
+    recurrencesTo: number
   }
 
   export type AccountCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     transactionsFrom?: boolean | AccountCountOutputTypeCountTransactionsFromArgs
     transactionsTo?: boolean | AccountCountOutputTypeCountTransactionsToArgs
+    recurrencesFrom?: boolean | AccountCountOutputTypeCountRecurrencesFromArgs
+    recurrencesTo?: boolean | AccountCountOutputTypeCountRecurrencesToArgs
   }
 
   // Custom InputTypes
@@ -1393,6 +1427,20 @@ export namespace Prisma {
     where?: TransactionWhereInput
   }
 
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountRecurrencesFromArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecurrenceWhereInput
+  }
+
+  /**
+   * AccountCountOutputType without action
+   */
+  export type AccountCountOutputTypeCountRecurrencesToArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecurrenceWhereInput
+  }
+
 
   /**
    * Count Type CategoryCountOutputType
@@ -1400,10 +1448,12 @@ export namespace Prisma {
 
   export type CategoryCountOutputType = {
     transactions: number
+    recurrences: number
   }
 
   export type CategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     transactions?: boolean | CategoryCountOutputTypeCountTransactionsArgs
+    recurrences?: boolean | CategoryCountOutputTypeCountRecurrencesArgs
   }
 
   // Custom InputTypes
@@ -1422,6 +1472,13 @@ export namespace Prisma {
    */
   export type CategoryCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TransactionWhereInput
+  }
+
+  /**
+   * CategoryCountOutputType without action
+   */
+  export type CategoryCountOutputTypeCountRecurrencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecurrenceWhereInput
   }
 
 
@@ -1475,6 +1532,8 @@ export namespace Prisma {
     name: string | null
     email: string | null
     passwordHash: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1482,6 +1541,8 @@ export namespace Prisma {
     name: string | null
     email: string | null
     passwordHash: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1489,6 +1550,8 @@ export namespace Prisma {
     name: number
     email: number
     passwordHash: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -1498,6 +1561,8 @@ export namespace Prisma {
     name?: true
     email?: true
     passwordHash?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1505,6 +1570,8 @@ export namespace Prisma {
     name?: true
     email?: true
     passwordHash?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1512,6 +1579,8 @@ export namespace Prisma {
     name?: true
     email?: true
     passwordHash?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -1592,6 +1661,8 @@ export namespace Prisma {
     name: string
     email: string | null
     passwordHash: string
+    createdAt: Date
+    updatedAt: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1616,6 +1687,8 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     passwordHash?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
     categories?: boolean | User$categoriesArgs<ExtArgs>
     recurrences?: boolean | User$recurrencesArgs<ExtArgs>
@@ -1628,6 +1701,8 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     passwordHash?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1635,6 +1710,8 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     passwordHash?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1642,9 +1719,11 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     passwordHash?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "passwordHash", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     categories?: boolean | User$categoriesArgs<ExtArgs>
@@ -1668,6 +1747,8 @@ export namespace Prisma {
       name: string
       email: string | null
       passwordHash: string
+      createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2099,6 +2180,8 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly passwordHash: FieldRef<"User", 'String'>
+    readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
     
 
@@ -2830,6 +2913,8 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     transactionsFrom?: boolean | Account$transactionsFromArgs<ExtArgs>
     transactionsTo?: boolean | Account$transactionsToArgs<ExtArgs>
+    recurrencesFrom?: boolean | Account$recurrencesFromArgs<ExtArgs>
+    recurrencesTo?: boolean | Account$recurrencesToArgs<ExtArgs>
     _count?: boolean | AccountCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["account"]>
 
@@ -2873,6 +2958,8 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     transactionsFrom?: boolean | Account$transactionsFromArgs<ExtArgs>
     transactionsTo?: boolean | Account$transactionsToArgs<ExtArgs>
+    recurrencesFrom?: boolean | Account$recurrencesFromArgs<ExtArgs>
+    recurrencesTo?: boolean | Account$recurrencesToArgs<ExtArgs>
     _count?: boolean | AccountCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AccountIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2888,6 +2975,8 @@ export namespace Prisma {
       user: Prisma.$UserPayload<ExtArgs>
       transactionsFrom: Prisma.$TransactionPayload<ExtArgs>[]
       transactionsTo: Prisma.$TransactionPayload<ExtArgs>[]
+      recurrencesFrom: Prisma.$RecurrencePayload<ExtArgs>[]
+      recurrencesTo: Prisma.$RecurrencePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3295,6 +3384,8 @@ export namespace Prisma {
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     transactionsFrom<T extends Account$transactionsFromArgs<ExtArgs> = {}>(args?: Subset<T, Account$transactionsFromArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transactionsTo<T extends Account$transactionsToArgs<ExtArgs> = {}>(args?: Subset<T, Account$transactionsToArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    recurrencesFrom<T extends Account$recurrencesFromArgs<ExtArgs> = {}>(args?: Subset<T, Account$recurrencesFromArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecurrencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    recurrencesTo<T extends Account$recurrencesToArgs<ExtArgs> = {}>(args?: Subset<T, Account$recurrencesToArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecurrencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3776,6 +3867,54 @@ export namespace Prisma {
   }
 
   /**
+   * Account.recurrencesFrom
+   */
+  export type Account$recurrencesFromArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recurrence
+     */
+    select?: RecurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recurrence
+     */
+    omit?: RecurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecurrenceInclude<ExtArgs> | null
+    where?: RecurrenceWhereInput
+    orderBy?: RecurrenceOrderByWithRelationInput | RecurrenceOrderByWithRelationInput[]
+    cursor?: RecurrenceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RecurrenceScalarFieldEnum | RecurrenceScalarFieldEnum[]
+  }
+
+  /**
+   * Account.recurrencesTo
+   */
+  export type Account$recurrencesToArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recurrence
+     */
+    select?: RecurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recurrence
+     */
+    omit?: RecurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecurrenceInclude<ExtArgs> | null
+    where?: RecurrenceWhereInput
+    orderBy?: RecurrenceOrderByWithRelationInput | RecurrenceOrderByWithRelationInput[]
+    cursor?: RecurrenceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RecurrenceScalarFieldEnum | RecurrenceScalarFieldEnum[]
+  }
+
+  /**
    * Account without action
    */
   export type AccountDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4010,6 +4149,7 @@ export namespace Prisma {
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     transactions?: boolean | Category$transactionsArgs<ExtArgs>
+    recurrences?: boolean | Category$recurrencesArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["category"]>
 
@@ -4049,6 +4189,7 @@ export namespace Prisma {
   export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     transactions?: boolean | Category$transactionsArgs<ExtArgs>
+    recurrences?: boolean | Category$recurrencesArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4063,6 +4204,7 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       transactions: Prisma.$TransactionPayload<ExtArgs>[]
+      recurrences: Prisma.$RecurrencePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4468,6 +4610,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     transactions<T extends Category$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Category$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    recurrences<T extends Category$recurrencesArgs<ExtArgs> = {}>(args?: Subset<T, Category$recurrencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecurrencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4924,6 +5067,30 @@ export namespace Prisma {
   }
 
   /**
+   * Category.recurrences
+   */
+  export type Category$recurrencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recurrence
+     */
+    select?: RecurrenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recurrence
+     */
+    omit?: RecurrenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecurrenceInclude<ExtArgs> | null
+    where?: RecurrenceWhereInput
+    orderBy?: RecurrenceOrderByWithRelationInput | RecurrenceOrderByWithRelationInput[]
+    cursor?: RecurrenceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RecurrenceScalarFieldEnum | RecurrenceScalarFieldEnum[]
+  }
+
+  /**
    * Category without action
    */
   export type CategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4956,100 +5123,166 @@ export namespace Prisma {
 
   export type RecurrenceAvgAggregateOutputType = {
     id: number | null
+    amount: Decimal | null
     totalParts: number | null
     currentPart: number | null
+    categoryId: number | null
+    sourceAccountId: number | null
+    targetAccountId: number | null
   }
 
   export type RecurrenceSumAggregateOutputType = {
     id: number | null
+    amount: Decimal | null
     totalParts: number | null
     currentPart: number | null
+    categoryId: number | null
+    sourceAccountId: number | null
+    targetAccountId: number | null
   }
 
   export type RecurrenceMinAggregateOutputType = {
     id: number | null
     userId: string | null
     name: string | null
+    type: $Enums.TransactionType | null
+    amount: Decimal | null
     frequency: $Enums.RecurrenceType | null
     totalParts: number | null
     currentPart: number | null
     startDate: Date | null
     nextDate: Date | null
+    endDate: Date | null
     active: boolean | null
+    categoryId: number | null
+    sourceAccountId: number | null
+    targetAccountId: number | null
+    isCardExpense: boolean | null
+    cardType: $Enums.CardType | null
   }
 
   export type RecurrenceMaxAggregateOutputType = {
     id: number | null
     userId: string | null
     name: string | null
+    type: $Enums.TransactionType | null
+    amount: Decimal | null
     frequency: $Enums.RecurrenceType | null
     totalParts: number | null
     currentPart: number | null
     startDate: Date | null
     nextDate: Date | null
+    endDate: Date | null
     active: boolean | null
+    categoryId: number | null
+    sourceAccountId: number | null
+    targetAccountId: number | null
+    isCardExpense: boolean | null
+    cardType: $Enums.CardType | null
   }
 
   export type RecurrenceCountAggregateOutputType = {
     id: number
     userId: number
     name: number
+    type: number
+    amount: number
     frequency: number
     totalParts: number
     currentPart: number
     startDate: number
     nextDate: number
+    endDate: number
     active: number
+    categoryId: number
+    sourceAccountId: number
+    targetAccountId: number
+    isCardExpense: number
+    cardType: number
+    metadata: number
     _all: number
   }
 
 
   export type RecurrenceAvgAggregateInputType = {
     id?: true
+    amount?: true
     totalParts?: true
     currentPart?: true
+    categoryId?: true
+    sourceAccountId?: true
+    targetAccountId?: true
   }
 
   export type RecurrenceSumAggregateInputType = {
     id?: true
+    amount?: true
     totalParts?: true
     currentPart?: true
+    categoryId?: true
+    sourceAccountId?: true
+    targetAccountId?: true
   }
 
   export type RecurrenceMinAggregateInputType = {
     id?: true
     userId?: true
     name?: true
+    type?: true
+    amount?: true
     frequency?: true
     totalParts?: true
     currentPart?: true
     startDate?: true
     nextDate?: true
+    endDate?: true
     active?: true
+    categoryId?: true
+    sourceAccountId?: true
+    targetAccountId?: true
+    isCardExpense?: true
+    cardType?: true
   }
 
   export type RecurrenceMaxAggregateInputType = {
     id?: true
     userId?: true
     name?: true
+    type?: true
+    amount?: true
     frequency?: true
     totalParts?: true
     currentPart?: true
     startDate?: true
     nextDate?: true
+    endDate?: true
     active?: true
+    categoryId?: true
+    sourceAccountId?: true
+    targetAccountId?: true
+    isCardExpense?: true
+    cardType?: true
   }
 
   export type RecurrenceCountAggregateInputType = {
     id?: true
     userId?: true
     name?: true
+    type?: true
+    amount?: true
     frequency?: true
     totalParts?: true
     currentPart?: true
     startDate?: true
     nextDate?: true
+    endDate?: true
     active?: true
+    categoryId?: true
+    sourceAccountId?: true
+    targetAccountId?: true
+    isCardExpense?: true
+    cardType?: true
+    metadata?: true
     _all?: true
   }
 
@@ -5143,12 +5376,21 @@ export namespace Prisma {
     id: number
     userId: string
     name: string
+    type: $Enums.TransactionType
+    amount: Decimal
     frequency: $Enums.RecurrenceType
     totalParts: number | null
-    currentPart: number | null
+    currentPart: number
     startDate: Date
     nextDate: Date | null
+    endDate: Date | null
     active: boolean
+    categoryId: number | null
+    sourceAccountId: number | null
+    targetAccountId: number | null
+    isCardExpense: boolean
+    cardType: $Enums.CardType | null
+    metadata: JsonValue | null
     _count: RecurrenceCountAggregateOutputType | null
     _avg: RecurrenceAvgAggregateOutputType | null
     _sum: RecurrenceSumAggregateOutputType | null
@@ -5174,13 +5416,25 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     name?: boolean
+    type?: boolean
+    amount?: boolean
     frequency?: boolean
     totalParts?: boolean
     currentPart?: boolean
     startDate?: boolean
     nextDate?: boolean
+    endDate?: boolean
     active?: boolean
+    categoryId?: boolean
+    sourceAccountId?: boolean
+    targetAccountId?: boolean
+    isCardExpense?: boolean
+    cardType?: boolean
+    metadata?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    category?: boolean | Recurrence$categoryArgs<ExtArgs>
+    sourceAccount?: boolean | Recurrence$sourceAccountArgs<ExtArgs>
+    targetAccount?: boolean | Recurrence$targetAccountArgs<ExtArgs>
     transactions?: boolean | Recurrence$transactionsArgs<ExtArgs>
     _count?: boolean | RecurrenceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["recurrence"]>
@@ -5189,69 +5443,123 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     name?: boolean
+    type?: boolean
+    amount?: boolean
     frequency?: boolean
     totalParts?: boolean
     currentPart?: boolean
     startDate?: boolean
     nextDate?: boolean
+    endDate?: boolean
     active?: boolean
+    categoryId?: boolean
+    sourceAccountId?: boolean
+    targetAccountId?: boolean
+    isCardExpense?: boolean
+    cardType?: boolean
+    metadata?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    category?: boolean | Recurrence$categoryArgs<ExtArgs>
+    sourceAccount?: boolean | Recurrence$sourceAccountArgs<ExtArgs>
+    targetAccount?: boolean | Recurrence$targetAccountArgs<ExtArgs>
   }, ExtArgs["result"]["recurrence"]>
 
   export type RecurrenceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
     name?: boolean
+    type?: boolean
+    amount?: boolean
     frequency?: boolean
     totalParts?: boolean
     currentPart?: boolean
     startDate?: boolean
     nextDate?: boolean
+    endDate?: boolean
     active?: boolean
+    categoryId?: boolean
+    sourceAccountId?: boolean
+    targetAccountId?: boolean
+    isCardExpense?: boolean
+    cardType?: boolean
+    metadata?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
+    category?: boolean | Recurrence$categoryArgs<ExtArgs>
+    sourceAccount?: boolean | Recurrence$sourceAccountArgs<ExtArgs>
+    targetAccount?: boolean | Recurrence$targetAccountArgs<ExtArgs>
   }, ExtArgs["result"]["recurrence"]>
 
   export type RecurrenceSelectScalar = {
     id?: boolean
     userId?: boolean
     name?: boolean
+    type?: boolean
+    amount?: boolean
     frequency?: boolean
     totalParts?: boolean
     currentPart?: boolean
     startDate?: boolean
     nextDate?: boolean
+    endDate?: boolean
     active?: boolean
+    categoryId?: boolean
+    sourceAccountId?: boolean
+    targetAccountId?: boolean
+    isCardExpense?: boolean
+    cardType?: boolean
+    metadata?: boolean
   }
 
-  export type RecurrenceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "frequency" | "totalParts" | "currentPart" | "startDate" | "nextDate" | "active", ExtArgs["result"]["recurrence"]>
+  export type RecurrenceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "type" | "amount" | "frequency" | "totalParts" | "currentPart" | "startDate" | "nextDate" | "endDate" | "active" | "categoryId" | "sourceAccountId" | "targetAccountId" | "isCardExpense" | "cardType" | "metadata", ExtArgs["result"]["recurrence"]>
   export type RecurrenceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    category?: boolean | Recurrence$categoryArgs<ExtArgs>
+    sourceAccount?: boolean | Recurrence$sourceAccountArgs<ExtArgs>
+    targetAccount?: boolean | Recurrence$targetAccountArgs<ExtArgs>
     transactions?: boolean | Recurrence$transactionsArgs<ExtArgs>
     _count?: boolean | RecurrenceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type RecurrenceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    category?: boolean | Recurrence$categoryArgs<ExtArgs>
+    sourceAccount?: boolean | Recurrence$sourceAccountArgs<ExtArgs>
+    targetAccount?: boolean | Recurrence$targetAccountArgs<ExtArgs>
   }
   export type RecurrenceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
+    category?: boolean | Recurrence$categoryArgs<ExtArgs>
+    sourceAccount?: boolean | Recurrence$sourceAccountArgs<ExtArgs>
+    targetAccount?: boolean | Recurrence$targetAccountArgs<ExtArgs>
   }
 
   export type $RecurrencePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Recurrence"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
+      category: Prisma.$CategoryPayload<ExtArgs> | null
+      sourceAccount: Prisma.$AccountPayload<ExtArgs> | null
+      targetAccount: Prisma.$AccountPayload<ExtArgs> | null
       transactions: Prisma.$TransactionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       userId: string
       name: string
+      type: $Enums.TransactionType
+      amount: Prisma.Decimal
       frequency: $Enums.RecurrenceType
       totalParts: number | null
-      currentPart: number | null
+      currentPart: number
       startDate: Date
       nextDate: Date | null
+      endDate: Date | null
       active: boolean
+      categoryId: number | null
+      sourceAccountId: number | null
+      targetAccountId: number | null
+      isCardExpense: boolean
+      cardType: $Enums.CardType | null
+      metadata: Prisma.JsonValue | null
     }, ExtArgs["result"]["recurrence"]>
     composites: {}
   }
@@ -5647,6 +5955,9 @@ export namespace Prisma {
   export interface Prisma__RecurrenceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    category<T extends Recurrence$categoryArgs<ExtArgs> = {}>(args?: Subset<T, Recurrence$categoryArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    sourceAccount<T extends Recurrence$sourceAccountArgs<ExtArgs> = {}>(args?: Subset<T, Recurrence$sourceAccountArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    targetAccount<T extends Recurrence$targetAccountArgs<ExtArgs> = {}>(args?: Subset<T, Recurrence$targetAccountArgs<ExtArgs>>): Prisma__AccountClient<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     transactions<T extends Recurrence$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Recurrence$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5680,12 +5991,21 @@ export namespace Prisma {
     readonly id: FieldRef<"Recurrence", 'Int'>
     readonly userId: FieldRef<"Recurrence", 'String'>
     readonly name: FieldRef<"Recurrence", 'String'>
+    readonly type: FieldRef<"Recurrence", 'TransactionType'>
+    readonly amount: FieldRef<"Recurrence", 'Decimal'>
     readonly frequency: FieldRef<"Recurrence", 'RecurrenceType'>
     readonly totalParts: FieldRef<"Recurrence", 'Int'>
     readonly currentPart: FieldRef<"Recurrence", 'Int'>
     readonly startDate: FieldRef<"Recurrence", 'DateTime'>
     readonly nextDate: FieldRef<"Recurrence", 'DateTime'>
+    readonly endDate: FieldRef<"Recurrence", 'DateTime'>
     readonly active: FieldRef<"Recurrence", 'Boolean'>
+    readonly categoryId: FieldRef<"Recurrence", 'Int'>
+    readonly sourceAccountId: FieldRef<"Recurrence", 'Int'>
+    readonly targetAccountId: FieldRef<"Recurrence", 'Int'>
+    readonly isCardExpense: FieldRef<"Recurrence", 'Boolean'>
+    readonly cardType: FieldRef<"Recurrence", 'CardType'>
+    readonly metadata: FieldRef<"Recurrence", 'Json'>
   }
     
 
@@ -6082,6 +6402,63 @@ export namespace Prisma {
   }
 
   /**
+   * Recurrence.category
+   */
+  export type Recurrence$categoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    where?: CategoryWhereInput
+  }
+
+  /**
+   * Recurrence.sourceAccount
+   */
+  export type Recurrence$sourceAccountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    where?: AccountWhereInput
+  }
+
+  /**
+   * Recurrence.targetAccount
+   */
+  export type Recurrence$targetAccountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    where?: AccountWhereInput
+  }
+
+  /**
    * Recurrence.transactions
    */
   export type Recurrence$transactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6143,6 +6520,7 @@ export namespace Prisma {
     sourceAccountId: number | null
     targetAccountId: number | null
     recurrenceId: number | null
+    recurrencePartNumber: number | null
   }
 
   export type TransactionSumAggregateOutputType = {
@@ -6152,6 +6530,7 @@ export namespace Prisma {
     sourceAccountId: number | null
     targetAccountId: number | null
     recurrenceId: number | null
+    recurrencePartNumber: number | null
   }
 
   export type TransactionMinAggregateOutputType = {
@@ -6165,6 +6544,12 @@ export namespace Prisma {
     sourceAccountId: number | null
     targetAccountId: number | null
     recurrenceId: number | null
+    recurrencePartNumber: number | null
+    isBudgetedExpense: boolean | null
+    budgetCategory: $Enums.BudgetCategory | null
+    isCardExpense: boolean | null
+    cardType: $Enums.CardType | null
+    source: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6180,6 +6565,12 @@ export namespace Prisma {
     sourceAccountId: number | null
     targetAccountId: number | null
     recurrenceId: number | null
+    recurrencePartNumber: number | null
+    isBudgetedExpense: boolean | null
+    budgetCategory: $Enums.BudgetCategory | null
+    isCardExpense: boolean | null
+    cardType: $Enums.CardType | null
+    source: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6195,6 +6586,12 @@ export namespace Prisma {
     sourceAccountId: number
     targetAccountId: number
     recurrenceId: number
+    recurrencePartNumber: number
+    isBudgetedExpense: number
+    budgetCategory: number
+    isCardExpense: number
+    cardType: number
+    source: number
     metadata: number
     createdAt: number
     updatedAt: number
@@ -6209,6 +6606,7 @@ export namespace Prisma {
     sourceAccountId?: true
     targetAccountId?: true
     recurrenceId?: true
+    recurrencePartNumber?: true
   }
 
   export type TransactionSumAggregateInputType = {
@@ -6218,6 +6616,7 @@ export namespace Prisma {
     sourceAccountId?: true
     targetAccountId?: true
     recurrenceId?: true
+    recurrencePartNumber?: true
   }
 
   export type TransactionMinAggregateInputType = {
@@ -6231,6 +6630,12 @@ export namespace Prisma {
     sourceAccountId?: true
     targetAccountId?: true
     recurrenceId?: true
+    recurrencePartNumber?: true
+    isBudgetedExpense?: true
+    budgetCategory?: true
+    isCardExpense?: true
+    cardType?: true
+    source?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6246,6 +6651,12 @@ export namespace Prisma {
     sourceAccountId?: true
     targetAccountId?: true
     recurrenceId?: true
+    recurrencePartNumber?: true
+    isBudgetedExpense?: true
+    budgetCategory?: true
+    isCardExpense?: true
+    cardType?: true
+    source?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6261,6 +6672,12 @@ export namespace Prisma {
     sourceAccountId?: true
     targetAccountId?: true
     recurrenceId?: true
+    recurrencePartNumber?: true
+    isBudgetedExpense?: true
+    budgetCategory?: true
+    isCardExpense?: true
+    cardType?: true
+    source?: true
     metadata?: true
     createdAt?: true
     updatedAt?: true
@@ -6364,6 +6781,12 @@ export namespace Prisma {
     sourceAccountId: number | null
     targetAccountId: number | null
     recurrenceId: number | null
+    recurrencePartNumber: number | null
+    isBudgetedExpense: boolean | null
+    budgetCategory: $Enums.BudgetCategory | null
+    isCardExpense: boolean | null
+    cardType: $Enums.CardType | null
+    source: string | null
     metadata: JsonValue | null
     createdAt: Date
     updatedAt: Date
@@ -6399,6 +6822,12 @@ export namespace Prisma {
     sourceAccountId?: boolean
     targetAccountId?: boolean
     recurrenceId?: boolean
+    recurrencePartNumber?: boolean
+    isBudgetedExpense?: boolean
+    budgetCategory?: boolean
+    isCardExpense?: boolean
+    cardType?: boolean
+    source?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6420,6 +6849,12 @@ export namespace Prisma {
     sourceAccountId?: boolean
     targetAccountId?: boolean
     recurrenceId?: boolean
+    recurrencePartNumber?: boolean
+    isBudgetedExpense?: boolean
+    budgetCategory?: boolean
+    isCardExpense?: boolean
+    cardType?: boolean
+    source?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6441,6 +6876,12 @@ export namespace Prisma {
     sourceAccountId?: boolean
     targetAccountId?: boolean
     recurrenceId?: boolean
+    recurrencePartNumber?: boolean
+    isBudgetedExpense?: boolean
+    budgetCategory?: boolean
+    isCardExpense?: boolean
+    cardType?: boolean
+    source?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -6462,12 +6903,18 @@ export namespace Prisma {
     sourceAccountId?: boolean
     targetAccountId?: boolean
     recurrenceId?: boolean
+    recurrencePartNumber?: boolean
+    isBudgetedExpense?: boolean
+    budgetCategory?: boolean
+    isCardExpense?: boolean
+    cardType?: boolean
+    source?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "type" | "amount" | "date" | "description" | "categoryId" | "sourceAccountId" | "targetAccountId" | "recurrenceId" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["transaction"]>
+  export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "type" | "amount" | "date" | "description" | "categoryId" | "sourceAccountId" | "targetAccountId" | "recurrenceId" | "recurrencePartNumber" | "isBudgetedExpense" | "budgetCategory" | "isCardExpense" | "cardType" | "source" | "metadata" | "createdAt" | "updatedAt", ExtArgs["result"]["transaction"]>
   export type TransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | Transaction$categoryArgs<ExtArgs>
     recurrence?: boolean | Transaction$recurrenceArgs<ExtArgs>
@@ -6510,6 +6957,12 @@ export namespace Prisma {
       sourceAccountId: number | null
       targetAccountId: number | null
       recurrenceId: number | null
+      recurrencePartNumber: number | null
+      isBudgetedExpense: boolean | null
+      budgetCategory: $Enums.BudgetCategory | null
+      isCardExpense: boolean | null
+      cardType: $Enums.CardType | null
+      source: string | null
       metadata: Prisma.JsonValue | null
       createdAt: Date
       updatedAt: Date
@@ -6951,6 +7404,12 @@ export namespace Prisma {
     readonly sourceAccountId: FieldRef<"Transaction", 'Int'>
     readonly targetAccountId: FieldRef<"Transaction", 'Int'>
     readonly recurrenceId: FieldRef<"Transaction", 'Int'>
+    readonly recurrencePartNumber: FieldRef<"Transaction", 'Int'>
+    readonly isBudgetedExpense: FieldRef<"Transaction", 'Boolean'>
+    readonly budgetCategory: FieldRef<"Transaction", 'BudgetCategory'>
+    readonly isCardExpense: FieldRef<"Transaction", 'Boolean'>
+    readonly cardType: FieldRef<"Transaction", 'CardType'>
+    readonly source: FieldRef<"Transaction", 'String'>
     readonly metadata: FieldRef<"Transaction", 'Json'>
     readonly createdAt: FieldRef<"Transaction", 'DateTime'>
     readonly updatedAt: FieldRef<"Transaction", 'DateTime'>
@@ -7462,7 +7921,9 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     email: 'email',
-    passwordHash: 'passwordHash'
+    passwordHash: 'passwordHash',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -7499,12 +7960,21 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     name: 'name',
+    type: 'type',
+    amount: 'amount',
     frequency: 'frequency',
     totalParts: 'totalParts',
     currentPart: 'currentPart',
     startDate: 'startDate',
     nextDate: 'nextDate',
-    active: 'active'
+    endDate: 'endDate',
+    active: 'active',
+    categoryId: 'categoryId',
+    sourceAccountId: 'sourceAccountId',
+    targetAccountId: 'targetAccountId',
+    isCardExpense: 'isCardExpense',
+    cardType: 'cardType',
+    metadata: 'metadata'
   };
 
   export type RecurrenceScalarFieldEnum = (typeof RecurrenceScalarFieldEnum)[keyof typeof RecurrenceScalarFieldEnum]
@@ -7521,6 +7991,12 @@ export namespace Prisma {
     sourceAccountId: 'sourceAccountId',
     targetAccountId: 'targetAccountId',
     recurrenceId: 'recurrenceId',
+    recurrencePartNumber: 'recurrencePartNumber',
+    isBudgetedExpense: 'isBudgetedExpense',
+    budgetCategory: 'budgetCategory',
+    isCardExpense: 'isCardExpense',
+    cardType: 'cardType',
+    source: 'source',
     metadata: 'metadata',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -7590,6 +8066,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -7646,20 +8136,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DateTime'
-   */
-  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-  /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
    * Reference to a field of type 'CategoryType'
    */
   export type EnumCategoryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CategoryType'>
@@ -7670,6 +8146,20 @@ export namespace Prisma {
    * Reference to a field of type 'CategoryType[]'
    */
   export type ListEnumCategoryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CategoryType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'TransactionType'
+   */
+  export type EnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType'>
+    
+
+
+  /**
+   * Reference to a field of type 'TransactionType[]'
+   */
+  export type ListEnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType[]'>
     
 
 
@@ -7695,16 +8185,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'TransactionType'
+   * Reference to a field of type 'CardType'
    */
-  export type EnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType'>
+  export type EnumCardTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CardType'>
     
 
 
   /**
-   * Reference to a field of type 'TransactionType[]'
+   * Reference to a field of type 'CardType[]'
    */
-  export type ListEnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType[]'>
+  export type ListEnumCardTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CardType[]'>
     
 
 
@@ -7719,6 +8209,20 @@ export namespace Prisma {
    * Reference to a field of type 'QueryMode'
    */
   export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
+   * Reference to a field of type 'BudgetCategory'
+   */
+  export type EnumBudgetCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BudgetCategory'>
+    
+
+
+  /**
+   * Reference to a field of type 'BudgetCategory[]'
+   */
+  export type ListEnumBudgetCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BudgetCategory[]'>
     
 
 
@@ -7747,6 +8251,8 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     email?: StringNullableFilter<"User"> | string | null
     passwordHash?: StringFilter<"User"> | string
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
     categories?: CategoryListRelationFilter
     recurrences?: RecurrenceListRelationFilter
@@ -7758,6 +8264,8 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrderInput | SortOrder
     passwordHash?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     accounts?: AccountOrderByRelationAggregateInput
     categories?: CategoryOrderByRelationAggregateInput
     recurrences?: RecurrenceOrderByRelationAggregateInput
@@ -7772,6 +8280,8 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
     passwordHash?: StringFilter<"User"> | string
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
     categories?: CategoryListRelationFilter
     recurrences?: RecurrenceListRelationFilter
@@ -7783,6 +8293,8 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrderInput | SortOrder
     passwordHash?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -7796,6 +8308,8 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringNullableWithAggregatesFilter<"User"> | string | null
     passwordHash?: StringWithAggregatesFilter<"User"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
   export type AccountWhereInput = {
@@ -7813,6 +8327,8 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     transactionsFrom?: TransactionListRelationFilter
     transactionsTo?: TransactionListRelationFilter
+    recurrencesFrom?: RecurrenceListRelationFilter
+    recurrencesTo?: RecurrenceListRelationFilter
   }
 
   export type AccountOrderByWithRelationInput = {
@@ -7827,6 +8343,8 @@ export namespace Prisma {
     user?: UserOrderByWithRelationInput
     transactionsFrom?: TransactionOrderByRelationAggregateInput
     transactionsTo?: TransactionOrderByRelationAggregateInput
+    recurrencesFrom?: RecurrenceOrderByRelationAggregateInput
+    recurrencesTo?: RecurrenceOrderByRelationAggregateInput
   }
 
   export type AccountWhereUniqueInput = Prisma.AtLeast<{
@@ -7845,6 +8363,8 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     transactionsFrom?: TransactionListRelationFilter
     transactionsTo?: TransactionListRelationFilter
+    recurrencesFrom?: RecurrenceListRelationFilter
+    recurrencesTo?: RecurrenceListRelationFilter
   }, "id" | "name_userId">
 
   export type AccountOrderByWithAggregationInput = {
@@ -7890,6 +8410,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Category"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     transactions?: TransactionListRelationFilter
+    recurrences?: RecurrenceListRelationFilter
   }
 
   export type CategoryOrderByWithRelationInput = {
@@ -7902,10 +8423,12 @@ export namespace Prisma {
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
     transactions?: TransactionOrderByRelationAggregateInput
+    recurrences?: RecurrenceOrderByRelationAggregateInput
   }
 
   export type CategoryWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    userId_name?: CategoryUserIdNameCompoundUniqueInput
     AND?: CategoryWhereInput | CategoryWhereInput[]
     OR?: CategoryWhereInput[]
     NOT?: CategoryWhereInput | CategoryWhereInput[]
@@ -7917,7 +8440,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Category"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     transactions?: TransactionListRelationFilter
-  }, "id">
+    recurrences?: RecurrenceListRelationFilter
+  }, "id" | "userId_name">
 
   export type CategoryOrderByWithAggregationInput = {
     id?: SortOrder
@@ -7954,13 +8478,25 @@ export namespace Prisma {
     id?: IntFilter<"Recurrence"> | number
     userId?: StringFilter<"Recurrence"> | string
     name?: StringFilter<"Recurrence"> | string
+    type?: EnumTransactionTypeFilter<"Recurrence"> | $Enums.TransactionType
+    amount?: DecimalFilter<"Recurrence"> | Decimal | DecimalJsLike | number | string
     frequency?: EnumRecurrenceTypeFilter<"Recurrence"> | $Enums.RecurrenceType
     totalParts?: IntNullableFilter<"Recurrence"> | number | null
-    currentPart?: IntNullableFilter<"Recurrence"> | number | null
+    currentPart?: IntFilter<"Recurrence"> | number
     startDate?: DateTimeFilter<"Recurrence"> | Date | string
     nextDate?: DateTimeNullableFilter<"Recurrence"> | Date | string | null
+    endDate?: DateTimeNullableFilter<"Recurrence"> | Date | string | null
     active?: BoolFilter<"Recurrence"> | boolean
+    categoryId?: IntNullableFilter<"Recurrence"> | number | null
+    sourceAccountId?: IntNullableFilter<"Recurrence"> | number | null
+    targetAccountId?: IntNullableFilter<"Recurrence"> | number | null
+    isCardExpense?: BoolFilter<"Recurrence"> | boolean
+    cardType?: EnumCardTypeNullableFilter<"Recurrence"> | $Enums.CardType | null
+    metadata?: JsonNullableFilter<"Recurrence">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
+    sourceAccount?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
+    targetAccount?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
     transactions?: TransactionListRelationFilter
   }
 
@@ -7968,13 +8504,25 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     name?: SortOrder
+    type?: SortOrder
+    amount?: SortOrder
     frequency?: SortOrder
     totalParts?: SortOrderInput | SortOrder
-    currentPart?: SortOrderInput | SortOrder
+    currentPart?: SortOrder
     startDate?: SortOrder
     nextDate?: SortOrderInput | SortOrder
+    endDate?: SortOrderInput | SortOrder
     active?: SortOrder
+    categoryId?: SortOrderInput | SortOrder
+    sourceAccountId?: SortOrderInput | SortOrder
+    targetAccountId?: SortOrderInput | SortOrder
+    isCardExpense?: SortOrder
+    cardType?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
+    category?: CategoryOrderByWithRelationInput
+    sourceAccount?: AccountOrderByWithRelationInput
+    targetAccount?: AccountOrderByWithRelationInput
     transactions?: TransactionOrderByRelationAggregateInput
   }
 
@@ -7985,13 +8533,25 @@ export namespace Prisma {
     NOT?: RecurrenceWhereInput | RecurrenceWhereInput[]
     userId?: StringFilter<"Recurrence"> | string
     name?: StringFilter<"Recurrence"> | string
+    type?: EnumTransactionTypeFilter<"Recurrence"> | $Enums.TransactionType
+    amount?: DecimalFilter<"Recurrence"> | Decimal | DecimalJsLike | number | string
     frequency?: EnumRecurrenceTypeFilter<"Recurrence"> | $Enums.RecurrenceType
     totalParts?: IntNullableFilter<"Recurrence"> | number | null
-    currentPart?: IntNullableFilter<"Recurrence"> | number | null
+    currentPart?: IntFilter<"Recurrence"> | number
     startDate?: DateTimeFilter<"Recurrence"> | Date | string
     nextDate?: DateTimeNullableFilter<"Recurrence"> | Date | string | null
+    endDate?: DateTimeNullableFilter<"Recurrence"> | Date | string | null
     active?: BoolFilter<"Recurrence"> | boolean
+    categoryId?: IntNullableFilter<"Recurrence"> | number | null
+    sourceAccountId?: IntNullableFilter<"Recurrence"> | number | null
+    targetAccountId?: IntNullableFilter<"Recurrence"> | number | null
+    isCardExpense?: BoolFilter<"Recurrence"> | boolean
+    cardType?: EnumCardTypeNullableFilter<"Recurrence"> | $Enums.CardType | null
+    metadata?: JsonNullableFilter<"Recurrence">
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
+    sourceAccount?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
+    targetAccount?: XOR<AccountNullableScalarRelationFilter, AccountWhereInput> | null
     transactions?: TransactionListRelationFilter
   }, "id">
 
@@ -7999,12 +8559,21 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     name?: SortOrder
+    type?: SortOrder
+    amount?: SortOrder
     frequency?: SortOrder
     totalParts?: SortOrderInput | SortOrder
-    currentPart?: SortOrderInput | SortOrder
+    currentPart?: SortOrder
     startDate?: SortOrder
     nextDate?: SortOrderInput | SortOrder
+    endDate?: SortOrderInput | SortOrder
     active?: SortOrder
+    categoryId?: SortOrderInput | SortOrder
+    sourceAccountId?: SortOrderInput | SortOrder
+    targetAccountId?: SortOrderInput | SortOrder
+    isCardExpense?: SortOrder
+    cardType?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
     _count?: RecurrenceCountOrderByAggregateInput
     _avg?: RecurrenceAvgOrderByAggregateInput
     _max?: RecurrenceMaxOrderByAggregateInput
@@ -8019,12 +8588,21 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Recurrence"> | number
     userId?: StringWithAggregatesFilter<"Recurrence"> | string
     name?: StringWithAggregatesFilter<"Recurrence"> | string
+    type?: EnumTransactionTypeWithAggregatesFilter<"Recurrence"> | $Enums.TransactionType
+    amount?: DecimalWithAggregatesFilter<"Recurrence"> | Decimal | DecimalJsLike | number | string
     frequency?: EnumRecurrenceTypeWithAggregatesFilter<"Recurrence"> | $Enums.RecurrenceType
     totalParts?: IntNullableWithAggregatesFilter<"Recurrence"> | number | null
-    currentPart?: IntNullableWithAggregatesFilter<"Recurrence"> | number | null
+    currentPart?: IntWithAggregatesFilter<"Recurrence"> | number
     startDate?: DateTimeWithAggregatesFilter<"Recurrence"> | Date | string
     nextDate?: DateTimeNullableWithAggregatesFilter<"Recurrence"> | Date | string | null
+    endDate?: DateTimeNullableWithAggregatesFilter<"Recurrence"> | Date | string | null
     active?: BoolWithAggregatesFilter<"Recurrence"> | boolean
+    categoryId?: IntNullableWithAggregatesFilter<"Recurrence"> | number | null
+    sourceAccountId?: IntNullableWithAggregatesFilter<"Recurrence"> | number | null
+    targetAccountId?: IntNullableWithAggregatesFilter<"Recurrence"> | number | null
+    isCardExpense?: BoolWithAggregatesFilter<"Recurrence"> | boolean
+    cardType?: EnumCardTypeNullableWithAggregatesFilter<"Recurrence"> | $Enums.CardType | null
+    metadata?: JsonNullableWithAggregatesFilter<"Recurrence">
   }
 
   export type TransactionWhereInput = {
@@ -8041,6 +8619,12 @@ export namespace Prisma {
     sourceAccountId?: IntNullableFilter<"Transaction"> | number | null
     targetAccountId?: IntNullableFilter<"Transaction"> | number | null
     recurrenceId?: IntNullableFilter<"Transaction"> | number | null
+    recurrencePartNumber?: IntNullableFilter<"Transaction"> | number | null
+    isBudgetedExpense?: BoolNullableFilter<"Transaction"> | boolean | null
+    budgetCategory?: EnumBudgetCategoryNullableFilter<"Transaction"> | $Enums.BudgetCategory | null
+    isCardExpense?: BoolNullableFilter<"Transaction"> | boolean | null
+    cardType?: EnumCardTypeNullableFilter<"Transaction"> | $Enums.CardType | null
+    source?: StringNullableFilter<"Transaction"> | string | null
     metadata?: JsonNullableFilter<"Transaction">
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeFilter<"Transaction"> | Date | string
@@ -8062,6 +8646,12 @@ export namespace Prisma {
     sourceAccountId?: SortOrderInput | SortOrder
     targetAccountId?: SortOrderInput | SortOrder
     recurrenceId?: SortOrderInput | SortOrder
+    recurrencePartNumber?: SortOrderInput | SortOrder
+    isBudgetedExpense?: SortOrderInput | SortOrder
+    budgetCategory?: SortOrderInput | SortOrder
+    isCardExpense?: SortOrderInput | SortOrder
+    cardType?: SortOrderInput | SortOrder
+    source?: SortOrderInput | SortOrder
     metadata?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8086,6 +8676,12 @@ export namespace Prisma {
     sourceAccountId?: IntNullableFilter<"Transaction"> | number | null
     targetAccountId?: IntNullableFilter<"Transaction"> | number | null
     recurrenceId?: IntNullableFilter<"Transaction"> | number | null
+    recurrencePartNumber?: IntNullableFilter<"Transaction"> | number | null
+    isBudgetedExpense?: BoolNullableFilter<"Transaction"> | boolean | null
+    budgetCategory?: EnumBudgetCategoryNullableFilter<"Transaction"> | $Enums.BudgetCategory | null
+    isCardExpense?: BoolNullableFilter<"Transaction"> | boolean | null
+    cardType?: EnumCardTypeNullableFilter<"Transaction"> | $Enums.CardType | null
+    source?: StringNullableFilter<"Transaction"> | string | null
     metadata?: JsonNullableFilter<"Transaction">
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeFilter<"Transaction"> | Date | string
@@ -8107,6 +8703,12 @@ export namespace Prisma {
     sourceAccountId?: SortOrderInput | SortOrder
     targetAccountId?: SortOrderInput | SortOrder
     recurrenceId?: SortOrderInput | SortOrder
+    recurrencePartNumber?: SortOrderInput | SortOrder
+    isBudgetedExpense?: SortOrderInput | SortOrder
+    budgetCategory?: SortOrderInput | SortOrder
+    isCardExpense?: SortOrderInput | SortOrder
+    cardType?: SortOrderInput | SortOrder
+    source?: SortOrderInput | SortOrder
     metadata?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8131,6 +8733,12 @@ export namespace Prisma {
     sourceAccountId?: IntNullableWithAggregatesFilter<"Transaction"> | number | null
     targetAccountId?: IntNullableWithAggregatesFilter<"Transaction"> | number | null
     recurrenceId?: IntNullableWithAggregatesFilter<"Transaction"> | number | null
+    recurrencePartNumber?: IntNullableWithAggregatesFilter<"Transaction"> | number | null
+    isBudgetedExpense?: BoolNullableWithAggregatesFilter<"Transaction"> | boolean | null
+    budgetCategory?: EnumBudgetCategoryNullableWithAggregatesFilter<"Transaction"> | $Enums.BudgetCategory | null
+    isCardExpense?: BoolNullableWithAggregatesFilter<"Transaction"> | boolean | null
+    cardType?: EnumCardTypeNullableWithAggregatesFilter<"Transaction"> | $Enums.CardType | null
+    source?: StringNullableWithAggregatesFilter<"Transaction"> | string | null
     metadata?: JsonNullableWithAggregatesFilter<"Transaction">
     createdAt?: DateTimeWithAggregatesFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Transaction"> | Date | string
@@ -8141,6 +8749,8 @@ export namespace Prisma {
     name: string
     email?: string | null
     passwordHash: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     categories?: CategoryCreateNestedManyWithoutUserInput
     recurrences?: RecurrenceCreateNestedManyWithoutUserInput
@@ -8152,6 +8762,8 @@ export namespace Prisma {
     name: string
     email?: string | null
     passwordHash: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
     recurrences?: RecurrenceUncheckedCreateNestedManyWithoutUserInput
@@ -8163,6 +8775,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     categories?: CategoryUpdateManyWithoutUserNestedInput
     recurrences?: RecurrenceUpdateManyWithoutUserNestedInput
@@ -8174,6 +8788,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
     recurrences?: RecurrenceUncheckedUpdateManyWithoutUserNestedInput
@@ -8185,6 +8801,8 @@ export namespace Prisma {
     name: string
     email?: string | null
     passwordHash: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
@@ -8192,6 +8810,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -8199,6 +8819,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AccountCreateInput = {
@@ -8211,6 +8833,8 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutAccountsInput
     transactionsFrom?: TransactionCreateNestedManyWithoutSourceAccountInput
     transactionsTo?: TransactionCreateNestedManyWithoutTargetAccountInput
+    recurrencesFrom?: RecurrenceCreateNestedManyWithoutSourceAccountInput
+    recurrencesTo?: RecurrenceCreateNestedManyWithoutTargetAccountInput
   }
 
   export type AccountUncheckedCreateInput = {
@@ -8224,6 +8848,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     transactionsFrom?: TransactionUncheckedCreateNestedManyWithoutSourceAccountInput
     transactionsTo?: TransactionUncheckedCreateNestedManyWithoutTargetAccountInput
+    recurrencesFrom?: RecurrenceUncheckedCreateNestedManyWithoutSourceAccountInput
+    recurrencesTo?: RecurrenceUncheckedCreateNestedManyWithoutTargetAccountInput
   }
 
   export type AccountUpdateInput = {
@@ -8236,6 +8862,8 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutAccountsNestedInput
     transactionsFrom?: TransactionUpdateManyWithoutSourceAccountNestedInput
     transactionsTo?: TransactionUpdateManyWithoutTargetAccountNestedInput
+    recurrencesFrom?: RecurrenceUpdateManyWithoutSourceAccountNestedInput
+    recurrencesTo?: RecurrenceUpdateManyWithoutTargetAccountNestedInput
   }
 
   export type AccountUncheckedUpdateInput = {
@@ -8249,6 +8877,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactionsFrom?: TransactionUncheckedUpdateManyWithoutSourceAccountNestedInput
     transactionsTo?: TransactionUncheckedUpdateManyWithoutTargetAccountNestedInput
+    recurrencesFrom?: RecurrenceUncheckedUpdateManyWithoutSourceAccountNestedInput
+    recurrencesTo?: RecurrenceUncheckedUpdateManyWithoutTargetAccountNestedInput
   }
 
   export type AccountCreateManyInput = {
@@ -8290,6 +8920,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutCategoriesInput
     transactions?: TransactionCreateNestedManyWithoutCategoryInput
+    recurrences?: RecurrenceCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUncheckedCreateInput = {
@@ -8301,6 +8932,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     transactions?: TransactionUncheckedCreateNestedManyWithoutCategoryInput
+    recurrences?: RecurrenceUncheckedCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUpdateInput = {
@@ -8311,6 +8943,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCategoriesNestedInput
     transactions?: TransactionUpdateManyWithoutCategoryNestedInput
+    recurrences?: RecurrenceUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryUncheckedUpdateInput = {
@@ -8322,6 +8955,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions?: TransactionUncheckedUpdateManyWithoutCategoryNestedInput
+    recurrences?: RecurrenceUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryCreateManyInput = {
@@ -8354,13 +8988,22 @@ export namespace Prisma {
 
   export type RecurrenceCreateInput = {
     name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
     frequency: $Enums.RecurrenceType
     totalParts?: number | null
-    currentPart?: number | null
+    currentPart?: number
     startDate: Date | string
     nextDate?: Date | string | null
+    endDate?: Date | string | null
     active?: boolean
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     user: UserCreateNestedOneWithoutRecurrencesInput
+    category?: CategoryCreateNestedOneWithoutRecurrencesInput
+    sourceAccount?: AccountCreateNestedOneWithoutRecurrencesFromInput
+    targetAccount?: AccountCreateNestedOneWithoutRecurrencesToInput
     transactions?: TransactionCreateNestedManyWithoutRecurrenceInput
   }
 
@@ -8368,24 +9011,42 @@ export namespace Prisma {
     id?: number
     userId: string
     name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
     frequency: $Enums.RecurrenceType
     totalParts?: number | null
-    currentPart?: number | null
+    currentPart?: number
     startDate: Date | string
     nextDate?: Date | string | null
+    endDate?: Date | string | null
     active?: boolean
+    categoryId?: number | null
+    sourceAccountId?: number | null
+    targetAccountId?: number | null
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     transactions?: TransactionUncheckedCreateNestedManyWithoutRecurrenceInput
   }
 
   export type RecurrenceUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
     totalParts?: NullableIntFieldUpdateOperationsInput | number | null
-    currentPart?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     user?: UserUpdateOneRequiredWithoutRecurrencesNestedInput
+    category?: CategoryUpdateOneWithoutRecurrencesNestedInput
+    sourceAccount?: AccountUpdateOneWithoutRecurrencesFromNestedInput
+    targetAccount?: AccountUpdateOneWithoutRecurrencesToNestedInput
     transactions?: TransactionUpdateManyWithoutRecurrenceNestedInput
   }
 
@@ -8393,12 +9054,21 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
     totalParts?: NullableIntFieldUpdateOperationsInput | number | null
-    currentPart?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
+    sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     transactions?: TransactionUncheckedUpdateManyWithoutRecurrenceNestedInput
   }
 
@@ -8406,34 +9076,58 @@ export namespace Prisma {
     id?: number
     userId: string
     name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
     frequency: $Enums.RecurrenceType
     totalParts?: number | null
-    currentPart?: number | null
+    currentPart?: number
     startDate: Date | string
     nextDate?: Date | string | null
+    endDate?: Date | string | null
     active?: boolean
+    categoryId?: number | null
+    sourceAccountId?: number | null
+    targetAccountId?: number | null
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type RecurrenceUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
     totalParts?: NullableIntFieldUpdateOperationsInput | number | null
-    currentPart?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type RecurrenceUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
     totalParts?: NullableIntFieldUpdateOperationsInput | number | null
-    currentPart?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
+    sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type TransactionCreateInput = {
@@ -8441,6 +9135,12 @@ export namespace Prisma {
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
     description?: string | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -8462,6 +9162,12 @@ export namespace Prisma {
     sourceAccountId?: number | null
     targetAccountId?: number | null
     recurrenceId?: number | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -8472,6 +9178,12 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8493,6 +9205,12 @@ export namespace Prisma {
     sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     recurrenceId?: NullableIntFieldUpdateOperationsInput | number | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8509,6 +9227,12 @@ export namespace Prisma {
     sourceAccountId?: number | null
     targetAccountId?: number | null
     recurrenceId?: number | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -8519,6 +9243,12 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8535,6 +9265,12 @@ export namespace Prisma {
     sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     recurrenceId?: NullableIntFieldUpdateOperationsInput | number | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8568,6 +9304,17 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type AccountListRelationFilter = {
@@ -8620,6 +9367,8 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     passwordHash?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -8627,6 +9376,8 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     passwordHash?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -8634,6 +9385,8 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     passwordHash?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -8672,6 +9425,20 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -8706,17 +9473,6 @@ export namespace Prisma {
     gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type UserScalarRelationFilter = {
@@ -8824,25 +9580,16 @@ export namespace Prisma {
     _max?: NestedDecimalFilter<$PrismaModel>
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
   export type EnumCategoryTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.CategoryType | EnumCategoryTypeFieldRefInput<$PrismaModel>
     in?: $Enums.CategoryType[] | ListEnumCategoryTypeFieldRefInput<$PrismaModel>
     notIn?: $Enums.CategoryType[] | ListEnumCategoryTypeFieldRefInput<$PrismaModel>
     not?: NestedEnumCategoryTypeFilter<$PrismaModel> | $Enums.CategoryType
+  }
+
+  export type CategoryUserIdNameCompoundUniqueInput = {
+    userId: string
+    name: string
   }
 
   export type CategoryCountOrderByAggregateInput = {
@@ -8893,6 +9640,13 @@ export namespace Prisma {
     _max?: NestedEnumCategoryTypeFilter<$PrismaModel>
   }
 
+  export type EnumTransactionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.TransactionType | EnumTransactionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTransactionTypeFilter<$PrismaModel> | $Enums.TransactionType
+  }
+
   export type EnumRecurrenceTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.RecurrenceType | EnumRecurrenceTypeFieldRefInput<$PrismaModel>
     in?: $Enums.RecurrenceType[] | ListEnumRecurrenceTypeFieldRefInput<$PrismaModel>
@@ -8927,52 +9681,135 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type EnumCardTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.CardType | EnumCardTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CardType[] | ListEnumCardTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.CardType[] | ListEnumCardTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumCardTypeNullableFilter<$PrismaModel> | $Enums.CardType | null
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type CategoryNullableScalarRelationFilter = {
+    is?: CategoryWhereInput | null
+    isNot?: CategoryWhereInput | null
+  }
+
+  export type AccountNullableScalarRelationFilter = {
+    is?: AccountWhereInput | null
+    isNot?: AccountWhereInput | null
+  }
+
   export type RecurrenceCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     name?: SortOrder
+    type?: SortOrder
+    amount?: SortOrder
     frequency?: SortOrder
     totalParts?: SortOrder
     currentPart?: SortOrder
     startDate?: SortOrder
     nextDate?: SortOrder
+    endDate?: SortOrder
     active?: SortOrder
+    categoryId?: SortOrder
+    sourceAccountId?: SortOrder
+    targetAccountId?: SortOrder
+    isCardExpense?: SortOrder
+    cardType?: SortOrder
+    metadata?: SortOrder
   }
 
   export type RecurrenceAvgOrderByAggregateInput = {
     id?: SortOrder
+    amount?: SortOrder
     totalParts?: SortOrder
     currentPart?: SortOrder
+    categoryId?: SortOrder
+    sourceAccountId?: SortOrder
+    targetAccountId?: SortOrder
   }
 
   export type RecurrenceMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     name?: SortOrder
+    type?: SortOrder
+    amount?: SortOrder
     frequency?: SortOrder
     totalParts?: SortOrder
     currentPart?: SortOrder
     startDate?: SortOrder
     nextDate?: SortOrder
+    endDate?: SortOrder
     active?: SortOrder
+    categoryId?: SortOrder
+    sourceAccountId?: SortOrder
+    targetAccountId?: SortOrder
+    isCardExpense?: SortOrder
+    cardType?: SortOrder
   }
 
   export type RecurrenceMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     name?: SortOrder
+    type?: SortOrder
+    amount?: SortOrder
     frequency?: SortOrder
     totalParts?: SortOrder
     currentPart?: SortOrder
     startDate?: SortOrder
     nextDate?: SortOrder
+    endDate?: SortOrder
     active?: SortOrder
+    categoryId?: SortOrder
+    sourceAccountId?: SortOrder
+    targetAccountId?: SortOrder
+    isCardExpense?: SortOrder
+    cardType?: SortOrder
   }
 
   export type RecurrenceSumOrderByAggregateInput = {
     id?: SortOrder
+    amount?: SortOrder
     totalParts?: SortOrder
     currentPart?: SortOrder
+    categoryId?: SortOrder
+    sourceAccountId?: SortOrder
+    targetAccountId?: SortOrder
+  }
+
+  export type EnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TransactionType | EnumTransactionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTransactionTypeWithAggregatesFilter<$PrismaModel> | $Enums.TransactionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTransactionTypeFilter<$PrismaModel>
+    _max?: NestedEnumTransactionTypeFilter<$PrismaModel>
   }
 
   export type EnumRecurrenceTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -9023,123 +9860,14 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type EnumTransactionTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.TransactionType | EnumTransactionTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumTransactionTypeFilter<$PrismaModel> | $Enums.TransactionType
-  }
-  export type JsonNullableFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonNullableFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonNullableFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
-
-  export type CategoryNullableScalarRelationFilter = {
-    is?: CategoryWhereInput | null
-    isNot?: CategoryWhereInput | null
-  }
-
-  export type RecurrenceNullableScalarRelationFilter = {
-    is?: RecurrenceWhereInput | null
-    isNot?: RecurrenceWhereInput | null
-  }
-
-  export type AccountNullableScalarRelationFilter = {
-    is?: AccountWhereInput | null
-    isNot?: AccountWhereInput | null
-  }
-
-  export type TransactionCountOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    type?: SortOrder
-    amount?: SortOrder
-    date?: SortOrder
-    description?: SortOrder
-    categoryId?: SortOrder
-    sourceAccountId?: SortOrder
-    targetAccountId?: SortOrder
-    recurrenceId?: SortOrder
-    metadata?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TransactionAvgOrderByAggregateInput = {
-    id?: SortOrder
-    amount?: SortOrder
-    categoryId?: SortOrder
-    sourceAccountId?: SortOrder
-    targetAccountId?: SortOrder
-    recurrenceId?: SortOrder
-  }
-
-  export type TransactionMaxOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    type?: SortOrder
-    amount?: SortOrder
-    date?: SortOrder
-    description?: SortOrder
-    categoryId?: SortOrder
-    sourceAccountId?: SortOrder
-    targetAccountId?: SortOrder
-    recurrenceId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TransactionMinOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    type?: SortOrder
-    amount?: SortOrder
-    date?: SortOrder
-    description?: SortOrder
-    categoryId?: SortOrder
-    sourceAccountId?: SortOrder
-    targetAccountId?: SortOrder
-    recurrenceId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type TransactionSumOrderByAggregateInput = {
-    id?: SortOrder
-    amount?: SortOrder
-    categoryId?: SortOrder
-    sourceAccountId?: SortOrder
-    targetAccountId?: SortOrder
-    recurrenceId?: SortOrder
-  }
-
-  export type EnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TransactionType | EnumTransactionTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumTransactionTypeWithAggregatesFilter<$PrismaModel> | $Enums.TransactionType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTransactionTypeFilter<$PrismaModel>
-    _max?: NestedEnumTransactionTypeFilter<$PrismaModel>
+  export type EnumCardTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CardType | EnumCardTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CardType[] | ListEnumCardTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.CardType[] | ListEnumCardTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumCardTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.CardType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumCardTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumCardTypeNullableFilter<$PrismaModel>
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -9166,6 +9894,125 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedJsonNullableFilter<$PrismaModel>
     _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
+
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type EnumBudgetCategoryNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.BudgetCategory | EnumBudgetCategoryFieldRefInput<$PrismaModel> | null
+    in?: $Enums.BudgetCategory[] | ListEnumBudgetCategoryFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.BudgetCategory[] | ListEnumBudgetCategoryFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumBudgetCategoryNullableFilter<$PrismaModel> | $Enums.BudgetCategory | null
+  }
+
+  export type RecurrenceNullableScalarRelationFilter = {
+    is?: RecurrenceWhereInput | null
+    isNot?: RecurrenceWhereInput | null
+  }
+
+  export type TransactionCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    amount?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    categoryId?: SortOrder
+    sourceAccountId?: SortOrder
+    targetAccountId?: SortOrder
+    recurrenceId?: SortOrder
+    recurrencePartNumber?: SortOrder
+    isBudgetedExpense?: SortOrder
+    budgetCategory?: SortOrder
+    isCardExpense?: SortOrder
+    cardType?: SortOrder
+    source?: SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TransactionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    categoryId?: SortOrder
+    sourceAccountId?: SortOrder
+    targetAccountId?: SortOrder
+    recurrenceId?: SortOrder
+    recurrencePartNumber?: SortOrder
+  }
+
+  export type TransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    amount?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    categoryId?: SortOrder
+    sourceAccountId?: SortOrder
+    targetAccountId?: SortOrder
+    recurrenceId?: SortOrder
+    recurrencePartNumber?: SortOrder
+    isBudgetedExpense?: SortOrder
+    budgetCategory?: SortOrder
+    isCardExpense?: SortOrder
+    cardType?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TransactionMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    type?: SortOrder
+    amount?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    categoryId?: SortOrder
+    sourceAccountId?: SortOrder
+    targetAccountId?: SortOrder
+    recurrenceId?: SortOrder
+    recurrencePartNumber?: SortOrder
+    isBudgetedExpense?: SortOrder
+    budgetCategory?: SortOrder
+    isCardExpense?: SortOrder
+    cardType?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TransactionSumOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    categoryId?: SortOrder
+    sourceAccountId?: SortOrder
+    targetAccountId?: SortOrder
+    recurrenceId?: SortOrder
+    recurrencePartNumber?: SortOrder
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
+  export type EnumBudgetCategoryNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BudgetCategory | EnumBudgetCategoryFieldRefInput<$PrismaModel> | null
+    in?: $Enums.BudgetCategory[] | ListEnumBudgetCategoryFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.BudgetCategory[] | ListEnumBudgetCategoryFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumBudgetCategoryNullableWithAggregatesFilter<$PrismaModel> | $Enums.BudgetCategory | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumBudgetCategoryNullableFilter<$PrismaModel>
+    _max?: NestedEnumBudgetCategoryNullableFilter<$PrismaModel>
   }
 
   export type AccountCreateNestedManyWithoutUserInput = {
@@ -9230,6 +10077,10 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type AccountUpdateManyWithoutUserNestedInput = {
@@ -9364,6 +10215,20 @@ export namespace Prisma {
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
   }
 
+  export type RecurrenceCreateNestedManyWithoutSourceAccountInput = {
+    create?: XOR<RecurrenceCreateWithoutSourceAccountInput, RecurrenceUncheckedCreateWithoutSourceAccountInput> | RecurrenceCreateWithoutSourceAccountInput[] | RecurrenceUncheckedCreateWithoutSourceAccountInput[]
+    connectOrCreate?: RecurrenceCreateOrConnectWithoutSourceAccountInput | RecurrenceCreateOrConnectWithoutSourceAccountInput[]
+    createMany?: RecurrenceCreateManySourceAccountInputEnvelope
+    connect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+  }
+
+  export type RecurrenceCreateNestedManyWithoutTargetAccountInput = {
+    create?: XOR<RecurrenceCreateWithoutTargetAccountInput, RecurrenceUncheckedCreateWithoutTargetAccountInput> | RecurrenceCreateWithoutTargetAccountInput[] | RecurrenceUncheckedCreateWithoutTargetAccountInput[]
+    connectOrCreate?: RecurrenceCreateOrConnectWithoutTargetAccountInput | RecurrenceCreateOrConnectWithoutTargetAccountInput[]
+    createMany?: RecurrenceCreateManyTargetAccountInputEnvelope
+    connect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+  }
+
   export type TransactionUncheckedCreateNestedManyWithoutSourceAccountInput = {
     create?: XOR<TransactionCreateWithoutSourceAccountInput, TransactionUncheckedCreateWithoutSourceAccountInput> | TransactionCreateWithoutSourceAccountInput[] | TransactionUncheckedCreateWithoutSourceAccountInput[]
     connectOrCreate?: TransactionCreateOrConnectWithoutSourceAccountInput | TransactionCreateOrConnectWithoutSourceAccountInput[]
@@ -9376,6 +10241,20 @@ export namespace Prisma {
     connectOrCreate?: TransactionCreateOrConnectWithoutTargetAccountInput | TransactionCreateOrConnectWithoutTargetAccountInput[]
     createMany?: TransactionCreateManyTargetAccountInputEnvelope
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type RecurrenceUncheckedCreateNestedManyWithoutSourceAccountInput = {
+    create?: XOR<RecurrenceCreateWithoutSourceAccountInput, RecurrenceUncheckedCreateWithoutSourceAccountInput> | RecurrenceCreateWithoutSourceAccountInput[] | RecurrenceUncheckedCreateWithoutSourceAccountInput[]
+    connectOrCreate?: RecurrenceCreateOrConnectWithoutSourceAccountInput | RecurrenceCreateOrConnectWithoutSourceAccountInput[]
+    createMany?: RecurrenceCreateManySourceAccountInputEnvelope
+    connect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+  }
+
+  export type RecurrenceUncheckedCreateNestedManyWithoutTargetAccountInput = {
+    create?: XOR<RecurrenceCreateWithoutTargetAccountInput, RecurrenceUncheckedCreateWithoutTargetAccountInput> | RecurrenceCreateWithoutTargetAccountInput[] | RecurrenceUncheckedCreateWithoutTargetAccountInput[]
+    connectOrCreate?: RecurrenceCreateOrConnectWithoutTargetAccountInput | RecurrenceCreateOrConnectWithoutTargetAccountInput[]
+    createMany?: RecurrenceCreateManyTargetAccountInputEnvelope
+    connect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
   }
 
   export type EnumAccountTypeFieldUpdateOperationsInput = {
@@ -9392,10 +10271,6 @@ export namespace Prisma {
     decrement?: Decimal | DecimalJsLike | number | string
     multiply?: Decimal | DecimalJsLike | number | string
     divide?: Decimal | DecimalJsLike | number | string
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
@@ -9434,6 +10309,34 @@ export namespace Prisma {
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
   }
 
+  export type RecurrenceUpdateManyWithoutSourceAccountNestedInput = {
+    create?: XOR<RecurrenceCreateWithoutSourceAccountInput, RecurrenceUncheckedCreateWithoutSourceAccountInput> | RecurrenceCreateWithoutSourceAccountInput[] | RecurrenceUncheckedCreateWithoutSourceAccountInput[]
+    connectOrCreate?: RecurrenceCreateOrConnectWithoutSourceAccountInput | RecurrenceCreateOrConnectWithoutSourceAccountInput[]
+    upsert?: RecurrenceUpsertWithWhereUniqueWithoutSourceAccountInput | RecurrenceUpsertWithWhereUniqueWithoutSourceAccountInput[]
+    createMany?: RecurrenceCreateManySourceAccountInputEnvelope
+    set?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    disconnect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    delete?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    connect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    update?: RecurrenceUpdateWithWhereUniqueWithoutSourceAccountInput | RecurrenceUpdateWithWhereUniqueWithoutSourceAccountInput[]
+    updateMany?: RecurrenceUpdateManyWithWhereWithoutSourceAccountInput | RecurrenceUpdateManyWithWhereWithoutSourceAccountInput[]
+    deleteMany?: RecurrenceScalarWhereInput | RecurrenceScalarWhereInput[]
+  }
+
+  export type RecurrenceUpdateManyWithoutTargetAccountNestedInput = {
+    create?: XOR<RecurrenceCreateWithoutTargetAccountInput, RecurrenceUncheckedCreateWithoutTargetAccountInput> | RecurrenceCreateWithoutTargetAccountInput[] | RecurrenceUncheckedCreateWithoutTargetAccountInput[]
+    connectOrCreate?: RecurrenceCreateOrConnectWithoutTargetAccountInput | RecurrenceCreateOrConnectWithoutTargetAccountInput[]
+    upsert?: RecurrenceUpsertWithWhereUniqueWithoutTargetAccountInput | RecurrenceUpsertWithWhereUniqueWithoutTargetAccountInput[]
+    createMany?: RecurrenceCreateManyTargetAccountInputEnvelope
+    set?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    disconnect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    delete?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    connect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    update?: RecurrenceUpdateWithWhereUniqueWithoutTargetAccountInput | RecurrenceUpdateWithWhereUniqueWithoutTargetAccountInput[]
+    updateMany?: RecurrenceUpdateManyWithWhereWithoutTargetAccountInput | RecurrenceUpdateManyWithWhereWithoutTargetAccountInput[]
+    deleteMany?: RecurrenceScalarWhereInput | RecurrenceScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -9470,6 +10373,34 @@ export namespace Prisma {
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
   }
 
+  export type RecurrenceUncheckedUpdateManyWithoutSourceAccountNestedInput = {
+    create?: XOR<RecurrenceCreateWithoutSourceAccountInput, RecurrenceUncheckedCreateWithoutSourceAccountInput> | RecurrenceCreateWithoutSourceAccountInput[] | RecurrenceUncheckedCreateWithoutSourceAccountInput[]
+    connectOrCreate?: RecurrenceCreateOrConnectWithoutSourceAccountInput | RecurrenceCreateOrConnectWithoutSourceAccountInput[]
+    upsert?: RecurrenceUpsertWithWhereUniqueWithoutSourceAccountInput | RecurrenceUpsertWithWhereUniqueWithoutSourceAccountInput[]
+    createMany?: RecurrenceCreateManySourceAccountInputEnvelope
+    set?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    disconnect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    delete?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    connect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    update?: RecurrenceUpdateWithWhereUniqueWithoutSourceAccountInput | RecurrenceUpdateWithWhereUniqueWithoutSourceAccountInput[]
+    updateMany?: RecurrenceUpdateManyWithWhereWithoutSourceAccountInput | RecurrenceUpdateManyWithWhereWithoutSourceAccountInput[]
+    deleteMany?: RecurrenceScalarWhereInput | RecurrenceScalarWhereInput[]
+  }
+
+  export type RecurrenceUncheckedUpdateManyWithoutTargetAccountNestedInput = {
+    create?: XOR<RecurrenceCreateWithoutTargetAccountInput, RecurrenceUncheckedCreateWithoutTargetAccountInput> | RecurrenceCreateWithoutTargetAccountInput[] | RecurrenceUncheckedCreateWithoutTargetAccountInput[]
+    connectOrCreate?: RecurrenceCreateOrConnectWithoutTargetAccountInput | RecurrenceCreateOrConnectWithoutTargetAccountInput[]
+    upsert?: RecurrenceUpsertWithWhereUniqueWithoutTargetAccountInput | RecurrenceUpsertWithWhereUniqueWithoutTargetAccountInput[]
+    createMany?: RecurrenceCreateManyTargetAccountInputEnvelope
+    set?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    disconnect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    delete?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    connect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    update?: RecurrenceUpdateWithWhereUniqueWithoutTargetAccountInput | RecurrenceUpdateWithWhereUniqueWithoutTargetAccountInput[]
+    updateMany?: RecurrenceUpdateManyWithWhereWithoutTargetAccountInput | RecurrenceUpdateManyWithWhereWithoutTargetAccountInput[]
+    deleteMany?: RecurrenceScalarWhereInput | RecurrenceScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutCategoriesInput = {
     create?: XOR<UserCreateWithoutCategoriesInput, UserUncheckedCreateWithoutCategoriesInput>
     connectOrCreate?: UserCreateOrConnectWithoutCategoriesInput
@@ -9483,11 +10414,25 @@ export namespace Prisma {
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
   }
 
+  export type RecurrenceCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<RecurrenceCreateWithoutCategoryInput, RecurrenceUncheckedCreateWithoutCategoryInput> | RecurrenceCreateWithoutCategoryInput[] | RecurrenceUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: RecurrenceCreateOrConnectWithoutCategoryInput | RecurrenceCreateOrConnectWithoutCategoryInput[]
+    createMany?: RecurrenceCreateManyCategoryInputEnvelope
+    connect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+  }
+
   export type TransactionUncheckedCreateNestedManyWithoutCategoryInput = {
     create?: XOR<TransactionCreateWithoutCategoryInput, TransactionUncheckedCreateWithoutCategoryInput> | TransactionCreateWithoutCategoryInput[] | TransactionUncheckedCreateWithoutCategoryInput[]
     connectOrCreate?: TransactionCreateOrConnectWithoutCategoryInput | TransactionCreateOrConnectWithoutCategoryInput[]
     createMany?: TransactionCreateManyCategoryInputEnvelope
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type RecurrenceUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<RecurrenceCreateWithoutCategoryInput, RecurrenceUncheckedCreateWithoutCategoryInput> | RecurrenceCreateWithoutCategoryInput[] | RecurrenceUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: RecurrenceCreateOrConnectWithoutCategoryInput | RecurrenceCreateOrConnectWithoutCategoryInput[]
+    createMany?: RecurrenceCreateManyCategoryInputEnvelope
+    connect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
   }
 
   export type EnumCategoryTypeFieldUpdateOperationsInput = {
@@ -9516,6 +10461,20 @@ export namespace Prisma {
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
   }
 
+  export type RecurrenceUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<RecurrenceCreateWithoutCategoryInput, RecurrenceUncheckedCreateWithoutCategoryInput> | RecurrenceCreateWithoutCategoryInput[] | RecurrenceUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: RecurrenceCreateOrConnectWithoutCategoryInput | RecurrenceCreateOrConnectWithoutCategoryInput[]
+    upsert?: RecurrenceUpsertWithWhereUniqueWithoutCategoryInput | RecurrenceUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: RecurrenceCreateManyCategoryInputEnvelope
+    set?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    disconnect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    delete?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    connect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    update?: RecurrenceUpdateWithWhereUniqueWithoutCategoryInput | RecurrenceUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: RecurrenceUpdateManyWithWhereWithoutCategoryInput | RecurrenceUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: RecurrenceScalarWhereInput | RecurrenceScalarWhereInput[]
+  }
+
   export type TransactionUncheckedUpdateManyWithoutCategoryNestedInput = {
     create?: XOR<TransactionCreateWithoutCategoryInput, TransactionUncheckedCreateWithoutCategoryInput> | TransactionCreateWithoutCategoryInput[] | TransactionUncheckedCreateWithoutCategoryInput[]
     connectOrCreate?: TransactionCreateOrConnectWithoutCategoryInput | TransactionCreateOrConnectWithoutCategoryInput[]
@@ -9530,10 +10489,42 @@ export namespace Prisma {
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
   }
 
+  export type RecurrenceUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<RecurrenceCreateWithoutCategoryInput, RecurrenceUncheckedCreateWithoutCategoryInput> | RecurrenceCreateWithoutCategoryInput[] | RecurrenceUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: RecurrenceCreateOrConnectWithoutCategoryInput | RecurrenceCreateOrConnectWithoutCategoryInput[]
+    upsert?: RecurrenceUpsertWithWhereUniqueWithoutCategoryInput | RecurrenceUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: RecurrenceCreateManyCategoryInputEnvelope
+    set?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    disconnect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    delete?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    connect?: RecurrenceWhereUniqueInput | RecurrenceWhereUniqueInput[]
+    update?: RecurrenceUpdateWithWhereUniqueWithoutCategoryInput | RecurrenceUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: RecurrenceUpdateManyWithWhereWithoutCategoryInput | RecurrenceUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: RecurrenceScalarWhereInput | RecurrenceScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutRecurrencesInput = {
     create?: XOR<UserCreateWithoutRecurrencesInput, UserUncheckedCreateWithoutRecurrencesInput>
     connectOrCreate?: UserCreateOrConnectWithoutRecurrencesInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type CategoryCreateNestedOneWithoutRecurrencesInput = {
+    create?: XOR<CategoryCreateWithoutRecurrencesInput, CategoryUncheckedCreateWithoutRecurrencesInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutRecurrencesInput
+    connect?: CategoryWhereUniqueInput
+  }
+
+  export type AccountCreateNestedOneWithoutRecurrencesFromInput = {
+    create?: XOR<AccountCreateWithoutRecurrencesFromInput, AccountUncheckedCreateWithoutRecurrencesFromInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutRecurrencesFromInput
+    connect?: AccountWhereUniqueInput
+  }
+
+  export type AccountCreateNestedOneWithoutRecurrencesToInput = {
+    create?: XOR<AccountCreateWithoutRecurrencesToInput, AccountUncheckedCreateWithoutRecurrencesToInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutRecurrencesToInput
+    connect?: AccountWhereUniqueInput
   }
 
   export type TransactionCreateNestedManyWithoutRecurrenceInput = {
@@ -9548,6 +10539,10 @@ export namespace Prisma {
     connectOrCreate?: TransactionCreateOrConnectWithoutRecurrenceInput | TransactionCreateOrConnectWithoutRecurrenceInput[]
     createMany?: TransactionCreateManyRecurrenceInputEnvelope
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type EnumTransactionTypeFieldUpdateOperationsInput = {
+    set?: $Enums.TransactionType
   }
 
   export type EnumRecurrenceTypeFieldUpdateOperationsInput = {
@@ -9570,12 +10565,46 @@ export namespace Prisma {
     set?: boolean
   }
 
+  export type NullableEnumCardTypeFieldUpdateOperationsInput = {
+    set?: $Enums.CardType | null
+  }
+
   export type UserUpdateOneRequiredWithoutRecurrencesNestedInput = {
     create?: XOR<UserCreateWithoutRecurrencesInput, UserUncheckedCreateWithoutRecurrencesInput>
     connectOrCreate?: UserCreateOrConnectWithoutRecurrencesInput
     upsert?: UserUpsertWithoutRecurrencesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRecurrencesInput, UserUpdateWithoutRecurrencesInput>, UserUncheckedUpdateWithoutRecurrencesInput>
+  }
+
+  export type CategoryUpdateOneWithoutRecurrencesNestedInput = {
+    create?: XOR<CategoryCreateWithoutRecurrencesInput, CategoryUncheckedCreateWithoutRecurrencesInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutRecurrencesInput
+    upsert?: CategoryUpsertWithoutRecurrencesInput
+    disconnect?: CategoryWhereInput | boolean
+    delete?: CategoryWhereInput | boolean
+    connect?: CategoryWhereUniqueInput
+    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutRecurrencesInput, CategoryUpdateWithoutRecurrencesInput>, CategoryUncheckedUpdateWithoutRecurrencesInput>
+  }
+
+  export type AccountUpdateOneWithoutRecurrencesFromNestedInput = {
+    create?: XOR<AccountCreateWithoutRecurrencesFromInput, AccountUncheckedCreateWithoutRecurrencesFromInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutRecurrencesFromInput
+    upsert?: AccountUpsertWithoutRecurrencesFromInput
+    disconnect?: AccountWhereInput | boolean
+    delete?: AccountWhereInput | boolean
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutRecurrencesFromInput, AccountUpdateWithoutRecurrencesFromInput>, AccountUncheckedUpdateWithoutRecurrencesFromInput>
+  }
+
+  export type AccountUpdateOneWithoutRecurrencesToNestedInput = {
+    create?: XOR<AccountCreateWithoutRecurrencesToInput, AccountUncheckedCreateWithoutRecurrencesToInput>
+    connectOrCreate?: AccountCreateOrConnectWithoutRecurrencesToInput
+    upsert?: AccountUpsertWithoutRecurrencesToInput
+    disconnect?: AccountWhereInput | boolean
+    delete?: AccountWhereInput | boolean
+    connect?: AccountWhereUniqueInput
+    update?: XOR<XOR<AccountUpdateToOneWithWhereWithoutRecurrencesToInput, AccountUpdateWithoutRecurrencesToInput>, AccountUncheckedUpdateWithoutRecurrencesToInput>
   }
 
   export type TransactionUpdateManyWithoutRecurrenceNestedInput = {
@@ -9636,8 +10665,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type EnumTransactionTypeFieldUpdateOperationsInput = {
-    set?: $Enums.TransactionType
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
+  export type NullableEnumBudgetCategoryFieldUpdateOperationsInput = {
+    set?: $Enums.BudgetCategory | null
   }
 
   export type CategoryUpdateOneWithoutTransactionsNestedInput = {
@@ -9716,6 +10749,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -9772,6 +10816,20 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type NestedEnumAccountTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.AccountType | EnumAccountTypeFieldRefInput<$PrismaModel>
     in?: $Enums.AccountType[] | ListEnumAccountTypeFieldRefInput<$PrismaModel>
@@ -9795,17 +10853,6 @@ export namespace Prisma {
     gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-  }
-
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -9871,20 +10918,6 @@ export namespace Prisma {
     _max?: NestedDecimalFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
   export type NestedEnumCategoryTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.CategoryType | EnumCategoryTypeFieldRefInput<$PrismaModel>
     in?: $Enums.CategoryType[] | ListEnumCategoryTypeFieldRefInput<$PrismaModel>
@@ -9900,6 +10933,13 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumCategoryTypeFilter<$PrismaModel>
     _max?: NestedEnumCategoryTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTransactionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.TransactionType | EnumTransactionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTransactionTypeFilter<$PrismaModel> | $Enums.TransactionType
   }
 
   export type NestedEnumRecurrenceTypeFilter<$PrismaModel = never> = {
@@ -9923,6 +10963,23 @@ export namespace Prisma {
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedEnumCardTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.CardType | EnumCardTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CardType[] | ListEnumCardTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.CardType[] | ListEnumCardTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumCardTypeNullableFilter<$PrismaModel> | $Enums.CardType | null
+  }
+
+  export type NestedEnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TransactionType | EnumTransactionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTransactionTypeWithAggregatesFilter<$PrismaModel> | $Enums.TransactionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTransactionTypeFilter<$PrismaModel>
+    _max?: NestedEnumTransactionTypeFilter<$PrismaModel>
   }
 
   export type NestedEnumRecurrenceTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -9984,21 +11041,14 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type NestedEnumTransactionTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.TransactionType | EnumTransactionTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumTransactionTypeFilter<$PrismaModel> | $Enums.TransactionType
-  }
-
-  export type NestedEnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TransactionType | EnumTransactionTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumTransactionTypeWithAggregatesFilter<$PrismaModel> | $Enums.TransactionType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTransactionTypeFilter<$PrismaModel>
-    _max?: NestedEnumTransactionTypeFilter<$PrismaModel>
+  export type NestedEnumCardTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CardType | EnumCardTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CardType[] | ListEnumCardTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.CardType[] | ListEnumCardTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumCardTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.CardType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumCardTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumCardTypeNullableFilter<$PrismaModel>
   }
   export type NestedJsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -10024,6 +11074,36 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedEnumBudgetCategoryNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.BudgetCategory | EnumBudgetCategoryFieldRefInput<$PrismaModel> | null
+    in?: $Enums.BudgetCategory[] | ListEnumBudgetCategoryFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.BudgetCategory[] | ListEnumBudgetCategoryFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumBudgetCategoryNullableFilter<$PrismaModel> | $Enums.BudgetCategory | null
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumBudgetCategoryNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BudgetCategory | EnumBudgetCategoryFieldRefInput<$PrismaModel> | null
+    in?: $Enums.BudgetCategory[] | ListEnumBudgetCategoryFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.BudgetCategory[] | ListEnumBudgetCategoryFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumBudgetCategoryNullableWithAggregatesFilter<$PrismaModel> | $Enums.BudgetCategory | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumBudgetCategoryNullableFilter<$PrismaModel>
+    _max?: NestedEnumBudgetCategoryNullableFilter<$PrismaModel>
+  }
+
   export type AccountCreateWithoutUserInput = {
     name: string
     type: $Enums.AccountType
@@ -10033,6 +11113,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     transactionsFrom?: TransactionCreateNestedManyWithoutSourceAccountInput
     transactionsTo?: TransactionCreateNestedManyWithoutTargetAccountInput
+    recurrencesFrom?: RecurrenceCreateNestedManyWithoutSourceAccountInput
+    recurrencesTo?: RecurrenceCreateNestedManyWithoutTargetAccountInput
   }
 
   export type AccountUncheckedCreateWithoutUserInput = {
@@ -10045,6 +11127,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     transactionsFrom?: TransactionUncheckedCreateNestedManyWithoutSourceAccountInput
     transactionsTo?: TransactionUncheckedCreateNestedManyWithoutTargetAccountInput
+    recurrencesFrom?: RecurrenceUncheckedCreateNestedManyWithoutSourceAccountInput
+    recurrencesTo?: RecurrenceUncheckedCreateNestedManyWithoutTargetAccountInput
   }
 
   export type AccountCreateOrConnectWithoutUserInput = {
@@ -10064,6 +11148,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     transactions?: TransactionCreateNestedManyWithoutCategoryInput
+    recurrences?: RecurrenceCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUncheckedCreateWithoutUserInput = {
@@ -10074,6 +11159,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     transactions?: TransactionUncheckedCreateNestedManyWithoutCategoryInput
+    recurrences?: RecurrenceUncheckedCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryCreateOrConnectWithoutUserInput = {
@@ -10088,24 +11174,42 @@ export namespace Prisma {
 
   export type RecurrenceCreateWithoutUserInput = {
     name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
     frequency: $Enums.RecurrenceType
     totalParts?: number | null
-    currentPart?: number | null
+    currentPart?: number
     startDate: Date | string
     nextDate?: Date | string | null
+    endDate?: Date | string | null
     active?: boolean
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    category?: CategoryCreateNestedOneWithoutRecurrencesInput
+    sourceAccount?: AccountCreateNestedOneWithoutRecurrencesFromInput
+    targetAccount?: AccountCreateNestedOneWithoutRecurrencesToInput
     transactions?: TransactionCreateNestedManyWithoutRecurrenceInput
   }
 
   export type RecurrenceUncheckedCreateWithoutUserInput = {
     id?: number
     name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
     frequency: $Enums.RecurrenceType
     totalParts?: number | null
-    currentPart?: number | null
+    currentPart?: number
     startDate: Date | string
     nextDate?: Date | string | null
+    endDate?: Date | string | null
     active?: boolean
+    categoryId?: number | null
+    sourceAccountId?: number | null
+    targetAccountId?: number | null
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     transactions?: TransactionUncheckedCreateNestedManyWithoutRecurrenceInput
   }
 
@@ -10124,6 +11228,12 @@ export namespace Prisma {
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
     description?: string | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10143,6 +11253,12 @@ export namespace Prisma {
     sourceAccountId?: number | null
     targetAccountId?: number | null
     recurrenceId?: number | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10240,12 +11356,21 @@ export namespace Prisma {
     id?: IntFilter<"Recurrence"> | number
     userId?: StringFilter<"Recurrence"> | string
     name?: StringFilter<"Recurrence"> | string
+    type?: EnumTransactionTypeFilter<"Recurrence"> | $Enums.TransactionType
+    amount?: DecimalFilter<"Recurrence"> | Decimal | DecimalJsLike | number | string
     frequency?: EnumRecurrenceTypeFilter<"Recurrence"> | $Enums.RecurrenceType
     totalParts?: IntNullableFilter<"Recurrence"> | number | null
-    currentPart?: IntNullableFilter<"Recurrence"> | number | null
+    currentPart?: IntFilter<"Recurrence"> | number
     startDate?: DateTimeFilter<"Recurrence"> | Date | string
     nextDate?: DateTimeNullableFilter<"Recurrence"> | Date | string | null
+    endDate?: DateTimeNullableFilter<"Recurrence"> | Date | string | null
     active?: BoolFilter<"Recurrence"> | boolean
+    categoryId?: IntNullableFilter<"Recurrence"> | number | null
+    sourceAccountId?: IntNullableFilter<"Recurrence"> | number | null
+    targetAccountId?: IntNullableFilter<"Recurrence"> | number | null
+    isCardExpense?: BoolFilter<"Recurrence"> | boolean
+    cardType?: EnumCardTypeNullableFilter<"Recurrence"> | $Enums.CardType | null
+    metadata?: JsonNullableFilter<"Recurrence">
   }
 
   export type TransactionUpsertWithWhereUniqueWithoutUserInput = {
@@ -10278,6 +11403,12 @@ export namespace Prisma {
     sourceAccountId?: IntNullableFilter<"Transaction"> | number | null
     targetAccountId?: IntNullableFilter<"Transaction"> | number | null
     recurrenceId?: IntNullableFilter<"Transaction"> | number | null
+    recurrencePartNumber?: IntNullableFilter<"Transaction"> | number | null
+    isBudgetedExpense?: BoolNullableFilter<"Transaction"> | boolean | null
+    budgetCategory?: EnumBudgetCategoryNullableFilter<"Transaction"> | $Enums.BudgetCategory | null
+    isCardExpense?: BoolNullableFilter<"Transaction"> | boolean | null
+    cardType?: EnumCardTypeNullableFilter<"Transaction"> | $Enums.CardType | null
+    source?: StringNullableFilter<"Transaction"> | string | null
     metadata?: JsonNullableFilter<"Transaction">
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeFilter<"Transaction"> | Date | string
@@ -10288,6 +11419,8 @@ export namespace Prisma {
     name: string
     email?: string | null
     passwordHash: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     categories?: CategoryCreateNestedManyWithoutUserInput
     recurrences?: RecurrenceCreateNestedManyWithoutUserInput
     transactions?: TransactionCreateNestedManyWithoutUserInput
@@ -10298,6 +11431,8 @@ export namespace Prisma {
     name: string
     email?: string | null
     passwordHash: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
     recurrences?: RecurrenceUncheckedCreateNestedManyWithoutUserInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -10313,6 +11448,12 @@ export namespace Prisma {
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
     description?: string | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10332,6 +11473,12 @@ export namespace Prisma {
     categoryId?: number | null
     targetAccountId?: number | null
     recurrenceId?: number | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10352,6 +11499,12 @@ export namespace Prisma {
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
     description?: string | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10371,6 +11524,12 @@ export namespace Prisma {
     categoryId?: number | null
     sourceAccountId?: number | null
     recurrenceId?: number | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10383,6 +11542,108 @@ export namespace Prisma {
 
   export type TransactionCreateManyTargetAccountInputEnvelope = {
     data: TransactionCreateManyTargetAccountInput | TransactionCreateManyTargetAccountInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RecurrenceCreateWithoutSourceAccountInput = {
+    name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    frequency: $Enums.RecurrenceType
+    totalParts?: number | null
+    currentPart?: number
+    startDate: Date | string
+    nextDate?: Date | string | null
+    endDate?: Date | string | null
+    active?: boolean
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    user: UserCreateNestedOneWithoutRecurrencesInput
+    category?: CategoryCreateNestedOneWithoutRecurrencesInput
+    targetAccount?: AccountCreateNestedOneWithoutRecurrencesToInput
+    transactions?: TransactionCreateNestedManyWithoutRecurrenceInput
+  }
+
+  export type RecurrenceUncheckedCreateWithoutSourceAccountInput = {
+    id?: number
+    userId: string
+    name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    frequency: $Enums.RecurrenceType
+    totalParts?: number | null
+    currentPart?: number
+    startDate: Date | string
+    nextDate?: Date | string | null
+    endDate?: Date | string | null
+    active?: boolean
+    categoryId?: number | null
+    targetAccountId?: number | null
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    transactions?: TransactionUncheckedCreateNestedManyWithoutRecurrenceInput
+  }
+
+  export type RecurrenceCreateOrConnectWithoutSourceAccountInput = {
+    where: RecurrenceWhereUniqueInput
+    create: XOR<RecurrenceCreateWithoutSourceAccountInput, RecurrenceUncheckedCreateWithoutSourceAccountInput>
+  }
+
+  export type RecurrenceCreateManySourceAccountInputEnvelope = {
+    data: RecurrenceCreateManySourceAccountInput | RecurrenceCreateManySourceAccountInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RecurrenceCreateWithoutTargetAccountInput = {
+    name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    frequency: $Enums.RecurrenceType
+    totalParts?: number | null
+    currentPart?: number
+    startDate: Date | string
+    nextDate?: Date | string | null
+    endDate?: Date | string | null
+    active?: boolean
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    user: UserCreateNestedOneWithoutRecurrencesInput
+    category?: CategoryCreateNestedOneWithoutRecurrencesInput
+    sourceAccount?: AccountCreateNestedOneWithoutRecurrencesFromInput
+    transactions?: TransactionCreateNestedManyWithoutRecurrenceInput
+  }
+
+  export type RecurrenceUncheckedCreateWithoutTargetAccountInput = {
+    id?: number
+    userId: string
+    name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    frequency: $Enums.RecurrenceType
+    totalParts?: number | null
+    currentPart?: number
+    startDate: Date | string
+    nextDate?: Date | string | null
+    endDate?: Date | string | null
+    active?: boolean
+    categoryId?: number | null
+    sourceAccountId?: number | null
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    transactions?: TransactionUncheckedCreateNestedManyWithoutRecurrenceInput
+  }
+
+  export type RecurrenceCreateOrConnectWithoutTargetAccountInput = {
+    where: RecurrenceWhereUniqueInput
+    create: XOR<RecurrenceCreateWithoutTargetAccountInput, RecurrenceUncheckedCreateWithoutTargetAccountInput>
+  }
+
+  export type RecurrenceCreateManyTargetAccountInputEnvelope = {
+    data: RecurrenceCreateManyTargetAccountInput | RecurrenceCreateManyTargetAccountInput[]
     skipDuplicates?: boolean
   }
 
@@ -10402,6 +11663,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoryUpdateManyWithoutUserNestedInput
     recurrences?: RecurrenceUpdateManyWithoutUserNestedInput
     transactions?: TransactionUpdateManyWithoutUserNestedInput
@@ -10412,6 +11675,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
     recurrences?: RecurrenceUncheckedUpdateManyWithoutUserNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -10449,11 +11714,45 @@ export namespace Prisma {
     data: XOR<TransactionUpdateManyMutationInput, TransactionUncheckedUpdateManyWithoutTargetAccountInput>
   }
 
+  export type RecurrenceUpsertWithWhereUniqueWithoutSourceAccountInput = {
+    where: RecurrenceWhereUniqueInput
+    update: XOR<RecurrenceUpdateWithoutSourceAccountInput, RecurrenceUncheckedUpdateWithoutSourceAccountInput>
+    create: XOR<RecurrenceCreateWithoutSourceAccountInput, RecurrenceUncheckedCreateWithoutSourceAccountInput>
+  }
+
+  export type RecurrenceUpdateWithWhereUniqueWithoutSourceAccountInput = {
+    where: RecurrenceWhereUniqueInput
+    data: XOR<RecurrenceUpdateWithoutSourceAccountInput, RecurrenceUncheckedUpdateWithoutSourceAccountInput>
+  }
+
+  export type RecurrenceUpdateManyWithWhereWithoutSourceAccountInput = {
+    where: RecurrenceScalarWhereInput
+    data: XOR<RecurrenceUpdateManyMutationInput, RecurrenceUncheckedUpdateManyWithoutSourceAccountInput>
+  }
+
+  export type RecurrenceUpsertWithWhereUniqueWithoutTargetAccountInput = {
+    where: RecurrenceWhereUniqueInput
+    update: XOR<RecurrenceUpdateWithoutTargetAccountInput, RecurrenceUncheckedUpdateWithoutTargetAccountInput>
+    create: XOR<RecurrenceCreateWithoutTargetAccountInput, RecurrenceUncheckedCreateWithoutTargetAccountInput>
+  }
+
+  export type RecurrenceUpdateWithWhereUniqueWithoutTargetAccountInput = {
+    where: RecurrenceWhereUniqueInput
+    data: XOR<RecurrenceUpdateWithoutTargetAccountInput, RecurrenceUncheckedUpdateWithoutTargetAccountInput>
+  }
+
+  export type RecurrenceUpdateManyWithWhereWithoutTargetAccountInput = {
+    where: RecurrenceScalarWhereInput
+    data: XOR<RecurrenceUpdateManyMutationInput, RecurrenceUncheckedUpdateManyWithoutTargetAccountInput>
+  }
+
   export type UserCreateWithoutCategoriesInput = {
     id?: string
     name: string
     email?: string | null
     passwordHash: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     recurrences?: RecurrenceCreateNestedManyWithoutUserInput
     transactions?: TransactionCreateNestedManyWithoutUserInput
@@ -10464,6 +11763,8 @@ export namespace Prisma {
     name: string
     email?: string | null
     passwordHash: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     recurrences?: RecurrenceUncheckedCreateNestedManyWithoutUserInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -10479,6 +11780,12 @@ export namespace Prisma {
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
     description?: string | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10498,6 +11805,12 @@ export namespace Prisma {
     sourceAccountId?: number | null
     targetAccountId?: number | null
     recurrenceId?: number | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10510,6 +11823,57 @@ export namespace Prisma {
 
   export type TransactionCreateManyCategoryInputEnvelope = {
     data: TransactionCreateManyCategoryInput | TransactionCreateManyCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RecurrenceCreateWithoutCategoryInput = {
+    name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    frequency: $Enums.RecurrenceType
+    totalParts?: number | null
+    currentPart?: number
+    startDate: Date | string
+    nextDate?: Date | string | null
+    endDate?: Date | string | null
+    active?: boolean
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    user: UserCreateNestedOneWithoutRecurrencesInput
+    sourceAccount?: AccountCreateNestedOneWithoutRecurrencesFromInput
+    targetAccount?: AccountCreateNestedOneWithoutRecurrencesToInput
+    transactions?: TransactionCreateNestedManyWithoutRecurrenceInput
+  }
+
+  export type RecurrenceUncheckedCreateWithoutCategoryInput = {
+    id?: number
+    userId: string
+    name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    frequency: $Enums.RecurrenceType
+    totalParts?: number | null
+    currentPart?: number
+    startDate: Date | string
+    nextDate?: Date | string | null
+    endDate?: Date | string | null
+    active?: boolean
+    sourceAccountId?: number | null
+    targetAccountId?: number | null
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    transactions?: TransactionUncheckedCreateNestedManyWithoutRecurrenceInput
+  }
+
+  export type RecurrenceCreateOrConnectWithoutCategoryInput = {
+    where: RecurrenceWhereUniqueInput
+    create: XOR<RecurrenceCreateWithoutCategoryInput, RecurrenceUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type RecurrenceCreateManyCategoryInputEnvelope = {
+    data: RecurrenceCreateManyCategoryInput | RecurrenceCreateManyCategoryInput[]
     skipDuplicates?: boolean
   }
 
@@ -10529,6 +11893,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     recurrences?: RecurrenceUpdateManyWithoutUserNestedInput
     transactions?: TransactionUpdateManyWithoutUserNestedInput
@@ -10539,6 +11905,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     recurrences?: RecurrenceUncheckedUpdateManyWithoutUserNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
@@ -10560,11 +11928,29 @@ export namespace Prisma {
     data: XOR<TransactionUpdateManyMutationInput, TransactionUncheckedUpdateManyWithoutCategoryInput>
   }
 
+  export type RecurrenceUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: RecurrenceWhereUniqueInput
+    update: XOR<RecurrenceUpdateWithoutCategoryInput, RecurrenceUncheckedUpdateWithoutCategoryInput>
+    create: XOR<RecurrenceCreateWithoutCategoryInput, RecurrenceUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type RecurrenceUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: RecurrenceWhereUniqueInput
+    data: XOR<RecurrenceUpdateWithoutCategoryInput, RecurrenceUncheckedUpdateWithoutCategoryInput>
+  }
+
+  export type RecurrenceUpdateManyWithWhereWithoutCategoryInput = {
+    where: RecurrenceScalarWhereInput
+    data: XOR<RecurrenceUpdateManyMutationInput, RecurrenceUncheckedUpdateManyWithoutCategoryInput>
+  }
+
   export type UserCreateWithoutRecurrencesInput = {
     id?: string
     name: string
     email?: string | null
     passwordHash: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     categories?: CategoryCreateNestedManyWithoutUserInput
     transactions?: TransactionCreateNestedManyWithoutUserInput
@@ -10575,6 +11961,8 @@ export namespace Prisma {
     name: string
     email?: string | null
     passwordHash: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutUserInput
@@ -10585,11 +11973,107 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutRecurrencesInput, UserUncheckedCreateWithoutRecurrencesInput>
   }
 
+  export type CategoryCreateWithoutRecurrencesInput = {
+    name: string
+    type: $Enums.CategoryType
+    color?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCategoriesInput
+    transactions?: TransactionCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryUncheckedCreateWithoutRecurrencesInput = {
+    id?: number
+    userId: string
+    name: string
+    type: $Enums.CategoryType
+    color?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    transactions?: TransactionUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoryCreateOrConnectWithoutRecurrencesInput = {
+    where: CategoryWhereUniqueInput
+    create: XOR<CategoryCreateWithoutRecurrencesInput, CategoryUncheckedCreateWithoutRecurrencesInput>
+  }
+
+  export type AccountCreateWithoutRecurrencesFromInput = {
+    name: string
+    type: $Enums.AccountType
+    currency: $Enums.Currency
+    balance?: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutAccountsInput
+    transactionsFrom?: TransactionCreateNestedManyWithoutSourceAccountInput
+    transactionsTo?: TransactionCreateNestedManyWithoutTargetAccountInput
+    recurrencesTo?: RecurrenceCreateNestedManyWithoutTargetAccountInput
+  }
+
+  export type AccountUncheckedCreateWithoutRecurrencesFromInput = {
+    id?: number
+    userId: string
+    name: string
+    type: $Enums.AccountType
+    currency: $Enums.Currency
+    balance?: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    transactionsFrom?: TransactionUncheckedCreateNestedManyWithoutSourceAccountInput
+    transactionsTo?: TransactionUncheckedCreateNestedManyWithoutTargetAccountInput
+    recurrencesTo?: RecurrenceUncheckedCreateNestedManyWithoutTargetAccountInput
+  }
+
+  export type AccountCreateOrConnectWithoutRecurrencesFromInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutRecurrencesFromInput, AccountUncheckedCreateWithoutRecurrencesFromInput>
+  }
+
+  export type AccountCreateWithoutRecurrencesToInput = {
+    name: string
+    type: $Enums.AccountType
+    currency: $Enums.Currency
+    balance?: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutAccountsInput
+    transactionsFrom?: TransactionCreateNestedManyWithoutSourceAccountInput
+    transactionsTo?: TransactionCreateNestedManyWithoutTargetAccountInput
+    recurrencesFrom?: RecurrenceCreateNestedManyWithoutSourceAccountInput
+  }
+
+  export type AccountUncheckedCreateWithoutRecurrencesToInput = {
+    id?: number
+    userId: string
+    name: string
+    type: $Enums.AccountType
+    currency: $Enums.Currency
+    balance?: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    transactionsFrom?: TransactionUncheckedCreateNestedManyWithoutSourceAccountInput
+    transactionsTo?: TransactionUncheckedCreateNestedManyWithoutTargetAccountInput
+    recurrencesFrom?: RecurrenceUncheckedCreateNestedManyWithoutSourceAccountInput
+  }
+
+  export type AccountCreateOrConnectWithoutRecurrencesToInput = {
+    where: AccountWhereUniqueInput
+    create: XOR<AccountCreateWithoutRecurrencesToInput, AccountUncheckedCreateWithoutRecurrencesToInput>
+  }
+
   export type TransactionCreateWithoutRecurrenceInput = {
     type: $Enums.TransactionType
     amount: Decimal | DecimalJsLike | number | string
     date: Date | string
     description?: string | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10609,6 +12093,12 @@ export namespace Prisma {
     categoryId?: number | null
     sourceAccountId?: number | null
     targetAccountId?: number | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10640,6 +12130,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     categories?: CategoryUpdateManyWithoutUserNestedInput
     transactions?: TransactionUpdateManyWithoutUserNestedInput
@@ -10650,9 +12142,119 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type CategoryUpsertWithoutRecurrencesInput = {
+    update: XOR<CategoryUpdateWithoutRecurrencesInput, CategoryUncheckedUpdateWithoutRecurrencesInput>
+    create: XOR<CategoryCreateWithoutRecurrencesInput, CategoryUncheckedCreateWithoutRecurrencesInput>
+    where?: CategoryWhereInput
+  }
+
+  export type CategoryUpdateToOneWithWhereWithoutRecurrencesInput = {
+    where?: CategoryWhereInput
+    data: XOR<CategoryUpdateWithoutRecurrencesInput, CategoryUncheckedUpdateWithoutRecurrencesInput>
+  }
+
+  export type CategoryUpdateWithoutRecurrencesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCategoriesNestedInput
+    transactions?: TransactionUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoryUncheckedUpdateWithoutRecurrencesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transactions?: TransactionUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type AccountUpsertWithoutRecurrencesFromInput = {
+    update: XOR<AccountUpdateWithoutRecurrencesFromInput, AccountUncheckedUpdateWithoutRecurrencesFromInput>
+    create: XOR<AccountCreateWithoutRecurrencesFromInput, AccountUncheckedCreateWithoutRecurrencesFromInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutRecurrencesFromInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutRecurrencesFromInput, AccountUncheckedUpdateWithoutRecurrencesFromInput>
+  }
+
+  export type AccountUpdateWithoutRecurrencesFromInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
+    currency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutAccountsNestedInput
+    transactionsFrom?: TransactionUpdateManyWithoutSourceAccountNestedInput
+    transactionsTo?: TransactionUpdateManyWithoutTargetAccountNestedInput
+    recurrencesTo?: RecurrenceUpdateManyWithoutTargetAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutRecurrencesFromInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
+    currency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transactionsFrom?: TransactionUncheckedUpdateManyWithoutSourceAccountNestedInput
+    transactionsTo?: TransactionUncheckedUpdateManyWithoutTargetAccountNestedInput
+    recurrencesTo?: RecurrenceUncheckedUpdateManyWithoutTargetAccountNestedInput
+  }
+
+  export type AccountUpsertWithoutRecurrencesToInput = {
+    update: XOR<AccountUpdateWithoutRecurrencesToInput, AccountUncheckedUpdateWithoutRecurrencesToInput>
+    create: XOR<AccountCreateWithoutRecurrencesToInput, AccountUncheckedCreateWithoutRecurrencesToInput>
+    where?: AccountWhereInput
+  }
+
+  export type AccountUpdateToOneWithWhereWithoutRecurrencesToInput = {
+    where?: AccountWhereInput
+    data: XOR<AccountUpdateWithoutRecurrencesToInput, AccountUncheckedUpdateWithoutRecurrencesToInput>
+  }
+
+  export type AccountUpdateWithoutRecurrencesToInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
+    currency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutAccountsNestedInput
+    transactionsFrom?: TransactionUpdateManyWithoutSourceAccountNestedInput
+    transactionsTo?: TransactionUpdateManyWithoutTargetAccountNestedInput
+    recurrencesFrom?: RecurrenceUpdateManyWithoutSourceAccountNestedInput
+  }
+
+  export type AccountUncheckedUpdateWithoutRecurrencesToInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
+    currency?: EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transactionsFrom?: TransactionUncheckedUpdateManyWithoutSourceAccountNestedInput
+    transactionsTo?: TransactionUncheckedUpdateManyWithoutTargetAccountNestedInput
+    recurrencesFrom?: RecurrenceUncheckedUpdateManyWithoutSourceAccountNestedInput
   }
 
   export type TransactionUpsertWithWhereUniqueWithoutRecurrenceInput = {
@@ -10678,6 +12280,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutCategoriesInput
+    recurrences?: RecurrenceCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryUncheckedCreateWithoutTransactionsInput = {
@@ -10688,6 +12291,7 @@ export namespace Prisma {
     color?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    recurrences?: RecurrenceUncheckedCreateNestedManyWithoutCategoryInput
   }
 
   export type CategoryCreateOrConnectWithoutTransactionsInput = {
@@ -10697,25 +12301,43 @@ export namespace Prisma {
 
   export type RecurrenceCreateWithoutTransactionsInput = {
     name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
     frequency: $Enums.RecurrenceType
     totalParts?: number | null
-    currentPart?: number | null
+    currentPart?: number
     startDate: Date | string
     nextDate?: Date | string | null
+    endDate?: Date | string | null
     active?: boolean
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     user: UserCreateNestedOneWithoutRecurrencesInput
+    category?: CategoryCreateNestedOneWithoutRecurrencesInput
+    sourceAccount?: AccountCreateNestedOneWithoutRecurrencesFromInput
+    targetAccount?: AccountCreateNestedOneWithoutRecurrencesToInput
   }
 
   export type RecurrenceUncheckedCreateWithoutTransactionsInput = {
     id?: number
     userId: string
     name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
     frequency: $Enums.RecurrenceType
     totalParts?: number | null
-    currentPart?: number | null
+    currentPart?: number
     startDate: Date | string
     nextDate?: Date | string | null
+    endDate?: Date | string | null
     active?: boolean
+    categoryId?: number | null
+    sourceAccountId?: number | null
+    targetAccountId?: number | null
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type RecurrenceCreateOrConnectWithoutTransactionsInput = {
@@ -10732,6 +12354,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutAccountsInput
     transactionsTo?: TransactionCreateNestedManyWithoutTargetAccountInput
+    recurrencesFrom?: RecurrenceCreateNestedManyWithoutSourceAccountInput
+    recurrencesTo?: RecurrenceCreateNestedManyWithoutTargetAccountInput
   }
 
   export type AccountUncheckedCreateWithoutTransactionsFromInput = {
@@ -10744,6 +12368,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     transactionsTo?: TransactionUncheckedCreateNestedManyWithoutTargetAccountInput
+    recurrencesFrom?: RecurrenceUncheckedCreateNestedManyWithoutSourceAccountInput
+    recurrencesTo?: RecurrenceUncheckedCreateNestedManyWithoutTargetAccountInput
   }
 
   export type AccountCreateOrConnectWithoutTransactionsFromInput = {
@@ -10760,6 +12386,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutAccountsInput
     transactionsFrom?: TransactionCreateNestedManyWithoutSourceAccountInput
+    recurrencesFrom?: RecurrenceCreateNestedManyWithoutSourceAccountInput
+    recurrencesTo?: RecurrenceCreateNestedManyWithoutTargetAccountInput
   }
 
   export type AccountUncheckedCreateWithoutTransactionsToInput = {
@@ -10772,6 +12400,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     transactionsFrom?: TransactionUncheckedCreateNestedManyWithoutSourceAccountInput
+    recurrencesFrom?: RecurrenceUncheckedCreateNestedManyWithoutSourceAccountInput
+    recurrencesTo?: RecurrenceUncheckedCreateNestedManyWithoutTargetAccountInput
   }
 
   export type AccountCreateOrConnectWithoutTransactionsToInput = {
@@ -10784,6 +12414,8 @@ export namespace Prisma {
     name: string
     email?: string | null
     passwordHash: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     categories?: CategoryCreateNestedManyWithoutUserInput
     recurrences?: RecurrenceCreateNestedManyWithoutUserInput
@@ -10794,6 +12426,8 @@ export namespace Prisma {
     name: string
     email?: string | null
     passwordHash: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
     recurrences?: RecurrenceUncheckedCreateNestedManyWithoutUserInput
@@ -10822,6 +12456,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutCategoriesNestedInput
+    recurrences?: RecurrenceUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryUncheckedUpdateWithoutTransactionsInput = {
@@ -10832,6 +12467,7 @@ export namespace Prisma {
     color?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recurrences?: RecurrenceUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
   export type RecurrenceUpsertWithoutTransactionsInput = {
@@ -10847,25 +12483,43 @@ export namespace Prisma {
 
   export type RecurrenceUpdateWithoutTransactionsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
     totalParts?: NullableIntFieldUpdateOperationsInput | number | null
-    currentPart?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     user?: UserUpdateOneRequiredWithoutRecurrencesNestedInput
+    category?: CategoryUpdateOneWithoutRecurrencesNestedInput
+    sourceAccount?: AccountUpdateOneWithoutRecurrencesFromNestedInput
+    targetAccount?: AccountUpdateOneWithoutRecurrencesToNestedInput
   }
 
   export type RecurrenceUncheckedUpdateWithoutTransactionsInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
     totalParts?: NullableIntFieldUpdateOperationsInput | number | null
-    currentPart?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
+    sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AccountUpsertWithoutTransactionsFromInput = {
@@ -10888,6 +12542,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutAccountsNestedInput
     transactionsTo?: TransactionUpdateManyWithoutTargetAccountNestedInput
+    recurrencesFrom?: RecurrenceUpdateManyWithoutSourceAccountNestedInput
+    recurrencesTo?: RecurrenceUpdateManyWithoutTargetAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutTransactionsFromInput = {
@@ -10900,6 +12556,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactionsTo?: TransactionUncheckedUpdateManyWithoutTargetAccountNestedInput
+    recurrencesFrom?: RecurrenceUncheckedUpdateManyWithoutSourceAccountNestedInput
+    recurrencesTo?: RecurrenceUncheckedUpdateManyWithoutTargetAccountNestedInput
   }
 
   export type AccountUpsertWithoutTransactionsToInput = {
@@ -10922,6 +12580,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutAccountsNestedInput
     transactionsFrom?: TransactionUpdateManyWithoutSourceAccountNestedInput
+    recurrencesFrom?: RecurrenceUpdateManyWithoutSourceAccountNestedInput
+    recurrencesTo?: RecurrenceUpdateManyWithoutTargetAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutTransactionsToInput = {
@@ -10934,6 +12594,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactionsFrom?: TransactionUncheckedUpdateManyWithoutSourceAccountNestedInput
+    recurrencesFrom?: RecurrenceUncheckedUpdateManyWithoutSourceAccountNestedInput
+    recurrencesTo?: RecurrenceUncheckedUpdateManyWithoutTargetAccountNestedInput
   }
 
   export type UserUpsertWithoutTransactionsInput = {
@@ -10952,6 +12614,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     categories?: CategoryUpdateManyWithoutUserNestedInput
     recurrences?: RecurrenceUpdateManyWithoutUserNestedInput
@@ -10962,6 +12626,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     passwordHash?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
     recurrences?: RecurrenceUncheckedUpdateManyWithoutUserNestedInput
@@ -10989,12 +12655,21 @@ export namespace Prisma {
   export type RecurrenceCreateManyUserInput = {
     id?: number
     name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
     frequency: $Enums.RecurrenceType
     totalParts?: number | null
-    currentPart?: number | null
+    currentPart?: number
     startDate: Date | string
     nextDate?: Date | string | null
+    endDate?: Date | string | null
     active?: boolean
+    categoryId?: number | null
+    sourceAccountId?: number | null
+    targetAccountId?: number | null
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type TransactionCreateManyUserInput = {
@@ -11007,6 +12682,12 @@ export namespace Prisma {
     sourceAccountId?: number | null
     targetAccountId?: number | null
     recurrenceId?: number | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -11021,6 +12702,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactionsFrom?: TransactionUpdateManyWithoutSourceAccountNestedInput
     transactionsTo?: TransactionUpdateManyWithoutTargetAccountNestedInput
+    recurrencesFrom?: RecurrenceUpdateManyWithoutSourceAccountNestedInput
+    recurrencesTo?: RecurrenceUpdateManyWithoutTargetAccountNestedInput
   }
 
   export type AccountUncheckedUpdateWithoutUserInput = {
@@ -11033,6 +12716,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactionsFrom?: TransactionUncheckedUpdateManyWithoutSourceAccountNestedInput
     transactionsTo?: TransactionUncheckedUpdateManyWithoutTargetAccountNestedInput
+    recurrencesFrom?: RecurrenceUncheckedUpdateManyWithoutSourceAccountNestedInput
+    recurrencesTo?: RecurrenceUncheckedUpdateManyWithoutTargetAccountNestedInput
   }
 
   export type AccountUncheckedUpdateManyWithoutUserInput = {
@@ -11052,6 +12737,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions?: TransactionUpdateManyWithoutCategoryNestedInput
+    recurrences?: RecurrenceUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryUncheckedUpdateWithoutUserInput = {
@@ -11062,6 +12748,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transactions?: TransactionUncheckedUpdateManyWithoutCategoryNestedInput
+    recurrences?: RecurrenceUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
   export type CategoryUncheckedUpdateManyWithoutUserInput = {
@@ -11075,36 +12762,63 @@ export namespace Prisma {
 
   export type RecurrenceUpdateWithoutUserInput = {
     name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
     totalParts?: NullableIntFieldUpdateOperationsInput | number | null
-    currentPart?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    category?: CategoryUpdateOneWithoutRecurrencesNestedInput
+    sourceAccount?: AccountUpdateOneWithoutRecurrencesFromNestedInput
+    targetAccount?: AccountUpdateOneWithoutRecurrencesToNestedInput
     transactions?: TransactionUpdateManyWithoutRecurrenceNestedInput
   }
 
   export type RecurrenceUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
     totalParts?: NullableIntFieldUpdateOperationsInput | number | null
-    currentPart?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
+    sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     transactions?: TransactionUncheckedUpdateManyWithoutRecurrenceNestedInput
   }
 
   export type RecurrenceUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
     totalParts?: NullableIntFieldUpdateOperationsInput | number | null
-    currentPart?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     active?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
+    sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type TransactionUpdateWithoutUserInput = {
@@ -11112,6 +12826,12 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11131,6 +12851,12 @@ export namespace Prisma {
     sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     recurrenceId?: NullableIntFieldUpdateOperationsInput | number | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11146,6 +12872,12 @@ export namespace Prisma {
     sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     recurrenceId?: NullableIntFieldUpdateOperationsInput | number | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11161,6 +12893,12 @@ export namespace Prisma {
     categoryId?: number | null
     targetAccountId?: number | null
     recurrenceId?: number | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -11176,9 +12914,55 @@ export namespace Prisma {
     categoryId?: number | null
     sourceAccountId?: number | null
     recurrenceId?: number | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type RecurrenceCreateManySourceAccountInput = {
+    id?: number
+    userId: string
+    name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    frequency: $Enums.RecurrenceType
+    totalParts?: number | null
+    currentPart?: number
+    startDate: Date | string
+    nextDate?: Date | string | null
+    endDate?: Date | string | null
+    active?: boolean
+    categoryId?: number | null
+    targetAccountId?: number | null
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type RecurrenceCreateManyTargetAccountInput = {
+    id?: number
+    userId: string
+    name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    frequency: $Enums.RecurrenceType
+    totalParts?: number | null
+    currentPart?: number
+    startDate: Date | string
+    nextDate?: Date | string | null
+    endDate?: Date | string | null
+    active?: boolean
+    categoryId?: number | null
+    sourceAccountId?: number | null
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type TransactionUpdateWithoutSourceAccountInput = {
@@ -11186,6 +12970,12 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11205,6 +12995,12 @@ export namespace Prisma {
     categoryId?: NullableIntFieldUpdateOperationsInput | number | null
     targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     recurrenceId?: NullableIntFieldUpdateOperationsInput | number | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11220,6 +13016,12 @@ export namespace Prisma {
     categoryId?: NullableIntFieldUpdateOperationsInput | number | null
     targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     recurrenceId?: NullableIntFieldUpdateOperationsInput | number | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11230,6 +13032,12 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11249,6 +13057,12 @@ export namespace Prisma {
     categoryId?: NullableIntFieldUpdateOperationsInput | number | null
     sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     recurrenceId?: NullableIntFieldUpdateOperationsInput | number | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11264,9 +13078,137 @@ export namespace Prisma {
     categoryId?: NullableIntFieldUpdateOperationsInput | number | null
     sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     recurrenceId?: NullableIntFieldUpdateOperationsInput | number | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecurrenceUpdateWithoutSourceAccountInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
+    totalParts?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    user?: UserUpdateOneRequiredWithoutRecurrencesNestedInput
+    category?: CategoryUpdateOneWithoutRecurrencesNestedInput
+    targetAccount?: AccountUpdateOneWithoutRecurrencesToNestedInput
+    transactions?: TransactionUpdateManyWithoutRecurrenceNestedInput
+  }
+
+  export type RecurrenceUncheckedUpdateWithoutSourceAccountInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
+    totalParts?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
+    targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    transactions?: TransactionUncheckedUpdateManyWithoutRecurrenceNestedInput
+  }
+
+  export type RecurrenceUncheckedUpdateManyWithoutSourceAccountInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
+    totalParts?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
+    targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type RecurrenceUpdateWithoutTargetAccountInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
+    totalParts?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    user?: UserUpdateOneRequiredWithoutRecurrencesNestedInput
+    category?: CategoryUpdateOneWithoutRecurrencesNestedInput
+    sourceAccount?: AccountUpdateOneWithoutRecurrencesFromNestedInput
+    transactions?: TransactionUpdateManyWithoutRecurrenceNestedInput
+  }
+
+  export type RecurrenceUncheckedUpdateWithoutTargetAccountInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
+    totalParts?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
+    sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    transactions?: TransactionUncheckedUpdateManyWithoutRecurrenceNestedInput
+  }
+
+  export type RecurrenceUncheckedUpdateManyWithoutTargetAccountInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
+    totalParts?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    categoryId?: NullableIntFieldUpdateOperationsInput | number | null
+    sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type TransactionCreateManyCategoryInput = {
@@ -11279,9 +13221,35 @@ export namespace Prisma {
     sourceAccountId?: number | null
     targetAccountId?: number | null
     recurrenceId?: number | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type RecurrenceCreateManyCategoryInput = {
+    id?: number
+    userId: string
+    name: string
+    type: $Enums.TransactionType
+    amount: Decimal | DecimalJsLike | number | string
+    frequency: $Enums.RecurrenceType
+    totalParts?: number | null
+    currentPart?: number
+    startDate: Date | string
+    nextDate?: Date | string | null
+    endDate?: Date | string | null
+    active?: boolean
+    sourceAccountId?: number | null
+    targetAccountId?: number | null
+    isCardExpense?: boolean
+    cardType?: $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type TransactionUpdateWithoutCategoryInput = {
@@ -11289,6 +13257,12 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11308,6 +13282,12 @@ export namespace Prisma {
     sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     recurrenceId?: NullableIntFieldUpdateOperationsInput | number | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11323,9 +13303,76 @@ export namespace Prisma {
     sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     recurrenceId?: NullableIntFieldUpdateOperationsInput | number | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecurrenceUpdateWithoutCategoryInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
+    totalParts?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    user?: UserUpdateOneRequiredWithoutRecurrencesNestedInput
+    sourceAccount?: AccountUpdateOneWithoutRecurrencesFromNestedInput
+    targetAccount?: AccountUpdateOneWithoutRecurrencesToNestedInput
+    transactions?: TransactionUpdateManyWithoutRecurrenceNestedInput
+  }
+
+  export type RecurrenceUncheckedUpdateWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
+    totalParts?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    transactions?: TransactionUncheckedUpdateManyWithoutRecurrenceNestedInput
+  }
+
+  export type RecurrenceUncheckedUpdateManyWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    frequency?: EnumRecurrenceTypeFieldUpdateOperationsInput | $Enums.RecurrenceType
+    totalParts?: NullableIntFieldUpdateOperationsInput | number | null
+    currentPart?: IntFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    nextDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    isCardExpense?: BoolFieldUpdateOperationsInput | boolean
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type TransactionCreateManyRecurrenceInput = {
@@ -11338,6 +13385,12 @@ export namespace Prisma {
     categoryId?: number | null
     sourceAccountId?: number | null
     targetAccountId?: number | null
+    recurrencePartNumber?: number | null
+    isBudgetedExpense?: boolean | null
+    budgetCategory?: $Enums.BudgetCategory | null
+    isCardExpense?: boolean | null
+    cardType?: $Enums.CardType | null
+    source?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -11348,6 +13401,12 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11367,6 +13426,12 @@ export namespace Prisma {
     categoryId?: NullableIntFieldUpdateOperationsInput | number | null
     sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11382,6 +13447,12 @@ export namespace Prisma {
     categoryId?: NullableIntFieldUpdateOperationsInput | number | null
     sourceAccountId?: NullableIntFieldUpdateOperationsInput | number | null
     targetAccountId?: NullableIntFieldUpdateOperationsInput | number | null
+    recurrencePartNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    isBudgetedExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    budgetCategory?: NullableEnumBudgetCategoryFieldUpdateOperationsInput | $Enums.BudgetCategory | null
+    isCardExpense?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    cardType?: NullableEnumCardTypeFieldUpdateOperationsInput | $Enums.CardType | null
+    source?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
