@@ -88,8 +88,7 @@ export type CategoryType = (typeof CategoryType)[keyof typeof CategoryType]
 export const RecurrenceType: {
   MONTHLY: 'MONTHLY',
   WEEKLY: 'WEEKLY',
-  YEARLY: 'YEARLY',
-  INSTALLMENT: 'INSTALLMENT'
+  YEARLY: 'YEARLY'
 };
 
 export type RecurrenceType = (typeof RecurrenceType)[keyof typeof RecurrenceType]

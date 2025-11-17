@@ -251,8 +251,7 @@ exports.TransactionType = exports.$Enums.TransactionType = {
 exports.RecurrenceType = exports.$Enums.RecurrenceType = {
   MONTHLY: 'MONTHLY',
   WEEKLY: 'WEEKLY',
-  YEARLY: 'YEARLY',
-  INSTALLMENT: 'INSTALLMENT'
+  YEARLY: 'YEARLY'
 };
 
 exports.CardType = exports.$Enums.CardType = {
