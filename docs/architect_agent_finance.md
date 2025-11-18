@@ -249,6 +249,36 @@ enum RecurrenceType {
 - Composite indexes for common queries
 - Full-text search where needed
 
+**Standard Master Categories**:
+
+The system is designed to work with a standard set of master categories. The category consolidation scripts are responsible for mapping old, user-defined categories to this standard list.
+
+1.  Groceries & Food Shopping
+2.  Restaurants & Takeout
+3.  Alcohol & Beverages
+4.  Tobacco & Smoking
+5.  Transportation - Fuel
+6.  Transportation - Public/Rideshare
+7.  Vehicle Maintenance
+8.  Rent & Housing
+9.  Utilities & Services
+10. Personal Care & Grooming
+11. Clothing & Footwear
+12. Health & Medical
+13. Gym & Sports
+14. Entertainment & Social
+15. Subscriptions & Memberships
+16. Household & Cleaning
+17. Hardware & Electronics
+18. Home Improvement & Tools
+19. Gifts & Special Occasions
+20. Miscellaneous/Other
+21. **Income (New)**
+22. **Education (New)**
+23. **Pets (New)**
+24. **Professional Services (New)**
+25. **Taxes & Fees (New)**
+
 ### 4. API Contract Specifications
 
 **Endpoint Template**:

@@ -1,16 +1,54 @@
 import { PrismaClient } from "@/generated/prisma";
+import { Glob } from "bun";
+import path from "path";
 
 const prisma = new PrismaClient();
 
-async function applyConsolidation(userId: string, mappingFile: string) {
-  // Bun way
-  const mapping = await Bun.file(mappingFile).json();
+async function applyConsolidation(userId: string) {
+  const mappingDir = path.join(
+    import.meta.dir,
+    "../../../docs/guides/categoryMigration",
+  );
+  const allOriginalFiles = new Set<string>();
+  const allReviewedFiles = new Set<string>();
+  const globOriginal = new Glob("category_mappings*.json");
+  const globReviewed = new Glob("reviewed-*.json");
 
-  console.log("Starting consolidation...\n");
+  for await (const file of globOriginal.scan(mappingDir)) {
+    allOriginalFiles.add(file);
+  }
+  for await (const file of globReviewed.scan(mappingDir)) {
+    allReviewedFiles.add(file);
+  }
+
+  const filesToProcess: string[] = [];
+  for (const reviewedFile of allReviewedFiles) {
+    filesToProcess.push(path.join(mappingDir, reviewedFile));
+    const originalName = reviewedFile.replace("reviewed-", "");
+    allOriginalFiles.delete(originalName);
+  }
+  for (const originalFile of allOriginalFiles) {
+    filesToProcess.push(path.join(mappingDir, originalFile));
+  }
+
+  console.log(
+    "Found files to process:",
+    filesToProcess.map((f) => path.basename(f)),
+  );
+
+  let allMappings: any[] = [];
+  for (const filePath of filesToProcess) {
+    const content = await Bun.file(filePath).json();
+    if (content.mappings) {
+      allMappings.push(...content.mappings);
+    }
+  }
+
+  console.log(`Starting consolidation for ${allMappings.length} old categories...\n`);
 
   // Step 1: Create all master categories
   const masterCategories = new Set(
-    mapping.mappings.map((m: any) => m.newCategoryName)
+    allMappings.map((m: any) => m.newCategoryName),
   );
   const createdCategories = new Map<string, number>();
 
@@ -37,47 +75,55 @@ async function applyConsolidation(userId: string, mappingFile: string) {
   let updatedRecurrences = 0;
   let deletedCategories = 0;
 
-  for (const map of mapping.mappings) {
+  for (const map of allMappings) {
     const newCategoryId = createdCategories.get(map.newCategoryName);
 
     if (!newCategoryId) {
       console.error(
-        `Error: Master category "${map.newCategoryName}" not found!`
+        `Error: Master category "${map.newCategoryName}" not found!`,
       );
       continue;
     }
 
-    // Skip if old and new are the same
     const oldCategory = await prisma.category.findUnique({
       where: { id: map.oldCategoryId },
     });
 
-    if (!oldCategory) continue;
-    if (oldCategory.id === newCategoryId) continue;
+    if (!oldCategory || oldCategory.id === newCategoryId) {
+      continue;
+    }
 
     // Update transactions
     const txResult = await prisma.transaction.updateMany({
       where: { categoryId: map.oldCategoryId },
       data: { categoryId: newCategoryId },
     });
-    updatedTransactions += txResult.count;
+    if (txResult.count > 0) {
+      updatedTransactions += txResult.count;
+    }
 
     // Update recurrences
     const recResult = await prisma.recurrence.updateMany({
       where: { categoryId: map.oldCategoryId },
       data: { categoryId: newCategoryId },
     });
-    updatedRecurrences += recResult.count;
+    if (recResult.count > 0) {
+      updatedRecurrences += recResult.count;
+    }
 
-    // Delete old category
-    await prisma.category.delete({
-      where: { id: map.oldCategoryId },
-    });
-    deletedCategories++;
-
-    console.log(
-      `✓ "${map.oldCategoryName}" → "${map.newCategoryName}" (${txResult.count} txns, ${recResult.count} recurrences)`
-    );
+    try {
+      await prisma.category.delete({
+        where: { id: map.oldCategoryId },
+      });
+      deletedCategories++;
+      console.log(
+        `✓ "${map.oldCategoryName}" → "${map.newCategoryName}" (${txResult.count} txns, ${recResult.count} recurrences)`,
+      );
+    } catch (e) {
+      console.warn(
+        `Could not delete category "${map.oldCategoryName}" (ID: ${map.oldCategoryId}). It might have already been consolidated.`,
+      );
+    }
   }
 
   console.log("\n=== CONSOLIDATION COMPLETE ===");
@@ -109,6 +155,12 @@ function getColorForCategory(name: string): string {
     "Home Improvement & Tools": "#FF6F00",
     "Gifts & Special Occasions": "#E91E63",
     "Miscellaneous/Other": "#757575",
+    // New Categories
+    Income: "#2E7D32",
+    Education: "#5E35B1",
+    Pets: "#D84315",
+    "Professional Services": "#455A64",
+    "Taxes & Fees": "#C62828",
   };
   return colors[name] || "#9E9E9E";
 }
@@ -116,9 +168,11 @@ function getColorForCategory(name: string): string {
 // Run it
 const userId = process.argv[2];
 if (!userId) {
-  console.error("Usage: bun run apply-consolidation.ts <userId>");
+  console.error(
+    "Usage: bun run finance-app/src/scripts/apply-consolidation.ts <userId>",
+  );
   process.exit(1);
 }
 
-await applyConsolidation(userId, "category-mapping.json");
+await applyConsolidation(userId);
 await prisma.$disconnect();

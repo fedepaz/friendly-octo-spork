@@ -1,0 +1,704 @@
+{
+  "mappings": [
+    {
+      "oldCategoryId": 401,
+      "oldCategoryName": "farmacia shampoo",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Personal Care & Grooming'. Matches were -> Health & Medical: farmacia; Personal Care & Grooming: shampoo"
+    },
+    {
+      "oldCategoryId": 402,
+      "oldCategoryName": "farmacia jabon",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Personal Care & Grooming'. Matches were -> Health & Medical: farmacia; Personal Care & Grooming: jabon"
+    },
+    {
+      "oldCategoryId": 403,
+      "oldCategoryName": "farmacia varios",
+      "newCategoryName": "Health & Medical",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Health & Medical'. Matches were -> Health & Medical: farmacia; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 404,
+      "oldCategoryName": "comida trabajo",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Keywords matched: comida"
+    },
+    {
+      "oldCategoryId": 405,
+      "oldCategoryName": "comida casa",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Keywords matched: comida"
+    },
+    {
+      "oldCategoryId": 406,
+      "oldCategoryName": "comida finde",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Keywords matched: comida"
+    },
+    {
+      "oldCategoryId": 407,
+      "oldCategoryName": "salida",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: salida"
+    },
+    {
+      "oldCategoryId": 408,
+      "oldCategoryName": "salida birra",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Entertainment & Social'. Matches were -> Entertainment & Social: salida; Alcohol & Beverages: birra"
+    },
+    {
+      "oldCategoryId": 409,
+      "oldCategoryName": "salida comida",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Restaurants & Takeout'. Matches were -> Restaurants & Takeout: comida; Entertainment & Social: salida"
+    },
+    {
+      "oldCategoryId": 410,
+      "oldCategoryName": "salida cine",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: salida, cine"
+    },
+    {
+      "oldCategoryId": 411,
+      "oldCategoryName": "salida recital",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: salida, recital"
+    },
+    {
+      "oldCategoryId": 412,
+      "oldCategoryName": "salida varios",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Entertainment & Social'. Matches were -> Entertainment & Social: salida; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 413,
+      "oldCategoryName": "joda",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: joda"
+    },
+    {
+      "oldCategoryId": 414,
+      "oldCategoryName": "joda birra",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Entertainment & Social'. Matches were -> Entertainment & Social: joda; Alcohol & Beverages: birra"
+    },
+    {
+      "oldCategoryId": 415,
+      "oldCategoryName": "joda comida",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Restaurants & Takeout'. Matches were -> Restaurants & Takeout: comida; Entertainment & Social: joda"
+    },
+    {
+      "oldCategoryId": 416,
+      "oldCategoryName": "joda varios",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Entertainment & Social'. Matches were -> Entertainment & Social: joda; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 417,
+      "oldCategoryName": "cumple",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Keywords matched: cumple"
+    },
+    {
+      "oldCategoryId": 418,
+      "oldCategoryName": "cumple regalo",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Keywords matched: cumple, regalo"
+    },
+    {
+      "oldCategoryId": 419,
+      "oldCategoryName": "cumple comida",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Restaurants & Takeout'. Matches were -> Restaurants & Takeout: comida; Gifts & Special Occasions: cumple"
+    },
+    {
+      "oldCategoryId": 420,
+      "oldCategoryName": "cumple birra",
+      "newCategoryName": "Alcohol & Beverages",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Alcohol & Beverages'. Matches were -> Alcohol & Beverages: birra; Gifts & Special Occasions: cumple"
+    },
+    {
+      "oldCategoryId": 421,
+      "oldCategoryName": "cumple varios",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Gifts & Special Occasions'. Matches were -> Gifts & Special Occasions: cumple; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 422,
+      "oldCategoryName": "regalo dia del padre",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Keywords matched: regalo"
+    },
+    {
+      "oldCategoryId": 423,
+      "oldCategoryName": "regalo dia de la madre",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Keywords matched: regalo"
+    },
+    {
+      "oldCategoryId": 424,
+      "oldCategoryName": "regalo navidad",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Keywords matched: regalo"
+    },
+    {
+      "oldCategoryId": 425,
+      "oldCategoryName": "regalo reyes",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Keywords matched: regalo"
+    },
+    {
+      "oldCategoryId": 426,
+      "oldCategoryName": "regalo aniversario",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Keywords matched: regalo"
+    },
+    {
+      "oldCategoryId": 427,
+      "oldCategoryName": "casamiento",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Keywords matched: casamiento"
+    },
+    {
+      "oldCategoryId": 428,
+      "oldCategoryName": "casamiento regalo",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Keywords matched: casamiento, regalo"
+    },
+    {
+      "oldCategoryId": 429,
+      "oldCategoryName": "casamiento comida",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Restaurants & Takeout'. Matches were -> Restaurants & Takeout: comida; Gifts & Special Occasions: casamiento"
+    },
+    {
+      "oldCategoryId": 430,
+      "oldCategoryName": "casamiento birra",
+      "newCategoryName": "Alcohol & Beverages",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Alcohol & Beverages'. Matches were -> Alcohol & Beverages: birra; Gifts & Special Occasions: casamiento"
+    },
+    {
+      "oldCategoryId": 431,
+      "oldCategoryName": "casamiento varios",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Gifts & Special Occasions'. Matches were -> Gifts & Special Occasions: casamiento; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 432,
+      "oldCategoryName": "vacaciones",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: vacaciones"
+    },
+    {
+      "oldCategoryId": 433,
+      "oldCategoryName": "vacaciones comida",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Restaurants & Takeout'. Matches were -> Restaurants & Takeout: comida; Entertainment & Social: vacaciones"
+    },
+    {
+      "oldCategoryId": 434,
+      "oldCategoryName": "vacaciones birra",
+      "newCategoryName": "Alcohol & Beverages",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Alcohol & Beverages'. Matches were -> Entertainment & Social: vacaciones; Alcohol & Beverages: birra"
+    },
+    {
+      "oldCategoryId": 435,
+      "oldCategoryName": "vacaciones nafta",
+      "newCategoryName": "Transportation - Fuel",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Transportation - Fuel'. Matches were -> Transportation - Fuel: nafta; Entertainment & Social: vacaciones"
+    },
+    {
+      "oldCategoryId": 436,
+      "oldCategoryName": "vacaciones varios",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Entertainment & Social'. Matches were -> Entertainment & Social: vacaciones; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 437,
+      "oldCategoryName": "ropa deportiva",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "high",
+      "reasoning": "Keywords matched: ropa"
+    },
+    {
+      "oldCategoryId": 438,
+      "oldCategoryName": "ropa trabajo",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "high",
+      "reasoning": "Keywords matched: ropa"
+    },
+    {
+      "oldCategoryId": 439,
+      "oldCategoryName": "ropa salida",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Clothing & Footwear'. Matches were -> Clothing & Footwear: ropa; Entertainment & Social: salida"
+    },
+    {
+      "oldCategoryId": 440,
+      "oldCategoryName": "ropa varios",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Clothing & Footwear'. Matches were -> Clothing & Footwear: ropa; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 441,
+      "oldCategoryName": "zapatillas deportivas",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "high",
+      "reasoning": "Keywords matched: zapatillas"
+    },
+    {
+      "oldCategoryId": 442,
+      "oldCategoryName": "zapatillas urbanas",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "high",
+      "reasoning": "Keywords matched: zapatillas"
+    },
+    {
+      "oldCategoryId": 443,
+      "oldCategoryName": "zapatillas varios",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Clothing & Footwear'. Matches were -> Clothing & Footwear: zapatillas; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 444,
+      "oldCategoryName": "seguro auto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: seguro, auto"
+    },
+    {
+      "oldCategoryId": 445,
+      "oldCategoryName": "seguro moto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: seguro, moto"
+    },
+    {
+      "oldCategoryId": 446,
+      "oldCategoryName": "seguro casa",
+      "newCategoryName": "Rent & Housing",
+      "confidence": "high",
+      "reasoning": "Keywords matched: seguro"
+    },
+    {
+      "oldCategoryId": 447,
+      "oldCategoryName": "seguro vida",
+      "newCategoryName": "Health & Medical",
+      "confidence": "high",
+      "reasoning": "Keywords matched: seguro"
+    },
+    {
+      "oldCategoryId": 448,
+      "oldCategoryName": "patente auto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: patente, auto"
+    },
+    {
+      "oldCategoryId": 449,
+      "oldCategoryName": "patente moto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: patente, moto"
+    },
+    {
+      "oldCategoryId": 450,
+      "oldCategoryName": "service auto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: service, auto"
+    },
+    {
+      "oldCategoryId": 451,
+      "oldCategoryName": "service moto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: service, moto"
+    },
+    {
+      "oldCategoryId": 452,
+      "oldCategoryName": "cubiertas auto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: cubiertas, auto"
+    },
+    {
+      "oldCategoryId": 453,
+      "oldCategoryName": "cubiertas moto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: cubiertas, moto"
+    },
+    {
+      "oldCategoryId": 454,
+      "oldCategoryName": "aceite auto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: aceite, auto"
+    },
+    {
+      "oldCategoryId": 455,
+      "oldCategoryName": "aceite moto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: aceite, moto"
+    },
+    {
+      "oldCategoryId": 456,
+      "oldCategoryName": "repuestos auto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: repuestos, auto"
+    },
+    {
+      "oldCategoryId": 457,
+      "oldCategoryName": "repuestos moto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: repuestos, moto"
+    },
+    {
+      "oldCategoryId": 458,
+      "oldCategoryName": "lavado auto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: lavado, auto"
+    },
+    {
+      "oldCategoryId": 459,
+      "oldCategoryName": "lavado moto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: lavado, moto"
+    },
+    {
+      "oldCategoryId": 460,
+      "oldCategoryName": "peaje",
+      "newCategoryName": "Transportation - Public/Rideshare",
+      "confidence": "high",
+      "reasoning": "Keywords matched: peaje"
+    },
+    {
+      "oldCategoryId": 461,
+      "oldCategoryName": "estacionamiento",
+      "newCategoryName": "Transportation - Public/Rideshare",
+      "confidence": "high",
+      "reasoning": "Keywords matched: estacionamiento"
+    },
+    {
+      "oldCategoryId": 462,
+      "oldCategoryName": "alquiler auto",
+      "newCategoryName": "Transportation - Public/Rideshare",
+      "confidence": "high",
+      "reasoning": "Keywords matched: alquiler, auto"
+    },
+    {
+      "oldCategoryId": 463,
+      "oldCategoryName": "alquiler moto",
+      "newCategoryName": "Transportation - Public/Rideshare",
+      "confidence": "high",
+      "reasoning": "Keywords matched: alquiler, moto"
+    },
+    {
+      "oldCategoryId": 464,
+      "oldCategoryName": "impuestos",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: impuestos"
+    },
+    {
+      "oldCategoryId": 465,
+      "oldCategoryName": "impuestos ganancias",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: impuestos"
+    },
+    {
+      "oldCategoryId": 466,
+      "oldCategoryName": "impuestos iva",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: impuestos, iva"
+    },
+    {
+      "oldCategoryId": 467,
+      "oldCategoryName": "impuestos inmobiliario",
+      "newCategoryName": "Rent & Housing",
+      "confidence": "high",
+      "reasoning": "Keywords matched: impuestos"
+    },
+    {
+      "oldCategoryId": 468,
+      "oldCategoryName": "impuestos automotor",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: impuestos"
+    },
+    {
+      "oldCategoryId": 469,
+      "oldCategoryName": "donacion",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Keywords matched: donacion"
+    },
+    {
+      "oldCategoryId": 470,
+      "oldCategoryName": "ahorro",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: ahorro"
+    },
+    {
+      "oldCategoryId": 471,
+      "oldCategoryName": "inversion",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: inversion"
+    },
+    {
+      "oldCategoryId": 472,
+      "oldCategoryName": "sueldo mama",
+      "newCategoryName": "Income",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 473,
+      "oldCategoryName": "sueldo papa",
+      "newCategoryName": "Income",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 474,
+      "oldCategoryName": "sueldo hermana",
+      "newCategoryName": "Income",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 475,
+      "oldCategoryName": "sueldo hermano",
+      "newCategoryName": "Income",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 476,
+      "oldCategoryName": "adelanto sueldo",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: adelanto"
+    },
+    {
+      "oldCategoryId": 477,
+      "oldCategoryName": "aguinaldo",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: aguinaldo"
+    },
+    {
+      "oldCategoryId": 478,
+      "oldCategoryName": "bono",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: bono"
+    },
+    {
+      "oldCategoryId": 479,
+      "oldCategoryName": "premio",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: premio"
+    },
+    {
+      "oldCategoryId": 480,
+      "oldCategoryName": "venta",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: venta"
+    },
+    {
+      "oldCategoryId": 481,
+      "oldCategoryName": "venta auto",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: venta, auto"
+    },
+    {
+      "oldCategoryId": 482,
+      "oldCategoryName": "venta moto",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: venta, moto"
+    },
+    {
+      "oldCategoryId": 483,
+      "oldCategoryName": "venta casa",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: venta"
+    },
+    {
+      "oldCategoryId": 484,
+      "oldCategoryName": "venta ropa",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: venta, ropa"
+    },
+    {
+      "oldCategoryId": 485,
+      "oldCategoryName": "venta varios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: venta, varios"
+    },
+    {
+      "oldCategoryId": 486,
+      "oldCategoryName": "transferencia",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: transferencia"
+    },
+    {
+      "oldCategoryId": 487,
+      "oldCategoryName": "transferencia recibida",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: transferencia"
+    },
+    {
+      "oldCategoryId": 488,
+      "oldCategoryName": "transferencia enviada",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: transferencia"
+    },
+    {
+      "oldCategoryId": 489,
+      "oldCategoryName": "extraccion",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: extraccion"
+    },
+    {
+      "oldCategoryId": 490,
+      "oldCategoryName": "deposito",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: deposito"
+    },
+    {
+      "oldCategoryId": 491,
+      "oldCategoryName": "pago tarjeta",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: pago tarjeta"
+    },
+    {
+      "oldCategoryId": 492,
+      "oldCategoryName": "pago prestamo",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: pago, prestamo"
+    },
+    {
+      "oldCategoryId": 493,
+      "oldCategoryName": "pago servicios",
+      "newCategoryName": "Utilities & Services",
+      "confidence": "high",
+      "reasoning": "Keywords matched: pago, servicios"
+    },
+    {
+      "oldCategoryId": 494,
+      "oldCategoryName": "pago alquiler",
+      "newCategoryName": "Rent & Housing",
+      "confidence": "high",
+      "reasoning": "Keywords matched: pago, alquiler"
+    },
+    {
+      "oldCategoryId": 495,
+      "oldCategoryName": "pago expensas",
+      "newCategoryName": "Rent & Housing",
+      "confidence": "high",
+      "reasoning": "Keywords matched: pago, expensas"
+    },
+    {
+      "oldCategoryId": 496,
+      "oldCategoryName": "pago monotributo",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: pago, monotributo"
+    },
+    {
+      "oldCategoryId": 497,
+      "oldCategoryName": "pago afip",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: pago, afip"
+    },
+    {
+      "oldCategoryId": 498,
+      "oldCategoryName": "pago varios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: pago, varios"
+    },
+    {
+      "oldCategoryId": 499,
+      "oldCategoryName": "compra dolares",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: compra dolares"
+    },
+    {
+      "oldCategoryId": 500,
+      "oldCategoryName": "venta dolares",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: venta dolares"
+    }
+  ]
+}

@@ -46,8 +46,80 @@ This applies to any operation that changes an account's balance. **All operation
 
 ---
 
+
+
 ## 3. The Delete Workflow
+
+
 
 As per system requirements, there is **no workflow for deleting records**.
 
+
+
 Once data is entered into the database, it is considered permanent and cannot be removed by a user action. This ensures a complete and unaltered financial history, which is essential for accurate tracking and future analysis.
+
+
+
+---
+
+
+
+## 4. Data Migration Workflows
+
+
+
+This section outlines specialized, one-time workflows for migrating and cleaning up data.
+
+
+
+### Category Consolidation Workflow
+
+
+
+This workflow is used to consolidate a large number of old, messy categories into a standardized set of master categories.
+
+
+
+1.  **Initial Analysis & Review File Generation**:
+
+    *   A script analyzes all existing transaction categories and attempts to map them to the new master categories.
+
+    *   Mappings with low confidence are written to a `review-needed.json` file in the `finance-app/` directory.
+
+
+
+2.  **Manual Review**:
+
+    *   A developer manually reviews the `review-needed.json` file.
+
+    *   For ambiguous categories, new master categories can be proposed and approved.
+
+
+
+3.  **Correction File Generation**:
+
+    *   The `finance-app/src/scripts/create-reviewed-chunks.ts` script is run.
+
+    *   This script reads all original `category_mappings_*.json` files and applies the approved corrections.
+
+    *   It generates new `reviewed-category_mappings_*.json` files for any chunks that contained updated mappings. These new files are the clean source of truth for the next step.
+
+
+
+4.  **Final Database Consolidation**:
+
+    *   The `finance-app/src/scripts/apply-consolidation.ts` script is run, specifying the `userId`.
+
+    *   This script intelligently finds and loads the complete set of mappings (using `reviewed-` files where available, and original files otherwise).
+
+    *   It then performs the database migration:
+
+        *   Creates all master categories.
+
+        *   Moves all transactions and recurrences from old categories to their new master categories.
+
+        *   Deletes the old, now-empty categories.
+
+
+
+This structured process ensures data is reviewed and cleaned before the final, destructive database operation is performed.

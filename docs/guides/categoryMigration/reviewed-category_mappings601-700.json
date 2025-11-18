@@ -1,0 +1,704 @@
+{
+  "mappings": [
+    {
+      "oldCategoryId": 601,
+      "oldCategoryName": "educacion cursos",
+      "newCategoryName": "Education",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 602,
+      "oldCategoryName": "educacion varios",
+      "newCategoryName": "Education",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 603,
+      "oldCategoryName": "entretenimiento",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: entretenimiento"
+    },
+    {
+      "oldCategoryId": 604,
+      "oldCategoryName": "entretenimiento cine",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: entretenimiento, cine"
+    },
+    {
+      "oldCategoryId": 605,
+      "oldCategoryName": "entretenimiento recital",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: entretenimiento, recital"
+    },
+    {
+      "oldCategoryId": 606,
+      "oldCategoryName": "entretenimiento teatro",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: entretenimiento"
+    },
+    {
+      "oldCategoryId": 607,
+      "oldCategoryName": "entretenimiento libros",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: entretenimiento"
+    },
+    {
+      "oldCategoryId": 608,
+      "oldCategoryName": "entretenimiento revistas",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: entretenimiento"
+    },
+    {
+      "oldCategoryId": 609,
+      "oldCategoryName": "entretenimiento musica",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: entretenimiento"
+    },
+    {
+      "oldCategoryId": 610,
+      "oldCategoryName": "entretenimiento juegos",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: entretenimiento"
+    },
+    {
+      "oldCategoryId": 611,
+      "oldCategoryName": "entretenimiento varios",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Entertainment & Social'. Matches were -> Entertainment & Social: entretenimiento; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 612,
+      "oldCategoryName": "mascotas",
+      "newCategoryName": "Pets",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 613,
+      "oldCategoryName": "mascotas comida",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Restaurants & Takeout'. Matches were -> Restaurants & Takeout: comida; Miscellaneous/Other: mascotas"
+    },
+    {
+      "oldCategoryId": 614,
+      "oldCategoryName": "mascotas veterinario",
+      "newCategoryName": "Health & Medical",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Health & Medical'. Matches were -> Health & Medical: veterinario; Miscellaneous/Other: mascotas"
+    },
+    {
+      "oldCategoryId": 615,
+      "oldCategoryName": "mascotas juguetes",
+      "newCategoryName": "Pets",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 616,
+      "oldCategoryName": "mascotas varios",
+      "newCategoryName": "Pets",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 617,
+      "oldCategoryName": "bebe",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 618,
+      "oldCategoryName": "bebe pañales",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Personal Care & Grooming'. Matches were -> Personal Care & Grooming: pañales; Miscellaneous/Other: bebe"
+    },
+    {
+      "oldCategoryId": 619,
+      "oldCategoryName": "bebe ropa",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Clothing & Footwear'. Matches were -> Clothing & Footwear: ropa; Miscellaneous/Other: bebe"
+    },
+    {
+      "oldCategoryId": 620,
+      "oldCategoryName": "bebe juguetes",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 621,
+      "oldCategoryName": "bebe comida",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Restaurants & Takeout'. Matches were -> Restaurants & Takeout: comida; Miscellaneous/Other: bebe"
+    },
+    {
+      "oldCategoryId": 622,
+      "oldCategoryName": "bebe varios",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 623,
+      "oldCategoryName": "hijos",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 624,
+      "oldCategoryName": "hijos cuota colegio",
+      "newCategoryName": "Education",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 625,
+      "oldCategoryName": "hijos utiles",
+      "newCategoryName": "Education",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 626,
+      "oldCategoryName": "hijos ropa",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Clothing & Footwear'. Matches were -> Clothing & Footwear: ropa; Miscellaneous/Other: hijos"
+    },
+    {
+      "oldCategoryId": 627,
+      "oldCategoryName": "hijos juguetes",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 628,
+      "oldCategoryName": "hijos medico",
+      "newCategoryName": "Health & Medical",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Health & Medical'. Matches were -> Health & Medical: medico; Miscellaneous/Other: hijos"
+    },
+    {
+      "oldCategoryId": 629,
+      "oldCategoryName": "hijos varios",
+      "newCategoryName": "Gifts & Special Occasions",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 630,
+      "oldCategoryName": "cuidado personal",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "high",
+      "reasoning": "Keywords matched: cuidado personal"
+    },
+    {
+      "oldCategoryId": 631,
+      "oldCategoryName": "cuidado personal peluqueria",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "high",
+      "reasoning": "Keywords matched: cuidado personal, peluqueria"
+    },
+    {
+      "oldCategoryId": 632,
+      "oldCategoryName": "cuidado personal barberia",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "high",
+      "reasoning": "Keywords matched: cuidado personal"
+    },
+    {
+      "oldCategoryId": 633,
+      "oldCategoryName": "cuidado personal cosmeticos",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "high",
+      "reasoning": "Keywords matched: cuidado personal"
+    },
+    {
+      "oldCategoryId": 634,
+      "oldCategoryName": "cuidado personal cremas",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "high",
+      "reasoning": "Keywords matched: cuidado personal, cremas"
+    },
+    {
+      "oldCategoryId": 635,
+      "oldCategoryName": "cuidado personal perfumes",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "high",
+      "reasoning": "Keywords matched: cuidado personal"
+    },
+    {
+      "oldCategoryId": 636,
+      "oldCategoryName": "cuidado personal varios",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Personal Care & Grooming'. Matches were -> Personal Care & Grooming: cuidado personal; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 637,
+      "oldCategoryName": "hogar",
+      "newCategoryName": "Household & Cleaning",
+      "confidence": "high",
+      "reasoning": "Keywords matched: hogar"
+    },
+    {
+      "oldCategoryId": 638,
+      "oldCategoryName": "hogar limpieza",
+      "newCategoryName": "Household & Cleaning",
+      "confidence": "high",
+      "reasoning": "Keywords matched: hogar, limpieza"
+    },
+    {
+      "oldCategoryId": 639,
+      "oldCategoryName": "hogar lavanderia",
+      "newCategoryName": "Household & Cleaning",
+      "confidence": "high",
+      "reasoning": "Keywords matched: hogar, lavanderia"
+    },
+    {
+      "oldCategoryId": 640,
+      "oldCategoryName": "hogar reparaciones",
+      "newCategoryName": "Home Improvement & Tools",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Home Improvement & Tools'. Matches were -> Household & Cleaning: hogar; Home Improvement & Tools: reparaciones"
+    },
+    {
+      "oldCategoryId": 641,
+      "oldCategoryName": "hogar muebles",
+      "newCategoryName": "Home Improvement & Tools",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Home Improvement & Tools'. Matches were -> Household & Cleaning: hogar; Home Improvement & Tools: muebles"
+    },
+    {
+      "oldCategoryId": 642,
+      "oldCategoryName": "hogar decoracion",
+      "newCategoryName": "Home Improvement & Tools",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Home Improvement & Tools'. Matches were -> Household & Cleaning: hogar; Home Improvement & Tools: decoracion"
+    },
+    {
+      "oldCategoryId": 643,
+      "oldCategoryName": "hogar varios",
+      "newCategoryName": "Household & Cleaning",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Household & Cleaning'. Matches were -> Household & Cleaning: hogar; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 644,
+      "oldCategoryName": "tecnologia",
+      "newCategoryName": "Hardware & Electronics",
+      "confidence": "high",
+      "reasoning": "Keywords matched: tecnologia"
+    },
+    {
+      "oldCategoryId": 645,
+      "oldCategoryName": "tecnologia celular",
+      "newCategoryName": "Hardware & Electronics",
+      "confidence": "high",
+      "reasoning": "Keywords matched: tecnologia, celular"
+    },
+    {
+      "oldCategoryId": 646,
+      "oldCategoryName": "tecnologia computadora",
+      "newCategoryName": "Hardware & Electronics",
+      "confidence": "high",
+      "reasoning": "Keywords matched: tecnologia, computadora"
+    },
+    {
+      "oldCategoryId": 647,
+      "oldCategoryName": "tecnologia accesorios",
+      "newCategoryName": "Hardware & Electronics",
+      "confidence": "high",
+      "reasoning": "Keywords matched: tecnologia"
+    },
+    {
+      "oldCategoryId": 648,
+      "oldCategoryName": "tecnologia varios",
+      "newCategoryName": "Hardware & Electronics",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Hardware & Electronics'. Matches were -> Hardware & Electronics: tecnologia; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 649,
+      "oldCategoryName": "suscripciones",
+      "newCategoryName": "Subscriptions & Memberships",
+      "confidence": "high",
+      "reasoning": "Keywords matched: suscripciones"
+    },
+    {
+      "oldCategoryId": 650,
+      "oldCategoryName": "suscripciones netflix",
+      "newCategoryName": "Subscriptions & Memberships",
+      "confidence": "high",
+      "reasoning": "Keywords matched: suscripciones, netflix"
+    },
+    {
+      "oldCategoryId": 651,
+      "oldCategoryName": "suscripciones spotify",
+      "newCategoryName": "Subscriptions & Memberships",
+      "confidence": "high",
+      "reasoning": "Keywords matched: suscripciones, spotify"
+    },
+    {
+      "oldCategoryId": 652,
+      "oldCategoryName": "suscripciones hbo",
+      "newCategoryName": "Subscriptions & Memberships",
+      "confidence": "high",
+      "reasoning": "Keywords matched: suscripciones"
+    },
+    {
+      "oldCategoryId": 653,
+      "oldCategoryName": "suscripciones disney",
+      "newCategoryName": "Subscriptions & Memberships",
+      "confidence": "high",
+      "reasoning": "Keywords matched: suscripciones"
+    },
+    {
+      "oldCategoryId": 654,
+      "oldCategoryName": "suscripciones amazon",
+      "newCategoryName": "Subscriptions & Memberships",
+      "confidence": "high",
+      "reasoning": "Keywords matched: suscripciones"
+    },
+    {
+      "oldCategoryId": 655,
+      "oldCategoryName": "suscripciones gym",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Gym & Sports'. Matches were -> Subscriptions & Memberships: suscripciones; Gym & Sports: gym"
+    },
+    {
+      "oldCategoryId": 656,
+      "oldCategoryName": "suscripciones varios",
+      "newCategoryName": "Subscriptions & Memberships",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Subscriptions & Memberships'. Matches were -> Subscriptions & Memberships: suscripciones; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 657,
+      "oldCategoryName": "deudas",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: deudas"
+    },
+    {
+      "oldCategoryId": 658,
+      "oldCategoryName": "deudas tarjeta",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: deudas"
+    },
+    {
+      "oldCategoryId": 659,
+      "oldCategoryName": "deudas prestamo",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: deudas, prestamo"
+    },
+    {
+      "oldCategoryId": 660,
+      "oldCategoryName": "deudas varios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: deudas, varios"
+    },
+    {
+      "oldCategoryId": 661,
+      "oldCategoryName": "freelance",
+      "newCategoryName": "Income",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 662,
+      "oldCategoryName": "freelance ingresos",
+      "newCategoryName": "Income",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 663,
+      "oldCategoryName": "freelance gastos",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: gastos"
+    },
+    {
+      "oldCategoryId": 664,
+      "oldCategoryName": "freelance impuestos",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: impuestos"
+    },
+    {
+      "oldCategoryId": 665,
+      "oldCategoryName": "freelance varios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 666,
+      "oldCategoryName": "estudios",
+      "newCategoryName": "Education",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 667,
+      "oldCategoryName": "estudios cuota",
+      "newCategoryName": "Education",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 668,
+      "oldCategoryName": "estudios libros",
+      "newCategoryName": "Education",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 669,
+      "oldCategoryName": "estudios utiles",
+      "newCategoryName": "Education",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 670,
+      "oldCategoryName": "estudios cursos",
+      "newCategoryName": "Education",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 671,
+      "oldCategoryName": "estudios varios",
+      "newCategoryName": "Education",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 672,
+      "oldCategoryName": "viajes",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: viajes"
+    },
+    {
+      "oldCategoryId": 673,
+      "oldCategoryName": "viajes pasajes",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: viajes"
+    },
+    {
+      "oldCategoryId": 674,
+      "oldCategoryName": "viajes alojamiento",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: viajes"
+    },
+    {
+      "oldCategoryId": 675,
+      "oldCategoryName": "viajes comida",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Restaurants & Takeout'. Matches were -> Restaurants & Takeout: comida; Entertainment & Social: viajes"
+    },
+    {
+      "oldCategoryId": 676,
+      "oldCategoryName": "viajes transporte",
+      "newCategoryName": "Transportation - Public/Rideshare",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Transportation - Public/Rideshare'. Matches were -> Transportation - Public/Rideshare: transporte; Entertainment & Social: viajes"
+    },
+    {
+      "oldCategoryId": 677,
+      "oldCategoryName": "viajes excursiones",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: viajes"
+    },
+    {
+      "oldCategoryId": 678,
+      "oldCategoryName": "viajes varios",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Entertainment & Social'. Matches were -> Entertainment & Social: viajes; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 679,
+      "oldCategoryName": "ahorro dolares",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: ahorro"
+    },
+    {
+      "oldCategoryId": 680,
+      "oldCategoryName": "ahorro euros",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: ahorro"
+    },
+    {
+      "oldCategoryId": 681,
+      "oldCategoryName": "ahorro pesos",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: ahorro"
+    },
+    {
+      "oldCategoryId": 682,
+      "oldCategoryName": "inversion plazo fijo",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: inversion"
+    },
+    {
+      "oldCategoryId": 683,
+      "oldCategoryName": "inversion acciones",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: inversion"
+    },
+    {
+      "oldCategoryId": 684,
+      "oldCategoryName": "inversion bonos",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: inversion, bonos"
+    },
+    {
+      "oldCategoryId": 685,
+      "oldCategoryName": "inversion cripto",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: inversion"
+    },
+    {
+      "oldCategoryId": 686,
+      "oldCategoryName": "inversion varios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: inversion, varios"
+    },
+    {
+      "oldCategoryId": 687,
+      "oldCategoryName": "prestamo recibido",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: prestamo"
+    },
+    {
+      "oldCategoryId": 688,
+      "oldCategoryName": "prestamo otorgado",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: prestamo"
+    },
+    {
+      "oldCategoryId": 689,
+      "oldCategoryName": "pago cuota prestamo",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: pago, prestamo"
+    },
+    {
+      "oldCategoryId": 690,
+      "oldCategoryName": "cobro cuota prestamo",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: prestamo"
+    },
+    {
+      "oldCategoryId": 691,
+      "oldCategoryName": "ajuste por inflacion",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: ajuste"
+    },
+    {
+      "oldCategoryId": 692,
+      "oldCategoryName": "diferencia de cambio",
+      "newCategoryName": "Taxes & Fees",
+      "confidence": "high",
+      "reasoning": "Manually reviewed and approved by user."
+    },
+    {
+      "oldCategoryId": 693,
+      "oldCategoryName": "ingresos varios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: ingresos, varios"
+    },
+    {
+      "oldCategoryId": 694,
+      "oldCategoryName": "egresos varios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: egresos, varios"
+    },
+    {
+      "oldCategoryId": 695,
+      "oldCategoryName": "comida perro",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Restaurants & Takeout'. Matches were -> Restaurants & Takeout: comida; Miscellaneous/Other: perro"
+    },
+    {
+      "oldCategoryId": 696,
+      "oldCategoryName": "comida gato",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Restaurants & Takeout'. Matches were -> Restaurants & Takeout: comida; Miscellaneous/Other: gato"
+    },
+    {
+      "oldCategoryId": 697,
+      "oldCategoryName": "veterinario perro",
+      "newCategoryName": "Health & Medical",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Health & Medical'. Matches were -> Health & Medical: veterinario; Miscellaneous/Other: perro"
+    },
+    {
+      "oldCategoryId": 698,
+      "oldCategoryName": "veterinario gato",
+      "newCategoryName": "Health & Medical",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Health & Medical'. Matches were -> Health & Medical: veterinario; Miscellaneous/Other: gato"
+    },
+    {
+      "oldCategoryId": 699,
+      "oldCategoryName": "vacunas perro",
+      "newCategoryName": "Health & Medical",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Health & Medical'. Matches were -> Health & Medical: vacunas; Miscellaneous/Other: perro"
+    },
+    {
+      "oldCategoryId": 700,
+      "oldCategoryName": "vacunas gato",
+      "newCategoryName": "Health & Medical",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Health & Medical'. Matches were -> Health & Medical: vacunas; Miscellaneous/Other: gato"
+    }
+  ]
+}
