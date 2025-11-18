@@ -1,0 +1,201 @@
+
+{
+  "mappings": [
+    {
+      "oldCategoryId": 72,
+      "oldCategoryName": "aguinaldo",
+      "newCategoryName": "Income",
+      "confidence": "high",
+      "reasoning": "Represents a form of income (13th salary)."
+    },
+    {
+      "oldCategoryId": 1254,
+      "oldCategoryName": "palSabado",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "medium",
+      "reasoning": "Name suggests 'for Saturday', likely a social or entertainment expense."
+    },
+    {
+      "oldCategoryId": 1255,
+      "oldCategoryName": "Notebook(10/12)",
+      "newCategoryName": "Hardware & Electronics",
+      "confidence": "high",
+      "reasoning": "Installment payment for a notebook computer."
+    },
+    {
+      "oldCategoryId": 1256,
+      "oldCategoryName": "animalPak(4/6)",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Animal Pak is a brand of nutritional supplements for bodybuilding."
+    },
+    {
+      "oldCategoryId": 1257,
+      "oldCategoryName": "variosMoto(3/6)",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Contains 'moto', indicating a motorcycle-related expense."
+    },
+    {
+      "oldCategoryId": 1258,
+      "oldCategoryName": "devolucion(?)",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "A return or refund of an unknown item."
+    },
+    {
+      "oldCategoryId": 1259,
+      "oldCategoryName": "psico",
+      "newCategoryName": "Health & Medical",
+      "confidence": "high",
+      "reasoning": "Abbreviation for 'psicologo' (psychologist)."
+    },
+    {
+      "oldCategoryId": 1260,
+      "oldCategoryName": "motoService",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Explicitly states 'moto service'."
+    },
+    {
+      "oldCategoryId": 1261,
+      "oldCategoryName": "devolucion moto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "A return related to a motorcycle."
+    },
+    {
+      "oldCategoryId": 1262,
+      "oldCategoryName": "turnosPsico",
+      "newCategoryName": "Health & Medical",
+      "confidence": "high",
+      "reasoning": "Appointments with a psychologist."
+    },
+    {
+      "oldCategoryId": 1263,
+      "oldCategoryName": "promo",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "medium",
+      "reasoning": "A promotion, could be for any category, defaulting to miscellaneous."
+    },
+    {
+      "oldCategoryId": 1264,
+      "oldCategoryName": "cintaPythonSan",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "Unclear meaning, requires manual review."
+    },
+    {
+      "oldCategoryId": 1265,
+      "oldCategoryName": "partePan",
+      "newCategoryName": "Groceries & Food Shopping",
+      "confidence": "high",
+      "reasoning": "Contains 'pan' (bread)."
+    },
+    {
+      "oldCategoryId": 1266,
+      "oldCategoryName": "panComida",
+      "newCategoryName": "Groceries & Food Shopping",
+      "confidence": "high",
+      "reasoning": "Contains 'pan' (bread) and 'comida' (food)."
+    },
+    {
+      "oldCategoryId": 1267,
+      "oldCategoryName": "milasConBi",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Abbreviation for 'milanesas con...' (schnitzel with...), likely a meal."
+    },
+    {
+      "oldCategoryId": 1268,
+      "oldCategoryName": "cabiMotoParada",
+      "newCategoryName": "Transportation - Public/Rideshare",
+      "confidence": "high",
+      "reasoning": "Contains 'cabi' (Cabify) and 'moto', indicating a motorcycle taxi service."
+    },
+    {
+      "oldCategoryId": 1269,
+      "oldCategoryName": "tarjeta2",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "medium",
+      "reasoning": "Refers to a second card, likely a payment method, not a category itself."
+    },
+    {
+      "oldCategoryId": 1270,
+      "oldCategoryName": "Notebook(11/12)",
+      "newCategoryName": "Hardware & Electronics",
+      "confidence": "high",
+      "reasoning": "Installment payment for a notebook computer."
+    },
+    {
+      "oldCategoryId": 1271,
+      "oldCategoryName": "animalPak(5/6)",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Animal Pak is a brand of nutritional supplements for bodybuilding."
+    },
+    {
+      "oldCategoryId": 1272,
+      "oldCategoryName": "variosMoto(4/6)",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Contains 'moto', indicating a motorcycle-related expense."
+    },
+    {
+      "oldCategoryId": 1273,
+      "oldCategoryName": "comida tuca",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Contains 'comida' (food)."
+    },
+    {
+      "oldCategoryId": 1274,
+      "oldCategoryName": "panEncen",
+      "newCategoryName": "Groceries & Food Shopping",
+      "confidence": "high",
+      "reasoning": "Contains 'pan' (bread)."
+    },
+    {
+      "oldCategoryId": 1275,
+      "oldCategoryName": "milaLavuelta",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Contains 'mila', likely referring to milanesa (schnitzel)."
+    },
+    {
+      "oldCategoryId": 1276,
+      "oldCategoryName": "pan queso",
+      "newCategoryName": "Groceries & Food Shopping",
+      "confidence": "high",
+      "reasoning": "Bread and cheese."
+    },
+    {
+      "oldCategoryId": 1277,
+      "oldCategoryName": "espejosMoto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Motorcycle mirrors."
+    },
+    {
+      "oldCategoryId": 1278,
+      "oldCategoryName": "subte",
+      "newCategoryName": "Transportation - Public/Rideshare",
+      "confidence": "high",
+      "reasoning": "Subway fare."
+    },
+    {
+      "oldCategoryId": 1279,
+      "oldCategoryName": "coto",
+      "newCategoryName": "Groceries & Food Shopping",
+      "confidence": "high",
+      "reasoning": "Coto is a major supermarket chain."
+    },
+    {
+      "oldCategoryId": 1280,
+      "oldCategoryName": "motoPiñon",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Motorcycle pinion/sprocket."
+    }
+  ]
+}
