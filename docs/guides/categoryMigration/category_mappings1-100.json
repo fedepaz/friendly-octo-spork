@@ -1,0 +1,649 @@
+
+{
+  "mappings": [
+    {
+      "oldCategoryId": 1238,
+      "oldCategoryName": "tabaco(6/6)",
+      "newCategoryName": "Tobacco & Smoking",
+      "confidence": "high",
+      "reasoning": "Keywords matched: tabaco"
+    },
+    {
+      "oldCategoryId": 1239,
+      "oldCategoryName": "animalPak(3/6)",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: animalpak"
+    },
+    {
+      "oldCategoryId": 1240,
+      "oldCategoryName": "variosMoto(2/6)",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Vehicle Maintenance'. Matches were -> Vehicle Maintenance: moto; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 1241,
+      "oldCategoryName": "vaper",
+      "newCategoryName": "Tobacco & Smoking",
+      "confidence": "high",
+      "reasoning": "Keywords matched: vaper"
+    },
+    {
+      "oldCategoryId": 1242,
+      "oldCategoryName": "parte",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 1243,
+      "oldCategoryName": "visita",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: visita"
+    },
+    {
+      "oldCategoryId": 1244,
+      "oldCategoryName": "festejo",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: festejo"
+    },
+    {
+      "oldCategoryId": 1245,
+      "oldCategoryName": "peluMila",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "medium",
+      "reasoning": "Contains haircut, but also food/drink, prioritizing the meal."
+    },
+    {
+      "oldCategoryId": 1246,
+      "oldCategoryName": "feca",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 1247,
+      "oldCategoryName": "arito",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "high",
+      "reasoning": "Keywords matched: arito"
+    },
+    {
+      "oldCategoryId": 1248,
+      "oldCategoryName": "guantesWater",
+      "newCategoryName": "Utilities & Services",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Chose highest score: 'Utilities & Services'. Matches were -> Utilities & Services: agua; Clothing & Footwear: guantes"
+    },
+    {
+      "oldCategoryId": 1249,
+      "oldCategoryName": "uniforme(1/2)",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "high",
+      "reasoning": "Keywords matched: uniforme"
+    },
+    {
+      "oldCategoryId": 1250,
+      "oldCategoryName": "maquinita",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: maquinita"
+    },
+    {
+      "oldCategoryId": 1251,
+      "oldCategoryName": "comidasMaxi",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Restaurants & Takeout'. Matches were -> Groceries & Food Shopping: maxi; Restaurants & Takeout: comidas"
+    },
+    {
+      "oldCategoryId": 1252,
+      "oldCategoryName": "lavanCafe",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Restaurants & Takeout'. Matches were -> Restaurants & Takeout: cafe; Household & Cleaning: lavan"
+    },
+    {
+      "oldCategoryId": 1253,
+      "oldCategoryName": "festejoJoda",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: festejo, joda"
+    },
+    {
+      "oldCategoryId": 24,
+      "oldCategoryName": "pistola",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 25,
+      "oldCategoryName": "fono marisa",
+      "newCategoryName": "Utilities & Services",
+      "confidence": "high",
+      "reasoning": "Keywords matched: fono"
+    },
+    {
+      "oldCategoryId": 26,
+      "oldCategoryName": "nafta",
+      "newCategoryName": "Transportation - Fuel",
+      "confidence": "high",
+      "reasoning": "Keywords matched: nafta"
+    },
+    {
+      "oldCategoryId": 27,
+      "oldCategoryName": "Default Expense",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Category name is empty, generic or unclear."
+    },
+    {
+      "oldCategoryId": 28,
+      "oldCategoryName": "super",
+      "newCategoryName": "Groceries & Food Shopping",
+      "confidence": "high",
+      "reasoning": "Keywords matched: super"
+    },
+    {
+      "oldCategoryId": 29,
+      "oldCategoryName": "marimba",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 30,
+      "oldCategoryName": "remera",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "high",
+      "reasoning": "Keywords matched: remera"
+    },
+    {
+      "oldCategoryId": 31,
+      "oldCategoryName": "prote",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: prote"
+    },
+    {
+      "oldCategoryId": 32,
+      "oldCategoryName": "compu",
+      "newCategoryName": "Hardware & Electronics",
+      "confidence": "high",
+      "reasoning": "Keywords matched: compu"
+    },
+    {
+      "oldCategoryId": 33,
+      "oldCategoryName": "varios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: varios"
+    },
+    {
+      "oldCategoryId": 34,
+      "oldCategoryName": "barra",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 35,
+      "oldCategoryName": "adelanto",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: adelanto"
+    },
+    {
+      "oldCategoryId": 36,
+      "oldCategoryName": "osde",
+      "newCategoryName": "Health & Medical",
+      "confidence": "high",
+      "reasoning": "Keywords matched: osde"
+    },
+    {
+      "oldCategoryId": 37,
+      "oldCategoryName": "agua",
+      "newCategoryName": "Utilities & Services",
+      "confidence": "high",
+      "reasoning": "Keywords matched: agua"
+    },
+    {
+      "oldCategoryId": 38,
+      "oldCategoryName": "telefono",
+      "newCategoryName": "Utilities & Services",
+      "confidence": "high",
+      "reasoning": "Keywords matched: telefono"
+    },
+    {
+      "oldCategoryId": 39,
+      "oldCategoryName": "prestamo",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: prestamo"
+    },
+    {
+      "oldCategoryId": 40,
+      "oldCategoryName": "abuela",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 41,
+      "oldCategoryName": "sueldo",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 42,
+      "oldCategoryName": "moto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: moto"
+    },
+    {
+      "oldCategoryId": 43,
+      "oldCategoryName": "auto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: auto"
+    },
+    {
+      "oldCategoryId": 44,
+      "oldCategoryName": "intereses des",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: intereses"
+    },
+    {
+      "oldCategoryId": 45,
+      "oldCategoryName": "préstamo",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: prestamo"
+    },
+    {
+      "oldCategoryId": 46,
+      "oldCategoryName": "aguapsa",
+      "newCategoryName": "Utilities & Services",
+      "confidence": "high",
+      "reasoning": "Keywords matched: agua, psa"
+    },
+    {
+      "oldCategoryId": 47,
+      "oldCategoryName": "Default Income",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Category name is empty, generic or unclear."
+    },
+    {
+      "oldCategoryId": 48,
+      "oldCategoryName": "nafta fz",
+      "newCategoryName": "Transportation - Fuel",
+      "confidence": "high",
+      "reasoning": "Keywords matched: nafta"
+    },
+    {
+      "oldCategoryId": 49,
+      "oldCategoryName": "limpieza",
+      "newCategoryName": "Household & Cleaning",
+      "confidence": "high",
+      "reasoning": "Keywords matched: limpieza"
+    },
+    {
+      "oldCategoryId": 50,
+      "oldCategoryName": "lomo",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Keywords matched: lomo"
+    },
+    {
+      "oldCategoryId": 51,
+      "oldCategoryName": "bici",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 52,
+      "oldCategoryName": "nafta ktm",
+      "newCategoryName": "Transportation - Fuel",
+      "confidence": "high",
+      "reasoning": "Keywords matched: nafta"
+    },
+    {
+      "oldCategoryId": 53,
+      "oldCategoryName": "bici pelu",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Personal Care & Grooming'. Matches were -> Personal Care & Grooming: pelu; Miscellaneous/Other: bici"
+    },
+    {
+      "oldCategoryId": 54,
+      "oldCategoryName": "helado",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Keywords matched: helado"
+    },
+    {
+      "oldCategoryId": 55,
+      "oldCategoryName": "fernet",
+      "newCategoryName": "Alcohol & Beverages",
+      "confidence": "high",
+      "reasoning": "Keywords matched: fernet"
+    },
+    {
+      "oldCategoryId": 56,
+      "oldCategoryName": "pinchadura",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: pinchadura"
+    },
+    {
+      "oldCategoryId": 57,
+      "oldCategoryName": "fernet y forro",
+      "newCategoryName": "Alcohol & Beverages",
+      "confidence": "high",
+      "reasoning": "Keywords matched: fernet"
+    },
+    {
+      "oldCategoryId": 58,
+      "oldCategoryName": "asado",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Social event related to a soccer match."
+    },
+    {
+      "oldCategoryId": 59,
+      "oldCategoryName": "intereses ade",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: intereses"
+    },
+    {
+      "oldCategoryId": 60,
+      "oldCategoryName": "oxido",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 61,
+      "oldCategoryName": "trx",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 62,
+      "oldCategoryName": "gym",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: gym"
+    },
+    {
+      "oldCategoryId": 63,
+      "oldCategoryName": "ferretería",
+      "newCategoryName": "Home Improvement & Tools",
+      "confidence": "high",
+      "reasoning": "Keywords matched: ferreteria"
+    },
+    {
+      "oldCategoryId": 64,
+      "oldCategoryName": "tabaco",
+      "newCategoryName": "Tobacco & Smoking",
+      "confidence": "high",
+      "reasoning": "Keywords matched: tabaco"
+    },
+    {
+      "oldCategoryId": 65,
+      "oldCategoryName": "comilona",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 66,
+      "oldCategoryName": "pelu",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "high",
+      "reasoning": "Keywords matched: pelu"
+    },
+    {
+      "oldCategoryId": 67,
+      "oldCategoryName": "tattoo",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "high",
+      "reasoning": "Tattoo is a personal grooming/body art service."
+    },
+    {
+      "oldCategoryId": 68,
+      "oldCategoryName": "mari mori",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 69,
+      "oldCategoryName": "intereses",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: intereses"
+    },
+    {
+      "oldCategoryId": 70,
+      "oldCategoryName": "suple",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: suple"
+    },
+    {
+      "oldCategoryId": 71,
+      "oldCategoryName": "sef/moto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: moto"
+    },
+    {
+      "oldCategoryId": 73,
+      "oldCategoryName": "Lomito 2",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Keywords matched: lomo"
+    },
+    {
+      "oldCategoryId": 74,
+      "oldCategoryName": "lentejas",
+      "newCategoryName": "Groceries & Food Shopping",
+      "confidence": "high",
+      "reasoning": "Keywords matched: lentejas"
+    },
+    {
+      "oldCategoryId": 75,
+      "oldCategoryName": "cargador",
+      "newCategoryName": "Hardware & Electronics",
+      "confidence": "high",
+      "reasoning": "Keywords matched: cargador"
+    },
+    {
+      "oldCategoryId": 76,
+      "oldCategoryName": "crema",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "high",
+      "reasoning": "Keywords matched: crema"
+    },
+    {
+      "oldCategoryId": 77,
+      "oldCategoryName": "naftameha, varios",
+      "newCategoryName": "Transportation - Fuel",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Transportation - Fuel'. Matches were -> Transportation - Fuel: nafta; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 78,
+      "oldCategoryName": "municiones",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 79,
+      "oldCategoryName": "iva",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: iva"
+    },
+    {
+      "oldCategoryId": 80,
+      "oldCategoryName": "suplementos",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: suplementos"
+    },
+    {
+      "oldCategoryId": 81,
+      "oldCategoryName": "lala",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 82,
+      "oldCategoryName": "zapas",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "high",
+      "reasoning": "Keywords matched: zapas"
+    },
+    {
+      "oldCategoryId": 83,
+      "oldCategoryName": "farmacia",
+      "newCategoryName": "Health & Medical",
+      "confidence": "high",
+      "reasoning": "Keywords matched: farmacia"
+    },
+    {
+      "oldCategoryId": 84,
+      "oldCategoryName": "barbijos",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "high",
+      "reasoning": "Keywords matched: barbijos"
+    },
+    {
+      "oldCategoryId": 85,
+      "oldCategoryName": "otros",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: otros"
+    },
+    {
+      "oldCategoryId": 86,
+      "oldCategoryName": "tiro",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 87,
+      "oldCategoryName": "pan/varios",
+      "newCategoryName": "Groceries & Food Shopping",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Groceries & Food Shopping'. Matches were -> Groceries & Food Shopping: pan; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 88,
+      "oldCategoryName": "nafta meha",
+      "newCategoryName": "Transportation - Fuel",
+      "confidence": "high",
+      "reasoning": "Keywords matched: nafta"
+    },
+    {
+      "oldCategoryId": 89,
+      "oldCategoryName": "birras",
+      "newCategoryName": "Alcohol & Beverages",
+      "confidence": "high",
+      "reasoning": "Keywords matched: birra"
+    },
+    {
+      "oldCategoryId": 90,
+      "oldCategoryName": "tacos",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Keywords matched: tacos"
+    },
+    {
+      "oldCategoryId": 91,
+      "oldCategoryName": "filtros",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "high",
+      "reasoning": "Keywords matched: filtro"
+    },
+    {
+      "oldCategoryId": 92,
+      "oldCategoryName": "lomo, papas, birra",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Restaurants & Takeout'. Matches were -> Groceries & Food Shopping: papas; Restaurants & Takeout: lomo; Alcohol & Beverages: birra"
+    },
+    {
+      "oldCategoryId": 93,
+      "oldCategoryName": "tatau",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "high",
+      "reasoning": "Tattoo is a personal grooming/body art service."
+    },
+    {
+      "oldCategoryId": 94,
+      "oldCategoryName": "lentes rusty",
+      "newCategoryName": "Health & Medical",
+      "confidence": "high",
+      "reasoning": "Keywords matched: lentes"
+    },
+    {
+      "oldCategoryId": 95,
+      "oldCategoryName": "manguera ab",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 96,
+      "oldCategoryName": "Juanma",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched.Needs manual review."
+    },
+    {
+      "oldCategoryId": 97,
+      "oldCategoryName": "Limpieza",
+      "newCategoryName": "Household & Cleaning",
+      "confidence": "high",
+      "reasoning": "Keywords matched: limpieza"
+    },
+    {
+      "oldCategoryId": 98,
+      "oldCategoryName": "misc",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: misc"
+    },
+    {
+      "oldCategoryId": 99,
+      "oldCategoryName": "teléfono",
+      "newCategoryName": "Utilities & Services",
+      "confidence": "high",
+      "reasoning": "Keywords matched: telefono"
+    },
+    {
+      "oldCategoryId": 100,
+      "oldCategoryName": "tortitas",
+      "newCategoryName": "Groceries & Food Shopping",
+      "confidence": "high",
+      "reasoning": "Keywords matched: tortitas"
+    }
+  ]
+}

@@ -1,0 +1,705 @@
+
+{
+  "mappings": [
+    {
+      "oldCategoryId": 1101,
+      "oldCategoryName": "banco municipal de rosario",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1102,
+      "oldCategoryName": "banco del chaco",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1103,
+      "oldCategoryName": "banco provincia del neuquen",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1104,
+      "oldCategoryName": "banco provincia de la rioja",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1105,
+      "oldCategoryName": "banco provincia de jujuy",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1106,
+      "oldCategoryName": "banco provincia de salta",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1107,
+      "oldCategoryName": "banco provincia de misiones",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1108,
+      "oldCategoryName": "banco provincia de santiago del estero",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1109,
+      "oldCategoryName": "banco provincia de tucuman",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1110,
+      "oldCategoryName": "banco provincia de entre rios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1111,
+      "oldCategoryName": "banco provincia de san juan",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1112,
+      "oldCategoryName": "banco provincia de santa cruz",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1113,
+      "oldCategoryName": "banco provincia del chubut",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1114,
+      "oldCategoryName": "banco provincia de la pampa",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1115,
+      "oldCategoryName": "banco provincia de corrientes",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1116,
+      "oldCategoryName": "banco provincia de formosa",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1117,
+      "oldCategoryName": "caja popular de ahorros de la provincia de tucuman",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: caja, ahorros"
+    },
+    {
+      "oldCategoryId": 1118,
+      "oldCategoryName": "banco de la comunidad",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1119,
+      "oldCategoryName": "banco de servicios y transacciones",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1120,
+      "oldCategoryName": "banco de comercio exterior",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1121,
+      "oldCategoryName": "banco de inversion y comercio exterior",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco, inversion"
+    },
+    {
+      "oldCategoryId": 1122,
+      "oldCategoryName": "banco de la nacion",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1123,
+      "oldCategoryName": "banco provincia",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1124,
+      "oldCategoryName": "banco ciudad",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1125,
+      "oldCategoryName": "banco nacion",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1126,
+      "oldCategoryName": "banco provincia de buenos aires",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1127,
+      "oldCategoryName": "banco ciudad de buenos aires",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1128,
+      "oldCategoryName": "banco provincia de cordoba",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1129,
+      "oldCategoryName": "banco municipal de rosario",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1130,
+      "oldCategoryName": "banco del chaco",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1131,
+      "oldCategoryName": "banco provincia del neuquen",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1132,
+      "oldCategoryName": "banco provincia de la rioja",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1133,
+      "oldCategoryName": "banco provincia de jujuy",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1134,
+      "oldCategoryName": "banco provincia de salta",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1135,
+      "oldCategoryName": "banco provincia de misiones",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1136,
+      "oldCategoryName": "banco provincia de santiago del estero",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1137,
+      "oldCategoryName": "banco provincia de tucuman",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1138,
+      "oldCategoryName": "banco provincia de entre rios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1139,
+      "oldCategoryName": "banco provincia de san juan",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1140,
+      "oldCategoryName": "banco provincia de santa cruz",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1141,
+      "oldCategoryName": "banco provincia del chubut",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1142,
+      "oldCategoryName": "banco provincia de la pampa",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1143,
+      "oldCategoryName": "banco provincia de corrientes",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1144,
+      "oldCategoryName": "banco provincia de formosa",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1145,
+      "oldCategoryName": "caja popular de ahorros de la provincia de tucuman",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: caja, ahorros"
+    },
+    {
+      "oldCategoryId": 1146,
+      "oldCategoryName": "banco de la comunidad",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1147,
+      "oldCategoryName": "banco de servicios y transacciones",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1148,
+      "oldCategoryName": "banco de comercio exterior",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1149,
+      "oldCategoryName": "banco de inversion y comercio exterior",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco, inversion"
+    },
+    {
+      "oldCategoryId": 1150,
+      "oldCategoryName": "banco de la nacion",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1151,
+      "oldCategoryName": "banco provincia",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1152,
+      "oldCategoryName": "banco ciudad",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1153,
+      "oldCategoryName": "banco nacion",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1154,
+      "oldCategoryName": "banco provincia de buenos aires",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1155,
+      "oldCategoryName": "banco ciudad de buenos aires",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1156,
+      "oldCategoryName": "banco provincia de cordoba",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1157,
+      "oldCategoryName": "banco municipal de rosario",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1158,
+      "oldCategoryName": "banco del chaco",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1159,
+      "oldCategoryName": "banco provincia del neuquen",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1160,
+      "oldCategoryName": "banco provincia de la rioja",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1161,
+      "oldCategoryName": "banco provincia de jujuy",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1162,
+      "oldCategoryName": "banco provincia de salta",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1163,
+      "oldCategoryName": "banco provincia de misiones",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1164,
+      "oldCategoryName": "banco provincia de santiago del estero",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1165,
+      "oldCategoryName": "banco provincia de tucuman",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1166,
+      "oldCategoryName": "banco provincia de entre rios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1167,
+      "oldCategoryName": "banco provincia de san juan",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1168,
+      "oldCategoryName": "banco provincia de santa cruz",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1169,
+      "oldCategoryName": "banco provincia del chubut",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1170,
+      "oldCategoryName": "banco provincia de la pampa",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1171,
+      "oldCategoryName": "banco provincia de corrientes",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1172,
+      "oldCategoryName": "banco provincia de formosa",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1173,
+      "oldCategoryName": "caja popular de ahorros de la provincia de tucuman",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: caja, ahorros"
+    },
+    {
+      "oldCategoryId": 1174,
+      "oldCategoryName": "banco de la comunidad",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1175,
+      "oldCategoryName": "banco de servicios y transacciones",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1176,
+      "oldCategoryName": "banco de comercio exterior",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1177,
+      "oldCategoryName": "banco de inversion y comercio exterior",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco, inversion"
+    },
+    {
+      "oldCategoryId": 1178,
+      "oldCategoryName": "banco de la nacion",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1179,
+      "oldCategoryName": "banco provincia",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1180,
+      "oldCategoryName": "banco ciudad",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1181,
+      "oldCategoryName": "banco nacion",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1182,
+      "oldCategoryName": "banco provincia de buenos aires",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1183,
+      "oldCategoryName": "banco ciudad de buenos aires",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1184,
+      "oldCategoryName": "banco provincia de cordoba",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1185,
+      "oldCategoryName": "banco municipal de rosario",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1186,
+      "oldCategoryName": "banco del chaco",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1187,
+      "oldCategoryName": "banco provincia del neuquen",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1188,
+      "oldCategoryName": "banco provincia de la rioja",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1189,
+      "oldCategoryName": "banco provincia de jujuy",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1190,
+      "oldCategoryName": "banco provincia de salta",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1191,
+      "oldCategoryName": "banco provincia de misiones",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1192,
+      "oldCategoryName": "banco provincia de santiago del estero",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1193,
+      "oldCategoryName": "banco provincia de tucuman",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1194,
+      "oldCategoryName": "banco provincia de entre rios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1195,
+      "oldCategoryName": "banco provincia de san juan",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1196,
+      "oldCategoryName": "banco provincia de santa cruz",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1197,
+      "oldCategoryName": "banco provincia del chubut",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1198,
+      "oldCategoryName": "banco provincia de la pampa",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1199,
+      "oldCategoryName": "banco provincia de corrientes",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    },
+    {
+      "oldCategoryId": 1200,
+      "oldCategoryName": "banco provincia de formosa",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: banco"
+    }
+  ]
+}

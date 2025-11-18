@@ -1,0 +1,705 @@
+
+{
+  "mappings": [
+    {
+      "oldCategoryId": 701,
+      "oldCategoryName": "peluqueria canina",
+      "newCategoryName": "Personal Care & Grooming",
+      "confidence": "high",
+      "reasoning": "Keywords matched: peluqueria"
+    },
+    {
+      "oldCategoryId": 702,
+      "oldCategoryName": "juguetes perro",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 703,
+      "oldCategoryName": "juguetes gato",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 704,
+      "oldCategoryName": "curso de manejo",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 705,
+      "oldCategoryName": "curso de cocina",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 706,
+      "oldCategoryName": "curso de ingles",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 707,
+      "oldCategoryName": "curso de programacion",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 708,
+      "oldCategoryName": "curso de fotografia",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 709,
+      "oldCategoryName": "curso de baile",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 710,
+      "oldCategoryName": "curso de canto",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 711,
+      "oldCategoryName": "curso de guitarra",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 712,
+      "oldCategoryName": "curso de piano",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 713,
+      "oldCategoryName": "curso de yoga",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: yoga"
+    },
+    {
+      "oldCategoryId": 714,
+      "oldCategoryName": "curso de pilates",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: pilates"
+    },
+    {
+      "oldCategoryId": 715,
+      "oldCategoryName": "curso de crossfit",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: crossfit"
+    },
+    {
+      "oldCategoryId": 716,
+      "oldCategoryName": "curso de natacion",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: natacion"
+    },
+    {
+      "oldCategoryId": 717,
+      "oldCategoryName": "curso de tenis",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: tenis"
+    },
+    {
+      "oldCategoryId": 718,
+      "oldCategoryName": "curso de futbol",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Social event related to a soccer match."
+    },
+    {
+      "oldCategoryId": 719,
+      "oldCategoryName": "curso de basquet",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: basquet"
+    },
+    {
+      "oldCategoryId": 720,
+      "oldCategoryName": "curso de voley",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: voley"
+    },
+    {
+      "oldCategoryId": 721,
+      "oldCategoryName": "curso de rugby",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: rugby"
+    },
+    {
+      "oldCategoryId": 722,
+      "oldCategoryName": "curso de hockey",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: hockey"
+    },
+    {
+      "oldCategoryId": 723,
+      "oldCategoryName": "curso de golf",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: golf"
+    },
+    {
+      "oldCategoryId": 724,
+      "oldCategoryName": "curso de boxeo",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: boxeo"
+    },
+    {
+      "oldCategoryId": 725,
+      "oldCategoryName": "curso de artes marciales",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: artes marciales"
+    },
+    {
+      "oldCategoryId": 726,
+      "oldCategoryName": "curso de defensa personal",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: defensa personal"
+    },
+    {
+      "oldCategoryId": 727,
+      "oldCategoryName": "psicologo",
+      "newCategoryName": "Health & Medical",
+      "confidence": "high",
+      "reasoning": "Keywords matched: psicologo"
+    },
+    {
+      "oldCategoryId": 728,
+      "oldCategoryName": "terapia",
+      "newCategoryName": "Health & Medical",
+      "confidence": "high",
+      "reasoning": "Keywords matched: terapia"
+    },
+    {
+      "oldCategoryId": 729,
+      "oldCategoryName": "kinesiologo",
+      "newCategoryName": "Health & Medical",
+      "confidence": "high",
+      "reasoning": "Keywords matched: kinesiologo"
+    },
+    {
+      "oldCategoryId": 730,
+      "oldCategoryName": "nutricionista",
+      "newCategoryName": "Health & Medical",
+      "confidence": "high",
+      "reasoning": "Keywords matched: nutricionista"
+    },
+    {
+      "oldCategoryId": 731,
+      "oldCategoryName": "personal trainer",
+      "newCategoryName": "Gym & Sports",
+      "confidence": "high",
+      "reasoning": "Keywords matched: personal trainer"
+    },
+    {
+      "oldCategoryId": 732,
+      "oldCategoryName": "clases particulares",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 733,
+      "oldCategoryName": "clases de apoyo",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 734,
+      "oldCategoryName": "consultoria",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 735,
+      "oldCategoryName": "asesoramiento",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 736,
+      "oldCategoryName": "honorarios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 737,
+      "oldCategoryName": "honorarios abogado",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 738,
+      "oldCategoryName": "honorarios contador",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 739,
+      "oldCategoryName": "honorarios escribano",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 740,
+      "oldCategoryName": "honorarios arquitecto",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 741,
+      "oldCategoryName": "honorarios medico",
+      "newCategoryName": "Health & Medical",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Health & Medical'. Matches were -> Health & Medical: medico; Miscellaneous/Other: honorarios"
+    },
+    {
+      "oldCategoryId": 742,
+      "oldCategoryName": "honorarios dentista",
+      "newCategoryName": "Health & Medical",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Health & Medical'. Matches were -> Health & Medical: dentista; Miscellaneous/Other: honorarios"
+    },
+    {
+      "oldCategoryId": 743,
+      "oldCategoryName": "honorarios psicologo",
+      "newCategoryName": "Health & Medical",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Health & Medical'. Matches were -> Health & Medical: psicologo; Miscellaneous/Other: honorarios"
+    },
+    {
+      "oldCategoryId": 744,
+      "oldCategoryName": "honorarios varios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 745,
+      "oldCategoryName": "tramites",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 746,
+      "oldCategoryName": "tramites dni",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 747,
+      "oldCategoryName": "tramites pasaporte",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 748,
+      "oldCategoryName": "tramites registro automotor",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Vehicle Maintenance'. Matches were -> Vehicle Maintenance: automotor; Miscellaneous/Other: tramites"
+    },
+    {
+      "oldCategoryId": 749,
+      "oldCategoryName": "tramites afip",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 750,
+      "oldCategoryName": "tramites varios",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 751,
+      "oldCategoryName": "multas",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 752,
+      "oldCategoryName": "multas transito",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Vehicle Maintenance'. Matches were -> Vehicle Maintenance: transito; Miscellaneous/Other: multas"
+    },
+    {
+      "oldCategoryId": 753,
+      "oldCategoryName": "multas estacionamiento",
+      "newCategoryName": "Transportation - Public/Rideshare",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Transportation - Public/Rideshare'. Matches were -> Transportation - Public/Rideshare: estacionamiento; Miscellaneous/Other: multas"
+    },
+    {
+      "oldCategoryId": 754,
+      "oldCategoryName": "multas varias",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "low",
+      "reasoning": "No specific keywords matched. Needs manual review."
+    },
+    {
+      "oldCategoryId": 755,
+      "oldCategoryName": "seguro de hogar",
+      "newCategoryName": "Rent & Housing",
+      "confidence": "high",
+      "reasoning": "Keywords matched: seguro, hogar"
+    },
+    {
+      "oldCategoryId": 756,
+      "oldCategoryName": "seguro de vida",
+      "newCategoryName": "Health & Medical",
+      "confidence": "high",
+      "reasoning": "Keywords matched: seguro"
+    },
+    {
+      "oldCategoryId": 757,
+      "oldCategoryName": "seguro de retiro",
+      "newCategoryName": "Miscellaneous/Other",
+      "confidence": "high",
+      "reasoning": "Keywords matched: seguro"
+    },
+    {
+      "oldCategoryId": 758,
+      "oldCategoryName": "seguro de accidentes personales",
+      "newCategoryName": "Health & Medical",
+      "confidence": "high",
+      "reasoning": "Keywords matched: seguro"
+    },
+    {
+      "oldCategoryId": 759,
+      "oldCategoryName": "reparacion pc",
+      "newCategoryName": "Hardware & Electronics",
+      "confidence": "high",
+      "reasoning": "Keywords matched: reparacion, pc"
+    },
+    {
+      "oldCategoryId": 760,
+      "oldCategoryName": "reparacion celular",
+      "newCategoryName": "Hardware & Electronics",
+      "confidence": "high",
+      "reasoning": "Keywords matched: reparacion, celular"
+    },
+    {
+      "oldCategoryId": 761,
+      "oldCategoryName": "reparacion electrodomestico",
+      "newCategoryName": "Home Improvement & Tools",
+      "confidence": "high",
+      "reasoning": "Keywords matched: reparacion"
+    },
+    {
+      "oldCategoryId": 762,
+      "oldCategoryName": "reparacion plomeria",
+      "newCategoryName": "Home Improvement & Tools",
+      "confidence": "high",
+      "reasoning": "Keywords matched: reparacion"
+    },
+    {
+      "oldCategoryId": 763,
+      "oldCategoryName": "reparacion electricidad",
+      "newCategoryName": "Home Improvement & Tools",
+      "confidence": "high",
+      "reasoning": "Keywords matched: reparacion"
+    },
+    {
+      "oldCategoryId": 764,
+      "oldCategoryName": "reparacion gas",
+      "newCategoryName": "Home Improvement & Tools",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Home Improvement & Tools'. Matches were -> Utilities & Services: gas; Home Improvement & Tools: reparacion"
+    },
+    {
+      "oldCategoryId": 765,
+      "oldCategoryName": "reparacion albanileria",
+      "newCategoryName": "Home Improvement & Tools",
+      "confidence": "high",
+      "reasoning": "Keywords matched: reparacion"
+    },
+    {
+      "oldCategoryId": 766,
+      "oldCategoryName": "reparacion pintura",
+      "newCategoryName": "Home Improvement & Tools",
+      "confidence": "high",
+      "reasoning": "Keywords matched: reparacion, pintura"
+    },
+    {
+      "oldCategoryId": 767,
+      "oldCategoryName": "reparacion varios",
+      "newCategoryName": "Home Improvement & Tools",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Home Improvement & Tools'. Matches were -> Home Improvement & Tools: reparacion; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 768,
+      "oldCategoryName": "delivery",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Keywords matched: delivery"
+    },
+    {
+      "oldCategoryId": 769,
+      "oldCategoryName": "delivery comida",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Keywords matched: delivery, comida"
+    },
+    {
+      "oldCategoryId": 770,
+      "oldCategoryName": "delivery pizza",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Keywords matched: delivery, pizza"
+    },
+    {
+      "oldCategoryId": 771,
+      "oldCategoryName": "delivery empanadas",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Keywords matched: delivery, empanadas"
+    },
+    {
+      "oldCategoryId": 772,
+      "oldCategoryName": "delivery sushi",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Keywords matched: delivery, sushi"
+    },
+    {
+      "oldCategoryId": 773,
+      "oldCategoryName": "delivery hamburguesa",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Keywords matched: delivery, hamburguesa"
+    },
+    {
+      "oldCategoryId": 774,
+      "oldCategoryName": "delivery helado",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "high",
+      "reasoning": "Keywords matched: delivery, helado"
+    },
+    {
+      "oldCategoryId": 775,
+      "oldCategoryName": "delivery supermercado",
+      "newCategoryName": "Groceries & Food Shopping",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Groceries & Food Shopping'. Matches were -> Groceries & Food Shopping: supermercado; Restaurants & Takeout: delivery"
+    },
+    {
+      "oldCategoryId": 776,
+      "oldCategoryName": "delivery farmacia",
+      "newCategoryName": "Health & Medical",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Health & Medical'. Matches were -> Restaurants & Takeout: delivery; Health & Medical: farmacia"
+    },
+    {
+      "oldCategoryId": 777,
+      "oldCategoryName": "delivery varios",
+      "newCategoryName": "Restaurants & Takeout",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Restaurants & Takeout'. Matches were -> Restaurants & Takeout: delivery; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 778,
+      "oldCategoryName": "indumentaria",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "high",
+      "reasoning": "Keywords matched: indumentaria"
+    },
+    {
+      "oldCategoryId": 779,
+      "oldCategoryName": "indumentaria deportiva",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "high",
+      "reasoning": "Keywords matched: indumentaria"
+    },
+    {
+      "oldCategoryId": 780,
+      "oldCategoryName": "indumentaria trabajo",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "high",
+      "reasoning": "Keywords matched: indumentaria"
+    },
+    {
+      "oldCategoryId": 781,
+      "oldCategoryName": "indumentaria salida",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Clothing & Footwear'. Matches were -> Clothing & Footwear: indumentaria; Entertainment & Social: salida"
+    },
+    {
+      "oldCategoryId": 782,
+      "oldCategoryName": "indumentaria varios",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Clothing & Footwear'. Matches were -> Clothing & Footwear: indumentaria; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 783,
+      "oldCategoryName": "calzado",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "high",
+      "reasoning": "Keywords matched: calzado"
+    },
+    {
+      "oldCategoryId": 784,
+      "oldCategoryName": "calzado deportivo",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "high",
+      "reasoning": "Keywords matched: calzado"
+    },
+    {
+      "oldCategoryId": 785,
+      "oldCategoryName": "calzado urbano",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "high",
+      "reasoning": "Keywords matched: calzado"
+    },
+    {
+      "oldCategoryId": 786,
+      "oldCategoryName": "calzado varios",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Clothing & Footwear'. Matches were -> Clothing & Footwear: calzado; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 787,
+      "oldCategoryName": "accesorios",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "high",
+      "reasoning": "Keywords matched: accesorios"
+    },
+    {
+      "oldCategoryId": 788,
+      "oldCategoryName": "accesorios celular",
+      "newCategoryName": "Hardware & Electronics",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Hardware & Electronics'. Matches were -> Clothing & Footwear: accesorios; Hardware & Electronics: celular"
+    },
+    {
+      "oldCategoryId": 789,
+      "oldCategoryName": "accesorios computadora",
+      "newCategoryName": "Hardware & Electronics",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Hardware & Electronics'. Matches were -> Clothing & Footwear: accesorios; Hardware & Electronics: computadora"
+    },
+    {
+      "oldCategoryId": 790,
+      "oldCategoryName": "accesorios auto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Vehicle Maintenance'. Matches were -> Clothing & Footwear: accesorios; Vehicle Maintenance: auto"
+    },
+    {
+      "oldCategoryId": 791,
+      "oldCategoryName": "accesorios moto",
+      "newCategoryName": "Vehicle Maintenance",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Vehicle Maintenance'. Matches were -> Clothing & Footwear: accesorios; Vehicle Maintenance: moto"
+    },
+    {
+      "oldCategoryId": 792,
+      "oldCategoryName": "accesorios varios",
+      "newCategoryName": "Clothing & Footwear",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Clothing & Footwear'. Matches were -> Clothing & Footwear: accesorios; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 793,
+      "oldCategoryName": "hobby",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: hobby"
+    },
+    {
+      "oldCategoryId": 794,
+      "oldCategoryName": "hobby fotografia",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: hobby"
+    },
+    {
+      "oldCategoryId": 795,
+      "oldCategoryName": "hobby musica",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: hobby"
+    },
+    {
+      "oldCategoryId": 796,
+      "oldCategoryName": "hobby jardineria",
+      "newCategoryName": "Home Improvement & Tools",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Home Improvement & Tools'. Matches were -> Entertainment & Social: hobby; Home Improvement & Tools: jardineria"
+    },
+    {
+      "oldCategoryId": 797,
+      "oldCategoryName": "hobby pintura",
+      "newCategoryName": "Home Improvement & Tools",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Home Improvement & Tools'. Matches were -> Entertainment & Social: hobby; Home Improvement & Tools: pintura"
+    },
+    {
+      "oldCategoryId": 798,
+      "oldCategoryName": "hobby coleccionismo",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: hobby"
+    },
+    {
+      "oldCategoryId": 799,
+      "oldCategoryName": "hobby varios",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "medium",
+      "reasoning": "Multiple categories matched. Prioritized 'Entertainment & Social'. Matches were -> Entertainment & Social: hobby; Miscellaneous/Other: varios"
+    },
+    {
+      "oldCategoryId": 800,
+      "oldCategoryName": "libros",
+      "newCategoryName": "Entertainment & Social",
+      "confidence": "high",
+      "reasoning": "Keywords matched: libros"
+    }
+  ]
+}
