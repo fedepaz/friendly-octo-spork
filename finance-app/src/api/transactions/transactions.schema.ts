@@ -5,7 +5,6 @@ import {
   TransactionType,
   AccountType,
   Currency,
-  CategoryType,
   RecurrenceType,
 } from "@/generated/prisma";
 
@@ -15,7 +14,6 @@ import {
 export const categoryResponseSchema = z.object({
   id: z.number().int(),
   name: z.string(),
-  type: z.nativeEnum(CategoryType),
   color: z.string().nullable(),
 });
 

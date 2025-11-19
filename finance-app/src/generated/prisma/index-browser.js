@@ -144,7 +144,6 @@ exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   name: 'name',
-  type: 'type',
   color: 'color',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -230,13 +229,6 @@ exports.Currency = exports.$Enums.Currency = {
   ARS: 'ARS',
   USD: 'USD',
   USDT: 'USDT'
-};
-
-exports.CategoryType = exports.$Enums.CategoryType = {
-  GASTO: 'GASTO',
-  PAGO: 'PAGO',
-  INGRESO: 'INGRESO',
-  RENDIMIENTO: 'RENDIMIENTO'
 };
 
 exports.TransactionType = exports.$Enums.TransactionType = {

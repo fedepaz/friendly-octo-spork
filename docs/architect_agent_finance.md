@@ -175,7 +175,6 @@ model Category {
   id           Int           @id @default(autoincrement())
   userId       String
   name         String
-  type         CategoryType
   color        String? // opcional para UI
   user         User          @relation(fields: [userId], references: [id])
   transactions Transaction[]
@@ -226,13 +225,6 @@ enum Currency {
   ARS
   USD
   USDT
-}
-
-enum CategoryType {
-  GASTO
-  PAGO
-  INGRESO
-  RENDIMIENTO
 }
 
 enum RecurrenceType {

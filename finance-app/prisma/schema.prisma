@@ -46,7 +46,6 @@ model Category {
   id           Int           @id @default(autoincrement())
   userId       String
   name         String
-    type         CategoryType? // remove this
   color        String?
   createdAt    DateTime      @default(now()) @db.Timestamp(6)
   updatedAt    DateTime      @default(now()) @db.Timestamp(6)
@@ -147,14 +146,6 @@ enum Currency {
   ARS
   USD
   USDT
-}
-
-// remove this
-enum CategoryType {
-  GASTO
-  PAGO
-  INGRESO
-  RENDIMIENTO
 }
 
 enum RecurrenceType {

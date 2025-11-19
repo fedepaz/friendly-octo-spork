@@ -9,7 +9,6 @@ import { CategoriesService } from "./categories.service";
 import { ErrorPage } from "@/pages/ErrorPage";
 import type { Context } from "hono";
 import { CategoriesList } from "@/components/categories/CategoriesList";
-import type { CategoryType } from "@/generated/prisma";
 import { CategoryForm } from "@/components/categories/CategoryForm";
 
 export class CategoriesController {
@@ -65,7 +64,6 @@ export class CategoriesController {
         const formData = await c.req.parseBody();
         data = {
           name: formData.name as string,
-          type: formData.type as CategoryType,
           color: formData.color as string,
         };
       }

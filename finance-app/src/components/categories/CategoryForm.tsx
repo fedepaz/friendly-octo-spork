@@ -1,8 +1,9 @@
 // src/components/categories/CategoryForm.tsx
 
 import type { FC } from "hono/jsx";
-import { CategoryType, type Category } from "@/generated/prisma";
-import { Button } from "@/components/shared/Button"; // New import
+import type { Category } from "@/generated/prisma";
+import { Button } from "@/components/shared/Button";
+import { LoadingSpinnerIcon } from "@/components/icons/LoadingSpinnerIcon";
 
 interface CategoryFormProps {
   category?: Category;
@@ -46,47 +47,6 @@ export const CategoryForm: FC<CategoryFormProps> = ({ category }) => {
 
         <div>
           <label
-            for="type"
-            class="text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
-          >
-            Category Type
-          </label>
-          <select
-            name="type"
-            id="type"
-            required
-            class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
-          >
-            <option value="">SELECT TYPE...</option>
-            <option
-              value="EXPENSE"
-              selected={category.type === CategoryType.GASTO}
-            >
-              EXPENSE
-            </option>
-            <option
-              value="INCOME"
-              selected={category.type === CategoryType.INGRESO}
-            >
-              INCOME
-            </option>
-            <option
-              value="TRANSFER"
-              selected={category.type === CategoryType.PAGO}
-            >
-              TRANSFER
-            </option>
-            <option
-              value="REVENUE"
-              selected={category.type === CategoryType.RENDIMIENTO}
-            >
-              REVENUE
-            </option>
-          </select>
-        </div>
-
-        <div>
-          <label
             for="color"
             class="block text-sm font-semibold uppercase tracking-wide text-foreground mb-2"
           >
@@ -116,10 +76,6 @@ export const CategoryForm: FC<CategoryFormProps> = ({ category }) => {
             CANCEL
           </Button>
           <Button type="submit" class="bg-primary text-primary-foreground">
-import { LoadingSpinnerIcon } from "@/components/icons/LoadingSpinnerIcon"; // Import the new icon component
-
-// ... (rest of the imports)
-
             <LoadingSpinnerIcon />
             SAVE
           </Button>
@@ -127,4 +83,5 @@ import { LoadingSpinnerIcon } from "@/components/icons/LoadingSpinnerIcon"; // I
       </form>
     </div>
   );
-}
+};
+
