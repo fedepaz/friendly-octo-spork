@@ -39,11 +39,6 @@ interface CategoriesPageProps {
 
 export const CategoriesPage: FC<CategoriesPageProps> = ({ data }) => {
   const categories = data?.categories || [];
-  const groupedCategories = categories.reduce((acc, cat) => {
-    if (!acc[cat.type]) acc[cat.type] = [];
-    acc[cat.type].push(cat);
-    return acc;
-  }, {} as Record<string, Category[]>);
 
   return (
     <Layout activeNavItem="/categories">
@@ -67,21 +62,11 @@ export const CategoriesPage: FC<CategoriesPageProps> = ({ data }) => {
         <EmptyState />
       ) : (
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {Object.entries(groupedCategories).map(([type, cats]) => (
-            <div
-              key={type}
-              class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 rounded-none
-                transition-all duration-150
-                hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]"
-            >
-              <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
-                {type}
-              </h2>
-              <div class="flex flex-wrap gap-3">
-                {cats.map((cat) => (
-                  <CategoryBadge key={cat.id} category={cat} />
-                ))}
-              </div>
+          {Object.entries(categories).map((cats) => (
+            <div class="flex flex-wrap gap-3">
+              {cats.map((cat) => (
+                <CategoryBadge key={cat.id} category={cat} />
+              ))}
             </div>
           ))}
         </div>

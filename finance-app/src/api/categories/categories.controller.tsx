@@ -1,10 +1,7 @@
 // src/api/categories/categories.controller.tsx
 
 import { CategoriesPage } from "@/pages/CategoriesPage";
-import {
-  categoryFilterSchema,
-  type CreateCategoryInput,
-} from "./categories.schema";
+import { type CreateCategoryInput } from "./categories.schema";
 import { CategoriesService } from "./categories.service";
 import { ErrorPage } from "@/pages/ErrorPage";
 import type { Context } from "hono";
@@ -18,12 +15,8 @@ export class CategoriesController {
     try {
       const payload = c.get("jwtPayload") as { sub: string };
       const userId = payload.sub;
-      const filters = categoryFilterSchema.parse(c.req.query());
 
-      const categories = await this.categoryService.getCategories(
-        userId,
-        filters
-      );
+      const categories = await this.categoryService.getCategories(userId);
 
       return c.render(<CategoriesPage categories={categories} />);
     } catch (error) {

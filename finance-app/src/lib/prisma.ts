@@ -48,7 +48,6 @@ export {
   TransactionType,
   AccountType,
   Currency,
-  CategoryType,
   RecurrenceType,
 } from "../generated/prisma";
 

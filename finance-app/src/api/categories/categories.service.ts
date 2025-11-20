@@ -2,19 +2,17 @@
 
 import { prisma } from "@/lib/prisma";
 import type {
-  CategoryFilterInput,
   CreateCategoryInput,
   UpdateCategoryInput,
 } from "./categories.schema";
 
 export class CategoriesService {
-  async getCategories(userId: string, filters?: CategoryFilterInput) {
+  async getCategories(userId: string) {
     const categories = await prisma.category.findMany({
       where: {
         userId,
-        ...(filters?.type && { type: filters.type }),
       },
-      orderBy: [{ type: "asc" }, { name: "asc" }],
+      orderBy: [{ name: "asc" }],
       include: {
         _count: {
           select: {
@@ -52,7 +50,7 @@ export class CategoriesService {
       data: {
         userId,
         name: data.name,
-        type: data.type,
+
         color: data.color,
       },
     });
@@ -66,7 +64,7 @@ export class CategoriesService {
       },
       data: {
         name: data.name,
-        type: data.type,
+
         color: data.color,
       },
     });
