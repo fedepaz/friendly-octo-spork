@@ -3,7 +3,7 @@
 import { DollarSignIcon } from "@/components/icons/DollarSignIcon";
 import { HamburgerMenu } from "./HamburgerMenu";
 import { Sidebar } from "./Sidebar"; // New import
-import type { FC } from "hono/jsx";
+import type { Child, FC } from "hono/jsx";
 
 interface LayoutProps {
   children?: Child;

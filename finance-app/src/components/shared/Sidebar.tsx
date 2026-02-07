@@ -4,26 +4,12 @@ import type { FC } from "hono/jsx";
 import {
   DollarSignIcon,
   LightbulbIcon,
-  XIcon,
-  CreditCardIcon,
-  TagIcon,
-  ClipboardIcon,
-  SparklesIcon,
-  AlertTriangleIcon,
-  CalendarDaysIcon,
   CalendarIcon,
-  CheckIcon,
   FolderIcon,
-  InfoIcon,
   LandmarkIcon,
   LineChartIcon,
-  TrendingUpIcon,
-  UserIcon,
   WalletIcon,
-  SadFaceIcon,
-  HappyFaceIcon,
 } from "@/components/icons";
-import { Button } from "./Button";
 
 interface SidebarProps {
   activeNavItem?: string;
@@ -40,13 +26,6 @@ export const Sidebar: FC<SidebarProps> = ({
     { href: "/categories", label: "Categories", icon: "folder" },
     { href: "/recurrences", label: "Recurrences", icon: "calendar" },
     { href: "/transactions", label: "Transactions", icon: "wallet" },
-
-    { href: "/incomes", label: "Incomes", icon: "credit-card" },
-    { href: "/expenses", label: "Expenses", icon: "tag" },
-    { href: "/transfers", label: "Transfers", icon: "clipboard" },
-    { href: "/investments", label: "Investments", icon: "sparkles" },
-    { href: "/returns", label: "Returns", icon: "alert-triangle" },
-    { href: "/payments", label: "Payments", icon: "calendar-days" },
   ];
 
   return (
@@ -113,46 +92,16 @@ export const Sidebar: FC<SidebarProps> = ({
               >
                 {(() => {
                   switch (link.icon) {
-                    case "credit-card":
-                      return <CreditCardIcon />;
-                    case "tag":
-                      return <TagIcon />;
-                    case "clipboard":
-                      return <ClipboardIcon />;
-                    case "sparkles":
-                      return <SparklesIcon />;
-                    case "alert-triangle":
-                      return <AlertTriangleIcon />;
-                    case "calendar-days":
-                      return <CalendarDaysIcon />;
-                    case "calendar":
-                      return <CalendarIcon />;
-                    case "check":
-                      return <CheckIcon />;
-                    case "dollar-sign":
-                      return <DollarSignIcon />;
-                    case "folder":
-                      return <FolderIcon />;
-                    case "info":
-                      return <InfoIcon />;
-                    case "landmark":
-                      return <LandmarkIcon />;
-                    case "lightbulb":
-                      return <LightbulbIcon />;
                     case "line-chart":
                       return <LineChartIcon />;
-                    case "trending-up":
-                      return <TrendingUpIcon />;
-                    case "user":
-                      return <UserIcon />;
+                    case "landmark":
+                      return <LandmarkIcon />;
+                    case "folder":
+                      return <FolderIcon />;
+                    case "calendar":
+                      return <CalendarIcon />;
                     case "wallet":
                       return <WalletIcon />;
-                    case "x":
-                      return <XIcon />;
-                    case "sad-face":
-                      return <SadFaceIcon />;
-                    case "happy-face":
-                      return <HappyFaceIcon />;
                     default:
                       return null; // Or a default icon
                   }

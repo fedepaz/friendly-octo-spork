@@ -13,7 +13,7 @@ import { Prisma, TransactionType } from "@/generated/prisma";
 
 export class TransactionsService {
   private mapTransactionToResponse(
-    tx: TransactionWithRelations
+    tx: TransactionWithRelations,
   ): TransactionResponse {
     return {
       id: tx.id,
@@ -73,11 +73,41 @@ export class TransactionsService {
     };
   }
 
+  // Get by userId and by month
+  async getTransactionsByUser(
+    userId: string,
+    filters?: { month?: string },
+  ): Promise<TransactionResponse[]> {
+    const whereClause: Prisma.TransactionWhereInput = {
+      userId,
+    };
+    if (filters?.month) {
+      const [year, month] = filters.month.split("-");
+      if (!year || !month) return [];
+      whereClause.date = {
+        gte: new Date(+year, +month - 1, 1),
+        lte: new Date(+year, +month, 1),
+      };
+    }
+    const transactions = await prisma.transaction.findMany({
+      where: whereClause,
+      include: {
+        category: true,
+        sourceAccount: true,
+        targetAccount: true,
+        recurrence: true,
+      },
+      orderBy: { date: "desc" },
+    });
+
+    return transactions.map((tx) => this.mapTransactionToResponse(tx));
+  }
+
   // Get by trasnsactionType and by month
   async getTransactionsByType(
     userId: string,
     transactionType: TransactionType,
-    filters?: { month?: string }
+    filters?: { month?: string },
   ): Promise<TransactionResponse[]> {
     const whereClause: Prisma.TransactionWhereInput = {
       userId,
@@ -107,7 +137,7 @@ export class TransactionsService {
 
   // GET transaction by id
   async getTransactionById(
-    transactionId: number
+    transactionId: number,
   ): Promise<TransactionResponse> {
     const transaction = await prisma.transaction.findUnique({
       where: { id: transactionId },
@@ -228,7 +258,7 @@ export class TransactionsService {
           // Calculate next date based on frequency
           const nextDate = this.calculateNextDate(
             data.date,
-            recurrence.frequency
+            recurrence.frequency,
           );
 
           await tx.recurrence.update({
@@ -249,7 +279,7 @@ export class TransactionsService {
   // Helper: Calculate next recurrence date
   private calculateNextDate(
     currentDate: Date,
-    frequency: "MONTHLY" | "WEEKLY" | "YEARLY" | "INSTALLMENT"
+    frequency: "MONTHLY" | "WEEKLY" | "YEARLY" | "INSTALLMENT",
   ): Date {
     const next = new Date(currentDate);
 

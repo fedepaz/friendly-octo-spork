@@ -53,14 +53,17 @@ You are a systematic Frontend Engineer specializing in **server-side rendering**
 **Example Usage:**
 
 ```typescript
-import { LandmarkIcon, LineChartIcon, PlusIcon, EditIcon } from "@/components/icons";
+import { LandmarkIcon, LineChartIcon, PlusIcon, EditIcon, WalletIcon } from "@/components/icons";
 
-export const ExpenseForm: FC = () => (
+export const GeneralForm: FC = () => (
   <form>
     <button type="submit" class="bg-primary text-primary-foreground px-4 py-2">
       <PlusIcon />
-      <span class="ml-2">Add Expense</span>
+      <span class="ml-2">Add Item</span>
     </button>
+    <LandmarkIcon />
+    <LineChartIcon />
+    <WalletIcon />
   </form>
 );
 ```
@@ -75,18 +78,35 @@ import type { FC } from "hono/jsx";
 import { PlusIcon } from "../icons";
 
 interface TransactionFormProps {
-  transactionType: string;
   errors?: Record<string, string>;
 }
 
-export const TransactionForm: FC<TransactionFormProps> = ({ transactionType, errors }) => (
+export const TransactionForm: FC<TransactionFormProps> = ({ errors }) => (
   <form
-    hx-post={`/${transactionType}`}
+    hx-post="/transactions" // Unified endpoint
     hx-target="#transaction-list"
     hx-swap="afterbegin"
     class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6"
   >
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-semibold uppercase mb-2">Type</label>
+        <select
+          name="type"
+          class={`w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring ${
+            errors?.type ? "border-destructive" : ""
+          }`}
+          required
+        >
+          <option value="EXPENSE">Expense</option>
+          <option value="INCOME">Income</option>
+          <option value="TRANSFER">Transfer</option>
+          {/* Add other types as needed */}
+        </select>
+        {errors?.type && (
+          <div class="text-destructive text-sm mt-1">{errors.type}</div>
+        )}
+      </div>
       <div>
         <label class="block text-sm font-semibold uppercase mb-2">Date</label>
         <input
@@ -120,6 +140,19 @@ export const TransactionForm: FC<TransactionFormProps> = ({ transactionType, err
         </div>
         {errors?.amount && (
           <div class="text-destructive text-sm mt-1">{errors.amount}</div>
+        )}
+      </div>
+       <div>
+        <label class="block text-sm font-semibold uppercase mb-2">Description</label>
+        <input
+          type="text"
+          name="description"
+          class={`w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring ${
+            errors?.description ? "border-destructive" : ""
+          }`}
+        />
+        {errors?.description && (
+          <div class="text-destructive text-sm mt-1">{errors.description}</div>
         )}
       </div>
     </div>
@@ -275,7 +308,7 @@ export const TransactionRowView: FC<TransactionRowViewProps> = ({ transaction })
     <td class="p-4 text-right">
       <button
         class="bg-secondary text-secondary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2 text-xs font-bold uppercase hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)] transition-all duration-150"
-        hx-get={`/api/transactions/${transaction.id}/edit`}
+        hx-get={`/api/transactions/${transaction.id}/edit`} // Unified endpoint for edit form
         hx-target="closest tr"
         hx-swap="outerHTML"
         aria-label="Edit transaction"
@@ -338,7 +371,7 @@ export const TransactionRowEdit: FC<TransactionRowEditProps> = ({ transaction })
       <div class="flex gap-2 justify-end">
         <button
           class="bg-accent text-accent-foreground border-2 border-border shadow-[var(--shadow)] px-3 py-1 text-xs font-bold uppercase transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]"
-          hx-put={`/api/transactions/${transaction.id}`}
+          hx-put={`/api/transactions/${transaction.id}`} // Unified endpoint for update
           hx-include="closest tr"
           hx-target={`#transaction-${transaction.id}`}
           hx-swap="outerHTML"
@@ -347,7 +380,7 @@ export const TransactionRowEdit: FC<TransactionRowEditProps> = ({ transaction })
         </button>
         <button
           class="bg-muted text-muted-foreground border-2 border-border shadow-[var(--shadow)] px-3 py-1 text-xs font-bold uppercase transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]"
-          hx-get={`/api/transactions/${transaction.id}`}
+          hx-get={`/api/transactions/${transaction.id}`} // Unified endpoint to get view mode
           hx-target={`#transaction-${transaction.id}`}
           hx-swap="outerHTML"
         >
@@ -381,6 +414,26 @@ export const TransactionFilters: FC = () => (
           hx-include="closest form"
           class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
         />
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold uppercase tracking-wide mb-2">
+          TRANSACTION TYPE
+        </label>
+        <select
+          name="type"
+          hx-get="/api/transactions"
+          hx-trigger="change"
+          hx-target="#transaction-table"
+          hx-include="closest form"
+          class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring"
+        >
+          <option value="">All Types</option>
+          <option value="INCOME">Income</option>
+          <option value="EXPENSE">Expense</option>
+          <option value="TRANSFER">Transfer</option>
+          {/* Add other types as needed */}
+        </select>
       </div>
 
       <div>
@@ -459,7 +512,7 @@ src/
 │   │   └── CategoryForm.tsx
 │   ├── transactions/
 │   │   ├── TransactionList.tsx
-│   │   ├── TransactionForm.tsx
+│   │   ├── TransactionForm.tsx     # Unified form for all transaction types
 │   │   ├── TransactionRow.tsx
 │   │   └── TransactionFilters.tsx
 │   ├── icons/
@@ -467,7 +520,7 @@ src/
 │   │   ├── PlusIcon.tsx
 │   │   ├── EditIcon.tsx
 │   │   ├── SearchIcon.tsx
-│   │   └── ...
+│   │   └── ...                 # Other commonly used icons
 │   └── shared/
 │       ├── Layout.tsx
 │       ├── Sidebar.tsx
@@ -475,7 +528,7 @@ src/
 ├── pages/
 │   ├── AccountsPage.tsx
 │   ├── CategoriesPage.tsx
-│   └── TransactionsPage.tsx
+│   └── TransactionsPage.tsx      # Handles display of all transaction types
 └── styles/
     ├── main.css              # Global styles, custom animations
     └── class.css             # Reusable custom classes (if needed)

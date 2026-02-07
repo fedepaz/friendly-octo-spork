@@ -27,11 +27,11 @@ You are an expert Backend Engineer specializing in Bun runtime, Hono framework, 
 **Hono Patterns**:
 ```typescript
 // Route organization
-app.get('/transactions', handler);        // List
-app.post('/transactions', handler);       // Create
-app.get('/transactions/:id', handler);    // Read
-app.put('/transactions/:id', handler);    // Update
-app.delete('/transactions/:id', handler); // Delete
+app.get('/transactions', handler);        // List all transactions, potentially with filters
+app.post('/transactions', handler);       // Create a new transaction (can specify type in body)
+app.get('/transactions/:id', handler);    // Read a specific transaction
+app.put('/transactions/:id', handler);    // Update a specific transaction
+app.delete('/transactions/:id', handler); // Delete a specific transaction
 
 // Middleware
 app.use('*', logger());
@@ -241,54 +241,54 @@ export class DashboardController {
 
 ---
 
-#### **Example 2: HTMX Partial Update with `c.html`**
+#### **Example 2: HTMX Partial Update with `c.html` (Unified Transaction Creation)**
 
 Use `c.html` when you need to return a small HTML fragment for an HTMX-powered partial update. This avoids sending the entire layout and only provides the piece of the page that needs to be changed.
 
-**Scenario**: A user submits the "Add Expense" form, and we want to add the new expense to the top of the expense list without a full page reload.
+**Scenario**: A user submits a "Create Transaction" form (which could be an expense, income, etc.), and we want to add the new transaction to the top of the transaction list without a full page reload.
 
-**`expense.routes.ts`**
+**`transactions.routes.ts`**
 ```typescript
-// src/api/expense.routes.ts
+// src/api/transactions/transactions.routes.ts
 import { Hono } from 'hono';
-import { ExpenseController } from './expense.controller';
+import { TransactionsController } from './transactions.controller';
 
-const expenseRoutes = new Hono();
-const controller = new ExpenseController();
+const transactionsRoutes = new Hono();
+const controller = new TransactionsController();
 
-// This route handles the form submission from HTMX.
-expenseRoutes.post('/', ...controller.createExpense);
+// This route handles the form submission for creating any transaction type.
+transactionsRoutes.post('/', controller.createTransaction);
 
-export default expenseRoutes;
+export default transactionsRoutes;
 ```
 
-**`expense.controller.tsx`**
+**`transactions.controller.tsx`**
 ```typescript
-// src/api/expense.controller.tsx
+// src/api/transactions/transactions.controller.tsx
 import { zValidator } from '@hono/zod-validator';
-import { expenseSchema } from '../schemas/expense';
-import { ExpenseService } from './expense.service';
-import { TransactionRow } from '../components/transactions/TransactionRow'; // Updated import
+import { transactionSchema } from '../schemas/transaction';
+import { TransactionsService } from './transactions.service';
+import { TransactionRow } from '../components/transactions/TransactionRow'; // A component to render a single transaction row
 import { Context } from 'hono';
 
-export class ExpenseController {
-  private expenseService = new ExpenseService();
+export class TransactionsController {
+  private transactionsService = new TransactionsService();
 
-  createExpense = [
-    zValidator('form', expenseSchema),
+  createTransaction = [
+    zValidator('form', transactionSchema), // Validate against a generic transaction schema
     async (c: Context) => {
       const userId = c.get('userId');
-      const data = c.req.valid('form');
+      const data = c.req.valid('form'); // Data includes transaction type (EXPENSE, INCOME, etc.)
       
-      // 1. Call the service to create the new expense.
-      const newExpense = await this.expenseService.create(userId, data);
+      // 1. Call the service to create the new transaction.
+      const newTransaction = await this.transactionsService.createTransaction(userId, data);
       
       // 2. Set the status code for a successful creation.
       c.status(201);
 
       // 3. Use c.html() to return ONLY the HTML for the new table row.
       // This fragment will be inserted into the page by HTMX.
-      return c.html(<TransactionRow transaction={newExpense} />); // Updated component name
+      return c.html(<TransactionRow transaction={newTransaction} />);
     }
   ];
 }
@@ -339,69 +339,87 @@ export type TransactionFilter = z.infer<typeof transactionFilterSchema>;
 ```typescript
 // src/services/transactionService.ts
 import { prisma } from '../lib/prisma';
+import { Prisma } from '@prisma/client';
 import type { TransactionInput } from '../schemas/transaction';
-import { TRANSACTION_INCLUDES, TransactionWithRelations } from '../lib/prisma';
+import { TRANSACTION_INCLUDES, TransactionWithRelations } from '../lib/prisma'; // Assuming TRANSACTION_INCLUDES and TransactionWithRelations are defined elsewhere
 
 export class TransactionService {
+  private mapTransactionToResponse(
+    tx: TransactionWithRelations,
+  ): TransactionWithRelations { // Adjust return type as needed for your DTO
+    return {
+      id: tx.id,
+      userId: tx.userId,
+      type: tx.type,
+      amount: tx.amount,
+      date: tx.date,
+      description: tx.description,
+      categoryId: tx.categoryId,
+      sourceAccountId: tx.sourceAccountId,
+      targetAccountId: tx.targetAccountId,
+      recurrenceId: tx.recurrenceId,
+      recurrencePartNumber: tx.recurrencePartNumber,
+      isBudgetedExpense: tx.isBudgetedExpense,
+      budgetCategory: tx.budgetCategory,
+      isCardExpense: tx.isCardExpense,
+      cardType: tx.cardType,
+      source: tx.source,
+      metadata: tx.metadata,
+      createdAt: tx.createdAt,
+      updatedAt: tx.updatedAt,
+      category: tx.category,
+      recurrence: tx.recurrence,
+      sourceAccount: tx.sourceAccount,
+      targetAccount: tx.targetAccount,
+      user: tx.user // assuming user is also included if needed
+    };
+  }
+
   async createTransaction(userId: string, data: TransactionInput) {
-    return await prisma.transaction.create({
+    // Logic for updating account balances, handling recurrences, etc. would go here
+    // For simplicity, directly creating the transaction
+    const transaction = await prisma.transaction.create({
       data: {
         ...data,
         userId,
-        amount: new Prisma.Decimal(data.amount)
+        amount: new Prisma.Decimal(data.amount),
+        // Ensure date is handled correctly (Date object for Prisma)
+        date: new Date(data.date),
       }
     });
+
+    // TODO: Update source/target account balances here if applicable
+
+    return this.mapTransactionToResponse(transaction);
   }
-  
-  async getMonthlyTransactions(userId: string, month: Date): Promise<{
-    transactions: TransactionWithRelations[];
-    summary: {
-      total: number;
-      byCategory: any; // You might want to define a more specific type for this
+
+  async getTransactionsByUser(
+    userId: string,
+    filters?: { month?: string },
+  ): Promise<TransactionWithRelations[]> { // Adjust return type as needed for your DTO
+    const whereClause: Prisma.TransactionWhereInput = {
+      userId,
     };
-  }> {
-    const startOfMonth = new Date(month);
-    startOfMonth.setDate(1);
-    startOfMonth.setHours(0, 0, 0, 0);
-    
-    const endOfMonth = new Date(month);
-    endOfMonth.setMonth(endOfMonth.getMonth() + 1);
-    endOfMonth.setDate(0);
-    endOfMonth.setHours(23, 59, 59, 999);
-    
+    if (filters?.month) {
+      const [year, month] = filters.month.split("-");
+      if (!year || !month) return [];
+      whereClause.date = {
+        gte: new Date(+year, +month - 1, 1),
+        lte: new Date(+year, +month, 1),
+      };
+    }
     const transactions = await prisma.transaction.findMany({
-      where: {
-        userId,
-        date: {
-          gte: startOfMonth,
-          lte: endOfMonth
-        }
+      where: whereClause,
+      include: {
+        category: true,
+        sourceAccount: true,
+        targetAccount: true,
+        recurrence: true,
       },
-      include: TRANSACTION_INCLUDES,
-      orderBy: { date: 'desc' }
+      orderBy: { date: "desc" },
     });
-    
-    // Aggregate by category
-    const byCategory = await prisma.transaction.groupBy({
-      by: ['categoryId'],
-      where: {
-        userId,
-        date: {
-          gte: startOfMonth,
-          lte: endOfMonth
-        }
-      },
-      _sum: { amount: true },
-      _count: true
-    });
-    
-    return {
-      transactions,
-      summary: {
-        total: transactions.reduce((sum, t) => sum + Number(t.amount), 0),
-        byCategory
-      }
-    };
+
+    return transactions.map((tx) => this.mapTransactionToResponse(tx));
   }
 }
 ```
