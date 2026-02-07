@@ -134,50 +134,85 @@ model User {
   id           String        @id @default(cuid())
   name         String
   email        String?       @unique
-  transactions Transaction[]
+  passwordHash String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now()) @updatedAt
   accounts     Account[]
   categories   Category[]
   recurrences  Recurrence[]
+  transactions Transaction[]
 }
 
 model Account {
-  id        Int         @id @default(autoincrement())
-  userId    String
-  name      String
-  type      AccountType
-  currency  Currency
-  balance   Decimal     @default(0)
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-
-  user             User          @relation(fields: [userId], references: [id])
-  // relaciones dobles (origen/destino) para transferencias internas
+  id               Int           @id @default(autoincrement())
+  userId           String
+  name             String
+  type             AccountType
+  currency         Currency
+  balance          Decimal       @default(0) @db.Decimal(15, 2)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactionsFrom Transaction[] @relation("SourceAccount")
   transactionsTo   Transaction[] @relation("TargetAccount")
-}
+  
+  // Recurrences using this account
+  recurrencesFrom Recurrence[] @relation("RecurrenceSource")
+  recurrencesTo   Recurrence[] @relation("RecurrenceTarget")
 
-model Recurrence {
-  id          Int            @id @default(autoincrement())
-  userId      String
-  name        String
-  frequency   RecurrenceType
-  totalParts  Int?
-  currentPart Int?
-  startDate   DateTime
-  nextDate    DateTime?
-  active      Boolean        @default(true)
-
-  user         User          @relation(fields: [userId], references: [id])
-  transactions Transaction[]
+  @@unique([name, userId], map: "account_name_user_unique")
+  @@index([userId])
 }
 
 model Category {
   id           Int           @id @default(autoincrement())
   userId       String
   name         String
-  color        String? // opcional para UI
-  user         User          @relation(fields: [userId], references: [id])
+  color        String?
+  createdAt    DateTime      @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime      @default(now()) @db.Timestamp(6)
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactions Transaction[]
+  recurrences  Recurrence[]
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
+model Recurrence {
+  id           Int            @id @default(autoincrement())
+  userId       String
+  name         String
+  type         TransactionType
+  amount       Decimal        @db.Decimal(15, 2)
+  frequency    RecurrenceType
+  totalParts   Int?
+  currentPart  Int  @default(0)
+  startDate    DateTime
+  nextDate     DateTime?
+  endDate      DateTime?
+  active       Boolean        @default(true)
+  
+  // Categorization
+  categoryId      Int?
+  sourceAccountId Int? // For expenses: which account pays
+  targetAccountId Int? // For income: which account receives
+  
+  // Card expenses (for card-based recurrences)
+  isCardExpense Boolean  @default(false)
+  cardType      CardType?
+  
+  // Metadata for additional info
+  metadata Json?
+
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category      Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  sourceAccount Account?  @relation("RecurrenceSource", fields: [sourceAccountId], references: [id], onDelete: SetNull)
+  targetAccount Account?  @relation("RecurrenceTarget", fields: [targetAccountId], references: [id], onDelete: SetNull)
+  transactions Transaction[]
+
+  @@index([userId, active])
+  @@index([nextDate])
 }
 
 model Transaction {
@@ -191,15 +226,25 @@ model Transaction {
   sourceAccountId Int?
   targetAccountId Int?
   recurrenceId    Int?
-  metadata        Json? // cuotas, tasas, observaciones
+  recurrencePartNumber Int?
+  isBudgetedExpense Boolean?
+  budgetCategory    BudgetCategory?
+  isCardExpense Boolean?
+  cardType      CardType?
+  source        String?
+  metadata        Json?
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-
-  user          User        @relation(fields: [userId], references: [id])
-  category      Category?   @relation(fields: [categoryId], references: [id])
-  sourceAccount Account?    @relation("SourceAccount", fields: [sourceAccountId], references: [id])
-  targetAccount Account?    @relation("TargetAccount", fields: [targetAccountId], references: [id])
-  recurrence    Recurrence? @relation(fields: [recurrenceId], references: [id])
+  category        Category?       @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  recurrence      Recurrence?     @relation(fields: [recurrenceId], references: [id], onDelete: SetNull)
+  sourceAccount   Account?        @relation("SourceAccount", fields: [sourceAccountId], references: [id], onDelete: SetNull)
+  targetAccount   Account?        @relation("TargetAccount", fields: [targetAccountId], references: [id], onDelete: SetNull)
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId, date])
+  @@index([userId, type])
+  @@index([categoryId])
+  @@index([recurrenceId])
 }
 
 // -------- ENUMS --------
@@ -231,7 +276,22 @@ enum RecurrenceType {
   MONTHLY
   WEEKLY
   YEARLY
-  INSTALLMENT
+}
+
+enum BudgetCategory {
+  DAILY_EXPENSES  // Day-to-day spending
+  FOOD_GROCERIES  // Food and groceries
+  ENTERTAINMENT   // Entertainment and leisure
+  TRANSPORTATION  // Transport costs
+  HEALTH          // Health and medical
+  UTILITIES       // Bills and utilities
+}
+
+enum CardType {
+  VISA
+  MASTERCARD
+  AMEX
+  MAESTRO
 }
 ```
 
@@ -560,62 +620,110 @@ model User {
   id           String        @id @default(cuid())
   name         String
   email        String?       @unique
-  transactions Transaction[]
+  passwordHash String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now()) @updatedAt
   accounts     Account[]
   categories   Category[]
   recurrences  Recurrence[]
-}
-
-model Account {
-  id        Int         @id @default(autoincrement())
-  userId    String
-  name      String
-  type      AccountType
-  currency  Currency
-  balance   Decimal     @default(0)
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-
-  user             User          @relation(fields: [userId], references: [id])
-  // relaciones dobles (origen/destino) para transferencias internas
-  transactionsFrom Transaction[] @relation("SourceAccount")
-  transactionsTo   Transaction[] @relation("TargetAccount")
-}
-
-model Recurrence {
-  id          Int            @id @default(autoincrement())
-  userId      String
-  name        String
-  frequency   RecurrenceType
-  totalParts  Int?
-  currentPart Int?
-  startDate   DateTime
-  nextDate    DateTime?
-  active      Boolean        @default(true)
-
-  user         User          @relation(fields: [userId], references: [id])
   transactions Transaction[]
 }
 
-model Transaction {
-  id          String          @id @default(cuid())
-  date        DateTime
-  amount      Decimal         @db.Decimal(12, 2)
-  concept     String
-  type        TransactionType
-  userId      String
-  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  categoryId  Int?
-  category    Category?       @relation(fields: [categoryId], references: [id])
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+model Account {
+  id               Int           @id @default(autoincrement())
+  userId           String
+  name             String
+  type             AccountType
+  currency         Currency
+  balance          Decimal       @default(0) @db.Decimal(15, 2)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactionsFrom Transaction[] @relation("SourceAccount")
+  transactionsTo   Transaction[] @relation("TargetAccount")
+  
+  // Recurrences using this account
+  recurrencesFrom Recurrence[] @relation("RecurrenceSource")
+  recurrencesTo   Recurrence[] @relation("RecurrenceTarget")
 
+  @@unique([name, userId], map: "account_name_user_unique")
+  @@index([userId])
+}
+
+model Recurrence {
+  id           Int            @id @default(autoincrement())
+  userId       String
+  name         String
+  type         TransactionType
+  amount       Decimal        @db.Decimal(15, 2)
+  frequency    RecurrenceType
+  totalParts   Int?
+  currentPart  Int  @default(0)
+  startDate    DateTime
+  nextDate     DateTime?
+  endDate      DateTime?
+  active       Boolean        @default(true)
+  
+  // Categorization
+  categoryId      Int?
+  sourceAccountId Int? // For expenses: which account pays
+  targetAccountId Int? // For income: which account receives
+  
+  // Card expenses (for card-based recurrences)
+  isCardExpense Boolean  @default(false)
+  cardType      CardType?
+  
+  // Metadata for additional info
+  metadata Json?
+
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category      Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  sourceAccount Account?  @relation("RecurrenceSource", fields: [sourceAccountId], references: [id], onDelete: SetNull)
+  targetAccount Account?  @relation("RecurrenceTarget", fields: [targetAccountId], references: [id], onDelete: SetNull)
+  transactions Transaction[]
+
+  @@index([userId, active])
+  @@index([nextDate])
+}
+
+model Transaction {
+  id              Int             @id @default(autoincrement())
+  userId          String
+  type            TransactionType
+  amount          Decimal
+  date            DateTime
+  description     String?
+  categoryId      Int?
+  sourceAccountId Int?
+  targetAccountId Int?
+  recurrenceId    Int?
+  recurrencePartNumber Int?
+  isBudgetedExpense Boolean?
+  budgetCategory    BudgetCategory?
+  isCardExpense Boolean?
+  cardType      CardType?
+  source        String?
+  metadata        Json?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  category        Category?       @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  recurrence      Recurrence?     @relation(fields: [recurrenceId], references: [id], onDelete: SetNull)
+  sourceAccount   Account?        @relation("SourceAccount", fields: [sourceAccountId], references: [id], onDelete: SetNull)
+  targetAccount   Account?        @relation("TargetAccount", fields: [targetAccountId], references: [id], onDelete: SetNull)
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
   @@index([userId, date])
+  @@index([userId, type])
+  @@index([categoryId])
+  @@index([recurrenceId])
 }
 
 enum TransactionType {
   INCOME
   EXPENSE
+  TRANSFER
+  INVESTMENT
+  RETURN
   PAYMENT
 }
 ```
