@@ -1,1 +1,0 @@
-- [ ] Determine scope of security analysis
