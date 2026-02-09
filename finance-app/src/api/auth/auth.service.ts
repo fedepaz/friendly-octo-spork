@@ -1,19 +1,15 @@
 // src/api/auth/auth.service.ts
 
-import { prisma } from "@/lib/prisma";
-
 import { password } from "bun";
 import type { LoginInput } from "./auth.schema";
 import { generateToken } from "@/middleware/auth";
+import { UserRepository } from "../repositories/user.repository";
 
 export class AuthService {
+  private userRepository = new UserRepository();
   login = async (parameters: LoginInput) => {
     const { email, plainPassword } = parameters;
-    const user = await prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
+    const user = await this.userRepository.getUserByEmail(email);
 
     if (!user) {
       throw new Error("Invalid email or password");
@@ -21,7 +17,7 @@ export class AuthService {
 
     const isPasswordValid = await password.verify(
       plainPassword,
-      user.passwordHash
+      user.passwordHash,
     );
 
     if (!isPasswordValid) {

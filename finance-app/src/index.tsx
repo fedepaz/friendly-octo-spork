@@ -10,16 +10,9 @@ import authRoutes from "./api/auth/auth.routes";
 import { ErrorPage } from "./pages/ErrorPage";
 import categoriesRoutes from "./api/categories/categories.routes";
 import recurrencesRoutes from "./api/recurrences/recurrences.routes";
+import transactionsRoutes from "./api/transactions/transactions.routes";
 import dashboardRoutes from "./api/dashboard/dashboard.routes";
 import Injection from "./styles/injection";
-
-import expensesRoutes from "./api/expenses/expenses.routes";
-import incomesRoutes from "./api/incomes/incomes.routes";
-import investmentsRoutes from "./api/investments/investments.routes";
-import paymentsRoutes from "./api/payments/payments.routes";
-import returnsRoutes from "./api/returns/returns.routes";
-import transfersRoutes from "./api/transfers/transfers.routes";
-import transactionsRoutes from "./api/transactions/transactions.routes";
 
 const app = new Hono();
 

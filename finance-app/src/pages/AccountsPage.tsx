@@ -7,10 +7,6 @@ import { CreditCardIcon } from "@/components/icons/CreditCardIcon";
 import type { Account } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
 
-interface AccountsPageData {
-  accounts: Account[];
-}
-
 const EmptyState: FC = () => (
   <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-12 text-center rounded-none">
     <CreditCardIcon class="text-6xl mb-4" aria-label="No accounts icon" />

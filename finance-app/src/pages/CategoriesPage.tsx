@@ -7,10 +7,6 @@ import { TagIcon } from "@/components/icons/TagIcon";
 import type { Category } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
 
-interface CategoriesPageData {
-  categories: Category[];
-}
-
 const EmptyState: FC = () => (
   <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-12 text-center rounded-none">
     <TagIcon class="text-6xl mb-4" aria-label="No categories icon" />
@@ -34,28 +30,16 @@ const EmptyState: FC = () => (
 );
 
 interface CategoriesPageProps {
-  data?: CategoriesPageData;
+  categories: Category[];
 }
 
-export const CategoriesPage: FC<CategoriesPageProps> = ({ data }) => {
-  const categories = data?.categories || [];
-
+export const CategoriesPage: FC<CategoriesPageProps> = ({ categories }) => {
   return (
     <Layout activeNavItem="/categories">
       <div class="flex items-center justify-between mb-8">
         <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">
           Categories
         </h1>
-        <Button
-          type="button" // Explicitly set type to "button"
-          hxGet="/categories/new"
-          hxTarget="#modal-content"
-          hxSwap="innerHTML"
-          dataToggle="modal"
-          dataTarget="#htmx-modal"
-        >
-          Add Category
-        </Button>
       </div>
 
       {categories.length === 0 ? (
@@ -65,14 +49,12 @@ export const CategoriesPage: FC<CategoriesPageProps> = ({ data }) => {
           {Object.entries(categories).map((cats) => (
             <div class="flex flex-wrap gap-3">
               {cats.map((cat) => (
-                <CategoryBadge key={cat.id} category={cat} />
+                <CategoryBadge category={cat} />
               ))}
             </div>
           ))}
         </div>
       )}
-
-      <div id="modal-content"></div>
     </Layout>
   );
 };

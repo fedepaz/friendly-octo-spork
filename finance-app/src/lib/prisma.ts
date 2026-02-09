@@ -12,15 +12,7 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
-    // Logging configuration
-    log:
-      process.env.NODE_ENV === "development"
-        ? ["query", "error", "warn"] // Ver todas las queries en dev
-        : ["error"], // Solo errores en producción
-  });
+export const prisma = globalForPrisma.prisma ?? new PrismaClient();
 
 // Function to connect Prisma Client
 export async function connectPrisma() {
