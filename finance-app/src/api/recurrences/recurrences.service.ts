@@ -1,46 +1,24 @@
 // src/api/recurrences/recurrences.service.ts
 
-import { prisma } from "@/lib/prisma";
-import type {
-  CreateRecurrenceInput,
-  RecurrenceFilterInput,
-} from "./recurrences.schema";
+import { RecurrenceRepository } from "../repositories/recurrence.repository";
+import type { CreateRecurrenceInput } from "./recurrences.schema";
 
 export class RecurrencesService {
-  async getRecurrences(userId: string, filters?: RecurrenceFilterInput) {
-    const recurrences = await prisma.recurrence.findMany({
-      where: {
-        userId,
-        ...(filters?.frequency && { frequency: filters.frequency }),
-        ...(filters?.active && { active: filters.active }),
-      },
-      orderBy: [{ frequency: "asc" }, { name: "asc" }],
-      include: {
-        _count: {
-          select: { transactions: true },
-        },
-      },
-    });
-
+  private recurrenceRepository = new RecurrenceRepository();
+  async findAllRecurrences(userId: string) {
+    if (!userId) {
+      throw new Error("User id is required");
+    }
+    const recurrences = await this.recurrenceRepository.getRecurrences();
     return recurrences;
   }
 
-  async getRecurrenceById(userId: string, recurrenceId: number) {
-    const recurrence = await prisma.recurrence.findFirst({
-      where: {
-        id: recurrenceId,
-        userId,
-      },
-      include: {
-        _count: {
-          select: { transactions: true },
-        },
-        transactions: {
-          orderBy: { date: "desc" },
-          take: 10,
-        },
-      },
-    });
+  async findRecurrenceById(recurrenceId: number) {
+    if (!recurrenceId) {
+      throw new Error("Recurrence id is required");
+    }
+    const recurrence =
+      await this.recurrenceRepository.getRecurrenceById(recurrenceId);
 
     if (!recurrence) {
       throw new Error("Recurrence not found");
@@ -50,23 +28,22 @@ export class RecurrencesService {
   }
 
   async createRecurrence(userId: string, data: CreateRecurrenceInput) {
-    const startDate = new Date(data.startDate || new Date());
+    const startDate = new Date(data.startDate);
     const nextDate = this.calculateNextDate(startDate, data.frequency);
-    const recurrence = await prisma.recurrence.create({
-      data: {
-        userId,
-        name: data.name,
-        frequency: data.frequency,
-        totalParts: data.totalParts,
-        currentPart: data.currentPart,
-        startDate: startDate,
-        nextDate: nextDate,
-        active: data.active,
-      },
+
+    if (nextDate < startDate) {
+      throw new Error("Start date must be before next date");
+    }
+    const recurrence = await this.recurrenceRepository.saveRecurrence({
+      ...data,
+      startDate,
+      nextDate,
+      userId,
     });
 
     return recurrence;
   }
+
   private calculateNextDate(currentDate: Date, frequency: string): Date {
     const next = new Date(currentDate);
 

@@ -21,11 +21,11 @@ interface TransactionPageProps {
 }
 
 export const TransactionPage: FC<TransactionPageProps> = ({
-  transactions,
-  currentMonth,
-  transactionType,
-  title,
-  navItem,
+  transactions = [],
+  currentMonth = "2022-01",
+  transactionType = "expenses",
+  title = "Transactions",
+  navItem = "/transactions",
 }) => {
   return (
     <Layout activeNavItem={navItem}>

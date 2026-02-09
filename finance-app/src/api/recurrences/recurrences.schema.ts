@@ -1,20 +1,23 @@
 // src/schemas/recurrences.schema.ts
 
 import { z } from "zod";
-import { RecurrenceType } from "../../generated/prisma";
+import { RecurrenceType, TransactionType } from "../../generated/prisma";
 
 export const createRecurrenceSchema = z.object({
   name: z
     .string()
     .min(1, "Recurrence name is required")
     .max(255, "Recurrence name is too long"),
+  type: z.nativeEnum(TransactionType, {
+    error: () => ({ message: "Invalid recurrence type" }),
+  }),
+  amount: z.coerce.number().positive("Amount must be a positive number"),
   frequency: z.nativeEnum(RecurrenceType, {
     error: () => ({ message: "Invalid recurrence frequency" }),
   }),
   totalParts: z.number().optional().default(1),
   currentPart: z.number().optional().default(1),
-  startDate: z.date().optional(),
-  nextDate: z.date().optional(),
+  startDate: z.coerce.date(),
   active: z.boolean().optional().default(true),
 });
 

@@ -15,9 +15,7 @@ export class AccountsController {
     try {
       const payload = c.get("jwtPayload") as { sub: string };
       const userId = payload.sub;
-
-      const query = c.req.query() as AccountFilterInput;
-      const accounts = await this.accountService.getAccounts(userId, query);
+      const accounts = await this.accountService.findAccounts();
 
       return c.render(<AccountsPage accounts={accounts} />);
     } catch (error) {
@@ -45,13 +43,12 @@ export class AccountsController {
           name: formData.name as string,
           type: formData.type as AccountType,
           currency: formData.currency as Currency,
-          balance: parseFloat(formData.balance as string) || 0,
         };
       }
 
       await this.accountService.createAccount(userId, data);
 
-      const accounts = await this.accountService.getAccounts(userId);
+      const accounts = await this.accountService.findAccounts();
       return c.html(<AccountsList accounts={accounts} />);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";

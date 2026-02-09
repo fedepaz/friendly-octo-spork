@@ -1,0 +1,20 @@
+- [x] SAST Recon on `finance-app/src/api/accounts/accounts.controller.tsx`
+- [x] SAST Recon on `finance-app/src/api/accounts/accounts.schema.ts`
+- [x] SAST Recon on `finance-app/src/api/accounts/accounts.service.ts`
+- [x] SAST Recon on `finance-app/src/api/categories/categories.controller.tsx`
+- [x] SAST Recon on `finance-app/src/api/categories/categories.service.ts`
+- [x] SAST Recon on `finance-app/src/api/dashboard/dashboard.controller.tsx`
+- [x] SAST Recon on `finance-app/src/api/dashboard/dashboard.schema.ts`
+- [x] SAST Recon on `finance-app/src/api/dashboard/dashboard.service.ts`
+- [x] SAST Recon on `finance-app/src/api/recurrences/recurrences.controller.tsx`
+- [x] SAST Recon on `finance-app/src/api/recurrences/recurrences.schema.ts`
+- [x] SAST Recon on `finance-app/src/api/recurrences/recurrences.service.ts`
+- [x] SAST Recon on `finance-app/src/api/transactions/transactions.controller.tsx`
+- [x] SAST Recon on `finance-app/src/api/transactions/transactions.service.ts`
+- [x] SAST Recon on `finance-app/src/pages/DashboardPage.tsx`
+- [x] SAST Recon on `finance-app/src/pages/TransactionsPage.tsx`
+- [ ] SAST Recon on `finance-app/src/api/repositories/account.repository.ts`
+- [ ] SAST Recon on `finance-app/src/api/repositories/categories.repository.ts`
+- [ ] SAST Recon on `finance-app/src/api/repositories/dashboard.repository.ts`
+- [ ] SAST Recon on `finance-app/src/api/repositories/recurrence.repository.ts`
+- [ ] SAST Recon on `finance-app/src/api/repositories/transaction.repository.ts`

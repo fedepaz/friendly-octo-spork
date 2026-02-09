@@ -14,10 +14,15 @@ export class TransactionsController {
       const userId = payload.sub;
       const month = c.req.query("month");
 
-      const data = await this.transactionService.getTransactionsByUser(userId, {
-        month,
-      });
-      return c.render(<TransactionPage {...data} />);
+      const data = await this.transactionService.findAllTransactions(userId);
+      const renderData = {
+        ...data,
+        currentMonth: month,
+        transactionType: "expenses",
+        title: "Expenses",
+        navItem: "/transactions/expenses",
+      };
+      return c.render(<TransactionPage {...renderData} />);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";
       const stack = error instanceof Error ? error.stack : undefined;

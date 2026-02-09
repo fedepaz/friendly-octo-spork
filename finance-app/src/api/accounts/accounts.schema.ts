@@ -1,7 +1,7 @@
 // src/schemas/createAccountSchema.ts
 
 import { z } from "zod";
-import { AccountType, Currency } from "../../generated/prisma";
+import { AccountType, Currency, Prisma } from "../../generated/prisma";
 
 export const accountSchema = z.object({
   id: z.number(),
@@ -23,21 +23,6 @@ export const createAccountSchema = z.object({
   currency: z.nativeEnum(Currency, {
     error: () => ({ message: "Invalid currency" }),
   }),
-  balance: z.number().optional().default(0),
-});
-
-export const accountFilterSchema = z.object({
-  type: z
-    .nativeEnum(AccountType, {
-      error: () => ({ message: "Invalid account type" }),
-    })
-    .optional(),
-  currency: z
-    .nativeEnum(Currency, {
-      error: () => ({ message: "Invalid currency" }),
-    })
-    .optional(),
 });
 
 export type CreateAccountInput = z.infer<typeof createAccountSchema>;
-export type AccountFilterInput = z.infer<typeof accountFilterSchema>;

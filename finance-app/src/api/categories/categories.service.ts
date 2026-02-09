@@ -1,42 +1,26 @@
 // src/api/categories/categories.service.ts
 
-import { prisma } from "@/lib/prisma";
-import type {
-  CreateCategoryInput,
-  UpdateCategoryInput,
-} from "./categories.schema";
+import { CategoriesRepository } from "../repositories/categories.repository";
 
 export class CategoriesService {
-  async getCategories(userId: string) {
-    const categories = await prisma.category.findMany({
-      where: {
-        userId,
-      },
-      orderBy: [{ name: "asc" }],
-      include: {
-        _count: {
-          select: {
-            transactions: true,
-          },
-        },
-      },
-    });
-
+  private categoriesRepository = new CategoriesRepository();
+  async findCategories(userId: string) {
+    if (!userId) {
+      throw new Error("User id is required");
+    }
+    const categories = await this.categoriesRepository.getCategories(userId);
+    if (!categories) {
+      throw new Error("Categories not found");
+    }
     return categories;
   }
 
-  async getCategoryById(userId: string, categoryId: number) {
-    const category = await prisma.category.findFirst({
-      where: {
-        id: categoryId,
-        userId,
-      },
-      include: {
-        _count: {
-          select: { transactions: true },
-        },
-      },
-    });
+  async findCategoryById(categoryId: number) {
+    if (!categoryId) {
+      throw new Error("Category id is required");
+    }
+    const category =
+      await this.categoriesRepository.getCategoryById(categoryId);
 
     if (!category) {
       throw new Error("Category not found");
@@ -44,34 +28,7 @@ export class CategoriesService {
 
     return category;
   }
-
-  async createCategory(userId: string, data: CreateCategoryInput) {
-    const category = await prisma.category.create({
-      data: {
-        userId,
-        name: data.name,
-
-        color: data.color,
-      },
-    });
-
-    return category;
-  }
-  async updateCategory(userId: string, id: number, data: UpdateCategoryInput) {
-    const category = await prisma.category.update({
-      where: {
-        id,
-      },
-      data: {
-        name: data.name,
-
-        color: data.color,
-      },
-    });
-
-    return category;
-  }
-
+  /*
   async getCategoryStats(
     userId: string,
     categoryId: number,
@@ -99,4 +56,5 @@ export class CategoriesService {
       transactions,
     };
   }
+    */
 }

@@ -1,11 +1,9 @@
 // src/pages/DashboardPage.tsx
 
 import { BudgetProgressCard } from "@/components/dashboard/BudgetProgressCard";
-import { RecentActivity } from "@/components/dashboard/RecentActivity";
 import { StatCard } from "@/components/dashboard/StatCard";
 import Layout from "@/components/shared/Layout";
-import { TransactionForm } from "@/components/transactions/TransactionForm";
-import type { Account, Category, Transaction } from "@/generated/prisma";
+import type { Account } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
 
 interface DashboardData {
@@ -13,9 +11,8 @@ interface DashboardData {
   monthlyBudget: number;
   dailyAverage: number;
   expenseCount: number;
-  categories: Category[];
+
   accounts: Account[];
-  recentTransactions: Transaction[];
 }
 
 interface DashboardPageProps {
@@ -46,9 +43,5 @@ export const DashboardPage: FC<DashboardPageProps> = ({ data }) => (
         color="accent"
       />
     </div>
-
-    <TransactionForm categories={data.categories} accounts={data.accounts} />
-
-    <RecentActivity recentActivity={data.recentTransactions} />
   </Layout>
 );

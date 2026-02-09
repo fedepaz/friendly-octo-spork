@@ -1,41 +1,38 @@
 // src/api/accounts/accounts.service.ts
 
-import type { Prisma } from "@/generated/prisma";
-import { prisma } from "../../lib/prisma";
-import type { CreateAccountInput, AccountFilterInput } from "./accounts.schema";
+import type { CreateAccountInput } from "./accounts.schema";
+import { AccountRepository } from "../repositories/account.repository";
 
 export class AccountsService {
-  async getAccounts(userId: string, filters?: AccountFilterInput) {
-    const where: Prisma.AccountWhereInput = {
-      userId,
-      ...(filters?.type && { type: filters.type }),
-      ...(filters?.currency && { currency: filters.currency }),
-    };
-
-    const accounts = await prisma.account.findMany({
-      where,
-    });
-
+  private accountRepository = new AccountRepository();
+  async findAccounts(userId: string) {
+    if (!userId) {
+      throw new Error("User id is required");
+    }
+    const accounts = await this.accountRepository.getAccounts(userId);
+    if (!accounts) {
+      throw new Error("Accounts not found");
+    }
     return accounts;
   }
 
-  async getAccountById(userId: string, accountId: number) {
-    const account = await prisma.account.findUnique({
-      where: { id: accountId, userId },
-    });
+  async findAccountById(accountId: number) {
+    if (!accountId) {
+      throw new Error("Account id is required");
+    }
+    const account = await this.accountRepository.getAccountById(accountId);
+
+    if (!account) {
+      throw new Error("Account not found");
+    }
 
     return account;
   }
 
   async createAccount(userId: string, data: CreateAccountInput) {
-    const account = await prisma.account.create({
-      data: {
-        userId,
-        name: data.name,
-        type: data.type,
-        currency: data.currency,
-        balance: data.balance,
-      },
+    const account = await this.accountRepository.saveAccount({
+      ...data,
+      userId,
     });
 
     return account;

@@ -1,7 +1,7 @@
 // src/api/recurrences/recurrences.controller.tsx
 
 import type { Context } from "hono";
-import { recurrenceFilterSchema } from "./recurrences.schema";
+
 import { RecurrencesService } from "./recurrences.service";
 import { RecurrencesPage } from "@/pages/RecurrencesPage";
 import { ErrorPage } from "@/pages/ErrorPage";
@@ -14,12 +14,9 @@ export class RecurrencesController {
     try {
       const payload = c.get("jwtPayload") as { sub: string };
       const userId = payload.sub;
-      const filters = recurrenceFilterSchema.parse(c.req.query());
 
-      const recurrences = await this.recurrenceService.getRecurrences(
-        userId,
-        filters
-      );
+      const recurrences =
+        await this.recurrenceService.findAllRecurrences(userId);
 
       return c.render(<RecurrencesPage recurrences={recurrences} />);
     } catch (error) {
