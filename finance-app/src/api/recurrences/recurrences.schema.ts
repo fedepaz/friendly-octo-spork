@@ -3,6 +3,20 @@
 import { z } from "zod";
 import { RecurrenceType, TransactionType } from "../../generated/prisma";
 
+export const recurrenceSchema = z.object({
+  id: z.number(),
+  userId: z.string(),
+  name: z.string(),
+  type: z.nativeEnum(TransactionType),
+  amount: z.number(),
+  frequency: z.nativeEnum(RecurrenceType),
+  totalParts: z.number().int().nullable(),
+  currentPart: z.number().int().nullable(),
+  startDate: z.date(),
+  nextDate: z.date().nullable(),
+  active: z.boolean(),
+});
+
 export const createRecurrenceSchema = z.object({
   name: z
     .string()

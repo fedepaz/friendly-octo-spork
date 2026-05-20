@@ -2,6 +2,8 @@
 
 import { RecurrenceRepository } from "../repositories/recurrence.repository";
 import type { CreateRecurrenceInput } from "./recurrences.schema";
+import { calculateNextDate } from "@/lib/date-utils";
+import { RecurrenceType } from "@/generated/prisma";
 
 export class RecurrencesService {
   private recurrenceRepository = new RecurrenceRepository();
@@ -9,7 +11,7 @@ export class RecurrencesService {
     if (!userId) {
       throw new Error("User id is required");
     }
-    const recurrences = await this.recurrenceRepository.getRecurrences();
+    const recurrences = await this.recurrenceRepository.getRecurrences(userId);
     return recurrences;
   }
 
@@ -29,7 +31,7 @@ export class RecurrencesService {
 
   async createRecurrence(userId: string, data: CreateRecurrenceInput) {
     const startDate = new Date(data.startDate);
-    const nextDate = this.calculateNextDate(startDate, data.frequency);
+    const nextDate = calculateNextDate(startDate, data.frequency as RecurrenceType);
 
     if (nextDate < startDate) {
       throw new Error("Start date must be before next date");
@@ -42,28 +44,5 @@ export class RecurrencesService {
     });
 
     return recurrence;
-  }
-
-  private calculateNextDate(currentDate: Date, frequency: string): Date {
-    const next = new Date(currentDate);
-
-    switch (frequency) {
-      case "MONTHLY":
-        next.setMonth(next.getMonth() + 1);
-        break;
-      case "WEEKLY":
-        next.setDate(next.getDate() + 7);
-        break;
-      case "YEARLY":
-        next.setFullYear(next.getFullYear() + 1);
-        break;
-      case "INSTALLMENT":
-        next.setMonth(next.getMonth() + 1);
-        break;
-      default:
-        throw new Error("Invalid frequency");
-    }
-
-    return next;
   }
 }

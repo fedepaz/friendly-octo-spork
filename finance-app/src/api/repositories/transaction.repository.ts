@@ -22,9 +22,17 @@ export class TransactionRepository {
 
   async saveTransaction(
     data: Prisma.TransactionUncheckedCreateInput,
+    tx?: Prisma.TransactionClient,
   ): Promise<Transaction> {
-    return await prisma.transaction.create({
+    const client = tx || prisma;
+    return await client.transaction.create({
       data,
+      include: {
+        category: true,
+        sourceAccount: true,
+        targetAccount: true,
+        recurrence: true,
+      },
     });
   }
 }

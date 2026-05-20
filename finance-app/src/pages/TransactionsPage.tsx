@@ -4,10 +4,10 @@ import { TransactionForm } from "@/components/transactions/TransactionForm";
 import { TransactionList } from "@/components/transactions/TransactionList";
 import type { FC } from "hono/jsx";
 import Layout from "@/components/shared/Layout";
-import type { TransactionResponse } from "@/api/transactions/transactions.schema";
+import type { Transaction } from "@/generated/prisma";
 
 interface TransactionPageProps {
-  transactions: TransactionResponse[];
+  transactions: Transaction[];
   currentMonth: string;
   transactionType:
     | "expenses"
@@ -39,8 +39,6 @@ export const TransactionPage: FC<TransactionPageProps> = ({
           transactionType={transactionType}
         />
       </div>
-
-      <TransactionForm transactionType={transactionType} />
     </Layout>
   );
 };

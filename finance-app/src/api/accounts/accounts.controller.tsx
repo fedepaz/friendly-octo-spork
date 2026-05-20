@@ -2,7 +2,7 @@
 
 import type { Context } from "hono";
 import { AccountsService } from "./accounts.service";
-import type { AccountFilterInput, CreateAccountInput } from "./accounts.schema";
+import type { CreateAccountInput } from "./accounts.schema";
 import { AccountsPage } from "@/pages/AccountsPage";
 import { ErrorPage } from "@/pages/ErrorPage";
 import { AccountsList } from "@/components/accounts/AccountsList";
@@ -15,7 +15,7 @@ export class AccountsController {
     try {
       const payload = c.get("jwtPayload") as { sub: string };
       const userId = payload.sub;
-      const accounts = await this.accountService.findAccounts();
+      const accounts = await this.accountService.findAccounts(userId);
 
       return c.render(<AccountsPage accounts={accounts} />);
     } catch (error) {
@@ -48,7 +48,7 @@ export class AccountsController {
 
       await this.accountService.createAccount(userId, data);
 
-      const accounts = await this.accountService.findAccounts();
+      const accounts = await this.accountService.findAccounts(userId);
       return c.html(<AccountsList accounts={accounts} />);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";

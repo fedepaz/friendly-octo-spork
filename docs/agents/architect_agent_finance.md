@@ -73,19 +73,19 @@ Data Architecture:
 
 **Backend Architecture (Hono)**:
 
-**Modular Transaction Endpoints**:
-The initial `TransactionsService` has been refactored into a more modular and maintainable structure. Instead of a single service handling all transaction types, the logic is now split into dedicated services based on the transaction type. This aligns with the vertical slicing architecture and improves separation of concerns.
+**Unified Transaction Endpoint**:
+Instead of splitting logic into multiple endpoints for each transaction type, the system now uses a unified `POST /api/transactions` endpoint. This allows the `TransactionsService` to handle all transaction types (INCOME, EXPENSE, TRANSFER, etc.) atomically within a single `prisma.$transaction`. This approach ensures that account balance updates and recurrence progress are always in sync with the transaction creation.
 
-- **/api/incomes**: Handles all logic related to `INCOME` transactions.
-- **/api/expenses**: Handles all logic related to `EXPENSE` transactions.
-- **/api/transfers**: Handles all logic related to `TRANSFER` transactions.
-- **/api/investments**: Handles all logic related to `INVESTMENT` transactions.
-- **/api/returns**: Handles all logic related to `RETURN` transactions.
-- **/api/payments**: Handles all logic related to `PAYMENT` transactions.
-
-Each of these modules has its own controller, service, and schema files. The generic helper methods previously in `TransactionsService` (e.g., `getCategories`, `getAccounts`) have been deprecated or moved into these more specific services as needed.
-
-This modular approach also applies to frontend components. For example, the generic `TransactionRow` component has been moved and adapted into more specific components like `transfers/TransactionRow` to handle the unique display requirements of each transaction type.
+```typescript
+// Unified Route structure
+/api
+  /transactions
+    GET    /           - List all transactions (with filters)
+    POST   /           - Create any transaction type (atomic)
+    GET    /:id        - Get details
+    PUT    /:id        - Update
+    DELETE /:id        - Delete
+```
 
 ```typescript
 // Route structure

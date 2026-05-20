@@ -7,40 +7,15 @@ import {
   Currency,
   RecurrenceType,
 } from "@/generated/prisma";
+import { categorySchema } from "../categories/categories.schema";
+import { accountSchema } from "../accounts/accounts.schema";
+import { recurrenceSchema } from "../recurrences/recurrences.schema";
 
 // ========== NESTED OBJECT SCHEMAS ==========
 
-// Category DTO
-export const categoryResponseSchema = z.object({
-  id: z.number().int(),
-  name: z.string(),
-  color: z.string().nullable(),
-});
-
-// Account DTO
-export const accountResponseSchema = z.object({
-  id: z.number().int(),
-  name: z.string(),
-  type: z.nativeEnum(AccountType),
-  currency: z.nativeEnum(Currency),
-  balance: z.number(), // Converted from Decimal
-});
-
-// Recurrence DTO
-export const recurrenceResponseSchema = z.object({
-  id: z.number().int(),
-  name: z.string(),
-  frequency: z.nativeEnum(RecurrenceType),
-  totalParts: z.number().int().nullable(),
-  currentPart: z.number().int().nullable(),
-  startDate: z.date(),
-  nextDate: z.date().nullable(),
-  active: z.boolean(),
-});
-
 // ========== MAIN TRANSACTION RESPONSE SCHEMA ==========
 
-export const transactionResponseSchema = z.object({
+export const transactionSchema = z.object({
   id: z.number().int(),
   type: z.nativeEnum(TransactionType),
   amount: z.number().positive(),
@@ -51,16 +26,11 @@ export const transactionResponseSchema = z.object({
   updatedAt: z.date(),
 
   // Full nested objects (not just IDs)
-  category: categoryResponseSchema.nullable(),
-  sourceAccount: accountResponseSchema.nullable(),
-  targetAccount: accountResponseSchema.nullable(),
-  recurrence: recurrenceResponseSchema.nullable(),
+  category: categorySchema.nullable(),
+  sourceAccount: accountSchema.nullable(),
+  targetAccount: accountSchema.nullable(),
+  recurrence: recurrenceSchema.nullable(),
 });
-
-export type TransactionResponse = z.infer<typeof transactionResponseSchema>;
-export type CategoryResponse = z.infer<typeof categoryResponseSchema>;
-export type AccountResponse = z.infer<typeof accountResponseSchema>;
-export type RecurrenceResponse = z.infer<typeof recurrenceResponseSchema>;
 
 // ========== CREATE SCHEMAS (keep existing) ==========
 
@@ -76,6 +46,9 @@ export const createTransactionSchema = z.object({
   metadata: z.object({}).catchall(z.unknown()).optional().nullable(),
 });
 
+export const updateTransactionSchema = createTransactionSchema.partial();
+
+export type UpdateTransactionInput = z.infer<typeof updateTransactionSchema>;
 export type CreateTransactionInput = z.infer<typeof createTransactionSchema>;
 
 // Validation rules based on the transaction type (keep existing)

@@ -25,9 +25,29 @@ export class AccountRepository {
   // Create account
   async saveAccount(
     data: Prisma.AccountUncheckedCreateInput,
+    tx?: Prisma.TransactionClient,
   ): Promise<Account> {
-    return prisma.account.create({
+    const client = tx || prisma;
+    return client.account.create({
       data,
+    });
+  }
+
+  // Update account balance
+  async updateBalance(
+    id: number,
+    amount: Prisma.Decimal | number,
+    operation: "increment" | "decrement",
+    tx?: Prisma.TransactionClient,
+  ): Promise<Account> {
+    const client = tx || prisma;
+    return client.account.update({
+      where: { id },
+      data: {
+        balance: {
+          [operation]: amount,
+        },
+      },
     });
   }
 }

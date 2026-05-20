@@ -56,12 +56,12 @@ const transactions = await prisma.transaction.findMany({
 });
 
 // Use transactions for multi-table operations
-await prisma.$transaction([
-  prisma.transaction.create({ data: transactionData }),
-  // Example of updating an account balance after a transaction
-  // prisma.account.update({ where: { id: sourceAccountId }, data: { balance: { decrement: amount } } }),
-  // prisma.account.update({ where: { id: targetAccountId }, data: { balance: { increment: amount } } }),
-]);
+// Pass an optional 'tx' client to repository methods to ensure atomic execution
+await prisma.$transaction(async (tx) => {
+  const transaction = await transactionRepository.saveTransaction(data, tx);
+  await accountRepository.updateBalance(data.sourceAccountId, amount, 'decrement', tx);
+  // ...
+});
 ```
 
 **JWT Authentication (Cookie-based)**:

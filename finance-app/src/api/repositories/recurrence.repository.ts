@@ -22,8 +22,22 @@ export class RecurrenceRepository {
 
   async saveRecurrence(
     data: Prisma.RecurrenceUncheckedCreateInput,
+    tx?: Prisma.TransactionClient,
   ): Promise<Recurrence> {
-    return await prisma.recurrence.create({
+    const client = tx || prisma;
+    return await client.recurrence.create({
+      data,
+    });
+  }
+
+  async updateRecurrence(
+    id: number,
+    data: Prisma.RecurrenceUncheckedUpdateInput,
+    tx?: Prisma.TransactionClient,
+  ): Promise<Recurrence> {
+    const client = tx || prisma;
+    return await client.recurrence.update({
+      where: { id },
       data,
     });
   }

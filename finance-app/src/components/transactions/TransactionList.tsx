@@ -2,10 +2,10 @@
 
 import type { FC } from "hono/jsx";
 import { TransactionRow } from "./TransactionRow";
-import type { TransactionResponse } from "@/api/transactions/transactions.schema";
+import type { Transaction } from "@/generated/prisma";
 
 interface TransactionListProps {
-  transactions: TransactionResponse[];
+  transactions: Transaction[];
   currentMonth: string;
   transactionType: string; // "expenses", "incomes", "payments", etc.
 }
@@ -25,13 +25,13 @@ export const TransactionList: FC<TransactionListProps> = ({
   const prevDate = new Date(date);
   prevDate.setMonth(prevDate.getMonth() - 1);
   const prevMonth = `${prevDate.getFullYear()}-${String(
-    prevDate.getMonth() + 1
+    prevDate.getMonth() + 1,
   ).padStart(2, "0")}`;
 
   const nextDate = new Date(date);
   nextDate.setMonth(nextDate.getMonth() + 1);
   const nextMonth = `${nextDate.getFullYear()}-${String(
-    nextDate.getMonth() + 1
+    nextDate.getMonth() + 1,
   ).padStart(2, "0")}`;
 
   // Format for display (current month)
