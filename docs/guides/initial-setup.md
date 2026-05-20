@@ -118,69 +118,46 @@ export default {
 
 This revised summary should now accurately reflect your project's setup and the technologies you are using.
 
-**5. Database Setup (PostgreSQL with Docker Compose):**
+**5. Database and Infrastructure Setup (Docker Compose):**
 
-To get the database up and running, we use Docker Compose to manage a PostgreSQL container. This provides an isolated and reproducible environment for your database.
+The application uses Docker Compose to orchestrate the core services: the Bun application, a PostgreSQL database, and an Nginx reverse proxy.
 
-*   **`docker/docker-compose.yml`**:
-    This file defines the PostgreSQL service. It specifies the `postgres:13` image, sets up environment variables for the database user, password, and database name, and mounts a named volume for data persistence. This ensures your data is not lost when the container is stopped or removed.
-
-    ```yaml
-    version: '3.8'
-    services:
-      db:
-        image: postgres:13
-        container_name: finance-app-db
-        restart: always
-        ports:
-          - '5432:5432'
-        environment:
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: finance-app
-        volumes:
-          - postgres_data:/var/lib/postgresql/data
-
-    volumes:
-      postgres_data:
-    ```
-
-*   **`finance-app/.env`**:
-    This file, located in your `finance-app` directory, contains the `DATABASE_URL` that Prisma uses to connect to the PostgreSQL database. It should reflect the credentials and database name defined in your `docker-compose.yml`.
-
-    ```
-    DATABASE_URL="postgresql://user:password@localhost:5432/finance-app"
-    ```
-
-*   **Starting the Database Container:**
-    Navigate to the `docker` directory and run the following command to start the PostgreSQL container in detached mode:
-
+1.  **Launch Services**:
+    From the root directory of the project, run:
     ```bash
-    cd docker
-    sudo docker compose up -d
+    docker compose up -d
+    ```
+    This will start the following containers:
+    - `app`: The Bun/Hono application (exposed on port 3000).
+    - `postgres`: The PostgreSQL database with a persistent volume (`postgres_data`).
+    - `nginx`: The reverse proxy (exposed on port 80).
+
+2.  **Environment Configuration**:
+    Ensure your `.env` file (in the `finance-app` directory) is configured to connect to the database container using its service name:
+    ```env
+    # Database (Internal Docker Network)
+    DATABASE_URL="postgresql://user:password@postgres:5432/finance-app"
     ```
 
-*   **Applying Prisma Migrations:**
-    Once the database container is running, navigate to the `finance-app` directory and apply the Prisma migrations. This will create all the necessary tables in your PostgreSQL database based on your `prisma/schema.prisma` file.
-
+3.  **Run Migrations**:
+    Apply the database schema to the running PostgreSQL container:
     ```bash
-    cd finance-app
-    bunx prisma migrate dev --name initial-schema
+    docker compose exec app bun prisma migrate deploy
     ```
 
-*   **Seeding the Database:**
-    To populate the database with initial standard accounts, 25 consolidated categories, and a default manager user, run:
-
+4.  **Seed Data**:
+    Populate the database with initial master categories, standard accounts, and a default user.
     ```bash
-    bun prisma db seed
+    docker compose exec app bun prisma db seed
     ```
 
-    This will use `bun` as configured in `prisma.config.ts` to execute `prisma/seed.ts`.
+**6. Nginx Reverse Proxy (Local Network Access):**
 
-*   **Verifying the Database Setup:**
-    To confirm that the database is running and the tables have been created, you can execute a command to list the tables directly from the PostgreSQL container:
+Nginx is configured to route traffic from your local network to the application container.
 
-    ```bash
-    sudo docker exec -it finance-app-db psql -U user -d finance-app -c "\\dt"
-    ```
-    You should see a list of tables including `User`, `Transaction`, `DailyExpense`, `Balance`, `CardExpense`, `InvestmentReturn`, `ExtraExpense`, `Category`, and `_prisma_migrations`.
+-   **Accessing the App**: You can access the application from any device on your local network using the server's IP address or a local hostname like `http://finance.local`.
+-   **Configuration**: The Nginx configuration ensures that requests to port 80 are proxied to the `app` container on port 3000.
+
+**7. Future: Secure Remote Access (Planned):**
+
+To access your finance tracker securely from outside your local network, a **Cloudflare Tunnel** will be used. This avoids the need to open ports on your router and provides an encrypted, authenticated path to your local server.

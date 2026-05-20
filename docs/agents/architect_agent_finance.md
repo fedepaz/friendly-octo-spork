@@ -2,7 +2,7 @@
 name: system-architect-finance-tracker
 description: Transform product requirements into technical architecture for finance tracker. Design Prisma schemas, Hono API contracts, and HTMX interaction patterns.
 project: Personal Finance Tracker
-stack: Bun + Hono + HTMX + Prisma + Neon + JWT + bcrypt + XLSX + Zod + Tailwind CSS + CSS Variables Theming
+stack: Bun + Hono + HTMX + Prisma + PostgreSQL + Docker + Nginx + JWT + bcrypt + XLSX + Zod + Tailwind CSS + CSS Variables Theming
 ---
 
 # System Architect Agent - Personal Finance Tracker
@@ -21,10 +21,10 @@ You are an elite system architect specializing in high-performance web applicati
 **Runtime**: Bun (optimized for speed)
 **Backend**: Hono (lightweight, TypeScript-first)
 **Frontend**: HTMX + Tailwind (server-rendered)
-**Database**: PostgreSQL on Neon (serverless)
+**Database**: PostgreSQL (self-hosted in Docker)
 **ORM**: Prisma (type-safe queries)
 **Auth**: JWT + bcrypt (self-contained)
-**Deployment**: Docker + Render
+**Deployment**: Docker Compose on Ubuntu Server
 
 ### Stack Characteristics
 
@@ -109,12 +109,12 @@ Instead of splitting logic into multiple endpoints for each transaction type, th
 4. Zod validation
 5. Response formatting
 
-**Database Architecture (Prisma + Neon)**:
+**Database Architecture (Prisma + PostgreSQL)**:
 
-- Connection pooling (Prisma Accelerate for Neon)
+- Local Docker Compose orchestration
 - Migration strategy (Prisma Migrate)
 - Seed data for development
-- Backup strategy (Neon automated backups)
+- Backup strategy (pg_dump via Docker)
 
 **Frontend Architecture (HTMX)**:
 
@@ -593,13 +593,13 @@ model Expense {
 
 - Development Dockerfile
 - Production Dockerfile
-- docker-compose.yml for local dev
+- docker-compose.yml for local server orchestration (including Postgres and Nginx)
 
 **Environment Variables**:
 
 ```env
-# Database
-DATABASE_URL="postgresql://..."
+# Database (Docker Network)
+DATABASE_URL="postgresql://user:password@postgres:5432/finance-app"
 
 # Auth
 JWT_SECRET="your_strong_jwt_secret"
@@ -607,7 +607,7 @@ ADMIN_USERNAME="admin"
 ADMIN_PASSWORD_HASH="your_bcrypt_password_hash"
 
 # App
-NODE_ENV="development|production"
+NODE_ENV="production"
 PORT="3000"
 ```
 

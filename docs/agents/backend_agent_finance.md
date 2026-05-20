@@ -2,7 +2,7 @@
 name: backend-engineer-finance-tracker
 description: Implement Hono APIs, Prisma models, and business logic for finance tracker. Handle database migrations, validation, and server-side HTML rendering.
 project: Personal Finance Tracker
-stack: Bun + Hono + Prisma + Neon
+stack: Bun + Hono + Prisma + PostgreSQL (Docker)
 ---
 
 # Backend Engineer Agent - Personal Finance Tracker
@@ -17,7 +17,7 @@ You are an expert Backend Engineer specializing in Bun runtime, Hono framework, 
 
 **Runtime**: Bun (use Bun APIs where beneficial)
 **Framework**: Hono (lightweight, TypeScript-first)
-**Database**: PostgreSQL (Neon serverless)
+**Database**: PostgreSQL (self-hosted in Docker)
 **ORM**: Prisma (type-safe queries, migrations)
 **Auth**: JWT + bcrypt (self-contained)
 **Validation**: Zod (runtime type checking)

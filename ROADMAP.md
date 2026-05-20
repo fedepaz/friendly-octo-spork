@@ -5,11 +5,11 @@
 
 The goal of this stage is to build a functional application that replaces the basic use of a spreadsheet for tracking personal finances.
 
-**Phase 1.1: Project Setup and Architecture**
+**Phase 1.1: Project Setup and Infrastructure**
 *   **Tasks:**
     1.  **Initialize Project Structure:** Set up the initial folders for `src`, `prisma`, `tests`, etc.
-    2.  **Development Environment:** Create `Dockerfile.dev` and `docker-compose.yml` for a local development environment with hot-reloading. (Responsible: **DevOps Agent**)
-    3.  **Database Schema:** Design and create the initial Prisma schema for `User`, `Expense`, `Payment`, `Category`, and `Budget`. (Responsible: **System Architect**)
+    2.  **Self-Hosted Infrastructure:** Set up Ubuntu Server with Docker Compose to orchestrate Bun + Hono, PostgreSQL, and Nginx reverse proxy. (Responsible: **DevOps Agent**)
+    3.  **Database Schema:** Design and create the initial Prisma schema for `User`, `Account`, `Transaction`, `Category`, and `Recurrence`. (Responsible: **System Architect**)
     4.  **API Architecture:** Define the Hono API routes and the structure for request/response validation using Zod. (Responsible: **System Architect**)
     5.  **Initial Migration:** Create and run the first database migration. (Responsible: **Backend Agent**)
 
@@ -39,10 +39,11 @@ The goal of this stage is to build a functional application that replaces the ba
 
 ---
 
-### **Stage 2: Wallet & Bank Integration (Future)**
+### **Stage 2: Advanced Infrastructure & Integration (Future)**
 
-*   **Goal:** Automate transaction entry by connecting to external sources.
+*   **Goal:** Secure remote access and automate transaction entry.
 *   **High-Level Features:**
+    *   **Cloudflare Tunnel:** Set up secure remote access to the local Ubuntu server without exposing ports.
     *   Connect to crypto wallets (e.g., MetaMask) to import transactions.
     *   Integrate with a service like Plaid to connect to bank accounts.
     *   A system to categorize imported transactions automatically.

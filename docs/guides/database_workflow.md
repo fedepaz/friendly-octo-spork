@@ -2,9 +2,9 @@
 
 This document outlines the required database operations and workflows for Creating, Reading, and Updating data, based on the database's relational schema.
 
-### Core Principle: Data Integrity and Immutability
+### Core Philosophy: Data Integrity and Immutability
 
-The database is the single source of truth. Workflows are designed to ensure that financial calculations are always consistent and that a historical record is maintained.
+The database is the single source of truth. Workflows are designed to ensure that financial calculations are always consistent and that a historical record is maintained. The application uses PostgreSQL running in a Docker container with persistent storage.
 
 ---
 
