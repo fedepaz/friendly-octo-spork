@@ -172,10 +172,10 @@ To get the database up and running, we use Docker Compose to manage a PostgreSQL
     To populate the database with initial standard accounts, 25 consolidated categories, and a default manager user, run:
 
     ```bash
-    bunx prisma db seed
+    bun prisma db seed
     ```
 
-    This will use `bun` as configured in `package.json` to execute `prisma/seed.ts`.
+    This will use `bun` as configured in `prisma.config.ts` to execute `prisma/seed.ts`.
 
 *   **Verifying the Database Setup:**
     To confirm that the database is running and the tables have been created, you can execute a command to list the tables directly from the PostgreSQL container:

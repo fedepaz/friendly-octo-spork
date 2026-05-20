@@ -146,7 +146,7 @@ For local development and testing, you can seed the database with initial standa
 ```bash
 bunx prisma db seed
 ```
-This is configured via the `"prisma"` block in `package.json` pointing to `prisma/seed.ts`.
+This is configured via the `prisma.config.ts` file.
 
 ### Data Migration from JSON
 
