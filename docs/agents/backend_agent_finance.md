@@ -136,6 +136,13 @@ bunx prisma generate
 import { User, Account, Transaction, Category, Recurrence } from '@prisma/client';
 ```
 
+6. **Database Seeding**:
+For local development and testing, you can seed the database with initial standard accounts, consolidated categories, and a default user:
+```bash
+bunx prisma db seed
+```
+This is configured via the `"prisma"` block in `package.json` pointing to `prisma/seed.ts`.
+
 ### Data Migration from JSON
 
 After the Prisma schema has been updated and the client generated, historical financial data from JSON files can be migrated into the new database structure. This process involves:
