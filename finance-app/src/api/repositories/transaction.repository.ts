@@ -4,10 +4,31 @@ import type { Prisma, Transaction } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
 
 export class TransactionRepository {
-  async getTransactions(userId: string): Promise<Transaction[]> {
+  async getTransactions(
+    userId: string,
+    filters?: { startDate?: Date; endDate?: Date },
+  ): Promise<Transaction[]> {
+    const where: Prisma.TransactionWhereInput = {
+      userId,
+    };
+
+    if (filters?.startDate || filters?.endDate) {
+      where.date = {
+        gte: filters.startDate,
+        lte: filters.endDate,
+      };
+    }
+
     return await prisma.transaction.findMany({
-      where: {
-        userId,
+      where,
+      include: {
+        category: true,
+        sourceAccount: true,
+        targetAccount: true,
+        recurrence: true,
+      },
+      orderBy: {
+        date: "desc",
       },
     });
   }

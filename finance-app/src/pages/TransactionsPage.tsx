@@ -17,7 +17,7 @@ interface TransactionPageProps {
     | "returns"
     | "transfers";
   title: string;
-  navItem: string;
+  navItem?: string;
 }
 
 export const TransactionPage: FC<TransactionPageProps> = ({

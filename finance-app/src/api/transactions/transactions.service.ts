@@ -16,12 +16,27 @@ export class TransactionsService {
   private accountRepository = new AccountRepository();
   private recurrenceRepository = new RecurrenceRepository();
 
-  async findAllTransactions(userId: string) {
+  async findAllTransactions(userId: string, month?: string) {
     if (!userId) {
       throw new Error("User id is required");
     }
-    const transactions =
-      await this.transactionRepository.getTransactions(userId);
+
+    let startDate: Date | undefined;
+    let endDate: Date | undefined;
+
+    if (month) {
+      const [year, m] = month.split("-").map(Number);
+      if (year && m) {
+        startDate = new Date(year, m - 1, 1);
+        endDate = new Date(year, m, 0, 23, 59, 59, 999); // Last day of the month
+      }
+    }
+
+    const transactions = await this.transactionRepository.getTransactions(
+      userId,
+      { startDate, endDate },
+    );
+
     if (!transactions) {
       throw new Error("Transactions not found");
     }

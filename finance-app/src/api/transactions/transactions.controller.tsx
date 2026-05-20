@@ -15,9 +15,20 @@ export class TransactionsController {
     try {
       const payload = c.get("jwtPayload") as { sub: string };
       const userId = payload.sub;
-      const month = c.req.query("month");
+      const month =
+        c.req.query("month") || new Date().toISOString().slice(0, 7);
 
-      const data = await this.transactionService.findAllTransactions(userId);
+      const transactions = await this.transactionService.findAllTransactions(
+        userId,
+        month,
+      );
+
+      const renderData = {
+        transactions,
+        currentMonth: month,
+        transactionType: "expenses" as const,
+        title: "Expenses",
+      };
 
       return c.render(<TransactionPage {...renderData} />);
     } catch (error) {
