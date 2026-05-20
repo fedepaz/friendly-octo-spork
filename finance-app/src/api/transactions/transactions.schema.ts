@@ -38,7 +38,7 @@ export const createTransactionSchema = z.object({
   type: z.nativeEnum(TransactionType),
   amount: z.coerce.number().positive("Amount must be a positive number"),
   date: z.coerce.date(),
-  description: z.string().min(1, "Description is required"),
+  description: z.string().min(1, "Description is required").max(255, "Description is too long"),
   categoryId: z.coerce.number().int().optional().nullable(),
   sourceAccountId: z.coerce.number().int().optional().nullable(),
   targetAccountId: z.coerce.number().int().optional().nullable(),

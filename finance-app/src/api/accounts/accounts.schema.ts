@@ -16,7 +16,7 @@ export const createAccountSchema = z.object({
   name: z
     .string()
     .min(1, "Account name is required")
-    .max(255, "Account name is too long"),
+    .max(50, "Account name is too long"),
   type: z.nativeEnum(AccountType, {
     error: () => ({ message: "Invalid account type" }),
   }),

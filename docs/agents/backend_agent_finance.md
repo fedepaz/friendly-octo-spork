@@ -112,6 +112,11 @@ export const someController = async (c: Context) => {
 bunx prisma migrate dev --name initial_schema
 ```
 
+**CRITICAL**: Always ensure that new fields have appropriate database constraints:
+- Use `@db.Decimal(15, 2)` for all monetary values.
+- Use `@db.VarChar(N)` for all string fields (e.g., 50 for names, 255 for descriptions).
+- Match these limits in your Zod validation schemas.
+
 2. **Review Generated SQL**:
 ```sql
 -- Always review migrations in prisma/migrations/

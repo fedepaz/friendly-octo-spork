@@ -13,7 +13,7 @@ export const createCategorySchema = z.object({
   name: z
     .string()
     .min(1, "Category name is required")
-    .max(255, "Category name is too long"),
+    .max(50, "Category name is too long"),
   color: z
     .string()
     .regex(/^#[0-9A-F]{6}$/i, "Invalid color format")

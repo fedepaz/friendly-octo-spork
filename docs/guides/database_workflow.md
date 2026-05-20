@@ -44,11 +44,32 @@ This applies to any operation that changes an account's balance. **All operation
         2.  The `Transaction` row is updated with the new data.
         3.  The effect of the *new* transaction data is applied to the `Account` balance(s).
 
+## 3. Data Precision and Constraints
+
+To ensure data integrity, storage efficiency, and consistent financial calculations, all database models must adhere to strict precision and length constraints.
+
+### Currency Precision
+
+All fields representing monetary values (e.g., `amount`, `balance`) must use the `Decimal` type with exactly two decimal places.
+
+-   **Prisma Attribute**: `@db.Decimal(15, 2)`
+-   **Why**: This prevents floating-point rounding errors and ensures that all financial data is stored and displayed consistently (e.g., `100.50` instead of `100.50000000003`).
+
+### String Length Limits (VARCHAR)
+
+To prevent database bloat and ensure predictable data sizes, all `String` fields must have explicit length limits using the `VarChar` type.
+
+-   **Standard Limits**:
+    -   **User/Account/Category Names**: `@db.VarChar(50)`
+    -   **Descriptions/Recurrence Names**: `@db.VarChar(100)` to `@db.VarChar(255)`
+    -   **Emails**: `@db.VarChar(150)`
+    -   **IDs (CUID)**: `@db.VarChar(36)`
+    -   **Colors (Hex Codes)**: `@db.VarChar(7)` (e.g., `#FF0000`)
+-   **Zod Alignment**: Always ensure that the corresponding Zod schemas in the backend include `.max(N)` validation that matches these database limits.
+
 ---
 
-
-
-## 3. The Delete Workflow
+## 4. The Delete Workflow
 
 
 

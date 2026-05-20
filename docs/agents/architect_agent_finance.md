@@ -131,10 +131,10 @@ For each entity, define:
 
 ```prisma
 model User {
-  id           String        @id @default(cuid())
-  name         String
-  email        String?       @unique
-  passwordHash String
+  id           String        @id @default(cuid()) @db.VarChar(36)
+  name         String        @db.VarChar(100)
+  email        String?       @unique @db.VarChar(150)
+  passwordHash String        @db.VarChar(255)
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @default(now()) @updatedAt
   accounts     Account[]
@@ -145,8 +145,8 @@ model User {
 
 model Account {
   id               Int           @id @default(autoincrement())
-  userId           String
-  name             String
+  userId           String        @db.VarChar(36)
+  name             String        @db.VarChar(50)
   type             AccountType
   currency         Currency
   balance          Decimal       @default(0) @db.Decimal(15, 2)
@@ -166,9 +166,9 @@ model Account {
 
 model Category {
   id           Int           @id @default(autoincrement())
-  userId       String
-  name         String
-  color        String?
+  userId       String        @db.VarChar(36)
+  name         String        @db.VarChar(50)
+  color        String?       @db.VarChar(7)
   createdAt    DateTime      @default(now()) @db.Timestamp(6)
   updatedAt    DateTime      @default(now()) @db.Timestamp(6)
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -181,8 +181,8 @@ model Category {
 
 model Recurrence {
   id           Int            @id @default(autoincrement())
-  userId       String
-  name         String
+  userId       String         @db.VarChar(36)
+  name         String         @db.VarChar(100)
   type         TransactionType
   amount       Decimal        @db.Decimal(15, 2)
   frequency    RecurrenceType
@@ -217,11 +217,11 @@ model Recurrence {
 
 model Transaction {
   id              Int             @id @default(autoincrement())
-  userId          String
+  userId          String          @db.VarChar(36)
   type            TransactionType
-  amount          Decimal
+  amount          Decimal         @db.Decimal(15, 2)
   date            DateTime
-  description     String?
+  description     String?         @db.VarChar(255)
   categoryId      Int?
   sourceAccountId Int?
   targetAccountId Int?
@@ -231,7 +231,7 @@ model Transaction {
   budgetCategory    BudgetCategory?
   isCardExpense Boolean?
   cardType      CardType?
-  source        String?
+  source        String?         @db.VarChar(100)
   metadata        Json?
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
@@ -617,10 +617,10 @@ PORT="3000"
 
 ```prisma
 model User {
-  id           String        @id @default(cuid())
-  name         String
-  email        String?       @unique
-  passwordHash String
+  id           String        @id @default(cuid()) @db.VarChar(36)
+  name         String        @db.VarChar(100)
+  email        String?       @unique @db.VarChar(150)
+  passwordHash String        @db.VarChar(255)
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @default(now()) @updatedAt
   accounts     Account[]
@@ -631,8 +631,8 @@ model User {
 
 model Account {
   id               Int           @id @default(autoincrement())
-  userId           String
-  name             String
+  userId           String        @db.VarChar(36)
+  name             String        @db.VarChar(50)
   type             AccountType
   currency         Currency
   balance          Decimal       @default(0) @db.Decimal(15, 2)
@@ -652,8 +652,8 @@ model Account {
 
 model Recurrence {
   id           Int            @id @default(autoincrement())
-  userId       String
-  name         String
+  userId       String         @db.VarChar(36)
+  name         String         @db.VarChar(100)
   type         TransactionType
   amount       Decimal        @db.Decimal(15, 2)
   frequency    RecurrenceType
@@ -688,11 +688,11 @@ model Recurrence {
 
 model Transaction {
   id              Int             @id @default(autoincrement())
-  userId          String
+  userId          String          @db.VarChar(36)
   type            TransactionType
-  amount          Decimal
+  amount          Decimal         @db.Decimal(15, 2)
   date            DateTime
-  description     String?
+  description     String?         @db.VarChar(255)
   categoryId      Int?
   sourceAccountId Int?
   targetAccountId Int?
@@ -702,7 +702,7 @@ model Transaction {
   budgetCategory    BudgetCategory?
   isCardExpense Boolean?
   cardType      CardType?
-  source        String?
+  source        String?         @db.VarChar(100)
   metadata        Json?
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
