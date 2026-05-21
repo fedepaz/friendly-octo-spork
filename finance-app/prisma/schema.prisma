@@ -13,8 +13,13 @@ model User {
   name         String        @db.VarChar(100)
   email        String?       @unique @db.VarChar(150)
   passwordHash String        @db.VarChar(255)
+
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @default(now()) @updatedAt
+
+  deletedByUserId String? @db.VarChar(36)
+  deletedAt DateTime? @db.Timestamp(0)
+
   accounts     Account[]
   categories   Category[]
   recurrences  Recurrence[]
@@ -22,14 +27,19 @@ model User {
 }
 
 model Account {
-  id               Int           @id @default(autoincrement())
+  id           String        @id @default(cuid()) @db.VarChar(36)
   userId           String        @db.VarChar(36)
   name             String        @db.VarChar(50)
   type             AccountType
   currency         Currency
   balance          Decimal       @default(0) @db.Decimal(15, 2)
+
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
+
+  deletedByUserId String? @db.VarChar(36)
+  deletedAt DateTime? @db.Timestamp(0)
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactionsFrom Transaction[] @relation("SourceAccount")
   transactionsTo   Transaction[] @relation("TargetAccount")
@@ -43,12 +53,14 @@ model Account {
 }
 
 model Category {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(cuid()) @db.VarChar(36)
   userId       String        @db.VarChar(36)
   name         String        @db.VarChar(50)
   color        String?       @db.VarChar(7)
+
   createdAt    DateTime      @default(now()) @db.Timestamp(6)
   updatedAt    DateTime      @default(now()) @db.Timestamp(6)
+  
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactions Transaction[]
   recurrences  Recurrence[]
@@ -58,7 +70,7 @@ model Category {
 }
 
 model Recurrence {
-  id           Int            @id @default(autoincrement())
+  id           String        @id @default(cuid()) @db.VarChar(36)
   userId       String         @db.VarChar(36)
   name         String         @db.VarChar(100)
   type         TransactionType
@@ -72,9 +84,9 @@ model Recurrence {
   active       Boolean        @default(true)
   
   // Categorization
-  categoryId      Int?
-  sourceAccountId Int? // For expenses: which account pays
-  targetAccountId Int? // For income: which account receives
+  categoryId      String?   @db.VarChar(36)
+  sourceAccountId String?   @db.VarChar(36)
+  targetAccountId String?   @db.VarChar(36)
   
   // Card expenses (for card-based recurrences)
   isCardExpense Boolean  @default(false)
@@ -94,16 +106,16 @@ model Recurrence {
 }
 
 model Transaction {
-  id              Int             @id @default(autoincrement())
+  id           String        @id @default(cuid()) @db.VarChar(36)
   userId          String          @db.VarChar(36)
   type            TransactionType
   amount          Decimal         @db.Decimal(15, 2)
   date            DateTime
   description     String?         @db.VarChar(255)
-  categoryId      Int?
-  sourceAccountId Int?
-  targetAccountId Int?
-  recurrenceId    Int?
+  categoryId      String?         @db.VarChar(36)
+  sourceAccountId String?         @db.VarChar(36)
+  targetAccountId String?         @db.VarChar(36)
+  recurrenceId    String?         @db.VarChar(36)
   recurrencePartNumber Int?
   isBudgetedExpense Boolean?
   budgetCategory    BudgetCategory?

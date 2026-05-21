@@ -50,9 +50,10 @@ Start with systematic brainstorming:
 Data Architecture:
 
 - Entity modeling (User, Account, Transaction, Category, Recurrence)
-- Relationships and foreign keys
-- Indexes for common queries
-- Soft deletes vs hard deletes
+- **ID Standard**: Use **CUIDs** (`@id @default(cuid()) @db.VarChar(36)`) for all primary keys to ensure global uniqueness and ease of synchronization.
+- **Soft Deletes**: Standardize on **Soft Deletes** using `deletedAt DateTime?` and `deletedByUserId String?` fields. Never use hard `DELETE` operations for core entities.
+- Relationships and foreign keys (must match CUID types)
+- Indexes for common queries (including filtering for non-deleted records)
 - Ensure database schema designs enable and enforce the data integrity and immutability principles outlined in the Database-Centric Workflow Guide (docs/guides/database_workflow.md).
 
 **API Design**:

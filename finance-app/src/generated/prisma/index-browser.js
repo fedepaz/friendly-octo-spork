@@ -126,7 +126,9 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   passwordHash: 'passwordHash',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedByUserId: 'deletedByUserId',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.AccountScalarFieldEnum = {
@@ -137,7 +139,9 @@ exports.Prisma.AccountScalarFieldEnum = {
   currency: 'currency',
   balance: 'balance',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedByUserId: 'deletedByUserId',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {

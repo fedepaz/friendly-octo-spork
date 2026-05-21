@@ -43,13 +43,14 @@ app.onError(errorHandler);
 
 **Prisma Patterns**:
 ```typescript
-// Always include userId filter
+// Always include userId and soft delete filter
 const transactions = await prisma.transaction.findMany({
   where: {
     userId,
-    sourceAccountId: sourceAccountId, // Example filtering
-    targetAccountId: targetAccountId, // Example filtering
-    recurrenceId: recurrenceId,       // Example filtering
+    deletedAt: null, // Always exclude soft-deleted records
+    sourceAccountId: sourceAccountId,
+    targetAccountId: targetAccountId,
+    recurrenceId: recurrenceId,
   },
   include: TRANSACTION_INCLUDES,
   orderBy: { date: 'desc' }

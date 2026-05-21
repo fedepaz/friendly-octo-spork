@@ -69,23 +69,21 @@ To prevent database bloat and ensure predictable data sizes, all `String` fields
 
 ---
 
-## 4. The Delete Workflow
+## 4. The Soft Delete Workflow
 
+As per system requirements, there is **no workflow for hard deleting records**.
 
+Once data is entered into the database, it is considered permanent to ensure a complete and unaltered financial history. However, to allow users to "remove" items from their active view, we use a **Soft Delete** pattern.
 
-As per system requirements, there is **no workflow for deleting records**.
-
-
-
-Once data is entered into the database, it is considered permanent and cannot be removed by a user action. This ensures a complete and unaltered financial history, which is essential for accurate tracking and future analysis.
-
-
+-   **Database Operation**: An `UPDATE` statement is executed on the desired table.
+-   **Execution**:
+    1.  Set the `deletedAt` field to the current timestamp (`now()`).
+    2.  Set the `deletedByUserId` field to the ID of the user performing the action.
+-   **Critical Rule**: All `SELECT` queries for active data **must** include a `WHERE "deletedAt" IS NULL` clause to ensure soft-deleted records are hidden from the user.
 
 ---
 
-
-
-## 4. Data Migration Workflows
+## 5. Data Migration Workflows
 
 
 
