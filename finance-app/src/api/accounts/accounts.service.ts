@@ -16,7 +16,7 @@ export class AccountsService {
     return accounts;
   }
 
-  async findAccountById(accountId: number) {
+  async findAccountById(accountId: string) {
     if (!accountId) {
       throw new Error("Account id is required");
     }

@@ -1,10 +1,3 @@
----
-name: system-architect-finance-tracker
-description: Transform product requirements into technical architecture for finance tracker. Design Prisma schemas, Hono API contracts, and HTMX interaction patterns.
-project: Personal Finance Tracker
-stack: Bun + Hono + HTMX + Prisma + PostgreSQL + Docker + Nginx + JWT + bcrypt + XLSX + Zod + Tailwind CSS + CSS Variables Theming
----
-
 # System Architect Agent - Personal Finance Tracker
 
 You are an elite system architect specializing in high-performance web applications using modern TypeScript stacks. You design architectures optimized for Bun runtime, server-side rendering, and relational databases.
@@ -72,7 +65,7 @@ Data Architecture:
 
 ### 2. Technology Stack Architecture
 
-**Backend Architecture (Hono)**:
+#### Backend Architecture (Hono):
 
 **Unified Transaction Endpoint**:
 Instead of splitting logic into multiple endpoints for each transaction type, the system now uses a unified `POST /api/transactions` endpoint. This allows the `TransactionsService` to handle all transaction types (INCOME, EXPENSE, TRANSFER, etc.) atomically within a single `prisma.$transaction`. This approach ensures that account balance updates and recurrence progress are always in sync with the transaction creation.
@@ -110,14 +103,14 @@ Instead of splitting logic into multiple endpoints for each transaction type, th
 4. Zod validation
 5. Response formatting
 
-**Database Architecture (Prisma + PostgreSQL)**:
+#### Database Architecture (Prisma + PostgreSQL):
 
 - Local Docker Compose orchestration
 - Migration strategy (Prisma Migrate)
 - Seed data for development
 - Backup strategy (pg_dump via Docker)
 
-**Frontend Architecture (HTMX)**:
+#### Frontend Architecture (HTMX):
 
 - Server-rendered templates (Hono JSX)
 - Partial updates with `hx-target`
@@ -145,7 +138,7 @@ model User {
 }
 
 model Account {
-  id               Int           @id @default(autoincrement())
+  id               String        @id @default(cuid()) @db.VarChar(36)
   userId           String        @db.VarChar(36)
   name             String        @db.VarChar(50)
   type             AccountType
@@ -156,7 +149,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactionsFrom Transaction[] @relation("SourceAccount")
   transactionsTo   Transaction[] @relation("TargetAccount")
-  
+
   // Recurrences using this account
   recurrencesFrom Recurrence[] @relation("RecurrenceSource")
   recurrencesTo   Recurrence[] @relation("RecurrenceTarget")
@@ -166,7 +159,7 @@ model Account {
 }
 
 model Category {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(cuid()) @db.VarChar(36)
   userId       String        @db.VarChar(36)
   name         String        @db.VarChar(50)
   color        String?       @db.VarChar(7)
@@ -181,11 +174,11 @@ model Category {
 }
 
 model Recurrence {
-  id           Int            @id @default(autoincrement())
-  userId       String         @db.VarChar(36)
-  name         String         @db.VarChar(100)
+  id           String        @id @default(cuid()) @db.VarChar(36)
+  userId       String        @db.VarChar(36)
+  name         String        @db.VarChar(100)
   type         TransactionType
-  amount       Decimal        @db.Decimal(15, 2)
+  amount       Decimal       @db.Decimal(15, 2)
   frequency    RecurrenceType
   totalParts   Int?
   currentPart  Int  @default(0)
@@ -193,16 +186,16 @@ model Recurrence {
   nextDate     DateTime?
   endDate      DateTime?
   active       Boolean        @default(true)
-  
+
   // Categorization
-  categoryId      Int?
-  sourceAccountId Int? // For expenses: which account pays
-  targetAccountId Int? // For income: which account receives
-  
+  categoryId      String? @db.VarChar(36)
+  sourceAccountId String? // For expenses: which account pays @db.VarChar(36)
+  targetAccountId String? // For income: which account receives @db.VarChar(36)
+
   // Card expenses (for card-based recurrences)
   isCardExpense Boolean  @default(false)
   cardType      CardType?
-  
+
   // Metadata for additional info
   metadata Json?
 
@@ -217,16 +210,16 @@ model Recurrence {
 }
 
 model Transaction {
-  id              Int             @id @default(autoincrement())
-  userId          String          @db.VarChar(36)
+  id              String        @id @default(cuid()) @db.VarChar(36)
+  userId          String        @db.VarChar(36)
   type            TransactionType
-  amount          Decimal         @db.Decimal(15, 2)
+  amount          Decimal       @db.Decimal(15, 2)
   date            DateTime
-  description     String?         @db.VarChar(255)
-  categoryId      Int?
-  sourceAccountId Int?
-  targetAccountId Int?
-  recurrenceId    Int?
+  description     String?       @db.VarChar(255)
+  categoryId      String? @db.VarChar(36)
+  sourceAccountId String? @db.VarChar(36)
+  targetAccountId String? @db.VarChar(36)
+  recurrenceId    String? @db.VarChar(36)
   recurrencePartNumber Int?
   isBudgetedExpense Boolean?
   budgetCategory    BudgetCategory?
@@ -234,14 +227,14 @@ model Transaction {
   cardType      CardType?
   source        String?         @db.VarChar(100)
   metadata        Json?
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   category        Category?       @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   recurrence      Recurrence?     @relation(fields: [recurrenceId], references: [id], onDelete: SetNull)
   sourceAccount   Account?        @relation("SourceAccount", fields: [sourceAccountId], references: [id], onDelete: SetNull)
   targetAccount   Account?        @relation("TargetAccount", fields: [targetAccountId], references: [id], onDelete: SetNull)
   user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
   @@index([userId, date])
   @@index([userId, type])
   @@index([categoryId])
@@ -294,6 +287,174 @@ enum CardType {
   AMEX
   MAESTRO
 }
+```
+
+### 4. API Contract Specifications
+
+**Endpoint Template**:
+
+```typescript
+// GET /api/expenses
+// Authentication: Required (JWT)
+// Query Params:
+//   - startDate?: string (ISO date)
+//   - endDate?: string (ISO date)
+//   - category?: string
+//   - limit?: number (default 50)
+//   - offset?: number (default 0)
+
+interface GetExpensesRequest {
+  startDate?: string;
+  endDate?: string;
+  category?: string;
+  limit?: number;
+  offset?: number;
+}
+
+interface GetExpensesResponse {
+  expenses: Expense[];
+  total: number;
+  hasMore: boolean;
+}
+
+// POST /api/expenses
+interface CreateExpenseRequest {
+  date: string; // ISO date
+  amount: number;
+  concept: string;
+  category: string;
+}
+
+interface CreateExpenseResponse {
+  expense: Expense;
+  message: string;
+}
+
+// Error Response
+interface ErrorResponse {
+  error: string;
+  message: string;
+  details?: Record<string, string[]>; // Validation errors
+}
+```
+
+### 5. HTMX Interaction Patterns
+
+**Form Submission Pattern**:
+
+```html
+<!-- Expense Entry Form -->
+<form hx-post="/api/expenses" hx-target="#expense-list" hx-swap="afterbegin">
+  <input type="date" name="date" required />
+  <input type="number" name="amount" step="0.01" required />
+  <input type="text" name="concept" required />
+  <select name="category" required>
+    <!-- Options -->
+  </select>
+  <button type="submit">Add Expense</button>
+</form>
+```
+
+<!-- Simple UI Toggle Pattern -->
+
+<button
+hx-on:click="
+const sidebar = document.getElementById('mobile-sidebar-container');
+if (sidebar) {
+sidebar.classList.toggle('open');
+}
+"
+
+> Toggle Menu
+> </button>
+
+<!-- Expense List (target for updates) -->
+<div id="expense-list">
+  <!-- Server renders expense rows here -->
+</div>
+```
+
+**Table Update Pattern**:
+
+```html
+<!-- Sortable/Filterable Table -->
+<div hx-get="/api/expenses" hx-trigger="load" hx-include="[name='filter']">
+  <!-- Server renders table here -->
+</div>
+```
+
+### 5.1. Project Architecture: Vertical Slicing
+
+This project follows a **Vertical Slicing** (or **Feature-Based**) architecture. This is a modern and highly scalable pattern where code is organized by feature rather than by file type.
+
+**Core Principle**: All files related to a single feature—including backend API, frontend components, and pages—are grouped together. This improves code cohesion and makes the application easier to develop, scale, and maintain.
+
+**Directory Structure for a Feature (e.g., "Accounts"):**
+
+```
+src/
+├── api/
+│   └── accounts/
+│       ├── accounts.routes.ts
+│       ├── accounts.controller.tsx
+│       ├── accounts.service.ts
+│       └── accounts.schema.ts
+├── components/
+│   └── accounts/
+│       ├── AccountsList.tsx
+│       └── AccountForm.tsx
+└── pages/
+    └── AccountsPage.tsx
+```
+
+- **`api/{feature}`**: Contains all backend logic.
+  - **`.routes.ts`**: Defines the Hono API endpoints for the feature.
+  - **`.controller.tsx`**: Handles HTTP requests and responses, and renders JSX components.
+  - **`.service.ts`**: Contains the core business logic and database interactions (Prisma).
+  - **`.schema.ts`**: Defines Zod validation schemas for the feature's data.
+- **`components/{feature}`**: Contains reusable JSX components specific to the feature.
+- **`pages/{Feature}Page.tsx`**: The main page component that assembles the feature's UI.
+
+This structure is the standard for this project and must be followed for all new feature development.
+
+### 6. Security Architecture
+
+**Authentication Flow (JWT + bcrypt)**:
+
+```typescript
+// 1. Login Endpoint (/api/login)
+// User POSTs a password.
+// Service layer compares it with the stored hash using `Bun.password.verify()`.
+
+// 2. JWT Creation & Cookie
+// If password is valid, create a JWT with the userId.
+// Send the JWT back to the client in a secure, httpOnly cookie.
+import { sign } from "hono/jwt";
+import { setCookie } from "hono/cookie";
+
+const payload = {
+  sub: userId,
+  exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
+}; // 24 hour expiry
+const token = await sign(payload, process.env.JWT_SECRET);
+setCookie(c, "auth_token", token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "Strict",
+  path: "/",
+});
+
+// 3. Middleware Verification
+// The requireAuth middleware verifies the JWT from the cookie on protected routes.
+import { jwt } from "hono/jwt";
+
+app.use(
+  "/api/*",
+  jwt({
+    secret: process.env.JWT_SECRET,
+    cookie: "auth_token",
+  }),
+);
 ```
 
 **Indexing Strategy**:
@@ -387,11 +548,7 @@ interface ErrorResponse {
 
 ```html
 <!-- Expense Entry Form -->
-<form
-  hx-post="/api/expenses"
-  hx-target="#expense-list"
-  hx-swap="afterbegin"
->
+<form hx-post="/api/expenses" hx-target="#expense-list" hx-swap="afterbegin">
   <input type="date" name="date" required />
   <input type="number" name="amount" step="0.01" required />
   <input type="text" name="concept" required />
@@ -498,7 +655,7 @@ app.use(
   jwt({
     secret: process.env.JWT_SECRET,
     cookie: "auth_token",
-  })
+  }),
 );
 
 // 4. Get user ID in routes
@@ -642,7 +799,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactionsFrom Transaction[] @relation("SourceAccount")
   transactionsTo   Transaction[] @relation("TargetAccount")
-  
+
   // Recurrences using this account
   recurrencesFrom Recurrence[] @relation("RecurrenceSource")
   recurrencesTo   Recurrence[] @relation("RecurrenceTarget")
@@ -664,16 +821,16 @@ model Recurrence {
   nextDate     DateTime?
   endDate      DateTime?
   active       Boolean        @default(true)
-  
+
   // Categorization
   categoryId      Int?
   sourceAccountId Int? // For expenses: which account pays
   targetAccountId Int? // For income: which account receives
-  
+
   // Card expenses (for card-based recurrences)
   isCardExpense Boolean  @default(false)
   cardType      CardType?
-  
+
   // Metadata for additional info
   metadata Json?
 
@@ -712,7 +869,7 @@ model Transaction {
   sourceAccount   Account?        @relation("SourceAccount", fields: [sourceAccountId], references: [id], onDelete: SetNull)
   targetAccount   Account?        @relation("TargetAccount", fields: [targetAccountId], references: [id], onDelete: SetNull)
   user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+
   @@index([userId, date])
   @@index([userId, type])
   @@index([categoryId])

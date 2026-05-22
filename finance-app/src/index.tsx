@@ -8,7 +8,6 @@ import { logger } from "hono/logger";
 import { cors } from "hono/cors";
 import authRoutes from "./api/auth/auth.routes";
 import { ErrorPage } from "./pages/ErrorPage";
-import categoriesRoutes from "./api/categories/categories.routes";
 import recurrencesRoutes from "./api/recurrences/recurrences.routes";
 import transactionsRoutes from "./api/transactions/transactions.routes";
 import dashboardRoutes from "./api/dashboard/dashboard.routes";
@@ -44,14 +43,12 @@ app.route("/", authRoutes);
 // Apply auth middleware to all protected routes
 app.use("/dashboard/*", requireAuth, refreshTokenIfNeeded);
 app.use("/accounts/*", requireAuth, refreshTokenIfNeeded);
-app.use("/categories/*", requireAuth, refreshTokenIfNeeded);
 app.use("/recurrences/*", requireAuth, refreshTokenIfNeeded);
 app.use("/transactions/*", requireAuth, refreshTokenIfNeeded);
 app.use("/api/*", requireAuth, refreshTokenIfNeeded);
 
 // Mount the protected API routes
 app.route("/accounts", accountsRoutes);
-app.route("/categories", categoriesRoutes);
 app.route("/recurrences", recurrencesRoutes);
 app.route("/transactions", transactionsRoutes);
 

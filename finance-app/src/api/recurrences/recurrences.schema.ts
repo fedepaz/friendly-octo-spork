@@ -1,10 +1,14 @@
 // src/schemas/recurrences.schema.ts
 
 import { z } from "zod";
-import { RecurrenceType, TransactionType } from "../../generated/prisma";
+import {
+  CardType,
+  RecurrenceType,
+  TransactionType,
+} from "../../generated/prisma";
 
 export const recurrenceSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   userId: z.string(),
   name: z.string(),
   type: z.nativeEnum(TransactionType),
@@ -14,7 +18,16 @@ export const recurrenceSchema = z.object({
   currentPart: z.number().int().nullable(),
   startDate: z.date(),
   nextDate: z.date().nullable(),
+  endDate: z.date().nullable(),
   active: z.boolean(),
+  categoryId: z.string().optional().nullable(),
+  sourceAccountId: z.string().optional().nullable(),
+  targetAccountId: z.string().optional().nullable(),
+  isCardExpense: z.boolean().optional().nullable(),
+  cardType: z.nativeEnum(CardType).optional().nullable(),
+
+  // Metadata for additional info
+  metadata: z.any().optional(),
 });
 
 export const createRecurrenceSchema = z.object({
@@ -33,6 +46,11 @@ export const createRecurrenceSchema = z.object({
   currentPart: z.number().optional().default(1),
   startDate: z.coerce.date(),
   active: z.boolean().optional().default(true),
+  categoryId: z.string().optional(),
+  sourceAccountId: z.string().optional(),
+  targetAccountId: z.string().optional(),
+  isCardExpense: z.boolean().optional(),
+  cardType: z.nativeEnum(CardType).optional(),
 });
 
 export const updateRecurrenceSchema = createRecurrenceSchema.partial();
@@ -49,10 +67,4 @@ export const recurrenceFilterSchema = z.object({
 export type CreateRecurrenceInput = z.infer<typeof createRecurrenceSchema>;
 export type UpdateRecurrenceInput = z.infer<typeof updateRecurrenceSchema>;
 export type RecurrenceFilterInput = z.infer<typeof recurrenceFilterSchema>;
-
-export enum RecurrenceFrequency {
-  MONTHLY = "MONTHLY",
-  WEEKLY = "WEEKLY",
-  YEARLY = "YEARLY",
-  INSTALLMENT = "INSTALLMENT",
-}
+export type RecurrenceInput = z.infer<typeof recurrenceSchema>;

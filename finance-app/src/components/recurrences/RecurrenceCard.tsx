@@ -1,17 +1,19 @@
-import type { Recurrence } from "@/generated/prisma";
 import { Button } from "@/components/shared/Button"; // New import
 import type { FC } from "hono/jsx";
 import { CalendarDaysIcon, CalendarIcon } from "@/components/icons";
+import type { RecurrenceInput } from "@/api/recurrences/recurrences.schema";
 
 const recurrenceTypeIcons: Record<string, string> = {
   // Changed to use icon names
   MONTHLY: "calendar",
   WEEKLY: "calendar-days",
   YEARLY: "calendar",
-  INSTALLMENT: "trending-up",
 };
 
-const recurrenceTypeStyles: Record<string, { icon: string; textColor: string; bgColor: string; borderColor: string }> = {
+const recurrenceTypeStyles: Record<
+  string,
+  { icon: string; textColor: string; bgColor: string; borderColor: string }
+> = {
   MONTHLY: {
     icon: recurrenceTypeIcons.MONTHLY || "",
     textColor: "text-[var(--accent)]",
@@ -39,7 +41,7 @@ const recurrenceTypeStyles: Record<string, { icon: string; textColor: string; bg
 };
 
 interface RecurrenceCardProps {
-  recurrence: Recurrence;
+  recurrence: RecurrenceInput;
 }
 
 export const RecurrenceCard: FC<RecurrenceCardProps> = ({ recurrence }) => {
@@ -65,7 +67,7 @@ export const RecurrenceCard: FC<RecurrenceCardProps> = ({ recurrence }) => {
               class={`text-2xl ${recurrenceTypeStyles[recurrence.frequency]?.textColor}`}
             >
               {(() => {
-                switch (recurrenceTypeIcons[recurrence.frequency]?.icon) {
+                switch (recurrenceTypeStyles[recurrence.frequency]?.icon) {
                   case "calendar":
                     return <CalendarIcon />;
                   case "calendar-days":
@@ -117,6 +119,17 @@ export const RecurrenceCard: FC<RecurrenceCardProps> = ({ recurrence }) => {
           EDIT
         </Button>
         <Button
+          type="button"
+          class={`${recurrence.active ? "bg-warning" : "bg-success"} text-white`}
+          hx-patch={`/api/recurrences/${recurrence.id}`}
+          hx-vals={JSON.stringify({ active: !recurrence.active })}
+          hx-target="#recurrences-list"
+          hx-swap="innerHTML"
+          aria-label={recurrence.active ? "Deactivate" : "Activate"}
+        >
+          {recurrence.active ? "DEACTIVATE" : "ACTIVATE"}
+        </Button>
+        <Button
           type="button" // Explicitly set type to "button"
           class="bg-destructive text-destructive-foreground"
           hx-delete={`/api/recurrences/${recurrence.id}`}
@@ -128,4 +141,4 @@ export const RecurrenceCard: FC<RecurrenceCardProps> = ({ recurrence }) => {
       </div>
     </div>
   );
-}
+};

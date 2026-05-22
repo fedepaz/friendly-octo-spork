@@ -1,22 +1,14 @@
 // src/pages/DashboardPage.tsx
 
+import type { DashboardInput } from "@/api/dashboard/dashboard.schema";
 import { BudgetProgressCard } from "@/components/dashboard/BudgetProgressCard";
 import { StatCard } from "@/components/dashboard/StatCard";
 import Layout from "@/components/shared/Layout";
 import type { Account } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
 
-interface DashboardData {
-  monthlySpent: number;
-  monthlyBudget: number;
-  dailyAverage: number;
-  expenseCount: number;
-
-  accounts: Account[];
-}
-
 interface DashboardPageProps {
-  data: DashboardData;
+  data: DashboardInput;
 }
 
 export const DashboardPage: FC<DashboardPageProps> = ({ data }) => (

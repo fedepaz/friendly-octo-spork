@@ -14,7 +14,7 @@ export class AccountRepository {
   }
 
   // Get account by id
-  async getAccountById(id: number): Promise<Account | null> {
+  async getAccountById(id: string): Promise<Account | null> {
     return prisma.account.findFirst({
       where: {
         id,
@@ -35,7 +35,7 @@ export class AccountRepository {
 
   // Update account balance
   async updateBalance(
-    id: number,
+    id: string,
     amount: Prisma.Decimal | number,
     operation: "increment" | "decrement",
     tx?: Prisma.TransactionClient,

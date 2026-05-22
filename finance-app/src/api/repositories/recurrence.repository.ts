@@ -12,7 +12,7 @@ export class RecurrenceRepository {
     });
   }
 
-  async getRecurrenceById(id: number): Promise<Recurrence | null> {
+  async getRecurrenceById(id: string): Promise<Recurrence | null> {
     return await prisma.recurrence.findFirst({
       where: {
         id,
@@ -31,7 +31,7 @@ export class RecurrenceRepository {
   }
 
   async updateRecurrence(
-    id: number,
+    id: string,
     data: Prisma.RecurrenceUncheckedUpdateInput,
     tx?: Prisma.TransactionClient,
   ): Promise<Recurrence> {

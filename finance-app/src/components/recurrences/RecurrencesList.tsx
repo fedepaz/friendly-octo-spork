@@ -1,37 +1,23 @@
 // src/components/recurrences/RecurrencesList.tsx
 
 import type { FC } from "hono/jsx";
-import type { Recurrence } from "@/generated/prisma";
 import { RecurrenceCard } from "./RecurrenceCard";
 import { Button } from "@/components/shared/Button"; // New import
 import { ClipboardIcon } from "@/components/icons/ClipboardIcon";
+import type { RecurrenceInput } from "@/api/recurrences/recurrences.schema";
 
 const EmptyState: FC = () => (
   <div
     id="recurrences-list"
     class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-12 text-center rounded-none"
   >
-              <ClipboardIcon class="text-6xl mb-4" aria-label="No recurrences icon" />    <h3 class="text-2xl md:text-3xl font-bold mb-2">
-      NO RECURRENCES YET
-    </h3>
-    <p class="text-muted-foreground">
-      CREATE YOUR FIRST RECURRENCE TO START TRACKING YOUR FINANCES.
-    </p>
-    <Button
-      type="button" // Explicitly set type to "button"
-      hxGet="/api/recurrences/new"
-      hxTarget="#modal-content"
-      hxSwap="innerHTML"
-      dataToggle="modal"
-      dataTarget="#htmx-modal"
-    >
-      CREATE RECURRENCE
-    </Button>
+    <ClipboardIcon class="text-6xl mb-4" aria-label="No recurrences icon" />{" "}
+    <h3 class="text-2xl md:text-3xl font-bold mb-2">NO RECURRENCES YET</h3>
   </div>
 );
 
 interface RecurrencesListProps {
-  recurrences: Recurrence[];
+  recurrences: RecurrenceInput[];
 }
 
 export const RecurrencesList: FC<RecurrencesListProps> = ({ recurrences }) => {
@@ -49,4 +35,4 @@ export const RecurrencesList: FC<RecurrencesListProps> = ({ recurrences }) => {
       ))}
     </div>
   );
-}
+};
