@@ -164,6 +164,7 @@ enum RecurrenceType {
   MONTHLY
   WEEKLY
   YEARLY
+  INSTALLMENT
 }
 
 enum BudgetCategory {

@@ -78,7 +78,8 @@ export type Currency = (typeof Currency)[keyof typeof Currency]
 export const RecurrenceType: {
   MONTHLY: 'MONTHLY',
   WEEKLY: 'WEEKLY',
-  YEARLY: 'YEARLY'
+  YEARLY: 'YEARLY',
+  INSTALLMENT: 'INSTALLMENT'
 };
 
 export type RecurrenceType = (typeof RecurrenceType)[keyof typeof RecurrenceType]
