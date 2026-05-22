@@ -4,10 +4,12 @@ import { TransactionForm } from "@/components/transactions/TransactionForm";
 import { TransactionList } from "@/components/transactions/TransactionList";
 import type { FC } from "hono/jsx";
 import Layout from "@/components/shared/Layout";
-import type { Transaction } from "@/generated/prisma";
+import type { Transaction, Account, Category } from "@/generated/prisma";
 
 interface TransactionPageProps {
   transactions: Transaction[];
+  accounts: Account[];
+  categories: Category[];
   currentMonth: string;
   transactionType:
     | "expenses"
@@ -22,6 +24,8 @@ interface TransactionPageProps {
 
 export const TransactionPage: FC<TransactionPageProps> = ({
   transactions = [],
+  accounts = [],
+  categories = [],
   currentMonth = "2022-01",
   transactionType = "expenses",
   title = "Transactions",
@@ -32,7 +36,14 @@ export const TransactionPage: FC<TransactionPageProps> = ({
       <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">
         {title}
       </h1>
-      <div id="transactions-container">
+
+      <TransactionForm
+        transactionType={transactionType}
+        accounts={accounts}
+        categories={categories}
+      />
+
+      <div id="transactions-container" class="mt-8">
         <TransactionList
           transactions={transactions}
           currentMonth={currentMonth}

@@ -17,6 +17,8 @@ const Injection: FC<injectionProps> = ({ children }) => {
         <link rel="stylesheet" href="/output.css" />
         <!-- HTMX -->
         <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+        <!-- Alpine.js -->
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
       </head>
       <body class="bg-background text-foreground">
         <main>${children}</main>

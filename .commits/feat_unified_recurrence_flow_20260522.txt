@@ -1,0 +1,9 @@
+feat: unify transaction and recurrence creation with interactive installment math
+
+- Integrated recurrence creation directly into TransactionForm via a toggle.
+- Implemented automatic installment calculation using Alpine.js.
+- Updated TransactionsService to atomically create linked Transaction and Recurrence records.
+- Refactored RecurrenceEditForm with "Bulletproof Check" confirmation and missing selectors.
+- Added Alpine.js to global infrastructure for enhanced micro-interactions.
+- Removed redundant RecurrenceForm.tsx as recurrences are now born from transactions.
+- Fixed Prisma validation issues where internal UI fields were leaked to the DB layer.

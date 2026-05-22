@@ -7,9 +7,13 @@ import { ErrorPage } from "@/pages/ErrorPage";
 import { TransactionRow } from "@/components/transactions/TransactionRow";
 import type { CreateTransactionInput } from "./transactions.schema";
 import type { TransactionType } from "@/generated/prisma";
+import { AccountsService } from "../accounts/accounts.service";
+import { CategoriesService } from "../categories/categories.service";
 
 export class TransactionsController {
   private transactionService = new TransactionsService();
+  private accountsService = new AccountsService();
+  private categoriesService = new CategoriesService();
 
   getTransactionsData = async (c: Context) => {
     try {
@@ -18,13 +22,16 @@ export class TransactionsController {
       const month =
         c.req.query("month") || new Date().toISOString().slice(0, 7);
 
-      const transactions = await this.transactionService.findAllTransactions(
-        userId,
-        month,
-      );
+      const [transactions, accounts, categories] = await Promise.all([
+        this.transactionService.findAllTransactions(userId, month),
+        this.accountsService.findAccounts(userId),
+        this.categoriesService.findCategories(userId),
+      ]);
 
       const renderData = {
         transactions,
+        accounts,
+        categories,
         currentMonth: month,
         transactionType: "expenses" as const,
         title: "Expenses",

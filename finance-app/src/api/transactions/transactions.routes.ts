@@ -9,10 +9,15 @@ const transactionsRoutes = new Hono();
 const transactionsController = new TransactionsController();
 
 transactionsRoutes.get("/", transactionsController.getTransactionsData);
-//transactionsRoutes.post(
-//  "/",
-//  zValidator("form", createTransactionSchema),
-//  transactionsController.createTransaction,
-//);
+transactionsRoutes.post(
+  "/",
+  zValidator("form", createTransactionSchema, (result, c) => {
+    if (!result.success) {
+      console.error("Validation failed:", result.error.flatten());
+      return c.json({ error: result.error.flatten() }, 400);
+    }
+  }),
+  transactionsController.createTransaction,
+);
 
 export default transactionsRoutes;

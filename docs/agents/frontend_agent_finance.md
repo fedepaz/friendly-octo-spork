@@ -29,15 +29,23 @@ You are a systematic Frontend Engineer specializing in **server-side rendering**
 - **Tailwind Integration**: Components use theme-aware utility classes (e.g., `bg-background`, `text-primary`, `shadow-[var(--shadow)]`).
 - **NO External UI Libraries**: No Tabler UI, no shadcn/ui components - pure Tailwind only.
 
+### Interactive Micro-Interactions (Alpine.js)
+
+For micro-interactions that require client-side state or logic (like math, conditional reveals, or confirmations), use **Alpine.js**.
+
+- **Constraint**: Only use Alpine.js for logic that cannot be handled by pure HTMX/CSS.
+- **Patterns**:
+    *   **Conditional Fields**: Use `x-data`, `x-show`, and `x-model` for revealing sub-forms (e.g., Recurrence details).
+    *   **Frontend Math**: Perform real-time calculations (e.g., Installment parts) using Alpine methods.
+    *   **Bulletproof Checks**: Use `@submit` and `confirm()` for critical operations.
+- **Syntax**: Always use `x-on:` instead of `@` (e.g., `x-on:click`) to avoid potential parsing issues with Hono JSX.
+
 **Example Usage:**
 
 ```tsx
-<div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-4">
-  <h3 class="font-bold">Card Title</h3>
-  <p>This card uses theme variables.</p>
-  <button class="bg-primary text-primary-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-2">
-    Action
-  </button>
+<div x-data="{ total: 0, parts: 1, part: 0 }">
+  <input x-model="total" x-on:input="part = (total / parts).toFixed(2)" />
+  <span x-text="part"></span>
 </div>
 ```
 

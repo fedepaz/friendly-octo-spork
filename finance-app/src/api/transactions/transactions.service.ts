@@ -68,18 +68,85 @@ export class TransactionsService {
     return await prisma.$transaction(async (tx) => {
       const amount = new Prisma.Decimal(data.amount);
 
-      // A. Create the transaction row
+      // A. Handle Recurrence (Existing or New)
+      let finalRecurrenceId = data.recurrenceId;
+      let partNumber = undefined;
+
+      if (data.isRecurrence && data.frequency) {
+        // Create new recurrence
+        const recurrence = await this.recurrenceRepository.saveRecurrence(
+          {
+            userId,
+            name: data.description,
+            type: data.type,
+            amount,
+            frequency: data.frequency as RecurrenceType,
+            totalParts: data.totalParts,
+            currentPart: 1,
+            startDate: new Date(data.date),
+            nextDate: calculateNextDate(
+              new Date(data.date),
+              data.frequency as RecurrenceType,
+            ),
+            categoryId: data.categoryId,
+            sourceAccountId: data.sourceAccountId,
+            targetAccountId: data.targetAccountId,
+          },
+          tx,
+        );
+        finalRecurrenceId = recurrence.id;
+        partNumber = 1;
+      } else if (data.recurrenceId) {
+        // Update existing recurrence
+        const recurrence = await this.recurrenceRepository.getRecurrenceById(
+          data.recurrenceId,
+        );
+
+        if (recurrence && recurrence.userId === userId) {
+          const newCurrentPart = recurrence.currentPart + 1;
+          const isActive = recurrence.totalParts
+            ? newCurrentPart < recurrence.totalParts
+            : true;
+
+          const nextDate = calculateNextDate(
+            recurrence.nextDate || new Date(),
+            recurrence.frequency as RecurrenceType,
+          );
+
+          await this.recurrenceRepository.updateRecurrence(
+            recurrence.id,
+            {
+              currentPart: newCurrentPart,
+              active: isActive,
+              nextDate: isActive ? nextDate : null,
+            },
+            tx,
+          );
+          partNumber = newCurrentPart;
+        }
+      }
+
+      // B. Create the transaction row
+      const finalData = {
+        type: data.type,
+        amount,
+        date: new Date(data.date),
+        description: data.description,
+        categoryId: data.categoryId,
+        sourceAccountId: data.sourceAccountId,
+        targetAccountId: data.targetAccountId,
+        userId,
+        recurrenceId: finalRecurrenceId,
+        recurrencePartNumber: partNumber,
+        metadata: data.metadata as any,
+      };
+      console.log("PASSING TO PRISMA:", JSON.stringify(finalData, null, 2));
       const transaction = await this.transactionRepository.saveTransaction(
-        {
-          ...data,
-          userId,
-          amount,
-          date: new Date(data.date),
-        },
+        finalData,
         tx,
       );
 
-      // B. Update Account balance(s)
+      // C. Update Account balance(s)
       switch (data.type) {
         case TransactionType.EXPENSE:
         case TransactionType.PAYMENT:
@@ -134,35 +201,6 @@ export class TransactionsService {
             );
           }
           break;
-      }
-
-      // C. Update Recurrence progress
-      if (data.recurrenceId) {
-        const recurrence = await this.recurrenceRepository.getRecurrenceById(
-          data.recurrenceId,
-        );
-
-        if (recurrence && recurrence.userId === userId) {
-          const newCurrentPart = recurrence.currentPart + 1;
-          const isActive = recurrence.totalParts
-            ? newCurrentPart < recurrence.totalParts
-            : true;
-
-          const nextDate = calculateNextDate(
-            recurrence.nextDate || new Date(),
-            recurrence.frequency as RecurrenceType,
-          );
-
-          await this.recurrenceRepository.updateRecurrence(
-            recurrence.id,
-            {
-              currentPart: newCurrentPart,
-              active: isActive,
-              nextDate: isActive ? nextDate : null,
-            },
-            tx,
-          );
-        }
       }
 
       return transaction;

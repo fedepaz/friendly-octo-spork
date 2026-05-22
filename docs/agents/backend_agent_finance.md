@@ -65,6 +65,18 @@ await prisma.$transaction(async (tx) => {
 });
 ```
 
+### Linked Model Creation (Atomic Patterns)
+
+When creating primary records that should optionally generate secondary records (e.g., a Transaction creating a Recurrence), follow these rules:
+
+1.  **Atomic Scope**: Always use `prisma.$transaction`.
+2.  **Order of Operations**:
+    *   Validate all inputs first.
+    *   Create/Update the secondary record (e.g., Recurrence) first to obtain its ID if needed.
+    *   Create the primary record (e.g., Transaction) linked to the secondary record.
+    *   Apply side effects (e.g., Balance updates).
+3.  **Data Sanitization**: Before passing `data` objects to Prisma's `create`/`update` methods, explicitly destructure and remove UI-only or transient fields (like `isRecurrence`) to avoid `Unknown argument` validation errors.
+
 **JWT Authentication (Cookie-based)**:
 ```typescript
 // src/middleware/auth.ts

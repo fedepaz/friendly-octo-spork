@@ -39,11 +39,16 @@ export const createTransactionSchema = z.object({
   amount: z.coerce.number().positive("Amount must be a positive number"),
   date: z.coerce.date(),
   description: z.string().min(1, "Description is required").max(255, "Description is too long"),
-  categoryId: z.coerce.number().int().optional().nullable(),
-  sourceAccountId: z.coerce.number().int().optional().nullable(),
-  targetAccountId: z.coerce.number().int().optional().nullable(),
-  recurrenceId: z.coerce.number().int().optional().nullable(),
+  categoryId: z.string().optional().nullable(),
+  sourceAccountId: z.string().optional().nullable(),
+  targetAccountId: z.string().optional().nullable(),
+  recurrenceId: z.string().optional().nullable(),
   metadata: z.object({}).catchall(z.unknown()).optional().nullable(),
+
+  // Automatic recurrence creation fields
+  isRecurrence: z.preprocess((val) => val === "on" || val === true, z.boolean()).optional(),
+  frequency: z.nativeEnum(RecurrenceType).optional(),
+  totalParts: z.coerce.number().int().optional(),
 });
 
 export const updateTransactionSchema = createTransactionSchema.partial();
