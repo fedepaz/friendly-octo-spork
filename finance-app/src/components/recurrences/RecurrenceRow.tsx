@@ -146,8 +146,6 @@ export const RecurrenceRow: FC<RecurrenceRowProps> = ({ recurrence }) => {
             hxGet={`/recurrences/${recurrence.id}`}
             hxTarget="#modal-content"
             hxSwap="innerHTML"
-            dataToggle="modal"
-            dataTarget="#htmx-modal"
             aria-label={`View ${recurrence.name}`}
           >
             VIEW
@@ -156,10 +154,9 @@ export const RecurrenceRow: FC<RecurrenceRowProps> = ({ recurrence }) => {
             type="button"
             class="bg-secondary text-secondary-foreground hover:bg-secondary/80 font-bold text-[9px] uppercase tracking-wider px-2 py-1 rounded border border-border shadow-[var(--shadow-sm)] hover:shadow-none hover:translate-y-[1px] transition-all"
             hxGet={`/recurrences/${recurrence.id}/edit`}
-            hxTarget={`#recurrence-${recurrence.id}`}
-            hxSwap="outerHTML"
+            hxTarget="#modal-content"
+            hxSwap="innerHTML"
             aria-label={`Edit ${recurrence.name}`}
-            hxOn="htmx:afterSwap: document.getElementById('htmx-modal').classList.remove('hidden')"
           >
             EDIT
           </Button>

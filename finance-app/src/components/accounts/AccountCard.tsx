@@ -83,22 +83,6 @@ export const AccountCard: FC<AccountCardProps> = ({ account }) => {
       >
         ${Number(account.balance).toFixed(2)}
       </div>
-
-      <div class="flex gap-3">
-        <button
-          class="flex-1 bg-secondary text-secondary-foreground opacity-80 border-2 border-border shadow-[var(--shadow)]
-                 px-6 py-3 font-bold uppercase tracking-wider
-                 transition-all duration-150
-                 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]
-                 active:translate-x-1 active:translate-y-1 active:shadow-none"
-          hx-get={`/api/accounts/${account.id}/`}
-          hx-target="#modal-content"
-          aria-label={`View ${account.name}`}
-        >
-          View
-        </button>
-        
-      </div>
     </div>
   );
 };

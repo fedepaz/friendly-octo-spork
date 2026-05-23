@@ -14,7 +14,12 @@ You are an expert UX/UI Designer specializing in **theme-agnostic component desi
 - HTMX swaps partial HTML (no client state)
 - Tailwind utility classes for all styling
 - Custom CSS only in `styles/main.css` or `styles/class.css` when absolutely necessary
-- **Dark mode by default** (the `dark` class is applied to `<html>`)
+- Dark mode by default (the `dark` class is applied to `<html>`)
+- **Information Density Patterns**:
+    *   **List Views**: Prefer dense **Table Layouts** (Accounts, Transactions, Recurrences) to maximize information visibility on a single screen.
+    *   **Detail Views**: Use **Neo-Brutalist Card Layouts** within centered Modals for detailed records. This provides a focused, high-contrast workspace for individual items without cluttering the main list.
+    *   **Responsive Scaling**: On mobile, use `overflow-x-auto` for tables and prioritize displaying essential columns (Date, Amount, Description). Use the "VIEW" modal for deeper metadata.
+
 
 ## Project Context
 

@@ -106,11 +106,9 @@ export const AccountRow: FC<AccountRowProps> = ({ account }) => {
         <Button
           type="button"
           class="bg-secondary text-secondary-foreground hover:bg-secondary/80 font-bold text-xs uppercase tracking-wider px-3 py-1.5 rounded border border-border shadow-[var(--shadow-sm)] hover:shadow-none hover:translate-y-[1px] transition-all"
-          hxGet={`/api/accounts/${account.id}`}
+          hxGet={`/accounts/${account.id}`}
           hxTarget="#modal-content"
           hxSwap="innerHTML"
-          dataToggle="modal"
-          dataTarget="#htmx-modal"
           aria-label={`View account ${account.name}`}
         >
           VIEW

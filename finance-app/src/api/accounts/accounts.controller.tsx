@@ -8,6 +8,7 @@ import { ErrorPage } from "@/pages/ErrorPage";
 import { AccountsList } from "@/components/accounts/AccountsList";
 import { AccountForm } from "@/components/accounts/AccountForm";
 import type { AccountType, Currency } from "@/generated/prisma";
+import { AccountCard } from "@/components/accounts/AccountCard";
 
 export class AccountsController {
   private accountService = new AccountsService();
@@ -59,5 +60,21 @@ export class AccountsController {
 
   getAccountForm = async (c: Context) => {
     return c.html(<AccountForm />);
+  };
+
+  getAccountById = async (c: Context) => {
+    try {
+      const payload = c.get("jwtPayload") as { sub: string };
+      const userId = payload.sub;
+      const id = c.req.param("id");
+
+      const account = await this.accountService.findAccountById(userId, id);
+
+      return c.html(<AccountCard account={account} />);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      const stack = error instanceof Error ? error.stack : undefined;
+      return c.render(<ErrorPage message={message} stack={stack} />);
+    }
   };
 }

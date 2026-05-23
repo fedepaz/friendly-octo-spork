@@ -57,29 +57,31 @@ const Layout: FC<LayoutProps> = (props) => {
         id="toast-container"
         class="fixed top-4 right-4 p-4 z-50 space-y-2"
       ></div>
-      {/* Modal - lives in Layout, used by everything */}
+      {/* Modal */}
       <div
         id="htmx-modal"
-        class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-        onclick="if(event.target===this)this.classList.add('hidden')"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 pt-20"
+        style="display:none"
+        onclick="if(event.target===this)this.style.display='none'"
       >
-        <div class="bg-card border-2 border-border rounded-xl shadow-[var(--shadow-lg)] w-full max-w-lg p-6 relative">
-          <button
-            onclick="document.getElementById('htmx-modal').classList.add('hidden')"
-            class="absolute top-4 right-4 text-muted-foreground hover:text-foreground font-bold"
-          >
-            ✕
-          </button>
+        <div class="overflow-y-auto relative">
           <div id="modal-content"></div>
         </div>
       </div>
-      <script>{`
-  document.addEventListener('htmx:afterSwap', function(e) {
-    if (e.detail.target.id === 'modal-content') {
-      document.getElementById('htmx-modal').classList.remove('hidden');
-    }
+
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+  document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("htmx:afterSwap", function(e) {
+      if (e.detail.target.id === "modal-content") {
+        document.getElementById("htmx-modal").style.display = "flex";
+      }
+    });
   });
-`}</script>
+`,
+        }}
+      ></script>
     </div>
   );
 };

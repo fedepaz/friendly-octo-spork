@@ -21,7 +21,10 @@ export const TransactionPage: FC<TransactionPageProps> = ({
           Transactions
         </h1>
       </div>
-      <TransactionList transactions={transactions} currentMonth={currentMonth} />
+      <TransactionList
+        transactions={transactions}
+        currentMonth={currentMonth}
+      />
     </Layout>
   );
 };

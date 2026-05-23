@@ -17,7 +17,7 @@ export const AccountForm: FC<AccountFormProps> = () => {
       </h3>
 
       <form
-        hx-post="/api/accounts"
+        hx-post="/accounts"
         hx-target="#accounts-list"
         hx-swap="innerHTML"
         hx-on--after-request="if(event.detail.successful) this.closest('[x-data]').__x.$data.open = false"
@@ -100,14 +100,7 @@ export const AccountForm: FC<AccountFormProps> = () => {
           />
         </div>
 
-        <div class="flex gap-2 justify-end mt-6">
-          <Button
-            type="button"
-            hx-on:click="this.closest('[x-data]').__x.$data.open = false"
-            class="bg-muted text-muted-foreground"
-          >
-            CANCEL
-          </Button>
+        <div class="flex gap-2 justify-center mt-6">
           <Button type="submit" class="bg-primary text-primary-foreground">
             <LoadingSpinnerIcon />
             SAVE

@@ -192,9 +192,9 @@ export const TransactionForm: FC<TransactionFormProps> = ({ errors }) => (
 **Core Attributes**:
 
 ```html
-<!-- Make HTTP requests -->
-hx-get="/api/expenses" hx-post="/api/expenses" hx-put="/api/expenses/123"
-hx-delete="/api/expenses/123"
+<!-- Make HTTP requests (Note: routes no longer use /api prefix) -->
+hx-get="/expenses" hx-post="/expenses" hx-put="/expenses/123"
+hx-delete="/expenses/123"
 
 <!-- Control where response goes -->
 hx-target="#expense-list" hx-target="closest tr" hx-swap="innerHTML"
@@ -225,66 +225,40 @@ import { Button } from "@/components/shared/Button";
 </Button>
 ```
 
-#### Modal Dialog
+#### Global Modal Pattern
 
-A reusable `Modal` component is available for displaying content in a dialog overlay. It is designed to be controlled via HTMX events.
+The application uses a centralized modal pattern managed in `Layout.tsx`. You should NOT create individual modal components for every view. Instead, target the global modal container.
 
-**Component:** `finance-app/src/components/shared/Modal.tsx`
+**Component:** Managed centrally in `finance-app/src/components/shared/Layout.tsx`
 
 **Example Usage:**
 
 1.  **Triggering the Modal:**
-    A button can open a modal by fetching content from an API and placing it inside the modal target.
+    A button can open the modal by fetching content from an endpoint and placing it inside the `#modal-content` target.
 
     ```tsx
     <Button
-      hx-get="/api/accounts/new"
+      hx-get="/accounts/new"
       hx-target="#modal-content"
       hx-swap="innerHTML"
-      data-toggle="modal"
-      data-target="#htmx-modal"
     >
       Create Account
     </Button>
     ```
 
-2.  **Modal Structure in Layout:**
-    The main layout should contain the modal structure.
+2.  **Modal Logic:**
+    The global modal automatically shows itself when content is swapped into `#modal-content` via a `htmx:afterSwap` listener in the `Layout`.
+
+3.  **Endpoint Returning Content:**
+    The endpoint should return the raw HTML fragment (e.g., a form or a card) without any modal wrappers.
 
     ```tsx
-    // In your main layout file (e.g., Layout.tsx)
-    <div id="htmx-modal">
-      {/* The modal content will be swapped here */}
-    </div>
+    // /accounts/new endpoint in controller
+    getAccountForm = async (c: Context) => {
+      return c.html(<AccountForm />);
+    };
     ```
 
-3.  **API Endpoint Returning Modal Content:**
-    The API endpoint should return the `Modal` component with the form or content to be displayed.
-
-    ```tsx
-    // /api/accounts/new endpoint
-    app.get("/api/accounts/new", (c) => {
-      return c.html(
-        <Modal title="Create New Account" isOpen={true} onClose={() => {}}>
-          <AccountForm />
-        </Modal>
-      );
-    });
-    ```
-
-4.  **Closing the Modal:**
-    The modal can be closed by triggering a `closeModal` event on the modal itself, or by clicking the backdrop.
-
-    ```tsx
-    // Inside the Modal component
-    <button
-      type="button"
-      hx-on:click="htmx.trigger('#htmx-modal', 'closeModal')"
-      aria-label="Close modal"
-    >
-      <XIcon />
-    </button>
-    ```
 
 ### Pattern 1: Inline Editing
 

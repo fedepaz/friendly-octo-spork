@@ -12,7 +12,9 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
     <div class="flex items-center justify-center min-h-screen bg-background">
       <div class="max-w-sm w-full p-4">
         <div class="text-center mb-4">
-          <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-3">FINANCE TRACKER</h2>
+          <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
+            FINANCE TRACKER
+          </h2>
           <p class="text-sm text-muted-foreground">SIGN IN TO CONTINUE</p>
         </div>
         <form
@@ -30,9 +32,7 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
             </div>
           )}
           <div class="mb-4">
-            <label
-              class="block text-sm font-semibold uppercase text-foreground mb-2"
-            >
+            <label class="block text-sm font-semibold uppercase text-foreground mb-2">
               Email
             </label>
             <input
@@ -63,7 +63,9 @@ export const LoginPage: FC<LoginPageProps> = ({ error }) => {
             />
           </div>
           <div class="mt-6">
-            <Button type="submit" class="w-full"> {/* Using Button component */}
+            <Button type="submit" class="w-full">
+              {" "}
+              {/* Using Button component */}
               SIGN IN
             </Button>
           </div>

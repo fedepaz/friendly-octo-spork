@@ -9,7 +9,7 @@ import type z from "zod";
 const transactionsRoutes = new Hono();
 const transactionsController = new TransactionsController();
 
-transactionsRoutes.get("/", transactionsController.getTransactionsData);
+transactionsRoutes.get("/", transactionsController.getTransactionsPage);
 transactionsRoutes.post(
   "/",
   zValidator("form", createTransactionSchema, (result, c) => {
@@ -21,5 +21,6 @@ transactionsRoutes.post(
   }),
   transactionsController.createTransaction,
 );
+transactionsRoutes.get("/:id", transactionsController.getTransactionById);
 
 export default transactionsRoutes;

@@ -27,11 +27,20 @@ export class AccountsService {
     return accounts.map((account) => this.mapToAccountDTO(account));
   }
 
-  async findAccountById(accountId: string): Promise<AccountDTO> {
+  async findAccountById(
+    userId: string,
+    accountId: string,
+  ): Promise<AccountDTO> {
     if (!accountId) {
       throw new Error("Account id is required");
     }
-    const account = await this.accountRepository.getAccountById(accountId);
+    if (!userId) {
+      throw new Error("User id is required");
+    }
+    const account = await this.accountRepository.getAccountById(
+      userId,
+      accountId,
+    );
 
     if (!account) {
       throw new Error("Account not found");

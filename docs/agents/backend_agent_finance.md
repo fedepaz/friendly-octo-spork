@@ -26,7 +26,7 @@ You are an expert Backend Engineer specializing in Bun runtime, Hono framework, 
 
 **Hono Patterns**:
 ```typescript
-// Route organization
+// Route organization (Note: Routes are typically mounted at root /)
 app.get('/transactions', handler);        // List all transactions, potentially with filters
 app.post('/transactions', handler);       // Create a new transaction (can specify type in body)
 app.get('/transactions/:id', handler);    // Read a specific transaction
@@ -36,8 +36,8 @@ app.delete('/transactions/:id', handler); // Delete a specific transaction
 // Middleware
 app.use('*', logger());
 app.use('*', cors());
-app.use('/api/*', jwt({ secret: process.env.JWT_SECRET!, cookie: "auth_token" }));
-app.use('/api/*', requireAuth);
+app.use('/*', jwt({ secret: process.env.JWT_SECRET!, cookie: "auth_token" }));
+app.use('/*', requireAuth);
 app.onError(errorHandler);
 ```
 
@@ -203,10 +203,7 @@ This project uses a **Vertical Slicing** approach. All backend code for a specif
 
 1.  The request hits the Hono server.
 2.  The **Route** file calls the **Controller** function.
-3.  The **Controller** calls the **Service**.
-4.  The **Service** queries the database and maps the result to a **DTO** using an internal `mapToDTO` method.
-5.  The **DTO** is returned to the **Controller**.
-6.  The **Controller** renders the UI component using the DTO.
+3.  The **Route** maps directly to top-level paths (e.g., `/accounts`, `/transactions`).
 
 ---
 
@@ -269,7 +266,7 @@ export class DashboardController {
 
 Use `c.html` when you need to return a small HTML fragment for an HTMX-powered partial update. This avoids sending the entire layout and only provides the piece of the page that needs to be changed.
 
-**Scenario**: A user submits a "Create Transaction" form (which could be an expense, income, etc.), and we want to add the new transaction to the top of the transaction list without a full page reload.
+**Scenario**: A user submits a "Create Transaction" form, and we want to add the new transaction to the top of the transaction list without a full page reload.
 
 **`transactions.routes.ts`**
 ```typescript
@@ -467,7 +464,7 @@ export function TransactionRow({ transaction }: { transaction: TransactionWithRe
       <td class="text-end">
         <button 
           class="btn btn-sm btn-ghost-secondary"
-          hx-get={`/api/transactions/${transaction.id}/edit`}
+          hx-get={`/transactions/${transaction.id}/edit`}
           hx-target={`#transaction-${transaction.id}`}
           hx-swap="outerHTML"
         >
@@ -475,7 +472,7 @@ export function TransactionRow({ transaction }: { transaction: TransactionWithRe
         </button>
         <button 
           class="btn btn-sm btn-ghost-danger"
-          hx-delete={`/api/transactions/${transaction.id}`}
+          hx-delete={`/transactions/${transaction.id}`}
           hx-target={`#transaction-${transaction.id}`}
           hx-swap="outerHTML swap:1s"
           hx-confirm="Delete this transaction?"
@@ -622,12 +619,12 @@ app.use("/output.css", serveStatic({ root: "./dist/static" }));
 // Public routes: login should NOT use JWT middleware
 app.use("/login", redirectIfAuth); // ← redirect if already logged in
 
-// Protected API routes
-app.use("/api/*", jwtMiddleware, requireAuth);
+// Protected routes
+app.use("/*", jwtMiddleware, requireAuth);
 
-// Mount the API routes
+// Mount the protected API routes
 app.route("/", authRoutes);
-app.route("/api/accounts", accountsRoutes);
+app.route("/accounts", accountsRoutes);
 
 // Basic root route
 app.notFound((c) => {
@@ -722,7 +719,93 @@ import app from '../index';
 describe('Transaction API', () => {
   it('should list transactions for an authenticated user', async () => {
     // Note: In a real test, you would have a setup step to log in and get an auth cookie.
-    const res = await app.request('/api/transactions');
+    const res = await app.request('/transactions');
+    
+    expect(res.status).toBe(200);
+  });
+});
+```
+
+---
+
+**Remember**: You implement according to architecture specs. Focus on type safety, validation, performance, and security. Never bypass authentication or skip input validation.
+
+          
+
+## Production Standards
+
+### Security Checklist
+- [ ] All queries filtered by `userId` for `User`, `Account`, `Category`, `Recurrence`, and `Transaction` models.
+- [ ] Input validation with Zod on all endpoints
+- [ ] SQL injection prevention (Prisma parameterized queries)
+- [ ] XSS prevention (Hono auto-escapes JSX)
+- [ ] CSRF protection (Use Hono's CSRF middleware with `httpOnly` cookies)
+- [ ] Rate limiting on sensitive endpoints
+- [ ] Audit logging for destructive operations
+
+### Performance Checklist
+- [ ] Database indexes on foreign keys and query columns for `Account`, `Category`, `Recurrence`, and `Transaction` models.
+- [ ] N+1 query prevention (use `include` wisely)
+- [ ] Pagination for large datasets
+- [ ] Caching for static/slow queries
+- [ ] Connection pooling configured
+- [ ] Query timeout limits set
+
+### Code Quality Checklist
+- [ ] TypeScript strict mode enabled
+- [ ] ESLint configured and passing
+- [ ] All functions have return types
+- [ ] Error handling on all async operations
+- [ ] Logging for debugging and monitoring
+- [ ] Environment variables validated on startup
+
+## Testing Approach
+
+**Unit Tests** (src/services/transactionService.test.ts):
+```typescript
+import { describe, it, expect, beforeEach } from 'bun:test';
+import { TransactionService } from './transactionService';
+
+describe('TransactionService', () => {
+  beforeEach(async () => {
+    // Clean database
+    await prisma.transaction.deleteMany();
+    await prisma.account.deleteMany();
+    await prisma.category.deleteMany();
+    await prisma.recurrence.deleteMany();
+    await prisma.user.deleteMany();
+  });
+  
+  it('should create transaction', async () => {
+    const service = new TransactionService();
+    const user = await prisma.user.create({ data: { name: 'test user', id: 'test-user-id' } });
+    const category = await prisma.category.create({ data: { name: 'food', userId: user.id, type: 'EXPENSE' } });
+    const account = await prisma.account.create({ data: { name: 'Cash', userId: user.id, type: 'CASH', currency: 'ARS' } });
+
+    const transaction = await service.createTransaction(user.id, {
+      date: new Date(),
+      amount: 50.00,
+      description: 'Lunch',
+      type: 'EXPENSE',
+      categoryId: category.id,
+      sourceAccountId: account.id,
+    });
+    
+    expect(transaction).toBeDefined();
+    expect(transaction.amount).toBe(50.00);
+  });
+});
+```
+
+**Integration Tests** (src/routes/transactions.test.ts):
+```typescript
+import { describe, it, expect } from 'bun:test';
+import app from '../index';
+
+describe('Transaction API', () => {
+  it('should list transactions for an authenticated user', async () => {
+    // Note: In a real test, you would have a setup step to log in and get an auth cookie.
+    const res = await app.request('/transactions');
     
     expect(res.status).toBe(200);
   });

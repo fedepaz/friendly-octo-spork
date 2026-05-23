@@ -1,6 +1,9 @@
 // src/api/transactions/transactions.service.ts
 
-import { TransactionRepository, type TransactionWithRelations } from "../repositories/transaction.repository";
+import {
+  TransactionRepository,
+  type TransactionWithRelations,
+} from "../repositories/transaction.repository";
 import { AccountRepository } from "../repositories/account.repository";
 import { RecurrenceRepository } from "../repositories/recurrence.repository";
 import {
@@ -99,12 +102,21 @@ export class TransactionsService {
     );
   }
 
-  async findTransactionById(transactionId: string): Promise<TransactionDTO> {
+  async findTransactionById(
+    userId: string,
+    transactionId: string,
+  ): Promise<TransactionDTO> {
     if (!transactionId) {
       throw new Error("Transaction id is required");
     }
-    const transaction =
-      await this.transactionRepository.getTransactionById(transactionId);
+
+    if (!userId) {
+      throw new Error("User id is required");
+    }
+    const transaction = await this.transactionRepository.getTransactionById(
+      userId,
+      transactionId,
+    );
 
     if (!transaction) {
       throw new Error("Transaction not found");

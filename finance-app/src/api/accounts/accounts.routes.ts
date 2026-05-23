@@ -14,7 +14,8 @@ accountsRoutes.get("/new", accountController.getAccountForm);
 accountsRoutes.post(
   "/",
   zValidator("json", createAccountSchema),
-  accountController.createAccount
+  accountController.createAccount,
 );
+accountsRoutes.get("/:id", accountController.getAccountById);
 
 export default accountsRoutes;

@@ -162,19 +162,7 @@ export const RecurrenceCard: FC<RecurrenceCardProps> = ({ recurrence }) => {
         <Button
           type="button"
           class="bg-secondary text-secondary-foreground hover:bg-secondary/80 font-bold text-[10px] uppercase tracking-wider px-2.5 py-1.5 rounded border border-border shadow-[var(--shadow-sm)] hover:shadow-none hover:translate-y-[1px] transition-all"
-          hxGet={`/api/recurrences/${recurrence.id}`}
-          hxTarget="#modal-content"
-          hxSwap="innerHTML"
-          dataToggle="modal"
-          dataTarget="#htmx-modal"
-          aria-label={`View ${recurrence.name}`}
-        >
-          VIEW
-        </Button>
-        <Button
-          type="button"
-          class="bg-secondary text-secondary-foreground hover:bg-secondary/80 font-bold text-[10px] uppercase tracking-wider px-2.5 py-1.5 rounded border border-border shadow-[var(--shadow-sm)] hover:shadow-none hover:translate-y-[1px] transition-all"
-          hxGet={`/api/recurrences/${recurrence.id}/edit`}
+          hxGet={`/recurrences/${recurrence.id}/edit`}
           hxTarget={`#recurrence-${recurrence.id}`}
           hxSwap="outerHTML"
           aria-label={`Edit ${recurrence.name}`}
@@ -186,22 +174,13 @@ export const RecurrenceCard: FC<RecurrenceCardProps> = ({ recurrence }) => {
           class={`${
             recurrence.active ? "bg-warning" : "bg-success"
           } text-white font-bold text-[10px] uppercase tracking-wider px-2.5 py-1.5 rounded border border-border shadow-[var(--shadow-sm)] hover:shadow-none hover:translate-y-[1px] transition-all`}
-          hx-patch={`/api/recurrences/${recurrence.id}`}
+          hx-patch={`/recurrences/${recurrence.id}`}
           hx-vals={JSON.stringify({ active: !recurrence.active })}
           hx-target="#recurrences-list"
           hx-swap="innerHTML"
           aria-label={recurrence.active ? "Deactivate" : "Activate"}
         >
           {recurrence.active ? "PAUSE" : "RESUME"}
-        </Button>
-        <Button
-          type="button"
-          class="bg-destructive text-destructive-foreground hover:bg-destructive/80 font-bold text-[10px] uppercase tracking-wider px-2.5 py-1.5 rounded border border-border shadow-[var(--shadow-sm)] hover:shadow-none hover:translate-y-[1px] transition-all"
-          hx-delete={`/api/recurrences/${recurrence.id}`}
-          hx-confirm="Are you sure you want to delete this recurrence?"
-          aria-label={`Delete ${recurrence.name}`}
-        >
-          DEL
         </Button>
       </div>
     </div>
