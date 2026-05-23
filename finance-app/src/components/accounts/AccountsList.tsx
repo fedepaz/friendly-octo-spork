@@ -1,28 +1,48 @@
 // src/components/accounts/AccountsList.tsx
 
 import type { FC } from "hono/jsx";
-import type { Account } from "@/generated/prisma";
 import { AccountCard } from "./AccountCard";
-import { Button } from "@/components/shared/Button"; // New import
-import { ClipboardIcon } from "@/components/icons/ClipboardIcon";
+import type { AccountDTO } from "@/api/accounts/accounts.schema";
+import { AccountRow } from "./AccountRow";
 
 interface AccountsListProps {
-  accounts: Account[];
+  accounts: AccountDTO[];
 }
 
 export const AccountsList: FC<AccountsListProps> = ({ accounts }) => {
-  if (accounts.length === 0) {
-    return <EmptyState />;
-  }
-
   return (
     <div
       id="accounts-list"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      class="border-2 border-border shadow-[var(--shadow)] overflow-x-auto"
     >
-      {accounts.map((account) => (
-        <AccountCard account={account} />
-      ))}
+      {/* Accounts Table */}
+      <table class="w-full">
+        <thead>
+          <tr class="border-b-2 border-border bg-primary text-primary-foreground">
+            <th class="p-4 text-center font-bold uppercase tracking-wider whitespace-nowrap">
+              Name
+            </th>
+            <th class="p-4 text-center font-bold uppercase tracking-wider whitespace-nowrap">
+              Type
+            </th>
+            <th class="p-4 text-center font-bold uppercase tracking-wider whitespace-nowrap">
+              Currency
+            </th>
+            <th class="p-4 text-center font-bold uppercase tracking-wider whitespace-nowrap">
+              Balance
+            </th>
+            <th class="p-4 font-bold uppercase tracking-wider whitespace-nowrap w-[200px]">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody id="transaction-list" class="divide-y-2 divide-border">
+          {accounts.length > 0 &&
+            accounts.map((transaction) => (
+              <AccountRow key={transaction.id} account={transaction} />
+            ))}
+        </tbody>
+      </table>
     </div>
   );
-}
+};

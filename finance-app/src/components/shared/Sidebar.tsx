@@ -23,7 +23,6 @@ export const Sidebar: FC<SidebarProps> = ({
   const navLinks = [
     { href: "/dashboard", label: "Dashboard", icon: "line-chart" },
     { href: "/accounts", label: "Accounts", icon: "landmark" },
-    { href: "/categories", label: "Categories", icon: "folder" },
     { href: "/recurrences", label: "Recurrences", icon: "calendar" },
     { href: "/transactions", label: "Transactions", icon: "wallet" },
   ];
@@ -96,8 +95,6 @@ export const Sidebar: FC<SidebarProps> = ({
                       return <LineChartIcon />;
                     case "landmark":
                       return <LandmarkIcon />;
-                    case "folder":
-                      return <FolderIcon />;
                     case "calendar":
                       return <CalendarIcon />;
                     case "wallet":
@@ -115,25 +112,6 @@ export const Sidebar: FC<SidebarProps> = ({
           );
         })}
       </nav>
-
-      {/* Sidebar Footer */}
-      <div class="p-4 border-t-2 border-border bg-muted/30 rounded-none">
-        <div class="bg-accent/10 border-2 border-accent/30 rounded-none p-4">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">
-              <LightbulbIcon />
-            </span>
-            <div>
-              <p class="text-sm font-semibold uppercase tracking-wide text-foreground">
-                Pro Tip
-              </p>
-              <p class="text-xs text-muted-foreground">
-                Track daily expenses to stay within budget
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
     </aside>
   );
 };

@@ -44,7 +44,17 @@ This applies to any operation that changes an account's balance. **All operation
         2.  The `Transaction` row is updated with the new data.
         3.  The effect of the *new* transaction data is applied to the `Account` balance(s).
 
-## 3. Data Precision and Constraints
+## 3. Data Mapping and DTOs
+
+To decouple the database schema from the UI and ensure consistent data types (e.g., converting Prisma's `Decimal` to `number`), the service layer must use **Data Transfer Objects (DTOs)**.
+
+-   **Internal Mapping**: Every service should implement a private `mapToDTO` method (e.g., `mapToAccountDTO`).
+-   **Type Conversion**: This method is responsible for converting `Prisma.Decimal` values to standard JavaScript `number` types using `Number(value)`.
+-   **DTO Types**: DTO types must be defined in the feature's `.schema.ts` file using Zod inference: `export type AccountDTO = z.infer<typeof accountSchema>;`.
+
+---
+
+## 4. Data Precision and Constraints
 
 To ensure data integrity, storage efficiency, and consistent financial calculations, all database models must adhere to strict precision and length constraints.
 

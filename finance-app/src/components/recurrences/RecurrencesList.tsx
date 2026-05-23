@@ -2,9 +2,8 @@
 
 import type { FC } from "hono/jsx";
 import { RecurrenceCard } from "./RecurrenceCard";
-import { Button } from "@/components/shared/Button"; // New import
 import { ClipboardIcon } from "@/components/icons/ClipboardIcon";
-import type { RecurrenceInput } from "@/api/recurrences/recurrences.schema";
+import type { RecurrenceDTO } from "@/api/recurrences/recurrences.schema";
 
 const EmptyState: FC = () => (
   <div
@@ -17,7 +16,7 @@ const EmptyState: FC = () => (
 );
 
 interface RecurrencesListProps {
-  recurrences: RecurrenceInput[];
+  recurrences: RecurrenceDTO[];
 }
 
 export const RecurrencesList: FC<RecurrencesListProps> = ({ recurrences }) => {

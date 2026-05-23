@@ -5,6 +5,7 @@ import { AccountRepository } from "../repositories/account.repository";
 import { RecurrenceRepository } from "../repositories/recurrence.repository";
 import {
   type CreateTransactionInput,
+  type TransactionDTO,
   validateTransactionType,
 } from "./transactions.schema";
 import { Prisma, TransactionType, RecurrenceType } from "@/generated/prisma";
@@ -16,7 +17,18 @@ export class TransactionsService {
   private accountRepository = new AccountRepository();
   private recurrenceRepository = new RecurrenceRepository();
 
-  async findAllTransactions(userId: string, month?: string) {
+  private mapToTransactionDTO(
+    transaction: Prisma.TransactionGetPayload<object>,
+  ): TransactionDTO {
+    return {
+      ...transaction,
+    };
+  }
+
+  async findAllTransactions(
+    userId: string,
+    month?: string,
+  ): Promise<TransactionDTO[]> {
     if (!userId) {
       throw new Error("User id is required");
     }
@@ -40,10 +52,12 @@ export class TransactionsService {
     if (!transactions) {
       throw new Error("Transactions not found");
     }
-    return transactions;
+    return transactions.map((transaction) =>
+      this.mapToTransactionDTO(transaction),
+    );
   }
 
-  async findTransactionById(transactionId: number) {
+  async findTransactionById(transactionId: number): Promise<TransactionDTO> {
     if (!transactionId) {
       throw new Error("Transaction id is required");
     }
@@ -54,10 +68,13 @@ export class TransactionsService {
       throw new Error("Transaction not found");
     }
 
-    return transaction;
+    return this.mapToTransactionDTO(transaction);
   }
 
-  async createTransaction(userId: string, data: CreateTransactionInput) {
+  async createTransaction(
+    userId: string,
+    data: CreateTransactionInput,
+  ): Promise<TransactionDTO> {
     // 1. Validation
     const { isValid, errors } = validateTransactionType(data);
     if (!isValid) {
@@ -110,7 +127,7 @@ export class TransactionsService {
 
           const nextDate = calculateNextDate(
             recurrence.nextDate || new Date(),
-            recurrence.frequency as RecurrenceType,
+            recurrence.frequency,
           );
 
           await this.recurrenceRepository.updateRecurrence(
@@ -138,9 +155,9 @@ export class TransactionsService {
         userId,
         recurrenceId: finalRecurrenceId,
         recurrencePartNumber: partNumber,
-        metadata: data.metadata as any,
+        metadata: data.metadata,
       };
-      console.log("PASSING TO PRISMA:", JSON.stringify(finalData, null, 2));
+
       const transaction = await this.transactionRepository.saveTransaction(
         finalData,
         tx,

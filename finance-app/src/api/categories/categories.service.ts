@@ -1,10 +1,20 @@
 // src/api/categories/categories.service.ts
 
+import type { Prisma } from "@/generated/prisma";
 import { CategoriesRepository } from "../repositories/categories.repository";
+import type { CategoryDTO } from "./categories.schema";
 
 export class CategoriesService {
   private categoriesRepository = new CategoriesRepository();
-  async findCategories(userId: string) {
+
+  private mapToCategoryDTO(
+    category: Prisma.CategoryGetPayload<object>,
+  ): CategoryDTO {
+    return {
+      ...category,
+    };
+  }
+  async findCategories(userId: string): Promise<CategoryDTO[]> {
     if (!userId) {
       throw new Error("User id is required");
     }
@@ -12,10 +22,10 @@ export class CategoriesService {
     if (!categories) {
       throw new Error("Categories not found");
     }
-    return categories;
+    return categories.map((category) => this.mapToCategoryDTO(category));
   }
 
-  async findCategoryById(categoryId: number) {
+  async findCategoryById(categoryId: number): Promise<CategoryDTO> {
     if (!categoryId) {
       throw new Error("Category id is required");
     }
@@ -26,35 +36,6 @@ export class CategoriesService {
       throw new Error("Category not found");
     }
 
-    return category;
+    return this.mapToCategoryDTO(category);
   }
-  /*
-  async getCategoryStats(
-    userId: string,
-    categoryId: number,
-    startDate?: Date,
-    endDate?: Date
-  ) {
-    await this.getCategoryById(userId, categoryId);
-
-    const transactions = await prisma.transaction.findMany({
-      where: {
-        categoryId,
-        userId,
-        ...(startDate && { date: { gte: startDate } }),
-        ...(endDate && { date: { lte: endDate } }),
-      },
-    });
-
-    const total = transactions.reduce((sum, t) => sum + Number(t.amount), 0);
-    const avg = transactions.length > 0 ? total / transactions.length : 0;
-
-    return {
-      total,
-      average: avg,
-      count: transactions.length,
-      transactions,
-    };
-  }
-    */
 }

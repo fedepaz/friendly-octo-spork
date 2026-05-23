@@ -67,4 +67,4 @@ export const recurrenceFilterSchema = z.object({
 export type CreateRecurrenceInput = z.infer<typeof createRecurrenceSchema>;
 export type UpdateRecurrenceInput = z.infer<typeof updateRecurrenceSchema>;
 export type RecurrenceFilterInput = z.infer<typeof recurrenceFilterSchema>;
-export type RecurrenceInput = z.infer<typeof recurrenceSchema>;
+export type RecurrenceDTO = z.infer<typeof recurrenceSchema>;

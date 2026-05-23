@@ -2,12 +2,13 @@
 
 import type { FC } from "hono/jsx";
 import { Button } from "@/components/shared/Button";
-import type { Account, Category } from "@/generated/prisma";
+import type { AccountDTO } from "@/api/accounts/accounts.schema";
+import type { CategoryDTO } from "@/api/categories/categories.schema";
 
 interface TransactionFormProps {
   transactionType: string;
-  accounts: Account[];
-  categories: Category[];
+  accounts: AccountDTO[];
+  categories: CategoryDTO[];
 }
 
 export const TransactionForm: FC<TransactionFormProps> = ({
@@ -123,7 +124,12 @@ export const TransactionForm: FC<TransactionFormProps> = ({
                   <div class="w-full bg-muted text-muted-foreground border-2 border-border shadow-inner px-4 py-3 text-base rounded-none cursor-not-allowed font-mono">
                     <span x-text="amount"></span>
                   </div>
-                  <input type="hidden" name="amount" x-bind:value="amount" x-bind:disabled="!isInstallment" />
+                  <input
+                    type="hidden"
+                    name="amount"
+                    x-bind:value="amount"
+                    x-bind:disabled="!isInstallment"
+                  />
                 </div>
               </div>
             </div>
@@ -273,7 +279,10 @@ export const TransactionForm: FC<TransactionFormProps> = ({
         </div>
 
         <div class="flex justify-end pt-4">
-          <Button type="submit" class="w-full md:w-auto bg-primary text-primary-foreground font-bold uppercase tracking-widest">
+          <Button
+            type="submit"
+            class="w-full md:w-auto bg-primary text-primary-foreground font-bold uppercase tracking-widest"
+          >
             ADD {transactionType.slice(0, -1).toUpperCase()}
           </Button>
         </div>

@@ -2,10 +2,10 @@
 
 import type { FC } from "hono/jsx";
 import { Button } from "@/components/shared/Button";
-import type { TransactionResponse } from "@/api/transactions/transactions.schema";
+import type { TransactionDTO } from "@/api/transactions/transactions.schema";
 
 interface TransactionRowProps {
-  transaction: TransactionResponse;
+  transaction: TransactionDTO;
 }
 
 export const TransactionRow: FC<TransactionRowProps> = ({ transaction }) => {

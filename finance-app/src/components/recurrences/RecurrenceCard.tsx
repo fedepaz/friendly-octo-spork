@@ -1,7 +1,7 @@
 import { Button } from "@/components/shared/Button"; // New import
 import type { FC } from "hono/jsx";
 import { CalendarDaysIcon, CalendarIcon } from "@/components/icons";
-import type { RecurrenceInput } from "@/api/recurrences/recurrences.schema";
+import type { RecurrenceDTO } from "@/api/recurrences/recurrences.schema";
 
 const recurrenceTypeIcons: Record<string, string> = {
   // Changed to use icon names
@@ -41,7 +41,7 @@ const recurrenceTypeStyles: Record<
 };
 
 interface RecurrenceCardProps {
-  recurrence: RecurrenceInput;
+  recurrence: RecurrenceDTO;
 }
 
 export const RecurrenceCard: FC<RecurrenceCardProps> = ({ recurrence }) => {

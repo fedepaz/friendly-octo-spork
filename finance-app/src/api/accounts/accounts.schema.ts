@@ -1,10 +1,10 @@
 // src/schemas/createAccountSchema.ts
 
 import { z } from "zod";
-import { AccountType, Currency, Prisma } from "../../generated/prisma";
+import { AccountType, Currency } from "../../generated/prisma";
 
 export const accountSchema = z.object({
-  id: z.number(),
+  id: z.string(),
   userId: z.string(),
   name: z.string(),
   type: z.nativeEnum(AccountType),
@@ -26,3 +26,4 @@ export const createAccountSchema = z.object({
 });
 
 export type CreateAccountInput = z.infer<typeof createAccountSchema>;
+export type AccountDTO = z.infer<typeof accountSchema>;

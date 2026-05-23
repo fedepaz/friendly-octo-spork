@@ -6,15 +6,13 @@ import type { Transaction } from "@/generated/prisma";
 
 interface TransactionListProps {
   transactions: Transaction[];
-  currentMonth: string;
-  transactionType: string; // "expenses", "incomes", "payments", etc.
 }
 
-export const TransactionList: FC<TransactionListProps> = ({
-  transactions,
-  currentMonth,
-  transactionType,
-}) => {
+export const TransactionList: FC<TransactionListProps> = ({ transactions }) => {
+  const currentMonth = new Date().toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
   const [year, month] = currentMonth.split("-").map(Number);
 
   if (!year || !month) return <></>;

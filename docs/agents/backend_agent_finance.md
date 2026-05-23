@@ -180,9 +180,9 @@ bunx prisma migrate dev --name rollback_expense_table
 
 ## Implementation Areas
 
-#### Standard Route, Controller, and Service Pattern
+#### Service Layer Pattern (DTO-First)
 
-To ensure the backend code is organized, testable, and maintainable, all new features should follow a three-layered pattern: **Routes**, **Controllers**, and **Services**.
+To ensure the backend code is organized, testable, and maintainable, all new features should follow a three-layered pattern: **Routes**, **Controllers**, and **Services**, with a strict emphasis on **Data Transfer Objects (DTOs)** for data returned to the UI.
 
 This project uses a **Vertical Slicing** approach. All backend code for a specific feature (e.g., "accounts", "categories") must be co-located within its own directory under `src/api/{feature-name}/`. This includes its routes, controller, service, and schemas.
 
@@ -191,23 +191,22 @@ This project uses a **Vertical Slicing** approach. All backend code for a specif
     *   This layer should be as simple as possible, containing no business logic.
 
 *   **Controller (`.controller.tsx` files):**
-    *   **Responsibility**: Handle the Hono context (`c`), parse request data (query params, form body), and call the service layer to perform business logic. After the service layer returns the data, the controller is responsible for rendering the Hono JSX components and returning the final response.
-    *   This layer acts as the bridge between the HTTP world and the application's business logic. It should not contain any direct database access.
+    *   **Responsibility**: Handle the Hono context (`c`), parse request data, and call the service layer. Controllers are responsible for rendering Hono JSX components using **DTOs** returned by the service.
+    *   This layer acts as the bridge between the HTTP world and the application's business logic.
 
 *   **Service (`.service.ts` files):**
-    *   **Responsibility**: Contain all business logic and data access operations. This is where you will use Prisma to interact with the database.
-    *   Services should be completely independent of Hono. They should not know about the Hono context (`c`) or any HTTP-related objects. This makes the business logic reusable and easy to test in isolation.
+    *   **Responsibility**: Contain all business logic and data access. Services **MUST** map Prisma models to DTOs before returning data to the controller.
+    *   **DTO Naming Convention**: All response types must be named `*DTO` (e.g., `AccountDTO`, `TransactionDTO`) and defined using Zod inference: `export type AccountDTO = z.infer<typeof accountSchema>;`.
+    *   Services should be completely independent of Hono.
 
 **Data Flow:**
 
-The flow of a request should be as follows:
-
 1.  The request hits the Hono server.
-2.  The **Route** file matches the URL and calls the corresponding **Controller** function.
-3.  The **Controller** parses the request and calls the **Service** with the necessary data.
-4.  The **Service** executes the business logic and uses Prisma to query the database.
-5.  The data is returned from the **Service** to the **Controller**.
-6.  The **Controller** uses the data to render a Hono JSX component and sends the HTML as the response.
+2.  The **Route** file calls the **Controller** function.
+3.  The **Controller** calls the **Service**.
+4.  The **Service** queries the database and maps the result to a **DTO** using an internal `mapToDTO` method.
+5.  The **DTO** is returned to the **Controller**.
+6.  The **Controller** renders the UI component using the DTO.
 
 ---
 

@@ -3,13 +3,14 @@
 import type { FC } from "hono/jsx";
 import { Button } from "@/components/shared/Button";
 import { LoadingSpinnerIcon } from "@/components/icons/LoadingSpinnerIcon";
-import type { RecurrenceInput } from "@/api/recurrences/recurrences.schema";
-import type { Account, Category } from "@/generated/prisma";
+import type { RecurrenceDTO } from "@/api/recurrences/recurrences.schema";
+import type { AccountDTO } from "@/api/accounts/accounts.schema";
+import type { CategoryDTO } from "@/api/categories/categories.schema";
 
 interface RecurrenceEditFormProps {
-  recurrence: RecurrenceInput;
-  accounts: Account[];
-  categories: Category[];
+  recurrence: RecurrenceDTO;
+  accounts: AccountDTO[];
+  categories: CategoryDTO[];
 }
 
 export const RecurrenceEditForm: FC<RecurrenceEditFormProps> = ({

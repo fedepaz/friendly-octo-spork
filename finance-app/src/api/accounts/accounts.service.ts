@@ -1,11 +1,22 @@
 // src/api/accounts/accounts.service.ts
 
-import type { CreateAccountInput } from "./accounts.schema";
+import type { AccountDTO, CreateAccountInput } from "./accounts.schema";
 import { AccountRepository } from "../repositories/account.repository";
+import type { Prisma } from "@/generated/prisma";
 
 export class AccountsService {
   private accountRepository = new AccountRepository();
-  async findAccounts(userId: string) {
+
+  private mapToAccountDTO(
+    account: Prisma.AccountGetPayload<object>,
+  ): AccountDTO {
+    return {
+      ...account,
+      balance: Number(account.balance), // Convert Prisma.Decimal to number
+    };
+  }
+
+  async findAccounts(userId: string): Promise<AccountDTO[]> {
     if (!userId) {
       throw new Error("User id is required");
     }
@@ -13,10 +24,10 @@ export class AccountsService {
     if (!accounts) {
       throw new Error("Accounts not found");
     }
-    return accounts;
+    return accounts.map((account) => this.mapToAccountDTO(account));
   }
 
-  async findAccountById(accountId: string) {
+  async findAccountById(accountId: string): Promise<AccountDTO> {
     if (!accountId) {
       throw new Error("Account id is required");
     }
@@ -26,15 +37,18 @@ export class AccountsService {
       throw new Error("Account not found");
     }
 
-    return account;
+    return this.mapToAccountDTO(account);
   }
 
-  async createAccount(userId: string, data: CreateAccountInput) {
+  async createAccount(
+    userId: string,
+    data: CreateAccountInput,
+  ): Promise<AccountDTO> {
     const account = await this.accountRepository.saveAccount({
       ...data,
       userId,
     });
 
-    return account;
+    return this.mapToAccountDTO(account);
   }
 }

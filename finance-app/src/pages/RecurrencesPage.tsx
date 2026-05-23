@@ -4,11 +4,10 @@ import type { FC } from "hono/jsx";
 
 import { RecurrencesList } from "@/components/recurrences/RecurrencesList";
 import Layout from "@/components/shared/Layout";
-import { Button } from "@/components/shared/Button"; // New import
-import type { RecurrenceInput } from "@/api/recurrences/recurrences.schema";
+import type { RecurrenceDTO } from "@/api/recurrences/recurrences.schema";
 
 interface RecurrencesPageProps {
-  recurrences: RecurrenceInput[];
+  recurrences: RecurrenceDTO[];
 }
 
 export const RecurrencesPage: FC<RecurrencesPageProps> = ({ recurrences }) => {

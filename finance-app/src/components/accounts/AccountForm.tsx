@@ -2,6 +2,7 @@
 
 import type { FC } from "hono/jsx";
 import { Button } from "@/components/shared/Button"; // New import
+import { LoadingSpinnerIcon } from "../icons/LoadingSpinnerIcon";
 
 interface AccountFormProps {
   // Added for linter error purposes only
@@ -108,9 +109,6 @@ export const AccountForm: FC<AccountFormProps> = () => {
             CANCEL
           </Button>
           <Button type="submit" class="bg-primary text-primary-foreground">
-            import {LoadingSpinnerIcon} from
-            "@/components/icons/LoadingSpinnerIcon"; // Import the new icon
-            component // ... (rest of the imports)
             <LoadingSpinnerIcon />
             SAVE
           </Button>

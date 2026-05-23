@@ -3,10 +3,10 @@
 import { z } from "zod";
 
 export const categorySchema = z.object({
-  id: z.number(),
+  id: z.string(),
   userId: z.string(),
   name: z.string(),
-  color: z.string().optional(),
+  color: z.string().optional().nullable(),
 });
 
 export const createCategorySchema = z.object({
@@ -20,7 +20,6 @@ export const createCategorySchema = z.object({
     .optional(),
 });
 
-export const updateCategorySchema = createCategorySchema.partial();
-
 export type CreateCategoryInput = z.infer<typeof createCategorySchema>;
-export type UpdateCategoryInput = z.infer<typeof updateCategorySchema>;
+
+export type CategoryDTO = z.infer<typeof categorySchema>;

@@ -3,40 +3,38 @@
 import { RecurrenceRepository } from "../repositories/recurrence.repository";
 import type {
   CreateRecurrenceInput,
-  RecurrenceInput,
+  RecurrenceDTO,
   UpdateRecurrenceInput,
 } from "./recurrences.schema";
 import { calculateNextDate } from "@/lib/date-utils";
-import { RecurrenceType, TransactionType } from "@/generated/prisma";
+import { RecurrenceType } from "@/generated/prisma";
 import { Prisma } from "@/generated/prisma";
 
 export class RecurrencesService {
   private recurrenceRepository = new RecurrenceRepository();
 
   /**
-   * Maps a Prisma Recurrence object to the RecurrenceInput type
+   * Maps a Prisma Recurrence object to the RecurrenceDTO type
    * Converts Prisma.Decimal to number for amount field
    */
-  private mapToRecurrenceInput(
+  private mapToRecurrenceDTO(
     recurrence: Prisma.RecurrenceGetPayload<object>,
-  ): RecurrenceInput {
+  ): RecurrenceDTO {
     return {
       ...recurrence,
       amount: Number(recurrence.amount), // Convert Prisma.Decimal to number
     };
   }
 
-  async findAllRecurrences(userId: string): Promise<RecurrenceInput[]> {
+  async findAllRecurrences(userId: string): Promise<RecurrenceDTO[]> {
     if (!userId) {
       throw new Error("User id is required");
     }
     const recurrences = await this.recurrenceRepository.getRecurrences(userId);
-    return recurrences.map((recurrence) =>
-      this.mapToRecurrenceInput(recurrence),
-    );
+    return recurrences.map((recurrence) => this.mapToRecurrenceDTO(recurrence));
   }
 
-  async findRecurrenceById(recurrenceId: string): Promise<RecurrenceInput> {
+  async findRecurrenceById(recurrenceId: string): Promise<RecurrenceDTO> {
     if (!recurrenceId) {
       throw new Error("Recurrence id is required");
     }
@@ -47,13 +45,13 @@ export class RecurrencesService {
       throw new Error("Recurrence not found");
     }
 
-    return this.mapToRecurrenceInput(recurrence);
+    return this.mapToRecurrenceDTO(recurrence);
   }
 
   async createRecurrence(
     userId: string,
     data: CreateRecurrenceInput,
-  ): Promise<RecurrenceInput> {
+  ): Promise<RecurrenceDTO> {
     const startDate = new Date(data.startDate);
     const nextDate = calculateNextDate(
       startDate,
@@ -69,17 +67,17 @@ export class RecurrencesService {
       userId,
     });
 
-    return this.mapToRecurrenceInput(recurrence);
+    return this.mapToRecurrenceDTO(recurrence);
   }
 
   async updateRecurrence(
     id: string,
     data: UpdateRecurrenceInput,
-  ): Promise<RecurrenceInput> {
+  ): Promise<RecurrenceDTO> {
     const recurrence = await this.recurrenceRepository.updateRecurrence(
       id,
       data,
     );
-    return this.mapToRecurrenceInput(recurrence);
+    return this.mapToRecurrenceDTO(recurrence);
   }
 }

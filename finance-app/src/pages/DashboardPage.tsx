@@ -4,7 +4,6 @@ import type { DashboardInput } from "@/api/dashboard/dashboard.schema";
 import { BudgetProgressCard } from "@/components/dashboard/BudgetProgressCard";
 import { StatCard } from "@/components/dashboard/StatCard";
 import Layout from "@/components/shared/Layout";
-import type { Account } from "@/generated/prisma";
 import type { FC } from "hono/jsx";
 
 interface DashboardPageProps {
