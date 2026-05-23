@@ -12,17 +12,6 @@ export const TransactionCard: FC<TransactionCardProps> = ({ transaction }) => {
     transaction.type === "INCOME" || transaction.type === "RETURN";
   const isNegative =
     transaction.type === "EXPENSE" || transaction.type === "PAYMENT";
-  const amountSign = isPositive ? "+" : isNegative ? "-" : "";
-
-  const currency =
-    transaction.sourceAccount?.currency ||
-    transaction.targetAccount?.currency ||
-    "USD";
-
-  const formattedAmount = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: currency,
-  }).format(transaction.amount);
 
   const categoryColor = transaction.category?.color || "#6b7280";
 
@@ -75,8 +64,7 @@ export const TransactionCard: FC<TransactionCardProps> = ({ transaction }) => {
                 : "text-foreground"
           }`}
         >
-          {amountSign}
-          {formattedAmount}
+          {Number(transaction.amount).toFixed(2)}
         </div>
       </div>
 
@@ -116,7 +104,7 @@ export const TransactionCard: FC<TransactionCardProps> = ({ transaction }) => {
         </p>
       </div>
 
-      {transaction.recurrencePartNumber && (
+      {transaction.recurrencePartNumber && transaction.type !== "PAYMENT" && (
         <div class="mt-6 pt-4 border-t-2 border-border border-dashed">
           <div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary text-secondary-foreground text-xs font-black border-2 border-border">
             RECURRENCE PART: {transaction.recurrencePartNumber}

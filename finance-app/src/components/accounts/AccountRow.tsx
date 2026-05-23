@@ -18,16 +18,16 @@ export const AccountRow: FC<AccountRowProps> = ({ account }) => {
   const getAccountIcon = (type: string) => {
     switch (type) {
       case "BANK":
-        return <BankIcon class="w-4.5 h-4.5 text-blue-500" />;
+        return <BankIcon class="w-4 h-4 text-blue-500" />;
       case "CARD":
-        return <CreditCardIcon class="w-4.5 h-4.5 text-purple-500" />;
+        return <CreditCardIcon class="w-4 h-4 text-purple-500" />;
       case "CASH":
       case "WALLET":
-        return <WalletIcon class="w-4.5 h-4.5 text-emerald-500" />;
+        return <WalletIcon class="w-4 h-4 text-emerald-500" />;
       case "INVESTMENT":
-        return <TrendingUpIcon class="w-4.5 h-4.5 text-amber-500" />;
+        return <TrendingUpIcon class="w-4 h-4 text-amber-500" />;
       default:
-        return <BankIcon class="w-4.5 h-4.5 text-muted-foreground" />;
+        return <BankIcon class="w-4 h-4 text-muted-foreground" />;
     }
   };
 
@@ -42,15 +42,6 @@ export const AccountRow: FC<AccountRowProps> = ({ account }) => {
   const currentTypeStyle =
     typeStyles[account.type] || "bg-muted text-muted-foreground border-border";
 
-  const currencyStyles: Record<string, string> = {
-    USD: "bg-card text-foreground border-border",
-    ARS: "bg-muted/60 text-muted-foreground border-border",
-    USDT: "bg-teal-500/10 text-teal-600 border-teal-500/20",
-  };
-
-  const currentCurrencyStyle =
-    currencyStyles[account.currency] || "bg-card text-foreground border-border";
-
   const formattedBalance = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: account.currency,
@@ -58,21 +49,21 @@ export const AccountRow: FC<AccountRowProps> = ({ account }) => {
 
   const balanceClass =
     Number(account.balance) >= 0
-      ? "text-emerald-600 font-bold font-mono text-base"
-      : "text-rose-600 font-bold font-mono text-base";
+      ? "text-emerald-600 font-bold font-mono text-sm"
+      : "text-rose-600 font-bold font-mono text-sm";
 
   return (
     <tr
       id={`account-${account.id}`}
-      class="border-b border-border hover:bg-muted/50 transition-all duration-200 "
+      class="border-b border-border hover:bg-muted/30 transition-all duration-200 group"
     >
       {/* Account Name with Icon */}
       <td class="p-4 align-middle text-left">
-        <div class="flex items-center gap-2.5">
-          <div class="p-2 bg-card rounded-lg border border-border shadow-[var(--shadow-sm)] flex items-center justify-center">
+        <div class="flex items-center gap-3">
+          <div class="p-2 bg-card rounded border border-border shadow-[var(--shadow-sm)] flex items-center justify-center group-hover:border-primary/30 transition-colors">
             {getAccountIcon(account.type)}
           </div>
-          <span class="font-bold text-foreground leading-snug">
+          <span class="font-bold text-foreground tracking-tight">
             {account.name}
           </span>
         </div>
@@ -81,7 +72,7 @@ export const AccountRow: FC<AccountRowProps> = ({ account }) => {
       {/* Account Type Badge */}
       <td class="p-4 align-middle text-left">
         <span
-          class={`inline-flex items-center px-2.5 py-0.5 text-[10px] font-bold rounded-full border uppercase tracking-wider ${currentTypeStyle}`}
+          class={`inline-flex items-center px-2 py-0.5 text-[9px] font-black rounded border uppercase tracking-widest shadow-[var(--shadow-sm)] ${currentTypeStyle}`}
         >
           {account.type}
         </span>
@@ -89,9 +80,7 @@ export const AccountRow: FC<AccountRowProps> = ({ account }) => {
 
       {/* Currency Pill */}
       <td class="p-4 align-middle text-left">
-        <span
-          class={`inline-flex items-center px-2 py-0.5 text-[10px] font-bold rounded border uppercase tracking-wider font-mono ${currentCurrencyStyle}`}
-        >
+        <span class="inline-flex items-center px-2 py-0.5 text-[9px] font-black rounded border border-border bg-muted/20 text-muted-foreground uppercase tracking-widest font-mono">
           {account.currency}
         </span>
       </td>
@@ -102,10 +91,10 @@ export const AccountRow: FC<AccountRowProps> = ({ account }) => {
       </td>
 
       {/* Actions Button */}
-      <td class="p-4 align-middle text-center w-32">
+      <td class="p-4 align-middle text-center w-24">
         <Button
           type="button"
-          class="bg-secondary text-secondary-foreground hover:bg-secondary/80 font-bold text-xs uppercase tracking-wider px-3 py-1.5 rounded border border-border shadow-[var(--shadow-sm)] hover:shadow-none hover:translate-y-[1px] transition-all"
+          class="bg-secondary text-secondary-foreground hover:bg-secondary/80 font-black text-[9px] uppercase tracking-widest px-2.5 py-1.5 rounded border border-border shadow-[var(--shadow-sm)] hover:shadow-none hover:translate-y-[1px] transition-all"
           hxGet={`/accounts/${account.id}`}
           hxTarget="#modal-content"
           hxSwap="innerHTML"

@@ -40,14 +40,14 @@ export const RecurrencesList: FC<RecurrencesListProps> = ({ recurrences }) => {
       <div class="overflow-x-auto">
         <table class="w-full border-collapse">
           <thead>
-            <tr class="border-b-2 border-border bg-primary/5 text-muted-foreground text-xs font-bold uppercase tracking-wider">
+            <tr class="border-b-2 border-border bg-primary/5 text-muted-foreground text-[10px] font-black uppercase tracking-[0.2em]">
               <th class="p-4 text-left whitespace-nowrap">Recurrence Name</th>
               <th class="p-4 text-left whitespace-nowrap w-28">Frequency</th>
               <th class="p-4 text-right whitespace-nowrap w-32">Amount</th>
               <th class="p-4 text-left whitespace-nowrap w-28">Progress</th>
               <th class="p-4 text-left whitespace-nowrap w-36">Next Charge</th>
               <th class="p-4 text-left whitespace-nowrap w-24">Status</th>
-              <th class="p-4 text-center whitespace-nowrap w-48">Actions</th>
+              <th class="p-4 text-center whitespace-nowrap w-32">Actions</th>
             </tr>
           </thead>
           <tbody class="divide-y border-border">

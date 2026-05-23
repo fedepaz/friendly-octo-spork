@@ -17,10 +17,10 @@ export const AccountsList: FC<AccountsListProps> = ({ accounts }) => {
       <div class="overflow-x-auto">
         <table class="w-full border-collapse">
           <thead>
-            <tr class="border-b-2 border-border bg-primary/5 text-muted-foreground text-xs font-bold uppercase tracking-wider">
+            <tr class="border-b-2 border-border bg-primary/5 text-muted-foreground text-[10px] font-black uppercase tracking-[0.2em]">
               <th class="p-4 text-left whitespace-nowrap">Account Name</th>
               <th class="p-4 text-left whitespace-nowrap w-28">Type</th>
-              <th class="p-4 text-left whitespace-nowrap w-20">Currency</th>
+              <th class="p-4 text-left whitespace-nowrap w-24">Currency</th>
               <th class="p-4 text-right whitespace-nowrap w-32">Balance</th>
               <th class="p-4 text-center whitespace-nowrap w-24">Actions</th>
             </tr>

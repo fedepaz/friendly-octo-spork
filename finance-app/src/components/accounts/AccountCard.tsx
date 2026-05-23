@@ -15,73 +15,101 @@ interface AccountCardProps {
 }
 
 export const AccountCard: FC<AccountCardProps> = ({ account }) => {
-  const typeStyles = typeStyleMap[account.type];
+  const typeStyles = typeStyleMap[account.type] || {
+    bg: "bg-muted",
+    text: "text-muted-foreground",
+    border: "border-border",
+    icon: "BankIcon",
+  };
 
-  if (!typeStyles) return null;
+  const getAccountIcon = (iconName: string) => {
+    switch (iconName) {
+      case "BankIcon":
+        return <BankIcon class="w-6 h-6" />;
+      case "WalletIcon":
+        return <WalletIcon class="w-6 h-6" />;
+      case "CreditCardIcon":
+        return <CreditCardIcon class="w-6 h-6" />;
+      case "TrendingUpIcon":
+        return <TrendingUpIcon class="w-6 h-6" />;
+      default:
+        return <BankIcon class="w-6 h-6" />;
+    }
+  };
+
   return (
     <div
-      class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 relative overflow-hidden
-                hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-xl)] transition-all duration-150"
+      class="bg-card text-card-foreground border-4 border-border shadow-[var(--shadow-lg)] p-8 relative overflow-hidden w-full max-w-md mx-auto select-none"
+      style="min-width: 320px;"
     >
-      {/* Background Icon */}
-      <div class="absolute top-4 right-4 text-6xl opacity-10">
-        {(() => {
-          switch (typeStyles.icon) {
-            case "BankIcon":
-              return <BankIcon />;
-            case "WalletIcon":
-              return <WalletIcon />;
-            case "CreditCardIcon":
-              return <CreditCardIcon />;
-            case "TrendingUpIcon":
-              return <TrendingUpIcon />;
-            default:
-              return null;
-          }
-        })()}
-      </div>
+      {/* Neo-brutalism decorative corner */}
+      <div class="absolute -top-6 -right-6 w-12 h-12 bg-primary rotate-45 border-4 border-border"></div>
 
-      <div class="flex justify-between items-start mb-6">
+      <div class="flex justify-between items-start mb-8">
         <div>
-          <h3 class="text-xl font-bold uppercase tracking-wider mb-2">
-            {account.name}
+          <h3 class="text-sm font-black uppercase tracking-widest text-muted-foreground mb-1">
+            Account Details
           </h3>
-          <span
-            class={`inline-flex items-center gap-2 px-3 py-1.5 
-                       text-xs font-bold uppercase tracking-wider
-                       ${typeStyles.bg} ${typeStyles.text} border-2 ${typeStyles.border}
-                       shadow-[var(--shadow-sm)]`}
+          <div
+            class={`inline-flex items-center gap-2 px-3 py-1.5 text-xs font-black border-2 border-border shadow-[var(--shadow-sm)] uppercase tracking-tight
+            ${typeStyles.bg} ${typeStyles.text} ${typeStyles.border}`}
           >
-            {(() => {
-              switch (typeStyles.icon) {
-                case "BankIcon":
-                  return <BankIcon />;
-                case "WalletIcon":
-                  return <WalletIcon />;
-                case "CreditCardIcon":
-                  return <CreditCardIcon />;
-                case "TrendingUpIcon":
-                  return <TrendingUpIcon />;
-                default:
-                  return null;
-              }
-            })()}{" "}
+            {getAccountIcon(typeStyles.icon)}
             {account.type}
-          </span>
+          </div>
         </div>
-        <span class="font-mono text-lg font-bold px-3 py-1 bg-secondary/20 border-2 border-border">
-          {account.currency}
-        </span>
+        <div class="text-right">
+          <div class="text-xs font-bold text-muted-foreground uppercase mb-1">
+            Currency
+          </div>
+          <div class="font-mono font-black text-xl px-3 py-1 bg-secondary/20 border-2 border-border inline-block">
+            {account.currency}
+          </div>
+        </div>
       </div>
 
-      <div
-        class={`font-mono text-4xl font-bold mb-6 ${
-          Number(account.balance) >= 0
-            ? "text-[var(--primary)]"
-            : "text-[var(--destructive)]"
-        }`}
-      >
-        ${Number(account.balance).toFixed(2)}
+      <div class="mb-8 p-6 bg-muted/30 border-2 border-border shadow-inner">
+        <div class="text-xs font-black uppercase tracking-widest text-muted-foreground mb-2">
+          Current Balance
+        </div>
+        <div
+          class={`font-mono text-5xl font-black  ${
+            Number(account.balance) >= 0 ? "text-emerald-500" : "text-rose-500"
+          }`}
+        >
+          {Number(account.balance).toFixed(2)}
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div>
+          <div class="text-xs font-black uppercase tracking-widest text-muted-foreground mb-2">
+            Account Name
+          </div>
+          <p class="font-black text-2xl leading-tight uppercase">
+            {account.name}
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 pt-4 border-t-2 border-border border-dashed">
+          <div>
+            <div class="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">
+              Account ID
+            </div>
+            <div class="font-mono text-[10px] text-muted-foreground truncate">
+              {account.id}
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">
+              Status
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 rounded-full text-[10px] font-bold uppercase">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Active
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

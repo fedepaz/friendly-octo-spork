@@ -120,25 +120,13 @@ export const TransactionList: FC<TransactionListProps> = ({
           <div class="overflow-x-auto">
             <table class="w-full border-collapse">
               <thead>
-                <tr class="border-b-2 border-border bg-primary/5 text-muted-foreground">
-                  <th class="p-4 text-center font-bold text-xs uppercase tracking-wider whitespace-nowrap w-20">
-                    Day
-                  </th>
-                  <th class="p-4 text-right font-bold text-xs uppercase tracking-wider whitespace-nowrap">
-                    Amount
-                  </th>
-                  <th class="p-4 text-left font-bold text-xs uppercase tracking-wider whitespace-nowrap">
-                    Details
-                  </th>
-                  <th class="p-4 text-left font-bold text-xs uppercase tracking-wider whitespace-nowrap">
-                    Category
-                  </th>
-                  <th class="p-4 text-left font-bold text-xs uppercase tracking-wider whitespace-nowrap">
-                    Account
-                  </th>
-                  <th class="p-4 text-center font-bold text-xs uppercase tracking-wider whitespace-nowrap w-32">
-                    Actions
-                  </th>
+                <tr class="border-b-2 border-border bg-primary/5 text-muted-foreground text-[10px] font-black uppercase tracking-[0.2em]">
+                  <th class="p-4 text-center whitespace-nowrap w-20">Day</th>
+                  <th class="p-4 text-right whitespace-nowrap">Amount</th>
+                  <th class="p-4 text-left whitespace-nowrap">Details</th>
+                  <th class="p-4 text-left whitespace-nowrap">Category</th>
+                  <th class="p-4 text-left whitespace-nowrap">Account</th>
+                  <th class="p-4 text-center whitespace-nowrap w-32">Actions</th>
                 </tr>
               </thead>
               <tbody id="transaction-list" class="divide-y border-border">

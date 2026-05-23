@@ -60,22 +60,21 @@ export const RecurrenceRow: FC<RecurrenceRowProps> = ({ recurrence }) => {
     ? new Date(recurrence.nextDate).toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
-        year: "numeric",
       })
-    : "Completed";
+    : "DONE";
 
   return (
     <tr
       id={`recurrence-${recurrence.id}`}
-      class="border-b border-border hover:bg-muted/50 transition-all duration-200 "
+      class="border-b border-border hover:bg-muted/30 transition-all duration-200 group"
     >
       {/* Recurrence Name & Icon */}
       <td class="p-4 align-middle text-left">
-        <div class="flex items-center gap-2.5">
-          <div class="p-2 bg-card rounded-lg border border-border shadow-[var(--shadow-sm)] flex items-center justify-center">
+        <div class="flex items-center gap-3">
+          <div class="p-2 bg-card rounded border border-border shadow-[var(--shadow-sm)] flex items-center justify-center group-hover:border-primary/30 transition-colors">
             {getFrequencyIcon(recurrence.frequency)}
           </div>
-          <span class="font-bold text-foreground leading-snug">
+          <span class="font-bold text-foreground tracking-tight">
             {recurrence.name}
           </span>
         </div>
@@ -84,7 +83,7 @@ export const RecurrenceRow: FC<RecurrenceRowProps> = ({ recurrence }) => {
       {/* Frequency Badge */}
       <td class="p-4 align-middle text-left">
         <span
-          class={`inline-flex items-center px-2.5 py-0.5 text-[10px] font-bold rounded-full border uppercase tracking-wider ${currentFreqStyle}`}
+          class={`inline-flex items-center px-2 py-0.5 text-[9px] font-black rounded border uppercase tracking-widest shadow-[var(--shadow-sm)] ${currentFreqStyle}`}
         >
           {recurrence.frequency}
         </span>
@@ -101,20 +100,19 @@ export const RecurrenceRow: FC<RecurrenceRowProps> = ({ recurrence }) => {
       {/* Progress / Cycles Info */}
       <td class="p-4 align-middle text-left">
         {recurrence.totalParts ? (
-          <span class="font-semibold text-foreground text-sm font-mono">
-            {recurrence.currentPart} / {recurrence.totalParts}{" "}
-            <span class="text-xs text-muted-foreground font-normal">parts</span>
+          <span class="font-black text-foreground text-[10px] font-mono border border-border px-1.5 py-0.5 bg-muted/20 rounded">
+            {recurrence.currentPart}/{recurrence.totalParts}
           </span>
         ) : (
-          <span class="text-xs font-semibold text-muted-foreground uppercase tracking-wider font-mono">
-            Continuous
+          <span class="text-[9px] font-black text-muted-foreground uppercase tracking-widest font-mono">
+            CONT
           </span>
         )}
       </td>
 
       {/* Next Charge Date */}
       <td class="p-4 align-middle text-left">
-        <span class="text-sm font-bold font-mono text-foreground">
+        <span class="text-xs font-black font-mono text-foreground uppercase">
           {formattedNextDate}
         </span>
       </td>
@@ -122,7 +120,7 @@ export const RecurrenceRow: FC<RecurrenceRowProps> = ({ recurrence }) => {
       {/* Active/Status Pill */}
       <td class="p-4 align-middle text-left">
         <span
-          class={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold border uppercase tracking-wider bg-card ${
+          class={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded border text-[9px] font-black uppercase tracking-widest shadow-[var(--shadow-sm)] bg-card ${
             recurrence.active
               ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
               : "bg-rose-500/10 text-rose-600 border-rose-500/20"
@@ -133,16 +131,16 @@ export const RecurrenceRow: FC<RecurrenceRowProps> = ({ recurrence }) => {
               recurrence.active ? "bg-emerald-500" : "bg-rose-500"
             }`}
           ></span>
-          {recurrence.active ? "Active" : "Paused"}
+          {recurrence.active ? "ON" : "OFF"}
         </span>
       </td>
 
       {/* Actions Compact Group */}
-      <td class="p-4 align-middle text-center w-56">
-        <div class="flex items-center justify-center gap-1">
+      <td class="p-4 align-middle text-center w-32">
+        <div class="flex items-center justify-center gap-1.5">
           <Button
             type="button"
-            class="bg-secondary text-secondary-foreground hover:bg-secondary/80 font-bold text-[9px] uppercase tracking-wider px-2 py-1 rounded border border-border shadow-[var(--shadow-sm)] hover:shadow-none hover:translate-y-[1px] transition-all"
+            class="bg-secondary text-secondary-foreground hover:bg-secondary/80 font-black text-[9px] uppercase tracking-widest px-2 py-1.5 rounded border border-border shadow-[var(--shadow-sm)] hover:shadow-none hover:translate-y-[1px] transition-all"
             hxGet={`/recurrences/${recurrence.id}`}
             hxTarget="#modal-content"
             hxSwap="innerHTML"
@@ -152,7 +150,7 @@ export const RecurrenceRow: FC<RecurrenceRowProps> = ({ recurrence }) => {
           </Button>
           <Button
             type="button"
-            class="bg-secondary text-secondary-foreground hover:bg-secondary/80 font-bold text-[9px] uppercase tracking-wider px-2 py-1 rounded border border-border shadow-[var(--shadow-sm)] hover:shadow-none hover:translate-y-[1px] transition-all"
+            class="bg-secondary text-secondary-foreground hover:bg-secondary/80 font-black text-[9px] uppercase tracking-widest px-2 py-1.5 rounded border border-border shadow-[var(--shadow-sm)] hover:shadow-none hover:translate-y-[1px] transition-all"
             hxGet={`/recurrences/${recurrence.id}/edit`}
             hxTarget="#modal-content"
             hxSwap="innerHTML"
