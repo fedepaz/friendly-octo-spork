@@ -4,6 +4,7 @@ import { Hono } from "hono";
 import { TransactionsController } from "./transactions.controller";
 import { zValidator } from "@hono/zod-validator";
 import { createTransactionSchema } from "./transactions.schema";
+import type z from "zod";
 
 const transactionsRoutes = new Hono();
 const transactionsController = new TransactionsController();
@@ -13,8 +14,9 @@ transactionsRoutes.post(
   "/",
   zValidator("form", createTransactionSchema, (result, c) => {
     if (!result.success) {
-      console.error("Validation failed:", result.error.flatten());
-      return c.json({ error: result.error.flatten() }, 400);
+      const err = result.error as z.ZodError;
+      console.error("Validation failed:", err.flatten());
+      return c.json({ error: err.flatten() }, 400);
     }
   }),
   transactionsController.createTransaction,

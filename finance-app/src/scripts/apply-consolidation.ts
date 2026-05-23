@@ -50,7 +50,7 @@ async function applyConsolidation(userId: string) {
   const masterCategories = new Set(
     allMappings.map((m: any) => m.newCategoryName),
   );
-  const createdCategories = new Map<string, number>();
+  const createdCategories = new Map<string, string>();
 
   for (const masterName of masterCategories) {
     const category = await prisma.category.upsert({

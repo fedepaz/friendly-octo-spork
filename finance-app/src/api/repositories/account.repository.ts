@@ -14,10 +14,11 @@ export class AccountRepository {
   }
 
   // Get account by id
-  async getAccountById(id: string): Promise<Account | null> {
+  async getAccountById(userId: string, id: string): Promise<Account | null> {
     return prisma.account.findFirst({
       where: {
         id,
+        userId,
       },
     });
   }

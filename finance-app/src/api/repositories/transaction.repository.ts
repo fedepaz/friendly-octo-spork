@@ -3,11 +3,20 @@
 import type { Prisma, Transaction } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
 
+export type TransactionWithRelations = Prisma.TransactionGetPayload<{
+  include: {
+    category: true;
+    sourceAccount: true;
+    targetAccount: true;
+    recurrence: true;
+  };
+}>;
+
 export class TransactionRepository {
   async getTransactions(
     userId: string,
     filters?: { startDate?: Date; endDate?: Date },
-  ): Promise<Transaction[]> {
+  ): Promise<TransactionWithRelations[]> {
     const where: Prisma.TransactionWhereInput = {
       userId,
     };
@@ -33,10 +42,20 @@ export class TransactionRepository {
     });
   }
 
-  async getTransactionById(id: number): Promise<Transaction | null> {
+  async getTransactionById(
+    userId: string,
+    id: string,
+  ): Promise<TransactionWithRelations | null> {
     return await prisma.transaction.findFirst({
       where: {
         id,
+        userId,
+      },
+      include: {
+        category: true,
+        sourceAccount: true,
+        targetAccount: true,
+        recurrence: true,
       },
     });
   }
@@ -44,7 +63,7 @@ export class TransactionRepository {
   async saveTransaction(
     data: Prisma.TransactionUncheckedCreateInput,
     tx?: Prisma.TransactionClient,
-  ): Promise<Transaction> {
+  ): Promise<TransactionWithRelations> {
     const client = tx || prisma;
     return await client.transaction.create({
       data,

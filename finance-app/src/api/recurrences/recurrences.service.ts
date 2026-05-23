@@ -34,12 +34,20 @@ export class RecurrencesService {
     return recurrences.map((recurrence) => this.mapToRecurrenceDTO(recurrence));
   }
 
-  async findRecurrenceById(recurrenceId: string): Promise<RecurrenceDTO> {
+  async findRecurrenceById(
+    userId: string,
+    recurrenceId: string,
+  ): Promise<RecurrenceDTO> {
+    if (!userId) {
+      throw new Error("User id is required");
+    }
     if (!recurrenceId) {
       throw new Error("Recurrence id is required");
     }
-    const recurrence =
-      await this.recurrenceRepository.getRecurrenceById(recurrenceId);
+    const recurrence = await this.recurrenceRepository.getRecurrenceById(
+      userId,
+      recurrenceId,
+    );
 
     if (!recurrence) {
       throw new Error("Recurrence not found");

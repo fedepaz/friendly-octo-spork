@@ -14,10 +14,11 @@ export class CategoriesRepository {
   }
 
   // Get category by id
-  async getCategoryById(id: number): Promise<Category | null> {
+  async getCategoryById(userId: string, id: string): Promise<Category | null> {
     return prisma.category.findFirst({
       where: {
         id,
+        userId,
       },
     });
   }

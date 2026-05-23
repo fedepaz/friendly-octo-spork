@@ -7,10 +7,12 @@ import type { TransactionDTO } from "@/api/transactions/transactions.schema";
 
 interface TransactionPageProps {
   transactions: TransactionDTO[];
+  currentMonth: string;
 }
 
 export const TransactionPage: FC<TransactionPageProps> = ({
   transactions = [],
+  currentMonth,
 }) => {
   return (
     <Layout activeNavItem="/transactions">
@@ -19,7 +21,7 @@ export const TransactionPage: FC<TransactionPageProps> = ({
           Transactions
         </h1>
       </div>
-      <TransactionList transactions={transactions} />
+      <TransactionList transactions={transactions} currentMonth={currentMonth} />
     </Layout>
   );
 };

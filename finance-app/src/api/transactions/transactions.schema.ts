@@ -1,7 +1,7 @@
 // src/schemas/transactions.schema.ts
 
 import { z } from "zod";
-import { TransactionType, RecurrenceType } from "@/generated/prisma";
+import { TransactionType, RecurrenceType, BudgetCategory, CardType } from "@/generated/prisma";
 import { categorySchema } from "../categories/categories.schema";
 import { accountSchema } from "../accounts/accounts.schema";
 import { recurrenceSchema } from "../recurrences/recurrences.schema";
@@ -12,10 +12,21 @@ import { recurrenceSchema } from "../recurrences/recurrences.schema";
 
 export const transactionSchema = z.object({
   id: z.string(),
+  userId: z.string(),
   type: z.nativeEnum(TransactionType),
   amount: z.number().positive(),
   date: z.date(),
   description: z.string().nullable(),
+  categoryId: z.string().nullable(),
+  sourceAccountId: z.string().nullable(),
+  targetAccountId: z.string().nullable(),
+  recurrenceId: z.string().nullable(),
+  recurrencePartNumber: z.number().int().nullable(),
+  isBudgetedExpense: z.boolean().nullable(),
+  budgetCategory: z.nativeEnum(BudgetCategory).nullable(),
+  isCardExpense: z.boolean().nullable(),
+  cardType: z.nativeEnum(CardType).nullable(),
+  source: z.string().nullable(),
   metadata: z.object({}).catchall(z.unknown()).nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),

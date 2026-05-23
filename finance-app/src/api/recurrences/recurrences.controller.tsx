@@ -13,6 +13,7 @@ import {
 import { RecurrenceEditForm } from "@/components/recurrences/RecurrenceEditForm";
 import { AccountsService } from "../accounts/accounts.service";
 import { CategoriesService } from "../categories/categories.service";
+import { RecurrenceCard } from "@/components/recurrences/RecurrenceCard";
 
 export class RecurrencesController {
   private recurrenceService = new RecurrencesService();
@@ -58,6 +59,24 @@ export class RecurrencesController {
     }
   };
 
+  getRecurrenceById = async (c: Context) => {
+    try {
+      const payload = c.get("jwtPayload") as { sub: string };
+      const userId = payload.sub;
+      const id = c.req.param("id");
+
+      const recurrence = await this.recurrenceService.findRecurrenceById(
+        userId,
+        id,
+      );
+
+      return c.html(<RecurrenceCard recurrence={recurrence} />);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      return c.json({ error: message }, 500);
+    }
+  };
+
   getEditForm = async (c: Context) => {
     try {
       const payload = c.get("jwtPayload") as { sub: string };
@@ -65,7 +84,7 @@ export class RecurrencesController {
       const id = c.req.param("id");
 
       const [recurrence, accounts, categories] = await Promise.all([
-        this.recurrenceService.findRecurrenceById(id),
+        this.recurrenceService.findRecurrenceById(userId, id),
         this.accountsService.findAccounts(userId),
         this.categoriesService.findCategories(userId),
       ]);

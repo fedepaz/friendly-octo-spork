@@ -12,10 +12,14 @@ export class RecurrenceRepository {
     });
   }
 
-  async getRecurrenceById(id: string): Promise<Recurrence | null> {
+  async getRecurrenceById(
+    userId: string,
+    id: string,
+  ): Promise<Recurrence | null> {
     return await prisma.recurrence.findFirst({
       where: {
         id,
+        userId,
       },
     });
   }

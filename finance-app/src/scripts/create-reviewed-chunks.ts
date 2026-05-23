@@ -133,7 +133,7 @@ async function createReviewedChunks() {
 
     for (const mapping of content.mappings) {
       if (changes[mapping.oldCategoryName]) {
-        mapping.newCategoryName = changes[mapping.oldCategoryName];
+        mapping.newCategoryName = changes[mapping.oldCategoryName]!;
         mapping.confidence = 'high';
         mapping.reasoning = 'Manually reviewed and approved by user.';
         wasModified = true;

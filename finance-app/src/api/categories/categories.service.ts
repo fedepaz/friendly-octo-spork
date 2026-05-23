@@ -25,7 +25,7 @@ export class CategoriesService {
     return categories.map((category) => this.mapToCategoryDTO(category));
   }
 
-  async findCategoryById(categoryId: number): Promise<CategoryDTO> {
+  async findCategoryById(categoryId: string): Promise<CategoryDTO> {
     if (!categoryId) {
       throw new Error("Category id is required");
     }

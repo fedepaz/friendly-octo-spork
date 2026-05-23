@@ -1,6 +1,6 @@
 // src/api/transactions/transactions.service.ts
 
-import { TransactionRepository } from "../repositories/transaction.repository";
+import { TransactionRepository, type TransactionWithRelations } from "../repositories/transaction.repository";
 import { AccountRepository } from "../repositories/account.repository";
 import { RecurrenceRepository } from "../repositories/recurrence.repository";
 import {
@@ -18,10 +18,52 @@ export class TransactionsService {
   private recurrenceRepository = new RecurrenceRepository();
 
   private mapToTransactionDTO(
-    transaction: Prisma.TransactionGetPayload<object>,
+    transaction: TransactionWithRelations,
   ): TransactionDTO {
     return {
       ...transaction,
+      amount: Number(transaction.amount),
+      recurrencePartNumber: transaction.recurrencePartNumber ?? null,
+      isBudgetedExpense: transaction.isBudgetedExpense ?? null,
+      budgetCategory: transaction.budgetCategory ?? null,
+      isCardExpense: transaction.isCardExpense ?? null,
+      cardType: transaction.cardType ?? null,
+      source: transaction.source ?? null,
+      metadata: transaction.metadata as Record<string, unknown> | null,
+      category: transaction.category
+        ? {
+            ...transaction.category,
+            color: transaction.category.color ?? null,
+          }
+        : null,
+      sourceAccount: transaction.sourceAccount
+        ? {
+            ...transaction.sourceAccount,
+            balance: Number(transaction.sourceAccount.balance),
+          }
+        : null,
+      targetAccount: transaction.targetAccount
+        ? {
+            ...transaction.targetAccount,
+            balance: Number(transaction.targetAccount.balance),
+          }
+        : null,
+      recurrence: transaction.recurrence
+        ? {
+            ...transaction.recurrence,
+            amount: Number(transaction.recurrence.amount),
+            totalParts: transaction.recurrence.totalParts ?? null,
+            currentPart: transaction.recurrence.currentPart ?? null,
+            nextDate: transaction.recurrence.nextDate ?? null,
+            endDate: transaction.recurrence.endDate ?? null,
+            categoryId: transaction.recurrence.categoryId ?? null,
+            sourceAccountId: transaction.recurrence.sourceAccountId ?? null,
+            targetAccountId: transaction.recurrence.targetAccountId ?? null,
+            isCardExpense: transaction.recurrence.isCardExpense ?? null,
+            cardType: transaction.recurrence.cardType ?? null,
+            metadata: transaction.recurrence.metadata,
+          }
+        : null,
     };
   }
 
@@ -57,7 +99,7 @@ export class TransactionsService {
     );
   }
 
-  async findTransactionById(transactionId: number): Promise<TransactionDTO> {
+  async findTransactionById(transactionId: string): Promise<TransactionDTO> {
     if (!transactionId) {
       throw new Error("Transaction id is required");
     }
@@ -82,7 +124,7 @@ export class TransactionsService {
     }
 
     // 2. Atomic Transaction
-    return await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx) => {
       const amount = new Prisma.Decimal(data.amount);
 
       // A. Handle Recurrence (Existing or New)
@@ -155,7 +197,7 @@ export class TransactionsService {
         userId,
         recurrenceId: finalRecurrenceId,
         recurrencePartNumber: partNumber,
-        metadata: data.metadata,
+        metadata: data.metadata as Prisma.InputJsonValue,
       };
 
       const transaction = await this.transactionRepository.saveTransaction(
@@ -222,5 +264,7 @@ export class TransactionsService {
 
       return transaction;
     });
+
+    return this.mapToTransactionDTO(result);
   }
 }
