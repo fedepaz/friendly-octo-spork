@@ -1,7 +1,12 @@
 // src/components/shared/Toast.tsx
 
 import type { FC } from "hono/jsx";
-import { CheckIcon, AlertTriangleIcon, InfoIcon, XIcon } from "@/components/icons";
+import {
+  CheckIcon,
+  AlertTriangleIcon,
+  InfoIcon,
+  XIcon,
+} from "@/components/icons";
 import { Button } from "./Button";
 
 interface ToastProps {
@@ -34,8 +39,9 @@ export const Toast: FC<ToastProps> = ({ message, type }) => {
   const { bgColor, textColor, borderColor, iconName } = toastTypes[type];
 
   return (
-    <div
-      class={`
+    <div id="toast-container" hx-swap-oob="beforeend">
+      <div
+        class={`
         ${bgColor} ${textColor}
         border-2 ${borderColor}
         shadow-[var(--shadow)]
@@ -45,34 +51,22 @@ export const Toast: FC<ToastProps> = ({ message, type }) => {
         animate-slide-in-right
         rounded-none
       `}
-      role="alert"
-      aria-live="assertive"
-      hx-swap-oob="true"
-      hx-on--after-load="setTimeout(() => this.remove(), 5000)"
-    >
-      <span class="text-2xl font-bold flex-shrink-0">
-        {iconName === "check" && <CheckIcon />}
-        {iconName === "alert-triangle" && <AlertTriangleIcon />}
-        {iconName === "info" && <InfoIcon />}
-      </span>
-      <span class="flex-1 font-semibold text-sm">{message}</span>
-      <Button
-        type="button" // Explicitly set type to "button"
-        class={`
-          flex-shrink-0
-          w-8 h-8
-          flex items-center justify-center
-          font-bold text-lg
-          bg-transparent text-current border-none shadow-none // Override default button styles
-          hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]
-          active:translate-x-1 active:translate-y-1 active:shadow-none
-          rounded-none
-        `}
-        hx-on:click="this.closest('[role=alert]').remove()"
-        aria-label="Close toast"
+        role="alert"
+        aria-live="assertive"
+        x-data="{ show: true }"
+        x-init="setTimeout(() => show = false, 5000)"
+        x-show="show"
+        x-transition:leave="transition ease-in duration-300"
+        x-transition:leave-start="opacity-100 translate-x-0"
+        x-transition:leave-end="opacity-0 translate-x-full"
       >
-        <XIcon />{" "}
-      </Button>
+        <span class="text-2xl font-bold flex-shrink-0">
+          {iconName === "check" && <CheckIcon />}
+          {iconName === "alert-triangle" && <AlertTriangleIcon />}
+          {iconName === "info" && <InfoIcon />}
+        </span>
+        <span class="flex-1 font-semibold text-sm">{message}</span>
+      </div>
     </div>
   );
 };

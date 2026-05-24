@@ -5,11 +5,17 @@ import { Button } from "@/components/shared/Button"; // New import
 import { LoadingSpinnerIcon } from "../icons/LoadingSpinnerIcon";
 
 interface AccountFormProps {
-  // Added for linter error purposes only
-  name?: string;
+  errors?: {
+    name?: string[];
+    type?: string[];
+    currency?: string[];
+    balance?: string[];
+  };
 }
 
-export const AccountForm: FC<AccountFormProps> = () => {
+export const AccountForm: FC<AccountFormProps> = ({
+  errors,
+}: AccountFormProps) => {
   return (
     <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] p-6 mb-6 rounded-none">
       <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2">
@@ -20,7 +26,7 @@ export const AccountForm: FC<AccountFormProps> = () => {
         hx-post="/accounts"
         hx-target="#accounts-list"
         hx-swap="innerHTML"
-        hx-on--after-request="if(event.detail.successful) this.closest('[x-data]').__x.$data.open = false"
+        hx-on--after-request="if(event.detail.successful) { this.reset(); htmx.trigger('#accounts-container', 'refresh'); }"
         class="space-y-4"
       >
         <div>
@@ -30,6 +36,7 @@ export const AccountForm: FC<AccountFormProps> = () => {
           >
             Account Name
           </label>
+
           <input
             type="text"
             name="name"
@@ -38,6 +45,9 @@ export const AccountForm: FC<AccountFormProps> = () => {
             class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
             placeholder="e.g., Main Checking"
           />
+          {errors?.name && (
+            <p class="text-destructive text-sm mt-1">{errors.name[0]}</p>
+          )}
         </div>
 
         <div>
@@ -60,6 +70,9 @@ export const AccountForm: FC<AccountFormProps> = () => {
             <option value="CARD">CREDIT CARD</option>
             <option value="INVESTMENT">INVESTMENT</option>
           </select>
+          {errors?.type && (
+            <p class="text-destructive text-sm mt-1">{errors.type[0]}</p>
+          )}
         </div>
 
         <div>
@@ -80,6 +93,9 @@ export const AccountForm: FC<AccountFormProps> = () => {
             <option value="USD">USD (US DOLLAR)</option>
             <option value="USDT">USDT (TETHER)</option>
           </select>
+          {errors?.currency && (
+            <p class="text-destructive text-sm mt-1">{errors.currency[0]}</p>
+          )}
         </div>
 
         <div>
@@ -98,6 +114,9 @@ export const AccountForm: FC<AccountFormProps> = () => {
             class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base transition-all duration-150 focus:outline-none focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-[var(--shadow-md)] focus:border-ring rounded-none"
             placeholder="0.00"
           />
+          {errors?.balance && (
+            <p class="text-destructive text-sm mt-1">{errors.balance[0]}</p>
+          )}
         </div>
 
         <div class="flex gap-2 justify-center mt-6">

@@ -42,11 +42,6 @@ export const AccountRow: FC<AccountRowProps> = ({ account }) => {
   const currentTypeStyle =
     typeStyles[account.type] || "bg-muted text-muted-foreground border-border";
 
-  const formattedBalance = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: account.currency,
-  }).format(account.balance);
-
   const balanceClass =
     Number(account.balance) >= 0
       ? "text-emerald-600 font-bold font-mono text-sm"
@@ -87,7 +82,7 @@ export const AccountRow: FC<AccountRowProps> = ({ account }) => {
 
       {/* Right Aligned Balance */}
       <td class="p-4 align-middle text-right whitespace-nowrap">
-        <span class={balanceClass}>{formattedBalance}</span>
+        <span class={balanceClass}>{account.balance}</span>
       </td>
 
       {/* Actions Button */}

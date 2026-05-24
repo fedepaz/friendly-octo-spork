@@ -2,13 +2,17 @@
 
 import type { Context } from "hono";
 import { AccountsService } from "./accounts.service";
-import type { CreateAccountInput } from "./accounts.schema";
+import { createAccountSchema } from "./accounts.schema";
 import { AccountsPage } from "@/pages/AccountsPage";
 import { ErrorPage } from "@/pages/ErrorPage";
 import { AccountsList } from "@/components/accounts/AccountsList";
-import { AccountForm } from "@/components/accounts/AccountForm";
-import type { AccountType, Currency } from "@/generated/prisma";
+import {
+  AccountForm,
+  type AccountFormErrors,
+} from "@/components/accounts/AccountForm";
+
 import { AccountCard } from "@/components/accounts/AccountCard";
+import { Toast } from "@/components/shared/Toast";
 
 export class AccountsController {
   private accountService = new AccountsService();
@@ -31,35 +35,39 @@ export class AccountsController {
       const payload = c.get("jwtPayload") as { sub: string };
       const userId = payload.sub;
 
-      // Parse form data for HTMX requests
-      const contentType = c.req.header("content-type");
-      let data: CreateAccountInput;
-
-      if (contentType?.includes("application/json")) {
-        data = await c.req.json();
-      } else {
-        // Handle form data from HTMX
-        const formData = await c.req.parseBody();
-        data = {
-          name: formData.name as string,
-          type: formData.type as AccountType,
-          currency: formData.currency as Currency,
-        };
+      const body = await c.req.parseBody();
+      const validation = createAccountSchema.safeParse(body);
+      console.log(validation);
+      if (!validation.success) {
+        return c.json({ error: validation.error.flatten() }, 400);
       }
-
-      await this.accountService.createAccount(userId, data);
+      await this.accountService.createAccount(userId, validation.data);
 
       const accounts = await this.accountService.findAccounts(userId);
-      return c.html(<AccountsList accounts={accounts} />);
+      return c.html(
+        <>
+          <AccountsList accounts={accounts} />
+          <Toast message="Account created successfully" type="success" />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `document.getElementById("htmx-modal").style.display = "none";`,
+            }}
+          />
+        </>,
+      );
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";
-      const stack = error instanceof Error ? error.stack : undefined;
-      return c.render(<ErrorPage message={message} stack={stack} />);
+      return c.html(<Toast message={message} type="error" />);
     }
   };
 
   getAccountForm = async (c: Context) => {
-    return c.html(<AccountForm />);
+    try {
+      return c.html(<AccountForm />);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      return c.html(<Toast message={message} type="error" />);
+    }
   };
 
   getAccountById = async (c: Context) => {
@@ -73,8 +81,7 @@ export class AccountsController {
       return c.html(<AccountCard account={account} />);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";
-      const stack = error instanceof Error ? error.stack : undefined;
-      return c.render(<ErrorPage message={message} stack={stack} />);
+      return c.html(<Toast message={message} type="error" />);
     }
   };
 }

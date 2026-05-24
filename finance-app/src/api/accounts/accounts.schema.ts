@@ -23,6 +23,10 @@ export const createAccountSchema = z.object({
   currency: z.nativeEnum(Currency, {
     error: () => ({ message: "Invalid currency" }),
   }),
+  balance: z.preprocess(
+    (val) => (val === "" ? undefined : Number(val)),
+    z.number().default(0),
+  ),
 });
 
 export type CreateAccountInput = z.infer<typeof createAccountSchema>;

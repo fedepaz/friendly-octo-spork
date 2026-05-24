@@ -15,6 +15,8 @@ This guide unifies the best practices and standards for implementing API endpoin
     *   **Single**: `{"data": {...}}`
     *   **Error**: `{"error": "Error message", "details": {"field": ["validation error"]}}`
 *   **HTMX Compatibility**: Design endpoints to return HTML fragments for partial updates where appropriate (e.g., `GET /api/transactions/:id/edit` returning an edit form).
+*   **User Feedback (Toasts)**: Use the `Toast` component with `hx-swap-oob="beforeend"` to provide non-intrusive feedback (success/error) that doesn't disrupt the main UI flow.
+    *   Example: `return c.html(<><AccountsList accounts={accounts} /><Toast message="Saved!" type="success" /></>)`
 
 ### 2. Project Structure (Project Structure & Backend Engineer)
 
