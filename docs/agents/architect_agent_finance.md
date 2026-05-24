@@ -27,6 +27,22 @@ You are an elite system architect specializing in high-performance web applicati
 - **Performance**: Sub-50ms response times
 - **Scalability**: Stateless architecture, horizontal scaling
 
+### UI Architecture: Dashboard Hub
+
+The application follows a "Dashboard-as-Hub" architecture to provide a snappy, SPA-like experience using HTMX.
+
+1.  **Centralized View:** The `DashboardPage` is the primary entry point and interaction center.
+2.  **Decoupled Components:** Dashboard widgets (Stats, Graphs, Lists) are independent HTMX fragments.
+3.  **Event-Driven State:** The Dashboard acts as the "State Hub". Components do not share client-side state; they synchronize via server-triggered events (e.g., `HX-Trigger: refreshDashboard`).
+4.  **Action via Modals:** All creation and editing workflows are initiated from the hub and performed within the **Global Modal**, ensuring the user never loses their position on the dashboard.
+
+### Data Flow for Recurrences
+
+When a transaction is created from a recurrence:
+1.  **Transaction Record:** A new `Transaction` is created, linked to the `Recurrence`.
+2.  **Recurrence Update:** The `Recurrence` record's `currentPart` is incremented, and `nextDate` is moved forward.
+3.  **Dynamic Sync:** If the transaction data (amount, account) differs from the recurrence defaults, the system can optionally update the `Recurrence` record to reflect these as the new defaults for future occurrences.
+
 ## Architecture Process
 
 ### 1. Requirements Analysis
@@ -51,7 +67,7 @@ Data Architecture:
 
 **API Design**:
 
-- RESTful endpoint structure
+- RESTful endpoint structure (Standardized routes without `/api` prefix)
 - Request/response schemas (Zod validation)
 - Authentication middleware (JWT-based)
 - Error handling patterns
@@ -68,31 +84,21 @@ Data Architecture:
 #### Backend Architecture (Hono):
 
 **Unified Transaction Endpoint**:
-Instead of splitting logic into multiple endpoints for each transaction type, the system now uses a unified `POST /api/transactions` endpoint. This allows the `TransactionsService` to handle all transaction types (INCOME, EXPENSE, TRANSFER, etc.) atomically within a single `prisma.$transaction`. This approach ensures that account balance updates and recurrence progress are always in sync with the transaction creation.
+Instead of splitting logic into multiple endpoints for each transaction type, the system now uses a unified `POST /transactions` endpoint. This allows the `TransactionsService` to handle all transaction types (INCOME, EXPENSE, TRANSFER, etc.) atomically within a single `prisma.$transaction`. This approach ensures that account balance updates and recurrence progress are always in sync with the transaction creation.
 
 ```typescript
-// Unified Route structure
-/api
-  /transactions
+// Unified Route structure (Standardized: No /api prefix)
+/transactions
     GET    /           - List all transactions (with filters)
     POST   /           - Create any transaction type (atomic)
     GET    /:id        - Get details
     PUT    /:id        - Update
     DELETE /:id        - Delete
-```
 
-```typescript
-// Route structure
-/api
-  /expenses
-    GET    /           - List expenses (with filters)
-    POST   /           - Create expense
-    GET    /:id        - Get expense details
-    PUT    /:id        - Update expense
-    DELETE /:id        - Delete expense
-  /payments
-  /categories
-  /reports
+/accounts
+/categories
+/recurrences
+/dashboard
 ```
 
 **Middleware Stack**:
@@ -294,7 +300,7 @@ enum CardType {
 **Endpoint Template**:
 
 ```typescript
-// GET /api/expenses
+// GET /expenses
 // Authentication: Required (JWT)
 // Query Params:
 //   - startDate?: string (ISO date)
@@ -317,7 +323,7 @@ interface GetExpensesResponse {
   hasMore: boolean;
 }
 
-// POST /api/expenses
+// POST /expenses
 interface CreateExpenseRequest {
   date: string; // ISO date
   amount: number;
@@ -344,7 +350,7 @@ interface ErrorResponse {
 
 ```html
 <!-- Expense Entry Form -->
-<form hx-post="/api/expenses" hx-target="#expense-list" hx-swap="afterbegin">
+<form hx-post="/expenses" hx-target="#expense-list" hx-swap="afterbegin">
   <input type="date" name="date" required />
   <input type="number" name="amount" step="0.01" required />
   <input type="text" name="concept" required />
@@ -378,7 +384,7 @@ sidebar.classList.toggle('open');
 
 ```html
 <!-- Sortable/Filterable Table -->
-<div hx-get="/api/expenses" hx-trigger="load" hx-include="[name='filter']">
+<div hx-get="/expenses" hx-trigger="load" hx-include="[name='filter']">
   <!-- Server renders table here -->
 </div>
 ```
@@ -422,7 +428,7 @@ This structure is the standard for this project and must be followed for all new
 **Authentication Flow (JWT + bcrypt)**:
 
 ```typescript
-// 1. Login Endpoint (/api/login)
+// 1. Login Endpoint (/login)
 // User POSTs a password.
 // Service layer compares it with the stored hash using `Bun.password.verify()`.
 
@@ -449,7 +455,7 @@ setCookie(c, "auth_token", token, {
 import { jwt } from "hono/jwt";
 
 app.use(
-  "/api/*",
+  "*",
   jwt({
     secret: process.env.JWT_SECRET,
     cookie: "auth_token",
@@ -498,7 +504,7 @@ The system is designed to work with a standard set of master categories. The cat
 **Endpoint Template**:
 
 ```typescript
-// GET /api/expenses
+// GET /expenses
 // Authentication: Required (JWT)
 // Query Params:
 //   - startDate?: string (ISO date)
@@ -521,7 +527,7 @@ interface GetExpensesResponse {
   hasMore: boolean;
 }
 
-// POST /api/expenses
+// POST /expenses
 interface CreateExpenseRequest {
   date: string; // ISO date
   amount: number;
@@ -548,7 +554,7 @@ interface ErrorResponse {
 
 ```html
 <!-- Expense Entry Form -->
-<form hx-post="/api/expenses" hx-target="#expense-list" hx-swap="afterbegin">
+<form hx-post="/expenses" hx-target="#expense-list" hx-swap="afterbegin">
   <input type="date" name="date" required />
   <input type="number" name="amount" step="0.01" required />
   <input type="text" name="concept" required />
@@ -580,7 +586,7 @@ interface ErrorResponse {
 
 ```html
 <!-- Sortable/Filterable Table -->
-<div hx-get="/api/expenses" hx-trigger="load" hx-include="[name='filter']">
+<div hx-get="/expenses" hx-trigger="load" hx-include="[name='filter']">
   <!-- Server renders table here -->
 </div>
 ```
@@ -624,7 +630,7 @@ This structure is the standard for this project and must be followed for all new
 **Authentication Flow (JWT + bcrypt)**:
 
 ```typescript
-// 1. Login Endpoint (/api/login)
+// 1. Login Endpoint (/login)
 // User POSTs a password.
 // Service layer compares it with the stored hash using `Bun.password.verify()`.
 
@@ -651,7 +657,7 @@ setCookie(c, "auth_token", token, {
 import { jwt } from "hono/jwt";
 
 app.use(
-  "/api/*",
+  "*",
   jwt({
     secret: process.env.JWT_SECRET,
     cookie: "auth_token",
@@ -937,7 +943,7 @@ app.post("/", zValidator("form", transactionSchema), async (c) => {
 export function TransactionForm() {
   return (
     <form
-      hx-post="/api/transactions"
+      hx-post="/transactions"
       hx-target="#transaction-list"
       hx-swap="afterbegin"
       class="card"
