@@ -148,16 +148,6 @@ export const RecurrenceRow: FC<RecurrenceRowProps> = ({ recurrence }) => {
           >
             VIEW
           </Button>
-          <Button
-            type="button"
-            class="bg-secondary text-secondary-foreground hover:bg-secondary/80 font-black text-[9px] uppercase tracking-widest px-2 py-1.5 rounded border border-border shadow-[var(--shadow-sm)] hover:shadow-none hover:translate-y-[1px] transition-all"
-            hxGet={`/recurrences/${recurrence.id}/edit`}
-            hxTarget="#modal-content"
-            hxSwap="innerHTML"
-            aria-label={`Edit ${recurrence.name}`}
-          >
-            EDIT
-          </Button>
         </div>
       </td>
     </tr>

@@ -252,12 +252,27 @@ The application uses a centralized modal pattern managed in `Layout.tsx`. You sh
 3.  **Endpoint Returning Content:**
     The endpoint should return the raw HTML fragment (e.g., a form or a card) without any modal wrappers.
 
-    ```tsx
-    // /accounts/new endpoint in controller
-    getAccountForm = async (c: Context) => {
-      return c.html(<AccountForm />);
-    };
-    ```
+4.  **Closing and Refreshing:**
+    After a successful submission inside a modal, the server should return a 204 or a small success fragment and include the `HX-Trigger: refreshDashboard` header to signal other components to update.
+
+### Pattern 3: Dashboard-as-Hub (SPA Experience)
+
+To achieve a "SPA-like" feel without a heavy JS framework, the Dashboard acts as a central hub where multiple independent components react to events.
+
+- **Event Protocol:** The standard event for refreshing dashboard components is `refreshDashboard`.
+- **Component Implementation:** Any component that needs to stay updated (e.g., Balance cards, Recent Transactions, Pending Bills) should listen for this event.
+
+```tsx
+<div 
+  id="monthly-summary"
+  hx-get="/dashboard/summary" 
+  hx-trigger="load, refreshDashboard from:body"
+>
+  <!-- Content loaded via HTMX -->
+</div>
+```
+
+- **Mutations:** All creation and editing actions should ideally happen in the **Global Modal**. When the mutation is successful, the server triggers the refresh, and the dashboard updates seamlessly without a full reload.
 
 
 ### Pattern 1: Inline Editing

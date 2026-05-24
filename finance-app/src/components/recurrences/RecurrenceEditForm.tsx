@@ -65,7 +65,7 @@ export const RecurrenceEditForm: FC<RecurrenceEditFormProps> = ({
       }`}
     >
       <h3 class="text-2xl md:text-3xl font-bold text-foreground mb-2 uppercase">
-        Edit Recurrence
+        Update Recurrence
       </h3>
 
       <form
@@ -210,14 +210,7 @@ export const RecurrenceEditForm: FC<RecurrenceEditFormProps> = ({
           </div>
         </div>
 
-        <div class="flex gap-2 justify-end mt-6">
-          <Button
-            type="button"
-            hx-on:click="this.closest('[x-data]').__x.$data.open = false"
-            class="bg-muted text-muted-foreground"
-          >
-            CANCEL
-          </Button>
+        <div class="flex gap-2 justify-center mt-6">
           <Button
             type="submit"
             class="bg-primary text-primary-foreground flex items-center gap-2"
