@@ -20,7 +20,6 @@ export const TransactionNewRecurrenceForm: FC<TransactionFormProps> = ({
     <div
       class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 rounded-none"
       x-data="{
-        recurrenceMode: 'new',
         isInstallment: false,
         amountValue: '',
         totalAmount: 0,
@@ -34,7 +33,7 @@ export const TransactionNewRecurrenceForm: FC<TransactionFormProps> = ({
     >
       <h2 class="text-2xl font-bold mb-6 uppercase tracking-tight flex items-center gap-2">
         <span class="w-2 h-8 bg-primary"></span>
-        Add New Transaction
+        Add New Recurring Transaction
       </h2>
 
       <form
@@ -44,6 +43,9 @@ export const TransactionNewRecurrenceForm: FC<TransactionFormProps> = ({
         hx-on--after-request="if(event.detail.successful) { this.reset(); htmx.trigger('#transactions-container', 'refresh'); }"
         class="space-y-6"
       >
+        {/* Hidden field to signal the backend this is a recurrence */}
+        <input type="hidden" name="isRecurrence" value="on" />
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Transaction Type */}
           <div>
@@ -70,7 +72,7 @@ export const TransactionNewRecurrenceForm: FC<TransactionFormProps> = ({
               for="date"
               class="block text-sm font-semibold uppercase tracking-wide mb-2"
             >
-              Date
+              First Date
             </label>
             <input
               type="date"
@@ -116,14 +118,14 @@ export const TransactionNewRecurrenceForm: FC<TransactionFormProps> = ({
               for="description"
               class="block text-sm font-semibold uppercase tracking-wide mb-2"
             >
-              Description
+              Description / Recurrence Name
             </label>
             <input
               type="text"
               name="description"
               id="description"
               required
-              placeholder="What was this for?"
+              placeholder="e.g., Netflix subscription"
               class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base focus:outline-none focus:border-ring rounded-none"
             />
           </div>
@@ -169,65 +171,21 @@ export const TransactionNewRecurrenceForm: FC<TransactionFormProps> = ({
               ))}
             </select>
           </div>
-
-          {/* Target Account — for transfers */}
-          <div class="md:col-span-2">
-            <label
-              for="targetAccountId"
-              class="block text-sm font-semibold uppercase tracking-wide mb-2"
-            >
-              Target Account{" "}
-              <span class="text-muted-foreground font-normal normal-case">
-                (transfers only)
-              </span>
-            </label>
-            <select
-              name="targetAccountId"
-              id="targetAccountId"
-              class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base focus:outline-none focus:border-ring rounded-none"
-            >
-              <option value="">None</option>
-              {accounts.map((a) => (
-                <option value={a.id}>
-                  {a.name} ({Number(a.balance).toFixed(2)} {a.currency})
-                </option>
-              ))}
-            </select>
-          </div>
         </div>
 
-        {/* ── Recurrence Section ── */}
+        {/* ── Recurrence Details ── */}
         <div class="border-t-2 border-border pt-6 space-y-4">
-          <p class="text-sm font-bold uppercase tracking-wider">Recurrence</p>
+          <p class="text-sm font-bold uppercase tracking-wider">Recurrence Configuration</p>
 
-          {/* Create new recurrence */}
-          <div
-            x-show="recurrenceMode === 'new'"
-            x-cloak
-            class="p-4 bg-muted/20 border-2 border-border space-y-4"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 -translate-y-2"
-            x-transition:enter-end="opacity-100 translate-y-0"
-          >
+          <div class="p-4 bg-muted/20 border-2 border-border space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-semibold uppercase tracking-wide mb-2">
-                  Recurrence Name
-                </label>
-                <input
-                  type="text"
-                  name="recurrenceName"
-                  placeholder="e.g., Netflix subscription"
-                  class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base focus:outline-none focus:border-primary rounded-none"
-                />
-              </div>
-
               <div>
                 <label class="block text-sm font-semibold uppercase tracking-wide mb-2">
                   Frequency
                 </label>
                 <select
                   name="frequency"
+                  required
                   x-on:change="isInstallment = ($event.target.value === 'INSTALLMENT'); if (!isInstallment) { amountValue = '' }"
                   class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base focus:outline-none focus:border-primary rounded-none"
                 >
@@ -276,7 +234,7 @@ export const TransactionNewRecurrenceForm: FC<TransactionFormProps> = ({
         <div class="flex justify-end pt-4">
           <Button type="submit" class="bg-primary text-primary-foreground">
             <LoadingSpinnerIcon />
-            ADD TRANSACTION
+            START RECURRENCE
           </Button>
         </div>
       </form>

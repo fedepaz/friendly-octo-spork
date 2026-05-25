@@ -186,12 +186,14 @@ To ensure the backend code is organized, testable, and maintainable, all new fea
 
 This project uses a **Vertical Slicing** approach. All backend code for a specific feature (e.g., "accounts", "categories") must be co-located within its own directory under `src/api/{feature-name}/`. This includes its routes, controller, service, and schemas.
 
-*   **Routes (`.routes.ts` files):**
+*   **Routes (`.routes.tsx` files):**
     *   **Responsibility**: Define the Hono routes and map them to the appropriate controller functions.
+    *   **Extension**: Use `.tsx` for route files that render or return JSX components (e.g., HTMX fragments).
     *   This layer should be as simple as possible, containing no business logic.
 
 *   **Controller (`.controller.tsx` files):**
     *   **Responsibility**: Handle the Hono context (`c`), parse request data, and call the service layer. Controllers are responsible for rendering Hono JSX components using **DTOs** returned by the service.
+    *   **Pattern**: Leverage specialized form components (e.g., `TransactionNewRecurrenceForm`) for distinct user intents while maintaining unified service calls.
     *   This layer acts as the bridge between the HTTP world and the application's business logic.
 
 *   **Service (`.service.ts` files):**

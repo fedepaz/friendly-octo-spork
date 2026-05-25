@@ -17,21 +17,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
   categories = [],
 }) => {
   return (
-    <div
-      class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 rounded-none"
-      x-data="{
-        recurrenceMode: 'none',   // 'none' | 'new' | 'existing'
-        isInstallment: false,
-        amountValue: '',
-        totalAmount: 0,
-        parts: 1,
-        calculatePart() {
-          if (this.isInstallment && this.parts > 0 && this.totalAmount > 0) {
-            this.amountValue = (this.totalAmount / this.parts).toFixed(2);
-          }
-        }
-      }"
-    >
+    <div class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 rounded-none">
       <h2 class="text-2xl font-bold mb-6 uppercase tracking-tight flex items-center gap-2">
         <span class="w-2 h-8 bg-primary"></span>
         Add New Transaction
@@ -82,7 +68,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
             />
           </div>
 
-          {/* Amount — single input, value controlled by alpine when installment */}
+          {/* Amount */}
           <div>
             <label
               for="amount"
@@ -96,18 +82,9 @@ export const TransactionForm: FC<TransactionFormProps> = ({
               id="amount"
               step="0.01"
               required
-              x-model="amountValue"
-              x-bind:readonly="isInstallment"
               class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base focus:outline-none focus:border-ring rounded-none"
-              x-bind:class="isInstallment ? 'bg-muted cursor-not-allowed' : ''"
               placeholder="0.00"
             />
-            <p
-              class="text-xs text-muted-foreground mt-1"
-              x-show="isInstallment"
-            >
-              Calculated from total ÷ parts
-            </p>
           </div>
 
           {/* Description */}

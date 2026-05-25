@@ -74,13 +74,13 @@ Follow the standard Route, Controller, and Service pattern:
 *   **Partial Updates**: Design API endpoints to return HTML fragments for HTMX to swap into the DOM, avoiding full page reloads.
 *   **XSS Prevention**: Hono JSX automatically escapes output, preventing XSS. Avoid `dangerouslySetInnerHTML` equivalents.
 
-### 8. Unified Form & Multi-Model Creation
+### 8. Intent-Based Specialized Forms & Multi-Model Creation
 
-When implementing forms that handle multiple related models (e.g., Transactions and Recurrences):
+When implementing workflows that handle multiple related models (e.g., Transactions and Recurrences):
 
-1.  **Unified Input**: Use a single Zod schema that includes optional fields for the secondary model (prefixed/grouped if needed).
-2.  **Transient Flags**: Use boolean flags (like `isRecurrence`) in the schema to trigger conditional logic in the Service layer.
-3.  **Schema Preprocessing**: Use `z.preprocess` for HTML specific values (checkboxes send `"on"`, which Zod must map to `boolean`).
+1.  **Intent-Based Specialized Forms**: Instead of one complex form with toggles, prefer multiple specialized components (e.g., `TransactionForm`, `TransactionNewRecurrenceForm`, `TransactionLinkRecurrenceForm`). This simplifies the UI and reduces complex client-side state.
+2.  **Unified API Endpoint**: Different forms can target the same POST endpoint. The backend distinguishes the intent by the presence of specific fields (e.g., `recurrenceId` vs. `isRecurrence="on"`).
+3.  **Transient Flags**: Use boolean flags (like `isRecurrence`) in the schema to trigger conditional logic in the Service layer.
 4.  **Service Atomicity**: Wrap the entire creation logic in a `prisma.$transaction`.
 5.  **Service Sanitization**: Ensure the Service layer explicitly maps only valid model fields to the Repository/Prisma layer, stripping transient UI flags.
 
@@ -148,3 +148,4 @@ Once you've implemented a module, follow these steps for local development and v
         *   Examine the DOM for HTMX-driven updates.
         *   Simulate user interactions.
     *   **Stopping the Server**: To stop the background process, you typically need to find its process ID (PID) and kill it, or if it's managed by `bun run dev` directly, `Ctrl+C` in the terminal where it was started should work. If `bun run dev` uses `concurrently`, `Ctrl+C` will usually stop all child processes.
+If `bun run dev` uses `concurrently`, `Ctrl+C` will usually stop all child processes.
