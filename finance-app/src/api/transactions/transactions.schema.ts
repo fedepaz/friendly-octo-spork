@@ -19,17 +19,17 @@ export const transactionSchema = z.object({
   type: z.nativeEnum(TransactionType),
   amount: z.number().positive(),
   date: z.date(),
-  description: z.string().nullable(),
-  categoryId: z.string().nullable(),
-  sourceAccountId: z.string().nullable(),
-  targetAccountId: z.string().nullable(),
-  recurrenceId: z.string().nullable(),
+  description: z.string().optional().nullable(),
+  categoryId: z.string().optional().nullable(),
+  sourceAccountId: z.string().optional().nullable(),
+  targetAccountId: z.string().optional().nullable(),
+  recurrenceId: z.string().optional().nullable(),
   recurrencePartNumber: z.number().int().nullable(),
   isBudgetedExpense: z.boolean().nullable(),
   budgetCategory: z.nativeEnum(BudgetCategory).nullable(),
   isCardExpense: z.boolean().nullable(),
   cardType: z.nativeEnum(CardType).nullable(),
-  source: z.string().nullable(),
+  source: z.string().optional().nullable(),
   metadata: z.object({}).catchall(z.unknown()).nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
@@ -108,8 +108,11 @@ export const validateTransactionType = (data: CreateTransactionInput) => {
 
     case "INVESTMENT":
     case "RETURN":
-      if (!data.sourceAccountId) {
-        errors.sourceAccountId = "Source account is required";
+      if (!data.sourceAccountId && !data.targetAccountId) {
+        if (!data.sourceAccountId)
+          errors.sourceAccountId = "Source account is required";
+        if (!data.targetAccountId)
+          errors.targetAccountId = "Target account is required";
       }
       break;
   }

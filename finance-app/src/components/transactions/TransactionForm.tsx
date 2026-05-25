@@ -25,9 +25,8 @@ export const TransactionForm: FC<TransactionFormProps> = ({
 
       <form
         hx-post="/transactions"
-        hx-target="#transaction-list"
         hx-swap="innerHTML"
-        hx-on--after-request="if(event.detail.successful) { this.reset(); htmx.trigger('#transactions-container', 'refresh'); }"
+        hx-on--after-request="if(event.detail.successful) { this.reset(); }"
         class="space-y-6"
       >
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

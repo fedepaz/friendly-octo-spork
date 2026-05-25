@@ -21,10 +21,19 @@ export const TransactionPage: FC<TransactionPageProps> = ({
           Transactions
         </h1>
       </div>
-      <TransactionList
-        transactions={transactions}
-        currentMonth={currentMonth}
-      />
+      <div
+        id="transactions-page-container"
+        hx-trigger="refreshDashboard from:body"
+        hx-get={`/transactions?month=${currentMonth}`}
+        hx-select="#transactions-page-container"
+        hx-target="#transactions-page-container"
+        hx-swap="outerHTML"
+      >
+        <TransactionList
+          transactions={transactions}
+          currentMonth={currentMonth}
+        />
+      </div>
     </Layout>
   );
 };

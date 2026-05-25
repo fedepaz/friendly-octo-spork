@@ -38,9 +38,8 @@ export const TransactionNewRecurrenceForm: FC<TransactionFormProps> = ({
 
       <form
         hx-post="/transactions"
-        hx-target="#transaction-list"
         hx-swap="innerHTML"
-        hx-on--after-request="if(event.detail.successful) { this.reset(); htmx.trigger('#transactions-container', 'refresh'); }"
+        hx-on--after-request="if(event.detail.successful) { this.reset(); }"
         class="space-y-6"
       >
         {/* Hidden field to signal the backend this is a recurrence */}
@@ -175,7 +174,9 @@ export const TransactionNewRecurrenceForm: FC<TransactionFormProps> = ({
 
         {/* ── Recurrence Details ── */}
         <div class="border-t-2 border-border pt-6 space-y-4">
-          <p class="text-sm font-bold uppercase tracking-wider">Recurrence Configuration</p>
+          <p class="text-sm font-bold uppercase tracking-wider">
+            Recurrence Configuration
+          </p>
 
           <div class="p-4 bg-muted/20 border-2 border-border space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

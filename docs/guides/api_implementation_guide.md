@@ -16,7 +16,11 @@ This guide unifies the best practices and standards for implementing API endpoin
     *   **Error**: `{"error": "Error message", "details": {"field": ["validation error"]}}`
 *   **HTMX Compatibility**: Design endpoints to return HTML fragments for partial updates where appropriate (e.g., `GET /api/transactions/:id/edit` returning an edit form).
 *   **User Feedback (Toasts)**: Use the `Toast` component with `hx-swap-oob="beforeend"` to provide non-intrusive feedback (success/error) that doesn't disrupt the main UI flow.
-    *   Example: `return c.html(<><AccountsList accounts={accounts} /><Toast message="Saved!" type="success" /></>)`
+    *   **CRITICAL**: When returning a `Toast` as a response to an HTMX request that should NOT replace the target (e.g., a validation error), use HTTP status `200 OK`. HTMX does not process OOB swaps for error codes (400+) by default.
+    *   Example: `return c.html(<Toast message="Field is required" type="error" />, 200)`
+*   **Cross-Component Refresh (Events)**: Use the `HX-Trigger` header to signal other parts of the UI to refresh. 
+    *   Standard Event: `refreshDashboard` - used to trigger a reload of the Dashboard and Transaction lists.
+    *   Example: `c.header("HX-Trigger", "refreshDashboard")`
 
 ### 2. Project Structure (Project Structure & Backend Engineer)
 

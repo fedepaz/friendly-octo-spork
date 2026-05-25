@@ -77,6 +77,7 @@ export class TransactionsController {
 
       await this.transactionService.createTransaction(userId, data);
 
+      c.header("HX-Trigger", "refreshDashboard");
       return c.html(
         <>
           <Toast message="Transaction created successfully" type="success" />
@@ -137,6 +138,7 @@ export class TransactionsController {
 
       await this.transactionService.createTransaction(userId, data);
 
+      c.header("HX-Trigger", "refreshDashboard");
       return c.html(
         <>
           <Toast message="Transaction created successfully" type="success" />
@@ -190,6 +192,7 @@ export class TransactionsController {
 
       await this.transactionService.createTransaction(userId, data);
 
+      c.header("HX-Trigger", "refreshDashboard");
       return c.html(
         <>
           <Toast message="Transaction created successfully" type="success" />

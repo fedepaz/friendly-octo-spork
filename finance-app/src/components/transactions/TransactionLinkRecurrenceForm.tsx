@@ -28,16 +28,17 @@ export const TransactionLinkRecurrenceForm: FC<TransactionFormProps> = ({
           Pay Recurring Entry
         </h2>
         <p class="text-sm text-muted-foreground mt-1 ml-4 font-mono">
-          Fulfilling: {recurrence.name} 
-          {recurrence.totalParts ? ` (Part ${recurrence.currentPart + 1}/${recurrence.totalParts})` : ""}
+          Fulfilling: {recurrence.name}
+          {recurrence.totalParts
+            ? ` (Part ${recurrence.currentPart + 1}/${recurrence.totalParts})`
+            : ""}
         </p>
       </div>
 
       <form
-        hx-post="/transactions"
-        hx-target="#transaction-list"
+        hx-post={`/transactions/link-recurrence/${recurrence.id}`}
         hx-swap="innerHTML"
-        hx-on--after-request="if(event.detail.successful) { this.reset(); htmx.trigger('#transactions-container', 'refresh'); }"
+        hx-on--after-request="if(event.detail.successful) { this.reset(); }"
         class="space-y-6"
       >
         {/* Hidden field to link this transaction to the recurrence series */}
@@ -54,7 +55,9 @@ export const TransactionLinkRecurrenceForm: FC<TransactionFormProps> = ({
               required
               class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base focus:outline-none focus:border-primary rounded-none"
             >
-              <option value={recurrence.type} selected>{recurrence.type}</option>
+              <option value={recurrence.type} selected>
+                {recurrence.type}
+              </option>
               <option value="EXPENSE">Expense</option>
               <option value="INCOME">Income</option>
               <option value="PAYMENT">Payment</option>
@@ -132,7 +135,10 @@ export const TransactionLinkRecurrenceForm: FC<TransactionFormProps> = ({
               class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base focus:outline-none focus:border-ring rounded-none"
             >
               {categories.map((cat) => (
-                <option value={cat.id} selected={cat.id === recurrence.categoryId}>
+                <option
+                  value={cat.id}
+                  selected={cat.id === recurrence.categoryId}
+                >
                   {cat.name}
                 </option>
               ))}
@@ -153,7 +159,10 @@ export const TransactionLinkRecurrenceForm: FC<TransactionFormProps> = ({
               class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base focus:outline-none focus:border-ring rounded-none"
             >
               {accounts.map((a) => (
-                <option value={a.id} selected={a.id === recurrence.sourceAccountId}>
+                <option
+                  value={a.id}
+                  selected={a.id === recurrence.sourceAccountId}
+                >
                   {a.name} ({Number(a.balance).toFixed(2)} {a.currency})
                 </option>
               ))}
