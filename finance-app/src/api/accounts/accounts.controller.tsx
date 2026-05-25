@@ -2,14 +2,11 @@
 
 import type { Context } from "hono";
 import { AccountsService } from "./accounts.service";
-import { createAccountSchema } from "./accounts.schema";
+import { type CreateAccountInput } from "./accounts.schema";
 import { AccountsPage } from "@/pages/AccountsPage";
 import { ErrorPage } from "@/pages/ErrorPage";
 import { AccountsList } from "@/components/accounts/AccountsList";
-import {
-  AccountForm,
-  type AccountFormErrors,
-} from "@/components/accounts/AccountForm";
+import { AccountForm } from "@/components/accounts/AccountForm";
 
 import { AccountCard } from "@/components/accounts/AccountCard";
 import { Toast } from "@/components/shared/Toast";
@@ -35,13 +32,9 @@ export class AccountsController {
       const payload = c.get("jwtPayload") as { sub: string };
       const userId = payload.sub;
 
-      const body = await c.req.parseBody();
-      const validation = createAccountSchema.safeParse(body);
-      console.log(validation);
-      if (!validation.success) {
-        return c.json({ error: validation.error.flatten() }, 400);
-      }
-      await this.accountService.createAccount(userId, validation.data);
+      const data = c.req.valid("form" as never) as CreateAccountInput;
+
+      await this.accountService.createAccount(userId, data);
 
       const accounts = await this.accountService.findAccounts(userId);
       return c.html(

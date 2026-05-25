@@ -1,12 +1,15 @@
 // src/schemas/transactions.schema.ts
 
 import { z } from "zod";
-import { TransactionType, RecurrenceType, BudgetCategory, CardType } from "@/generated/prisma";
+import {
+  TransactionType,
+  RecurrenceType,
+  BudgetCategory,
+  CardType,
+} from "@/generated/prisma";
 import { categorySchema } from "../categories/categories.schema";
 import { accountSchema } from "../accounts/accounts.schema";
 import { recurrenceSchema } from "../recurrences/recurrences.schema";
-
-// ========== NESTED OBJECT SCHEMAS ==========
 
 // ========== MAIN TRANSACTION RESPONSE SCHEMA ==========
 
@@ -57,7 +60,8 @@ export const createTransactionSchema = z.object({
   // Automatic recurrence creation fields
   isRecurrence: z
     .preprocess((val) => val === "on" || val === true, z.boolean())
-    .optional(),
+    .optional()
+    .default(false),
   frequency: z.nativeEnum(RecurrenceType).optional(),
   totalParts: z.coerce.number().int().optional(),
 });

@@ -148,6 +148,14 @@ export const RecurrenceRow: FC<RecurrenceRowProps> = ({ recurrence }) => {
           >
             VIEW
           </Button>
+          <Button
+            type="button"
+            hxGet={`/transactions/link-recurrence/${recurrence.id}`}
+            hxTarget="#modal-content"
+            hxSwap="innerHTML"
+          >
+            Pay
+          </Button>
         </div>
       </td>
     </tr>

@@ -10,7 +10,7 @@ import {
 import { Button } from "./Button";
 
 interface ToastProps {
-  message: string;
+  message: string | string[];
   type: "success" | "error" | "info";
 }
 
@@ -37,6 +37,7 @@ const toastTypes = {
 
 export const Toast: FC<ToastProps> = ({ message, type }) => {
   const { bgColor, textColor, borderColor, iconName } = toastTypes[type];
+  const messages = Array.isArray(message) ? message : [message];
 
   return (
     <div id="toast-container" hx-swap-oob="beforeend">
@@ -65,7 +66,17 @@ export const Toast: FC<ToastProps> = ({ message, type }) => {
           {iconName === "alert-triangle" && <AlertTriangleIcon />}
           {iconName === "info" && <InfoIcon />}
         </span>
-        <span class="flex-1 font-semibold text-sm">{message}</span>
+        <div class="flex-1 font-semibold text-sm">
+          {messages.length === 1 ? (
+            <span>{messages[0]}</span>
+          ) : (
+            <ul class="space-y-1">
+              {messages.map((m) => (
+                <li>· {m}</li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -25,12 +25,20 @@ export class CategoriesService {
     return categories.map((category) => this.mapToCategoryDTO(category));
   }
 
-  async findCategoryById(categoryId: string): Promise<CategoryDTO> {
+  async findCategoryById(
+    userId: string,
+    categoryId: string,
+  ): Promise<CategoryDTO> {
     if (!categoryId) {
       throw new Error("Category id is required");
     }
-    const category =
-      await this.categoriesRepository.getCategoryById(categoryId);
+    if (!userId) {
+      throw new Error("User id is required");
+    }
+    const category = await this.categoriesRepository.getCategoryById(
+      userId,
+      categoryId,
+    );
 
     if (!category) {
       throw new Error("Category not found");

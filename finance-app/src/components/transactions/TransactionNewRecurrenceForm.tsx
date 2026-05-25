@@ -1,4 +1,4 @@
-// src/components/transactions/TransactionForm.tsx
+// src/components/transactions/TransactionNewRecurrenceForm.tsx
 
 import type { FC } from "hono/jsx";
 import { Button } from "@/components/shared/Button";
@@ -12,7 +12,7 @@ interface TransactionFormProps {
   categories: CategoryDTO[];
 }
 
-export const TransactionForm: FC<TransactionFormProps> = ({
+export const TransactionNewRecurrenceForm: FC<TransactionFormProps> = ({
   accounts = [],
   categories = [],
 }) => {
@@ -20,7 +20,7 @@ export const TransactionForm: FC<TransactionFormProps> = ({
     <div
       class="bg-card text-card-foreground border-2 border-border shadow-[var(--shadow-lg)] p-6 rounded-none"
       x-data="{
-        recurrenceMode: 'none',   // 'none' | 'new' | 'existing'
+        recurrenceMode: 'new',
         isInstallment: false,
         amountValue: '',
         totalAmount: 0,
@@ -193,6 +193,83 @@ export const TransactionForm: FC<TransactionFormProps> = ({
                 </option>
               ))}
             </select>
+          </div>
+        </div>
+
+        {/* ── Recurrence Section ── */}
+        <div class="border-t-2 border-border pt-6 space-y-4">
+          <p class="text-sm font-bold uppercase tracking-wider">Recurrence</p>
+
+          {/* Create new recurrence */}
+          <div
+            x-show="recurrenceMode === 'new'"
+            x-cloak
+            class="p-4 bg-muted/20 border-2 border-border space-y-4"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 -translate-y-2"
+            x-transition:enter-end="opacity-100 translate-y-0"
+          >
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-semibold uppercase tracking-wide mb-2">
+                  Recurrence Name
+                </label>
+                <input
+                  type="text"
+                  name="recurrenceName"
+                  placeholder="e.g., Netflix subscription"
+                  class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base focus:outline-none focus:border-primary rounded-none"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold uppercase tracking-wide mb-2">
+                  Frequency
+                </label>
+                <select
+                  name="frequency"
+                  x-on:change="isInstallment = ($event.target.value === 'INSTALLMENT'); if (!isInstallment) { amountValue = '' }"
+                  class="w-full bg-card text-card-foreground border-2 border-border shadow-[var(--shadow)] px-4 py-3 text-base focus:outline-none focus:border-primary rounded-none"
+                >
+                  <option value="MONTHLY">Monthly</option>
+                  <option value="WEEKLY">Weekly</option>
+                  <option value="YEARLY">Yearly</option>
+                  <option value="INSTALLMENT">Installment</option>
+                </select>
+              </div>
+
+              {/* Installment calculator — only shown when INSTALLMENT selected */}
+              <div x-show="isInstallment" x-cloak class="md:col-span-2">
+                <div class="grid grid-cols-2 gap-4 p-4 border-2 border-dashed border-border bg-muted/30">
+                  <div>
+                    <label class="block text-sm font-semibold uppercase tracking-wide mb-2 text-primary">
+                      Total Amount
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      x-model="totalAmount"
+                      x-on:input="calculatePart()"
+                      placeholder="e.g., 60000"
+                      class="w-full bg-card text-card-foreground border-2 border-border px-4 py-3 text-base focus:outline-none focus:border-primary rounded-none"
+                    />
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold uppercase tracking-wide mb-2 text-primary">
+                      Number of Parts
+                    </label>
+                    <input
+                      type="number"
+                      name="totalParts"
+                      x-model="parts"
+                      x-on:input="calculatePart()"
+                      min="1"
+                      class="w-full bg-card text-card-foreground border-2 border-border px-4 py-3 text-base focus:outline-none focus:border-primary rounded-none"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
