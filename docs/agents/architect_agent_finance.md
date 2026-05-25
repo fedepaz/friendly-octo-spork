@@ -346,18 +346,24 @@ interface ErrorResponse {
 
 ### 5. HTMX Interaction Patterns
 
-**Form Submission Pattern**:
+**Form Submission Pattern (Specialized Forms)**:
+
+Instead of a generic form, we use specialized components targeting the unified `/transactions` endpoint. The backend distinguishes intent by the payload (e.g., `recurrenceId` vs. `isRecurrence="on"`).
 
 ```html
-<!-- Expense Entry Form -->
-<form hx-post="/expenses" hx-target="#expense-list" hx-swap="afterbegin">
+<!-- Transaction Form (Simple) -->
+<form hx-post="/transactions" hx-target="#transaction-list" hx-swap="afterbegin">
   <input type="date" name="date" required />
   <input type="number" name="amount" step="0.01" required />
-  <input type="text" name="concept" required />
-  <select name="category" required>
-    <!-- Options -->
-  </select>
-  <button type="submit">Add Expense</button>
+  <input type="text" name="description" required />
+  <button type="submit">Add Transaction</button>
+</form>
+
+<!-- Transaction Link Form (Fulfilling Recurrence) -->
+<form hx-post="/transactions" hx-target="#transaction-list" hx-swap="afterbegin">
+  <input type="hidden" name="recurrenceId" value="rec_123" />
+  <input type="number" name="amount" value="50.00" required />
+  <button type="submit">Submit Payment</button>
 </form>
 ```
 

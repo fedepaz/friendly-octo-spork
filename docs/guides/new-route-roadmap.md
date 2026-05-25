@@ -54,13 +54,13 @@ This roadmap outlines the steps to add a new server-rendered page, such as a das
 ### 5. UI Components (`finance-app/src/components/dashboard/`)
 
 *   **Objective**: Develop smaller, reusable Hono JSX components specifically for your dashboard.
-*   **Action**: Create a new directory (e.g., `finance-app/src/components/dashboard/`) and add components within it (e.g., `DashboardSummary.tsx`, `TransactionChart.tsx`).
-    *   These components are pure presentation, receiving data via props and rendering HTML.
-    *   Utilize Tailwind CSS for styling and ensure adherence to design conventions.
-*   **Key Principles**:
-    *   **Reusability**: Design components to be independent and reusable.
-    *   **HTMX Integration**: Incorporate `hx-*` attributes for dynamic interactions where appropriate (e.g., filtering, refreshing data).
-    *   **Iconography**: Use SVG icons from `finance-app/src/components/icons/`.
+*   **Action**: Create a new directory and add components.
+*   **Form Strategy**: When adding mutation capabilities (forms), decide between:
+    *   **Simple Form**: One component for the entire entity.
+    *   **Specialized Forms**: Separate components for different intents (e.g., Create vs. Link to Recurrence). **This is preferred for complex financial entries.**
+*   **HTMX Integration**: 
+    *   Target the **Global Modal** (`#modal-content`) for forms.
+    *   Include `hx-trigger="load, refreshDashboard from:body"` in list components to ensure they stay in sync with hub-wide actions.
 *   **Reference**: See `finance-app/src/components/transactions/` for examples of feature-specific components.
 
 ### 6. Route Definition (`finance-app/src/api/dashboard/dashboard.routes.ts`)

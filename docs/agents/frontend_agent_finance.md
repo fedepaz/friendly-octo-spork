@@ -510,7 +510,9 @@ src/
 │   │   └── CategoryForm.tsx
 │   ├── transactions/
 │   │   ├── TransactionList.tsx
-│   │   ├── TransactionForm.tsx     # Unified form for all transaction types
+│   │   ├── TransactionForm.tsx              # Simple one-off entries
+│   │   ├── TransactionNewRecurrenceForm.tsx # Starts a new series
+│   │   ├── TransactionLinkRecurrenceForm.tsx # Pays/updates existing recurrence
 │   │   ├── TransactionRow.tsx
 │   │   └── TransactionFilters.tsx
 │   ├── icons/
@@ -646,5 +648,8 @@ describe("TransactionRow", () => {
 - **CSS variables** for all theme values
 - **Dark mode is default** - design for dark first
 - **Minimal client-side JS** - only for micro-interactions
+- **Tailwind utilities only** - custom CSS in main.css/class.css when necessary
+- Follow **vertical slicing** file structure
+nimal client-side JS** - only for micro-interactions
 - **Tailwind utilities only** - custom CSS in main.css/class.css when necessary
 - Follow **vertical slicing** file structure

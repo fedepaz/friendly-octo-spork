@@ -1,0 +1,6 @@
+docs: align agent profiles and guides with specialized form refactors
+
+- Update Frontend Agent profile to reflect specialized Transaction form components.
+- Align System Architect HTMX patterns with unified /transactions endpoint logic.
+- Update New Route Roadmap with guidance on intent-based form selection.
+- Refine Dashboard-as-Hub documentation to include specialized component triggers.
