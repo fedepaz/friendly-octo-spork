@@ -1,5 +1,7 @@
+// backend/src/repositories/transaction.repository.ts
+
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '../generated/prisma';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../infra/prisma/prisma.service';
 
 export type TransactionWithRelations = Prisma.TransactionGetPayload<{

@@ -1,0 +1,7 @@
+fix(backend): resolve build inclusion and config validation issues
+
+- Move Prisma Client generation to standard @prisma/client.
+- Update repository imports to use the global Prisma client.
+- Fix JWT secret length and add missing database config keys to .env.example.
+- Update nest-cli.json to include assets and correct tsconfig path.
+- Remove redundant relationMode from schema.prisma for native DB integrity.
