@@ -1,22 +1,21 @@
-// src/api/repositories/recurrence.repository.ts
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma.service';
+import { Recurrence, Prisma } from '@prisma/client';
 
-import type { Prisma, Recurrence } from "@/generated/prisma";
-import { prisma } from "@/lib/prisma";
-
+@Injectable()
 export class RecurrenceRepository {
+  constructor(private prisma: PrismaService) {}
+
   async getRecurrences(userId: string): Promise<Recurrence[]> {
-    return await prisma.recurrence.findMany({
+    return this.prisma.recurrence.findMany({
       where: {
         userId,
       },
     });
   }
 
-  async getRecurrenceById(
-    userId: string,
-    id: string,
-  ): Promise<Recurrence | null> {
-    return await prisma.recurrence.findFirst({
+  async getRecurrenceById(userId: string, id: string): Promise<Recurrence | null> {
+    return this.prisma.recurrence.findFirst({
       where: {
         id,
         userId,
@@ -28,8 +27,8 @@ export class RecurrenceRepository {
     data: Prisma.RecurrenceUncheckedCreateInput,
     tx?: Prisma.TransactionClient,
   ): Promise<Recurrence> {
-    const client = tx || prisma;
-    return await client.recurrence.create({
+    const client = tx || this.prisma;
+    return client.recurrence.create({
       data,
     });
   }
@@ -39,8 +38,8 @@ export class RecurrenceRepository {
     data: Prisma.RecurrenceUncheckedUpdateInput,
     tx?: Prisma.TransactionClient,
   ): Promise<Recurrence> {
-    const client = tx || prisma;
-    return await client.recurrence.update({
+    const client = tx || this.prisma;
+    return client.recurrence.update({
       where: { id },
       data,
     });

@@ -1,7 +1,6 @@
-// src/api/repositories/transaction.repository.ts
-
-import type { Prisma, Transaction } from "@/generated/prisma";
-import { prisma } from "@/lib/prisma";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma.service';
+import { Transaction, Prisma } from '@prisma/client';
 
 export type TransactionWithRelations = Prisma.TransactionGetPayload<{
   include: {
@@ -12,7 +11,10 @@ export type TransactionWithRelations = Prisma.TransactionGetPayload<{
   };
 }>;
 
+@Injectable()
 export class TransactionRepository {
+  constructor(private prisma: PrismaService) {}
+
   async getTransactions(
     userId: string,
     filters?: { startDate?: Date; endDate?: Date },
@@ -28,7 +30,7 @@ export class TransactionRepository {
       };
     }
 
-    return await prisma.transaction.findMany({
+    return this.prisma.transaction.findMany({
       where,
       include: {
         category: true,
@@ -37,7 +39,7 @@ export class TransactionRepository {
         recurrence: true,
       },
       orderBy: {
-        date: "desc",
+        date: 'desc',
       },
     });
   }
@@ -46,7 +48,7 @@ export class TransactionRepository {
     userId: string,
     id: string,
   ): Promise<TransactionWithRelations | null> {
-    return await prisma.transaction.findFirst({
+    return this.prisma.transaction.findFirst({
       where: {
         id,
         userId,
@@ -64,8 +66,8 @@ export class TransactionRepository {
     data: Prisma.TransactionUncheckedCreateInput,
     tx?: Prisma.TransactionClient,
   ): Promise<TransactionWithRelations> {
-    const client = tx || prisma;
-    return await client.transaction.create({
+    const client = tx || this.prisma;
+    return client.transaction.create({
       data,
       include: {
         category: true,

@@ -1,5 +1,3 @@
-//src/api/categories/categories.schema.ts
-
 import { z } from "zod";
 
 export const categorySchema = z.object({
@@ -21,5 +19,4 @@ export const createCategorySchema = z.object({
 });
 
 export type CreateCategoryInput = z.infer<typeof createCategorySchema>;
-
 export type CategoryDTO = z.infer<typeof categorySchema>;

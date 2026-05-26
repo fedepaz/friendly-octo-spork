@@ -1,14 +1,12 @@
-// src/schemas/createAccountSchema.ts
-
 import { z } from "zod";
-import { AccountType, Currency } from "../../generated/prisma";
+import { AccountTypeSchema, CurrencySchema } from "../enums";
 
 export const accountSchema = z.object({
   id: z.string(),
   userId: z.string(),
   name: z.string(),
-  type: z.nativeEnum(AccountType),
-  currency: z.nativeEnum(Currency),
+  type: AccountTypeSchema,
+  currency: CurrencySchema,
   balance: z.number(),
 });
 
@@ -17,12 +15,8 @@ export const createAccountSchema = z.object({
     .string()
     .min(1, "Account name is required")
     .max(50, "Account name is too long"),
-  type: z.nativeEnum(AccountType, {
-    error: () => ({ message: "Invalid account type" }),
-  }),
-  currency: z.nativeEnum(Currency, {
-    error: () => ({ message: "Invalid currency" }),
-  }),
+  type: AccountTypeSchema,
+  currency: CurrencySchema,
   balance: z.preprocess(
     (val) => (val === "" ? undefined : Number(val)),
     z.number().default(0),

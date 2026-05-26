@@ -1,19 +1,17 @@
-// src/schemas/recurrences.schema.ts
-
 import { z } from "zod";
 import {
-  CardType,
-  RecurrenceType,
-  TransactionType,
-} from "../../generated/prisma";
+  CardTypeSchema,
+  RecurrenceTypeSchema,
+  TransactionTypeSchema,
+} from "../enums";
 
 export const recurrenceSchema = z.object({
   id: z.string(),
   userId: z.string(),
   name: z.string(),
-  type: z.nativeEnum(TransactionType),
+  type: TransactionTypeSchema,
   amount: z.number(),
-  frequency: z.nativeEnum(RecurrenceType),
+  frequency: RecurrenceTypeSchema,
   totalParts: z.number().int().nullable(),
   currentPart: z.number().int().nullable(),
   startDate: z.date(),
@@ -24,9 +22,7 @@ export const recurrenceSchema = z.object({
   sourceAccountId: z.string().optional().nullable(),
   targetAccountId: z.string().optional().nullable(),
   isCardExpense: z.boolean().optional().nullable(),
-  cardType: z.nativeEnum(CardType).optional().nullable(),
-
-  // Metadata for additional info
+  cardType: CardTypeSchema.optional().nullable(),
   metadata: z.any().optional(),
 });
 
@@ -35,13 +31,9 @@ export const createRecurrenceSchema = z.object({
     .string()
     .min(1, "Recurrence name is required")
     .max(255, "Recurrence name is too long"),
-  type: z.nativeEnum(TransactionType, {
-    error: () => ({ message: "Invalid recurrence type" }),
-  }),
+  type: TransactionTypeSchema,
   amount: z.coerce.number().positive("Amount must be a positive number"),
-  frequency: z.nativeEnum(RecurrenceType, {
-    error: () => ({ message: "Invalid recurrence frequency" }),
-  }),
+  frequency: RecurrenceTypeSchema,
   totalParts: z.number().optional().default(1),
   currentPart: z.number().optional().default(1),
   startDate: z.coerce.date(),
@@ -50,17 +42,13 @@ export const createRecurrenceSchema = z.object({
   sourceAccountId: z.string().optional(),
   targetAccountId: z.string().optional(),
   isCardExpense: z.boolean().optional(),
-  cardType: z.nativeEnum(CardType).optional(),
+  cardType: CardTypeSchema.optional(),
 });
 
 export const updateRecurrenceSchema = createRecurrenceSchema.partial();
 
 export const recurrenceFilterSchema = z.object({
-  frequency: z
-    .nativeEnum(RecurrenceType, {
-      error: () => ({ message: "Invalid recurrence frequency" }),
-    })
-    .optional(),
+  frequency: RecurrenceTypeSchema.optional(),
   active: z.boolean().optional().default(true),
 });
 

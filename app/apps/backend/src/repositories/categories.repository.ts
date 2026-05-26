@@ -1,21 +1,21 @@
-// src/api/repositories/categories.repository.ts
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma.service';
+import { Category } from '@prisma/client';
 
-import type { Category } from "@/generated/prisma";
-import { prisma } from "@/lib/prisma";
-
+@Injectable()
 export class CategoriesRepository {
-  // Get categories
+  constructor(private prisma: PrismaService) {}
+
   async getCategories(userId: string): Promise<Category[]> {
-    return prisma.category.findMany({
+    return this.prisma.category.findMany({
       where: {
         userId,
       },
     });
   }
 
-  // Get category by id
   async getCategoryById(userId: string, id: string): Promise<Category | null> {
-    return prisma.category.findFirst({
+    return this.prisma.category.findFirst({
       where: {
         id,
         userId,

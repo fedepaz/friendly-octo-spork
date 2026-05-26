@@ -1,47 +1,47 @@
-// src/api/repositories/account.repository.ts
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma.service';
+import { Account, Prisma } from '@prisma/client';
 
-import type { Account, Prisma } from "@/generated/prisma";
-import { prisma } from "@/lib/prisma";
-
+@Injectable()
 export class AccountRepository {
-  // Get accounts
+  constructor(private prisma: PrismaService) {}
+
   async getAccounts(userId: string): Promise<Account[]> {
-    return prisma.account.findMany({
+    return this.prisma.account.findMany({
       where: {
         userId,
+        deletedAt: null,
       },
     });
   }
 
-  // Get account by id
   async getAccountById(userId: string, id: string): Promise<Account | null> {
-    return prisma.account.findFirst({
+    return this.prisma.account.findFirst({
       where: {
         id,
         userId,
+        deletedAt: null,
       },
     });
   }
 
-  // Create account
   async saveAccount(
     data: Prisma.AccountUncheckedCreateInput,
     tx?: Prisma.TransactionClient,
   ): Promise<Account> {
-    const client = tx || prisma;
+    const client = tx || this.prisma;
     return client.account.create({
       data,
     });
   }
 
-  // Update account balance
   async updateBalance(
     id: string,
-    amount: Prisma.Decimal | number,
-    operation: "increment" | "decrement",
+    amount: number | Prisma.Decimal,
+    operation: 'increment' | 'decrement',
     tx?: Prisma.TransactionClient,
   ): Promise<Account> {
-    const client = tx || prisma;
+    const client = tx || this.prisma;
     return client.account.update({
       where: { id },
       data: {
