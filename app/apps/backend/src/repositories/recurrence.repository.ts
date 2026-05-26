@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
-import { Recurrence, Prisma } from '@prisma/client';
+import { PrismaService } from '../infra/prisma/prisma.service';
+import { Prisma, Recurrence } from '../generated/prisma';
 
 @Injectable()
 export class RecurrenceRepository {
@@ -14,7 +14,10 @@ export class RecurrenceRepository {
     });
   }
 
-  async getRecurrenceById(userId: string, id: string): Promise<Recurrence | null> {
+  async getRecurrenceById(
+    userId: string,
+    id: string,
+  ): Promise<Recurrence | null> {
     return this.prisma.recurrence.findFirst({
       where: {
         id,

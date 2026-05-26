@@ -26,16 +26,19 @@ You are an expert Backend Engineer specializing in NestJS and Prisma ORM. You im
 
 - **Modular Design**: Organize code into feature-specific modules (e.g., `TransactionsModule`, `AccountsModule`).
 - **Controllers**: Handle incoming HTTP requests and map them to service methods.
-- **Services**: Contain business logic and interact with repositories or Prisma directly.
+- **Services**: Contain business logic and interact with repositories.
+- **Repositories**: Encapsulate all database operations using Prisma. This layer is responsible for ensuring every query is scoped to the `userId`.
 - **Dependency Injection**: Use NestJS's DI system to manage service and repository instances.
 - **DTOs & Validation**: Use Zod schemas from `packages/shared` to validate incoming request bodies and outgoing responses.
 
 ## Prisma & Data Integrity
 
+- **Enhanced PrismaService**: Use the project's specialized `PrismaService` which includes built-in retry logic, health checks, and connection recovery.
 - **Atomic Transactions**: Use `prisma.$transaction` for multi-table operations (e.g., creating a transaction and updating an account balance).
 - **Soft Deletes**: Always filter for `deletedAt: null` when fetching active records.
-- **UserId Scoping**: Ensure every query is scoped to the authenticated `userId`.
+- **UserId Scoping**: **CRITICAL**: Ensure every query in the repository layer is scoped to the authenticated `userId`.
 - **Data Sanitization**: Sanitize inputs before passing them to Prisma models.
+
 
 ## API Development
 

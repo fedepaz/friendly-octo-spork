@@ -1,6 +1,8 @@
+// backend/src/repositories/account.repository.ts
+
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
-import { Account, Prisma } from '@prisma/client';
+import { PrismaService } from '../infra/prisma/prisma.service';
+import { Account, Prisma } from '../generated/prisma';
 
 @Injectable()
 export class AccountRepository {
@@ -37,7 +39,7 @@ export class AccountRepository {
 
   async updateBalance(
     id: string,
-    amount: number | Prisma.Decimal,
+    amount: number,
     operation: 'increment' | 'decrement',
     tx?: Prisma.TransactionClient,
   ): Promise<Account> {
