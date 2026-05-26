@@ -51,10 +51,18 @@ export const createTransactionSchema = z.object({
     .string()
     .min(1, "Description is required")
     .max(255, "Description is too long"),
-  categoryId: z.string().optional().nullable(),
-  sourceAccountId: z.string().optional().nullable(),
-  targetAccountId: z.string().optional().nullable(),
-  recurrenceId: z.string().optional().nullable(),
+  categoryId: z
+    .preprocess((val) => (val === "" ? null : val), z.string().nullable())
+    .optional(),
+  sourceAccountId: z
+    .preprocess((val) => (val === "" ? null : val), z.string().nullable())
+    .optional(),
+  targetAccountId: z
+    .preprocess((val) => (val === "" ? null : val), z.string().nullable())
+    .optional(),
+  recurrenceId: z
+    .preprocess((val) => (val === "" ? null : val), z.string().nullable())
+    .optional(),
   metadata: z.object({}).catchall(z.unknown()).optional().nullable(),
 
   // Automatic recurrence creation fields
