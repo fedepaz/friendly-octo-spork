@@ -4,7 +4,9 @@ import {
   OnModuleInit,
   OnModuleDestroy,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
 
 @Injectable()
 export class PrismaService
@@ -12,6 +14,14 @@ export class PrismaService
   implements OnModuleInit, OnModuleDestroy
 {
   private readonly logger = new Logger(PrismaService.name);
+
+  constructor(private readonly configService: ConfigService) {
+    const databaseUrl = configService.get<string>(
+      'config.database_dev.databaseUrl',
+    );
+    const adapter = new PrismaPg({ connectionString: databaseUrl });
+    super({ adapter, log: ['info', 'warn', 'error'] });
+  }
 
   async onModuleInit() {
     this.logger.log('🔄 INITIALIZING DATABASE CONNECTION...');
@@ -21,9 +31,15 @@ export class PrismaService
 
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
+        const user = this.configService.get<string>('config.database_dev.user');
+        const databaseName = this.configService.get<string>(
+          'config.database_dev.databaseName',
+        );
         await this.$connect();
         await this.$queryRaw`SELECT 1 as health`;
-        this.logger.log('✅ DATABASE CONNECTION SUCCESSFUL');
+        this.logger.log(
+          `Database connection successful: -user: ${user} -database: ${databaseName}`,
+        );
         return;
       } catch (error) {
         const errorMsg = (error as Error).message;

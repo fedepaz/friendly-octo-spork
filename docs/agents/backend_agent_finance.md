@@ -24,20 +24,18 @@ You are an expert Backend Engineer specializing in NestJS and Prisma ORM. You im
 
 ## NestJS Implementation Patterns
 
-- **Modular Design**: Organize code into feature-specific modules (e.g., `TransactionsModule`, `AccountsModule`).
+- **Modular Design**: Organize code into feature-specific modules (e.g., `TransactionsModule`, `HealthModule`).
 - **Controllers**: Handle incoming HTTP requests and map them to service methods.
 - **Services**: Contain business logic and interact with repositories.
-- **Repositories**: Encapsulate all database operations using Prisma. This layer is responsible for ensuring every query is scoped to the `userId`.
-- **Dependency Injection**: Use NestJS's DI system to manage service and repository instances.
-- **DTOs & Validation**: Use Zod schemas from `packages/shared` to validate incoming request bodies and outgoing responses.
+- **Repositories**: Encapsulate all database operations.
+- **Access Control**: Use the custom `@Public()` decorator to bypass global authentication guards for specific endpoints (e.g., health checks).
 
 ## Prisma & Data Integrity
 
-- **Enhanced PrismaService**: Use the project's specialized `PrismaService` which includes built-in retry logic, health checks, and connection recovery.
-- **Atomic Transactions**: Use `prisma.$transaction` for multi-table operations (e.g., creating a transaction and updating an account balance).
-- **Soft Deletes**: Always filter for `deletedAt: null` when fetching active records.
+- **Driver Adapters**: ALWAYS use the `@prisma/adapter-pg` driver with the `pg` library for PostgreSQL connectivity to ensure robust connection management.
+- **Enhanced PrismaService**: Utilize the project's specialized `PrismaService` which includes driver initialization, retry logic, and connection recovery.
+- **Foreign Key Integrity**: Rely on native database foreign keys (avoid `relationMode = "prisma"` in the schema).
 - **UserId Scoping**: **CRITICAL**: Ensure every query in the repository layer is scoped to the authenticated `userId`.
-- **Data Sanitization**: Sanitize inputs before passing them to Prisma models.
 
 
 ## API Development

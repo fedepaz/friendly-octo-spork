@@ -4,7 +4,7 @@ This document outlines the required database operations and workflows for Creati
 
 ### Core Philosophy: Data Integrity and Immutability
 
-The database is the single source of truth. Workflows are designed to ensure that financial calculations are always consistent and that a historical record is maintained. The application uses PostgreSQL running in a Docker container with persistent storage.
+The database is the single source of truth. Workflows are designed to ensure that financial calculations are always consistent and that a historical record is maintained. The application uses PostgreSQL with native foreign key integrity (Prisma `relationMode` is not used) to ensure data consistency at the engine level.
 
 ---
 

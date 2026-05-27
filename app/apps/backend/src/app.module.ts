@@ -8,6 +8,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { pinoStream } from './config/logger';
 import { PrismaModule } from './infra/prisma/prisma.module';
 import { IncomingMessage } from 'http';
+import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { IncomingMessage } from 'http';
       },
     }),
     PrismaModule,
+    HealthModule,
   ],
 })
 export class AppModule {}

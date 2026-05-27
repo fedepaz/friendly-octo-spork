@@ -31,9 +31,6 @@ async function bootstrap() {
     'config.database_dev.databaseName',
   );
   const DATABASE_USER = configService.get<string>('config.database_dev.user');
-  const DATABASE_PASSWORD = configService.get<string>(
-    'config.database_dev.password',
-  );
 
   app.enableCors({
     origin: corsOrigins,
@@ -59,7 +56,6 @@ async function bootstrap() {
       DATABASE_PORT,
       DATABASE_DATABASE_NAME,
       DATABASE_USER,
-      DATABASE_PASSWORD,
     });
   } catch (error) {
     console.error('❌ BACKEND STARTUP FAILED');
