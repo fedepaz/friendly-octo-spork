@@ -239,5 +239,5 @@ enum CardType {
 }
 ```
 
-- `packages/shared`: Contains Zod schemas and common types used by both frontend and backend.
+- `@repo/shared`: Contains Zod schemas and common types used by both frontend and backend. It is a buildable package using `tsc` to generate a `dist/` folder, ensuring compatibility across the monorepo.
 - `packages/database`: Contains the Prisma schema and generated client.

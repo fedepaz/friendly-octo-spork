@@ -25,7 +25,8 @@ Follow the NestJS Module-Controller-Service-Repository pattern:
 
 ### 3. Authentication & Authorization
 
-*   **Guards**: Use NestJS Guards (e.g., `JwtAuthGuard`) to protect endpoints.
+*   **Guards**: Use NestJS Guards (e.g., `JwtAuthGuard`) to protect endpoints. The project uses a `GlobalAuthGuard` registered in the `AppModule` to protect all routes by default.
+*   **Public Access**: Use the `@Public()` decorator to bypass authentication for specific controllers or methods (e.g., login, health checks).
 *   **Decorators**: Use custom decorators to extract the `User` object or `userId` from the request.
 *   **Data Isolation**: Never allow a user to access or modify data belonging to another `userId`.
 

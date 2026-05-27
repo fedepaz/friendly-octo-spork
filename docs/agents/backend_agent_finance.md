@@ -29,6 +29,8 @@ You are an expert Backend Engineer specializing in NestJS and Prisma ORM. You im
 - **Services**: Contain business logic and interact with repositories.
 - **Repositories**: Encapsulate all database operations.
 - **Access Control**: Use the custom `@Public()` decorator to bypass global authentication guards for specific endpoints (e.g., health checks).
+- **Validation**: Use `ZodValidationPipe` for unified request validation using shared Zod schemas.
+- **Traceability**: Implement `RequestIdMiddleware` to ensure every request has a unique identifier for logging.
 
 ## Prisma & Data Integrity
 
