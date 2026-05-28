@@ -1,1 +1,4 @@
-npx --no --commitlint --config app/commitlint.config.js --edit "$1"
+#!/bin/sh
+[ -d "app" ] && cd app
+
+pnpm exec commitlint --config commitlint.config.js --edit "$1"

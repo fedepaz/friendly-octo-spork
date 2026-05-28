@@ -1,1 +1,5 @@
-pnpm --prefix app turbo run lint
+#!/bin/sh
+# Si se ejecuta desde la raíz, entra a 'app'
+[ -d "app" ] && cd app
+
+pnpm turbo run lint
