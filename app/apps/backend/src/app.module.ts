@@ -9,6 +9,9 @@ import { pinoStream } from './config/logger';
 import { PrismaModule } from './infra/prisma/prisma.module';
 import { IncomingMessage } from 'http';
 import { HealthModule } from './modules/health/health.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { GlobalAuthGuard } from './modules/auth/guards/global-auth.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -49,8 +52,15 @@ import { HealthModule } from './modules/health/health.module';
         },
       },
     }),
+    AuthModule,
     PrismaModule,
     HealthModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: GlobalAuthGuard,
+    },
   ],
 })
 export class AppModule {}

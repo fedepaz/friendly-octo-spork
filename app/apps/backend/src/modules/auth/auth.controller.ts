@@ -10,6 +10,16 @@ import {
   Patch,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import {
+  LoginAuthDto,
+  RefreshTokenDto,
+  TokensDto,
+  ChangePasswordDto,
+  LoginAuthSchema,
+  RefreshTokenSchema,
+  ChangePasswordSchema,
+  AuthResponseDto,
+} from '@repo/shared';
 
 import { AuthUser } from './types/auth-user.type';
 import { Public } from '../../shared/decorators/public.decorator';

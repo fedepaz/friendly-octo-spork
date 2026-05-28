@@ -1,3 +1,5 @@
+// packages/shared/src/index.ts
+
 export * from "./enums";
 export * from "./schemas/accounts.schema";
 export * from "./schemas/categories.schema";

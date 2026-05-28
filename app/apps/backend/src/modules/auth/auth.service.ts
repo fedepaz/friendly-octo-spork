@@ -15,6 +15,12 @@ import {
   JwtPayload,
   JwtRefreshPayload,
 } from './interfaces/jwt-payload.interface';
+import {
+  AuthResponseDto,
+  ChangePasswordDto,
+  LoginAuthDto,
+  TokensDto,
+} from '@repo/shared';
 
 @Injectable()
 export class AuthService {
@@ -65,7 +71,7 @@ export class AuthService {
       user: {
         id: user.id,
         name: user.name,
-        email: user.email,
+        email: user.email as string,
       },
       ...tokens,
       isDefaultPassword,
