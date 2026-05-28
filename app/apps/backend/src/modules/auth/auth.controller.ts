@@ -6,7 +6,6 @@ import {
   Body,
   HttpCode,
   HttpStatus,
-  Logger,
   Patch,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
@@ -28,8 +27,6 @@ import { ZodValidationPipe } from '../../shared/pipes/zod-validation-pipe';
 
 @Controller('auth')
 export class AuthController {
-  private readonly logger = new Logger(AuthController.name);
-
   constructor(private readonly authService: AuthService) {}
 
   /**
@@ -63,8 +60,7 @@ export class AuthController {
    */
   @Post('logout')
   @HttpCode(HttpStatus.OK)
-  logout(@CurrentUser() user: AuthUser) {
-    this.logger.log(`👋 Logout: ${user.name}`);
+  logout() {
     return { message: 'Logged out successfully' };
   }
   /**

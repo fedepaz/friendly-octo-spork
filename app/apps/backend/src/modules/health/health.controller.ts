@@ -12,15 +12,12 @@ export class HealthController {
   @HttpCode(HttpStatus.OK)
   @Public()
   async healthCheck() {
-    const response = await this.healthService.getAllServicesStatus();
-    this.logger.log(response);
-    return response;
+    return this.healthService.getAllServicesStatus();
   }
 
   @Get('auth')
   @HttpCode(HttpStatus.OK)
   authCheck() {
-    this.logger.log('Authenticated');
     return {
       status: 'ok',
       timestamp: new Date().toISOString(),

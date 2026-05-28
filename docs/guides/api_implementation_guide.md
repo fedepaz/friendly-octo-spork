@@ -40,10 +40,14 @@ Follow the NestJS Module-Controller-Service-Repository pattern:
 ### 5. Infrastructure & Reliability
 
 *   **Database Connectivity**: Always implement the `@prisma/adapter-pg` pattern in the `PrismaService` constructor to ensure stable connection pooling in Node.js environments.
-*   **Health Monitoring**: New infrastructure should include a health check following the `HealthModule` pattern:
-    *   **Adaptive Caching**: Use a shorter cache duration for degraded states and longer for healthy ones.
-    *   **Circuit Breaking**: Implement consecutive failure tracking to report service status accurately.
-*   **Access Control**: Use the `@Public()` decorator for endpoints that must remain accessible without authentication (e.g., system monitoring).
+*   **Health Monitoring**: New infrastructure should include a health check following the `HealthModule` pattern.
+*   **Logging & Observability**:
+    *   **Engine**: We use `nestjs-pino`. Use the standard NestJS `Logger` from `@nestjs/common`; it is globally overridden to use Pino.
+    *   **Strategy**:
+        *   **Controllers**: Avoid manual logging. `pino-http` automatically logs all request/response metadata.
+        *   **Services**: Place business-critical logs here (e.g., "Processing payment for user X").
+        *   **Context**: Always initialize the logger with the class name: `private readonly logger = new Logger(MyService.name)`.
+    *   **Security**: Never log PII, passwords, or full JWTs. Use the `redact` config in `AppModule` if new sensitive fields are added.
 
 ### 6. Implementation Checklist
 
