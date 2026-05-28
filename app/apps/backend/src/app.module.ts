@@ -12,6 +12,7 @@ import { HealthModule } from './modules/health/health.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { GlobalAuthGuard } from './modules/auth/guards/global-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { AccountsModule } from './modules/accounts/account.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { APP_GUARD } from '@nestjs/core';
     AuthModule,
     PrismaModule,
     HealthModule,
+    AccountsModule,
   ],
   providers: [
     {
