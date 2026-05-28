@@ -13,6 +13,9 @@ import { AuthModule } from './modules/auth/auth.module';
 import { GlobalAuthGuard } from './modules/auth/guards/global-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { AccountsModule } from './modules/accounts/account.module';
+import { CategoriesModule } from './modules/categories/categories.module';
+import { RecurrencesModule } from './modules/recurrences/recurrence.module';
+import { TransactionModule } from './modules/transactions/transaction.module';
 
 @Module({
   imports: [
@@ -57,6 +60,9 @@ import { AccountsModule } from './modules/accounts/account.module';
     PrismaModule,
     HealthModule,
     AccountsModule,
+    CategoriesModule,
+    RecurrencesModule,
+    TransactionModule,
   ],
   providers: [
     {

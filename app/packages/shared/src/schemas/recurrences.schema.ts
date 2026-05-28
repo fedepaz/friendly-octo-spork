@@ -23,7 +23,7 @@ export const recurrenceSchema = z.object({
   targetAccountId: z.string().optional().nullable(),
   isCardExpense: z.boolean().optional().nullable(),
   cardType: CardTypeSchema.optional().nullable(),
-  metadata: z.any().optional(),
+  metadata: z.unknown().optional().nullable(),
 });
 
 export const createRecurrenceSchema = z.object({

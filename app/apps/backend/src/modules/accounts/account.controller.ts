@@ -18,14 +18,12 @@ import {
 } from '@repo/shared';
 import { AuthUser } from '../auth/types/auth-user.type';
 import { ZodValidationPipe } from '../../shared/pipes/zod-validation-pipe';
-import { Public } from '../../shared/decorators/public.decorator';
 
 @Controller('accounts')
 export class AccountController {
   constructor(private readonly accountsService: AccountService) {}
 
   @Get()
-  @Public()
   @HttpCode(HttpStatus.OK)
   async getAccounts(@CurrentUser() user: AuthUser): Promise<AccountDTO[]> {
     return this.accountsService.getAccounts(user.id);
@@ -41,7 +39,6 @@ export class AccountController {
   @HttpCode(HttpStatus.CREATED)
   async saveAccount(
     @CurrentUser() user: AuthUser,
-    @Param('id') id: string,
     @Body(new ZodValidationPipe(createAccountSchema))
     accountData: CreateAccountInput,
   ): Promise<AccountDTO> {

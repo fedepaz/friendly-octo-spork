@@ -26,7 +26,7 @@ export const transactionSchema = z.object({
   isCardExpense: z.boolean().nullable(),
   cardType: CardTypeSchema.nullable(),
   source: z.string().optional().nullable(),
-  metadata: z.object({}).catchall(z.unknown()).nullable(),
+  metadata: z.unknown().optional().nullable(),
   createdAt: z.date(),
   updatedAt: z.date(),
 
@@ -56,7 +56,7 @@ export const createTransactionSchema = z.object({
   recurrenceId: z
     .preprocess((val) => (val === "" ? null : val), z.string().nullable())
     .optional(),
-  metadata: z.object({}).catchall(z.unknown()).optional().nullable(),
+  metadata: z.unknown().optional().nullable(),
 
   isRecurrence: z
     .preprocess((val) => val === "on" || val === true, z.boolean())

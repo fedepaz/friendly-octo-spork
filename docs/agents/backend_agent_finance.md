@@ -25,12 +25,21 @@ You are an expert Backend Engineer specializing in NestJS and Prisma ORM. You im
 ## NestJS Implementation Patterns
 
 - **Modular Design**: Organize code into feature-specific modules (e.g., `TransactionsModule`, `HealthModule`).
-- **Controllers**: Handle incoming HTTP requests and map them to service methods.
-- **Services**: Contain business logic and interact with repositories.
+- **Controllers**: Handle incoming HTTP requests and map them to service methods. **Standard**: Avoid manual logging in controllers; `pino-http` handles request/response metadata automatically.
+- **Services**: Contain business logic and interact with repositories. **Standard**: This is the primary location for business-critical logging. Initialize with `private readonly logger = new Logger(MyService.name)`.
 - **Repositories**: Encapsulate all database operations.
 - **Access Control**: Use the custom `@Public()` decorator to bypass global authentication guards for specific endpoints (e.g., health checks).
 - **Validation**: Use `ZodValidationPipe` for unified request validation using shared Zod schemas.
 - **Traceability**: Implement `RequestIdMiddleware` to ensure every request has a unique identifier for logging.
+
+## Logging & Observability Standards
+
+- **Engine**: We use `nestjs-pino`.
+- **Signal vs. Noise**: 
+    - **Infrastructure Logs**: (HTTP, DB connections) handled by standard middleware.
+    - **Business Logs**: (Manual) handled in **Services** only.
+    - **Audit Logs**: High-level events (e.g., "Account Deleted") should be persisted to the `AuditLog` table (see Architect docs for schema).
+- **Security**: Never log PII, secrets, or full JWTs. Use the `redact` configuration in `AppModule`.
 
 ## Prisma & Data Integrity
 
