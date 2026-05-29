@@ -118,6 +118,23 @@ When the user asks me to **commit, push, or otherwise save new work**, I will ex
 
 ---
 
+### Rule: Workflow for UX/UI Feature Review
+
+When asked to review a new feature's UI/UX, follow this procedure:
+
+1.  **Activate Specialized Skill**: Use `activate_skill` with `ui-ux-pro-max`.
+2.  **Analyze Against Guidelines**: Evaluate the feature's components against `docs/agents/ux_agent_finance.md` and the `ui-ux-pro-max` intelligence.
+3.  **Check Core Areas**:
+    - **Color Tokens**: Verify use of OKLCH variables (no hardcoded hex/colors).
+    - **Responsiveness**: Ensure mobile-first and adaptive layouts (Zero-Scroll standard).
+    - **Skeleton Strategy**: Verify Level 1 (`loading.tsx`) and Level 2 (`Suspense`) implementations.
+    - **Component Patterns**: Check for `SlideOverForm`, `DataTable`, etc.
+4.  **Propose Improvements**: Suggest specific code changes to align with standards.
+5.  **Update Documentation**: Append new components to `docs/project-documentation/components-list.md`.
+6.  **Seek Approval**: Present the analysis and documentation updates to the user.
+
+---
+
 ## Agent Roster
 
 ### 1. Product Manager
