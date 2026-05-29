@@ -1,0 +1,195 @@
+// src/lib/api/error-handler.ts
+import { ApiError } from "./client-fetch";
+
+/**
+ * API Error Handler
+ *
+ * Centralized error parsing and categorization
+ * Returns structured error information for UI consumption
+ */
+export interface ParsedError {
+  type: ErrorType;
+  title: string;
+  message: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  details?: Record<string, any>;
+  shouldRetry?: boolean;
+  isFatal?: boolean;
+}
+
+export type ErrorType =
+  | "NETWORK"
+  | "AUTH"
+  | "VALIDATION"
+  | "NOT_FOUND"
+  | "FORBIDDEN"
+  | "CONFLICT"
+  | "SERVER_ERROR"
+  | "TIMEOUT"
+  | "UNKNOWN";
+
+export function parseApiError(error: unknown): ParsedError {
+  // Network errors
+  if (error instanceof TypeError) {
+    return {
+      type: "NETWORK",
+      title: "Sin conexión",
+      message:
+        "No se puede conectar al servidor. Verifica tu conexión a internet.",
+      shouldRetry: true,
+    };
+  }
+
+  // API errors
+  if (error instanceof ApiError) {
+    // ✅ CASO ESPECIAL: 401 con mensaje "Access denied" = credenciales incorrectas
+    if (
+      error.status === 401 &&
+      (error.message === "Invaliddy Request" ||
+        error.message === "Invalid credentials - email" ||
+        error.message === "Invalid credentials - password")
+    ) {
+      return {
+        type: "FORBIDDEN",
+        title: "Credenciales incorrectas",
+        message: "El nombre de usuario o contraseña son incorrectos.",
+      };
+    }
+    if (error.message === "Network error: unable to reach server") {
+      return {
+        type: "NETWORK",
+        title: "Error",
+        message:
+          "No se puede conectar al servidor. Verifica tu conexión a internet.",
+        details: error.details,
+      };
+    }
+    if (error.message === "New cannot be the same as the current") {
+      return {
+        type: "VALIDATION",
+        title: "Contraseña incorrecta",
+        message:
+          "La contraseña actual no puede ser la misma que la nueva contraseña.",
+        details: error.details,
+      };
+    }
+    if (
+      error.message ===
+      "You cannot manage permissions for a user with equal or greater seniority."
+    ) {
+      return {
+        type: "FORBIDDEN",
+        title: "Restricción de jerarquía",
+        message:
+          "No puedes gestionar los permisos de un usuario con antigüedad igual o superior a la tuya.",
+        details: error.details,
+      };
+    }
+
+    switch (error.status) {
+      case 400:
+        return {
+          type: "VALIDATION",
+          title: "Datos inválidos",
+          message: "Por favor, verifica la información ingresada",
+          details: error.details,
+        };
+      case 401:
+        return {
+          type: "AUTH",
+          title: "Sesión expirada",
+          message:
+            "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
+          isFatal: true,
+          details: error.details,
+        };
+      case 403:
+        return {
+          type: "FORBIDDEN",
+          title: "Acceso denegado",
+          message: "No tienes permisos para realizar esta acción.",
+          details: error.details,
+        };
+      case 404:
+        return {
+          type: "NOT_FOUND",
+          title: "No encontrado",
+          message: "El recurso solicitado no fue encontrado.",
+          details: error.details,
+        };
+      case 408:
+        return {
+          type: "TIMEOUT",
+          title: "Tiempo de espera agotado",
+          message: "La solicitud tardó demasiado tiempo. Intenta nuevamente.",
+          details: error.details,
+          shouldRetry: true,
+        };
+      case 409:
+        return {
+          type: "CONFLICT",
+          title: "Conflicto",
+          message: "Ya existe un registro con estos datos.",
+          details: error.details,
+        };
+      case 500:
+        return {
+          type: "SERVER_ERROR",
+          title: "Error del servidor",
+          message: "Error interno del servidor. Por favor, intenta nuevamente.",
+          shouldRetry: true,
+          details: error.details,
+        };
+      case 503:
+        return {
+          type: "SERVER_ERROR",
+          title: "Servicio no disponible",
+          message:
+            "El servicio está temporalmente no disponible. Intenta más tarde.",
+          shouldRetry: true,
+          details: error.details,
+        };
+      default:
+        return {
+          type: "UNKNOWN",
+          title: "Error",
+          message: error.message || "Ha ocurrido un error inesperado",
+          details: error.details,
+        };
+    }
+  }
+
+  // Generic errors
+  if (error instanceof Error) {
+    return {
+      type: "UNKNOWN",
+      title: "Error Genérico",
+      message: error.message,
+      details: error,
+    };
+  }
+
+  return {
+    type: "UNKNOWN",
+    title: "Error totalmente inesperado :(",
+    message: "Ha ocurrido un error inesperado",
+  };
+}
+
+/**
+ * Check if error is retryable
+ */
+export function isRetryableError(error: unknown): boolean {
+  const parsed = parseApiError(error);
+  return parsed.shouldRetry || false;
+}
+
+/**
+ * Check if error requires authentication
+ */
+export function requiresAuthentication(error: unknown): boolean {
+  if (error instanceof ApiError && error.status === 401) {
+    return true;
+  }
+  return false;
+}

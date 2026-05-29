@@ -1,0 +1,44 @@
+// src/features/auth/hooks/useLogin.ts
+"use client";
+
+import { useMutation } from "@tanstack/react-query";
+import { LoginAuthDto, AuthResponseDto } from "@vivero/shared";
+import { useAuthContext } from "../providers/AuthProvider";
+import { toast } from "sonner";
+import { authService } from "../api/authService";
+
+export const useLogin = () => {
+  const { signIn } = useAuthContext();
+
+  const mutation = useMutation<AuthResponseDto, Error, LoginAuthDto>({
+    mutationFn: authService.login,
+    onSuccess: (data) => {
+      // Check if user is default password
+      if (data.isDefaultPassword) {
+        toast.info(
+          "Contraseña por defecto, se abrirá un formulario para cambiar la contraseña",
+          {
+            duration: 3000,
+          },
+        );
+      } else {
+        const toastMessage = `Inicio de sesión exitoso como ${data.user.username}`;
+        toast.success(toastMessage, {
+          duration: 3000,
+        });
+      }
+      // Store refresh token
+      localStorage.setItem("refreshToken", data.refreshToken);
+      // Update auth state via useAuth
+      signIn(data.accessToken, data.user);
+    },
+  });
+
+  return {
+    login: mutation.mutate,
+    loginAsync: mutation.mutateAsync,
+    isLoading: mutation.isPending,
+    isSuccess: mutation.isSuccess,
+    reset: mutation.reset,
+  };
+};

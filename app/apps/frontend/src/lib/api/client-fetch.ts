@@ -1,0 +1,176 @@
+// src/lib/api/client-fetch.ts
+"use client";
+
+const backendUrl = process.env.NEXT_PUBLIC_API_URL; // instead of BACKEND_URL
+
+if (!backendUrl) {
+  console.warn("NEXT_PUBLIC_API_URL is not set");
+}
+
+let isRefreshing = false;
+let failedQueue: Array<{
+  resolve: (token: string) => void;
+  reject: (error: Error) => void;
+}> = [];
+
+const processQueue = (error: Error | null, token: string | null = null) => {
+  failedQueue.forEach((promise) => {
+    if (error) {
+      promise.reject(error);
+    } else if (token) {
+      promise.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
+export class ApiError extends Error {
+  status: number;
+  code?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  details?: Record<string, any>;
+  path?: string;
+  timestamp?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  constructor(message: string, status: number, details?: Record<string, any>) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+    this.details = details;
+  }
+}
+
+async function refreshAccessToken(): Promise<string> {
+  const refreshToken = localStorage.getItem("refreshToken");
+  if (!refreshToken) {
+    throw new ApiError("No refresh token found", 401);
+  }
+
+  const response = await fetch(`${backendUrl}/auth/refresh`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      refreshToken,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new ApiError(
+      errorData.error?.message || errorData.message || response.statusText,
+      response.status,
+      errorData.error,
+    );
+  }
+  const data = await response.json();
+  localStorage.setItem("accessToken", data.accessToken);
+  if (data.refreshToken) {
+    localStorage.setItem("refreshToken", data.refreshToken);
+  }
+  return data.accessToken;
+}
+
+function logout() {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("userProfile");
+}
+
+export async function clientFetch<T>(
+  endpoint: string,
+  options: RequestInit = {},
+): Promise<T> {
+  try {
+    const token =
+      typeof window !== "undefined"
+        ? localStorage.getItem("accessToken")
+        : null;
+
+    const headers = {
+      ...options.headers,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      "Content-Type": "application/json",
+    };
+
+    const res = await fetch(`${backendUrl}/${endpoint}`, {
+      ...options,
+      headers,
+    });
+
+    // Handle non 2xx responses
+    if (!res.ok) {
+      if (res.status === 401) {
+        // Try to refresh the token
+        if (isRefreshing) {
+          // If already refreshing, queue this request
+          return new Promise<T>((resolve, reject) => {
+            failedQueue.push({
+              resolve: (newToken: string) => {
+                // Retry the original request with new token
+                clientFetch<T>(endpoint, {
+                  ...options,
+                  headers: {
+                    ...options.headers,
+                    Authorization: `Bearer ${newToken}`,
+                  },
+                })
+                  .then(resolve)
+                  .catch(reject);
+              },
+              reject: (error: Error) => {
+                reject(error);
+              },
+            });
+          });
+        }
+
+        // Start refresh process
+        isRefreshing = true;
+
+        try {
+          const newToken = await refreshAccessToken();
+          processQueue(null, newToken);
+
+          // Retry the original request with new token
+          return clientFetch<T>(endpoint, {
+            ...options,
+            headers: {
+              ...options.headers,
+              Authorization: `Bearer ${newToken}`,
+            },
+          });
+        } catch (refreshError) {
+          processQueue(new Error("Token refresh failed"), null);
+          console.warn(refreshError, "Token refresh failed");
+          logout();
+        } finally {
+          isRefreshing = false;
+        }
+      }
+
+      const errorData = await res.json().catch(() => ({}));
+      const errorInfo = errorData.error || errorData;
+      if (process.env.NODE_ENV === "development") {
+        console.log("message:", errorInfo.message);
+        console.log("status:", res.status);
+        console.log("errorInfo:", errorInfo);
+      }
+      throw new ApiError(
+        errorInfo.message || res.statusText,
+        res.status,
+        errorInfo,
+      );
+    }
+
+    return res.json() as Promise<T>;
+  } catch (error) {
+    // Si es un error de red (DNS, timeout, etc.)
+    if (error instanceof TypeError) {
+      throw new ApiError("Network error: unable to reach server", 0);
+    }
+    // Re-lanzar otros errores (como ApiError)
+    throw error;
+  }
+}
