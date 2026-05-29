@@ -26,7 +26,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   ) {
     const user = await this.authService.validateUser(payload.sub);
 
-    if (!user || !user.deletedAt) {
+    if (!user || user.deletedAt) {
       throw new UnauthorizedException('User no longer active or exists');
     }
 

@@ -46,7 +46,7 @@ export class AuthController {
    * POST /auth/refresh
    * Protected endpoint - refresh access token
    */
-
+  @Public()
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
   async refresh(

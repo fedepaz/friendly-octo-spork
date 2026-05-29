@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils";
 import { useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 
-import { useAuthContext } from "@/features/auth/providers/AuthProvider";
 import { NAVIGATION_CONFIG } from "@/lib/config/navigations";
 import Link from "next/link";
 import {
@@ -42,7 +41,6 @@ export function DesktopSidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
 
-  const { permissions } = useAuthContext();
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(
     new Set(["operations"]),
   );

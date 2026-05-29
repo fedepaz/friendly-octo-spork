@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { useAuthContext } from "@/features/auth/providers/AuthProvider";
+
 import { NAVIGATION_CONFIG } from "@/lib/config/navigations";
 import { Logo } from "@/components/common/logo";
 import { UserSidebarMenu } from "../user-profile/user-sidebar-menu";
@@ -42,7 +42,6 @@ interface NavigationGroup {
 export function MobileNavigation() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const { permissions } = useAuthContext();
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(
     new Set(["operations"]),
   );

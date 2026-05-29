@@ -1,9 +1,7 @@
 // src/features/users/components/columns.tsx
 
 import { Row, Table, type ColumnDef } from "@tanstack/react-table";
-import {
-  SortableHeader,
-} from "@/components/data-display/data-table";
+import { SortableHeader } from "@/components/data-display/data-table";
 import { UserProfileDto } from "@repo/shared";
 import { formatShortDate } from "@/lib/date-utils";
 
