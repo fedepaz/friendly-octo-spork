@@ -2,6 +2,7 @@
 import { PrismaClient } from '@prisma/client';
 import { AccountType, Currency } from '../src/generated/prisma';
 import { PrismaPg } from '@prisma/adapter-pg';
+import * as bcrypt from 'bcrypt';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
@@ -10,9 +11,11 @@ async function main() {
 
   // 2. Create the default primary User
   //const passwordHash = await bcrypt.hash('admin123', 10);
-  const passwordHash = 'admin123';
-  const user = await prisma.user.create({
-    data: {
+  const passwordHash = await bcrypt.hash('admin123', 10);
+  const user = await prisma.user.upsert({
+    where: { email: 'user@admin.com' },
+    update: {},
+    create: {
       name: 'Finance Manager',
       email: 'user@admin.com',
       passwordHash: passwordHash,

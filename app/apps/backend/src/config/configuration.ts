@@ -24,6 +24,7 @@ export type AppConfig = {
     refreshSecret: string;
     refreshExpiresIn: string;
   };
+  defaultPassword: string;
 };
 
 // Create a typed factory function
@@ -51,6 +52,7 @@ const configFactory = (): AppConfig => ({
       'your-super-secret-refresh-jwt-key-change-in-prod',
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '12h',
   },
+  defaultPassword: process.env.DEFAULT_PASSWORD || '',
 });
 
 // Export the final configuration
@@ -76,4 +78,5 @@ export const validationSchema = Joi.object({
   JWT_EXPIRES_IN: Joi.string().default('15m'),
   JWT_REFRESH_SECRET: Joi.string().min(32).required(),
   JWT_REFRESH_EXPIRES_IN: Joi.string().default('7d'),
+  DEFAULT_PASSWORD: Joi.string().optional().allow(''),
 });

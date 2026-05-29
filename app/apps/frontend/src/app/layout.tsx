@@ -5,12 +5,9 @@ import "./globals.css";
 import { AppProviders } from "@/providers/app-providers";
 
 export const metadata: Metadata = {
-  title: "Sistema de gestión",
-  description: "Enterprise Management System",
+  title: "Finance Manager",
+  description: "Gestión de finanzas",
   generator: "v0.app",
-  icons: {
-    icon: "/proIcon.png",
-  },
 };
 
 export const viewport: Viewport = {

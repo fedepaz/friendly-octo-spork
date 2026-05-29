@@ -1,12 +1,12 @@
 // apps/frontend/src/features/auth/api/authService.ts
 
 import { clientFetch } from "@/lib/api/client-fetch";
-import { 
-  AuthResponseDto, 
-  ChangePasswordDto, 
-  LoginAuthDto, 
-  UserPermissions, 
-  UserProfileDto 
+import {
+  AuthResponseDto,
+  ChangePasswordDto,
+  LoginAuthDto,
+  UserPermissions,
+  UserProfileDto,
 } from "@repo/shared";
 
 export const authService = {
@@ -31,14 +31,16 @@ export const authService = {
   },
 
   getProfileMe: () => {
-    return clientFetch<UserProfileDto>("users/me", { 
-      method: "GET" 
+    return clientFetch<UserProfileDto>("users/me", {
+      method: "GET",
     });
   },
 
   getPermissionsMe: () => {
-    return clientFetch<UserPermissions>("permissions/me", {
-      method: "GET",
-    });
+    const hardCodedPermissions: UserPermissions = {
+      isAdmin: true,
+      permissions: [],
+    };
+    return Promise.resolve(hardCodedPermissions);
   },
 };

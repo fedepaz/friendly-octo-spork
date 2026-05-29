@@ -2,10 +2,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "../ui/dialog";
 import { User } from "lucide-react";
 import { UserProfileInfo } from "./user-info";
-import { UserProfileEdit } from "./user-edit";
 import { ChangePasswordForm } from "./user-password";
 import { useAuthContext } from "@/features/auth/providers/AuthProvider";
 
@@ -15,7 +19,7 @@ interface UserMenuProps {
 }
 
 export function UserMenu({ open, onOpenChange }: UserMenuProps) {
-  const [tab, setTab] = useState<"info" | "edit" | "password">("info");
+  const [tab, setTab] = useState<"info" | "password">("info");
   const { userProfile, isLoading } = useAuthContext();
 
   useEffect(() => {
@@ -44,18 +48,6 @@ export function UserMenu({ open, onOpenChange }: UserMenuProps) {
             </button>
 
             <button
-              onClick={() => setTab("edit")}
-              className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 cursor-pointer
-                ${
-                  tab === "edit"
-                    ? "bg-primary/10 text-primary font-semibold"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                }
-              `}
-            >
-              Actualizar Perfil
-            </button>
-            <button
               onClick={() => setTab("password")}
               className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 cursor-pointer
                 ${
@@ -79,7 +71,7 @@ export function UserMenu({ open, onOpenChange }: UserMenuProps) {
               </div>
               <DialogTitle className="text-xl font-semibold font-sans">
                 {tab === "info" && "Perfil de Usuario"}
-                {tab === "edit" && "Editar Perfil"}
+
                 {tab === "password" && "Cambiar Contraseña"}
               </DialogTitle>
               <DialogDescription className="sr-only">
@@ -88,14 +80,7 @@ export function UserMenu({ open, onOpenChange }: UserMenuProps) {
             </div>
 
             {tab === "info" && <UserProfileInfo />}
-            {tab === "edit" && (
-              <UserProfileEdit
-                onClose={() => {
-                  setTab("info");
-                  onOpenChange(false);
-                }}
-              />
-            )}
+
             {tab === "password" && (
               <ChangePasswordForm
                 onClose={() => {
