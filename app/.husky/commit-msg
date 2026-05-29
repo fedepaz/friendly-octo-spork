@@ -1,4 +1,25 @@
 #!/bin/sh
 [ -d "app" ] && cd app
 
-pnpm exec commitlint --config commitlint.config.js --edit "$1"
+
+# Ejecutar commitlint y capturar el código de salida
+npx --no -- commitlint --edit "$1"
+EXIT_CODE=$?
+
+# Si commitlint falla (código de salida no es 0), mostrar un mensaje de ayuda en español
+if [ $? -ne 0 ]; then
+  echo "------------------------------------------------------------------"
+  echo "❌ Error: Tu mensaje de commit no sigue el formato de Conventional Commits."
+  echo ""
+  echo "👉 Por favor, formatea tu mensaje de la siguiente manera:"
+  echo "   <tipo>(ámbito opcional): <descripción>"
+  echo ""
+  echo "   Ejemplos:"
+  echo "     feat: agregar botón de login"
+  echo "     fix(api): corregir error en el endpoint de usuarios"
+  echo ""
+  echo "💡 Para una guía detallada, consulta el archivo COMMIT_CONVENTIONS.md"
+  exit 1
+fi
+
+exit 0
