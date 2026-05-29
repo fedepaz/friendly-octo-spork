@@ -53,6 +53,21 @@ To maintain the integrity of the monorepo, follow these steps when adding a new 
 ### 4. Configuration
 - Ensure root `package.json` scripts and `turbo.json` tasks are updated to include the new package if they are name-specific.
 
+## Tailwind CSS v4 Configuration
+
+When using Tailwind CSS v4 with PostCSS, ensure that the `postcss.config.mjs` (or `.js`) file uses the array format for plugins to avoid integration issues:
+
+```javascript
+// app/apps/frontend/postcss.config.mjs
+const config = {
+  plugins: ["@tailwindcss/postcss"],
+};
+
+export default config;
+```
+
+Avoid the object format (e.g., `{ "@tailwindcss/postcss": {} }`) if it causes issues with the Tailwind v4 engine.
+
 ## Linting & Ignored Files
 
 Auto-generated files (e.g., Prisma Client) should be ignored to prevent false positives in the linting process.
