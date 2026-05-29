@@ -35,6 +35,24 @@ export class TransactionService {
       createdAt: transaction.createdAt,
       updatedAt: transaction.updatedAt,
       category: transaction.category,
+      sourceAccount: transaction.sourceAccount
+        ? {
+            ...transaction.sourceAccount,
+            balance: transaction.sourceAccount.balance.toNumber(),
+          }
+        : null,
+      targetAccount: transaction.targetAccount
+        ? {
+            ...transaction.targetAccount,
+            balance: transaction.targetAccount.balance.toNumber(),
+          }
+        : null,
+      recurrence: transaction.recurrence
+        ? {
+            ...transaction.recurrence,
+            amount: transaction.recurrence.amount.toNumber(),
+          }
+        : null,
     };
   }
 
