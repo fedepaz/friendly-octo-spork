@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
 import { useForm } from "react-hook-form";
-import { LoginAuthDto, LoginAuthSchema } from "@vivero/shared";
+import { LoginAuthDto, LoginAuthSchema } from "@repo/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -29,7 +29,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
   const form = useForm<LoginAuthDto>({
     resolver: zodResolver(LoginAuthSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
     mode: "onChange",
@@ -50,13 +50,13 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-3 md:gap-4 font-serif"
       >
-        {/* Username Field */}
+        {/* Email Field */}
         <FormField
           control={form.control}
-          name="username"
+          name="email"
           render={({ field }) => (
             <FormItem className="space-y-1 md:space-y-2">
-              <FormLabel className="font-sans text-[10px] md:text-sm uppercase tracking-widest opacity-70">Nombre de usuario</FormLabel>
+              <FormLabel className="font-sans text-[10px] md:text-sm uppercase tracking-widest opacity-70">Email</FormLabel>
               <FormControl>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -64,7 +64,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
                   </div>
                   <Input
                     {...field}
-                    placeholder="juanperez007"
+                    placeholder="juanperez@example.com"
                     disabled={isLoading}
                     className="pl-12 md:pl-14 h-10 md:h-12 text-sm md:text-base"
                     autoFocus

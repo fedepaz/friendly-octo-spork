@@ -11,7 +11,7 @@ import {
   AuthResponseDto,
   UserPermissions,
   UserProfileDto,
-} from "@vivero/shared";
+} from "@repo/shared";
 import { permissionsQueryKeys, usePermissions } from "../hooks/use-permissions";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -67,7 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isError: profile.isError,
     isDatabaseUnavailable: profile.isDatabaseUnavailable,
     isPendingPermissions,
-    permissions: permissions.data || {},
+    permissions: permissions.data || { isAdmin: true, permissions: [] },
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

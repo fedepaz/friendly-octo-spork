@@ -4,7 +4,7 @@ import { Row, Table, type ColumnDef } from "@tanstack/react-table";
 import {
   SortableHeader,
 } from "@/components/data-display/data-table";
-import { UserProfileDto } from "@vivero/shared";
+import { UserProfileDto } from "@repo/shared";
 import { formatShortDate } from "@/lib/date-utils";
 
 interface CellProps {
@@ -15,11 +15,10 @@ interface CellProps {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function FullNameCell({ row }: { row: any }) {
   const user = row.original as UserProfileDto;
-  const fullName = `${user.firstName || ""} ${user.lastName || ""}`.trim();
   return (
     <div className="font-black text-sm text-foreground tracking-tight">
       <span className="font-bold text-sm truncate leading-tight">
-        {fullName || "No name"}
+        {user.name || "No name"}
       </span>
     </div>
   );

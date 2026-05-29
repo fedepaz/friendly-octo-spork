@@ -38,7 +38,14 @@ export function UserSidebarMenu({ isCollapsed = false }: UserSidebarMenuProps) {
     } catch {}
   };
 
-  const initials = `${userProfile?.firstName?.charAt(0) || ""}${userProfile?.lastName?.charAt(0) || ""}`;
+  const initials = userProfile?.name
+    ? userProfile.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    : "";
 
   return (
     <>
@@ -70,10 +77,10 @@ export function UserSidebarMenu({ isCollapsed = false }: UserSidebarMenuProps) {
                   {!isCollapsed && (
                     <div className="flex flex-col items-start min-w-0 flex-1">
                       <p className="text-sm font-black text-foreground truncate leading-tight tracking-tight w-full text-left">
-                        {userProfile?.firstName} {userProfile?.lastName}
+                        {userProfile?.name}
                       </p>
                       <p className="text-[10px] font-bold text-muted-foreground truncate leading-tight tracking-wider uppercase opacity-70 w-full text-left">
-                        {userProfile?.username}
+                        {userProfile?.email}
                       </p>
                     </div>
                   )}
@@ -86,8 +93,8 @@ export function UserSidebarMenu({ isCollapsed = false }: UserSidebarMenuProps) {
                 className="border border-border shadow-xl bg-popover"
               >
                 <div className="flex flex-col gap-0.5">
-                  <p className="font-black text-xs text-primary">{userProfile?.firstName} {userProfile?.lastName}</p>
-                  <p className="text-[10px] text-muted-foreground font-bold">{userProfile?.username}</p>
+                  <p className="font-black text-xs text-primary">{userProfile?.name}</p>
+                  <p className="text-[10px] text-muted-foreground font-bold">{userProfile?.email}</p>
                 </div>
               </TooltipContent>
             )}
@@ -97,7 +104,7 @@ export function UserSidebarMenu({ isCollapsed = false }: UserSidebarMenuProps) {
         <DropdownMenuContent align={isCollapsed ? "start" : "end"} side={isCollapsed ? "right" : "top"} className="w-56 p-1.5 border-border/50 shadow-2xl rounded-xl">
           <DropdownMenuLabel className="px-2 py-1.5 flex flex-col gap-0.5">
             <span className="text-xs font-black text-primary uppercase tracking-widest">Cuenta</span>
-            <span className="text-sm font-bold truncate">{userProfile?.firstName} {userProfile?.lastName}</span>
+            <span className="text-sm font-bold truncate">{userProfile?.name}</span>
           </DropdownMenuLabel>
           <DropdownMenuSeparator className="my-1 opacity-50" />
           <DropdownMenuItem 

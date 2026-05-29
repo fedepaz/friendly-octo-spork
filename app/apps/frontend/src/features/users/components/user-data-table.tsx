@@ -14,7 +14,7 @@ import {
   UpdateUserProfileDto,
   UpdateUserProfileSchema,
   UserProfileDto,
-} from "@vivero/shared";
+} from "@repo/shared";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserCreateForm } from "./user-create-form";
@@ -39,18 +39,16 @@ export function UsersDataTable() {
   const formCreateUser = useForm<RegisterAuthDto>({
     resolver: zodResolver(RegisterAuthSchema),
     defaultValues: {
-      username: "",
-      firstName: "",
-      lastName: "",
+      name: "",
       email: "",
+      password: "",
     },
   });
 
   useEffect(() => {
     if (selectedUser) {
       formEditUser.reset({
-        firstName: selectedUser?.firstName || "",
-        lastName: selectedUser?.lastName || "",
+        name: selectedUser?.name || "",
         email: selectedUser?.email || "",
       });
     }
@@ -72,8 +70,8 @@ export function UsersDataTable() {
   };
 
   const handleDelete = async (row: UserProfileDto) => {
-    if (row.username) {
-      await deleteUser(row.username);
+    if (row.id) {
+      await deleteUser(row.id);
     }
   };
 
@@ -88,7 +86,7 @@ export function UsersDataTable() {
     if (selectedUser) {
       try {
         await updateUser({
-          username: selectedUser.username,
+          id: selectedUser.id,
           userUpdate: formData,
         });
       } catch {}
@@ -121,13 +119,13 @@ export function UsersDataTable() {
       />
       {slideOverOpen && (
         <SlideOverForm
-          formId={selectedUser ? `edit-${selectedUser.username}` : "create"}
+          formId={selectedUser ? `edit-${selectedUser.id}` : "create"}
           open={slideOverOpen}
           onOpenChange={setSlideOverOpen}
           title={selectedUser ? `Editar usuario` : "Crear nuevo usuario"}
           description={
             selectedUser
-              ? `Edita los detalles del usuario ${selectedUser.username}.`
+              ? `Edita los detalles del usuario ${selectedUser.name}.`
               : "Rellena los campos para crear un nuevo usuario."
           }
           onCancel={() => setSlideOverOpen(false)}
@@ -141,7 +139,7 @@ export function UsersDataTable() {
                 onSubmit={handleUpdate}
                 onCancel={() => setSlideOverOpen(false)}
                 formId={
-                  selectedUser ? `edit-${selectedUser.username}` : "create"
+                  selectedUser ? `edit-${selectedUser.id}` : "create"
                 }
               />
             ) : (

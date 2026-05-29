@@ -2,7 +2,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { LoginAuthDto, AuthResponseDto } from "@vivero/shared";
+import { LoginAuthDto, AuthResponseDto } from "@repo/shared";
 import { useAuthContext } from "../providers/AuthProvider";
 import { toast } from "sonner";
 import { authService } from "../api/authService";
@@ -22,7 +22,7 @@ export const useLogin = () => {
           },
         );
       } else {
-        const toastMessage = `Inicio de sesión exitoso como ${data.user.username}`;
+        const toastMessage = `Inicio de sesión exitoso como ${data.user.name}`;
         toast.success(toastMessage, {
           duration: 3000,
         });

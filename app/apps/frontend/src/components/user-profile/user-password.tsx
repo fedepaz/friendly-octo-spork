@@ -3,7 +3,7 @@
 import { useChangePassword } from "@/features/auth/hooks/useChangePassword";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChangePasswordDto, ChangePasswordSchema } from "@vivero/shared";
+import { ChangePasswordDto, ChangePasswordSchema } from "@repo/shared";
 import {
   Form,
   FormControl,

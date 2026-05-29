@@ -2,7 +2,7 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { AuthResponseDto, RegisterAuthDto } from "@vivero/shared";
+import { AuthResponseDto, RegisterAuthDto } from "@repo/shared";
 import { toast } from "sonner";
 import { userService } from "../api/userService";
 

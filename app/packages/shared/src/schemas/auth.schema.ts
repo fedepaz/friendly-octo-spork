@@ -47,6 +47,40 @@ export const AuthResponseSchema = z.object({
 
 export type AuthResponseDto = z.infer<typeof AuthResponseSchema>;
 
+// User Profile types
+export const UserProfileSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string().email(),
+  isActive: z.boolean().optional(),
+  createdAt: z.date().or(z.string()).optional(),
+});
+
+export type UserProfileDto = z.infer<typeof UserProfileSchema>;
+
+export const UpdateUserProfileSchema = z.object({
+  name: z.string().min(1).optional(),
+  email: z.string().email().optional(),
+  isActive: z.boolean().optional(),
+});
+
+export type UpdateUserProfileDto = z.infer<typeof UpdateUserProfileSchema>;
+
+export const RegisterAuthSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  password: z.string().min(4),
+});
+
+export type RegisterAuthDto = z.infer<typeof RegisterAuthSchema>;
+
+export const UserPermissionsSchema = z.object({
+  isAdmin: z.boolean().default(false),
+  permissions: z.array(z.string()).default([]),
+});
+
+export type UserPermissions = z.infer<typeof UserPermissionsSchema>;
+
 export const ChangePasswordSchema = z
   .object({
     currentPassword: z

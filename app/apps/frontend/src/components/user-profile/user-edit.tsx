@@ -6,7 +6,7 @@ import { useUpdateUserProfile } from "@/features/users/hooks/usersHooks";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateUserProfileDto, UpdateUserProfileSchema } from "@vivero/shared";
+import { UpdateUserProfileDto, UpdateUserProfileSchema } from "@repo/shared";
 import {
   Form,
   FormControl,
@@ -29,8 +29,7 @@ export function UserProfileEdit({ onClose }: UserProfileEditProps) {
   const form = useForm<UpdateUserProfileDto>({
     resolver: zodResolver(UpdateUserProfileSchema),
     defaultValues: {
-      firstName: userProfile?.firstName || "",
-      lastName: userProfile?.lastName || "",
+      name: userProfile?.name || "",
       email: userProfile?.email || "",
     },
     mode: "onChange",
@@ -38,8 +37,7 @@ export function UserProfileEdit({ onClose }: UserProfileEditProps) {
 
   useEffect(() => {
     form.reset({
-      firstName: userProfile?.firstName || "",
-      lastName: userProfile?.lastName || "",
+      name: userProfile?.name || "",
       email: userProfile?.email || "",
     });
   }, [userProfile, form]);
@@ -63,25 +61,12 @@ export function UserProfileEdit({ onClose }: UserProfileEditProps) {
       >
         <FormField
           control={form.control}
-          name="firstName"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="font-sans">Nombre</FormLabel>
               <FormControl>
                 <Input placeholder="Nombre" {...field} disabled={isPending} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-sans">Apellido</FormLabel>
-              <FormControl>
-                <Input placeholder="Apellido" {...field} disabled={isPending} />
               </FormControl>
               <FormMessage />
             </FormItem>

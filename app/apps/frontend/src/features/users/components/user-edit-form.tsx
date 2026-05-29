@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { UpdateUserProfileDto } from "@vivero/shared";
+import { UpdateUserProfileDto } from "@repo/shared";
 
 interface FormProps {
   onSubmit: (data: UpdateUserProfileDto) => Promise<void>;
@@ -30,46 +30,25 @@ export function UserEditForm({ onSubmit, formId, form }: FormProps) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-3 md:gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-4 md:pb-6"
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
-          <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem className="space-y-1.5 md:space-y-2">
-                <FormLabel className="text-[10px] md:text-sm font-black uppercase tracking-widest text-foreground">Nombre</FormLabel>
-                <FormControl>
-                  <Input 
-                    {...field} 
-                    placeholder="Nombre" 
-                    autoFocus 
-                    className="h-10 md:h-12 rounded-xl border-border/60 bg-background shadow-sm text-sm md:text-base px-4 font-bold"
-                    tabIndex={0} 
-                  />
-                </FormControl>
-                <FormMessage className="text-[10px]" />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem className="space-y-1.5 md:space-y-2">
-                <FormLabel className="text-[10px] md:text-sm font-black uppercase tracking-widest text-foreground">Apellido</FormLabel>
-                <FormControl>
-                  <Input 
-                    {...field} 
-                    placeholder="Apellido" 
-                    className="h-10 md:h-12 rounded-xl border-border/60 bg-background shadow-sm text-sm md:text-base px-4 font-bold"
-                    tabIndex={0} 
-                  />
-                </FormControl>
-                <FormMessage className="text-[10px]" />
-              </FormItem>
-            )}
-          />
-        </div>
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem className="space-y-1.5 md:space-y-2">
+              <FormLabel className="text-[10px] md:text-sm font-black uppercase tracking-widest text-foreground">Nombre Completo</FormLabel>
+              <FormControl>
+                <Input 
+                  {...field} 
+                  placeholder="Nombre" 
+                  autoFocus 
+                  className="h-10 md:h-12 rounded-xl border-border/60 bg-background shadow-sm text-sm md:text-base px-4 font-bold"
+                  tabIndex={0} 
+                />
+              </FormControl>
+              <FormMessage className="text-[10px]" />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}

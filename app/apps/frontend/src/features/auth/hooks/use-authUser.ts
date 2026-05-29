@@ -2,7 +2,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { UserProfileDto } from "@vivero/shared";
+import { UserProfileDto } from "@repo/shared";
 import { useAuth } from "./useAuth";
 import { ApiError } from "@/lib/api/client-fetch";
 import { authService } from "../api/authService";

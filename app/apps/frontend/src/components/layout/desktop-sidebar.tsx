@@ -61,10 +61,8 @@ export function DesktopSidebar() {
     return NAVIGATION_CONFIG.map((group) => {
       const filteredItems = group.items.filter((item) => {
         if (!item.requiredPermission) return true;
-
-        const { table } = item.requiredPermission;
-        const perm = permissions[table];
-        return !!perm?.canRead;
+        // In single-user mode, all items are visible
+        return true;
       });
 
       return {
@@ -72,7 +70,7 @@ export function DesktopSidebar() {
         items: filteredItems,
       };
     }).filter((group) => group.items.length > 0);
-  }, [permissions]);
+  }, []);
 
   return (
     <aside

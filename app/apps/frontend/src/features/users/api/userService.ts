@@ -4,21 +4,15 @@ import {
   RegisterAuthDto, 
   UpdateUserProfileDto, 
   UserProfileDto 
-} from "@vivero/shared";
+} from "@repo/shared";
 
 export const userService = {
   fetchAll: () => {
     return clientFetch<UserProfileDto[]>("users/all", { method: "GET" });
   },
 
-  fetchByUserName: (username: string) => {
-    return clientFetch<UserProfileDto | null>(`users/username/${username}`, {
-      method: "GET",
-    });
-  },
-
-  fetchByTenantId: (tenantId: string) => {
-    return clientFetch<UserProfileDto[]>(`users/tenant/${tenantId}`, {
+  fetchById: (id: string) => {
+    return clientFetch<UserProfileDto | null>(`users/${id}`, {
       method: "GET",
     });
   },
@@ -34,15 +28,15 @@ export const userService = {
     });
   },
 
-  updateUser: (username: string, userUpdate: UpdateUserProfileDto) => {
-    return clientFetch<UserProfileDto>(`users/${username}`, {
+  updateUser: (id: string, userUpdate: UpdateUserProfileDto) => {
+    return clientFetch<UserProfileDto>(`users/${id}`, {
       method: "PATCH",
       body: JSON.stringify(userUpdate),
     });
   },
 
-  delete: (username: string) => {
-    return clientFetch<void>(`users/${username}`, {
+  delete: (id: string) => {
+    return clientFetch<void>(`users/${id}`, {
       method: "DELETE",
     });
   },

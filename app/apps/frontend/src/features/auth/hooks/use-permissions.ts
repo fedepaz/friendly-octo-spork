@@ -3,7 +3,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "./useAuth";
-import { UserPermissions } from "@vivero/shared";
+import { UserPermissions } from "@repo/shared";
 import { authService } from "../api/authService";
 
 export const permissionsQueryKeys = {

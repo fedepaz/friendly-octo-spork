@@ -62,7 +62,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useTableByName } from "@/features/permissions/hooks/permsHooks";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -126,28 +125,13 @@ export function DataTable<TData, TValue>({
   const [itemsToDelete, setItemsToDelete] = useState<TData | null>(null);
   const [isBulkDelete, setIsBulkDelete] = useState(false);
   const dataTablePermissions = usePermission(tableName);
-  const { data: entity } = useTableByName(tableName);
 
   const allowedActions = {
-    CRUD: {
-      canView: !!onView && dataTablePermissions.canRead,
-      canEdit: dataTablePermissions.canUpdate,
-      canDelete: dataTablePermissions.canDelete,
-      canExecute: false,
-    },
-    PROCESS: {
-      canView: !!onView && dataTablePermissions.canRead,
-      canEdit: dataTablePermissions.canUpdate,
-      canDelete: dataTablePermissions.canDelete,
-      canExecute: dataTablePermissions.canCreate, // create = execute
-    },
-    READ_ONLY: {
-      canView: !!onView && dataTablePermissions.canRead,
-      canEdit: false,
-      canDelete: false,
-      canExecute: false,
-    },
-  }[entity?.permissionType || "READ_ONLY"];
+    canView: !!onView && dataTablePermissions.canRead,
+    canEdit: dataTablePermissions.canUpdate,
+    canDelete: dataTablePermissions.canDelete,
+    canExecute: false,
+  };
 
   const selectColumn: ColumnDef<TData, TValue> = {
     id: "select",
@@ -285,12 +269,8 @@ export function DataTable<TData, TValue>({
   };
 
   const enhancedColumns = useMemo(() => {
-    // Smart logic: show it if explicitly enabled OR if it's not a READ_ONLY entity
-    const showSelection =
-      enableSelection !== undefined
-        ? (enableSelection ?? entity?.permissionType !== "READ_ONLY")
-        : entity?.permissionType !== "READ_ONLY" &&
-          entity?.permissionType !== "PROCESS";
+    // Smart logic: show it if explicitly enabled OR default to true
+    const showSelection = enableSelection ?? true;
 
     let result = [...columns];
 
@@ -300,7 +280,7 @@ export function DataTable<TData, TValue>({
 
     return [...result, actionColumn];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [columns, entity?.permissionType, enableSelection]);
+  }, [columns, enableSelection]);
 
   const table = useReactTable({
     data,

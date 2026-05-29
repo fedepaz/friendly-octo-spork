@@ -19,12 +19,8 @@ export function UserProfileInfo() {
         </CardHeader>
         <CardContent className="grid gap-2 font-serif">
           <div>
-            <Label className="text-muted-foreground">Nombre</Label>
-            <p className="text-base font-medium">{userProfile.firstName}</p>
-          </div>
-          <div>
-            <Label className="text-muted-foreground">Apellido</Label>
-            <p className="text-base font-medium">{userProfile.lastName}</p>
+            <Label className="text-muted-foreground">Nombre Full</Label>
+            <p className="text-base font-medium">{userProfile.name}</p>
           </div>
           <div>
             <Label className="text-muted-foreground">Email</Label>
@@ -43,10 +39,6 @@ export function UserProfileInfo() {
           <div>
             <Label className="text-muted-foreground">Empresa</Label>
             <p className="text-base font-medium">{name}</p>
-          </div>
-          <div>
-            <Label className="text-muted-foreground">ID de Empresa</Label>
-            <p className="text-base font-medium">{userProfile.tenantName}</p>
           </div>
         </CardContent>
       </Card>

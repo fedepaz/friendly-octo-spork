@@ -7,7 +7,7 @@ import {
   LoginAuthDto, 
   UserPermissions, 
   UserProfileDto 
-} from "@vivero/shared";
+} from "@repo/shared";
 
 export const authService = {
   login: (credentials: LoginAuthDto) => {

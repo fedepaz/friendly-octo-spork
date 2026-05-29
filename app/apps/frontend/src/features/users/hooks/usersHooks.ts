@@ -6,7 +6,7 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { UpdateUserProfileDto, UserProfileDto } from "@vivero/shared";
+import { UpdateUserProfileDto, UserProfileDto } from "@repo/shared";
 import { userService } from "../api/userService";
 
 export const userProfileQueryKeys = {
@@ -36,7 +36,7 @@ export const useUpdateUserProfile = () => {
   >({
     mutationFn: async ({ userUpdate }) => userService.updateMe(userUpdate),
     onSuccess: (data) => {
-      const toastMessage = `Perfil de usuario ${data.username} actualizado exitosamente`;
+      const toastMessage = `Perfil de usuario ${data.name} actualizado exitosamente`;
       toast.success(toastMessage, {
         duration: 3000,
       });
@@ -51,18 +51,10 @@ export const useUpdateUserProfile = () => {
   });
 };
 
-export const useUsersByUserName = (username: string) => {
+export const useUsersById = (id: string) => {
   return useSuspenseQuery<UserProfileDto | null>({
-    queryKey: userProfileQueryKeys.byUserName(username),
-    queryFn: () => userService.fetchByUserName(username),
-    retry: 1, // Retry once to account for transient network issues
-  });
-};
-
-export const useUsersByTenantId = (tenantId: string) => {
-  return useSuspenseQuery<UserProfileDto[]>({
-    queryKey: userProfileQueryKeys.byTenantId(tenantId),
-    queryFn: () => userService.fetchByTenantId(tenantId),
+    queryKey: ["users", "byId", id],
+    queryFn: () => userService.fetchById(id),
     retry: 1, // Retry once to account for transient network issues
   });
 };
@@ -73,11 +65,11 @@ export const useUpdateUser = () => {
   return useMutation<
     UserProfileDto,
     Error,
-    { username: string; userUpdate: UpdateUserProfileDto }
+    { id: string; userUpdate: UpdateUserProfileDto }
   >({
-    mutationFn: async ({ username, userUpdate }) => userService.updateUser(username, userUpdate),
+    mutationFn: async ({ id, userUpdate }) => userService.updateUser(id, userUpdate),
     onSuccess: (data) => {
-      const toastMessage = `Perfil de usuario ${data.username} actualizado exitosamente`;
+      const toastMessage = `Perfil de usuario ${data.name} actualizado exitosamente`;
       toast.success(toastMessage, {
         duration: 3000,
       });

@@ -2,7 +2,7 @@
 "use client";
 
 import { useQueryClient } from "@tanstack/react-query";
-import { AuthResponseDto } from "@vivero/shared";
+import { AuthResponseDto } from "@repo/shared";
 import { useCallback, useEffect, useState } from "react";
 
 interface AuthState {
