@@ -8,10 +8,7 @@ CREATE TYPE "AccountType" AS ENUM ('BANK', 'WALLET', 'CASH', 'CARD', 'INVESTMENT
 CREATE TYPE "Currency" AS ENUM ('ARS', 'USD', 'USDT');
 
 -- CreateEnum
-CREATE TYPE "CategoryType" AS ENUM ('GASTO', 'PAGO', 'INGRESO', 'RENDIMIENTO');
-
--- CreateEnum
-CREATE TYPE "RecurrenceType" AS ENUM ('MONTHLY', 'WEEKLY', 'YEARLY');
+CREATE TYPE "RecurrenceType" AS ENUM ('MONTHLY', 'WEEKLY', 'YEARLY', 'INSTALLMENT');
 
 -- CreateEnum
 CREATE TYPE "BudgetCategory" AS ENUM ('DAILY_EXPENSES', 'FOOD_GROCERIES', 'ENTERTAINMENT', 'TRANSPORTATION', 'HEALTH', 'UTILITIES');
@@ -21,37 +18,40 @@ CREATE TYPE "CardType" AS ENUM ('VISA', 'MASTERCARD', 'AMEX', 'MAESTRO');
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "email" TEXT,
-    "passwordHash" TEXT NOT NULL,
+    "id" VARCHAR(36) NOT NULL,
+    "name" VARCHAR(100) NOT NULL,
+    "email" VARCHAR(150) NOT NULL,
+    "passwordHash" VARCHAR(255) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deletedByUserId" VARCHAR(36),
+    "deletedAt" TIMESTAMP(0),
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Account" (
-    "id" SERIAL NOT NULL,
-    "userId" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "id" VARCHAR(36) NOT NULL,
+    "userId" VARCHAR(36) NOT NULL,
+    "name" VARCHAR(50) NOT NULL,
     "type" "AccountType" NOT NULL,
     "currency" "Currency" NOT NULL,
     "balance" DECIMAL(15,2) NOT NULL DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "deletedByUserId" VARCHAR(36),
+    "deletedAt" TIMESTAMP(0),
 
     CONSTRAINT "Account_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Category" (
-    "id" SERIAL NOT NULL,
-    "userId" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "type" "CategoryType" NOT NULL,
-    "color" TEXT,
+    "id" VARCHAR(36) NOT NULL,
+    "userId" VARCHAR(36) NOT NULL,
+    "name" VARCHAR(50) NOT NULL,
+    "color" VARCHAR(7),
     "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -60,9 +60,9 @@ CREATE TABLE "Category" (
 
 -- CreateTable
 CREATE TABLE "Recurrence" (
-    "id" SERIAL NOT NULL,
-    "userId" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "id" VARCHAR(36) NOT NULL,
+    "userId" VARCHAR(36) NOT NULL,
+    "name" VARCHAR(100) NOT NULL,
     "type" "TransactionType" NOT NULL,
     "amount" DECIMAL(15,2) NOT NULL,
     "frequency" "RecurrenceType" NOT NULL,
@@ -72,9 +72,9 @@ CREATE TABLE "Recurrence" (
     "nextDate" TIMESTAMP(3),
     "endDate" TIMESTAMP(3),
     "active" BOOLEAN NOT NULL DEFAULT true,
-    "categoryId" INTEGER,
-    "sourceAccountId" INTEGER,
-    "targetAccountId" INTEGER,
+    "categoryId" VARCHAR(36),
+    "sourceAccountId" VARCHAR(36),
+    "targetAccountId" VARCHAR(36),
     "isCardExpense" BOOLEAN NOT NULL DEFAULT false,
     "cardType" "CardType",
     "metadata" JSONB,
@@ -84,22 +84,22 @@ CREATE TABLE "Recurrence" (
 
 -- CreateTable
 CREATE TABLE "Transaction" (
-    "id" SERIAL NOT NULL,
-    "userId" TEXT NOT NULL,
+    "id" VARCHAR(36) NOT NULL,
+    "userId" VARCHAR(36) NOT NULL,
     "type" "TransactionType" NOT NULL,
-    "amount" DECIMAL(65,30) NOT NULL,
+    "amount" DECIMAL(15,2) NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
-    "description" TEXT,
-    "categoryId" INTEGER,
-    "sourceAccountId" INTEGER,
-    "targetAccountId" INTEGER,
-    "recurrenceId" INTEGER,
+    "description" VARCHAR(255),
+    "categoryId" VARCHAR(36),
+    "sourceAccountId" VARCHAR(36),
+    "targetAccountId" VARCHAR(36),
+    "recurrenceId" VARCHAR(36),
     "recurrencePartNumber" INTEGER,
     "isBudgetedExpense" BOOLEAN,
     "budgetCategory" "BudgetCategory",
     "isCardExpense" BOOLEAN,
     "cardType" "CardType",
-    "source" TEXT,
+    "source" VARCHAR(100),
     "metadata" JSONB,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -140,6 +140,9 @@ CREATE INDEX "Transaction_categoryId_idx" ON "Transaction"("categoryId");
 -- CreateIndex
 CREATE INDEX "Transaction_recurrenceId_idx" ON "Transaction"("recurrenceId");
 
+-- CreateIndex
+CREATE INDEX "Transaction_userId_categoryId_idx" ON "Transaction"("userId", "categoryId");
+
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -172,4 +175,3 @@ ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_targetAccountId_fkey" FORE
 
 -- AddForeignKey
 ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-

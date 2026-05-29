@@ -58,14 +58,6 @@ export const UserProfileSchema = z.object({
 
 export type UserProfileDto = z.infer<typeof UserProfileSchema>;
 
-export const UpdateUserProfileSchema = z.object({
-  name: z.string().min(1).optional(),
-  email: z.string().email().optional(),
-  isActive: z.boolean().optional(),
-});
-
-export type UpdateUserProfileDto = z.infer<typeof UpdateUserProfileSchema>;
-
 export const RegisterAuthSchema = z.object({
   name: z.string().min(1),
   email: z.string().email(),

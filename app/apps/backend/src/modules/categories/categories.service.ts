@@ -1,6 +1,6 @@
 // backend/src/modules/categories/categories.service.ts
 
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { CategoriesRepository } from '../../repositories/categories.repository';
 import { CategoryDTO } from '@repo/shared';
 
@@ -10,7 +10,7 @@ export class CategoriesService {
   constructor(private readonly categoriesRepo: CategoriesRepository) {}
 
   async getCategories(userId: string): Promise<CategoryDTO[]> {
-    if (!userId) throw new Error('User id is required');
+    if (!userId) throw new BadRequestException('User id is required');
     this.logger.log(`Getting categories for user ${userId}`);
     return this.categoriesRepo.getCategories(userId);
   }
@@ -19,7 +19,7 @@ export class CategoriesService {
     userId: string,
     id: string,
   ): Promise<CategoryDTO | null> {
-    if (!userId) throw new Error('User id is required');
+    if (!userId) throw new BadRequestException('User id is required');
     this.logger.log(`Getting category ${id} for user ${userId}`);
     return this.categoriesRepo.getCategoryById(userId, id);
   }

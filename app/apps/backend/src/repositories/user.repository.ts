@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../infra/prisma/prisma.service';
-import { User } from '../generated/prisma';
+import { User } from 'generated/prisma';
 
 @Injectable()
 export class UserRepository {
@@ -15,6 +15,12 @@ export class UserRepository {
   async getUserByEmail(email: string): Promise<User | null> {
     return this.prisma.user.findFirst({
       where: { email, deletedAt: null },
+    });
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return this.prisma.user.findMany({
+      where: { deletedAt: null },
     });
   }
 }

@@ -16,6 +16,7 @@ import { AccountsModule } from './modules/accounts/account.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { RecurrencesModule } from './modules/recurrences/recurrence.module';
 import { TransactionModule } from './modules/transactions/transaction.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { TransactionModule } from './modules/transactions/transaction.module';
     CategoriesModule,
     RecurrencesModule,
     TransactionModule,
+    UsersModule,
   ],
   providers: [
     {

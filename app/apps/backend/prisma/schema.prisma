@@ -11,7 +11,7 @@ datasource db {
 model User {
   id           String        @id @default(cuid()) @db.VarChar(36)
   name         String        @db.VarChar(100)
-  email        String?       @unique @db.VarChar(150)
+  email        String       @unique @db.VarChar(150)
   passwordHash String        @db.VarChar(255)
 
   createdAt    DateTime      @default(now())
@@ -135,6 +135,7 @@ model Transaction {
   @@index([userId, type])
   @@index([categoryId])
   @@index([recurrenceId])
+  @@index([userId, categoryId])
 }
 
 enum TransactionType {

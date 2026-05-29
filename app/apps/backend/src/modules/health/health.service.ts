@@ -1,6 +1,6 @@
 // src/modules/health/health.service.ts
 
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import {
   CACHE_DURATION_DEGRADED,
   CACHE_DURATION_HEALTHY,
@@ -39,7 +39,7 @@ export class HealthService {
     }
     try {
       const isHealthy = await checker();
-      if (!isHealthy) throw new Error(`${label} check failed`);
+      if (!isHealthy) throw new BadRequestException('Health check failed');
 
       cache.status = 'connected';
       cache.consecutiveFailures = 0;

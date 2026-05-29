@@ -1,6 +1,11 @@
 // backend/src/modules/transactions/transaction.service.ts
 
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import {
   TransactionRepository,
   TransactionWithRelations,
@@ -57,7 +62,7 @@ export class TransactionService {
   }
 
   async getTransactions(userId: string): Promise<TransactionDTO[]> {
-    if (!userId) throw new Error('User id is required');
+    if (!userId) throw new BadRequestException('User id is required');
     this.logger.log(`Getting transactions for user ${userId}`);
     const response = await this.transactionRepo.getTransactions(userId);
     return response.map((transaction) => this.mapToDTO(transaction));
@@ -67,7 +72,7 @@ export class TransactionService {
     userId: string,
     id: string,
   ): Promise<TransactionDTO | null> {
-    if (!userId) throw new Error('User id is required');
+    if (!userId) throw new BadRequestException('User id is required');
     this.logger.log(`Getting transaction ${id} for user ${userId}`);
     const response = await this.transactionRepo.getTransactionById(userId, id);
     if (!response) throw new NotFoundException('Transaction not found');
@@ -78,7 +83,7 @@ export class TransactionService {
     userId: string,
     transactionData: CreateTransactionInput,
   ): Promise<TransactionDTO> {
-    if (!userId) throw new Error('User id is required');
+    if (!userId) throw new BadRequestException('User id is required');
     this.logger.log(
       `Saving transaction ${transactionData.type} for user ${userId}`,
     );

@@ -1,19 +1,12 @@
-// finance-app/prisma/seed.ts
+// backend/prisma/seed.ts
+import { PrismaClient } from '@prisma/client';
+import { AccountType, Currency } from '../src/generated/prisma';
+import { PrismaPg } from '@prisma/adapter-pg';
 
-import { PrismaClient, AccountType, Currency } from '../src/generated/prisma';
-
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+const prisma = new PrismaClient({ adapter });
 async function main() {
   console.log('🌱 Starting database seeding...');
-
-  // 1. Clear existing data in strict dependency order (foreign keys first)
-  await prisma.transaction.deleteMany({});
-  await prisma.recurrence.deleteMany({});
-  await prisma.category.deleteMany({});
-  await prisma.account.deleteMany({});
-  await prisma.user.deleteMany({});
-
-  console.log('🗑️  Cleared existing database tables.');
 
   // 2. Create the default primary User
   //const passwordHash = await bcrypt.hash('admin123', 10);
@@ -70,12 +63,18 @@ async function main() {
   });
 
   console.log('💳 Seeded accounts.');
-  console.log(`💰 Seeded ${bankAccount.name} with ${bankAccount.balance} ARS.`);
-  console.log(`💰 Seeded ${cashWallet.name} with ${cashWallet.balance} ARS.`);
   console.log(
-    `💰 Seeded ${mercadoLibreWallet.name} with ${mercadoLibreWallet.balance} ARS.`,
+    `💰 Seeded ${bankAccount.name} with ${bankAccount.balance.toNumber()} ARS.`,
   );
-  console.log(`💰 Seeded ${creditCard.name} with ${creditCard.balance} ARS.`);
+  console.log(
+    `💰 Seeded ${cashWallet.name} with ${cashWallet.balance.toNumber()} ARS.`,
+  );
+  console.log(
+    `💰 Seeded ${mercadoLibreWallet.name} with ${mercadoLibreWallet.balance.toNumber()} ARS.`,
+  );
+  console.log(
+    `💰 Seeded ${creditCard.name} with ${creditCard.balance.toNumber()} ARS.`,
+  );
 
   // 4. Create your exact 25 consolidated master categories with their colors
   const categoriesData = [
