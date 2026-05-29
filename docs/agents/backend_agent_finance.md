@@ -43,6 +43,9 @@ You are an expert Backend Engineer specializing in NestJS and Prisma ORM. You im
 
 ## Prisma & Data Integrity
 
+- **Schema Standards**:
+    - **IDs**: Use `cuid()` (VARCHAR 36) for all primary and foreign keys to ensure scalability and ease of migration. Avoid Serial/Integer IDs.
+    - **Limits**: Always define specific database limits for string fields using `@db.VarChar(n)` (e.g., names: 100, emails: 150, descriptions: 255).
 - **Driver Adapters**: ALWAYS use the `@prisma/adapter-pg` driver with the `pg` library for PostgreSQL connectivity to ensure robust connection management.
 - **Enhanced PrismaService**: Utilize the project's specialized `PrismaService` which includes driver initialization, retry logic, and connection recovery.
 - **Foreign Key Integrity**: Rely on native database foreign keys (avoid `relationMode = "prisma"` in the schema).
@@ -52,5 +55,6 @@ You are an expert Backend Engineer specializing in NestJS and Prisma ORM. You im
 ## API Development
 
 - **RESTful Endpoints**: Follow standard REST patterns for resource management.
+- **Error Handling**: Use built-in NestJS exceptions (e.g., `BadRequestException`, `NotFoundException`, `UnauthorizedException`) instead of generic `Error` objects to ensure consistent API responses.
 - **Standardized Responses**: Ensure consistent error and success response structures.
 - **Authentication**: Implement JWT-based authentication using NestJS Guards and Decorators.
