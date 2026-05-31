@@ -22,10 +22,6 @@ import {
   ChevronRight,
   Eye,
   Filter,
-  Play,
-  Plus,
-  SquarePen,
-  Trash2,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -69,10 +65,6 @@ interface DataTableProps<TData, TValue> {
   tableName: string;
   description?: string;
   onView?: (row: TData) => void;
-  onEdit?: (row: TData) => void;
-  onDelete?: (row: TData) => void;
-  onCreate?: () => void;
-  createLabel?: string;
   onExport?: (
     format: "csv" | "excel" | "json" | "pdf",
     selectedRows: TData[],
@@ -80,13 +72,7 @@ interface DataTableProps<TData, TValue> {
   loading?: boolean;
   totalCount?: number;
   enableSelection?: boolean;
-  renderInlineEdit?: (
-    row: TData,
-    onSave: () => void,
-    onCancel: () => void,
-  ) => ReactNode;
   toolbarContent?: ReactNode;
-  canExecuteLabel?: string;
 }
 
 function HeaderComponent({ titulo }: { titulo: string }) {
@@ -103,15 +89,10 @@ export function DataTable<TData, TValue>({
   description,
   tableName,
   onView,
-  onEdit,
-  onDelete,
-  onCreate,
-  createLabel = "Nuevo",
   onExport,
   totalCount = 0,
   enableSelection,
   toolbarContent,
-  canExecuteLabel = "Cambiar",
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -124,9 +105,6 @@ export function DataTable<TData, TValue>({
 
   const allowedActions = {
     canView: !!onView && dataTablePermissions.canRead,
-    canEdit: dataTablePermissions.canUpdate,
-    canDelete: dataTablePermissions.canDelete,
-    canExecute: false,
   };
 
   const selectColumn: ColumnDef<TData, TValue> = {
@@ -157,108 +135,33 @@ export function DataTable<TData, TValue>({
     enableHiding: false,
     accessorKey: "actions",
     header: ({}) => {
-      if (
-        !allowedActions.canView &&
-        !allowedActions.canEdit &&
-        !allowedActions.canDelete
-      )
-        return null;
+      if (!allowedActions.canView) return null;
       return <HeaderComponent titulo="Acciones" />;
     },
     cell: ({ row }) => {
-      if (
-        !allowedActions.canEdit &&
-        !allowedActions.canDelete &&
-        !allowedActions.canView
-      )
-        return null;
+      if (!allowedActions.canView) return null;
 
       return (
         <div className="flex items-center justify-center gap-2 min-h-[40px]">
-          {allowedActions.canView && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="min-h-[40px] text-muted-foreground"
-                  onClick={() => onView?.(row.original)}
-                  aria-label="Ver detalles"
-                >
-                  <Eye className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent
-                side="top"
-                className="border border-border shadow-md"
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="min-h-[40px] text-muted-foreground"
+                onClick={() => onView?.(row.original)}
+                aria-label="Ver detalles"
               >
-                <p>Ver detalles</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
-          {allowedActions.canEdit && !allowedActions.canExecute && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="min-h-[40px] text-primary"
-                  onClick={() => onEdit && onEdit(row.original)}
-                  aria-label="Editar"
-                >
-                  <SquarePen className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent
-                side="top"
-                className="border border-border shadow-md"
-              >
-                <p>Editar</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
-          {allowedActions.canDelete && !allowedActions.canExecute && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  onClick={() => onDelete?.(row.original)}
-                  className="min-h-[40px] text-destructive hover:bg-destructive/10"
-                  variant="outline"
-                  size="sm"
-                  aria-label="Eliminar"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent
-                side="top"
-                className="border border-border shadow-md bg-popover"
-              >
-                <p>Eliminar</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
-          {allowedActions.canExecute && onEdit && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="min-h-[40px] text-accent hover:bg-accent/10"
-                  onClick={() => onEdit(row.original)}
-                  aria-label={canExecuteLabel}
-                >
-                  <Play className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent
-                side="top"
-                className="border border-border shadow-md bg-popover"
-              >
-                <p>{canExecuteLabel}</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
+                <Eye className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent
+              side="top"
+              className="border border-border shadow-md bg-popover"
+            >
+              <p>Ver detalles</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
       );
     },
@@ -405,66 +308,11 @@ export function DataTable<TData, TValue>({
               />
             )}
 
-            {dataTablePermissions.canCreate && onCreate && (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-8 text-xs bg-transparent"
-                    onClick={onCreate}
-                    aria-label={createLabel}
-                  >
-                    <Plus className="h-3.5 w-3.5 mr-1" />
-                    {breakpoint === "sm" ? "" : createLabel}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent
-                  side="top"
-                  className="border border-border shadow-md"
-                >
-                  <p>{createLabel}</p>
-                </TooltipContent>
-              </Tooltip>
-            )}
-
             {toolbarContent && (
               <div className="flex-1 flex items-center gap-2">
                 {toolbarContent}
               </div>
             )}
-
-            {selectedCount > 0 &&
-              allowedActions.canDelete &&
-              !allowedActions.canExecute && (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      className="h-8 text-xs animate-in fade-in zoom-in duration-200"
-                      onClick={() => {
-                        if (!onDelete) return;
-                        const selectedRows = table.getFilteredSelectedRowModel().rows;
-                        selectedRows.forEach(row => onDelete(row.original));
-                        table.resetRowSelection();
-                      }}
-                      aria-label={`Eliminar ${selectedCount} seleccionados`}
-                    >
-                      <Trash2 className="mr-1.5 h-3.5 w-3.5" />
-                      {breakpoint === "sm"
-                        ? selectedCount
-                        : `Eliminar (${selectedCount})`}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent
-                    side="top"
-                    className="border border-border shadow-md"
-                  >
-                    <p>Eliminar seleccionados</p>
-                  </TooltipContent>
-                </Tooltip>
-              )}
           </div>
           <div className="flex-1 overflow-auto px-4">
             <div className="rounded-md border">
