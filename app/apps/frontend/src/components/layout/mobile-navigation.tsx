@@ -93,7 +93,7 @@ export function MobileNavigation() {
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="p-4 border-b shrink-0">
-            <Logo variant="icon" className="h-7 w-auto" />
+            <Logo variant="sidebar" className="h-7 w-auto" />
           </div>
 
           {/* Navigation Items */}

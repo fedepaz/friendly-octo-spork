@@ -8,10 +8,10 @@ import {
   DialogDescription,
   DialogTitle,
 } from "../ui/dialog";
-import { User } from "lucide-react";
 import { UserProfileInfo } from "./user-info";
 import { ChangePasswordForm } from "./user-password";
 import { useAuthContext } from "@/features/auth/providers/AuthProvider";
+import { Logo } from "../common/logo";
 
 interface UserMenuProps {
   open: boolean;
@@ -64,9 +64,9 @@ export function UserMenu({ open, onOpenChange }: UserMenuProps) {
           {/* Content */}
           <div className="flex-1 p-4 md:p-6 overflow-auto">
             <div className="flex gap-2 items-center mb-4">
-              <div className="bg-gradient-to-r from-primary to-primary/80 px-3 py-2 shrink-0 rounded-md">
-                <div className="h-6 w-6 rounded-full bg-primary-foreground/10 flex items-center justify-center">
-                  <User className="h-5 w-5" />
+              <div className="bg-gradient-to-r from-primary to-primary/80 px-3 py-1.5 shrink-0 rounded">
+                <div className="h-8 w-8  bg-primary-foreground/80 flex items-center justify-center">
+                  <Logo variant="icon" />
                 </div>
               </div>
               <DialogTitle className="text-xl font-semibold font-sans">

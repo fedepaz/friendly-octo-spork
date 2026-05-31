@@ -4,7 +4,7 @@
  * Stub hook for permissions.
  * In a single-user app, we allow all operations.
  */
-export function usePermission(tableName?: string) {
+export function usePermission(_tableName?: string) {
   return {
     canCreate: true,
     canRead: true,

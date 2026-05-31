@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Logo } from "../common/logo";
 import { getISOWeek, getTotalWeeks, formatSpanishDate } from "@/lib/date-utils";
+import { ThemeToggle } from "../common/theme-toggle";
 
 export function DashboardHeader() {
   const { isLoading } = useLogout();
@@ -87,6 +88,7 @@ export function DashboardHeader() {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+            <ThemeToggle />
           </div>
         </div>
       </div>

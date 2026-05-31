@@ -85,7 +85,7 @@ export function DesktopSidebar() {
           )}
         >
           <Logo
-            variant="icon"
+            variant={isCollapsed ? "icon" : "sidebar"}
             className={cn("h-6 w-auto", isCollapsed ? "h-7" : "h-6")}
           />
 

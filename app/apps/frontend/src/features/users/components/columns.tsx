@@ -1,42 +1,58 @@
 // src/features/users/components/columns.tsx
 
-import { Row, Table, type ColumnDef } from "@tanstack/react-table";
+import { Row, type ColumnDef } from "@tanstack/react-table";
 import { SortableHeader } from "@/components/data-display/data-table";
 import { UserProfileDto } from "@repo/shared";
 import { formatShortDate } from "@/lib/date-utils";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import { User, Mail, ShieldCheck, ShieldAlert } from "lucide-react";
 
 interface CellProps {
-  row?: Row<UserProfileDto>;
-  table?: Table<UserProfileDto>;
+  row: Row<UserProfileDto>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function FullNameCell({ row }: { row: any }) {
-  const user = row.original as UserProfileDto;
+function FullNameCell({ row }: CellProps) {
+  const user = row.original;
   return (
-    <div className="font-black text-sm text-foreground tracking-tight">
-      <span className="font-bold text-sm truncate leading-tight">
-        {user.name || "No name"}
-      </span>
+    <div className="flex items-center gap-2">
+      <div className="h-7 w-7 rounded-none bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+        <User className="h-4 w-4 text-primary" />
+      </div>
+      <div className="flex flex-col gap-0.5 overflow-hidden">
+        <span className="text-sm font-bold text-foreground leading-none truncate">
+          {user.name || "No name"}
+        </span>
+        <span className="text-[10px] text-muted-foreground opacity-70 truncate font-mono">
+          ID: {user.id.slice(0, 8)}...
+        </span>
+      </div>
     </div>
   );
 }
 
 function StatusCell({ row }: CellProps) {
-  if (!row) return null;
-  const user = row.original as UserProfileDto;
+  const isActive = row.original.isActive;
+  
   return (
-    <span className="text-sm font-medium">
-      {user.isActive ? "Activo" : "Inactivo"}
-    </span>
+    <Badge 
+      variant="outline" 
+      className={cn(
+        "gap-1 px-1.5 py-0 text-[10px] font-bold uppercase tracking-tighter",
+        isActive 
+          ? "bg-secondary/10 text-secondary border-secondary/30" 
+          : "bg-muted/10 text-muted-foreground border-muted/30"
+      )}
+    >
+      {isActive ? <ShieldCheck className="h-3 w-3" /> : <ShieldAlert className="h-3 w-3" />}
+      {isActive ? "Activo" : "Inactivo"}
+    </Badge>
   );
 }
 
 function CreatedAtCell({ row }: CellProps) {
-  if (!row) return null;
-
   return (
-    <span className="text-xs font-bold font-mono tracking-tighter text-muted-foreground">
+    <span className="text-xs font-bold font-mono tracking-tighter text-muted-foreground opacity-80 whitespace-nowrap">
       {formatShortDate(row.original.createdAt)}
     </span>
   );
@@ -46,25 +62,26 @@ export const userColumns: ColumnDef<UserProfileDto>[] = [
   {
     id: "fullName",
     header: ({ column }) => (
-      <SortableHeader column={column}>Nombre completo</SortableHeader>
+      <SortableHeader column={column}>Identidad</SortableHeader>
     ),
-    cell: ({ row }) => {
-      return <FullNameCell row={row} />;
-    },
+    cell: ({ row }) => <FullNameCell row={row} />,
   },
   {
     accessorKey: "email",
     header: ({ column }) => (
-      <SortableHeader column={column}>Correo electrónico</SortableHeader>
+      <SortableHeader column={column}>Correo Electrónico</SortableHeader>
     ),
     cell: ({ row }) => (
-      <span className="text-foreground font-semibold">
-        {row.original.email}
-      </span>
+      <div className="flex items-center gap-1.5 text-sm text-foreground">
+        <Mail className="h-3.5 w-3.5 opacity-30 shrink-0" />
+        <span className="truncate max-w-[180px] font-medium tracking-tight">
+          {row.original.email}
+        </span>
+      </div>
     ),
   },
   {
-    accessorKey: "status",
+    accessorKey: "isActive",
     header: ({ column }) => (
       <SortableHeader column={column}>Estado</SortableHeader>
     ),
@@ -73,7 +90,7 @@ export const userColumns: ColumnDef<UserProfileDto>[] = [
   {
     accessorKey: "createdAt",
     header: ({ column }) => (
-      <SortableHeader column={column}>Creado</SortableHeader>
+      <SortableHeader column={column}>Registro</SortableHeader>
     ),
     cell: ({ row }) => <CreatedAtCell row={row} />,
   },

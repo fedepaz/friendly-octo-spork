@@ -11,24 +11,27 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `SlideOverForm`| Shared | ✅ | ✅ | ✅ | N/A | Approved |
 | `LoginForm` | Auth | ✅ | ✅ | ✅ | N/A | Approved |
 | `UserTable` | Users | ✅ | ✅ | ✅ | ✅ | Approved |
+| `AccountDashboard` | Accounts | ✅ | ✅ | ✅ | ✅ | Approved |
+| `AccountDashboardSkeleton` | Accounts | ✅ | N/A | N/A | N/A | Approved |
+| `DataTableSkeleton` | Shared | ✅ | ✅ | N/A | N/A | Approved |
 
 ## Audit Checklist Details
 
 ### 1. Responsive (Zero-Scroll Mandate)
-- [ ] Uses `dvh` for full-height layouts.
-- [ ] High-density gaps (`gap-2` to `gap-4`) and padding (`p-3` to `p-4`).
-- [ ] Adaptive layout shifts for tablet/desktop without increasing whitespace.
+- [x] Uses `dvh` for full-height layouts.
+- [x] High-density gaps (`gap-2` to `gap-4`) and padding (`p-3` to `p-4`).
+- [x] Adaptive layout shifts for tablet/desktop without increasing whitespace.
 
 ### 2. Color Tokens (OKLCH)
-- [ ] No hardcoded colors (`#fff`, `rgb()`, `red-500`).
-- [ ] Uses semantic variables (`bg-primary`, `text-foreground`).
-- [ ] Correct opacity application (e.g., `border-border/60`).
+- [x] No hardcoded colors (`#fff`, `rgb()`, `red-500`).
+- [x] Uses semantic variables (`bg-primary`, `text-foreground`).
+- [x] Correct opacity application (e.g., `border-border/60`).
 
 ### 3. UX Helpers & A11y
-- [ ] Tooltips on icon-only buttons.
-- [ ] Descriptive `aria-label` for screen readers.
-- [ ] Functional `FormDescription` and `FormMessage` for all inputs.
+- [x] Tooltips on icon-only buttons.
+- [x] Descriptive `aria-label` for screen readers.
+- [x] Functional `FormDescription` and `FormMessage` for all inputs.
 
 ### 4. Golden Path Loading
-- [ ] Level 1: `loading.tsx` coverage for the route.
-- [ ] Level 2: Component-level `<Suspense>` with matching `{ComponentName}Skeleton`.
+- [x] Level 1: `loading.tsx` coverage for the route.
+- [x] Level 2: Component-level `<Suspense>` with matching `{ComponentName}Skeleton`.

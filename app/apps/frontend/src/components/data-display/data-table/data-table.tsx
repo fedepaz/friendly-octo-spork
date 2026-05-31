@@ -54,7 +54,6 @@ import {
 } from "@/components/ui/card";
 
 import { ExportDropdown } from "@/components/data-display/data-table/export-dropdown";
-import { DeleteDialog } from "@/components/data-display/data-table/delete-dialog-button";
 import { usePermission } from "@/hooks/usePermission";
 import { useBreakpoint } from "@/hooks/useMediaQuery";
 import {
@@ -121,9 +120,6 @@ export function DataTable<TData, TValue>({
   const [globalFilter, setGlobalFilter] = useState("");
   const breakpoint = useBreakpoint();
 
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [itemsToDelete, setItemsToDelete] = useState<TData | null>(null);
-  const [isBulkDelete, setIsBulkDelete] = useState(false);
   const dataTablePermissions = usePermission(tableName);
 
   const allowedActions = {
@@ -225,8 +221,8 @@ export function DataTable<TData, TValue>({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  onClick={() => handleDeleteSingle(row.original)}
-                  className="min-h-[40px] text-destructive"
+                  onClick={() => onDelete?.(row.original)}
+                  className="min-h-[40px] text-destructive hover:bg-destructive/10"
                   variant="outline"
                   size="sm"
                   aria-label="Eliminar"
@@ -236,7 +232,7 @@ export function DataTable<TData, TValue>({
               </TooltipTrigger>
               <TooltipContent
                 side="top"
-                className="border border-border shadow-md"
+                className="border border-border shadow-md bg-popover"
               >
                 <p>Eliminar</p>
               </TooltipContent>
@@ -248,7 +244,7 @@ export function DataTable<TData, TValue>({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="min-h-[40px] text-amber-500"
+                  className="min-h-[40px] text-accent hover:bg-accent/10"
                   onClick={() => onEdit(row.original)}
                   aria-label={canExecuteLabel}
                 >
@@ -257,7 +253,7 @@ export function DataTable<TData, TValue>({
               </TooltipTrigger>
               <TooltipContent
                 side="top"
-                className="border border-border shadow-md"
+                className="border border-border shadow-md bg-popover"
               >
                 <p>{canExecuteLabel}</p>
               </TooltipContent>
@@ -332,40 +328,6 @@ export function DataTable<TData, TValue>({
 
     setColumnVisibility(visibility);
   }, [breakpoint, table]);
-
-  const handleDeleteSingle = (item: TData) => {
-    setIsBulkDelete(false);
-    setItemsToDelete(item);
-    setDeleteDialogOpen(true);
-  };
-
-  const handleBulkDelete = () => {
-    setIsBulkDelete(true);
-    setDeleteDialogOpen(true);
-  };
-
-  const confirmDelete = async () => {
-    if (!onDelete) return;
-
-    try {
-      if (isBulkDelete) {
-        const selectedRows = table.getFilteredSelectedRowModel().rows;
-        // Sequential execution to ensure each delete completes and avoid overwhelming the network
-        for (const row of selectedRows) {
-          onDelete(row.original);
-        }
-      } else if (itemsToDelete) {
-        onDelete(itemsToDelete);
-      }
-
-      table.resetRowSelection();
-      setDeleteDialogOpen(false);
-      setItemsToDelete(null);
-      setIsBulkDelete(false);
-    } catch (error) {
-      console.error("Delete operation failed:", error);
-    }
-  };
 
   const handleExport = (format: "csv" | "excel" | "json" | "pdf") => {
     if (onExport) {
@@ -481,7 +443,12 @@ export function DataTable<TData, TValue>({
                       variant="destructive"
                       size="sm"
                       className="h-8 text-xs animate-in fade-in zoom-in duration-200"
-                      onClick={handleBulkDelete}
+                      onClick={() => {
+                        if (!onDelete) return;
+                        const selectedRows = table.getFilteredSelectedRowModel().rows;
+                        selectedRows.forEach(row => onDelete(row.original));
+                        table.resetRowSelection();
+                      }}
                       aria-label={`Eliminar ${selectedCount} seleccionados`}
                     >
                       <Trash2 className="mr-1.5 h-3.5 w-3.5" />
@@ -675,15 +642,6 @@ export function DataTable<TData, TValue>({
           </div>
         </CardContent>
       </Card>
-      <DeleteDialog
-        open={deleteDialogOpen}
-        onOpenChange={(open) => {
-          setDeleteDialogOpen(open);
-          if (!open) setIsBulkDelete(false);
-        }}
-        onConfirm={confirmDelete}
-        itemCount={isBulkDelete ? selectedCount : 1}
-      />
     </>
   );
 }
