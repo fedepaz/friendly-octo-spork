@@ -14,6 +14,9 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `AccountDashboard` | Accounts | ✅ | ✅ | ✅ | ✅ | Approved |
 | `AccountDashboardSkeleton` | Accounts | ✅ | N/A | N/A | N/A | Approved |
 | `DataTableSkeleton` | Shared | ✅ | ✅ | N/A | N/A | Approved |
+| `AccountViewForm` | Accounts | ✅ | ✅ | ✅ | N/A | Approved |
+| `RecurrenceViewForm`| Recurrences | ✅ | ✅ | ✅ | N/A | Approved |
+| `TransactionViewForm`| Transactions| ✅ | ✅ | ✅ | N/A | Approved |
 
 ## Audit Checklist Details
 
