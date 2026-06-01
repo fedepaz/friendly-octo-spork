@@ -2,17 +2,29 @@
 
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../infra/prisma/prisma.service';
-import { Recurrence } from '../generated/prisma';
 import { Prisma } from '@prisma/client';
+
+export type RecurrenceWithRelations = Prisma.RecurrenceGetPayload<{
+  include: {
+    category: true;
+    sourceAccount: true;
+    targetAccount: true;
+  };
+}>;
 
 @Injectable()
 export class RecurrenceRepository {
   constructor(private prisma: PrismaService) {}
 
-  async getRecurrences(userId: string): Promise<Recurrence[]> {
+  async getRecurrences(userId: string): Promise<RecurrenceWithRelations[]> {
     return this.prisma.recurrence.findMany({
       where: {
         userId,
+      },
+      include: {
+        category: true,
+        sourceAccount: true,
+        targetAccount: true,
       },
     });
   }
@@ -20,11 +32,16 @@ export class RecurrenceRepository {
   async getRecurrenceById(
     userId: string,
     id: string,
-  ): Promise<Recurrence | null> {
+  ): Promise<RecurrenceWithRelations | null> {
     return this.prisma.recurrence.findFirst({
       where: {
         id,
         userId,
+      },
+      include: {
+        category: true,
+        sourceAccount: true,
+        targetAccount: true,
       },
     });
   }
@@ -32,10 +49,15 @@ export class RecurrenceRepository {
   async saveRecurrence(
     data: Prisma.RecurrenceUncheckedCreateInput,
     tx?: Prisma.TransactionClient,
-  ): Promise<Recurrence> {
+  ): Promise<RecurrenceWithRelations> {
     const client = tx || this.prisma;
     return client.recurrence.create({
       data,
+      include: {
+        category: true,
+        sourceAccount: true,
+        targetAccount: true,
+      },
     });
   }
 
@@ -43,11 +65,16 @@ export class RecurrenceRepository {
     id: string,
     data: Prisma.RecurrenceUncheckedUpdateInput,
     tx?: Prisma.TransactionClient,
-  ): Promise<Recurrence> {
+  ): Promise<RecurrenceWithRelations> {
     const client = tx || this.prisma;
     return client.recurrence.update({
       where: { id },
       data,
+      include: {
+        category: true,
+        sourceAccount: true,
+        targetAccount: true,
+      },
     });
   }
 }

@@ -42,7 +42,7 @@ export function TransactionViewForm({
             Categoría
           </p>
           <p className="text-xs font-semibold">
-            {selectedTransaction.categoryId || "SIN CATEGORÍA"}
+            {selectedTransaction.category?.name || "SIN CATEGORÍA"}
           </p>
         </div>
       </div>
@@ -68,11 +68,11 @@ export function TransactionViewForm({
         <div className="grid grid-cols-2 gap-2 text-2.75 font-mono">
           <div className="opacity-50">ORIGEN:</div>
           <div className="text-right">
-            {selectedTransaction.sourceAccountId || "N/A"}
+            {selectedTransaction.sourceAccount?.name || "N/A"}
           </div>
           <div className="opacity-50">DESTINO:</div>
           <div className="text-right">
-            {selectedTransaction.targetAccountId || "N/A"}
+            {selectedTransaction.targetAccount?.name || "N/A"}
           </div>
         </div>
       </div>

@@ -21,9 +21,6 @@ export function UserViewForm({ selectedUser }: UserViewFormProps) {
         <p className="text-lg font-black tracking-tighter uppercase">
           {selectedUser.name || "IDENTIDAD DESCONOCIDA"}
         </p>
-        <p className="font-mono text-[10px] opacity-50">
-          UUID: {selectedUser.id}
-        </p>
       </div>
 
       <div className="space-y-4">

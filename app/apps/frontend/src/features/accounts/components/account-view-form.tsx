@@ -34,22 +34,6 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
           {formatCurrency(selectedAccount.balance, selectedAccount.currency)}
         </p>
       </div>
-
-      <div className="space-y-4">
-        <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-          Metadatos Técnicos
-        </h4>
-        <div className="font-mono text-2.5 space-y-2 opacity-70">
-          <div className="flex justify-between">
-            <span>ID SISTEMA</span>
-            <span className="truncate ml-4">{selectedAccount.id}</span>
-          </div>
-          <div className="flex justify-between">
-            <span>USUARIO</span>
-            <span className="truncate ml-4">{selectedAccount.userId}</span>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

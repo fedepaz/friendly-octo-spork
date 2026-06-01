@@ -23,9 +23,6 @@ function FullNameCell({ row }: CellProps) {
         <span className="text-sm font-bold text-foreground leading-none truncate">
           {user.name || "No name"}
         </span>
-        <span className="text-[10px] text-muted-foreground opacity-70 truncate font-mono">
-          ID: {user.id.slice(0, 8)}...
-        </span>
       </div>
     </div>
   );

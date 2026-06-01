@@ -109,7 +109,7 @@ export const recurrenceColumns: ColumnDef<RecurrenceDTO>[] = [
           {row.original.name}
         </span>
         <span className="text-[10px] text-muted-foreground opacity-70 italic truncate max-w-[150px]">
-          {row.original.categoryId || "Sin categoría"}
+          {row.original.category?.name || "Sin categoría"}
         </span>
       </div>
     ),
@@ -164,7 +164,7 @@ export const recurrenceColumns: ColumnDef<RecurrenceDTO>[] = [
         <div className="flex items-center gap-1">
           <span className="opacity-50">Origen:</span>
           <span className="truncate max-w-[80px]">
-            {row.original.sourceAccountId || "-"}
+            {row.original.sourceAccount?.name || "-"}
           </span>
         </div>
       </div>

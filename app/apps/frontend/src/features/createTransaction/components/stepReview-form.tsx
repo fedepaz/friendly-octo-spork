@@ -1,7 +1,9 @@
 // src/features/createTransaction/components/stepReview-form.tsx
 
+import { useAccounts } from "@/features/accounts/hooks/accountsHooks";
 import { CreateTransactionInput } from "@repo/shared";
 import { UseFormReturn } from "react-hook-form";
+import { useCategorie } from "../hooks/useCategoriesHook";
 
 interface StepReviewProps {
   formCreateTransaction: UseFormReturn<CreateTransactionInput>;
@@ -13,6 +15,17 @@ export function StepReviewComponent({
   error,
 }: StepReviewProps) {
   const watched = formCreateTransaction.watch();
+  const { data: accounts = [] } = useAccounts();
+  const { data: categories = [] } = useCategorie();
+
+  const sourceAccountName = accounts.find(
+    (a) => a.id === watched.sourceAccountId,
+  )?.name;
+  const targetAccountName = accounts.find(
+    (a) => a.id === watched.targetAccountId,
+  )?.name;
+  const categoryName = categories.find((c) => c.id === watched.categoryId)
+    ?.name;
 
   return (
     <div className="flex flex-col gap-3">
@@ -34,9 +47,9 @@ export function StepReviewComponent({
               : "—",
           },
           { label: "Description", value: watched.description ?? "—" },
-          { label: "From", value: watched.sourceAccountId ?? "—" },
-          { label: "To", value: watched.targetAccountId ?? "—" },
-          { label: "Category", value: watched.categoryId ?? "None" },
+          { label: "From", value: sourceAccountName ?? "—" },
+          { label: "To", value: targetAccountName ?? "—" },
+          { label: "Category", value: categoryName ?? "None" },
           {
             label: "Recurring",
             value: watched.isRecurrence

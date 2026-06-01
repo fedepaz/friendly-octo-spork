@@ -65,7 +65,7 @@ export function RecurrenceViewForm({
             <div
               className="h-full bg-primary"
               style={{
-                width: `${(selectedRecurrence.currentPart / selectedRecurrence.totalParts) * 100}%`,
+                width: `${((selectedRecurrence.currentPart ?? 1) / (selectedRecurrence.totalParts ?? 1)) * 100}%`,
               }}
             />
           </div>
@@ -76,14 +76,14 @@ export function RecurrenceViewForm({
         <div className="flex items-center justify-between p-2 bg-background border border-border font-mono text-2.5">
           <span className="opacity-50 uppercase">Origen de Fondos</span>
           <span className="font-bold">
-            {selectedRecurrence.sourceAccountId || "NO DEFINIDO"}
+            {selectedRecurrence.sourceAccount?.name || "NO DEFINIDO"}
           </span>
         </div>
-        {selectedRecurrence.targetAccountId && (
+        {selectedRecurrence.targetAccount && (
           <div className="flex items-center justify-between p-2 bg-background border border-border font-mono text-2.5">
             <span className="opacity-50 uppercase">Destino</span>
             <span className="font-bold">
-              {selectedRecurrence.targetAccountId}
+              {selectedRecurrence.targetAccount.name}
             </span>
           </div>
         )}

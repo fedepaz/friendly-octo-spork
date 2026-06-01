@@ -105,7 +105,7 @@ export const transactionsColumns: ColumnDef<TransactionDTO>[] = [
           {row.original.description}
         </span>
         <span className="text-[10px] text-muted-foreground truncate opacity-70">
-          {row.original.categoryId || "Sin categoría"}
+          {row.original.category?.name || "Sin categoría"}
         </span>
       </div>
     ),
@@ -127,14 +127,14 @@ export const transactionsColumns: ColumnDef<TransactionDTO>[] = [
         <div className="flex items-center gap-1">
           <span className="opacity-50">De:</span>
           <span className="truncate max-w-[80px]">
-            {row.original.sourceAccountId || "-"}
+            {row.original.sourceAccount?.name || "-"}
           </span>
         </div>
-        {row.original.targetAccountId && (
+        {row.original.targetAccount && (
           <div className="flex items-center gap-1">
             <span className="opacity-50">A:</span>
             <span className="truncate max-w-[80px]">
-              {row.original.targetAccountId}
+              {row.original.targetAccount.name}
             </span>
           </div>
         )}

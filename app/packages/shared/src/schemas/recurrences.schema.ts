@@ -4,6 +4,8 @@ import {
   RecurrenceTypeSchema,
   TransactionTypeSchema,
 } from "../enums";
+import { categorySchema } from "./categories.schema";
+import { accountSchema } from "./accounts.schema";
 
 export const recurrenceSchema = z.object({
   id: z.string(),
@@ -24,6 +26,10 @@ export const recurrenceSchema = z.object({
   isCardExpense: z.boolean().optional().nullable(),
   cardType: CardTypeSchema.optional().nullable(),
   metadata: z.unknown().optional().nullable(),
+
+  category: categorySchema.nullable().optional(),
+  sourceAccount: accountSchema.nullable().optional(),
+  targetAccount: accountSchema.nullable().optional(),
 });
 
 export const createRecurrenceSchema = z.object({
