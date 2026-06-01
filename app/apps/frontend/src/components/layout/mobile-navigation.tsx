@@ -108,7 +108,7 @@ export function MobileNavigation() {
                   <Button
                     variant="ghost"
                     onClick={() => toggleGroup(group.id)}
-                    className="w-full justify-start gap-2 font-bold text-[10px] uppercase tracking-widest text-muted-foreground/60 p-2 h-8"
+                    className="w-full justify-start gap-2 font-bold text-2.5 uppercase tracking-widest text-muted-foreground/60 p-2 h-8"
                   >
                     <GroupIcon className="h-4 w-4 shrink-0" />
                     <span className="flex-1 text-left">{group.title}</span>
@@ -142,14 +142,14 @@ export function MobileNavigation() {
                             >
                               <Icon className="h-4.5 w-4.5" />
                               <div className="flex-1 min-w-0">
-                                <p className="font-medium text-[13px] truncate">
+                                <p className="font-medium text-3.25 truncate">
                                   {item.title}
                                 </p>
                               </div>
                               {item.badge && (
                                 <Badge
                                   variant={item.badgeVariant || "secondary"}
-                                  className="text-[9px] h-4 px-1"
+                                  className="text-2.25 h-4 px-1"
                                 >
                                   {item.badge}
                                 </Badge>

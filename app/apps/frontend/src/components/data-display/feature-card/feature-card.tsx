@@ -35,15 +35,15 @@ export function FeatureCard({
           className,
         )}
       >
-        <CardHeader>
+        <CardHeader className="p-4">
           <div className="flex items-start justify-between">
-            <div className="flex size-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <Icon className="size-6" />
+            <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <Icon className="size-5" />
             </div>
-            <ArrowRight className="size-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
           </div>
-          <CardTitle className="mt-4">{title}</CardTitle>
-          <CardDescription>{description}</CardDescription>
+          <CardTitle className="mt-3 text-sm font-bold uppercase tracking-tight">{title}</CardTitle>
+          <CardDescription className="text-xs line-clamp-2">{description}</CardDescription>
         </CardHeader>
       </Card>
     </Link>

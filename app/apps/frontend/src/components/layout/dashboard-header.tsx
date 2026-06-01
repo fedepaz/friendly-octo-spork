@@ -62,7 +62,7 @@ export function DashboardHeader() {
                       <p className="text-xl font-black text-foreground tracking-tighter leading-none">
                         S{weekNum}
                       </p>
-                      <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest leading-none mt-0.5">
+                      <p className="text-2.25 font-bold text-muted-foreground uppercase tracking-widest leading-none mt-0.5">
                         Semana
                       </p>
                     </div>
@@ -76,11 +76,11 @@ export function DashboardHeader() {
                     <p className="text-xs font-bold text-foreground">
                       {formattedDate}
                     </p>
-                    <p className="text-[10px] text-muted-foreground leading-tight">
+                    <p className="text-2.5 text-muted-foreground leading-tight">
                       Semana {weekNum} de {totalWeeks}
                     </p>
                     <div className="pt-1 border-t border-border/50">
-                      <p className="text-[10px] text-muted-foreground leading-tight">
+                      <p className="text-2.5 text-muted-foreground leading-tight">
                         Mendoza, Argentina
                       </p>
                     </div>

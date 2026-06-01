@@ -56,7 +56,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
           name="email"
           render={({ field }) => (
             <FormItem className="space-y-1 md:space-y-2">
-              <FormLabel className="font-sans text-[10px] md:text-sm uppercase tracking-widest opacity-70">Email</FormLabel>
+              <FormLabel className="font-sans text-2.5 md:text-sm uppercase tracking-widest opacity-70">Email</FormLabel>
               <FormControl>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -82,7 +82,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
           name="password"
           render={({ field }) => (
             <FormItem className="space-y-1 md:space-y-2">
-              <FormLabel className="font-sans text-[10px] md:text-sm uppercase tracking-widest opacity-70">Contraseña</FormLabel>
+              <FormLabel className="font-sans text-2.5 md:text-sm uppercase tracking-widest opacity-70">Contraseña</FormLabel>
               <FormControl>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 rounded-lg bg-primary/10 flex items-center justify-center">

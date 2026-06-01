@@ -142,13 +142,13 @@ export function DataTable<TData, TValue>({
       if (!allowedActions.canView) return null;
 
       return (
-        <div className="flex items-center justify-center gap-2 min-h-[40px]">
+        <div className="flex items-center justify-center gap-2 min-h-10">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
                 variant="ghost"
                 size="sm"
-                className="min-h-[40px] text-muted-foreground"
+                className="min-h-10 text-muted-foreground"
                 onClick={() => onView?.(row.original)}
                 aria-label="Ver detalles"
               >
@@ -380,18 +380,18 @@ export function DataTable<TData, TValue>({
 
           <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-2 shrink-0 border-t mt-auto">
             {" "}
-            <div className="flex-1 text-[11px] text-muted-foreground">
+            <div className="flex-1 text-2.75 text-muted-foreground">
               {`${table.getFilteredSelectedRowModel().rows.length} de ${table.getFilteredRowModel().rows.length} fila(s) seleccionada(s).`}
             </div>
             <div className="flex flex-wrap items-center gap-4">
               <div className="flex items-center space-x-2">
-                <p className="text-[11px] font-medium">Filas por página</p>
+                <p className="text-2.75 font-medium">Filas por página</p>
                 <select
                   value={table.getState().pagination.pageSize}
                   onChange={(e) => {
                     table.setPageSize(Number(e.target.value));
                   }}
-                  className="h-7 w-[60px] rounded border border-input bg-background px-1 text-[11px]"
+                  className="h-7 w-15 rounded border border-input bg-background px-1 text-2.75"
                 >
                   {[10, 20, 30, 40, 50, 100].map((pageSize) => (
                     <option key={pageSize} value={pageSize}>
@@ -400,7 +400,7 @@ export function DataTable<TData, TValue>({
                   ))}
                 </select>
               </div>
-              <div className="flex w-[80px] items-center justify-center text-[11px] font-medium">
+              <div className="flex w-20 items-center justify-center text-2.75 font-medium">
                 {`Página ${table.getState().pagination.pageIndex + 1} de ${table.getPageCount()}`}
               </div>
               <div className="flex items-center space-x-1">

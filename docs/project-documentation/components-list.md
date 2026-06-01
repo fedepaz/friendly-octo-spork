@@ -17,6 +17,15 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `AccountViewForm` | Accounts | ✅ | ✅ | ✅ | N/A | Approved |
 | `RecurrenceViewForm`| Recurrences | ✅ | ✅ | ✅ | N/A | Approved |
 | `TransactionViewForm`| Transactions| ✅ | ✅ | ✅ | N/A | Approved |
+| `TransactionWizard` | Transactions| ✅ | ✅ | ✅ | N/A | Approved |
+| `CreateTransactionsWizardSkeleton` | Transactions| ✅ | ✅ | ✅ | N/A | Approved |
+| `RootDashboard` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
+| `DashboardHeader`| Layout | ✅ | ✅ | ✅ | N/A | Approved |
+| `DesktopSidebar` | Layout | ✅ | ✅ | ✅ | N/A | Approved |
+| `MobileNavigation`| Layout | ✅ | ✅ | ✅ | N/A | Approved |
+| `UserSidebarMenu`| Layout | ✅ | ✅ | ✅ | N/A | Approved |
+| `KPICard` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
+| `FeatureCard` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 
 ## Audit Checklist Details
 

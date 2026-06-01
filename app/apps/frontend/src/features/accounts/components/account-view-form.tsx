@@ -13,13 +13,13 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
     <div className="space-y-6">
       <div className="grid grid-cols-2 gap-4 border-b border-border/50 pb-4">
         <div>
-          <p className="text-[10px] uppercase font-bold text-muted-foreground opacity-50">
+          <p className="text-2.5 uppercase font-bold text-muted-foreground opacity-50">
             Tipo
           </p>
           <p className="text-sm font-semibold">{selectedAccount.type}</p>
         </div>
         <div>
-          <p className="text-[10px] uppercase font-bold text-muted-foreground opacity-50">
+          <p className="text-2.5 uppercase font-bold text-muted-foreground opacity-50">
             Moneda
           </p>
           <p className="text-sm font-semibold">{selectedAccount.currency}</p>
@@ -27,7 +27,7 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
       </div>
 
       <div className="p-4 bg-primary/5 border border-primary/20">
-        <p className="text-[10px] uppercase font-bold text-primary mb-1">
+        <p className="text-2.5 uppercase font-bold text-primary mb-1">
           Saldo Actual
         </p>
         <p className="text-2xl font-mono font-black tabular-nums">
@@ -39,7 +39,7 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
         <h4 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
           Metadatos Técnicos
         </h4>
-        <div className="font-mono text-[10px] space-y-2 opacity-70">
+        <div className="font-mono text-2.5 space-y-2 opacity-70">
           <div className="flex justify-between">
             <span>ID SISTEMA</span>
             <span className="truncate ml-4">{selectedAccount.id}</span>

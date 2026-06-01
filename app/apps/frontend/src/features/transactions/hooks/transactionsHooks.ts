@@ -1,4 +1,4 @@
-// src/features/transactions/hooks/useAccounts.ts
+// src/features/transactions/hooks/transactionsHooks.ts
 
 import { TransactionDTO } from "@repo/shared";
 import { useSuspenseQuery } from "@tanstack/react-query";

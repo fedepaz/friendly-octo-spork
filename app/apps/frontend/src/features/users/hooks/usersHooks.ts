@@ -1,4 +1,4 @@
-// src/features/users/hooks/useUsers.ts
+// src/features/users/hooks/usersHooks.ts
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { userService } from "../api/userService";

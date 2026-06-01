@@ -22,13 +22,13 @@ export function DataTableSkeleton({
       <CardHeader>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-2">
-            <Skeleton className="h-8 w-[150px] sm:w-[200px]" />
-            <Skeleton className="h-4 w-full max-w-[300px]" />
+            <Skeleton className="h-8 w-37.5 sm:w-50" />
+            <Skeleton className="h-4 w-full max-w-75" />
           </div>
           <div className="flex items-center space-x-2">
-            <Skeleton className="h-6 w-[60px] sm:w-[80px]" />
-            <Skeleton className="h-8 w-[80px] sm:w-[90px]" />
-            <Skeleton className="h-8 w-[80px] sm:w-[90px]" />
+            <Skeleton className="h-6 w-15 sm:w-20" />
+            <Skeleton className="h-8 w-20 sm:w-22.5" />
+            <Skeleton className="h-8 w-20 sm:w-22.5" />
           </div>
         </div>
       </CardHeader>
@@ -38,7 +38,7 @@ export function DataTableSkeleton({
           <div className="relative flex-1 max-w-sm">
             <Skeleton className="h-9 w-full" />
           </div>
-          <Skeleton className="h-9 w-[80px] sm:w-[100px]" />
+          <Skeleton className="h-9 w-20 sm:w-25" />
         </div>
 
         {/* Table */}
@@ -54,12 +54,12 @@ export function DataTableSkeleton({
                       index >= 2 && "hidden sm:table-cell",
                     )}
                   >
-                    <Skeleton className="h-4 w-[80px]" />
+                    <Skeleton className="h-4 w-20" />
                   </TableHead>
                 ))}
                 {/* Actions column */}
                 <TableHead className="font-semibold">
-                  <Skeleton className="h-4 w-[60px]" />
+                  <Skeleton className="h-4 w-15" />
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -71,7 +71,7 @@ export function DataTableSkeleton({
                       key={cellIndex}
                       className={cn(cellIndex >= 2 && "hidden sm:table-cell")}
                     >
-                      <Skeleton className="h-4 w-full max-w-[120px]" />
+                      <Skeleton className="h-4 w-full max-w-30" />
                     </TableCell>
                   ))}
                   {/* Actions cell */}
@@ -87,15 +87,15 @@ export function DataTableSkeleton({
         {/* Pagination */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 py-4">
           <div className="flex-1 text-center md:text-left">
-            <Skeleton className="h-4 w-[150px] sm:w-[200px] mx-auto md:mx-0" />
+            <Skeleton className="h-4 w-37.5 sm:w-50 mx-auto md:mx-0" />
           </div>
           <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-8">
             <div className="flex items-center space-x-2">
-              <Skeleton className="h-4 w-[80px]" />
-              <Skeleton className="h-8 w-[70px]" />
+              <Skeleton className="h-4 w-20" />
+              <Skeleton className="h-8 w-17.5" />
             </div>
             <div className="flex items-center justify-center">
-              <Skeleton className="h-4 w-[100px]" />
+              <Skeleton className="h-4 w-25" />
             </div>
             <div className="flex items-center space-x-2">
               <Skeleton className="hidden lg:block h-8 w-8" />

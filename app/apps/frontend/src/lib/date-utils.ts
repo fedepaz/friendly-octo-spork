@@ -35,7 +35,6 @@ export const getTotalWeeks = (year: number) => {
  */
 export const formatSpanishDate = (date: Date) => {
   return date.toLocaleDateString("es-AR", {
-    weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -71,6 +70,7 @@ export const formatShortDate = (date: Date | string | null | undefined) => {
 
   return `${day}/${month}/${year}`;
 };
+
 export function getLocalDateStr(date: Date): string {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");

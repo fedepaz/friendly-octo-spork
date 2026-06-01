@@ -11,6 +11,7 @@ import {
   TransactionWithRelations,
 } from '../../repositories/transaction.repository';
 import { CreateTransactionInput, TransactionDTO } from '@repo/shared';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class TransactionService {
@@ -87,10 +88,14 @@ export class TransactionService {
     this.logger.log(
       `Saving transaction ${transactionData.type} for user ${userId}`,
     );
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { isRecurrence, ...prismaData } = transactionData;
+
     const response = await this.transactionRepo.saveTransaction({
-      ...transactionData,
+      ...prismaData,
       userId,
-      metadata: transactionData.metadata ?? {},
+      metadata: prismaData.metadata ? prismaData.metadata : Prisma.JsonNull,
     });
     return this.mapToDTO(response);
   }

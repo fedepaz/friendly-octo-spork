@@ -1,4 +1,4 @@
-// apps/frontend/src/features/auth/api/authService.ts
+// src/features/auth/api/authService.ts
 
 import { clientFetch } from "@/lib/api/client-fetch";
 import {

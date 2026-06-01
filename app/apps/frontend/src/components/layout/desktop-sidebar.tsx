@@ -133,7 +133,7 @@ export function DesktopSidebar() {
                   variant="ghost"
                   onClick={() => !isCollapsed && toggleGroup(group.id)}
                   className={cn(
-                    "h-8 w-full justify-start gap-2 font-medium text-[10px] uppercase tracking-widest text-muted-foreground/60 hover:text-foreground",
+                    "h-8 w-full justify-start gap-2 font-medium text-2.5 uppercase tracking-widest text-muted-foreground/60 hover:text-foreground",
                   )}
                 >
                   <GroupIcon className="h-3.5 w-3.5 shrink-0" />
@@ -177,7 +177,7 @@ export function DesktopSidebar() {
                                 {item.badge && isCollapsed && (
                                   <Badge
                                     variant={item.badgeVariant || "secondary"}
-                                    className="absolute -top-1 -right-1 h-3.5 w-3.5 p-0 flex items-center justify-center text-[8px]"
+                                    className="absolute -top-1 -right-1 h-3.5 w-3.5 p-0 flex items-center justify-center text-2"
                                   >
                                     {item.badge.length > 2 ? "99+" : item.badge}
                                   </Badge>
@@ -186,14 +186,14 @@ export function DesktopSidebar() {
                               {!isCollapsed && (
                                 <>
                                   <div className="flex-1 min-w-0">
-                                    <p className="font-medium text-[12px] truncate">
+                                    <p className="font-medium text-3 truncate">
                                       {item.title}
                                     </p>
                                   </div>
                                   {item.badge && (
                                     <Badge
                                       variant={item.badgeVariant || "secondary"}
-                                      className="text-[9px] h-4 px-1"
+                                      className="text-2.25 h-4 px-1"
                                     >
                                       {item.badge}
                                     </Badge>
@@ -212,7 +212,7 @@ export function DesktopSidebar() {
                             <div className="flex flex-col gap-1">
                               <p className="font-semibold">{item.title}</p>
                               {item.description && (
-                                <p className="text-[10px] opacity-80">
+                                <p className="text-2.5 opacity-80">
                                   {item.description}
                                 </p>
                               )}

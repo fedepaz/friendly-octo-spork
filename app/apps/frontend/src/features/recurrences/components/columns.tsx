@@ -6,12 +6,12 @@ import { RecurrenceDTO } from "@repo/shared";
 import { formatCurrency, getTransactionTypeStyles, cn } from "@/lib/utils";
 import { formatShortDate } from "@/lib/date-utils";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Calendar, 
-  Clock, 
-  ArrowDownLeft, 
-  ArrowUpRight, 
-  RefreshCw 
+import {
+  Calendar,
+  Clock,
+  ArrowDownLeft,
+  ArrowUpRight,
+  RefreshCw,
 } from "lucide-react";
 
 interface CellProps {
@@ -57,20 +57,30 @@ function AmountCell({ row }: CellProps) {
 
 function FrequencyCell({ row }: CellProps) {
   const frequency = row.original.frequency;
-  
+
   return (
-    <Badge variant="outline" className="bg-accent/5 text-accent border-accent/20 px-1.5 py-0 text-[10px] font-bold">
+    <Badge
+      variant="outline"
+      className="bg-accent/5 text-accent border-accent/20 px-1.5 py-0 text-[10px] font-bold"
+    >
       <Clock className="mr-1 h-3 w-3" />
-      {frequency === "MONTHLY" ? "Mensual" : 
-       frequency === "WEEKLY" ? "Semanal" : 
-       frequency === "YEARLY" ? "Anual" : "Cuotas"}
+      {frequency === "MONTHLY"
+        ? "Mensual"
+        : frequency === "WEEKLY"
+          ? "Semanal"
+          : frequency === "YEARLY"
+            ? "Anual"
+            : "Cuotas"}
     </Badge>
   );
 }
 
 function PartsCell({ row }: CellProps) {
   const { totalParts, currentPart } = row.original;
-  if (!totalParts) return <span className="text-muted-foreground opacity-30">—</span>;
+  if (!totalParts)
+    return <span className="text-muted-foreground opacity-30">—</span>;
+  if (!currentPart)
+    return <span className="text-muted-foreground opacity-30">—</span>;
 
   const isLast = currentPart === totalParts;
 
@@ -80,7 +90,9 @@ function PartsCell({ row }: CellProps) {
         [{currentPart.toString().padStart(2, "0")}
       </span>
       <span className="opacity-30">/</span>
-      <span className="opacity-50">{totalParts.toString().padStart(2, "0")}]</span>
+      <span className="opacity-50">
+        {totalParts.toString().padStart(2, "0")}]
+      </span>
     </div>
   );
 }

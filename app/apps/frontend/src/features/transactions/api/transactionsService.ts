@@ -1,7 +1,7 @@
 // src/features/transactions/api/transactionsService.ts
 
 import { clientFetch } from "@/lib/api/client-fetch";
-import { CreateTransactionInput, TransactionDTO } from "@repo/shared";
+import { TransactionDTO } from "@repo/shared";
 
 export const transactionService = {
   fetchAll: () => {
@@ -11,13 +11,6 @@ export const transactionService = {
   fetchById: (id: string) => {
     return clientFetch<TransactionDTO | null>(`transactions/${id}`, {
       method: "GET",
-    });
-  },
-
-  saveTransaction: (data: CreateTransactionInput) => {
-    return clientFetch<TransactionDTO>(`transactions`, {
-      method: "POST",
-      body: JSON.stringify(data),
     });
   },
 };
