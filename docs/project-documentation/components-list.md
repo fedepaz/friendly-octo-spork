@@ -23,6 +23,15 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `RecurrencesDashboard`| Recurrences | ✅ | ✅ | ✅ | ✅ | Approved |
 | `TransactionViewForm`| Transactions| ✅ | ✅ | ✅ | N/A | Approved |
 | `TransactionWizard` | Transactions| ✅ | ✅ | ✅ | N/A | Approved |
+| `StepTypeComponent` | Transactions| ✅ | ✅ | ✅ | N/A | Approved |
+| `StepAmountComponent` | Transactions| ✅ | ✅ | ✅ | N/A | Approved |
+| `StepAccountComponent`| Transactions| ✅ | ✅ | ✅ | N/A | Approved |
+| `StepCategoryComponent`| Transactions| ✅ | ✅ | ✅ | N/A | Approved |
+| `StepRecurrenceComponent`| Transactions| ✅ | ✅ | ✅ | N/A | Approved |
+| `StepReviewComponent`| Transactions| ✅ | ✅ | ✅ | N/A | Approved |
+| `WizardModal` | Shared | ✅ | ✅ | ✅ | N/A | Approved |
+| `WizardFooter` | Shared | ✅ | ✅ | ✅ | N/A | Approved |
+| `StepIndicator` | Shared | ✅ | ✅ | ✅ | N/A | Approved |
 | `TransactionsDashboard`| Transactions| ✅ | ✅ | ✅ | ✅ | Approved |
 | `CreateTransactionsWizardSkeleton` | Transactions| ✅ | ✅ | ✅ | N/A | Approved |
 | `RootDashboard` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
