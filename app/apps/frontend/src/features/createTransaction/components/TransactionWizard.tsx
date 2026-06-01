@@ -9,20 +9,18 @@ import { StepAccountsComponent } from "./stepAccount-form";
 import { StepCategoryComponent } from "./stepCategory-form";
 import { StepRecurrenceComponent } from "./stepRecurrence-form";
 import { StepReviewComponent } from "./stepReview-form";
-import { useTransactionWizard } from "../hooks/useTransactionWizard";
-import { WizardModal, StepIndicator, WizardFooter } from "./wizardModal";
-
-export function FieldError({ message }: { message?: string }) {
-  if (!message) return null;
-  return <p className="text-xs font-mono text-destructive mt-1">{message}</p>;
-} // ─── Props ───────────────────────────────────────────────────────────────────
+import { useTransactionWizard, type Step } from "../hooks/useTransactionWizard";
+import {
+  WizardModal,
+  StepIndicator,
+  WizardFooter,
+  FieldError,
+} from "./wizardModal";
 
 interface TransactionWizardProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
-// ─── Wizard ──────────────────────────────────────────────────────────────────
 
 export function TransactionWizard({ isOpen, onClose }: TransactionWizardProps) {
   const { mutateAsync: createTransaction, isPending: isSubmitting } =

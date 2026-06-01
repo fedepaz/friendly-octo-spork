@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { CreateTransactionInput } from "@repo/shared";
 import { UseFormReturn } from "react-hook-form";
 import { useCategorie } from "../hooks/useCategoriesHook";
-import { FieldError } from "./TransactionWizard";
+import { FieldError } from "./wizardModal";
 
 interface StepCategoryProps {
   formCreateTransaction: UseFormReturn<CreateTransactionInput>;

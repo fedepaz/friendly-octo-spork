@@ -3,7 +3,7 @@
 import { getLocalDateStr } from "@/lib/date-utils";
 import { CreateTransactionInput } from "@repo/shared";
 import { UseFormReturn } from "react-hook-form";
-import { FieldError } from "./TransactionWizard";
+import { FieldError } from "./wizardModal";
 import { Label } from "@/components/ui/label";
 
 interface StepAmountProps {

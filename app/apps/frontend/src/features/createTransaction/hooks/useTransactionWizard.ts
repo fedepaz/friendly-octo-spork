@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
-type Step =
+export type Step =
   | "type"
   | "amount"
   | "accounts"

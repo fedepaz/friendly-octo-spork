@@ -1,6 +1,5 @@
 // src/features/createTransaction/components/wizardModal.tsx
 export function WizardModal({
-  isOpen,
   onClose,
   title,
   step,
@@ -100,4 +99,8 @@ export function WizardFooter({
       )}
     </div>
   );
+}
+export function FieldError({ message }: { message?: string }) {
+  if (!message) return null;
+  return <p className="text-xs font-mono text-destructive mt-1">{message}</p>;
 }
