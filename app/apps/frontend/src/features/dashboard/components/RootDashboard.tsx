@@ -218,7 +218,7 @@ export function RootDashboard() {
         {/* Left Column - Charts */}
         <div className="lg:col-span-2 flex flex-col gap-4 min-h-0">
           {/* Net Worth Chart */}
-          <Card className="h-[280px] lg:flex-1 min-h-0 flex flex-col overflow-hidden">
+          <Card className="h-70 lg:flex-1 min-h-0 flex flex-col overflow-hidden">
             <CardHeader className="pb-2 px-4 shrink-0">
               <CardTitle className="font-sans text-[10px] uppercase tracking-wider opacity-60">
                 Net Worth Trend
@@ -282,7 +282,7 @@ export function RootDashboard() {
           </Card>
 
           {/* Income vs Expenses Chart */}
-          <Card className="h-[280px] lg:flex-1 min-h-0 flex flex-col overflow-hidden">
+          <Card className="h-70 lg:flex-1 min-h-0 flex flex-col overflow-hidden">
             <CardHeader className="pb-2 px-4 shrink-0">
               <CardTitle className="font-sans text-[10px] uppercase tracking-wider opacity-60">
                 Income vs Expenses
@@ -341,7 +341,9 @@ export function RootDashboard() {
                   className="flex items-center justify-between border-b border-border/30 pb-1 last:border-0 last:pb-0"
                 >
                   <div className="min-w-0 flex-1">
-                    <p className="text-[11px] font-bold truncate leading-tight">{account.name}</p>
+                    <p className="text-[11px] font-bold truncate leading-tight">
+                      {account.name}
+                    </p>
                     <p className="font-mono text-[8px] uppercase text-muted-foreground/60 leading-none">
                       {account.type}
                     </p>
@@ -368,7 +370,7 @@ export function RootDashboard() {
                 return (
                   <div key={budget.category} className="space-y-0.5">
                     <div className="flex items-center justify-between">
-                      <p className="text-[9px] font-bold uppercase tracking-tight truncate max-w-[120px]">
+                      <p className="text-[9px] font-bold uppercase tracking-tight truncate max-w-30">
                         {budget.category}
                       </p>
                       <p
