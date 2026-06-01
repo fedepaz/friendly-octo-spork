@@ -48,7 +48,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-3 md:gap-4 font-serif"
+        className="flex flex-col gap-3 md:gap-4"
       >
         {/* Email Field */}
         <FormField
@@ -59,14 +59,14 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
               <FormLabel className="font-sans text-2.5 md:text-sm uppercase tracking-widest opacity-70">Email</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 rounded-none bg-primary/10 border border-primary/20 flex items-center justify-center">
                     <User className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
                   </div>
                   <Input
                     {...field}
                     placeholder="juanperez@example.com"
                     disabled={isLoading}
-                    className="pl-12 md:pl-14 h-10 md:h-12 text-sm md:text-base"
+                    className="pl-12 md:pl-14 h-10 md:h-12 text-sm md:text-base rounded-none border-2"
                     autoFocus
                     tabIndex={0}
                   />
@@ -85,7 +85,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
               <FormLabel className="font-sans text-2.5 md:text-sm uppercase tracking-widest opacity-70">Contraseña</FormLabel>
               <FormControl>
                 <div className="relative">
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 rounded-none bg-primary/10 border border-primary/20 flex items-center justify-center">
                     <Lock className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
                   </div>
                   <Input
@@ -93,14 +93,14 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
                     type={showPassword ? "text" : "password"}
                     placeholder="Tu contraseña"
                     disabled={isLoading}
-                    className="pl-12 md:pl-14 h-10 md:h-12 text-sm md:text-base"
+                    className="pl-12 md:pl-14 h-10 md:h-12 text-sm md:text-base rounded-none border-2"
                     {...field}
                     tabIndex={0}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-7 h-7 md:w-8 md:h-8 rounded-lg bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-7 h-7 md:w-8 md:h-8 rounded-none bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors border border-border"
                     tabIndex={-1}
                     aria-label={
                       showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
@@ -121,7 +121,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
         {/* Submit Button */}
         <Button
           type="submit"
-          className="w-full h-10 md:h-12 bg-primary rounded p-2 cursor-pointer mt-2"
+          className="w-full h-10 md:h-12 bg-primary rounded-none p-2 cursor-pointer mt-2 border-2 border-primary-foreground/20 font-sans font-bold uppercase tracking-wider"
           disabled={isLoading || !form.formState.isDirty}
           tabIndex={0}
         >

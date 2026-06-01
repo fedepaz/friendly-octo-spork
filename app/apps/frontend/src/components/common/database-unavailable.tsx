@@ -13,20 +13,20 @@ export function DatabaseUnavailablePage() {
           <DatabaseZap className="w-20 h-20 text-muted-foreground/40" />
         </div>
 
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-foreground text-balance sm:text-6xl">
+        <h1 className="mt-4 text-4xl font-black uppercase tracking-tighter text-foreground text-balance sm:text-6xl">
           Servicio Temporalmente No Disponible
         </h1>
 
-        <p className="mt-6 text-lg font-medium text-pretty text-muted-foreground sm:text-xl/8">
+        <p className="mt-6 text-lg font-medium text-pretty text-muted-foreground sm:text-xl/8 font-mono">
           Actualmente estamos realizando mantenimiento en nuestros sistemas de
           base de datos.
         </p>
 
-        <div className="mt-8 p-6 rounded-lg bg-muted/50 border border-border">
-          <p className="text-base text-foreground font-medium mb-2">
+        <div className="mt-8 p-6 rounded-none bg-muted/50 border-2 border-border">
+          <p className="text-base text-foreground font-bold uppercase tracking-widest mb-2">
             Mantenimiento del Sistema
           </p>
-          <p className="text-sm text-muted-foreground text-balance">
+          <p className="text-sm text-muted-foreground text-balance font-mono">
             Nuestro equipo está trabajando para restaurar el servicio completo
             lo antes posible. Lamentamos cualquier inconveniente que esto pueda
             causar.
@@ -36,7 +36,7 @@ export function DatabaseUnavailablePage() {
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button
             variant="outline"
-            className="gap-2 bg-transparent"
+            className="gap-2 bg-transparent rounded-none border-2 font-bold uppercase tracking-wider"
             onClick={() => window.location.reload()}
           >
             <RefreshCw className="w-4 h-4" />
@@ -44,6 +44,7 @@ export function DatabaseUnavailablePage() {
           </Button>
           <Button
             variant="secondary"
+            className="rounded-none border-2 border-secondary-foreground/20 font-bold uppercase tracking-wider"
             onClick={() => (window.location.href = "/")}
           >
             Ir a la Página Principal
@@ -53,10 +54,10 @@ export function DatabaseUnavailablePage() {
         <div className="mt-8 flex items-center justify-center gap-2 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-destructive"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-none bg-destructive opacity-75"></span>
+              <span className="relative inline-flex rounded-none h-3 w-3 bg-destructive"></span>
             </span>
-            Mantenimiento en curso
+            <span className="text-[10px] font-black uppercase tracking-widest">Mantenimiento en curso</span>
           </div>
         </div>
       </div>

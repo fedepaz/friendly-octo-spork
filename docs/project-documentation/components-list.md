@@ -10,22 +10,34 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `DataTable` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `SlideOverForm`| Shared | ✅ | ✅ | ✅ | N/A | Approved |
 | `LoginForm` | Auth | ✅ | ✅ | ✅ | N/A | Approved |
+| `AuthDashboard` | Auth | ✅ | ✅ | ✅ | ✅ | Approved |
+| `AuthLayout` | Auth | ✅ | ✅ | ✅ | N/A | Approved |
 | `UserTable` | Users | ✅ | ✅ | ✅ | ✅ | Approved |
+| `UserKPIs` | Users | ✅ | ✅ | ✅ | ✅ | Approved |
+| `UsersDashboard` | Users | ✅ | ✅ | ✅ | ✅ | Approved |
 | `AccountDashboard` | Accounts | ✅ | ✅ | ✅ | ✅ | Approved |
 | `AccountDashboardSkeleton` | Accounts | ✅ | N/A | N/A | N/A | Approved |
 | `DataTableSkeleton` | Shared | ✅ | ✅ | N/A | N/A | Approved |
 | `AccountViewForm` | Accounts | ✅ | ✅ | ✅ | N/A | Approved |
 | `RecurrenceViewForm`| Recurrences | ✅ | ✅ | ✅ | N/A | Approved |
+| `RecurrencesDashboard`| Recurrences | ✅ | ✅ | ✅ | ✅ | Approved |
 | `TransactionViewForm`| Transactions| ✅ | ✅ | ✅ | N/A | Approved |
 | `TransactionWizard` | Transactions| ✅ | ✅ | ✅ | N/A | Approved |
+| `TransactionsDashboard`| Transactions| ✅ | ✅ | ✅ | ✅ | Approved |
 | `CreateTransactionsWizardSkeleton` | Transactions| ✅ | ✅ | ✅ | N/A | Approved |
 | `RootDashboard` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
 | `DashboardHeader`| Layout | ✅ | ✅ | ✅ | N/A | Approved |
 | `DesktopSidebar` | Layout | ✅ | ✅ | ✅ | N/A | Approved |
 | `MobileNavigation`| Layout | ✅ | ✅ | ✅ | N/A | Approved |
 | `UserSidebarMenu`| Layout | ✅ | ✅ | ✅ | N/A | Approved |
+| `UserMenu` | Layout | ✅ | ✅ | ✅ | N/A | Approved |
+| `ChangePasswordForm`| Layout | ✅ | ✅ | ✅ | N/A | Approved |
 | `KPICard` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `FeatureCard` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
+| `ComingSoonPage` | Common | ✅ | ✅ | ✅ | N/A | Approved |
+| `DatabaseUnavailablePage`| Common | ✅ | ✅ | ✅ | N/A | Approved |
+| `PendingPermissionsPage` | Common | ✅ | ✅ | ✅ | N/A | Approved |
+| `LoadingSpinner` | Common | ✅ | ✅ | ✅ | N/A | Approved |
 
 ## Audit Checklist Details
 

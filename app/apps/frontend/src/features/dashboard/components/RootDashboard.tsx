@@ -16,7 +16,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import {
   Area,
@@ -148,10 +147,10 @@ export function RootDashboard() {
   }
 
   return (
-    <div className="flex h-dvh flex-col gap-4 bg-background p-4 overflow-hidden">
+    <div className="flex flex-1 flex-col gap-4 min-h-0 overflow-hidden">
       {/* Header Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 shrink-0">
-        <Card className="py-2">
+        <Card className="py-1.5 md:py-2">
           <CardHeader className="pb-1 px-4">
             <CardDescription className="font-mono text-[10px] uppercase tracking-wider">
               Net Worth
@@ -215,13 +214,13 @@ export function RootDashboard() {
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid flex-1 grid-cols-1 lg:grid-cols-3 gap-4 min-h-0 overflow-hidden">
+      <div className="grid flex-1 grid-cols-1 lg:grid-cols-3 gap-4 min-h-0 overflow-y-auto lg:overflow-hidden">
         {/* Left Column - Charts */}
         <div className="lg:col-span-2 flex flex-col gap-4 min-h-0">
           {/* Net Worth Chart */}
-          <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
+          <Card className="h-[280px] lg:flex-1 min-h-0 flex flex-col overflow-hidden">
             <CardHeader className="pb-2 px-4 shrink-0">
-              <CardTitle className="font-sans text-xs uppercase tracking-wider">
+              <CardTitle className="font-sans text-[10px] uppercase tracking-wider opacity-60">
                 Net Worth Trend
               </CardTitle>
             </CardHeader>
@@ -283,9 +282,9 @@ export function RootDashboard() {
           </Card>
 
           {/* Income vs Expenses Chart */}
-          <Card className="flex-1 min-h-0 flex flex-col overflow-hidden">
+          <Card className="h-[280px] lg:flex-1 min-h-0 flex flex-col overflow-hidden">
             <CardHeader className="pb-2 px-4 shrink-0">
-              <CardTitle className="font-sans text-xs uppercase tracking-wider">
+              <CardTitle className="font-sans text-[10px] uppercase tracking-wider opacity-60">
                 Income vs Expenses
               </CardTitle>
             </CardHeader>
@@ -329,25 +328,25 @@ export function RootDashboard() {
         {/* Right Column - Lists */}
         <div className="flex flex-col gap-4 min-h-0 overflow-hidden">
           {/* Accounts */}
-          <Card className="shrink-0 overflow-hidden flex flex-col">
-            <CardHeader className="pb-2 px-4 shrink-0">
-              <CardTitle className="font-sans text-xs uppercase tracking-wider">
+          <Card className="shrink-0 overflow-hidden flex flex-col max-h-[30%]">
+            <CardHeader className="pb-1 px-4 shrink-0">
+              <CardTitle className="font-sans text-[10px] uppercase tracking-wider opacity-60">
                 Accounts
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2 px-4 pb-3 overflow-y-auto">
+            <CardContent className="space-y-1.5 px-4 pb-2 overflow-y-auto custom-scrollbar">
               {accounts.map((account) => (
                 <div
                   key={account.name}
-                  className="flex items-center justify-between border-b border-border/50 pb-1.5 last:border-0 last:pb-0"
+                  className="flex items-center justify-between border-b border-border/30 pb-1 last:border-0 last:pb-0"
                 >
-                  <div>
-                    <p className="text-xs font-bold">{account.name}</p>
-                    <p className="font-mono text-[9px] uppercase text-muted-foreground opacity-70">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[11px] font-bold truncate leading-tight">{account.name}</p>
+                    <p className="font-mono text-[8px] uppercase text-muted-foreground/60 leading-none">
                       {account.type}
                     </p>
                   </div>
-                  <p className="font-mono text-sm font-black text-primary">
+                  <p className="font-mono text-[11px] font-black text-primary tabular-nums ml-2">
                     {formatCurrency(account.balance)}
                   </p>
                 </div>
@@ -356,24 +355,24 @@ export function RootDashboard() {
           </Card>
 
           {/* Budget Progress */}
-          <Card className="shrink-0 overflow-hidden flex flex-col">
-            <CardHeader className="pb-2 px-4 shrink-0">
-              <CardTitle className="font-sans text-xs uppercase tracking-wider">
+          <Card className="shrink-0 overflow-hidden flex flex-col max-h-[30%]">
+            <CardHeader className="pb-1 px-4 shrink-0">
+              <CardTitle className="font-sans text-[10px] uppercase tracking-wider opacity-60">
                 Budget Status
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3 px-4 pb-3 overflow-y-auto">
+            <CardContent className="space-y-2.5 px-4 pb-2 overflow-y-auto custom-scrollbar">
               {budgets.map((budget) => {
                 const percentage = (budget.spent / budget.limit) * 100;
                 const isOverBudget = percentage > 100;
                 return (
-                  <div key={budget.category} className="space-y-1">
+                  <div key={budget.category} className="space-y-0.5">
                     <div className="flex items-center justify-between">
-                      <p className="text-[10px] font-bold uppercase">
+                      <p className="text-[9px] font-bold uppercase tracking-tight truncate max-w-[120px]">
                         {budget.category}
                       </p>
                       <p
-                        className={`font-mono text-[10px] ${isOverBudget ? "text-destructive" : "text-muted-foreground"}`}
+                        className={`font-mono text-[9px] tabular-nums ${isOverBudget ? "text-destructive" : "text-muted-foreground/70"}`}
                       >
                         {formatCurrency(budget.spent)} /{" "}
                         {formatCurrency(budget.limit)}
@@ -381,7 +380,7 @@ export function RootDashboard() {
                     </div>
                     <Progress
                       value={Math.min(percentage, 100)}
-                      className={`h-1.5 ${isOverBudget ? "[&>div]:bg-destructive" : ""}`}
+                      className={`h-1 ${isOverBudget ? "[&>div]:bg-destructive" : "[&>div]:bg-secondary"}`}
                     />
                   </div>
                 );
@@ -392,48 +391,50 @@ export function RootDashboard() {
           {/* Recent Transactions */}
           <Card className="flex-1 min-h-0 overflow-hidden flex flex-col">
             <CardHeader className="pb-2 px-4 shrink-0">
-              <CardTitle className="font-sans text-sm uppercase tracking-wider">
+              <CardTitle className="font-sans text-[10px] uppercase tracking-wider opacity-60">
                 Recent Transactions
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex-1 min-h-0 overflow-auto px-4 pb-2">
-              <Table>
-                <TableHeader className="sticky top-0 bg-card z-10">
-                  <TableRow className="hover:bg-transparent">
-                    <TableHead className="font-mono text-[10px] h-8 px-0">
-                      Description
-                    </TableHead>
-                    <TableHead className="font-mono text-[10px] text-right h-8 px-0">
-                      Amount
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {recentTransactions.map((tx) => (
-                    <TableRow
-                      key={tx.id}
-                      className="hover:bg-accent/50 border-border/30"
-                    >
-                      <TableCell className="py-1.5 px-0">
-                        <div className="flex flex-col">
-                          <p className="text-xs font-bold leading-tight truncate max-w-40">
-                            {tx.description}
-                          </p>
-                          <span className="font-mono text-[9px] text-muted-foreground opacity-60 uppercase">
-                            {tx.category}
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell
-                        className={`font-mono text-xs font-black text-right tabular-nums py-1.5 px-0 ${tx.amount > 0 ? "text-secondary" : "text-foreground"}`}
-                      >
-                        {tx.amount > 0 ? "+" : ""}
-                        {formatCurrency(tx.amount)}
-                      </TableCell>
+            <CardContent className="flex-1 min-h-0 overflow-hidden px-4 pb-2">
+              <div className="h-full overflow-y-auto pr-1 custom-scrollbar">
+                <Table>
+                  <TableHeader className="sticky top-0 bg-card z-10 shadow-sm">
+                    <TableRow className="hover:bg-transparent border-b-2">
+                      <TableHead className="font-mono text-[9px] h-7 px-0 uppercase tracking-tighter">
+                        Description
+                      </TableHead>
+                      <TableHead className="font-mono text-[9px] text-right h-7 px-0 uppercase tracking-tighter">
+                        Amount
+                      </TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {recentTransactions.map((tx) => (
+                      <TableRow
+                        key={tx.id}
+                        className="hover:bg-accent/50 border-border/30"
+                      >
+                        <TableCell className="py-1.5 px-0">
+                          <div className="flex flex-col">
+                            <p className="text-xs font-bold leading-tight truncate max-w-40">
+                              {tx.description}
+                            </p>
+                            <span className="font-mono text-[9px] text-muted-foreground opacity-60 uppercase">
+                              {tx.category}
+                            </span>
+                          </div>
+                        </TableCell>
+                        <TableCell
+                          className={`font-mono text-xs font-black text-right tabular-nums py-1.5 px-0 ${tx.amount > 0 ? "text-secondary" : "text-foreground"}`}
+                        >
+                          {tx.amount > 0 ? "+" : ""}
+                          {formatCurrency(tx.amount)}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </CardContent>
           </Card>
         </div>

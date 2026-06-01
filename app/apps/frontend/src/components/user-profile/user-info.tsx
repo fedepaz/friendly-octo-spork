@@ -10,20 +10,20 @@ export function UserProfileInfo() {
   if (!userProfile) return null;
   return (
     <div className="grid gap-4">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold font-sans">
+      <Card className="rounded-none border-2">
+        <CardHeader className="pb-2 border-b border-border/30">
+          <CardTitle className="text-sm font-black uppercase tracking-widest text-primary">
             Información General
           </CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-2 font-serif">
-          <div>
-            <Label className="text-muted-foreground">Nombre Full</Label>
-            <p className="text-base font-medium">{userProfile.name}</p>
+        <CardContent className="grid gap-4 pt-4">
+          <div className="space-y-1">
+            <Label className="text-[10px] uppercase font-bold text-muted-foreground opacity-60">Nombre Full</Label>
+            <p className="text-sm font-bold tracking-tight">{userProfile.name}</p>
           </div>
-          <div>
-            <Label className="text-muted-foreground">Email</Label>
-            <p className="text-base font-medium">{userProfile.email}</p>
+          <div className="space-y-1">
+            <Label className="text-[10px] uppercase font-bold text-muted-foreground opacity-60">Email</Label>
+            <p className="text-sm font-mono font-medium">{userProfile.email}</p>
           </div>
         </CardContent>
       </Card>
