@@ -8,6 +8,6 @@ import { RecurrenceRepository } from '../../repositories/recurrence.repository';
 @Module({
   controllers: [RecurrenceController],
   providers: [RecurrenceService, RecurrenceRepository],
-  exports: [RecurrenceService],
+  exports: [RecurrenceService, RecurrenceRepository],
 })
 export class RecurrencesModule {}

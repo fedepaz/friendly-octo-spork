@@ -52,6 +52,7 @@ export const transactionSchema: z.ZodType<TransactionDTO> = z.object({
   sourceAccountId: z.string().optional().nullable(),
   targetAccountId: z.string().optional().nullable(),
   recurrenceId: z.string().optional().nullable(),
+  recurrenceName: z.string().optional().nullable(),
   recurrencePartNumber: z.number().int().nullable(),
   isBudgetedExpense: z.boolean().nullable(),
   budgetCategory: BudgetCategorySchema.nullable(),
@@ -72,7 +73,10 @@ export const createTransactionSchema = z.object({
   type: TransactionTypeSchema,
   amount: z
     .preprocess((val) => String(val), z.string())
-    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, "Amount must be a positive number"),
+    .refine(
+      (val) => !isNaN(Number(val)) && Number(val) > 0,
+      "Amount must be a positive number",
+    ),
   date: z.coerce.date(),
   description: z
     .string()
@@ -88,6 +92,9 @@ export const createTransactionSchema = z.object({
     .preprocess((val) => (val === "" ? null : val), z.string().nullable())
     .optional(),
   recurrenceId: z
+    .preprocess((val) => (val === "" ? null : val), z.string().nullable())
+    .optional(),
+  recurrenceName: z
     .preprocess((val) => (val === "" ? null : val), z.string().nullable())
     .optional(),
   metadata: z.unknown().optional().nullable(),

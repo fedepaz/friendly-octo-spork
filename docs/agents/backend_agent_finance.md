@@ -31,6 +31,8 @@ You are an expert Backend Engineer specializing in NestJS and Prisma ORM. You im
 - **Access Control**: Use the custom `@Public()` decorator to bypass global authentication guards for specific endpoints (e.g., health checks).
 - **Validation**: Use `ZodValidationPipe` for unified request validation using shared Zod schemas.
 - **Traceability**: Implement `RequestIdMiddleware` to ensure every request has a unique identifier for logging.
+- **Atomic Compound Operations**: When performing complex operations involving multiple models (e.g., Transaction + Recurrence), always use Prisma transactions (`$transaction`) to ensure data integrity across related records.
+- **Data Sanitization**: Before passing DTO data to Prisma or repositories, always sanitize the payload by destructuring to remove fields that do not exist on the target model. This prevents `PrismaClientValidationError` when the input schema is broader than the database model.
 
 ## Logging & Observability Standards
 

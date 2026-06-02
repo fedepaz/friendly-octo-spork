@@ -10,10 +10,15 @@ import {
   TransactionRepository,
   TransactionWithRelations,
 } from '../../repositories/transaction.repository';
-import { CreateTransactionInput, TransactionDTO } from '@repo/shared';
+import {
+  CreateTransactionInput,
+  RecurrenceTypeSchema,
+  TransactionDTO,
+} from '@repo/shared';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../infra/prisma/prisma.service';
 import { AccountRepository } from '../../repositories/account.repository';
+import { RecurrenceRepository } from '../../repositories/recurrence.repository';
 
 @Injectable()
 export class TransactionService {
@@ -22,6 +27,7 @@ export class TransactionService {
   constructor(
     private readonly transactionRepo: TransactionRepository,
     private readonly accountRepo: AccountRepository,
+    private readonly recurrenceRepo: RecurrenceRepository,
     private readonly prisma: PrismaService,
   ) {}
 
@@ -95,8 +101,13 @@ export class TransactionService {
       `Saving transaction ${transactionData.type} for user ${userId}`,
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { isRecurrence: _, ...prismaData } = transactionData;
+    const {
+      isRecurrence: _isRecurrence,
+      frequency: _frequency,
+      totalParts: _totalParts,
+      recurrenceName: _recurrenceName,
+      ...prismaData
+    } = transactionData;
     const amount = transactionData.amount;
 
     return this.prisma.$transaction(async (tx) => {
@@ -113,6 +124,8 @@ export class TransactionService {
         },
         tx,
       );
+      // ─── 2. Create/Update Recurrence ────────────────────────────────────────
+      await this.createOrUpdateRecurrence(transactionData, userId, tx);
 
       return this.mapToDTO(response);
     });
@@ -245,6 +258,51 @@ export class TransactionService {
         // 🔒 Exhaustive check: TypeScript will error if a new type is added but not handled
         throw new BadRequestException(`Unhandled transaction type:`);
       }
+    }
+  }
+  private async createOrUpdateRecurrence(
+    data: CreateTransactionInput,
+    userId: string,
+    tx: Prisma.TransactionClient,
+  ): Promise<void> {
+    // If it's not a recurrence and no ID is provided, do nothing
+    if (!data.recurrenceId && !data.isRecurrence) {
+      return;
+    }
+
+    if (data.recurrenceId) {
+      // Update existing recurrence
+      const updateRecurrenceData = {
+        userId,
+        metadata: data.metadata
+          ? (data.metadata as Prisma.InputJsonValue)
+          : Prisma.JsonNull,
+      };
+
+      await this.recurrenceRepo.updateRecurrence(
+        data.recurrenceId,
+        updateRecurrenceData,
+        tx,
+      );
+    } else if (data.isRecurrence) {
+      // Create new recurrence
+      const createRecurrenceData = {
+        userId,
+        name: data.recurrenceName ? data.recurrenceName : 'default',
+        type: data.type,
+        amount: data.amount,
+        startDate: data.date,
+        frequency: data.frequency ?? RecurrenceTypeSchema.enum.MONTHLY,
+        totalParts: data.totalParts,
+        categoryId: data.categoryId,
+        sourceAccountId: data.sourceAccountId,
+        targetAccountId: data.targetAccountId,
+        metadata: data.metadata
+          ? (data.metadata as Prisma.InputJsonValue)
+          : Prisma.JsonNull,
+      };
+
+      await this.recurrenceRepo.saveRecurrence(createRecurrenceData, tx);
     }
   }
 }

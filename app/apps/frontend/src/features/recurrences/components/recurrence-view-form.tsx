@@ -4,7 +4,7 @@
 import { RecurrenceDTO } from "@repo/shared";
 
 import { formatCurrency, cn } from "@/lib/utils";
-import { formatSpanishDate } from "@/lib/date-utils";
+import { formatShortDate } from "@/lib/date-utils";
 import { Calendar, Clock } from "lucide-react";
 
 interface RecurrenceViewFormProps {
@@ -24,7 +24,7 @@ export function RecurrenceViewForm({
           </span>
         </div>
         <div className="font-mono text-2.5 font-bold">
-          PRÓXIMO: {formatSpanishDate(selectedRecurrence.nextDate!)}
+          PRÓXIMO: {formatShortDate(selectedRecurrence.nextDate)}
         </div>
       </div>
 
@@ -94,7 +94,7 @@ export function RecurrenceViewForm({
         <div className="text-2.5">
           <p className="font-bold uppercase leading-none">Fecha de Inicio</p>
           <p className="font-mono">
-            {formatSpanishDate(selectedRecurrence.startDate)}
+            {formatShortDate(selectedRecurrence.startDate)}
           </p>
         </div>
       </div>

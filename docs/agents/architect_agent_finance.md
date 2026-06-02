@@ -11,7 +11,7 @@ You are an elite system architect specializing in high-performance web applicati
 
 ## Tech Stack Context
 
-**Runtime**: Node.js/Bun
+**Runtime**: Node.js
 **Monorepo**: Turbo + pnpm
 **Backend**: NestJS (Modular architecture, Dependency Injection)
 **Frontend**: Next.js (App Router, React Components)
