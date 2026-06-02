@@ -12,12 +12,18 @@ import {
 } from '../../repositories/transaction.repository';
 import { CreateTransactionInput, TransactionDTO } from '@repo/shared';
 import { Prisma } from '@prisma/client';
+import { PrismaService } from '../../infra/prisma/prisma.service';
+import { AccountRepository } from '../../repositories/account.repository';
 
 @Injectable()
 export class TransactionService {
   private readonly logger = new Logger(TransactionService.name);
 
-  constructor(private readonly transactionRepo: TransactionRepository) {}
+  constructor(
+    private readonly transactionRepo: TransactionRepository,
+    private readonly accountRepo: AccountRepository,
+    private readonly prisma: PrismaService,
+  ) {}
 
   private mapToDTO(transaction: TransactionWithRelations): TransactionDTO {
     return {
@@ -90,13 +96,155 @@ export class TransactionService {
     );
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { isRecurrence, ...prismaData } = transactionData;
+    const { isRecurrence: _, ...prismaData } = transactionData;
+    const amount = Number(transactionData.amount);
 
-    const response = await this.transactionRepo.saveTransaction({
-      ...prismaData,
-      userId,
-      metadata: prismaData.metadata ? prismaData.metadata : Prisma.JsonNull,
+    return this.prisma.$transaction(async (tx) => {
+      // ─── 1. Update Account Balances ─────────────────────────────────────────
+      await this.updateBalancesForType(transactionData, amount, tx);
+
+      // ─── 2. Save Transaction Record ─────────────────────────────────────────
+
+      const response = await this.transactionRepo.saveTransaction(
+        {
+          ...prismaData,
+          userId,
+          metadata: prismaData.metadata ? prismaData.metadata : Prisma.JsonNull,
+        },
+        tx,
+      );
+
+      return this.mapToDTO(response);
     });
-    return this.mapToDTO(response);
+  }
+
+  // ─── Extracted: Balance logic per transaction type ─────────────────────────
+  private async updateBalancesForType(
+    data: CreateTransactionInput,
+    amount: number,
+    tx: Prisma.TransactionClient,
+  ): Promise<void> {
+    const { type, sourceAccountId, targetAccountId } = data;
+
+    switch (type) {
+      case 'EXPENSE': {
+        // Money leaves source account
+        if (!sourceAccountId) {
+          throw new BadRequestException('EXPENSE requires sourceAccountId');
+        }
+        await this.accountRepo.updateBalance(
+          sourceAccountId,
+          amount,
+          'decrement',
+          tx,
+        );
+        break;
+      }
+
+      case 'INCOME': {
+        // Money enters target account
+        if (!targetAccountId) {
+          throw new BadRequestException('INCOME requires targetAccountId');
+        }
+        await this.accountRepo.updateBalance(
+          targetAccountId,
+          amount,
+          'increment',
+          tx,
+        );
+        break;
+      }
+
+      case 'TRANSFER': {
+        // Move money: source ↓, target ↑
+        if (!sourceAccountId || !targetAccountId) {
+          throw new BadRequestException(
+            'TRANSFER requires both source and target accounts',
+          );
+        }
+        await Promise.all([
+          this.accountRepo.updateBalance(
+            sourceAccountId,
+            amount,
+            'decrement',
+            tx,
+          ),
+          this.accountRepo.updateBalance(
+            targetAccountId,
+            amount,
+            'increment',
+            tx,
+          ),
+        ]);
+        break;
+      }
+
+      case 'INVESTMENT': {
+        // Money moves from source to investment target (both are assets)
+        if (!sourceAccountId || !targetAccountId) {
+          throw new BadRequestException(
+            'INVESTMENT requires both source and target accounts',
+          );
+        }
+        await Promise.all([
+          this.accountRepo.updateBalance(
+            sourceAccountId,
+            amount,
+            'decrement',
+            tx,
+          ),
+          this.accountRepo.updateBalance(
+            targetAccountId,
+            amount,
+            'increment',
+            tx,
+          ),
+        ]);
+        break;
+      }
+
+      case 'RETURN': {
+        // Investment return: source (investment) ↓, target (cash) ↑
+        if (!sourceAccountId || !targetAccountId) {
+          throw new BadRequestException(
+            'RETURN requires both source and target accounts',
+          );
+        }
+        await Promise.all([
+          this.accountRepo.updateBalance(
+            sourceAccountId,
+            amount,
+            'decrement',
+            tx,
+          ),
+          this.accountRepo.updateBalance(
+            targetAccountId,
+            amount,
+            'increment',
+            tx,
+          ),
+        ]);
+        break;
+      }
+
+      case 'PAYMENT': {
+        // Money leaves source account
+        if (!sourceAccountId) {
+          throw new BadRequestException('EXPENSE requires sourceAccountId');
+        }
+        await this.accountRepo.updateBalance(
+          sourceAccountId,
+          amount,
+          'decrement',
+          tx,
+        );
+        break;
+      }
+
+      default: {
+        // 🔒 Exhaustive check: TypeScript will error if a new type is added but not handled
+        throw new BadRequestException(`Unhandled transaction type:`);
+      }
+    }
   }
 }

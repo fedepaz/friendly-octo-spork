@@ -8,6 +8,6 @@ import { AccountRepository } from '../../repositories/account.repository';
 @Module({
   controllers: [AccountController],
   providers: [AccountService, AccountRepository],
-  exports: [AccountService],
+  exports: [AccountService, AccountRepository],
 })
 export class AccountsModule {}
