@@ -1,18 +1,47 @@
 import { z } from "zod";
 import {
+  CardType,
   CardTypeSchema,
+  RecurrenceType,
   RecurrenceTypeSchema,
+  TransactionType,
   TransactionTypeSchema,
 } from "../enums";
+import type { CategoryDTO } from "./categories.schema";
 import { categorySchema } from "./categories.schema";
-import { accountSchema } from "./accounts.schema";
+import type { AccountDTO } from "./accounts.schema";
 
-export const recurrenceSchema = z.object({
+export interface RecurrenceDTO {
+  id: string;
+  userId: string;
+  name: string;
+  type: TransactionType;
+  amount: string;
+  frequency: RecurrenceType;
+  totalParts: number | null;
+  currentPart: number | null;
+  startDate: Date;
+  nextDate: Date | null;
+  endDate: Date | null;
+  active: boolean;
+  categoryId?: string | null;
+  sourceAccountId?: string | null;
+  targetAccountId?: string | null;
+  isCardExpense?: boolean | null;
+  cardType?: CardType | null;
+  metadata?: unknown | null;
+
+  category?: CategoryDTO | null;
+  sourceAccount?: AccountDTO | null;
+  targetAccount?: AccountDTO | null;
+}
+
+export const recurrenceSchema: z.ZodType<RecurrenceDTO> = z.object({
   id: z.string(),
   userId: z.string(),
   name: z.string(),
   type: TransactionTypeSchema,
-  amount: z.number(),
+  amount: z.string(),
   frequency: RecurrenceTypeSchema,
   totalParts: z.number().int().nullable(),
   currentPart: z.number().int().nullable(),
@@ -27,10 +56,10 @@ export const recurrenceSchema = z.object({
   cardType: CardTypeSchema.optional().nullable(),
   metadata: z.unknown().optional().nullable(),
 
-  category: categorySchema.nullable().optional(),
-  sourceAccount: accountSchema.nullable().optional(),
-  targetAccount: accountSchema.nullable().optional(),
-});
+  category: z.lazy(() => categorySchema.nullable().optional()),
+  sourceAccount: z.lazy(() => z.any().nullable().optional()),
+  targetAccount: z.lazy(() => z.any().nullable().optional()),
+}) as z.ZodType<RecurrenceDTO>;
 
 export const createRecurrenceSchema = z.object({
   name: z
@@ -38,7 +67,9 @@ export const createRecurrenceSchema = z.object({
     .min(1, "Recurrence name is required")
     .max(255, "Recurrence name is too long"),
   type: TransactionTypeSchema,
-  amount: z.coerce.number().positive("Amount must be a positive number"),
+  amount: z
+    .preprocess((val) => String(val), z.string())
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, "Amount must be a positive number"),
   frequency: RecurrenceTypeSchema,
   totalParts: z.number().optional().default(1),
   currentPart: z.number().optional().default(1),
@@ -61,4 +92,3 @@ export const recurrenceFilterSchema = z.object({
 export type CreateRecurrenceInput = z.infer<typeof createRecurrenceSchema>;
 export type UpdateRecurrenceInput = z.infer<typeof updateRecurrenceSchema>;
 export type RecurrenceFilterInput = z.infer<typeof recurrenceFilterSchema>;
-export type RecurrenceDTO = z.infer<typeof recurrenceSchema>;

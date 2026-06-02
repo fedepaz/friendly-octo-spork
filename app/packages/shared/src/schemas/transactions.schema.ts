@@ -1,19 +1,51 @@
 import { z } from "zod";
 import {
+  BudgetCategory,
   BudgetCategorySchema,
+  CardType,
   CardTypeSchema,
+  RecurrenceType,
   RecurrenceTypeSchema,
+  TransactionType,
   TransactionTypeSchema,
 } from "../enums";
+import type { CategoryDTO } from "./categories.schema";
 import { categorySchema } from "./categories.schema";
-import { accountSchema } from "./accounts.schema";
-import { recurrenceSchema } from "./recurrences.schema";
+import type { AccountDTO } from "./accounts.schema";
+import type { RecurrenceDTO } from "./recurrences.schema";
 
-export const transactionSchema = z.object({
+export interface TransactionDTO {
+  id: string;
+  userId: string;
+  type: TransactionType;
+  amount: string;
+  date: Date;
+  description?: string | null;
+  categoryId?: string | null;
+  sourceAccountId?: string | null;
+  targetAccountId?: string | null;
+  recurrenceId?: string | null;
+  recurrencePartNumber?: number | null;
+  isBudgetedExpense?: boolean | null;
+  budgetCategory?: BudgetCategory | null;
+  isCardExpense?: boolean | null;
+  cardType?: CardType | null;
+  source?: string | null;
+  metadata?: unknown | null;
+  createdAt: Date;
+  updatedAt: Date;
+
+  category?: CategoryDTO | null;
+  sourceAccount?: AccountDTO | null;
+  targetAccount?: AccountDTO | null;
+  recurrence?: RecurrenceDTO | null;
+}
+
+export const transactionSchema: z.ZodType<TransactionDTO> = z.object({
   id: z.string(),
   userId: z.string(),
   type: TransactionTypeSchema,
-  amount: z.number().positive(),
+  amount: z.string(),
   date: z.date(),
   description: z.string().optional().nullable(),
   categoryId: z.string().optional().nullable(),
@@ -30,15 +62,17 @@ export const transactionSchema = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
 
-  category: categorySchema.nullable(),
-  sourceAccount: accountSchema.nullable(),
-  targetAccount: accountSchema.nullable(),
-  recurrence: recurrenceSchema.nullable(),
-});
+  category: z.lazy(() => categorySchema.nullable()),
+  sourceAccount: z.lazy(() => z.any().nullable()),
+  targetAccount: z.lazy(() => z.any().nullable()),
+  recurrence: z.lazy(() => z.any().nullable()),
+}) as z.ZodType<TransactionDTO>;
 
 export const createTransactionSchema = z.object({
   type: TransactionTypeSchema,
-  amount: z.coerce.number().positive("Amount must be a positive number"),
+  amount: z
+    .preprocess((val) => String(val), z.string())
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, "Amount must be a positive number"),
   date: z.coerce.date(),
   description: z
     .string()
@@ -70,4 +104,3 @@ export const updateTransactionSchema = createTransactionSchema.partial();
 
 export type UpdateTransactionInput = z.infer<typeof updateTransactionSchema>;
 export type CreateTransactionInput = z.infer<typeof createTransactionSchema>;
-export type TransactionDTO = z.infer<typeof transactionSchema>;

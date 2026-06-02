@@ -25,8 +25,8 @@ export function StepAmountComponent({
         <Label>Amount</Label>
         <input
           {...formCreateTransaction.register("amount")}
-          type="number"
-          step="0.01"
+          type="text"
+          inputMode="decimal"
           placeholder="0.00"
           autoFocus
           className="w-full bg-background border-2 border-border px-4 py-3 text-2xl font-mono text-right focus:outline-none focus:border-foreground transition-colors"

@@ -1,7 +1,10 @@
 // backend/src/modules/accounts/account.service.ts
 
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import { AccountRepository } from '../../repositories/account.repository';
+import {
+  AccountRepository,
+  AccountWithRelations,
+} from '../../repositories/account.repository';
 import { AccountDTO, CreateAccountInput } from '@repo/shared';
 
 @Injectable()
@@ -10,16 +13,33 @@ export class AccountService {
 
   constructor(private readonly accountsRepo: AccountRepository) {}
 
+  private mapToDTO(account: AccountWithRelations): AccountDTO {
+    return {
+      ...account,
+      balance: account.balance.toString(),
+      transactionsFrom: account.transactionsFrom?.map((tx) => ({
+        ...tx,
+        amount: tx.amount.toString(),
+      })),
+      transactionsTo: account.transactionsTo?.map((tx) => ({
+        ...tx,
+        amount: tx.amount.toString(),
+      })),
+    };
+  }
+
   async getAccounts(userId: string): Promise<AccountDTO[]> {
     if (!userId) throw new BadRequestException('User id is required');
     this.logger.log(`Getting accounts for user ${userId}`);
-    return this.accountsRepo.getAccounts(userId);
+    const accounts = await this.accountsRepo.getAccounts(userId);
+    return accounts.map((account) => this.mapToDTO(account));
   }
 
   async getAccountById(userId: string, id: string): Promise<AccountDTO | null> {
     if (!userId) throw new BadRequestException('User id is required');
     this.logger.log(`Getting account ${id} for user ${userId}`);
-    return this.accountsRepo.getAccountById(userId, id);
+    const account = await this.accountsRepo.getAccountById(userId, id);
+    return account ? this.mapToDTO(account) : null;
   }
 
   async saveAccount(
@@ -28,9 +48,10 @@ export class AccountService {
   ): Promise<AccountDTO> {
     if (!userId) throw new BadRequestException('User id is required');
     this.logger.log(`Saving account ${accountData.name} for user ${userId}`);
-    return this.accountsRepo.saveAccount({
+    const account = await this.accountsRepo.saveAccount({
       userId,
       ...accountData,
     });
+    return this.mapToDTO(account);
   }
 }

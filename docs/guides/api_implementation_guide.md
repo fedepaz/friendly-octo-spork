@@ -33,7 +33,11 @@ Follow the NestJS Module-Controller-Service-Repository pattern:
 ### 4. Database Interactions (Prisma)
 
 *   **PrismaService**: Inject the `PrismaService` into repositories.
-*   **Precision**: Always use `@db.Decimal(15, 2)` for monetary values.
+*   **Precision**: Always use `@db.Decimal(19, 4)` for monetary values (amount, balance) in `schema.prisma`.
+*   **Money Mapping**:
+    *   **Internal Math**: Perform all calculations in Services using the native `Decimal` objects returned by Prisma. Never use `.toNumber()` for money.
+    *   **DTOs**: Map Decimals to strings using `.toString()` in Service `mapToDTO` methods.
+    *   **Wire Format**: All monetary values in API requests/responses MUST be strings to prevent floating-point rounding errors during JSON transit.
 *   **Soft Deletes**: Always filter for `deletedAt: null` in read operations.
 *   **Transactions**: Use `prisma.$transaction` for multi-model atomic updates (e.g., creating a transaction and updating an account balance).
     *   **Pattern**: Inject the `PrismaService` into the primary Service. Start a transaction using `this.prisma.$transaction(async (tx) => { ... })`. Pass the `tx` object (of type `Prisma.TransactionClient`) to repository methods to ensure they execute within the same database session.

@@ -2,8 +2,9 @@
 
 import { Label } from "@/components/ui/label";
 import { useAccounts } from "@/features/accounts/hooks/accountsHooks";
-import { CreateTransactionInput } from "@repo/shared";
+import { CreateTransactionInput, Currency } from "@repo/shared";
 import { UseFormReturn } from "react-hook-form";
+import { formatCurrency } from "@/lib/utils";
 
 interface StepAccountProps {
   formCreateTransaction: UseFormReturn<CreateTransactionInput>;
@@ -56,7 +57,7 @@ export function StepAccountsComponent({
                 <span className="font-mono font-bold text-sm">{a.name}</span>
                 <span className="font-mono text-sm text-muted-foreground">
                   {/* balance shown here — backend sorts by balance > 0 first */}
-                  {a.currency} {Number(a.balance).toFixed(2)}
+                  {formatCurrency(a.balance, a.currency as Currency)}
                 </span>
               </button>
             ))}
@@ -88,7 +89,7 @@ export function StepAccountsComponent({
                 >
                   <span className="font-mono font-bold text-sm">{a.name}</span>
                   <span className="font-mono text-sm text-muted-foreground">
-                    {a.currency} {Number(a.balance).toFixed(2)}
+                    {formatCurrency(a.balance, a.currency as Currency)}
                   </span>
                 </button>
               ))}

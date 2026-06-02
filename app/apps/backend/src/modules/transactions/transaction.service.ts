@@ -30,7 +30,7 @@ export class TransactionService {
       id: transaction.id,
       userId: transaction.userId,
       type: transaction.type,
-      amount: transaction.amount.toNumber(),
+      amount: transaction.amount.toString(),
       date: transaction.date,
       description: transaction.description,
       categoryId: transaction.category?.id,
@@ -50,19 +50,19 @@ export class TransactionService {
       sourceAccount: transaction.sourceAccount
         ? {
             ...transaction.sourceAccount,
-            balance: transaction.sourceAccount.balance.toNumber(),
+            balance: transaction.sourceAccount.balance.toString(),
           }
         : null,
       targetAccount: transaction.targetAccount
         ? {
             ...transaction.targetAccount,
-            balance: transaction.targetAccount.balance.toNumber(),
+            balance: transaction.targetAccount.balance.toString(),
           }
         : null,
       recurrence: transaction.recurrence
         ? {
             ...transaction.recurrence,
-            amount: transaction.recurrence.amount.toNumber(),
+            amount: transaction.recurrence.amount.toString(),
           }
         : null,
     };
@@ -97,7 +97,7 @@ export class TransactionService {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { isRecurrence: _, ...prismaData } = transactionData;
-    const amount = Number(transactionData.amount);
+    const amount = transactionData.amount;
 
     return this.prisma.$transaction(async (tx) => {
       // ─── 1. Update Account Balances ─────────────────────────────────────────
@@ -121,7 +121,7 @@ export class TransactionService {
   // ─── Extracted: Balance logic per transaction type ─────────────────────────
   private async updateBalancesForType(
     data: CreateTransactionInput,
-    amount: number,
+    amount: string | Prisma.DecimalJsLike,
     tx: Prisma.TransactionClient,
   ): Promise<void> {
     const { type, sourceAccountId, targetAccountId } = data;

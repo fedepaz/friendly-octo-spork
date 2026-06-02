@@ -32,7 +32,7 @@ model Account {
   name             String        @db.VarChar(50)
   type             AccountType
   currency         Currency
-  balance          Decimal       @default(0) @db.Decimal(15, 2)
+  balance          Decimal       @default(0) @db.Decimal(19, 4)
 
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
@@ -74,7 +74,7 @@ model Recurrence {
   userId       String         @db.VarChar(36)
   name         String         @db.VarChar(100)
   type         TransactionType
-  amount       Decimal        @db.Decimal(15, 2)
+  amount       Decimal        @db.Decimal(19, 4)
   frequency    RecurrenceType
   totalParts   Int?
   currentPart  Int  @default(0)
@@ -109,7 +109,7 @@ model Transaction {
   id           String        @id @default(cuid()) @db.VarChar(36)
   userId          String          @db.VarChar(36)
   type            TransactionType
-  amount          Decimal         @db.Decimal(15, 2)
+  amount          Decimal         @db.Decimal(19, 4)
   date            DateTime
   description     String?         @db.VarChar(255)
   categoryId      String?         @db.VarChar(36)

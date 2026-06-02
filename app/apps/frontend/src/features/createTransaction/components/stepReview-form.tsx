@@ -1,9 +1,10 @@
 // src/features/createTransaction/components/stepReview-form.tsx
 
 import { useAccounts } from "@/features/accounts/hooks/accountsHooks";
-import { CreateTransactionInput } from "@repo/shared";
+import { CreateTransactionInput, Currency } from "@repo/shared";
 import { UseFormReturn } from "react-hook-form";
 import { useCategorie } from "../hooks/useCategoriesHook";
+import { formatCurrency } from "@/lib/utils";
 
 interface StepReviewProps {
   formCreateTransaction: UseFormReturn<CreateTransactionInput>;
@@ -18,14 +19,21 @@ export function StepReviewComponent({
   const { data: accounts = [] } = useAccounts();
   const { data: categories = [] } = useCategorie();
 
-  const sourceAccountName = accounts.find(
+  const sourceAccount = accounts.find(
     (a) => a.id === watched.sourceAccountId,
-  )?.name;
-  const targetAccountName = accounts.find(
+  );
+  const targetAccount = accounts.find(
     (a) => a.id === watched.targetAccountId,
-  )?.name;
+  );
+
+  const sourceAccountName = sourceAccount?.name;
+  const targetAccountName = targetAccount?.name;
   const categoryName = categories.find((c) => c.id === watched.categoryId)
     ?.name;
+
+  const displayCurrency = (sourceAccount?.currency ||
+    targetAccount?.currency ||
+    "ARS") as Currency;
 
   return (
     <div className="flex flex-col gap-3">
@@ -38,7 +46,9 @@ export function StepReviewComponent({
           { label: "Type", value: watched.type },
           {
             label: "Amount",
-            value: watched.amount ? `${watched.amount}` : "—",
+            value: watched.amount
+              ? formatCurrency(watched.amount, displayCurrency)
+              : "—",
           },
           {
             label: "Date",

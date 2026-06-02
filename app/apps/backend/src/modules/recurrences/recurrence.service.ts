@@ -33,18 +33,18 @@ export class RecurrenceService {
   private mapToDTO(r: RecurrenceWithRelations): RecurrenceDTO {
     return {
       ...r,
-      amount: Number(r.amount),
+      amount: r.amount.toString(),
       // Map nested account balances if they exist
       sourceAccount: r.sourceAccount
         ? {
             ...r.sourceAccount,
-            balance: Number(r.sourceAccount.balance),
+            balance: r.sourceAccount.balance.toString(),
           }
         : undefined,
       targetAccount: r.targetAccount
         ? {
             ...r.targetAccount,
-            balance: Number(r.targetAccount.balance),
+            balance: r.targetAccount.balance.toString(),
           }
         : undefined,
     };
