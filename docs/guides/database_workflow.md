@@ -44,6 +44,19 @@ This applies to any operation that changes an account's balance. **All operation
     2.  The `Transaction` row is updated with the new data.
     3.  The effect of the _new_ transaction data is applied to the `Account` balance(s).
 
+### Workflow C: Card Funding & Settlement
+
+This is a specialized version of Workflow B for `CARD` accounts.
+
+1.  **Funding (Transfer to Card)**:
+    - User creates a `TRANSFER` from `BANK` to `CARD`.
+    - `BANK.balance` decreases (-).
+    - `CARD.balance` increases (+), representing "funds available to pay debt."
+2.  **Settlement (Paying Expenses)**:
+    - User records a `PAYMENT` on the `CARD` account.
+    - `CARD.balance` decreases (-), consuming the previously loaded funds.
+    - The transaction tracks which expense was settled (via metadata or linked ID).
+
 ## 3. Data Mapping and DTOs
 
 To decouple the database schema from the UI and ensure consistent data types (e.g., converting Prisma's `Decimal` to `number`), the service layer must use **Data Transfer Objects (DTOs)**.

@@ -5,7 +5,13 @@ import {
   RecurrenceRepository,
   RecurrenceWithRelations,
 } from '../../repositories/recurrence.repository';
-import { RecurrenceDTO } from '@repo/shared';
+import {
+  CreateTransactionInput,
+  RecurrenceDTO,
+  RecurrenceType,
+  RecurrenceTypeSchema,
+} from '@repo/shared';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class RecurrenceService {
@@ -48,5 +54,87 @@ export class RecurrenceService {
           }
         : undefined,
     };
+  }
+
+  private calculateRecurrenceDates(
+    transactionDate: Date,
+    frequency: RecurrenceType,
+    totalParts?: number,
+    firstPaymentTiming: 'now' | 'next' = 'now',
+  ): { startDate: Date; nextDate: Date; endDate: Date | null } {
+    let startDate = new Date(transactionDate);
+
+    if (firstPaymentTiming === 'next') {
+      startDate = this.addFrequencyUnit(startDate, frequency);
+    }
+
+    const nextDate = this.addFrequencyUnit(startDate, frequency);
+    const endDate = totalParts
+      ? this.addFrequencyUnit(startDate, frequency, totalParts - 1)
+      : null;
+
+    return { startDate, nextDate, endDate };
+  }
+
+  private addFrequencyUnit(
+    date: Date,
+    frequency: RecurrenceType,
+    count = 1,
+  ): Date {
+    const result = new Date(date);
+    switch (frequency) {
+      case 'WEEKLY':
+        result.setDate(result.getDate() + 7 * count);
+        break;
+      case 'MONTHLY':
+        result.setMonth(result.getMonth() + count);
+        break;
+      case 'YEARLY':
+        result.setFullYear(result.getFullYear() + count);
+        break;
+      default:
+        return result;
+    }
+    return result;
+  }
+
+  // In saveTransaction or createRecurrence:
+  async createRecurrenceForTransaction(
+    data: CreateTransactionInput,
+    userId: string,
+    tx: Prisma.TransactionClient,
+  ) {
+    if (!data.recurrenceName) {
+      throw new BadRequestException('Recurrence name is required');
+    }
+
+    const { startDate, nextDate, endDate } = this.calculateRecurrenceDates(
+      data.date,
+      data.frequency!,
+      data.totalParts,
+      data.isFirstPayment ? 'now' : 'next',
+    );
+    const createRecurrenceData = {
+      userId,
+      name: data.recurrenceName,
+      type: data.type,
+      amount: data.amount,
+      frequency: data.frequency ?? RecurrenceTypeSchema.enum.MONTHLY,
+      totalParts: data.totalParts,
+      categoryId: data.categoryId,
+      sourceAccountId: data.sourceAccountId,
+      targetAccountId: data.targetAccountId,
+      startDate,
+      nextDate,
+      endDate,
+      active: true,
+      isCardExpense: data.isCardExpense,
+      cardType: data.cardType,
+      metadata: data.metadata
+        ? (data.metadata as Prisma.InputJsonValue)
+        : Prisma.JsonNull,
+    };
+
+    await this.recurrenceRepo.saveRecurrence(createRecurrenceData, tx);
   }
 }

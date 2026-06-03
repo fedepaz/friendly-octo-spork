@@ -4,7 +4,6 @@ import {
   BudgetCategorySchema,
   CardType,
   CardTypeSchema,
-  RecurrenceType,
   RecurrenceTypeSchema,
   TransactionType,
   TransactionTypeSchema,
@@ -69,7 +68,8 @@ export const transactionSchema: z.ZodType<TransactionDTO> = z.object({
   recurrence: z.lazy(() => z.any().nullable()),
 }) as z.ZodType<TransactionDTO>;
 
-export const createTransactionSchema = z.object({
+// ─── 1. BASE SCHEMA (raw ZodObject) ─────────────────────────────────────
+const createTransactionSchemaBase = z.object({
   type: TransactionTypeSchema,
   amount: z
     .preprocess((val) => String(val), z.string())
@@ -103,11 +103,37 @@ export const createTransactionSchema = z.object({
     .preprocess((val) => val === "on" || val === true, z.boolean())
     .optional()
     .default(false),
+  isFirstPayment: z
+    .preprocess((val) => val === "on" || val === true, z.boolean())
+    .optional()
+    .default(false),
+  isCardExpense: z
+    .preprocess((val) => val === "on" || val === true, z.boolean())
+    .default(false),
+  cardType: CardTypeSchema.nullable(),
   frequency: RecurrenceTypeSchema.optional(),
   totalParts: z.coerce.number().int().optional(),
 });
 
-export const updateTransactionSchema = createTransactionSchema.partial();
+// ─── 2. CREATE SCHEMA (with cross-field validation) ─────────────────────
+export const createTransactionSchema = createTransactionSchemaBase.superRefine(
+  (data, ctx) => {
+    if (
+      data.isRecurrence &&
+      (!data.recurrenceName || !data.recurrenceName.trim())
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Recurrence name is required",
+        path: ["recurrenceName"],
+      });
+    }
+    // Add more cross-field rules here if needed
+  },
+);
+
+// ─── 3. UPDATE SCHEMA (partial, no create-specific validation) ──────────
+export const updateTransactionSchema = createTransactionSchemaBase.partial();
 
 export type UpdateTransactionInput = z.infer<typeof updateTransactionSchema>;
 export type CreateTransactionInput = z.infer<typeof createTransactionSchema>;

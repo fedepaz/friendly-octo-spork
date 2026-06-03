@@ -12,27 +12,26 @@ You are assisting in the development of a personal, single-user finance tracker 
 
 ### Core Philosophy:
 
-- One source of truth: All financial activity (income, expenses, recurring payments, investments) is stored as typed transactions in a single Transaction table (or equivalent), with clear categories and metadata.
-- No complex auth: For now, assume a single hardcoded user (or a simple User table for future scaling). Skip login flows unless explicitly requested.
-- Ultra-minimal UX: The interface must feel like a smart spreadsheet—fast, keyboard-friendly, and functional. Use React components with Next.js for a modern, responsive experience.
+- One source of truth: All financial activity (income, expenses, recurring payments, investments) is stored as typed transactions in a single Transaction table, with clear categories and metadata.
+- **Debt Tracking**: The app uses a "Load & Settle" workflow for Credit Cards. Debt is tracked via `CARD` accounts. You load them with money from your bank to pay off accumulated expenses one-by-one.
+- No complex auth: For now, assume a single hardcoded user. Skip login flows unless explicitly requested.
+- Ultra-minimal UX: The interface must feel like a smart spreadsheet—fast, keyboard-friendly, and functional.
 - Shared Validation: Use Zod for validation schemas, shared across the monorepo in `packages/shared`.
 
 ## User Workflow (Key Mental Model):
 
 1. **Start of month**: User logs income (e.g., salary). System auto-calculates:
-   -Total income
-   -Pending recurring payments (bills, subscriptions)
-   -Available budget = income − fixed costs
-   -Optional: auto-reserve for investments
-2. **During month**: User logs daily expenses (groceries, coffee) and marks recurring payments as paid. System shows:
-   -Current balance
-   -Daily spending limit (based on remaining budget / days left)
-   -YTD or monthly spend totals
+   - Total income
+   - Pending recurring payments (subscriptions) and installments (loans/purchases)
+   - Available budget = income − fixed costs
+2. **During month**: 
+   - User logs daily expenses. 
+   - **Card Workflow**: User swipes card (Debt Gap increases). User transfers money to Card Account (Balance increases). User settles expenses (Balance decreases, Gap decreases).
+   - System shows current balance and daily spending limit.
 3. **End of month**: System generates a summary:
-   -Totals by category
-   -Variance vs. budget
-   -Suggestions (“You spent 20% more on food—consider lowering next month”)
-   -Auto-creates next month’s recurring payment skeleton
+   - Totals by category
+   - Variance vs. budget
+   - Auto-creates next month’s recurring payment/installment skeleton.
 
 ## Tech Constraints:
 

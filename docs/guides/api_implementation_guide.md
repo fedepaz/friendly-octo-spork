@@ -42,6 +42,9 @@ Follow the NestJS Module-Controller-Service-Repository pattern:
 *   **Transactions**: Use `prisma.$transaction` for multi-model atomic updates (e.g., creating a transaction and updating an account balance).
     *   **Pattern**: Inject the `PrismaService` into the primary Service. Start a transaction using `this.prisma.$transaction(async (tx) => { ... })`. Pass the `tx` object (of type `Prisma.TransactionClient`) to repository methods to ensure they execute within the same database session.
     *   **Cross-Module Logic**: If an operation affects multiple domains (e.g., Transactions and Accounts), the Service should orchestrate the repositories. Export the necessary Repository from its owner module and import that module into the consuming feature's module.
+*   **Workflow Enforcement**:
+    *   **Recurrences**: If `frequency` is `INSTALLMENT`, `totalParts` is mandatory. For `MONTHLY`/`WEEKLY`/`YEARLY`, `totalParts` must be null.
+    *   **Card Settlement**: `PAYMENT` transactions on `CARD` accounts must decrease the balance (consuming "loaded" funds) and should ideally link to the expenses being settled.
 *   **Data Sanitization**: When a single DTO is used to create multiple related entities (e.g., `CreateTransactionInput` containing both transaction and recurrence data), you MUST sanitize the payload before calling each repository's save method.
     *   **Technique**: Use object destructuring to extract only the fields required for each specific model.
     ```typescript

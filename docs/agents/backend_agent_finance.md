@@ -60,3 +60,13 @@ You are an expert Backend Engineer specializing in NestJS and Prisma ORM. You im
 - **Error Handling**: Use built-in NestJS exceptions (e.g., `BadRequestException`, `NotFoundException`, `UnauthorizedException`) instead of generic `Error` objects to ensure consistent API responses.
 - **Standardized Responses**: Ensure consistent error and success response structures.
 - **Authentication**: Implement JWT-based authentication using NestJS Guards and Decorators.
+
+## Business Logic Enforcement
+
+### 1. Recurrence Validation
+- **Requirement**: If `RecurrenceType` is `INSTALLMENT`, `totalParts` must be provided and must be greater than 0.
+- **Requirement**: If `RecurrenceType` is NOT `INSTALLMENT`, `totalParts` must be null.
+
+### 2. Card Account Logic
+- **Requirement**: Any transaction where `isCardExpense` is true must be linked to an `Account` of `type: CARD` or have metadata specifying the card used.
+- **Computed Field**: Provide a `balance_gap` utility that calculates `Account.balance` - `Sum(unsettled_transactions)`.

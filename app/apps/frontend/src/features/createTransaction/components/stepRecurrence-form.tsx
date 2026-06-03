@@ -1,8 +1,8 @@
 // src/features/createTransaction/components/stepRecurrence-form.tsx
 
 import { Label } from "@/components/ui/label";
-import { CreateTransactionInput } from "@repo/shared";
-import { UseFormReturn } from "react-hook-form";
+import { CardType, CreateTransactionInput } from "@repo/shared";
+import { Controller, UseFormReturn } from "react-hook-form";
 
 const FREQUENCIES = ["MONTHLY", "WEEKLY", "YEARLY", "INSTALLMENT"] as const;
 
@@ -14,6 +14,29 @@ export function StepRecurrenceComponent({
   formCreateTransaction,
 }: StepRecurrenceProps) {
   const watched = formCreateTransaction.watch();
+  const {
+    setValue,
+    formState: { errors },
+  } = formCreateTransaction;
+
+  // Toggle handler for isRecurrence
+  const toggleRecurrence = (value: boolean) => {
+    setValue("isRecurrence", value);
+    if (!value) {
+      // Clear recurrence-specific fields when toggled off
+      setValue("recurrenceName", undefined);
+      setValue("frequency", undefined);
+      setValue("totalParts", undefined);
+      setValue("isFirstPayment", false);
+    }
+  };
+
+  const isNextPaymentLabel =
+    watched.frequency?.toLowerCase() === "monthly"
+      ? "month"
+      : watched.frequency?.toLowerCase() === "weekly"
+        ? "week"
+        : "year";
 
   return (
     <div className="flex flex-col gap-4">
@@ -21,19 +44,52 @@ export function StepRecurrenceComponent({
         Does this repeat?
       </h3>
 
-      <div className="grid  gap-3">
+      <div className="grid grid-cols-2 gap-3">
         <button
           type="button"
-          onClick={() => formCreateTransaction.setValue("isRecurrence", true)}
+          onClick={() => toggleRecurrence(true)}
           className={`p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
-            ${watched.isRecurrence ? "border-foreground bg-muted" : "border-border text-muted-foreground hover:bg-muted"}`}
+            ${
+              watched.isRecurrence
+                ? "border-foreground bg-muted"
+                : "border-border text-muted-foreground hover:bg-muted"
+            }`}
         >
           Yes
+        </button>
+        <button
+          type="button"
+          onClick={() => toggleRecurrence(false)}
+          className={`p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+            ${
+              !watched.isRecurrence
+                ? "border-foreground bg-muted"
+                : "border-border text-muted-foreground hover:bg-muted"
+            }`}
+        >
+          No
         </button>
       </div>
 
       {watched.isRecurrence && (
         <div className="flex flex-col gap-3 border-2 border-border p-3">
+          {/* Recurrence Name (required) */}
+          <div>
+            <Label>Recurrence Name</Label>
+            <input
+              {...formCreateTransaction.register("recurrenceName")}
+              type="text"
+              placeholder="e.g. Monthly Rent, Netflix Subscription..."
+              className="w-full bg-background border-2 border-border px-4 py-3 text-sm font-mono focus:outline-none focus:border-foreground"
+            />
+            {errors.recurrenceName && (
+              <p className="text-xs font-mono text-destructive mt-1">
+                {errors.recurrenceName.message}
+              </p>
+            )}
+          </div>
+
+          {/* Frequency Selection */}
           <div>
             <Label>Frequency</Label>
             <div className="grid grid-cols-2 gap-2">
@@ -41,7 +97,9 @@ export function StepRecurrenceComponent({
                 <button
                   key={f}
                   type="button"
-                  onClick={() => formCreateTransaction.setValue("frequency", f)}
+                  onClick={() => {
+                    setValue("frequency", f);
+                  }}
                   className={`p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
                     ${
                       watched.frequency === f
@@ -53,20 +111,112 @@ export function StepRecurrenceComponent({
                 </button>
               ))}
             </div>
+            {errors.frequency && (
+              <p className="text-xs font-mono text-destructive mt-1">
+                {errors.frequency.message}
+              </p>
+            )}
           </div>
 
+          {/* Total Parts (only for INSTALLMENT) */}
           {watched.frequency && (
             <div>
-              <Label>Total Parts</Label>
+              <Label>Total Installments</Label>
               <input
                 {...formCreateTransaction.register("totalParts")}
                 type="number"
-                min="1"
+                max="99"
                 placeholder="e.g. 9"
                 className="w-full bg-background border-2 border-border px-4 py-3 text-sm font-mono focus:outline-none focus:border-foreground"
               />
+              {errors.totalParts && (
+                <p className="text-xs font-mono text-destructive mt-1">
+                  {errors.totalParts.message}
+                </p>
+              )}
             </div>
           )}
+
+          {/* First Payment Timing (only if totalParts is set) */}
+          {watched.totalParts && watched.frequency && (
+            <div className="border-t border-border pt-3 mt-2">
+              <Label>First Payment</Label>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setValue("isFirstPayment", true)}
+                  className={`p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                    ${
+                      watched.isFirstPayment
+                        ? "border-foreground bg-muted font-bold"
+                        : "border-border text-muted-foreground hover:bg-muted"
+                    }`}
+                >
+                  Now
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setValue("isFirstPayment", false)}
+                  className={`p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                    ${
+                      !watched.isFirstPayment
+                        ? "border-foreground bg-muted font-bold"
+                        : "border-border text-muted-foreground hover:bg-muted"
+                    }`}
+                >
+                  Next {isNextPaymentLabel}
+                </button>
+              </div>
+              <p className="text-xs font-mono text-muted-foreground mt-2">
+                {watched.isFirstPayment
+                  ? "First installment charged today"
+                  : `First installment charged on next ${isNextPaymentLabel}`}
+              </p>
+            </div>
+          )}
+
+          {/* Card Fields (optional, if transaction is card-related) */}
+          <div className="border-t border-border pt-3 mt-2">
+            <Controller
+              name="isCardExpense"
+              control={formCreateTransaction.control}
+              defaultValue={false} // Explicit default
+              render={({ field }) => (
+                <div className="flex items-center gap-2 mb-3">
+                  <input
+                    id="isCardExpense"
+                    type="checkbox"
+                    checked={field.value} // Always boolean from Controller
+                    onChange={field.onChange}
+                    className="w-4 h-4"
+                  />
+                  <Label htmlFor="isCardExpense" className="text-sm font-mono">
+                    This is a card expense
+                  </Label>
+                </div>
+              )}
+            />
+
+            {watched.isCardExpense && (
+              <div className="grid grid-cols-2 gap-2">
+                {["VISA", "MASTERCARD", "AMEX", "MAESTRO"].map((card) => (
+                  <button
+                    key={card}
+                    type="button"
+                    onClick={() => setValue("cardType", card as CardType)}
+                    className={`p-2 border-2 font-mono text-xs uppercase transition-all
+                      ${
+                        watched.cardType === card
+                          ? "border-foreground bg-muted font-bold"
+                          : "border-border text-muted-foreground hover:bg-muted"
+                      }`}
+                  >
+                    {card}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

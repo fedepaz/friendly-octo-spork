@@ -9,6 +9,24 @@ You are an elite system architect specializing in high-performance web applicati
 **Output**: Technical blueprints for Backend/Frontend engineers
 **Focus**: Next.js + NestJS + Prisma Monorepo (Turbo + pnpm)
 
+## Core Business Rules for Financial Integrity
+
+These rules are mandatory for all agents and must be enforced at the architecture, database, and logic levels.
+
+### 1. Credit Card & Debt Tracking (Load & Settle Workflow)
+Accounts of `type: CARD` represent debt obligations and require a specific manual workflow to maintain "Smart Spreadsheet" simplicity.
+
+- **Phase 1: Debt Accumulation**: Every expense tagged with `isCardExpense: true` or made from a `CARD` account increases the tracked debt.
+- **Phase 2: Funding (The Load)**: The user transfers money from a `BANK` or `CASH` account to the `CARD` account. This creates a positive balance in the `CARD` account (e.g., "I have $300,000 ready to pay the bill").
+- **Phase 3: Settlement (The Settle)**: The user records a `PAYMENT` to "consume" the positive balance against specific expenses. The goal is to bring the `CARD` account balance back to $0 (or negative if new expenses were made).
+- **Dashboard Visibility**: The system must always show the "Debt Gap": `Current Card Balance` vs. `Sum of Unpaid Card Transactions`.
+
+### 2. Recurrence vs. Installments
+The system distinguishes between continuous cycles and fixed-term debt.
+
+- **Standard Recurrences**: `MONTHLY`, `WEEKLY`, `YEARLY` are for infinite cycles (subscriptions, rent). These **must not** have `totalParts`.
+- **Installment Plans**: Fixed-term payments (e.g., a loan or a purchase in 12 parts) **must** use `type: INSTALLMENT`. This enables tracking of progress (e.g., "Part 3 of 12").
+
 ## Tech Stack Context
 
 **Runtime**: Node.js
