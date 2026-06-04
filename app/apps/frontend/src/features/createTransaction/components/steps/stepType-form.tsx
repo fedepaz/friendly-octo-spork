@@ -1,8 +1,9 @@
-// src/features/createTransaction/components/stepType-form.tsx
+// src/features/createTransaction/components/steps/stepType-form.tsx
 "use client";
 
-import { CreateTransactionInput } from "@repo/shared";
-import { UseFormReturn } from "react-hook-form";
+import { CreateTransactionInput, TransactionType } from "@repo/shared";
+import { useFormContext } from "react-hook-form";
+import { FieldError } from "../wizardModal";
 
 const TRANSACTION_TYPES = [
   {
@@ -43,18 +44,13 @@ const TRANSACTION_TYPES = [
   },
 ] as const;
 
-type TransactionTypeValue = (typeof TRANSACTION_TYPES)[number]["value"];
-
-interface StepTypeProps {
-  formCreateTransaction: UseFormReturn<CreateTransactionInput>;
-  onNext: () => void;
-}
-
-export function StepTypeComponent({
-  formCreateTransaction,
-  onNext,
-}: StepTypeProps) {
-  const watched = formCreateTransaction.watch();
+export function StepTypeComponent() {
+  const {
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext<CreateTransactionInput>();
+  const watchedType = watch("type");
 
   return (
     <div className="flex flex-col gap-3">
@@ -67,17 +63,13 @@ export function StepTypeComponent({
             key={value}
             type="button"
             onClick={() => {
-              formCreateTransaction.setValue(
-                "type",
-                value as TransactionTypeValue,
-              );
+              setValue("type", value as TransactionType);
               // reset account fields when type changes
-              formCreateTransaction.setValue("sourceAccountId", null);
-              formCreateTransaction.setValue("targetAccountId", null);
-              onNext();
+              setValue("sourceAccountId", null);
+              setValue("targetAccountId", null);
             }}
             className={`flex flex-col gap-1 p-4 border-2 text-left transition-all hover:bg-muted
-              ${watched.type === value ? `${color} bg-muted` : "border-border text-muted-foreground"}
+              ${watchedType === value ? `${color} bg-muted` : "border-border text-muted-foreground"}
             `}
           >
             <span className="font-mono font-bold text-sm uppercase tracking-wider">
@@ -86,6 +78,7 @@ export function StepTypeComponent({
             <span className="font-mono text-xs opacity-70">{hint}</span>
           </button>
         ))}
+        <FieldError message={errors.date?.message} />
       </div>
     </div>
   );

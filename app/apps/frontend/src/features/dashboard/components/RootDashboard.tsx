@@ -31,7 +31,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
-import { TransactionWizard } from "@/features/createTransaction";
+import { SmartFormProvider } from "@/features/createTransaction";
 
 // Mock data
 const netWorthData = [
@@ -441,7 +441,7 @@ export function RootDashboard() {
           </Card>
         </div>
       </div>
-      <TransactionWizard isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      {isOpen && <SmartFormProvider />}
     </div>
   );
 }

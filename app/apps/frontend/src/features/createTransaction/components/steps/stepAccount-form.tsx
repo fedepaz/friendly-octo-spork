@@ -1,20 +1,36 @@
-// src/features/createTransaction/components/stepAccount-form.tsx
+// src/features/createTransaction/components/steps/stepAccount-form.tsx
+"use client";
 
 import { Label } from "@/components/ui/label";
 import { useAccounts } from "@/features/accounts/hooks/accountsHooks";
-import { CreateTransactionInput, Currency } from "@repo/shared";
-import { UseFormReturn } from "react-hook-form";
+import { CreateTransactionInput, Currency, CardType } from "@repo/shared";
+import { useFormContext } from "react-hook-form";
 import { formatCurrency } from "@/lib/utils";
+import { useEffect } from "react";
 
-interface StepAccountProps {
-  formCreateTransaction: UseFormReturn<CreateTransactionInput>;
-}
-
-export function StepAccountsComponent({
-  formCreateTransaction,
-}: StepAccountProps) {
-  const watched = formCreateTransaction.watch();
+export function StepAccountsComponent() {
+  const { setValue, watch } = useFormContext<CreateTransactionInput>();
+  const watched = watch();
   const { data: accounts = [] } = useAccounts();
+
+  const sourceAccountId = watched.sourceAccountId;
+
+  // Auto-detect card expense
+  useEffect(() => {
+    if (sourceAccountId) {
+      const account = accounts.find((a) => a.id === sourceAccountId);
+      if (account?.type === "CARD") {
+        setValue("isCardExpense", true);
+        // Default card type if not set
+        if (!watched.cardType) {
+          setValue("cardType", "VISA" as CardType);
+        }
+      } else {
+        setValue("isCardExpense", false);
+        setValue("cardType", null);
+      }
+    }
+  }, [sourceAccountId, accounts, setValue, watched.cardType]);
 
   function needsSource(type: string) {
     return ["EXPENSE", "TRANSFER", "INVESTMENT", "PAYMENT"].includes(type);
@@ -37,16 +53,12 @@ export function StepAccountsComponent({
           <Label>
             {watched.type === "TRANSFER" ? "From account" : "Account"}
           </Label>
-          {/* TODO: accounts here ideally come from GET /accounts/for-transaction?type=EXPENSE */}
-          {/* filtered & sorted by balance on the backend */}
           <div className="flex flex-col gap-2">
             {accounts.map((a) => (
               <button
                 key={a.id}
                 type="button"
-                onClick={() =>
-                  formCreateTransaction.setValue("sourceAccountId", a.id)
-                }
+                onClick={() => setValue("sourceAccountId", a.id)}
                 className={`flex justify-between items-center p-3 border-2 text-left transition-all
                      ${
                        watched.sourceAccountId === a.id
@@ -56,7 +68,6 @@ export function StepAccountsComponent({
               >
                 <span className="font-mono font-bold text-sm">{a.name}</span>
                 <span className="font-mono text-sm text-muted-foreground">
-                  {/* balance shown here — backend sorts by balance > 0 first */}
                   {formatCurrency(a.balance, a.currency as Currency)}
                 </span>
               </button>
@@ -77,9 +88,7 @@ export function StepAccountsComponent({
                 <button
                   key={a.id}
                   type="button"
-                  onClick={() =>
-                    formCreateTransaction.setValue("targetAccountId", a.id)
-                  }
+                  onClick={() => setValue("targetAccountId", a.id)}
                   className={`flex justify-between items-center p-3 border-2 text-left transition-all
                        ${
                          watched.targetAccountId === a.id

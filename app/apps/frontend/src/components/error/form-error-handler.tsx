@@ -7,7 +7,7 @@ import { Alert, AlertDescription } from "../ui/alert";
 /**
  * Form Error Handler Component
  *
- * Displays form-level errors in agricultural context
+ * Displays form-level errors in a nicely styled way
  * Works with react-hook-form error state
  */
 export function FormErrorHandler() {

@@ -1,18 +1,18 @@
-// src/features/createTransaction/components/stepAmount-form.tsx
+// src/features/createTransaction/components/steps/stepAmount-form.tsx
+"use client";
 
+import { Label } from "@/components/ui/label";
 import { getLocalDateStr } from "@/lib/date-utils";
 import { CreateTransactionInput } from "@repo/shared";
-import { UseFormReturn } from "react-hook-form";
-import { FieldError } from "./wizardModal";
-import { Label } from "@/components/ui/label";
+import { useFormContext } from "react-hook-form";
+import { FieldError } from "../wizardModal";
 
-interface StepAmountProps {
-  formCreateTransaction: UseFormReturn<CreateTransactionInput>;
-}
-
-export function StepAmountComponent({
-  formCreateTransaction,
-}: StepAmountProps) {
+export function StepAmountComponent() {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<CreateTransactionInput>();
+  
   const date = new Date();
   const today = getLocalDateStr(date);
 
@@ -24,29 +24,25 @@ export function StepAmountComponent({
       <div>
         <Label>Amount</Label>
         <input
-          {...formCreateTransaction.register("amount")}
+          {...register("amount")}
           type="text"
           inputMode="decimal"
           placeholder="0.00"
           autoFocus
           className="w-full bg-background border-2 border-border px-4 py-3 text-2xl font-mono text-right focus:outline-none focus:border-foreground transition-colors"
         />
-        <FieldError
-          message={formCreateTransaction.formState.errors.amount?.message}
-        />
+        <FieldError message={errors.amount?.message} />
       </div>
       <div>
         <Label>Date</Label>
         <input
-          {...formCreateTransaction.register("date")}
+          {...register("date")}
           type="date"
           className="w-full bg-background border-2 border-border px-4 py-3 text-sm font-mono focus:outline-none focus:border-foreground transition-colors"
-          value={today}
+          defaultValue={today}
           disabled
         />
-        <FieldError
-          message={formCreateTransaction.formState.errors.date?.message}
-        />
+        <FieldError message={errors.date?.message} />
       </div>
     </div>
   );

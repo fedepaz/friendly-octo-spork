@@ -1,23 +1,21 @@
-// src/features/createTransaction/components/stepRecurrence-form.tsx
+// src/features/createTransaction/components/steps/stepRecurrence-form.tsx
+"use client";
 
 import { Label } from "@/components/ui/label";
 import { CardType, CreateTransactionInput } from "@repo/shared";
-import { Controller, UseFormReturn } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
 const FREQUENCIES = ["MONTHLY", "WEEKLY", "YEARLY", "INSTALLMENT"] as const;
 
-interface StepRecurrenceProps {
-  formCreateTransaction: UseFormReturn<CreateTransactionInput>;
-}
-
-export function StepRecurrenceComponent({
-  formCreateTransaction,
-}: StepRecurrenceProps) {
-  const watched = formCreateTransaction.watch();
+export function StepRecurrenceComponent() {
   const {
+    register,
     setValue,
+    watch,
+    control,
     formState: { errors },
-  } = formCreateTransaction;
+  } = useFormContext<CreateTransactionInput>();
+  const watched = watch();
 
   // Toggle handler for isRecurrence
   const toggleRecurrence = (value: boolean) => {
@@ -77,7 +75,7 @@ export function StepRecurrenceComponent({
           <div>
             <Label>Recurrence Name</Label>
             <input
-              {...formCreateTransaction.register("recurrenceName")}
+              {...register("recurrenceName")}
               type="text"
               placeholder="e.g. Monthly Rent, Netflix Subscription..."
               className="w-full bg-background border-2 border-border px-4 py-3 text-sm font-mono focus:outline-none focus:border-foreground"
@@ -119,11 +117,11 @@ export function StepRecurrenceComponent({
           </div>
 
           {/* Total Parts (only for INSTALLMENT) */}
-          {watched.frequency && (
+          {watched.frequency && watched.frequency === "INSTALLMENT" && (
             <div>
               <Label>Total Installments</Label>
               <input
-                {...formCreateTransaction.register("totalParts")}
+                {...register("totalParts")}
                 type="number"
                 max="99"
                 placeholder="e.g. 9"
@@ -138,7 +136,7 @@ export function StepRecurrenceComponent({
           )}
 
           {/* First Payment Timing (only if totalParts is set) */}
-          {watched.totalParts && watched.frequency && (
+          {watched.totalParts && watched.frequency === "INSTALLMENT" && (
             <div className="border-t border-border pt-3 mt-2">
               <Label>First Payment</Label>
               <div className="grid grid-cols-2 gap-2">
@@ -179,14 +177,14 @@ export function StepRecurrenceComponent({
           <div className="border-t border-border pt-3 mt-2">
             <Controller
               name="isCardExpense"
-              control={formCreateTransaction.control}
-              defaultValue={false} // Explicit default
+              control={control}
+              defaultValue={false}
               render={({ field }) => (
                 <div className="flex items-center gap-2 mb-3">
                   <input
                     id="isCardExpense"
                     type="checkbox"
-                    checked={field.value} // Always boolean from Controller
+                    checked={!!field.value}
                     onChange={field.onChange}
                     className="w-4 h-4"
                   />

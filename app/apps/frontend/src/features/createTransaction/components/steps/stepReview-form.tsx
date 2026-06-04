@@ -1,35 +1,26 @@
-// src/features/createTransaction/components/stepReview-form.tsx
+// src/features/createTransaction/components/steps/stepReview-form.tsx
+"use client";
 
 import { useAccounts } from "@/features/accounts/hooks/accountsHooks";
 import { CreateTransactionInput, Currency } from "@repo/shared";
-import { UseFormReturn } from "react-hook-form";
-import { useCategorie } from "../hooks/useCategoriesHook";
+import { useFormContext } from "react-hook-form";
+import { useCategorie } from "../../hooks/useCategoriesHook";
 import { formatCurrency } from "@/lib/utils";
 
-interface StepReviewProps {
-  formCreateTransaction: UseFormReturn<CreateTransactionInput>;
-  error?: string | null;
-}
-
-export function StepReviewComponent({
-  formCreateTransaction,
-  error,
-}: StepReviewProps) {
-  const watched = formCreateTransaction.watch();
+export function StepReviewComponent() {
+  const { watch } = useFormContext<CreateTransactionInput>();
+  const watched = watch();
   const { data: accounts = [] } = useAccounts();
   const { data: categories = [] } = useCategorie();
 
-  const sourceAccount = accounts.find(
-    (a) => a.id === watched.sourceAccountId,
-  );
-  const targetAccount = accounts.find(
-    (a) => a.id === watched.targetAccountId,
-  );
+  const sourceAccount = accounts.find((a) => a.id === watched.sourceAccountId);
+  const targetAccount = accounts.find((a) => a.id === watched.targetAccountId);
 
   const sourceAccountName = sourceAccount?.name;
   const targetAccountName = targetAccount?.name;
-  const categoryName = categories.find((c) => c.id === watched.categoryId)
-    ?.name;
+  const categoryName = categories.find(
+    (c) => c.id === watched.categoryId,
+  )?.name;
 
   const displayCurrency = (sourceAccount?.currency ||
     targetAccount?.currency ||
@@ -79,12 +70,6 @@ export function StepReviewComponent({
             </div>
           ))}
       </div>
-
-      {error && (
-        <div className="border-2 border-destructive bg-destructive/10 px-4 py-3">
-          <p className="text-xs font-mono text-destructive">{error}</p>
-        </div>
-      )}
     </div>
   );
 }

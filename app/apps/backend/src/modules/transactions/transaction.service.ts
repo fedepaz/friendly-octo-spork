@@ -107,8 +107,6 @@ export class TransactionService {
       totalParts: _totalParts,
       recurrenceName: _recurrenceName,
       isFirstPayment: _isFirstPayment,
-      isCardExpense: _isCardExpense,
-      cardType: _cardType,
       ...prismaData
     } = transactionData;
     const amount = transactionData.amount;
