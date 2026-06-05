@@ -62,8 +62,21 @@ export function SmartFormProvider() {
     defaultValues,
   });
 
-  const onSubmit = (data: SmartFormSchema) => {
-    console.log("Final Submission:", data);
+  const onSubmit = async (data: SmartFormSchema) => {
+    try {
+      setErrorMessage(null);
+      await api.post("/endpoint", data);
+      setActiveStep(0);
+      methods.reset();
+    } catch (error) {
+      const parsed = parseApiError(error);
+      if (parsed.type === "VALIDATION" && error instanceof ApiError) {
+        // Use the mapping utility to push errors to fields
+        mapServerErrorsToForm(error.details, methods.setError);
+      } else {
+        setErrorMessage(parsed.message);
+      }
+    }
   };
 
   return (

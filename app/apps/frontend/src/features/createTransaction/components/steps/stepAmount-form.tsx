@@ -2,20 +2,24 @@
 "use client";
 
 import { Label } from "@/components/ui/label";
-import { getLocalDateStr } from "@/lib/date-utils";
+
 import { CreateTransactionInput } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
 import { FieldError } from "../wizardModal";
+import { useEffect } from "react";
 
 export function StepAmountComponent() {
   const {
     register,
+    setValue,
     formState: { errors },
   } = useFormContext<CreateTransactionInput>();
-  
-  const date = new Date();
-  const today = getLocalDateStr(date);
 
+  useEffect(() => {
+    const today = new Date();
+
+    setValue("date", today);
+  }, [setValue]);
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
@@ -34,14 +38,6 @@ export function StepAmountComponent() {
         <FieldError message={errors.amount?.message} />
       </div>
       <div>
-        <Label>Date</Label>
-        <input
-          {...register("date")}
-          type="date"
-          className="w-full bg-background border-2 border-border px-4 py-3 text-sm font-mono focus:outline-none focus:border-foreground transition-colors"
-          defaultValue={today}
-          disabled
-        />
         <FieldError message={errors.date?.message} />
       </div>
     </div>

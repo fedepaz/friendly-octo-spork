@@ -4,9 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTransactionInput, createTransactionSchema } from "@repo/shared";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { FormContainer } from "../components/FormContainer";
 import { useCreateTransaction } from "../hooks/createMutationHooks";
+import { mapServerErrorsToForm } from "@/lib/utils/form-error-mapper";
+import { ApiError } from "@/lib/api/client-fetch";
+import { parseApiError } from "@/lib/api/error-handler";
 
 export function SmartFormProvider() {
   const [activeStep, setActiveStep] = useState(0);
@@ -26,14 +28,21 @@ export function SmartFormProvider() {
 
   const onSubmit = async (data: CreateTransactionInput) => {
     try {
+      setErrorMessage(null);
       await createTransaction(data);
-      toast.success("Transaction created successfully");
+      // Toast is handled in the mutation hook (useCreateTransaction)
       setActiveStep(0);
       methods.reset();
     } catch (error) {
-      const errorMessage =
-        'Failed to create transaction. Error: "' + error + '"';
-      setErrorMessage(errorMessage);
+      const parsed = parseApiError(error);
+
+      if (parsed.type === "VALIDATION" && error instanceof ApiError) {
+        // ✅ SURGICAL: Map backend validation errors to specific fields
+        mapServerErrorsToForm(error.details, methods.setError);
+      } else {
+        // ✅ GLOBAL: Show system/auth errors in the snackbar
+        setErrorMessage(parsed.message);
+      }
     }
   };
 

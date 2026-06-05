@@ -29,8 +29,6 @@ export function FormContainer({
     if (isValid) {
       setActiveStep(activeStep + 1);
       setGlobalError(null);
-    } else {
-      setGlobalError("Please fill in all required fields");
     }
   };
   const handleBack = () => {

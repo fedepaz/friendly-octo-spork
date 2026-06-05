@@ -1,14 +1,20 @@
 // src/main.ts
 
 import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import 'dotenv/config';
 import { AppModule } from './app.module';
 import { Logger } from 'nestjs-pino';
+import { AllExceptionsFilter } from './shared/filters/all-exceptions.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   app.useLogger(app.get(Logger));
+
+  const httpAdapterHost = app.get(HttpAdapterHost);
+  app.useGlobalFilters(
+    new AllExceptionsFilter(httpAdapterHost, app.get(Logger)),
+  );
 
   const configService = app.get(ConfigService);
 
