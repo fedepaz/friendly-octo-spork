@@ -17,40 +17,14 @@ const stepFields: Record<number, Path<CreateTransactionInput>[]> = {
     "isCardExpense",
     "cardType",
   ],
+  5: ["isBudgetedExpense", "budgetCategory"],
 };
 
 export function useStepValidation(activeStep: number) {
-  const { trigger, getValues } = useFormContext<CreateTransactionInput>();
+  const { trigger } = useFormContext<CreateTransactionInput>();
 
   const validateCurrentStep = async () => {
-    let fields = stepFields[activeStep];
-
-    // Conditional logic for Step 4 (Recurrence)
-    if (activeStep === 4) {
-      const isRecurrence = getValues("isRecurrence");
-      const isCardExpense = getValues("isCardExpense");
-      if (isRecurrence && !isCardExpense) {
-        fields = [
-          "isRecurrence",
-          "recurrenceName",
-          "frequency",
-          "totalParts",
-          "isFirstPayment",
-        ];
-      } else if (isRecurrence && isCardExpense) {
-        fields = [
-          "isRecurrence",
-          "recurrenceName",
-          "frequency",
-          "totalParts",
-          "isFirstPayment",
-          "isCardExpense",
-          "cardType",
-        ];
-      } else {
-        fields = ["isRecurrence"];
-      }
-    }
+    const fields = stepFields[activeStep];
 
     const isValid = await trigger(fields);
     return isValid;

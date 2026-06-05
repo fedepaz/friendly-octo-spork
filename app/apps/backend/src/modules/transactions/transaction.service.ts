@@ -10,15 +10,12 @@ import {
   TransactionRepository,
   TransactionWithRelations,
 } from '../../repositories/transaction.repository';
-import {
-  CreateTransactionInput,
-  RecurrenceTypeSchema,
-  TransactionDTO,
-} from '@repo/shared';
+import { CreateTransactionInput, TransactionDTO } from '@repo/shared';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../infra/prisma/prisma.service';
 import { AccountRepository } from '../../repositories/account.repository';
-import { RecurrenceRepository } from '../../repositories/recurrence.repository';
+
+import { RecurrenceService } from '../recurrences/recurrence.service';
 
 @Injectable()
 export class TransactionService {
@@ -27,7 +24,7 @@ export class TransactionService {
   constructor(
     private readonly transactionRepo: TransactionRepository,
     private readonly accountRepo: AccountRepository,
-    private readonly recurrenceRepo: RecurrenceRepository,
+    private readonly recurrenceService: RecurrenceService,
     private readonly prisma: PrismaService,
   ) {}
 
@@ -113,7 +110,7 @@ export class TransactionService {
 
     return this.prisma.$transaction(async (tx) => {
       // ─── 1. Update Account Balances ─────────────────────────────────────────
-      await this.updateBalancesForType(transactionData, amount, tx);
+      await this.updateBalancesForType(transactionData, userId, amount, tx);
 
       // ─── 2. Save Transaction Record ─────────────────────────────────────────
 
@@ -135,6 +132,7 @@ export class TransactionService {
   // ─── Extracted: Balance logic per transaction type ─────────────────────────
   private async updateBalancesForType(
     data: CreateTransactionInput,
+    userId: string,
     amount: string | Prisma.DecimalJsLike,
     tx: Prisma.TransactionClient,
   ): Promise<void> {
@@ -159,6 +157,15 @@ export class TransactionService {
         // Money enters target account
         if (!targetAccountId) {
           throw new BadRequestException('INCOME requires targetAccountId');
+        }
+        const account = await this.accountRepo.getAccountById(
+          userId,
+          targetAccountId,
+        );
+        if (account?.type === 'CARD') {
+          throw new BadRequestException(
+            'Cannot add income directly to a card account (use a transfer instead)',
+          );
         }
         await this.accountRepo.updateBalance(
           targetAccountId,
@@ -273,37 +280,18 @@ export class TransactionService {
 
     if (data.recurrenceId) {
       // Update existing recurrence
-      const updateRecurrenceData = {
-        userId,
-        metadata: data.metadata
-          ? (data.metadata as Prisma.InputJsonValue)
-          : Prisma.JsonNull,
-      };
-
-      await this.recurrenceRepo.updateRecurrence(
+      await this.recurrenceService.updateRecurrenceForTransaction(
         data.recurrenceId,
-        updateRecurrenceData,
+        userId,
+        data,
         tx,
       );
     } else if (data.isRecurrence) {
-      // Create new recurrence
-      const createRecurrenceData = {
+      await this.recurrenceService.createRecurrenceForTransaction(
+        data,
         userId,
-        name: data.recurrenceName ? data.recurrenceName : 'default',
-        type: data.type,
-        amount: data.amount,
-        startDate: data.date,
-        frequency: data.frequency ?? RecurrenceTypeSchema.enum.MONTHLY,
-        totalParts: data.totalParts,
-        categoryId: data.categoryId,
-        sourceAccountId: data.sourceAccountId,
-        targetAccountId: data.targetAccountId,
-        metadata: data.metadata
-          ? (data.metadata as Prisma.InputJsonValue)
-          : Prisma.JsonNull,
-      };
-
-      await this.recurrenceRepo.saveRecurrence(createRecurrenceData, tx);
+        tx,
+      );
     }
   }
 }

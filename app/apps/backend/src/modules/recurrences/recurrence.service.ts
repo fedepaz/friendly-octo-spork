@@ -92,6 +92,9 @@ export class RecurrenceService {
       case 'YEARLY':
         result.setFullYear(result.getFullYear() + count);
         break;
+      case 'INSTALLMENT':
+        result.setMonth(result.getMonth() + count);
+        break;
       default:
         return result;
     }
@@ -136,5 +139,55 @@ export class RecurrenceService {
     };
 
     await this.recurrenceRepo.saveRecurrence(createRecurrenceData, tx);
+  }
+
+  async updateRecurrenceForTransaction(
+    recurrenceId: string,
+    userId: string,
+    data: CreateTransactionInput,
+    tx: Prisma.TransactionClient,
+  ): Promise<void> {
+    if (!recurrenceId) {
+      throw new BadRequestException('Recurrence id is required');
+    }
+    if (!userId) {
+      throw new BadRequestException('User id is required');
+    }
+
+    const recurrence = await this.recurrenceRepo.getRecurrenceById(
+      userId,
+      recurrenceId,
+    );
+    if (!recurrence) {
+      throw new BadRequestException('Recurrence not found');
+    }
+
+    const nextDate = this.addFrequencyUnit(
+      recurrence.nextDate ?? recurrence.startDate,
+      recurrence.frequency,
+    );
+
+    // Deactivate the recurrence if this was the last part
+    const isLastPart =
+      recurrence.totalParts != null &&
+      recurrence.currentPart != null &&
+      recurrence.currentPart >= recurrence.totalParts;
+
+    const updateRecurrenceData = {
+      userId,
+      nextDate,
+      currentPart: { increment: 1 }, // assumes Prisma atomic update
+      active: isLastPart ? false : true,
+      metadata: data.metadata
+        ? (data.metadata as Prisma.InputJsonValue)
+        : Prisma.JsonNull,
+    };
+
+    this.logger.log(`Updating recurrence ${recurrenceId} for user ${userId}`);
+    await this.recurrenceRepo.updateRecurrence(
+      recurrenceId,
+      updateRecurrenceData,
+      tx,
+    );
   }
 }

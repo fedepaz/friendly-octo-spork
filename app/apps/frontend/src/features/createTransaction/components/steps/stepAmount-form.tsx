@@ -5,8 +5,8 @@ import { Label } from "@/components/ui/label";
 
 import { CreateTransactionInput } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
-import { FieldError } from "../wizardModal";
 import { useEffect } from "react";
+import { InLineError } from "../inLineError";
 
 export function StepAmountComponent() {
   const {
@@ -35,10 +35,7 @@ export function StepAmountComponent() {
           autoFocus
           className="w-full bg-background border-2 border-border px-4 py-3 text-2xl font-mono text-right focus:outline-none focus:border-foreground transition-colors"
         />
-        <FieldError message={errors.amount?.message} />
-      </div>
-      <div>
-        <FieldError message={errors.date?.message} />
+        {errors.amount && <InLineError message={errors.amount.message} />}
       </div>
     </div>
   );

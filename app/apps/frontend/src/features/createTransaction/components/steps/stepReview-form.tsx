@@ -1,27 +1,23 @@
 // src/features/createTransaction/components/steps/stepReview-form.tsx
 "use client";
 
-import { useAccounts } from "@/features/accounts/hooks/accountsHooks";
+import { useAccountById } from "@/features/accounts/hooks/accountsHooks";
 import { CreateTransactionInput, Currency } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
-import { useCategorie } from "../../hooks/useCategoriesHook";
+import { useCategorieById } from "../../hooks/useCategoriesHook";
 import { formatCurrency } from "@/lib/utils";
 
 export function StepReviewComponent() {
   const { watch } = useFormContext<CreateTransactionInput>();
   const watched = watch();
-  const { data: accounts = [] } = useAccounts();
-  const { data: categories = [] } = useCategorie();
-
-  const sourceAccount = accounts.find((a) => a.id === watched.sourceAccountId);
-  const targetAccount = accounts.find((a) => a.id === watched.targetAccountId);
+  const { data: sourceAccount } = useAccountById(watched.sourceAccountId ?? "");
+  const { data: targetAccount } = useAccountById(watched.targetAccountId ?? "");
+  const { data: categoryName = [] } = useCategorieById(
+    watched.categoryId ?? "",
+  );
 
   const sourceAccountName = sourceAccount?.name;
   const targetAccountName = targetAccount?.name;
-  const categoryName = categories.find(
-    (c) => c.id === watched.categoryId,
-  )?.name;
-
   const displayCurrency = (sourceAccount?.currency ||
     targetAccount?.currency ||
     "ARS") as Currency;

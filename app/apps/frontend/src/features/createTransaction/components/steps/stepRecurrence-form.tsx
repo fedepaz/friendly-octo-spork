@@ -3,7 +3,8 @@
 
 import { Label } from "@/components/ui/label";
 import { CardType, CreateTransactionInput } from "@repo/shared";
-import { Controller, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
+import { InLineError } from "../inLineError";
 
 const FREQUENCIES = ["MONTHLY", "WEEKLY", "YEARLY", "INSTALLMENT"] as const;
 
@@ -12,7 +13,6 @@ export function StepRecurrenceComponent() {
     register,
     setValue,
     watch,
-    control,
     formState: { errors },
   } = useFormContext<CreateTransactionInput>();
   const watched = watch();
@@ -28,13 +28,6 @@ export function StepRecurrenceComponent() {
       setValue("isFirstPayment", false);
     }
   };
-
-  const isNextPaymentLabel =
-    watched.frequency?.toLowerCase() === "monthly"
-      ? "month"
-      : watched.frequency?.toLowerCase() === "weekly"
-        ? "week"
-        : "year";
 
   return (
     <div className="flex flex-col gap-4">
@@ -81,9 +74,7 @@ export function StepRecurrenceComponent() {
               className="w-full bg-background border-2 border-border px-4 py-3 text-sm font-mono focus:outline-none focus:border-foreground"
             />
             {errors.recurrenceName && (
-              <p className="text-xs font-mono text-destructive mt-1">
-                {errors.recurrenceName.message}
-              </p>
+              <InLineError message={errors.recurrenceName.message} />
             )}
           </div>
 
@@ -110,9 +101,7 @@ export function StepRecurrenceComponent() {
               ))}
             </div>
             {errors.frequency && (
-              <p className="text-xs font-mono text-destructive mt-1">
-                {errors.frequency.message}
-              </p>
+              <InLineError message={errors.frequency.message} />
             )}
           </div>
 
@@ -128,9 +117,7 @@ export function StepRecurrenceComponent() {
                 className="w-full bg-background border-2 border-border px-4 py-3 text-sm font-mono focus:outline-none focus:border-foreground"
               />
               {errors.totalParts && (
-                <p className="text-xs font-mono text-destructive mt-1">
-                  {errors.totalParts.message}
-                </p>
+                <InLineError message={errors.totalParts.message} />
               )}
             </div>
           )}

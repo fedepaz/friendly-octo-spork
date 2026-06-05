@@ -1,13 +1,16 @@
 // src/features/createTransaction/components/FormContainer.tsx
 
+import { useFormContext } from "react-hook-form";
 import { useStepValidation } from "../hooks/useStepValidation";
 import { StepAccountsComponent } from "./steps/stepAccount-form";
 import { StepAmountComponent } from "./steps/stepAmount-form";
+import { StepBudgetComponent } from "./steps/stepBudget-form";
 import { StepCategoryComponent } from "./steps/stepCategory-form";
 import { StepRecurrenceComponent } from "./steps/stepRecurrence-form";
 import { StepReviewComponent } from "./steps/stepReview-form";
 import { StepTypeComponent } from "./steps/stepType-form";
 import { StepIndicator, WizardFooter, WizardModal } from "./wizardModal";
+import { CreateTransactionInput } from "@repo/shared";
 
 interface FormContainerProps {
   activeStep: number;
@@ -25,23 +28,38 @@ export function FormContainer({
   onClose,
 }: FormContainerProps) {
   const { validateCurrentStep } = useStepValidation(activeStep);
+  const { watch } = useFormContext<CreateTransactionInput>();
+  const isBudgetedExpense = watch("type") === "EXPENSE";
 
   const handleNext = async () => {
     const isValid = await validateCurrentStep();
     if (isValid) {
+      if (activeStep === 4 && !isBudgetedExpense) {
+        // If type is not an expense, skip budget step
+        setActiveStep(activeStep + 2);
+        setGlobalError(null);
+        return;
+      }
       setActiveStep(activeStep + 1);
       setGlobalError(null);
     }
   };
 
   const handleBack = () => {
+    if (activeStep === 6 && !isBudgetedExpense) {
+      // If type is not an expense, skip on the back budget step
+      setActiveStep(activeStep - 2);
+      setGlobalError(null);
+      return;
+    }
+
     if (activeStep > 0) {
       setActiveStep(activeStep - 1);
       setGlobalError(null);
     }
   };
 
-  const TOTAL_STEPS = 6;
+  const TOTAL_STEPS = 7;
   const isLastStep = activeStep === TOTAL_STEPS - 1;
 
   const renderStep = () => {
@@ -57,6 +75,8 @@ export function FormContainer({
       case 4:
         return <StepRecurrenceComponent />;
       case 5:
+        return <StepBudgetComponent />;
+      case 6:
         return <StepReviewComponent />;
       default:
         return null;

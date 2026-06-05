@@ -99,6 +99,10 @@ const createTransactionSchemaBase = z.object({
     .optional(),
   metadata: z.unknown().optional().nullable(),
 
+  isBudgetedExpense: z
+    .preprocess((val) => val === "on" || val === true, z.boolean())
+    .optional()
+    .default(false),
   isRecurrence: z
     .preprocess((val) => val === "on" || val === true, z.boolean())
     .optional()
@@ -110,6 +114,7 @@ const createTransactionSchemaBase = z.object({
   isCardExpense: z
     .preprocess((val) => val === "on" || val === true, z.boolean())
     .default(false),
+  budgetCategory: BudgetCategorySchema.nullable(),
   cardType: CardTypeSchema.nullable(),
   frequency: RecurrenceTypeSchema.optional(),
   totalParts: z.coerce.number().int().optional(),
@@ -118,17 +123,83 @@ const createTransactionSchemaBase = z.object({
 // ─── 2. CREATE SCHEMA (with cross-field validation) ─────────────────────
 export const createTransactionSchema = createTransactionSchemaBase.superRefine(
   (data, ctx) => {
-    if (
-      data.isRecurrence &&
-      (!data.recurrenceName || !data.recurrenceName.trim())
-    ) {
+    // ─── Recurrence validation ───────────────────────────────────────────
+    if (data.isRecurrence) {
+      if (!data.recurrenceName?.trim()) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Recurrence name is required when creating a recurrence",
+          path: ["recurrenceName"],
+        });
+      }
+      if (!data.frequency) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Frequency is required when creating a recurrence",
+          path: ["frequency"],
+        });
+      }
+      // INSTALLMENT needs a part count
+      if (data.frequency === "INSTALLMENT" && !data.totalParts) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Total parts is required for INSTALLMENT recurrences",
+          path: ["totalParts"],
+        });
+      }
+    }
+
+    // ─── Card expense validation ─────────────────────────────────────────
+    if (data.isCardExpense && !data.cardType) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "Recurrence name is required",
-        path: ["recurrenceName"],
+        message: "Card type is required for card expenses",
+        path: ["cardType"],
       });
     }
-    // Add more cross-field rules here if needed
+
+    // ─── Type-dependent account validation ───────────────────────────────
+    const requiresSource = [
+      "EXPENSE",
+      "TRANSFER",
+      "INVESTMENT",
+      "RETURN",
+      "PAYMENT",
+    ];
+    const requiresTarget = ["INCOME", "TRANSFER", "INVESTMENT", "RETURN"];
+
+    if (requiresSource.includes(data.type) && !data.sourceAccountId) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `${data.type} requires a source account`,
+        path: ["sourceAccountId"],
+      });
+    }
+    if (requiresTarget.includes(data.type) && !data.targetAccountId) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `${data.type} requires a target account`,
+        path: ["targetAccountId"],
+      });
+    }
+
+    // ─── Budgeted Expense Validation ─────────────────────────────────────────
+    if (data.isBudgetedExpense) {
+      if (data.type !== "EXPENSE") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Budgeted expenses can only be used for expenses",
+          path: ["type"],
+        });
+      }
+      if (!data.budgetCategory) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Budget category is required for budgeted expenses",
+          path: ["budgetCategory"],
+        });
+      }
+    }
   },
 );
 

@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { CreateTransactionInput } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
 import { useCategorie } from "../../hooks/useCategoriesHook";
-import { FieldError } from "../wizardModal";
+import { InLineError } from "../inLineError";
 
 export function StepCategoryComponent() {
   const {
@@ -32,7 +32,9 @@ export function StepCategoryComponent() {
           autoFocus
           className="w-full bg-background border-2 border-border px-4 py-3 text-sm font-mono focus:outline-none focus:border-foreground transition-colors"
         />
-        <FieldError message={errors.description?.message} />
+        {errors.description && (
+          <InLineError message={errors.description.message} />
+        )}
       </div>
 
       <div>
@@ -61,6 +63,9 @@ export function StepCategoryComponent() {
         >
           No category
         </button>
+        {errors.categoryId && (
+          <InLineError message={errors.categoryId.message} />
+        )}
       </div>
     </div>
   );

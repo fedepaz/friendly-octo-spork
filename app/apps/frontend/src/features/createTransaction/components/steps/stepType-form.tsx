@@ -3,7 +3,7 @@
 
 import { CreateTransactionInput, TransactionType } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
-import { FieldError } from "../wizardModal";
+import { InLineError } from "../inLineError";
 
 const TRANSACTION_TYPES = [
   {
@@ -78,7 +78,7 @@ export function StepTypeComponent() {
             <span className="font-mono text-xs opacity-70">{hint}</span>
           </button>
         ))}
-        <FieldError message={errors.date?.message} />
+        {errors.type && <InLineError message={errors.type.message} />}
       </div>
     </div>
   );
