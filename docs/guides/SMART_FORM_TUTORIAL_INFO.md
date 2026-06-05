@@ -1,77 +1,56 @@
-✦ This is a structural breakdown and implementation guide for your "Smart Form" architecture. It is designed to be a "recipe" you can follow for future complex forms, maintaining the rigid step-by-step enforcement
-  you created.
+# The "Smart Form" Architecture Recipe
 
-  The "Smart Form" Architecture Recipe
+This guide serves as a reusable blueprint for implementing robust, multi-step forms in any client project. It decouples data validation, state management, and navigation logic.
 
-  To replicate this, you need five specific layers:
+---
 
-  ---
+### 1. The Schema Layer (`schema.ts`)
 
-  1. The Schema Layer (schema.ts)
-  Purpose: Defines the "Source of Truth" using Zod.
-   * Key Logic: Use z.object for standard fields and .superRefine() or .refine() for complex cross-field dependencies (e.g., "Departure must be after Arrival").
-   * Enforcement: This schema must represent the entire form, even if the user only sees small parts at a time.
+**Purpose**: Defines the "Source of Truth" using Zod.
 
-  2. The Orchestrator Layer (FormProvider.tsx)
-  Purpose: Initializes React Hook Form and manages the "Global" form state.
-   * Wrapping: Wrap everything in <FormProvider {...methods}>.
-   * State Management:
-       * activeStep: The current index.
-       * showReview: A boolean to toggle the pre-submission summary.
-       * errorMessage: A string state used to trigger a global Snackbar.
-   * Final Submission: Contains the onSubmit and a handleFinalize function that parses the entire schema one last time before allowing the user to see the "Review" page.
+- **Key Logic**: Use `z.object` for standard fields and `.refine()` for cross-field dependencies.
+- **Enforcement**: The schema must represent the _entire_ form data structure.
 
-  3. The Surgical Validation Hook (useStepValidation.ts)
-  Purpose: The "Gatekeeper" that prevents the user from clicking "Next" if the current view has errors.
-   * The Map: Create a constant detailedStepFields that maps each step index to an array of string paths (e.g., 0: ["user.name", "user.email"]).
-   * The Magic Tool: Use methods.trigger(fieldPaths) from RHF. Unlike handleSubmit, trigger allows you to validate only the fields in the current step.
-   * Array Logic: If a step involves dynamic lists, add custom checks here (e.g., if (list.length === 0) return "Add at least one item").
+### 2. The Orchestrator Layer (`FormProvider.tsx`)
 
-  4. The Navigation Layer (FormContainer.tsx)
-  Purpose: Renders the Stepper and handles the transitions.
-   * Blocking Flow:
+**Purpose**: Initializes React Hook Form and manages global form state.
 
-   1     const handleNext = async () => {
-   2       const isValid = await validateCurrentStep(); // Calls the hook
-   3       if (isValid) {
-   4         setActiveStep(prev => prev + 1);
-   5       }
-   6     };
-   * Local Error Boundaries: Inside renderStepContent, wrap each step in an ErrorProvider. This separates "Form Validation Errors" (Zod/Snackbar) from "System/API Errors" (Loading/ErrorPage).
+- **Wrapping**: All step components must be descendants of `<FormProvider {...methods}>`.
+- **Submission**: Contains the final `onSubmit` logic with a guard: `if (activeStep < FINAL_STEP) return;`.
 
-  5. The Review Layer (FormReview.tsx)
-  Purpose: Final confirmation before the POST request.
-   * Final Fields: Use this view to capture fields that only make sense at the end (e.g., horaFin).
-   * Safety: It receives all data via getValues() to show a read-only summary, ensuring the user is 100% sure before hitting the final POST.
+### 3. The Surgical Validation Hook (`useStepValidation.ts`)
 
-  ---
+**Purpose**: The "Gatekeeper" that prevents navigation if the current step is invalid.
 
-  Technical Review & Improvements
+- **The Map**: Map each `activeStep` index to an array of `Path<Schema>` strings.
+- **The Magic**: Use `methods.trigger(fieldPaths)`. Unlike `handleSubmit`, it allows partial validation of only the visible fields.
 
-  Your implementation is robust, but for future projects, consider these "pro" refinements that maintain your same result with cleaner code:
+### 4. The Navigation Layer (`FormContainer.tsx`)
 
-   1. Consolidated Error Handling (Step 2 & 3):
-       * Observation: You have validation logic in Zod and manual array checks in the hook.
-       * Improvement: For future forms, you can use z.array().min(1) in the schema for those arrays. Then, in useStepValidation, simply trigger the array path. This removes the need for validateArrayFields and
-         keeps all "What is valid?" logic inside the Zod file.
+**Purpose**: Renders the Stepper and handles step transitions.
 
-   2. Provider Granularity:
-       * Observation: You wrap renderStepContent in an ErrorProvider every time the step changes. 
-       * Improvement: Since the ErrorProvider seems to handle the appError state for the whole form flow, you can wrap the entire <Stack> once in Planillas.tsx. This prevents the provider from re-mounting every
-         time the user clicks "Next", which is more efficient for React.
+- **Blocking Flow**:
+  ```typescript
+  const handleNext = async () => {
+    const isValid = await validateCurrentStep(); // Calls the gatekeeper hook
+    if (isValid) setActiveStep((prev) => prev + 1);
+  };
+  ```
 
-   3. Path Mapping:
-       * Observation: The detailedStepFields is hardcoded with strings.
-       * Improvement: Use the Path<Schema> type from React Hook Form to ensure that if you rename a field in your schema, TypeScript will immediately throw an error in your validation map.
+### 5. The Review Layer (`FormReview.tsx`)
 
-  Summary for your Doc
-  When building a "SmartForm":
-   1. Define everything in Zod first.
-   2. Map Steps to Schema Paths in a custom hook.
-   3. Use methods.trigger() to block navigation.
-   4. Review before POSTing.
-   5. Use FormProvider to keep child components "clean" (using useFormContext instead of passing props).
+**Purpose**: Final confirmation before the network request.
 
-  This structure is a "Smart Form" because it decouples Data (Zod), State (Provider), and Navigation Logic (Hook), making it extremely easy to add or remove steps without breaking the rest of the form.
+- **Safety**: Use `getValues()` to show a read-only summary of the entire collected dataset.
 
+---
 
+### 💡 Implementation Refinements
+
+1.  **Consolidated Validation**: Avoid manual array checks in the hook. Use `z.array().min(1)` in the Zod schema and simply `trigger()` that path in the hook.
+2.  **Path Type Safety**: Always use the `Path<T>` type from React Hook Form for the step-to-field mapping. This ensures that renaming a field in the schema breaks the mapping at compile-time rather than runtime.
+3.  **Global Error Handling**: Integrate the `mapServerErrorsToForm` utility in the Orchestrator's `onSubmit` catch block to provide surgical field highlighting for backend-driven validation failures.
+4.  Consolidated Error Handling (Step 2 & 3):
+    - Observation: You have validation logic in Zod and manual array checks in the hook.
+    - Improvement: For future forms, you can use z.array().min(1) in the schema for those arrays. Then, in useStepValidation, simply trigger the array path. This removes the need for validateArrayFields and
+      keeps all "What is valid?" logic inside the Zod file.

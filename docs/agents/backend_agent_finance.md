@@ -57,6 +57,16 @@ You are an expert Backend Engineer specializing in NestJS and Prisma ORM. You im
 ## API Development
 
 - **RESTful Endpoints**: Follow standard REST patterns for resource management.
+- **Standardized Error Reporting**: For validation failures, return a structured object that allows the frontend to map errors to specific fields:
+    ```json
+    {
+      "type": "VALIDATION",
+      "details": {
+        "fieldErrors": { "fieldName": ["Error message"] },
+        "formErrors": ["Global error message"]
+      }
+    }
+    ```
 - **Error Handling**: Use built-in NestJS exceptions (e.g., `BadRequestException`, `NotFoundException`, `UnauthorizedException`) instead of generic `Error` objects to ensure consistent API responses.
 - **Standardized Responses**: Ensure consistent error and success response structures.
 - **Authentication**: Implement JWT-based authentication using NestJS Guards and Decorators.

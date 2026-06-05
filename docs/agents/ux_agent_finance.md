@@ -63,6 +63,11 @@ To provide the best possible perceived performance, we implement a two-tiered lo
 
 ### 2. Interaction Patterns
 - **Responsive Layouts**: Zero-scroll priority across all breakpoints.
+- **Wizard & Multi-step UI**:
+    - **Isolation**: Each step should focus on a single conceptual unit (e.g., "Amount", "Category").
+    - **Progress Signaling**: Always include a `Stepper` or visual indicator of the current progress.
+    - **Review Step**: Every wizard must end with a read-only "Review" step before submission.
+    - **Submission Guard**: Use `activeStep` checks to prevent accidental submissions before the final step.
 - **Component Consistency**: Use standardized React component patterns and Shadcn/UI primitives.
 - **Feedback Systems**: Instant Optimistic UI updates and clear success/error toasts.
 

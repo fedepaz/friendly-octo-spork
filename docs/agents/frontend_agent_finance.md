@@ -42,6 +42,11 @@ You are a systematic Frontend Engineer specializing in **Next.js** and **React c
 ### Component Architecture
 
 - **Feature-Driven Structure**: Organize code by domain in `src/features/`. Each feature should contain its own `api`, `components`, `hooks`, and `providers`. Use `index.ts` to export the public API of the feature.
+- **Smart Form Wizard Pattern**: For complex entity creation (e.g., Transactions), implement a multi-step "Wizard" pattern:
+    - **Orchestration**: Use a `SmartFormProvider` to initialize `useForm` and provide context.
+    - **Surgical Validation**: Use a custom `useStepValidation` hook that utilizes `methods.trigger()` to validate only the fields relevant to the current step before allowing navigation.
+    - **Shared Schemas**: Always use Zod schemas from `@repo/shared` for consistent validation.
+    - **Error Mapping**: Use the `mapServerErrorsToForm` utility to surgically bind backend validation errors to specific form fields.
 - **Server Components**: Prefer Server Components for data fetching and initial rendering to improve performance and SEO.
 - **Client Components**: Use Client Components for interactive elements, local state management, and browser-only features.
 - **Iconography**: Use consistent SVG components for all icons, managed centrally.
