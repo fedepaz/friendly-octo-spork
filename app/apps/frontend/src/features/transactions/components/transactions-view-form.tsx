@@ -80,25 +80,53 @@ export function TransactionViewForm({
       <div className="space-y-2">
         <div className="flex items-center justify-between p-2 border border-dashed border-border text-2.5 font-bold">
           <span className="opacity-60">GASTO CON TARJETA</span>
-          <span
-            className={
-              selectedTransaction.isCardExpense ? "text-accent" : "opacity-20"
-            }
-          >
-            {selectedTransaction.isCardExpense ? "CONFIRMADO" : "NO"}
-          </span>
+          <div className="flex items-center gap-2">
+            {selectedTransaction.cardType && (
+              <span className="bg-accent/10 text-accent px-1.5 py-0.5 border border-accent/20">
+                {selectedTransaction.cardType}
+              </span>
+            )}
+            <span
+              className={
+                selectedTransaction.isCardExpense ? "text-accent" : "opacity-20"
+              }
+            >
+              {selectedTransaction.isCardExpense ? "CONFIRMADO" : "NO"}
+            </span>
+          </div>
         </div>
+        {selectedTransaction.recurrence && (
+          <div className="flex items-center justify-between p-2 border border-dashed border-border text-2.5 font-bold">
+            <span className="opacity-60">RECURRENCIA</span>
+            <div className="flex items-center gap-2">
+              <span className="bg-primary/10 text-primary px-1.5 py-0.5 border border-primary/20">
+                {selectedTransaction.recurrence.name}
+              </span>
+              <span className="font-bold">
+                {selectedTransaction.recurrence.frequency}
+              </span>
+            </div>
+          </div>
+        )}
+
         <div className="flex items-center justify-between p-2 border border-dashed border-border text-2.5 font-bold">
           <span className="opacity-60">PRESUPUESTADO</span>
-          <span
-            className={
-              selectedTransaction.isBudgetedExpense
-                ? "text-primary"
-                : "opacity-20"
-            }
-          >
-            {selectedTransaction.isBudgetedExpense ? "SÍ" : "NO"}
-          </span>
+          <div className="flex items-center gap-2">
+            {selectedTransaction.budgetCategory && (
+              <span className="bg-primary/10 text-primary px-1.5 py-0.5 border border-primary/20">
+                {selectedTransaction.budgetCategory}
+              </span>
+            )}
+            <span
+              className={
+                selectedTransaction.isBudgetedExpense
+                  ? "text-primary"
+                  : "opacity-20"
+              }
+            >
+              {selectedTransaction.isBudgetedExpense ? "SÍ" : "NO"}
+            </span>
+          </div>
         </div>
       </div>
     </div>

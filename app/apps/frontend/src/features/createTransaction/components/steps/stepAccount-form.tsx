@@ -17,7 +17,7 @@ export function StepAccountsComponent() {
   } = useFormContext<CreateTransactionInput>();
   const watched = watch();
   const { data: accounts = [] } = useAccounts();
-  console.log(accounts);
+  // console.log(accounts);
 
   const isIncome = watched.type === "INCOME";
 

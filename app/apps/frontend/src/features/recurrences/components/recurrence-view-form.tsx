@@ -75,9 +75,16 @@ export function RecurrenceViewForm({
       <div className="grid grid-cols-1 gap-2">
         <div className="flex items-center justify-between p-2 bg-background border border-border font-mono text-2.5">
           <span className="opacity-50 uppercase">Origen de Fondos</span>
-          <span className="font-bold">
-            {selectedRecurrence.sourceAccount?.name || "NO DEFINIDO"}
-          </span>
+          <div className="flex items-center gap-2">
+            {selectedRecurrence.cardType && (
+              <span className="bg-accent/10 text-accent px-1.5 py-0.5 border border-accent/20 text-[10px] font-bold">
+                {selectedRecurrence.cardType}
+              </span>
+            )}
+            <span className="font-bold">
+              {selectedRecurrence.sourceAccount?.name || "NO DEFINIDO"}
+            </span>
+          </div>
         </div>
         {selectedRecurrence.targetAccount && (
           <div className="flex items-center justify-between p-2 bg-background border border-border font-mono text-2.5">

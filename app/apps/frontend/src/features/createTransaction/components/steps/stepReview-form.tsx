@@ -46,7 +46,20 @@ export function StepReviewComponent() {
           { label: "Description", value: watched.description ?? "—" },
           { label: "From", value: sourceAccountName ?? "—" },
           { label: "To", value: targetAccountName ?? "—" },
-          { label: "Category", value: categoryName ?? "None" },
+          {
+            label: "Category",
+            value: categoryName ?? "None",
+          },
+          {
+            label: "Budget",
+            value: watched.isBudgetedExpense
+              ? `Yes — ${watched.budgetCategory ?? ""}`
+              : "No",
+          },
+          {
+            label: "Card Type",
+            value: watched.isCardExpense ? watched.cardType ?? "Yes" : "No",
+          },
           {
             label: "Recurring",
             value: watched.isRecurrence
