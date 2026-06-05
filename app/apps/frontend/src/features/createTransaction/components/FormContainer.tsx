@@ -14,6 +14,7 @@ interface FormContainerProps {
   setActiveStep: (step: number) => void;
   setGlobalError: (error: string | null) => void;
   isSubmitting?: boolean;
+  onClose: () => void;
 }
 
 export function FormContainer({
@@ -21,6 +22,7 @@ export function FormContainer({
   setActiveStep,
   setGlobalError,
   isSubmitting,
+  onClose,
 }: FormContainerProps) {
   const { validateCurrentStep } = useStepValidation(activeStep);
 
@@ -31,6 +33,7 @@ export function FormContainer({
       setGlobalError(null);
     }
   };
+
   const handleBack = () => {
     if (activeStep > 0) {
       setActiveStep(activeStep - 1);
@@ -39,37 +42,22 @@ export function FormContainer({
   };
 
   const TOTAL_STEPS = 6;
-
-  function layoutRender(children: React.ReactNode) {
-    const isLastStep = activeStep === TOTAL_STEPS - 1;
-    return (
-      <>
-        <StepIndicator current={activeStep} total={TOTAL_STEPS} />
-        <div className="flex-1 overflow-y-auto px-4 py-4">{children}</div>
-        <WizardFooter
-          onBack={activeStep > 0 ? handleBack : undefined}
-          onNext={!isLastStep ? handleNext : undefined}
-          onConfirm={isLastStep ? () => {} : undefined}
-          isSubmitting={isSubmitting}
-        />
-      </>
-    );
-  }
+  const isLastStep = activeStep === TOTAL_STEPS - 1;
 
   const renderStep = () => {
     switch (activeStep) {
       case 0:
-        return layoutRender(<StepTypeComponent />);
+        return <StepTypeComponent />;
       case 1:
-        return layoutRender(<StepAmountComponent />);
+        return <StepAmountComponent />;
       case 2:
-        return layoutRender(<StepAccountsComponent />);
+        return <StepAccountsComponent />;
       case 3:
-        return layoutRender(<StepCategoryComponent />);
+        return <StepCategoryComponent />;
       case 4:
-        return layoutRender(<StepRecurrenceComponent />);
+        return <StepRecurrenceComponent />;
       case 5:
-        return layoutRender(<StepReviewComponent />);
+        return <StepReviewComponent />;
       default:
         return null;
     }
@@ -78,12 +66,19 @@ export function FormContainer({
   return (
     <WizardModal
       isOpen={true}
-      onClose={() => setActiveStep(0)}
+      onClose={onClose}
       title="Create Transaction"
       step={activeStep + 1}
-      totalSteps={5}
+      totalSteps={TOTAL_STEPS}
     >
-      {renderStep()}
+      <StepIndicator current={activeStep} total={TOTAL_STEPS} />
+      <div className="flex-1 overflow-y-auto px-4 py-4">{renderStep()}</div>
+      <WizardFooter
+        onBack={activeStep > 0 ? handleBack : undefined}
+        onNext={!isLastStep ? handleNext : undefined}
+        onConfirm={isLastStep ? () => {} : undefined}
+        isSubmitting={isSubmitting}
+      />
     </WizardModal>
   );
 }

@@ -162,40 +162,21 @@ export function StepRecurrenceComponent() {
                         : "border-border text-muted-foreground hover:bg-muted"
                     }`}
                 >
-                  Next {isNextPaymentLabel}
+                  Next Month
                 </button>
               </div>
               <p className="text-xs font-mono text-muted-foreground mt-2">
                 {watched.isFirstPayment
                   ? "First installment charged today"
-                  : `First installment charged on next ${isNextPaymentLabel}`}
+                  : `First installment charged on next month`}
               </p>
             </div>
           )}
 
-          {/* Card Fields (optional, if transaction is card-related) */}
-          <div className="border-t border-border pt-3 mt-2">
-            <Controller
-              name="isCardExpense"
-              control={control}
-              defaultValue={false}
-              render={({ field }) => (
-                <div className="flex items-center gap-2 mb-3">
-                  <input
-                    id="isCardExpense"
-                    type="checkbox"
-                    checked={!!field.value}
-                    onChange={field.onChange}
-                    className="w-4 h-4"
-                  />
-                  <Label htmlFor="isCardExpense" className="text-sm font-mono">
-                    This is a card expense
-                  </Label>
-                </div>
-              )}
-            />
-
-            {watched.isCardExpense && (
+          {/* Card Fields (automatically shown if account step detected a card) */}
+          {watched.isCardExpense && (
+            <div className="border-t border-border pt-3 mt-2">
+              <Label className="text-sm font-mono mb-2 block">Card Type</Label>
               <div className="grid grid-cols-2 gap-2">
                 {["VISA", "MASTERCARD", "AMEX", "MAESTRO"].map((card) => (
                   <button
@@ -213,8 +194,8 @@ export function StepRecurrenceComponent() {
                   </button>
                 ))}
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       )}
     </div>

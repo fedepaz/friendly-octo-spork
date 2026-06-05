@@ -71,6 +71,7 @@ export function WizardFooter({
   return (
     <div className="px-4 py-4 border-t-2 border-border grid grid-cols-2 gap-3">
       <button
+        key="back-button"
         type="button"
         onClick={onBack}
         disabled={!onBack}
@@ -80,6 +81,7 @@ export function WizardFooter({
       </button>
       {onConfirm ? (
         <button
+          key="confirm-button"
           type="submit"
           onClick={onConfirm}
           disabled={isSubmitting}
@@ -89,6 +91,7 @@ export function WizardFooter({
         </button>
       ) : (
         <button
+          key="next-button"
           type="button"
           onClick={onNext}
           disabled={!onNext}

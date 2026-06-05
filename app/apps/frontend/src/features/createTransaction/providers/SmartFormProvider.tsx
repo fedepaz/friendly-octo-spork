@@ -10,7 +10,7 @@ import { mapServerErrorsToForm } from "@/lib/utils/form-error-mapper";
 import { ApiError } from "@/lib/api/client-fetch";
 import { parseApiError } from "@/lib/api/error-handler";
 
-export function SmartFormProvider() {
+export function SmartFormProvider({ onClose }: { onClose: () => void }) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -27,12 +27,16 @@ export function SmartFormProvider() {
   });
 
   const onSubmit = async (data: CreateTransactionInput) => {
+    // 🛡️ Safety Guard: Only allow submission if we are on the final Review step (Step 5)
+    if (activeStep < 5) return;
+
     try {
       setErrorMessage(null);
       await createTransaction(data);
       // Toast is handled in the mutation hook (useCreateTransaction)
       setActiveStep(0);
       methods.reset();
+      onClose();
     } catch (error) {
       const parsed = parseApiError(error);
 
@@ -54,6 +58,7 @@ export function SmartFormProvider() {
           setActiveStep={setActiveStep}
           setGlobalError={setErrorMessage}
           isSubmitting={isSubmitting}
+          onClose={onClose}
         />
         {errorMessage && (
           <div className="px-4 pb-4">

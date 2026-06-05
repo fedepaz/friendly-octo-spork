@@ -28,7 +28,26 @@ export function useStepValidation(activeStep: number) {
     // Conditional logic for Step 4 (Recurrence)
     if (activeStep === 4) {
       const isRecurrence = getValues("isRecurrence");
-      if (!isRecurrence) {
+      const isCardExpense = getValues("isCardExpense");
+      if (isRecurrence && !isCardExpense) {
+        fields = [
+          "isRecurrence",
+          "recurrenceName",
+          "frequency",
+          "totalParts",
+          "isFirstPayment",
+        ];
+      } else if (isRecurrence && isCardExpense) {
+        fields = [
+          "isRecurrence",
+          "recurrenceName",
+          "frequency",
+          "totalParts",
+          "isFirstPayment",
+          "isCardExpense",
+          "cardType",
+        ];
+      } else {
         fields = ["isRecurrence"];
       }
     }

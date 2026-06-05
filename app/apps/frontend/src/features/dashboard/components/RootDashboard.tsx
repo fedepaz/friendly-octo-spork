@@ -441,7 +441,7 @@ export function RootDashboard() {
           </Card>
         </div>
       </div>
-      {isOpen && <SmartFormProvider />}
+      {isOpen && <SmartFormProvider onClose={() => setIsOpen(false)} />}
     </div>
   );
 }
