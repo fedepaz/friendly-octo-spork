@@ -12,10 +12,9 @@ export function StepReviewComponent() {
   const watched = watch();
   const { data: sourceAccount } = useAccountById(watched.sourceAccountId ?? "");
   const { data: targetAccount } = useAccountById(watched.targetAccountId ?? "");
-  const { data: categoryName = [] } = useCategorieById(
-    watched.categoryId ?? "",
-  );
+  const { data: category } = useCategorieById(watched.categoryId ?? "");
 
+  const categoryName = category?.name;
   const sourceAccountName = sourceAccount?.name;
   const targetAccountName = targetAccount?.name;
   const displayCurrency = (sourceAccount?.currency ||

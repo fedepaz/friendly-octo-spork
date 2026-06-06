@@ -3,7 +3,7 @@
 
 import { Label } from "@/components/ui/label";
 import { useAccounts } from "@/features/accounts/hooks/accountsHooks";
-import { CreateTransactionInput, Currency, CardType } from "@repo/shared";
+import { CreateTransactionInput, Currency } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
 import { formatCurrency } from "@/lib/utils";
 import { useEffect } from "react";
@@ -20,6 +20,7 @@ export function StepAccountsComponent() {
   // console.log(accounts);
 
   const isIncome = watched.type === "INCOME";
+  const isTransfer = watched.type === "TRANSFER";
 
   const sourceAccountId = watched.sourceAccountId;
 
@@ -29,16 +30,11 @@ export function StepAccountsComponent() {
       const account = accounts.find((a) => a.id === sourceAccountId);
       if (account?.type === "CARD") {
         setValue("isCardExpense", true);
-        // Default card type if not set
-        if (!watched.cardType) {
-          setValue("cardType", "VISA" as CardType);
-        }
       } else {
         setValue("isCardExpense", false);
-        setValue("cardType", null);
       }
     }
-  }, [sourceAccountId, accounts, setValue, watched.cardType]);
+  }, [sourceAccountId, accounts, setValue]);
 
   function needsSource(type: string) {
     return ["EXPENSE", "TRANSFER", "INVESTMENT", "PAYMENT"].includes(type);
@@ -49,11 +45,12 @@ export function StepAccountsComponent() {
   }
   // Source: show all accounts, no restrictions
   // (needsSource already handles INCOME not having a source)
-  const sourceAccounts = accounts;
-
+  const sourceAccounts = accounts.filter((a) => {
+    if (isIncome || (isTransfer && a.type === "CARD")) return false;
+    return true;
+  });
   // Target: exclude self, exclude CARD if INCOME
   const targetAccounts = accounts.filter((a) => {
-    if (a.id === watched.sourceAccountId) return false;
     if (isIncome && a.type === "CARD") return false;
     return true;
   });

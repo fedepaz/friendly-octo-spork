@@ -23,6 +23,8 @@ export function StepBudgetComponent() {
   } = useFormContext<CreateTransactionInput>();
   const watched = watch();
 
+  const watchedTransactionType = watched.type !== "EXPENSE";
+
   // Toggle handler for isBudgetedExpense
   const toggleBudgetedExpense = (value: boolean) => {
     setValue("isBudgetedExpense", value);
@@ -42,6 +44,7 @@ export function StepBudgetComponent() {
         <button
           type="button"
           onClick={() => toggleBudgetedExpense(true)}
+          disabled={watchedTransactionType}
           className={`p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
             ${
               watched.isBudgetedExpense

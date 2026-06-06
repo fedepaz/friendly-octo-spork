@@ -114,10 +114,10 @@ const createTransactionSchemaBase = z.object({
   isCardExpense: z
     .preprocess((val) => val === "on" || val === true, z.boolean())
     .default(false),
-  budgetCategory: BudgetCategorySchema.nullable(),
-  cardType: CardTypeSchema.nullable(),
-  frequency: RecurrenceTypeSchema.optional(),
-  totalParts: z.coerce.number().int().optional(),
+  budgetCategory: BudgetCategorySchema.optional().nullable(),
+  cardType: CardTypeSchema.optional().nullable(),
+  frequency: RecurrenceTypeSchema.optional().nullable(),
+  totalParts: z.coerce.number().int().optional().nullable(),
 });
 
 // ─── 2. CREATE SCHEMA (with cross-field validation) ─────────────────────
@@ -189,7 +189,7 @@ export const createTransactionSchema = createTransactionSchemaBase.superRefine(
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: "Budgeted expenses can only be used for expenses",
-          path: ["type"],
+          path: ["isBudgetedExpense"],
         });
       }
       if (!data.budgetCategory) {

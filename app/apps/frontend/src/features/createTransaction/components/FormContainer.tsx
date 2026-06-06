@@ -28,14 +28,45 @@ export function FormContainer({
   onClose,
 }: FormContainerProps) {
   const { validateCurrentStep } = useStepValidation(activeStep);
-  const { watch } = useFormContext<CreateTransactionInput>();
+  const { watch, setValue } = useFormContext<CreateTransactionInput>();
   const isBudgetedExpense = watch("type") === "EXPENSE";
+  const recurrenceTransationsTypesArray = [
+    "EXPENSE",
+    "INCOME",
+    "PAYMENT",
+    "RETURN",
+    "INVESTMENT",
+  ];
+  const isRecurrenceTransactionType = recurrenceTransationsTypesArray.includes(
+    watch("type"),
+  );
 
   const handleNext = async () => {
     const isValid = await validateCurrentStep();
     if (isValid) {
+      if (
+        activeStep === 3 &&
+        !isBudgetedExpense &&
+        !isRecurrenceTransactionType
+      ) {
+        // If type is not a recurrence transaction, skip recurrence step and clear values
+        setValue("isRecurrence", false);
+        setValue("frequency", null);
+        setValue("totalParts", null);
+        setActiveStep(activeStep + 3);
+        setGlobalError(null);
+        return;
+      } else if (activeStep === 3 && !isRecurrenceTransactionType) {
+        // If type is not an expense, skip on the back budget step
+        setActiveStep(activeStep - 2);
+        setGlobalError(null);
+        return;
+      }
+
       if (activeStep === 4 && !isBudgetedExpense) {
-        // If type is not an expense, skip budget step
+        // If type is not an expense, skip budget step and clear values
+        setValue("isBudgetedExpense", false);
+        setValue("budgetCategory", null);
         setActiveStep(activeStep + 2);
         setGlobalError(null);
         return;
@@ -52,13 +83,7 @@ export function FormContainer({
       setGlobalError(null);
       return;
     }
-
-    if (activeStep > 0) {
-      setActiveStep(activeStep - 1);
-      setGlobalError(null);
-    }
   };
-
   const TOTAL_STEPS = 7;
   const isLastStep = activeStep === TOTAL_STEPS - 1;
 

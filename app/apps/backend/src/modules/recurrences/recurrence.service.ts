@@ -114,7 +114,7 @@ export class RecurrenceService {
     const { startDate, nextDate, endDate } = this.calculateRecurrenceDates(
       data.date,
       data.frequency!,
-      data.totalParts,
+      data.totalParts ?? 1,
       data.isFirstPayment ? 'now' : 'next',
     );
     const createRecurrenceData = {

@@ -31,6 +31,28 @@ export function StepRecurrenceComponent() {
 
   return (
     <div className="flex flex-col gap-4">
+      {watched.isCardExpense && (
+        <div className="border-t border-border pt-3 mt-2">
+          <Label className="text-sm font-mono mb-2 block">Card Type</Label>
+          <div className="grid grid-cols-2 gap-2">
+            {["VISA", "MASTERCARD", "AMEX", "MAESTRO"].map((card) => (
+              <button
+                key={card}
+                type="button"
+                onClick={() => setValue("cardType", card as CardType)}
+                className={`p-2 border-2 font-mono text-xs uppercase transition-all
+                  ${
+                    watched.cardType === card
+                      ? "border-foreground bg-muted font-bold"
+                      : "border-border text-muted-foreground hover:bg-muted"
+                  }`}
+              >
+                {card}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
         Does this repeat?
       </h3>
@@ -161,28 +183,6 @@ export function StepRecurrenceComponent() {
           )}
 
           {/* Card Fields (automatically shown if account step detected a card) */}
-          {watched.isCardExpense && (
-            <div className="border-t border-border pt-3 mt-2">
-              <Label className="text-sm font-mono mb-2 block">Card Type</Label>
-              <div className="grid grid-cols-2 gap-2">
-                {["VISA", "MASTERCARD", "AMEX", "MAESTRO"].map((card) => (
-                  <button
-                    key={card}
-                    type="button"
-                    onClick={() => setValue("cardType", card as CardType)}
-                    className={`p-2 border-2 font-mono text-xs uppercase transition-all
-                      ${
-                        watched.cardType === card
-                          ? "border-foreground bg-muted font-bold"
-                          : "border-border text-muted-foreground hover:bg-muted"
-                      }`}
-                  >
-                    {card}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       )}
     </div>
