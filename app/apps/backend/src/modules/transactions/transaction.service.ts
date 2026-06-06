@@ -78,6 +78,13 @@ export class TransactionService {
     return response.map((transaction) => this.mapToDTO(transaction));
   }
 
+  async getTransactionsByMonth(userId: string, month: number, year: number) {
+    if (!userId) throw new BadRequestException('User id is required');
+    this.logger.log(`Getting transactions for user ${userId}`);
+    const response = await this.transactionRepo.getByMonth(userId, month, year);
+    return response.map((transaction) => this.mapToDTO(transaction));
+  }
+
   async getTransactionById(
     userId: string,
     id: string,

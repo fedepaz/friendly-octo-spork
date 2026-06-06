@@ -45,6 +45,10 @@ Follow the NestJS Module-Controller-Service-Repository pattern:
 *   **Workflow Enforcement**:
     *   **Recurrences**: If `frequency` is `INSTALLMENT`, `totalParts` is mandatory. For `MONTHLY`/`WEEKLY`/`YEARLY`, `totalParts` must be null.
     *   **Card Settlement**: `PAYMENT` transactions on `CARD` accounts must decrease the balance (consuming "loaded" funds) and should ideally link to the expenses being settled.
+*   **Data Enrichment for Dashboards**:
+    *   **Usage Statistics**: When possible, provide "usage-based" endpoints (e.g., categories sorted by transaction count) to improve UX speed for common tasks.
+    *   **Timeline Projections**: For recurring items, implement services that project future occurrences and track current-month payment status.
+    *   **Aggregations**: Use Prisma's `groupBy` for simple daily/monthly totals. For complex comparisons (e.g., month-over-month variance), utilize `this.prisma.$queryRaw` with optimized SQL filters.
 *   **Data Sanitization**: When a single DTO is used to create multiple related entities (e.g., `CreateTransactionInput` containing both transaction and recurrence data), you MUST sanitize the payload before calling each repository's save method.
     *   **Technique**: Use object destructuring to extract only the fields required for each specific model.
     ```typescript

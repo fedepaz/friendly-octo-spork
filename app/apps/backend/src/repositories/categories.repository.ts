@@ -1,3 +1,5 @@
+// backend/src/repositories/categories.repository.ts
+
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../infra/prisma/prisma.service';
 import { Category } from '../generated/prisma';
@@ -19,6 +21,18 @@ export class CategoriesRepository {
       where: {
         id,
         userId,
+      },
+    });
+  }
+
+  async getCategoriesWithUsage(userId: string) {
+    return this.prisma.category.findMany({
+      where: { userId },
+      include: {
+        _count: { select: { transactions: true } },
+      },
+      orderBy: {
+        transactions: { _count: 'desc' },
       },
     });
   }

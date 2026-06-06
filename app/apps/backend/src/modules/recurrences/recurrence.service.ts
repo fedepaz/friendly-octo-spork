@@ -8,6 +8,7 @@ import {
 import {
   CreateTransactionInput,
   RecurrenceDTO,
+  RecurrenceTimelineDTO,
   RecurrenceType,
   RecurrenceTypeSchema,
 } from '@repo/shared';
@@ -189,5 +190,50 @@ export class RecurrenceService {
       updateRecurrenceData,
       tx,
     );
+  }
+
+  async getRecurrenceTimeline(
+    userId: string,
+  ): Promise<RecurrenceTimelineDTO[]> {
+    const recurrences =
+      await this.recurrenceRepo.getRecurrencesWithHistory(userId);
+    const now = new Date();
+    const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const thisMonthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+    return recurrences.map((r) => {
+      const lastTransaction = r.transactions[0] ?? null;
+      const paidThisMonth = lastTransaction
+        ? lastTransaction.date >= thisMonthStart &&
+          lastTransaction.date <= thisMonthEnd
+        : false;
+
+      return {
+        ...this.mapToDTO(r),
+        paidThisMonth,
+        lastPaidAt: lastTransaction?.date ?? null,
+        // project next occurrences for the frontend timeline
+        projectedDates: this.projectNextDates(r.nextDate, r.frequency, 3),
+        transactions: r.transactions.map((t) => ({
+          ...t,
+          amount: t.amount.toString(),
+        })),
+      };
+    });
+  }
+
+  private projectNextDates(
+    nextDate: Date | null,
+    frequency: RecurrenceType,
+    count: number,
+  ): Date[] {
+    if (!nextDate) return [];
+    const dates: Date[] = [];
+    let current = new Date(nextDate);
+    for (let i = 0; i < count; i++) {
+      dates.push(new Date(current));
+      current = this.addFrequencyUnit(current, frequency);
+    }
+    return dates;
   }
 }

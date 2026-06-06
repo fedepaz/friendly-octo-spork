@@ -77,4 +77,50 @@ export class RecurrenceRepository {
       },
     });
   }
+
+  async getRecurrencesWithHistory(userId: string) {
+    return this.prisma.recurrence.findMany({
+      where: {
+        userId,
+        active: true,
+      },
+      include: {
+        category: true,
+        sourceAccount: true,
+        targetAccount: true,
+        transactions: {
+          orderBy: { date: 'desc' },
+          // only need recent ones to check payment status
+          take: 3,
+        },
+      },
+      orderBy: { nextDate: 'asc' },
+    });
+  }
+
+  // For dashboard — what's coming up next
+  async getUpcoming(userId: string) {
+    return this.prisma.recurrence.findMany({
+      where: {
+        userId,
+        active: true,
+        nextDate: { gte: new Date() },
+      },
+      include: { category: true, sourceAccount: true },
+      orderBy: { nextDate: 'asc' },
+    });
+  }
+
+  // For detecting missed payments
+  async getOverdue(userId: string) {
+    return this.prisma.recurrence.findMany({
+      where: {
+        userId,
+        active: true,
+        nextDate: { lt: new Date() },
+      },
+      include: { category: true, sourceAccount: true },
+      orderBy: { nextDate: 'asc' },
+    });
+  }
 }

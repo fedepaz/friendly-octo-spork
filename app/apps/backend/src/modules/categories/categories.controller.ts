@@ -24,4 +24,10 @@ export class CategoriesController {
   ) {
     return this.categoriesService.getCategoryById(user.id, id);
   }
+
+  @Get('usage')
+  @HttpCode(HttpStatus.OK)
+  async getCategoriesWithUsage(@CurrentUser() user: AuthUser) {
+    return this.categoriesService.getCategoriesWithUsage(user.id);
+  }
 }
