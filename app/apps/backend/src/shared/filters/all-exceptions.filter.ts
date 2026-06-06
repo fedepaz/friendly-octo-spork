@@ -9,9 +9,10 @@ import {
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import { Logger } from 'nestjs-pino';
+import { ErrorCode } from '@repo/shared';
 
 interface ExceptionResponse {
-  code?: string;
+  code?: ErrorCode;
   message?: string | string[];
   error?: unknown;
   details?: unknown;
@@ -90,12 +91,24 @@ export class AllExceptionsFilter implements ExceptionFilter {
     response: ExceptionResponse | string | null,
   ): string {
     if (response && typeof response === 'object' && response.code)
-      return response.code;
-    if (status === 400) return 'VALIDATION_ERROR';
-    if (status === 401) return 'UNAUTHORIZED';
-    if (status === 403) return 'FORBIDDEN';
-    if (status === 404) return 'NOT_FOUND';
-    return 'INTERNAL_SERVER_ERROR';
+      return response.code as string;
+
+    switch (status) {
+      case 400:
+        return 'VALIDATION_ERROR';
+      case 401:
+        return 'UNAUTHORIZED';
+      case 403:
+        return 'FORBIDDEN';
+      case 404:
+        return 'NOT_FOUND';
+      case 409:
+        return 'CONFLICT';
+      case 408:
+        return 'TIMEOUT_ERROR';
+      default:
+        return 'INTERNAL_ERROR';
+    }
   }
 
   private getErrorMessage(response: ExceptionResponse | string | null): string {

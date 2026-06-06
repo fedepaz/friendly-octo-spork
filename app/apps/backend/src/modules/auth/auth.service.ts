@@ -41,7 +41,10 @@ export class AuthService {
     const user = await this.userAuthRepo.findByEmail(dto.email);
 
     if (!user) {
-      throw new UnauthorizedException('Invalid credentials - email');
+      throw new UnauthorizedException({
+        code: 'AUTH_INVALID_CREDENTIALS',
+        message: 'Invalid credentials - email',
+      });
     }
 
     // validate password
@@ -50,12 +53,18 @@ export class AuthService {
       user.passwordHash,
     );
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid credentials - password');
+      throw new UnauthorizedException({
+        code: 'AUTH_INVALID_CREDENTIALS',
+        message: 'Invalid credentials - password',
+      });
     }
 
     // check if user is active
     if (user.deletedAt) {
-      throw new UnauthorizedException('User is inactive');
+      throw new UnauthorizedException({
+        code: 'FORBIDDEN',
+        message: 'User is inactive',
+      });
     }
 
     // generate tokens
@@ -87,7 +96,10 @@ export class AuthService {
       // check if user exists
       const user = await this.userAuthRepo.findById(payload.sub);
       if (!user) {
-        throw new UnauthorizedException('User not found');
+        throw new UnauthorizedException({
+          code: 'UNAUTHORIZED',
+          message: 'User not found',
+        });
       }
 
       // generate tokens
@@ -97,14 +109,22 @@ export class AuthService {
       });
     } catch (error) {
       this.logger.error('Error refreshing tokens:', error);
-      throw new UnauthorizedException('Invalid credentials');
+      throw new UnauthorizedException({
+        code: 'AUTH_SESSION_INVALID',
+        message: 'Invalid credentials',
+      });
     }
   }
 
   async changePassword(userId: string, dto: ChangePasswordDto): Promise<void> {
     // Validate user
     const user = await this.userAuthRepo.findById(userId);
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) {
+      throw new NotFoundException({
+        code: 'NOT_FOUND',
+        message: 'User not found',
+      });
+    }
 
     // Validate password
     const isPasswordValid = await bcrypt.compare(
@@ -112,7 +132,10 @@ export class AuthService {
       user.passwordHash,
     );
     if (!isPasswordValid) {
-      throw new BadRequestException('Invalid credentials');
+      throw new BadRequestException({
+        code: 'AUTH_INVALID_CREDENTIALS',
+        message: 'Invalid credentials',
+      });
     }
 
     // Hash new password
@@ -123,7 +146,10 @@ export class AuthService {
 
     // Check if current password is different from new password
     if (dto.currentPassword === dto.newPassword) {
-      throw new BadRequestException('New cannot be the same as the current');
+      throw new BadRequestException({
+        code: 'VALIDATION_ERROR',
+        message: 'New cannot be the same as the current',
+      });
     }
 
     // Update password

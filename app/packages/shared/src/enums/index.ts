@@ -37,6 +37,8 @@ export const BudgetCategorySchema = z.enum([
 
 export const CardTypeSchema = z.enum(["VISA", "MASTERCARD", "AMEX", "MAESTRO"]);
 
+export * from "./error-codes";
+
 export type TransactionType = z.infer<typeof TransactionTypeSchema>;
 export type AccountType = z.infer<typeof AccountTypeSchema>;
 export type Currency = z.infer<typeof CurrencySchema>;

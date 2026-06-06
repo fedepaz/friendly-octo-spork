@@ -1,4 +1,5 @@
 // src/lib/api/error-handler.ts
+import { ErrorCode } from "@repo/shared";
 import { ApiError } from "./client-fetch";
 
 /**
@@ -28,151 +29,144 @@ export type ErrorType =
   | "TIMEOUT"
   | "UNKNOWN";
 
+/**
+ * Registry of known semantic errors
+ * Used to provide specific UI feedback for business logic failures
+ */
+const ERROR_REGISTRY: Partial<Record<ErrorCode, Partial<ParsedError>>> = {
+  AUTH_INVALID_CREDENTIALS: {
+    type: "FORBIDDEN",
+    title: "Credenciales incorrectas",
+    message: "El nombre de usuario o contraseña son incorrectos.",
+  },
+  AUTH_EXPIRED: {
+    type: "AUTH",
+    title: "Sesión expirada",
+    message: "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
+    isFatal: true,
+  },
+  HIERARCHY_RESTRICTION: {
+    type: "FORBIDDEN",
+    title: "Restricción de jerarquía",
+    message:
+      "No puedes gestionar los permisos de un usuario con antigüedad igual o superior a la tuya.",
+  },
+  NETWORK_ERROR: {
+    type: "NETWORK",
+    title: "Sin conexión",
+    message: "No se puede conectar al servidor. Verifica tu conexión.",
+  },
+  INSUFFICIENT_FUNDS: {
+    type: "VALIDATION",
+    title: "Fondos insuficientes",
+    message: "La cuenta seleccionada no tiene fondos suficientes.",
+  },
+  ACCOUNT_TYPE_RESTRICTION: {
+    type: "FORBIDDEN",
+    title: "Operación no permitida",
+    message: "Este tipo de cuenta no permite este tipo de transacción.",
+  },
+  DUPLICATE_RECORD: {
+    type: "CONFLICT",
+    title: "Registro duplicado",
+    message: "Ya existe un registro con estos datos.",
+  },
+};
+
 export function parseApiError(error: unknown): ParsedError {
-  // Network errors
+  // 1. Network / Connection Errors
   if (error instanceof TypeError) {
     return {
       type: "NETWORK",
-      title: "Sin conexión",
-      message:
-        "No se puede conectar al servidor. Verifica tu conexión a internet.",
+      title: "Error de red",
+      message: "No se pudo establecer conexión con el servidor.",
       shouldRetry: true,
     };
   }
 
-  // API errors
+  // 2. Structured API Errors
   if (error instanceof ApiError) {
-    // ✅ CASO ESPECIAL: 401 con mensaje "Access denied" = credenciales incorrectas
-    if (
-      error.status === 401 &&
-      (error.message === "Invaliddy Request" ||
-        error.message === "Invalid credentials - email" ||
-        error.message === "Invalid credentials - password")
-    ) {
+    const code = error.code as ErrorCode;
+
+    // A. Check Registry for semantic matches
+    if (code && ERROR_REGISTRY[code]) {
+      const entry = ERROR_REGISTRY[code]!;
       return {
-        type: "FORBIDDEN",
-        title: "Credenciales incorrectas",
-        message: "El nombre de usuario o contraseña son incorrectos.",
-      };
-    }
-    if (error.message === "Network error: unable to reach server") {
-      return {
-        type: "NETWORK",
-        title: "Error",
-        message:
-          "No se puede conectar al servidor. Verifica tu conexión a internet.",
+        type: entry.type || "UNKNOWN",
+        title: entry.title || "Error",
+        message: entry.message || error.message || "Error desconocido",
         details: error.details,
-      };
-    }
-    if (error.message === "New cannot be the same as the current") {
-      return {
-        type: "VALIDATION",
-        title: "Contraseña incorrecta",
-        message:
-          "La contraseña actual no puede ser la misma que la nueva contraseña.",
-        details: error.details,
-      };
-    }
-    if (
-      error.message ===
-      "You cannot manage permissions for a user with equal or greater seniority."
-    ) {
-      return {
-        type: "FORBIDDEN",
-        title: "Restricción de jerarquía",
-        message:
-          "No puedes gestionar los permisos de un usuario con antigüedad igual o superior a la tuya.",
-        details: error.details,
+        isFatal: entry.isFatal,
+        shouldRetry: entry.shouldRetry,
       };
     }
 
+    // B. Fallback to Status-based messages
     switch (error.status) {
       case 400:
         return {
           type: "VALIDATION",
           title: "Datos inválidos",
-          message: "Por favor, verifica la información ingresada",
+          message: "Por favor, verifica la información ingresada.",
           details: error.details,
         };
       case 401:
         return {
           type: "AUTH",
-          title: "Sesión expirada",
-          message:
-            "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
+          title: "No autorizado",
+          message: "No tienes permiso para acceder a este recurso.",
           isFatal: true,
-          details: error.details,
         };
       case 403:
         return {
           type: "FORBIDDEN",
           title: "Acceso denegado",
-          message: "No tienes permisos para realizar esta acción.",
-          details: error.details,
+          message: "No tienes los permisos necesarios.",
         };
       case 404:
         return {
           type: "NOT_FOUND",
           title: "No encontrado",
-          message: "El recurso solicitado no fue encontrado.",
-          details: error.details,
-        };
-      case 408:
-        return {
-          type: "TIMEOUT",
-          title: "Tiempo de espera agotado",
-          message: "La solicitud tardó demasiado tiempo. Intenta nuevamente.",
-          details: error.details,
-          shouldRetry: true,
+          message: "El recurso solicitado no existe.",
         };
       case 409:
         return {
           type: "CONFLICT",
           title: "Conflicto",
-          message: "Ya existe un registro con estos datos.",
-          details: error.details,
+          message: "Ya existe un registro similar.",
         };
       case 500:
+      case 502:
+      case 503:
+      case 504:
         return {
           type: "SERVER_ERROR",
           title: "Error del servidor",
-          message: "Error interno del servidor. Por favor, intenta nuevamente.",
+          message: "El servidor tuvo un problema. Reintenta en unos momentos.",
           shouldRetry: true,
-          details: error.details,
-        };
-      case 503:
-        return {
-          type: "SERVER_ERROR",
-          title: "Servicio no disponible",
-          message:
-            "El servicio está temporalmente no disponible. Intenta más tarde.",
-          shouldRetry: true,
-          details: error.details,
         };
       default:
         return {
           type: "UNKNOWN",
-          title: "Error",
-          message: error.message || "Ha ocurrido un error inesperado",
-          details: error.details,
+          title: "Error inesperado",
+          message: error.message || "Ha ocurrido un error inesperado.",
         };
     }
   }
 
-  // Generic errors
+  // 3. Generic JS Errors
   if (error instanceof Error) {
     return {
       type: "UNKNOWN",
-      title: "Error Genérico",
+      title: "Error interno",
       message: error.message,
-      details: error,
     };
   }
 
   return {
     type: "UNKNOWN",
-    title: "Error totalmente inesperado :(",
-    message: "Ha ocurrido un error inesperado",
+    title: "Error desconocido",
+    message: "Ha ocurrido un error totalmente inesperado.",
   };
 }
 

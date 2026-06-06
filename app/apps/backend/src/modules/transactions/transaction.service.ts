@@ -163,9 +163,11 @@ export class TransactionService {
           targetAccountId,
         );
         if (account?.type === 'CARD') {
-          throw new BadRequestException(
-            'Cannot add income directly to a card account (use a transfer instead)',
-          );
+          throw new BadRequestException({
+            code: 'ACCOUNT_TYPE_RESTRICTION',
+            message:
+              'Cannot add income directly to a card account (use a transfer instead)',
+          });
         }
         await this.accountRepo.updateBalance(
           targetAccountId,
