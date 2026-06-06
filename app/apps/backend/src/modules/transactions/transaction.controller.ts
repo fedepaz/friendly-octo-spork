@@ -39,6 +39,16 @@ export class TransactionController {
     return this.transactionService.getTransactionById(user.id, id);
   }
 
+  @Get('month/:month/:year')
+  @HttpCode(HttpStatus.OK)
+  async getTransactionsByMonth(
+    @CurrentUser() user: AuthUser,
+    @Param('month') month: number,
+    @Param('year') year: number,
+  ): Promise<TransactionDTO[]> {
+    return this.transactionService.getTransactionsByMonth(user.id, month, year);
+  }
+
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async saveTransaction(

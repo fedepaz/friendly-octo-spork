@@ -42,6 +42,7 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `UserSidebarMenu`| Layout | ✅ | ✅ | ✅ | N/A | Approved |
 | `UserMenu` | Layout | ✅ | ✅ | ✅ | N/A | Approved |
 | `ChangePasswordForm`| Layout | ✅ | ✅ | ✅ | N/A | Approved |
+| `MonthSelector` | Shared | ✅ | ✅ | ✅ | N/A | Approved |
 | `KPICard` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `FeatureCard` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `ComingSoonPage` | Common | ✅ | ✅ | ✅ | N/A | Approved |

@@ -13,7 +13,7 @@ export class CategoriesController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async getCategories(@CurrentUser() user: AuthUser): Promise<CategoryDTO[]> {
-    return this.categoriesService.getCategories(user.id);
+    return this.categoriesService.getCategoriesWithUsage(user.id);
   }
 
   @Get(':id')
@@ -23,11 +23,5 @@ export class CategoriesController {
     @Param('id') id: string,
   ) {
     return this.categoriesService.getCategoryById(user.id, id);
-  }
-
-  @Get('usage')
-  @HttpCode(HttpStatus.OK)
-  async getCategoriesWithUsage(@CurrentUser() user: AuthUser) {
-    return this.categoriesService.getCategoriesWithUsage(user.id);
   }
 }

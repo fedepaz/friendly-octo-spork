@@ -91,7 +91,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     response: ExceptionResponse | string | null,
   ): string {
     if (response && typeof response === 'object' && response.code)
-      return response.code as string;
+      return response.code;
 
     switch (status) {
       case 400:

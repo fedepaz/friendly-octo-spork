@@ -13,4 +13,10 @@ export const transactionService = {
       method: "GET",
     });
   },
+  fetchByMonth: (month: number, year: number) => {
+    return clientFetch<TransactionDTO[]>(
+      `transactions/month/${month}/${year}`,
+      { method: "GET" },
+    );
+  },
 };

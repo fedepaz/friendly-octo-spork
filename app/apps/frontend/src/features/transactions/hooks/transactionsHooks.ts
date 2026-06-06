@@ -8,6 +8,8 @@ export const transactionProfileQueryKeys = {
   all: () => ["transactions"] as const,
   byId: (id: string) =>
     [...transactionProfileQueryKeys.all(), "byId", id] as const,
+  byMonth: (month: number, year: number) =>
+    [...transactionProfileQueryKeys.all(), "byMonth", month, year] as const,
 };
 
 export const useTransactions = () => {
@@ -22,6 +24,14 @@ export const useTransactionById = (id: string) => {
   return useSuspenseQuery<TransactionDTO | null>({
     queryKey: transactionProfileQueryKeys.byId(id),
     queryFn: () => transactionService.fetchById(id),
+    retry: 1, // Retry once to account for transient network issues
+  });
+};
+
+export const useTransactionsByMonth = (month: number, year: number) => {
+  return useSuspenseQuery<TransactionDTO[]>({
+    queryKey: transactionProfileQueryKeys.byMonth(month, year),
+    queryFn: () => transactionService.fetchByMonth(month, year),
     retry: 1, // Retry once to account for transient network issues
   });
 };

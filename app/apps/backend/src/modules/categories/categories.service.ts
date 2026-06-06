@@ -24,7 +24,7 @@ export class CategoriesService {
     return this.categoriesRepo.getCategoryById(userId, id);
   }
 
-  async getCategoriesWithUsage(userId: string) {
+  async getCategoriesWithUsage(userId: string): Promise<CategoryDTO[]> {
     if (!userId) throw new BadRequestException('User id is required');
     this.logger.log(`Getting categories with usage for user ${userId}`);
     return this.categoriesRepo.getCategoriesWithUsage(userId);
