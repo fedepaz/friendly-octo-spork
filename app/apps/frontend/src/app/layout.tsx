@@ -3,10 +3,13 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { AppProviders } from "@/providers/app-providers";
-import { Geist } from "next/font/google";
+import { Oxanium } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const oxanium = Oxanium({
+  subsets: ["latin"],
+  variable: "--font-oxanium",
+});
 
 export const metadata: Metadata = {
   title: "Finance Manager",
@@ -28,7 +31,15 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning className={cn("font-sans", geist.variable)}>
+    <html
+      suppressHydrationWarning
+      className={cn("font-sans", oxanium.variable)}
+    >
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content={viewport.toString()} />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body>
         <AppProviders>{children}</AppProviders>
       </body>

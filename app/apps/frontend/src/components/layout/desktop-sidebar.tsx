@@ -4,7 +4,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+import { ChevronLeft, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -102,11 +102,7 @@ export function DesktopSidebar() {
                     : "Contraer barra lateral"
                 }
               >
-                {isCollapsed ? (
-                  <ChevronRight className="h-3.5 w-3.5" />
-                ) : (
-                  <ChevronLeft className="h-3.5 w-3.5" />
-                )}
+                {!isCollapsed ? <ChevronLeft className="h-3.5 w-3.5" /> : null}
               </Button>
             </TooltipTrigger>
             <TooltipContent

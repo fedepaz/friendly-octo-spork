@@ -15,8 +15,14 @@ This project uses a **semantic OKLCH-based Tailwind theme** inspired by the "Doo
 
 ## Typography
 
+This project utilizes `next/font/google` to optimize font loading and prevent layout shift.
+
 - **Primary (Sans)**: `Oxanium` - Used for all UI labels, headings, and interactive elements.
 - **Secondary (Mono)**: `Source Code Pro` - Used for financial figures, codes, and data tables.
+
+Variables are mapped via `RootLayout` using:
+- `--font-oxanium` (applied as `font-sans`)
+- `--font-mono`
 
 ---
 
