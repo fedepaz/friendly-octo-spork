@@ -28,22 +28,32 @@ export function FeatureCard({
   className,
 }: FeatureCardProps) {
   return (
-    <Link href={href}>
+    <Link href={href} className="block group">
       <Card
         className={cn(
-          "group transition-all hover:shadow-md hover:border-primary/50",
+          "bg-card/20 border-border/40 shadow-premium rounded-none h-full transition-premium hover:bg-card/40 hover:border-primary/40 relative overflow-hidden",
           className,
         )}
       >
-        <CardHeader className="p-4">
+        <div className="absolute top-0 right-0 w-12 h-12 bg-primary/5 -rotate-45 translate-x-6 -translate-y-6 group-hover:bg-primary/10 transition-premium" />
+        <CardHeader className="p-5 relative">
           <div className="flex items-start justify-between">
-            <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <Icon className="size-5" />
+            <div className="flex size-10 items-center justify-center rounded-none bg-primary/10 border border-primary/20 text-primary shadow-etched group-hover:bg-primary/20 transition-premium">
+              <Icon className="size-5 opacity-80 group-hover:opacity-100" />
             </div>
-            <ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
+            <div className="flex items-center gap-2 opacity-0 group-hover:opacity-40 transition-premium">
+              <span className="text-[9px] font-black uppercase tracking-widest">Acceder</span>
+              <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
+            </div>
           </div>
-          <CardTitle className="mt-3 text-sm font-bold uppercase tracking-tight">{title}</CardTitle>
-          <CardDescription className="text-xs line-clamp-2">{description}</CardDescription>
+          <div className="mt-5 space-y-2">
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-foreground group-hover:text-primary transition-premium">
+              {title}
+            </CardTitle>
+            <CardDescription className="text-[10px] font-bold uppercase text-muted-foreground/40 leading-relaxed tracking-tight line-clamp-2">
+              {description}
+            </CardDescription>
+          </div>
         </CardHeader>
       </Card>
     </Link>

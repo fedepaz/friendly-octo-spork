@@ -61,10 +61,14 @@ export function SmartFormProvider({ onClose }: { onClose: () => void }) {
           onClose={onClose}
         />
         {errorMessage && (
-          <div className="px-4 pb-4">
-            <p className="text-xs font-mono text-destructive border-2 border-destructive bg-destructive/10 p-2">
-              {errorMessage}
-            </p>
+          <div className="px-5 pb-5">
+            <div className="text-[10px] font-bold uppercase tracking-tight text-destructive border border-destructive/20 bg-destructive/5 p-3 flex items-start gap-2 shadow-etched animate-premium-in">
+              <div className="h-1.5 w-1.5 bg-destructive mt-1 shrink-0" />
+              <div className="flex-1">
+                <p className="font-black mb-0.5">Error de Validación</p>
+                <p className="opacity-70 leading-relaxed">{errorMessage}</p>
+              </div>
+            </div>
           </div>
         )}
       </form>

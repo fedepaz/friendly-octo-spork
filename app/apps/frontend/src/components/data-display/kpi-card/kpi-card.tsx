@@ -26,28 +26,25 @@ export function KPICard({
   className,
 }: KPICardProps) {
   return (
-    <Card className={cn("overflow-hidden", className)}>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 px-3 py-2">
-        <CardTitle className="text-2.75 font-bold uppercase tracking-wider text-muted-foreground/70">{title}</CardTitle>
-        {Icon && <Icon className="size-3.5 text-muted-foreground/50" />}
+    <Card className={cn("bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none", className)}>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 pt-4 pb-1">
+        <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 group-hover:text-foreground transition-premium">{title}</CardTitle>
+        {Icon && <Icon className="size-3.5 text-primary opacity-40 group-hover:opacity-100 transition-premium" />}
       </CardHeader>
-      <CardContent className="px-3 pb-3 pt-0">
-        <div className="text-xl font-black tracking-tight">{value}</div>
+      <CardContent className="px-4 pb-4 pt-0">
+        <div className="text-2xl font-mono font-black tracking-tighter text-foreground tabular-nums">{value}</div>
         {description && (
-          <p className="text-2.5 text-muted-foreground/60 leading-none mt-0.5">{description}</p>
+          <p className="text-[10px] font-bold uppercase text-muted-foreground/40 leading-none mt-1 tracking-tight">{description}</p>
         )}
         {trend && (
-          <div className="mt-1 flex items-center gap-1 text-2.5">
-            <span
-              className={cn(
-                "font-bold",
-                trend.isPositive ? "text-primary" : "text-destructive",
-              )}
-            >
-              {trend.isPositive ? "+" : ""}
-              {trend.value}%
-            </span>
-            <span className="text-muted-foreground/60">{trend.label}</span>
+          <div className="mt-2 flex items-center gap-1.5">
+            <div className={cn(
+              "flex items-center px-1.5 py-0.5 text-[9px] font-black uppercase tracking-tighter rounded-none",
+              trend.isPositive ? "bg-secondary/10 text-secondary" : "bg-destructive/10 text-destructive"
+            )}>
+              {trend.isPositive ? "+" : ""}{trend.value}%
+            </div>
+            <span className="text-[9px] font-bold uppercase text-muted-foreground/30 tracking-widest">{trend.label}</span>
           </div>
         )}
       </CardContent>

@@ -48,25 +48,27 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-3 md:gap-4"
+        className="flex flex-col gap-4 animate-premium-in"
       >
         {/* Email Field */}
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem className="space-y-1 md:space-y-2">
-              <FormLabel className="font-sans text-2.5 md:text-sm uppercase tracking-widest opacity-70">Email</FormLabel>
+            <FormItem className="space-y-1.5">
+              <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
+                Identificación de Usuario
+              </FormLabel>
               <FormControl>
-                <div className="relative">
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 rounded-none bg-primary/10 border border-primary/20 flex items-center justify-center">
-                    <User className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
+                <div className="relative group">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 rounded-none bg-primary/5 border border-primary/20 flex items-center justify-center transition-premium group-focus-within:bg-primary/20 group-focus-within:border-primary/40">
+                    <User className="h-3.5 w-3.5 text-primary opacity-60 group-focus-within:opacity-100" />
                   </div>
                   <Input
                     {...field}
-                    placeholder="juanperez@example.com"
+                    placeholder="USUARIO@TERMINAL.FINANCE"
                     disabled={isLoading}
-                    className="pl-12 md:pl-14 h-10 md:h-12 text-sm md:text-base rounded-none border-2"
+                    className="pl-14 h-12 text-[11px] font-bold uppercase tracking-wider rounded-none border-border/40 bg-background/40 hover:border-primary/20 focus:border-primary/60 transition-premium shadow-etched"
                     autoFocus
                     tabIndex={0}
                   />
@@ -81,35 +83,37 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem className="space-y-1 md:space-y-2">
-              <FormLabel className="font-sans text-2.5 md:text-sm uppercase tracking-widest opacity-70">Contraseña</FormLabel>
+            <FormItem className="space-y-1.5">
+              <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
+                Clave de Acceso
+              </FormLabel>
               <FormControl>
-                <div className="relative">
-                  <div className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 rounded-none bg-primary/10 border border-primary/20 flex items-center justify-center">
-                    <Lock className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
+                <div className="relative group">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 rounded-none bg-primary/5 border border-primary/20 flex items-center justify-center transition-premium group-focus-within:bg-primary/20 group-focus-within:border-primary/40">
+                    <Lock className="h-3.5 w-3.5 text-primary opacity-60 group-focus-within:opacity-100" />
                   </div>
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Tu contraseña"
+                    placeholder="********"
                     disabled={isLoading}
-                    className="pl-12 md:pl-14 h-10 md:h-12 text-sm md:text-base rounded-none border-2"
+                    className="pl-14 h-12 text-[11px] font-bold uppercase tracking-wider rounded-none border-border/40 bg-background/40 hover:border-primary/20 focus:border-primary/60 transition-premium shadow-etched"
                     {...field}
                     tabIndex={0}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-7 h-7 md:w-8 md:h-8 rounded-none bg-muted/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors border border-border"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-none bg-foreground/5 flex items-center justify-center text-muted-foreground/40 hover:text-foreground hover:bg-foreground/10 transition-premium border border-border/20 cursor-pointer"
                     tabIndex={-1}
                     aria-label={
-                      showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                      showPassword ? "Ocultar" : "Mostrar"
                     }
                   >
                     {showPassword ? (
-                      <EyeOff className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                      <EyeOff className="h-3.5 w-3.5" />
                     ) : (
-                      <Eye className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                      <Eye className="h-3.5 w-3.5" />
                     )}
                   </button>
                 </div>
@@ -121,14 +125,14 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
         {/* Submit Button */}
         <Button
           type="submit"
-          className="w-full h-10 md:h-12 bg-primary rounded-none p-2 cursor-pointer mt-2 border-2 border-primary-foreground/20 font-sans font-bold uppercase tracking-wider"
+          className="w-full h-12 bg-primary text-primary-foreground rounded-none px-4 py-2 cursor-pointer mt-4 border-2 border-primary-foreground/20 font-black text-xs uppercase tracking-widest shadow-premium hover:opacity-90 transition-premium"
           disabled={isLoading || !form.formState.isDirty}
           tabIndex={0}
         >
           {isLoading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
-            "Iniciar sesión"
+            "Autenticar Terminal"
           )}
         </Button>
       </form>

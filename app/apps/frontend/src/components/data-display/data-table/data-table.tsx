@@ -245,40 +245,45 @@ export function DataTable<TData, TValue>({
   const selectedCount = table.getFilteredSelectedRowModel().rows.length;
 
   return (
-    <>
-      <Card className="w-full flex-1 flex flex-col overflow-hidden">
-        <CardHeader>
+    <div className="flex-1 flex flex-col min-h-0 animate-premium-in">
+      <Card className="w-full flex-1 flex flex-col overflow-hidden bg-card/40 border-border/40 shadow-premium rounded-none">
+        <CardHeader className="px-5 pt-5 pb-3">
           <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="text-2xl font-bold">{title}</CardTitle>
+            <div className="space-y-1">
+              <CardTitle className="text-sm font-black uppercase tracking-widest text-foreground">
+                {title}
+              </CardTitle>
               {description && (
-                <CardDescription className="mt-2">
+                <CardDescription className="text-[10px] font-bold uppercase text-muted-foreground/40 tracking-tight">
                   {description}
                 </CardDescription>
               )}
             </div>
 
             {totalCount > 0 ? (
-              <div className="flex items-center space-x-2">
-                <Badge variant="secondary" className="text-sm">
-                  {`${totalCount} registros`}
-                </Badge>
+              <div className="flex items-center px-2 py-0.5 bg-primary/10 border border-primary/20">
+                <span className="text-[10px] font-black text-primary uppercase tracking-tighter">
+                  {totalCount} REGISTROS
+                </span>
               </div>
             ) : null}
           </div>
         </CardHeader>
-        <CardContent className="p-0 flex-1 flex flex-col overflow-hidden">
-          <div className="flex items-center px-4 py-2 space-x-2 shrink-0">
+        <CardContent className="p-0 flex-1 flex flex-col min-h-0 overflow-hidden">
+          <div className="flex items-center px-5 py-2 space-x-3 shrink-0 border-y border-border/20 bg-background/40">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="h-8 text-xs">
-                  <Filter className="mr-2 h-3.5 w-3.5" />
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="h-8 bg-background/40 border-border/40 hover:border-primary/40 rounded-none text-[10px] font-black uppercase tracking-widest transition-premium px-3"
+                >
+                  <Filter className="mr-2 h-3 w-3 opacity-60" />
                   {breakpoint === "sm" ? "" : "Columnas"}
-
-                  <ChevronDown className="ml-1 h-3.5 w-3.5" />
+                  <ChevronDown className="ml-2 h-2.5 w-2.5 opacity-40" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuContent align="start" className="w-48 bg-popover/90 backdrop-blur-xl border-border shadow-2xl rounded-none p-1">
                 {table
                   .getAllColumns()
                   .filter((column) => column.getCanHide())
@@ -286,7 +291,7 @@ export function DataTable<TData, TValue>({
                     return (
                       <DropdownMenuCheckboxItem
                         key={column.id}
-                        className="capitalize"
+                        className="capitalize text-[11px] font-bold py-2 px-3 rounded-none focus:bg-primary/10 focus:text-primary transition-premium cursor-pointer"
                         checked={column.getIsVisible()}
                         onCheckedChange={(value) =>
                           column.toggleVisibility(!!value)
@@ -314,20 +319,21 @@ export function DataTable<TData, TValue>({
               </div>
             )}
           </div>
-          <div className="flex-1 overflow-auto px-4">
-            <div className="rounded-md border">
+          
+          <div className="flex-1 overflow-hidden flex flex-col">
+            <div className="flex-1 overflow-auto custom-scrollbar">
               <Table className="min-w-full">
-                <TableHeader>
+                <TableHeader className="sticky top-0 bg-card/80 backdrop-blur-md z-10 shadow-sm">
                   {table.getHeaderGroups().map((headerGroup) => (
                     <TableRow
                       key={headerGroup.id}
-                      className="hover:bg-transparent"
+                      className="hover:bg-transparent border-b border-border/40"
                     >
                       {headerGroup.headers.map((header) => {
                         return (
                           <TableHead
                             key={header.id}
-                            className="h-9 py-1 text-xs"
+                            className="h-10 py-0 text-[10px] font-black uppercase tracking-widest text-muted-foreground/50"
                           >
                             {header.isPlaceholder
                               ? null
@@ -347,12 +353,12 @@ export function DataTable<TData, TValue>({
                       <Fragment key={row.id}>
                         <TableRow
                           data-state={row.getIsSelected() && "selected"}
-                          className="hover:bg-accent/50 group"
+                          className="hover:bg-foreground/5 group border-b border-border/10 cursor-pointer transition-premium"
                         >
                           {row.getVisibleCells().map((cell) => (
                             <TableCell
                               key={cell.id}
-                              className="py-1 px-3 text-sm h-10"
+                              className="py-2.5 px-3 text-[11px] font-bold h-12"
                             >
                               {flexRender(
                                 cell.column.columnDef.cell,
@@ -367,7 +373,7 @@ export function DataTable<TData, TValue>({
                     <TableRow>
                       <TableCell
                         colSpan={enhancedColumns.length}
-                        className="h-24 text-center"
+                        className="h-32 text-center text-[11px] font-black uppercase tracking-widest opacity-40"
                       >
                         No se encontraron resultados
                       </TableCell>
@@ -378,20 +384,19 @@ export function DataTable<TData, TValue>({
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-2 shrink-0 border-t mt-auto">
-            {" "}
-            <div className="flex-1 text-2.75 text-muted-foreground">
-              {`${table.getFilteredSelectedRowModel().rows.length} de ${table.getFilteredRowModel().rows.length} fila(s) seleccionada(s).`}
+          <div className="flex flex-wrap items-center justify-between gap-4 px-5 py-3 shrink-0 border-t border-border/40 bg-background/40">
+            <div className="flex-1 text-[10px] font-black uppercase tracking-widest text-muted-foreground/40">
+              {`${table.getFilteredSelectedRowModel().rows.length} / ${table.getFilteredRowModel().rows.length} SELECCIONADOS`}
             </div>
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="flex items-center space-x-2">
-                <p className="text-2.75 font-medium">Filas por página</p>
+            <div className="flex flex-wrap items-center gap-6">
+              <div className="flex items-center space-x-3">
+                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">Filas</p>
                 <select
                   value={table.getState().pagination.pageSize}
                   onChange={(e) => {
                     table.setPageSize(Number(e.target.value));
                   }}
-                  className="h-7 w-15 rounded border border-input bg-background px-1 text-2.75"
+                  className="h-8 w-16 bg-background/40 border border-border/40 text-[11px] font-mono font-black text-center focus:border-primary/40 focus:outline-none transition-premium"
                 >
                   {[10, 20, 30, 40, 50, 100].map((pageSize) => (
                     <option key={pageSize} value={pageSize}>
@@ -400,97 +405,32 @@ export function DataTable<TData, TValue>({
                   ))}
                 </select>
               </div>
-              <div className="flex w-20 items-center justify-center text-2.75 font-medium">
-                {`Página ${table.getState().pagination.pageIndex + 1} de ${table.getPageCount()}`}
+              <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+                PÁGINA <span className="text-foreground font-mono">{table.getState().pagination.pageIndex + 1}</span> DE <span className="text-foreground font-mono">{table.getPageCount()}</span>
               </div>
-              <div className="flex items-center space-x-1">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="hidden h-7 w-7 p-0 lg:flex bg-transparent"
-                      onClick={() => table.setPageIndex(0)}
-                      disabled={!table.getCanPreviousPage()}
-                      aria-label="Ir a la primera página"
-                    >
-                      {"<<"}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent
-                    side="top"
-                    className="border border-border shadow-md"
-                  >
-                    <p>Primera página</p>
-                  </TooltipContent>
-                </Tooltip>
-
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="h-7 w-7 p-0 bg-transparent"
-                      onClick={() => table.previousPage()}
-                      disabled={!table.getCanPreviousPage()}
-                      aria-label="Ir a la página anterior"
-                    >
-                      <ChevronLeft className="h-3.5 w-3.5" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent
-                    side="top"
-                    className="border border-border shadow-md"
-                  >
-                    <p>Página anterior</p>
-                  </TooltipContent>
-                </Tooltip>
-
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="h-7 w-7 p-0 bg-transparent"
-                      onClick={() => table.nextPage()}
-                      disabled={!table.getCanNextPage()}
-                      aria-label="Ir a la página siguiente"
-                    >
-                      <ChevronRight className="h-3.5 w-3.5" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent
-                    side="top"
-                    className="border border-border shadow-md"
-                  >
-                    <p>Siguiente página</p>
-                  </TooltipContent>
-                </Tooltip>
-
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="hidden h-7 w-7 p-0 lg:flex bg-transparent"
-                      onClick={() =>
-                        table.setPageIndex(table.getPageCount() - 1)
-                      }
-                      disabled={!table.getCanNextPage()}
-                      aria-label="Ir a la última página"
-                    >
-                      {">>"}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent
-                    side="top"
-                    className="border border-border shadow-md"
-                  >
-                    <p>Última página</p>
-                  </TooltipContent>
-                </Tooltip>
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="outline"
+                  className="h-8 w-8 p-0 bg-background/40 border-border/40 hover:border-primary/40 rounded-none transition-premium"
+                  onClick={() => table.previousPage()}
+                  disabled={!table.getCanPreviousPage()}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  className="h-8 w-8 p-0 bg-background/40 border-border/40 hover:border-primary/40 rounded-none transition-premium"
+                  onClick={() => table.nextPage()}
+                  disabled={!table.getCanNextPage()}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
-    </>
+    </div>
   );
 }
 

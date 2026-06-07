@@ -17,6 +17,24 @@ interface MonthSelectorProps {
   onMonthChange: (month: number) => void;
 }
 
+import { Calendar } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const MONTHS = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+];
+
 export function MonthSelector({ onMonthChange }: MonthSelectorProps) {
   const breakpoint = useBreakpoint();
   const [month, setMonth] = useState(new Date().getMonth());
@@ -31,43 +49,43 @@ export function MonthSelector({ onMonthChange }: MonthSelectorProps) {
         <Button
           variant="outline"
           size="sm"
-          className="min-h-[40px] bg-transparent"
+          className="h-10 bg-background/40 hover:bg-background/80 border-border/60 hover:border-primary/40 rounded-none transition-premium gap-3 px-4 shadow-etched"
         >
-          {breakpoint === "sm" ? "" : "Elegir Mes"}
+          <Calendar className="h-3.5 w-3.5 text-primary opacity-70" />
+          <span className="text-[10px] font-black uppercase tracking-widest">
+            {breakpoint === "sm"
+              ? MONTHS[month].substring(0, 3)
+              : MONTHS[month]}
+          </span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>Mes</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setMonth(0)}>Enero</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setMonth(1)}>Febrero</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setMonth(2)}>Marzo</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setMonth(3)}>Abril</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setMonth(4)}>Mayo</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setMonth(5)}>Junio</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setMonth(6)}>Julio</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setMonth(7)}>Agosto</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setMonth(8)}>
-          Septiembre
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setMonth(9)}>Octubre</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setMonth(10)}>
-          Noviembre
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setMonth(11)}>
-          Diciembre
-        </DropdownMenuItem>
+      <DropdownMenuContent
+        align="end"
+        className="w-48 bg-popover/90 backdrop-blur-xl border-border shadow-2xl rounded-none p-1"
+      >
+        <DropdownMenuLabel className="text-[10px] uppercase tracking-widest opacity-60 px-2 py-1.5">
+          Período Mensual
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator className="bg-border/40" />
+        <div className="grid grid-cols-1 gap-0.5">
+          {MONTHS.map((name, index) => (
+            <DropdownMenuItem
+              key={name}
+              onClick={() => setMonth(index)}
+              className={cn(
+                "text-[11px] font-bold uppercase tracking-tight py-2 px-3 rounded-none cursor-pointer transition-premium",
+                month === index
+                  ? "bg-primary/10 text-primary"
+                  : "hover:bg-foreground/5",
+              )}
+            >
+              <div className="flex items-center justify-between w-full">
+                <span>{name}</span>
+                {month === index && <div className="h-1 w-1 bg-primary" />}
+              </div>
+            </DropdownMenuItem>
+          ))}
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

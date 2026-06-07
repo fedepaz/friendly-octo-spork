@@ -32,6 +32,7 @@ import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { SmartFormProvider } from "@/features/createTransaction";
+import { cn } from "@/lib/utils";
 
 // Mock data
 const netWorthData = [
@@ -147,84 +148,101 @@ export function RootDashboard() {
   }
 
   return (
-    <div className="flex flex-1 flex-col gap-4 min-h-0 overflow-hidden">
-      {/* Header Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 shrink-0">
-        <Card className="py-1.5 md:py-2">
-          <CardHeader className="pb-1 px-4">
-            <CardDescription className="font-mono text-[10px] uppercase tracking-wider">
-              Net Worth
-            </CardDescription>
+    <div className="flex flex-1 flex-col gap-3 min-h-0 overflow-hidden animate-premium-in">
+      {/* Top Bento Row: Stats & Quick Actions */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 shrink-0">
+        <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
+          <CardHeader className="pb-1 px-4 pt-4">
+            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+              Patrimonio Neto
+            </CardTitle>
           </CardHeader>
-          <CardContent className="px-4 pb-2">
-            <p className="font-mono text-2xl font-bold text-primary">
+          <CardContent className="px-4 pb-4">
+            <p className="text-2xl font-mono font-black text-primary tracking-tighter tabular-nums">
               {formatCurrency(totalNetWorth)}
             </p>
-            <p className="font-mono text-[10px] text-secondary">
-              +8.2% from last month
-            </p>
+            <div className="flex items-center gap-1.5 mt-1">
+              <span className="text-[10px] font-bold text-secondary tracking-tight">
+                +8.2%
+              </span>
+              <span className="text-[10px] text-muted-foreground/40 uppercase font-bold tracking-tighter">
+                vs mes anterior
+              </span>
+            </div>
           </CardContent>
         </Card>
 
-        <Card className="py-2">
-          <CardHeader className="pb-1 px-4">
-            <CardDescription className="font-mono text-[10px] uppercase tracking-wider">
-              Monthly Income
-            </CardDescription>
+        <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
+          <CardHeader className="pb-1 px-4 pt-4">
+            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+              Ingresos Junio
+            </CardTitle>
           </CardHeader>
-          <CardContent className="px-4 pb-2">
-            <p className="font-mono text-2xl font-bold text-secondary">
+          <CardContent className="px-4 pb-4">
+            <p className="text-2xl font-mono font-black text-secondary tracking-tighter tabular-nums">
               {formatCurrency(monthlyIncome)}
             </p>
-            <p className="font-mono text-[10px] text-muted-foreground">
-              June 2024
-            </p>
+            <div className="w-full h-1 bg-secondary/10 mt-2">
+              <div className="h-full bg-secondary w-full" />
+            </div>
           </CardContent>
         </Card>
 
-        <Card className="py-2">
-          <CardHeader className="pb-1 px-4">
-            <CardDescription className="font-mono text-[10px] uppercase tracking-wider">
-              Monthly Expenses
-            </CardDescription>
+        <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
+          <CardHeader className="pb-1 px-4 pt-4">
+            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+              Gastos Junio
+            </CardTitle>
           </CardHeader>
-          <CardContent className="px-4 pb-2">
-            <p className="font-mono text-2xl font-bold text-destructive">
+          <CardContent className="px-4 pb-4">
+            <p className="text-2xl font-mono font-black text-destructive tracking-tighter tabular-nums">
               {formatCurrency(monthlyExpenses)}
             </p>
-            <p className="font-mono text-[10px] text-muted-foreground">
-              June 2024
-            </p>
+            <div className="w-full h-1 bg-destructive/10 mt-2">
+              <div className="h-full bg-destructive w-[65%]" />
+            </div>
           </CardContent>
         </Card>
 
-        <Card className="py-2">
-          <CardHeader className="pb-1 px-4">
-            <CardDescription className="font-mono text-[10px] uppercase tracking-wider">
-              Crear Transacción
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="px-4 pb-2">
-            <Button className="w-full" onClick={() => openWizard()}>
-              <PlusIcon className="mr-2 h-4 w-4" />
-              Crear Transacción
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="flex flex-col gap-3">
+          <Button
+            onClick={() => openWizard()}
+            className="flex-1 bg-primary text-primary-foreground font-black text-xs uppercase tracking-widest rounded-none shadow-premium hover:opacity-90 transition-premium group"
+          >
+            <PlusIcon className="mr-2 h-4 w-4 group-hover:rotate-90 transition-premium" />
+            Nueva Transacción
+          </Button>
+          <Button
+            variant="outline"
+            className="flex-1 bg-card/40 border-border/40 text-foreground font-black text-xs uppercase tracking-widest rounded-none shadow-premium hover:bg-card/60 transition-premium"
+          >
+            Exportar Reporte
+          </Button>
+        </div>
       </div>
 
-      {/* Main Content Grid */}
-      <div className="grid flex-1 grid-cols-1 lg:grid-cols-3 gap-4 min-h-0 overflow-y-auto lg:overflow-hidden">
-        {/* Left Column - Charts */}
-        <div className="lg:col-span-2 flex flex-col gap-4 min-h-0">
-          {/* Net Worth Chart */}
-          <Card className="h-70 lg:flex-1 min-h-0 flex flex-col overflow-hidden">
-            <CardHeader className="pb-2 px-4 shrink-0">
-              <CardTitle className="font-sans text-[10px] uppercase tracking-wider opacity-60">
-                Net Worth Trend
-              </CardTitle>
+      {/* Main Bento Grid */}
+      <div className="grid flex-1 grid-cols-1 lg:grid-cols-12 gap-3 min-h-0 overflow-y-auto lg:overflow-hidden pr-1 custom-scrollbar">
+        {/* Analytics Section (Span 8) */}
+        <div className="lg:col-span-8 flex flex-col gap-3 min-h-0">
+          <Card className="flex-1 bg-card/20 border-border/40 shadow-premium rounded-none min-h-[300px] flex flex-col overflow-hidden">
+            <CardHeader className="pb-4 px-5 pt-5 flex flex-row items-center justify-between shrink-0">
+              <div className="space-y-1">
+                <CardTitle className="text-[11px] font-black uppercase tracking-widest text-foreground">
+                  Proyección de Patrimonio
+                </CardTitle>
+                <CardDescription className="text-[10px] uppercase font-bold text-muted-foreground/40 tracking-tight">
+                  Evolución histórica y tendencia actual
+                </CardDescription>
+              </div>
+              <div className="flex gap-2">
+                <div className="h-2 w-2 bg-primary" />
+                <span className="text-[9px] font-bold uppercase tracking-tighter opacity-60">
+                  Real
+                </span>
+              </div>
             </CardHeader>
-            <CardContent className="flex-1 min-h-0 px-2 pb-2">
+            <CardContent className="flex-1 min-h-0 px-4 pb-4">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={netWorthData}>
                   <defs>
@@ -238,7 +256,7 @@ export function RootDashboard() {
                       <stop
                         offset="5%"
                         stopColor="var(--primary)"
-                        stopOpacity={0.3}
+                        stopOpacity={0.2}
                       />
                       <stop
                         offset="95%"
@@ -248,76 +266,107 @@ export function RootDashboard() {
                     </linearGradient>
                   </defs>
                   <CartesianGrid
-                    strokeDasharray="3 3"
+                    strokeDasharray="4 4"
                     stroke="var(--border)"
-                    opacity={0.3}
+                    opacity={0.1}
+                    vertical={false}
                   />
                   <XAxis
                     dataKey="month"
                     stroke="var(--muted-foreground)"
-                    fontSize={10}
+                    fontSize={9}
+                    fontWeight={700}
                     fontFamily="Source Code Pro"
                     tickLine={false}
                     axisLine={false}
+                    dy={10}
                   />
                   <YAxis
                     stroke="var(--muted-foreground)"
-                    fontSize={10}
+                    fontSize={9}
+                    fontWeight={700}
                     fontFamily="Source Code Pro"
                     tickFormatter={(value) => `$${value / 1000}k`}
                     tickLine={false}
                     axisLine={false}
+                    dx={-10}
                   />
-                  <Tooltip content={<CustomTooltip />} />
+                  <Tooltip
+                    content={<CustomTooltip />}
+                    cursor={{
+                      stroke: "var(--primary)",
+                      strokeWidth: 1,
+                      strokeDasharray: "4 4",
+                    }}
+                  />
                   <Area
                     type="monotone"
                     dataKey="value"
                     stroke="var(--primary)"
-                    strokeWidth={2}
+                    strokeWidth={2.5}
                     fill="url(#netWorthGradient)"
+                    animationDuration={1000}
                   />
                 </AreaChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
 
-          {/* Income vs Expenses Chart */}
-          <Card className="h-70 lg:flex-1 min-h-0 flex flex-col overflow-hidden">
-            <CardHeader className="pb-2 px-4 shrink-0">
-              <CardTitle className="font-sans text-[10px] uppercase tracking-wider opacity-60">
-                Income vs Expenses
-              </CardTitle>
+          <Card className="flex-1 bg-card/20 border-border/40 shadow-premium rounded-none min-h-[300px] flex flex-col overflow-hidden">
+            <CardHeader className="pb-4 px-5 pt-5 flex flex-row items-center justify-between shrink-0">
+              <div className="space-y-1">
+                <CardTitle className="text-[11px] font-black uppercase tracking-widest text-foreground">
+                  Flujo de Caja
+                </CardTitle>
+                <CardDescription className="text-[10px] uppercase font-bold text-muted-foreground/40 tracking-tight">
+                  Comparativa de ingresos y gastos operativos
+                </CardDescription>
+              </div>
             </CardHeader>
-            <CardContent className="flex-1 min-h-0 px-2 pb-2">
+            <CardContent className="flex-1 min-h-0 px-4 pb-4">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={incomeExpenseData} barGap={4}>
+                <BarChart data={incomeExpenseData} barGap={8}>
                   <CartesianGrid
-                    strokeDasharray="3 3"
+                    strokeDasharray="4 4"
                     stroke="var(--border)"
-                    opacity={0.3}
+                    opacity={0.1}
+                    vertical={false}
                   />
                   <XAxis
                     dataKey="month"
                     stroke="var(--muted-foreground)"
-                    fontSize={10}
+                    fontSize={9}
+                    fontWeight={700}
                     fontFamily="Source Code Pro"
                     tickLine={false}
                     axisLine={false}
+                    dy={10}
                   />
                   <YAxis
                     stroke="var(--muted-foreground)"
-                    fontSize={10}
+                    fontSize={9}
+                    fontWeight={700}
                     fontFamily="Source Code Pro"
                     tickFormatter={(value) => `$${value / 1000}k`}
                     tickLine={false}
                     axisLine={false}
+                    dx={-10}
                   />
-                  <Tooltip content={<CustomTooltip />} />
-                  <Bar dataKey="income" fill="var(--secondary)" radius={0} />
+                  <Tooltip
+                    content={<CustomTooltip />}
+                    cursor={{ fill: "var(--foreground)", opacity: 0.05 }}
+                  />
+                  <Bar
+                    dataKey="income"
+                    fill="var(--secondary)"
+                    radius={0}
+                    barSize={24}
+                  />
                   <Bar
                     dataKey="expenses"
                     fill="var(--destructive)"
                     radius={0}
+                    barSize={24}
                   />
                 </BarChart>
               </ResponsiveContainer>
@@ -325,30 +374,29 @@ export function RootDashboard() {
           </Card>
         </div>
 
-        {/* Right Column - Lists */}
-        <div className="flex flex-col gap-4 min-h-0 overflow-hidden">
-          {/* Accounts */}
-          <Card className="shrink-0 overflow-hidden flex flex-col max-h-[30%]">
-            <CardHeader className="pb-1 px-4 shrink-0">
-              <CardTitle className="font-sans text-[10px] uppercase tracking-wider opacity-60">
-                Accounts
+        {/* Sidebar Section (Span 4) */}
+        <div className="lg:col-span-4 flex flex-col gap-3 min-h-0">
+          <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col max-h-[25%] overflow-hidden">
+            <CardHeader className="pb-2 px-5 pt-4 shrink-0">
+              <CardTitle className="text-[10px] font-black uppercase tracking-widest text-primary">
+                Instrumental de Cuentas
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-1.5 px-4 pb-2 overflow-y-auto custom-scrollbar">
+            <CardContent className="space-y-2 px-5 pb-4 overflow-y-auto custom-scrollbar">
               {accounts.map((account) => (
                 <div
                   key={account.name}
-                  className="flex items-center justify-between border-b border-border/30 pb-1 last:border-0 last:pb-0"
+                  className="flex items-center justify-between group cursor-pointer hover:translate-x-1 transition-premium border-l-2 border-transparent hover:border-primary pl-2"
                 >
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[11px] font-bold truncate leading-tight">
+                  <div className="min-w-0">
+                    <p className="text-[11px] font-black text-foreground truncate uppercase tracking-tighter">
                       {account.name}
                     </p>
-                    <p className="font-mono text-[8px] uppercase text-muted-foreground/60 leading-none">
+                    <p className="font-mono text-[8px] uppercase text-muted-foreground/40 font-bold leading-none">
                       {account.type}
                     </p>
                   </div>
-                  <p className="font-mono text-[11px] font-black text-primary tabular-nums ml-2">
+                  <p className="font-mono text-[11px] font-black text-secondary tabular-nums">
                     {formatCurrency(account.balance)}
                   </p>
                 </div>
@@ -356,57 +404,72 @@ export function RootDashboard() {
             </CardContent>
           </Card>
 
-          {/* Budget Progress */}
-          <Card className="shrink-0 overflow-hidden flex flex-col max-h-[30%]">
-            <CardHeader className="pb-1 px-4 shrink-0">
-              <CardTitle className="font-sans text-[10px] uppercase tracking-wider opacity-60">
-                Budget Status
+          <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col max-h-[35%] overflow-hidden">
+            <CardHeader className="pb-2 px-5 pt-4 shrink-0">
+              <CardTitle className="text-[10px] font-black uppercase tracking-widest text-secondary">
+                Estado de Presupuestos
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2.5 px-4 pb-2 overflow-y-auto custom-scrollbar">
+            <CardContent className="space-y-4 px-5 pb-4 overflow-y-auto custom-scrollbar">
               {budgets.map((budget) => {
                 const percentage = (budget.spent / budget.limit) * 100;
                 const isOverBudget = percentage > 100;
                 return (
-                  <div key={budget.category} className="space-y-0.5">
+                  <div key={budget.category} className="space-y-1.5">
                     <div className="flex items-center justify-between">
-                      <p className="text-[9px] font-bold uppercase tracking-tight truncate max-w-30">
+                      <p className="text-[9px] font-black uppercase tracking-widest text-foreground/80">
                         {budget.category}
                       </p>
                       <p
-                        className={`font-mono text-[9px] tabular-nums ${isOverBudget ? "text-destructive" : "text-muted-foreground/70"}`}
+                        className={cn(
+                          "font-mono text-[10px] font-black tabular-nums",
+                          isOverBudget ? "text-destructive" : "text-secondary",
+                        )}
                       >
-                        {formatCurrency(budget.spent)} /{" "}
-                        {formatCurrency(budget.limit)}
+                        {Math.round(percentage)}%
                       </p>
                     </div>
-                    <Progress
-                      value={Math.min(percentage, 100)}
-                      className={`h-1 ${isOverBudget ? "[&>div]:bg-destructive" : "[&>div]:bg-secondary"}`}
-                    />
+                    <div className="relative h-1.5 bg-foreground/5 shadow-etched overflow-hidden">
+                      <div
+                        className={cn(
+                          "absolute inset-y-0 left-0 transition-all duration-1000",
+                          isOverBudget
+                            ? "bg-destructive shadow-[0_0_8px_rgba(var(--destructive),0.4)]"
+                            : "bg-secondary",
+                        )}
+                        style={{ width: `${Math.min(percentage, 100)}%` }}
+                      />
+                    </div>
+                    <div className="flex justify-between items-center opacity-40">
+                      <span className="text-[8px] font-mono">
+                        {formatCurrency(budget.spent)}
+                      </span>
+                      <span className="text-[8px] font-mono">
+                        {formatCurrency(budget.limit)}
+                      </span>
+                    </div>
                   </div>
                 );
               })}
             </CardContent>
           </Card>
 
-          {/* Recent Transactions */}
-          <Card className="flex-1 min-h-0 overflow-hidden flex flex-col">
-            <CardHeader className="pb-2 px-4 shrink-0">
-              <CardTitle className="font-sans text-[10px] uppercase tracking-wider opacity-60">
-                Recent Transactions
+          <Card className="bg-card/40 border-border/40 shadow-premium rounded-none flex-1 min-h-0 flex flex-col overflow-hidden">
+            <CardHeader className="pb-3 px-5 pt-4 shrink-0">
+              <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+                Registros Recientes
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex-1 min-h-0 overflow-hidden px-4 pb-2">
+            <CardContent className="flex-1 min-h-0 px-5 pb-4 overflow-hidden">
               <div className="h-full overflow-y-auto pr-1 custom-scrollbar">
                 <Table>
-                  <TableHeader className="sticky top-0 bg-card z-10 shadow-sm">
-                    <TableRow className="hover:bg-transparent border-b-2">
-                      <TableHead className="font-mono text-[9px] h-7 px-0 uppercase tracking-tighter">
-                        Description
+                  <TableHeader className="sticky top-0 bg-card/90 backdrop-blur-md z-10">
+                    <TableRow className="hover:bg-transparent border-b border-border/40">
+                      <TableHead className="font-black text-[9px] h-8 px-0 uppercase tracking-widest opacity-40">
+                        Descripción
                       </TableHead>
-                      <TableHead className="font-mono text-[9px] text-right h-7 px-0 uppercase tracking-tighter">
-                        Amount
+                      <TableHead className="font-black text-[9px] text-right h-8 px-0 uppercase tracking-widest opacity-40">
+                        Monto
                       </TableHead>
                     </TableRow>
                   </TableHeader>
@@ -414,20 +477,25 @@ export function RootDashboard() {
                     {recentTransactions.map((tx) => (
                       <TableRow
                         key={tx.id}
-                        className="hover:bg-accent/50 border-border/30"
+                        className="group hover:bg-foreground/5 border-border/10 cursor-pointer transition-premium"
                       >
-                        <TableCell className="py-1.5 px-0">
+                        <TableCell className="py-2.5 px-0">
                           <div className="flex flex-col">
-                            <p className="text-xs font-bold leading-tight truncate max-w-40">
+                            <p className="text-[11px] font-black uppercase tracking-tight text-foreground/90 group-hover:text-primary transition-premium">
                               {tx.description}
                             </p>
-                            <span className="font-mono text-[9px] text-muted-foreground opacity-60 uppercase">
+                            <span className="font-mono text-[8px] text-muted-foreground/40 uppercase font-bold">
                               {tx.category}
                             </span>
                           </div>
                         </TableCell>
                         <TableCell
-                          className={`font-mono text-xs font-black text-right tabular-nums py-1.5 px-0 ${tx.amount > 0 ? "text-secondary" : "text-foreground"}`}
+                          className={cn(
+                            "font-mono text-[11px] font-black text-right tabular-nums py-2.5 px-0",
+                            tx.amount > 0
+                              ? "text-secondary"
+                              : "text-foreground",
+                          )}
                         >
                           {tx.amount > 0 ? "+" : ""}
                           {formatCurrency(tx.amount)}

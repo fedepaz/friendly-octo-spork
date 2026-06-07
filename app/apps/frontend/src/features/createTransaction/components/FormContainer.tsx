@@ -112,12 +112,12 @@ export function FormContainer({
     <WizardModal
       isOpen={true}
       onClose={onClose}
-      title="Create Transaction"
+      title="Terminal de Transacciones"
       step={activeStep + 1}
       totalSteps={TOTAL_STEPS}
     >
       <StepIndicator current={activeStep} total={TOTAL_STEPS} />
-      <div className="flex-1 overflow-y-auto px-4 py-4">{renderStep()}</div>
+      <div className="flex-1 overflow-y-auto px-5 py-6 animate-premium-in">{renderStep()}</div>
       <WizardFooter
         onBack={activeStep > 0 ? handleBack : undefined}
         onNext={!isLastStep ? handleNext : undefined}

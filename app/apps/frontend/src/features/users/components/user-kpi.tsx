@@ -14,25 +14,30 @@ function UserKPIs() {
   const emailUsers = data?.filter((u) => u.email?.includes("@")).length || 0;
 
   return (
-    <div className="grid gap-2 sm:gap-3 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 shrink-0 animate-premium-in">
       <KPICard
-        title="Total de Usuarios"
+        title="Operadores Totales"
         value={totalUsers}
-        description="en el sistema"
+        description="IDENTIDADES REGISTRADAS"
         icon={Users}
-        trend={{ value: 5.0, label: "desde el mes pasado", isPositive: true }}
+        trend={{ value: 5.0, label: "VS PERÍODO ANTERIOR", isPositive: true }}
       />
-      <KPICard title="Usuarios Activos" value={activeUsers} icon={UserCheck} />
+      <KPICard 
+        title="Identidades Activas" 
+        value={activeUsers} 
+        description="EN LÍNEA / DISPONIBLES"
+        icon={UserCheck} 
+      />
       <KPICard
-        title="Usuarios Inactivos"
+        title="Accesos Suspendidos"
         value={inactiveUsers}
-        description="Necesitan atención"
+        description="REQUIEREN REVISIÓN"
         icon={UserX}
       />
       <KPICard
-        title="Contactos"
+        title="Enlaces de Red"
         value={emailUsers}
-        description="Con correo electrónico"
+        description="CORREOS VERIFICADOS"
         icon={Shield}
       />
     </div>

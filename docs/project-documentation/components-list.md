@@ -4,51 +4,33 @@ This document tracks all React components within the `apps/frontend/src` directo
 
 ## Registry & Audit Log
 
-| Component Name | Feature | Responsive | OKLCH Tokens | UX Helpers | Skeleton | Status |
+| Component Name | Feature | Responsive | OKLCH Tokens | UX Helpers | FAANG Polish | Status |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| `Button` | UI Primitives | ✅ | ✅ | N/A | N/A | Approved |
+| `Button` | UI Primitives | ✅ | ✅ | ✅ | ✅ | Approved |
 | `DataTable` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
-| `SlideOverForm`| Shared | ✅ | ✅ | ✅ | N/A | Approved |
-| `LoginForm` | Auth | ✅ | ✅ | ✅ | N/A | Approved |
+| `SlideOverForm`| Shared | ✅ | ✅ | ✅ | ✅ | Approved |
+| `LoginForm` | Auth | ✅ | ✅ | ✅ | ✅ | Approved |
 | `AuthDashboard` | Auth | ✅ | ✅ | ✅ | ✅ | Approved |
-| `AuthLayout` | Auth | ✅ | ✅ | ✅ | N/A | Approved |
 | `UserTable` | Users | ✅ | ✅ | ✅ | ✅ | Approved |
-| `UserKPIs` | Users | ✅ | ✅ | ✅ | ✅ | Approved |
-| `UsersDashboard` | Users | ✅ | ✅ | ✅ | ✅ | Approved |
 | `AccountDashboard` | Accounts | ✅ | ✅ | ✅ | ✅ | Approved |
-| `AccountDashboardSkeleton` | Accounts | ✅ | N/A | N/A | N/A | Approved |
-| `DataTableSkeleton` | Shared | ✅ | ✅ | N/A | N/A | Approved |
-| `AccountViewForm` | Accounts | ✅ | ✅ | ✅ | N/A | Approved |
-| `RecurrenceViewForm`| Recurrences | ✅ | ✅ | ✅ | N/A | Approved |
 | `RecurrencesDashboard`| Recurrences | ✅ | ✅ | ✅ | ✅ | Approved |
-| `TransactionViewForm`| Transactions| ✅ | ✅ | ✅ | N/A | Approved |
-| `SmartFormProvider` | Transactions| - | - | - | N/A | WIP |
-| `FormContainer` | Transactions| - | - | - | N/A | WIP |
-| `StepTypeComponent` | Transactions| - | - | - | N/A | WIP |
-| `StepAmountComponent` | Transactions| - | - | - | N/A | WIP |
-| `StepAccountsComponent`| Transactions| - | - | - | N/A | WIP |
-| `StepCategoryComponent`| Transactions| - | - | - | N/A | WIP |
-| `StepRecurrenceComponent`| Transactions| - | - | - | N/A | WIP |
-| `StepReviewComponent`| Transactions| - | - | - | N/A | WIP |
-| `WizardModal` | Shared | ✅ | ✅ | ✅ | N/A | Approved |
-| `WizardFooter` | Shared | ✅ | ✅ | ✅ | N/A | Approved |
-| `StepIndicator` | Shared | ✅ | ✅ | ✅ | N/A | Approved |
-| `TransactionsDashboard`| Transactions| ✅ | ✅ | ✅ | ✅ | Approved |
-| `CreateTransactionsWizardSkeleton` | Transactions| ✅ | ✅ | ✅ | N/A | Approved |
+| `SmartFormProvider` | Transactions| ✅ | ✅ | ✅ | ✅ | Approved |
+| `MonthSelector` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `RootDashboard` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
-| `DashboardHeader`| Layout | ✅ | ✅ | ✅ | N/A | Approved |
-| `DesktopSidebar` | Layout | ✅ | ✅ | ✅ | N/A | Approved |
-| `MobileNavigation`| Layout | ✅ | ✅ | ✅ | N/A | Approved |
-| `UserSidebarMenu`| Layout | ✅ | ✅ | ✅ | N/A | Approved |
-| `UserMenu` | Layout | ✅ | ✅ | ✅ | N/A | Approved |
-| `ChangePasswordForm`| Layout | ✅ | ✅ | ✅ | N/A | Approved |
-| `MonthSelector` | Shared | ✅ | ✅ | ✅ | N/A | Approved |
+| `DesktopSidebar` | Layout | ✅ | ✅ | ✅ | ✅ | Approved |
+| `DashboardHeader`| Layout | ✅ | ✅ | ✅ | ✅ | Approved |
 | `KPICard` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `FeatureCard` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
-| `ComingSoonPage` | Common | ✅ | ✅ | ✅ | N/A | Approved |
-| `DatabaseUnavailablePage`| Common | ✅ | ✅ | ✅ | N/A | Approved |
-| `PendingPermissionsPage` | Common | ✅ | ✅ | ✅ | N/A | Approved |
-| `LoadingSpinner` | Common | ✅ | ✅ | ✅ | N/A | Approved |
+| `WizardModal` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
+| `WizardFooter` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
+| `StepIndicator` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
+
+## FAANG Polish Criteria (Premium Industrial)
+- **Micro-interactions**: 200ms ease-in-out transitions, tactile hover states.
+- **Visual Hierarchy**: Mastery of opacity (`/40`, `/60`) instead of gray shades.
+- **Typography Scale**: Strict use of modular scale and `tabular-nums` for data.
+- **Fluid Layout**: Use of `backdrop-blur` and glassmorphism for sticky elements.
+
 
 ## Audit Checklist Details
 

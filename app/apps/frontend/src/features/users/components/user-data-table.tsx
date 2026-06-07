@@ -13,12 +13,12 @@ export function UsersDataTable() {
   const [selectedUser, setSelectedUser] = useState<UserProfileDto | null>(null);
 
   return (
-    <>
+    <div className="flex-1 flex flex-col min-h-0 animate-premium-in">
       <DataTable
         columns={userColumns}
         data={users}
-        title="Usuarios"
-        description="Gestión de los usuarios del sistema"
+        title="Directorio de Operadores"
+        description="Gestión de identidades y privilegios del sistema"
         tableName="users"
         totalCount={users.length}
         onView={(row) => setSelectedUser(row)}
@@ -27,11 +27,11 @@ export function UsersDataTable() {
       <SlideOverForm
         open={!!selectedUser}
         onOpenChange={(open) => !open && setSelectedUser(null)}
-        title="Perfil de Seguridad"
-        description={selectedUser?.name}
+        title="Terminal de Seguridad"
+        description={`IDENTIDAD: ${selectedUser?.name?.toUpperCase()}`}
       >
         {selectedUser && <UserViewForm selectedUser={selectedUser} />}
       </SlideOverForm>
-    </>
+    </div>
   );
 }
