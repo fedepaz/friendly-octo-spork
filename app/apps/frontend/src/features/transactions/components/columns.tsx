@@ -1,14 +1,8 @@
 // src/features/transactions/components/columns.tsx
 
 import { Row, type ColumnDef } from "@tanstack/react-table";
-import { SortableHeader } from "@/components/data-display/data-table";
 import { TransactionDTO } from "@repo/shared";
-import {
-  formatCurrency,
-  getTransactionTypeStyles,
-  cn,
-} from "@/lib/utils";
-import { formatShortDate } from "@/lib/date-utils";
+import { getTransactionTypeStyles } from "@/lib/utils";
 import {
   ArrowDownLeft,
   ArrowUpRight,
@@ -18,12 +12,18 @@ import {
   Receipt,
   Minus,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  PremiumAmountCell,
+  PremiumBadgeCell,
+  PremiumDateCell,
+  SortableHeader,
+  TacticalTextCell,
+} from "@/components/data-display/data-table";
 
 interface CellProps {
   row: Row<TransactionDTO>;
@@ -43,34 +43,22 @@ function TransactionTypeCell({ row }: CellProps) {
           : TrendingUp;
 
   return (
-    <Badge
-      variant="outline"
-      className={cn(
-        "gap-1 px-1.5 py-0 text-[10px] font-bold uppercase tracking-tighter",
-        styles.bg,
-        styles.color,
-        styles.border,
-      )}
-    >
-      <Icon className="h-3 w-3" />
-      {styles.label}
-    </Badge>
-  );
-}
-
-function AmountCell({ row }: CellProps) {
-  const { amount, type } = row.original;
-  const isNegative = type === "EXPENSE" || type === "INVESTMENT";
-
-  return (
-    <div
-      className={cn(
-        "font-mono text-sm font-bold tabular-nums text-right",
-        isNegative ? "text-destructive" : "text-secondary",
-      )}
-    >
-      {isNegative ? "-" : "+"}
-      {formatCurrency(amount)}
+    <div className="flex items-center gap-2">
+      <div className="flex h-6 w-6 items-center justify-center bg-muted/20 border border-border/40 shadow-inner">
+        <Icon
+          className={styles.color.replace("text-", "text-").concat(" h-3 w-3")}
+        />
+      </div>
+      <PremiumBadgeCell
+        label={styles.label}
+        variant={
+          type === "INCOME"
+            ? "secondary"
+            : type === "EXPENSE"
+              ? "destructive"
+              : "primary"
+        }
+      />
     </div>
   );
 }
@@ -81,11 +69,7 @@ export const transactionsColumns: ColumnDef<TransactionDTO>[] = [
     header: ({ column }) => (
       <SortableHeader column={column}>Fecha</SortableHeader>
     ),
-    cell: ({ row }) => (
-      <span className="text-xs font-mono text-muted-foreground whitespace-nowrap">
-        {formatShortDate(row.original.date)}
-      </span>
-    ),
+    cell: ({ row }) => <PremiumDateCell date={row.original.date} />,
   },
   {
     accessorKey: "type",
@@ -100,14 +84,10 @@ export const transactionsColumns: ColumnDef<TransactionDTO>[] = [
       <SortableHeader column={column}>Descripción</SortableHeader>
     ),
     cell: ({ row }) => (
-      <div className="flex flex-col gap-0.5 max-w-[200px]">
-        <span className="text-sm font-semibold truncate leading-none">
-          {row.original.description}
-        </span>
-        <span className="text-[10px] text-muted-foreground truncate opacity-70">
-          {row.original.category?.name || "Sin categoría"}
-        </span>
-      </div>
+      <TacticalTextCell
+        title={row.original.category?.name || "Sin categoría"}
+        subtext={row.original.description?.replaceAll("\n", " ")}
+      />
     ),
   },
   {
@@ -117,30 +97,14 @@ export const transactionsColumns: ColumnDef<TransactionDTO>[] = [
         <SortableHeader column={column}>Monto</SortableHeader>
       </div>
     ),
-    cell: ({ row }) => <AmountCell row={row} />,
-  },
-  {
-    accessorKey: "accounts",
-    header: "Cuentas",
     cell: ({ row }) => (
-      <div className="flex flex-col text-[10px] gap-0.5 font-mono text-muted-foreground">
-        <div className="flex items-center gap-1">
-          <span className="opacity-50">De:</span>
-          <span className="truncate max-w-[80px]">
-            {row.original.sourceAccount?.name || "-"}
-          </span>
-        </div>
-        {row.original.targetAccount && (
-          <div className="flex items-center gap-1">
-            <span className="opacity-50">A:</span>
-            <span className="truncate max-w-[80px]">
-              {row.original.targetAccount.name}
-            </span>
-          </div>
-        )}
-      </div>
+      <PremiumAmountCell
+        amount={row.original.amount}
+        type={row.original.type}
+      />
     ),
   },
+
   {
     id: "flags",
     header: "",
@@ -149,7 +113,7 @@ export const transactionsColumns: ColumnDef<TransactionDTO>[] = [
         {row.original.isCardExpense && (
           <Tooltip>
             <TooltipTrigger asChild>
-              <CreditCard className="h-3.5 w-3.5 text-accent" />
+              <CreditCard className="h-3.5 w-3.5 text-accent opacity-70 hover:opacity-100 transition-opacity" />
             </TooltipTrigger>
             <TooltipContent side="top">Gasto con Tarjeta</TooltipContent>
           </Tooltip>
@@ -157,7 +121,7 @@ export const transactionsColumns: ColumnDef<TransactionDTO>[] = [
         {row.original.isBudgetedExpense && (
           <Tooltip>
             <TooltipTrigger asChild>
-              <Receipt className="h-3.5 w-3.5 text-primary" />
+              <Receipt className="h-3.5 w-3.5 text-primary opacity-70 hover:opacity-100 transition-opacity" />
             </TooltipTrigger>
             <TooltipContent side="top">Gasto Presupuestado</TooltipContent>
           </Tooltip>

@@ -18,6 +18,8 @@ import {
   RefreshTokenSchema,
   ChangePasswordSchema,
   AuthResponseDto,
+  RegisterAuthSchema,
+  RegisterAuthDto,
 } from '@repo/shared';
 
 import { AuthUser } from './types/auth-user.type';
@@ -40,6 +42,15 @@ export class AuthController {
     @Body(new ZodValidationPipe(LoginAuthSchema)) dto: LoginAuthDto,
   ): Promise<AuthResponseDto> {
     return this.authService.login(dto);
+  }
+
+  @Public()
+  @Post('register')
+  @HttpCode(HttpStatus.OK)
+  async register(
+    @Body(new ZodValidationPipe(RegisterAuthSchema)) dto: RegisterAuthDto,
+  ): Promise<AuthResponseDto> {
+    return this.authService.register(dto);
   }
 
   /**

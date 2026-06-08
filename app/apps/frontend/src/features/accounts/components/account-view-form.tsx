@@ -3,8 +3,8 @@
 
 import { AccountDTO, Currency } from "@repo/shared";
 import { formatCurrency, cn } from "@/lib/utils";
-import { formatShortDate } from "@/lib/date-utils";
 import { ArrowDownLeft, ArrowUpRight, History } from "lucide-react";
+import { PremiumAmountCell, PremiumDateCell, TacticalTextCell } from "@/components/data-display/data-table";
 
 interface AccountViewFormProps {
   selectedAccount: AccountDTO;
@@ -26,27 +26,35 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
   const recentActivity = allTransactions.slice(0, 5);
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-2 gap-4 border-b border-border/50 pb-4">
-        <div>
-          <p className="text-2.5 uppercase font-bold text-muted-foreground opacity-50">
-            Tipo
+    <div className="space-y-8 animate-premium-in">
+      {/* Tactical KPI Area */}
+      <div className="grid grid-cols-2 gap-px bg-border/40 border border-border/40 shadow-etched">
+        <div className="bg-background/40 p-4 space-y-1">
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
+            Tipo Operativo
           </p>
-          <p className="text-sm font-semibold">{selectedAccount.type}</p>
+          <p className="text-sm font-black font-oxanium uppercase tracking-tighter">
+            {selectedAccount.type}
+          </p>
         </div>
-        <div>
-          <p className="text-2.5 uppercase font-bold text-muted-foreground opacity-50">
-            Moneda
+        <div className="bg-background/40 p-4 space-y-1">
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
+            Divisa Base
           </p>
-          <p className="text-sm font-semibold">{selectedAccount.currency}</p>
+          <p className="text-sm font-black font-oxanium uppercase tracking-tighter">
+            {selectedAccount.currency}
+          </p>
         </div>
       </div>
 
-      <div className="p-4 bg-primary/5 border border-primary/20">
-        <p className="text-2.5 uppercase font-bold text-primary mb-1">
-          Saldo Actual
+      <div className="p-6 bg-primary/5 border-2 border-primary/20 shadow-premium relative overflow-hidden group">
+        <div className="absolute top-0 right-0 p-2 opacity-5 group-hover:opacity-10 transition-opacity">
+          <History className="h-16 w-16 -mr-4 -mt-4 rotate-12" />
+        </div>
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-2">
+          Saldo Consolidado
         </p>
-        <p className="text-2xl font-mono font-black tabular-nums">
+        <p className="text-3xl font-mono font-black tabular-nums tracking-tighter">
           {formatCurrency(
             selectedAccount.balance,
             selectedAccount.currency as Currency,
@@ -55,57 +63,60 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
       </div>
 
       {/* Recent Activity Feed */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2 text-muted-foreground opacity-60">
-          <History className="h-3 w-3" />
-          <h4 className="text-2.5 font-bold uppercase tracking-widest">
-            Actividad Reciente
-          </h4>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between border-b border-border/40 pb-2">
+          <div className="flex items-center gap-2 text-primary">
+            <History className="h-3.5 w-3.5" />
+            <h4 className="text-[11px] font-black uppercase tracking-[0.2em]">
+              Historial de Terminal
+            </h4>
+          </div>
+          <span className="text-[9px] font-mono text-muted-foreground opacity-40 uppercase">
+            Últimos 5 registros
+          </span>
         </div>
 
-        <div className="border-2 border-border divide-y divide-border/50">
+        <div className="space-y-px bg-border/20 border border-border/20">
           {recentActivity.length > 0 ? (
             recentActivity.map((tx) => (
               <div
                 key={tx.id}
-                className="flex items-center justify-between px-3 py-2.5 hover:bg-muted/30 transition-colors"
+                className="flex items-center justify-between px-4 py-3 bg-background/20 hover:bg-muted/30 transition-premium group"
               >
-                <div className="flex flex-col gap-0.5">
-                  <span className="text-[11px] font-bold leading-none truncate max-w-37.5">
-                    {tx.description}
-                  </span>
-                  <span className="text-[9px] font-mono opacity-50 uppercase">
-                    {formatShortDate(tx.date)}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <div
-                    className={cn(
-                      "font-mono text-xs font-black tabular-nums",
-                      tx.displayType === "IN"
-                        ? "text-secondary"
-                        : "text-destructive",
-                    )}
-                  >
-                    {tx.displayType === "IN" ? "+" : "-"}
-                    {formatCurrency(
-                      tx.amount,
-                      selectedAccount.currency as Currency,
-                      false,
+                <div className="flex items-center gap-3">
+                  <div className={cn(
+                    "flex h-7 w-7 items-center justify-center border border-border/40 shadow-inner transition-colors",
+                    tx.displayType === "IN" ? "bg-emerald-400/5 text-emerald-400/60" : "bg-rose-400/5 text-rose-400/60"
+                  )}>
+                    {tx.displayType === "IN" ? (
+                      <ArrowDownLeft className="h-3.5 w-3.5" />
+                    ) : (
+                      <ArrowUpRight className="h-3.5 w-3.5" />
                     )}
                   </div>
-                  {tx.displayType === "IN" ? (
-                    <ArrowDownLeft className="h-3 w-3 text-secondary opacity-50" />
-                  ) : (
-                    <ArrowUpRight className="h-3 w-3 text-destructive opacity-50" />
-                  )}
+                  <div className="flex flex-col">
+                    <span className="text-xs font-black text-foreground/80 tracking-tighter uppercase font-oxanium truncate max-w-[150px]">
+                      {tx.description}
+                    </span>
+                    <PremiumDateCell date={tx.date} className="text-[9px]" />
+                  </div>
+                </div>
+
+                <div className="text-right">
+                  <PremiumAmountCell 
+                    amount={tx.amount} 
+                    currency={selectedAccount.currency as Currency}
+                    isNegative={tx.displayType === "OUT"}
+                    className="text-xs"
+                  />
                 </div>
               </div>
             ))
           ) : (
-            <div className="p-6 text-center italic text-muted-foreground opacity-30 text-xs">
-              Sin movimientos registrados
+            <div className="p-8 text-center bg-background/10">
+              <p className="text-[10px] font-black uppercase tracking-widest opacity-20">
+                Sin movimientos registrados
+              </p>
             </div>
           )}
         </div>

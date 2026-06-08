@@ -1,13 +1,13 @@
-// src/features/auth/components/login-form.tsx
+// src/features/auth/components/register-form.tsx
 "use client";
 import { Loader2, Lock, Eye, EyeOff, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { useLogin } from "../hooks/useLogin";
+import { useRegister } from "../hooks/useRegister";
 import { useForm } from "react-hook-form";
-import { LoginAuthDto, LoginAuthSchema } from "@repo/shared";
+import { RegisterAuthDto, RegisterAuthSchema } from "@repo/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -17,27 +17,28 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 
-interface LoginFormProps {
+interface RegisterFormProps {
   onDefaultPassword: () => void;
 }
 
-export function LoginForm({ onDefaultPassword }: LoginFormProps) {
-  const { loginAsync, isLoading } = useLogin();
+export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
+  const { registerAsync, isLoading } = useRegister();
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const form = useForm<LoginAuthDto>({
-    resolver: zodResolver(LoginAuthSchema),
+  const form = useForm<RegisterAuthDto>({
+    resolver: zodResolver(RegisterAuthSchema),
     defaultValues: {
       name: "",
+      email: "",
       password: "",
     },
     mode: "onChange",
   });
 
-  async function onSubmit(values: LoginAuthDto) {
+  async function onSubmit(values: RegisterAuthDto) {
     try {
-      const response = await loginAsync(values);
+      const response = await registerAsync(values);
       if (response.isDefaultPassword) {
         onDefaultPassword();
       }
@@ -57,7 +58,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
           render={({ field }) => (
             <FormItem className="space-y-1.5">
               <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
-                Identificación de Usuario
+                Nombre
               </FormLabel>
               <FormControl>
                 <div className="relative group">
@@ -78,6 +79,34 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
           )}
         />
 
+        {/* Email Field */}
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem className="space-y-1.5">
+              <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
+                Email
+              </FormLabel>
+              <FormControl>
+                <div className="relative group">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 rounded-none bg-primary/5 border border-primary/20 flex items-center justify-center transition-premium group-focus-within:bg-primary/20 group-focus-within:border-primary/40">
+                    <User className="h-3.5 w-3.5 text-primary opacity-60 group-focus-within:opacity-100" />
+                  </div>
+                  <Input
+                    {...field}
+                    placeholder="lionelmessi87@afa.ar"
+                    disabled={isLoading}
+                    className="pl-14 h-12 text-[11px] font-bold uppercase tracking-wider rounded-none border-border/40 bg-background/40 hover:border-primary/20 focus:border-primary/60 transition-premium shadow-etched"
+                    autoFocus
+                    tabIndex={0}
+                  />
+                </div>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
         {/* Password Field */}
         <FormField
           control={form.control}
@@ -85,7 +114,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
           render={({ field }) => (
             <FormItem className="space-y-1.5">
               <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
-                Clave de Acceso
+                Contraseña
               </FormLabel>
               <FormControl>
                 <div className="relative group">
@@ -130,7 +159,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
           {isLoading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
-            "Iniciar Sesión"
+            "Registrarse"
           )}
         </Button>
       </form>

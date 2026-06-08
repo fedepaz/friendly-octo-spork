@@ -19,6 +19,7 @@ import {
   AuthResponseDto,
   ChangePasswordDto,
   LoginAuthDto,
+  RegisterAuthDto,
   TokensDto,
 } from '@repo/shared';
 
@@ -38,12 +39,12 @@ export class AuthService {
 
   async login(dto: LoginAuthDto): Promise<AuthResponseDto> {
     // validate username
-    const user = await this.userAuthRepo.findByEmail(dto.email);
+    const user = await this.userAuthRepo.findByName(dto.name as string);
 
     if (!user) {
       throw new UnauthorizedException({
         code: 'AUTH_INVALID_CREDENTIALS',
-        message: 'Invalid credentials - email',
+        message: 'Invalid credentials - name',
       });
     }
 
@@ -170,13 +171,15 @@ export class AuthService {
 
     const accessTokenSecret =
       this.config.getOrThrow<string>('config.jwt.secret');
-    const accessTokenExpiresIn =
-      this.config.get<number>('config.jwt.expiresIn') || '15m';
+    const accessTokenExpiresIn = this.config.get<number>(
+      'config.jwt.expiresIn',
+    );
     const refreshTokenSecret = this.config.getOrThrow<string>(
       'config.jwt.refreshSecret',
     );
-    const refreshTokenExpiresIn =
-      this.config.get<number>('config.jwt.refreshExpiresIn') || '7d';
+    const refreshTokenExpiresIn = this.config.get<number>(
+      'config.jwt.refreshExpiresIn',
+    );
 
     const nodeEnv = this.config.getOrThrow<string>('config.environment');
     const isProd = nodeEnv === 'production';
@@ -199,5 +202,46 @@ export class AuthService {
     ]);
 
     return { accessToken, refreshToken };
+  }
+
+  async register(dto: RegisterAuthDto): Promise<AuthResponseDto> {
+    // Check if user already exists
+    const userExists = await this.userAuthRepo.findByName(dto.name);
+    const emailExists = await this.userAuthRepo.findByEmail(dto.email);
+
+    if (userExists || emailExists) {
+      throw new BadRequestException({
+        code: 'AUTH_USER_ALREADY_EXISTS',
+        message: 'User already exists',
+      });
+    }
+
+    // Create password hash
+    const passwordHash = await bcrypt.hash(dto.password, this.BCRYPT_ROUNDS);
+
+    const user = await this.userAuthRepo.createUser(
+      dto.name,
+      dto.email,
+      passwordHash,
+    );
+
+    // generate tokens
+    const tokens = await this.generateTokens({
+      sub: user.id,
+      name: user.name,
+    });
+
+    const isDefaultPassword =
+      dto.password === this.config.get('config.defaultPassword');
+
+    return {
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email as string,
+      },
+      ...tokens,
+      isDefaultPassword,
+    };
   }
 }

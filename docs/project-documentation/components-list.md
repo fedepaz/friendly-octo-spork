@@ -25,6 +25,7 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `WizardModal` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `WizardFooter` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `StepIndicator` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
+| `TacticalDataTableCells` | Shared | ✅ | ✅ | ✅ | ✅ | Premium |
 
 ## FAANG Polish Criteria (Premium Industrial)
 - **Micro-interactions**: 200ms ease-in-out transitions, tactile hover states.

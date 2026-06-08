@@ -5,6 +5,7 @@ import {
   AuthResponseDto,
   ChangePasswordDto,
   LoginAuthDto,
+  RegisterAuthDto,
   UserPermissions,
   UserProfileDto,
 } from "@repo/shared";
@@ -12,6 +13,13 @@ import {
 export const authService = {
   login: (credentials: LoginAuthDto) => {
     return clientFetch<AuthResponseDto>("auth/login", {
+      method: "POST",
+      body: JSON.stringify(credentials),
+    });
+  },
+
+  register: (credentials: RegisterAuthDto) => {
+    return clientFetch<AuthResponseDto>("auth/register", {
       method: "POST",
       body: JSON.stringify(credentials),
     });

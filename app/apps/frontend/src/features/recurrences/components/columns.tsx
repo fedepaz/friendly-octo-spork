@@ -1,11 +1,15 @@
 // src/features/recurrences/components/columns.tsx
 
 import { Row, type ColumnDef } from "@tanstack/react-table";
-import { SortableHeader } from "@/components/data-display/data-table";
+import { 
+  SortableHeader, 
+  TacticalTextCell, 
+  PremiumAmountCell, 
+  PremiumBadgeCell, 
+  TacticalTypeCell 
+} from "@/components/data-display/data-table";
 import { RecurrenceDTO } from "@repo/shared";
-import { formatCurrency, getTransactionTypeStyles, cn } from "@/lib/utils";
-import { formatShortDate } from "@/lib/date-utils";
-import { Badge } from "@/components/ui/badge";
+import { getTransactionTypeStyles } from "@/lib/utils";
 import {
   Calendar,
   Clock,
@@ -29,72 +33,7 @@ function TransactionTypeCell({ row }: CellProps) {
         ? ArrowUpRight
         : RefreshCw;
 
-  return (
-    <div className={cn("flex items-center gap-1.5", styles.color)}>
-      <Icon className="h-3.5 w-3.5" />
-      <span className="text-[10px] font-bold uppercase tracking-tighter">
-        {styles.label}
-      </span>
-    </div>
-  );
-}
-
-function AmountCell({ row }: CellProps) {
-  const { amount, type } = row.original;
-  const isNegative = type === "EXPENSE";
-
-  return (
-    <div
-      className={cn(
-        "font-mono text-sm font-bold tabular-nums text-right",
-        isNegative ? "text-destructive" : "text-secondary",
-      )}
-    >
-      {formatCurrency(amount)}
-    </div>
-  );
-}
-
-function FrequencyCell({ row }: CellProps) {
-  const frequency = row.original.frequency;
-
-  return (
-    <Badge
-      variant="outline"
-      className="bg-accent/5 text-accent border-accent/20 px-1.5 py-0 text-[10px] font-bold"
-    >
-      <Clock className="mr-1 h-3 w-3" />
-      {frequency === "MONTHLY"
-        ? "Mensual"
-        : frequency === "WEEKLY"
-          ? "Semanal"
-          : frequency === "YEARLY"
-            ? "Anual"
-            : "Cuotas"}
-    </Badge>
-  );
-}
-
-function PartsCell({ row }: CellProps) {
-  const { totalParts, currentPart } = row.original;
-  if (!totalParts)
-    return <span className="text-muted-foreground opacity-30">—</span>;
-  if (!currentPart)
-    return <span className="text-muted-foreground opacity-30">—</span>;
-
-  const isLast = currentPart === totalParts;
-
-  return (
-    <div className="flex items-center gap-1 font-mono text-[10px]">
-      <span className={cn(isLast ? "text-secondary" : "text-primary")}>
-        [{currentPart.toString().padStart(2, "0")}
-      </span>
-      <span className="opacity-30">/</span>
-      <span className="opacity-50">
-        {totalParts.toString().padStart(2, "0")}]
-      </span>
-    </div>
-  );
+  return <TacticalTypeCell icon={Icon} label={styles.label} iconClassName={styles.color} />;
 }
 
 export const recurrenceColumns: ColumnDef<RecurrenceDTO>[] = [
@@ -104,36 +43,18 @@ export const recurrenceColumns: ColumnDef<RecurrenceDTO>[] = [
       <SortableHeader column={column}>Nombre</SortableHeader>
     ),
     cell: ({ row }) => (
-      <div className="flex flex-col gap-0.5">
-        <span className="text-sm font-bold text-foreground leading-none">
-          {row.original.name}
-        </span>
-        <span className="text-[10px] text-muted-foreground opacity-70 italic truncate max-w-[150px]">
-          {row.original.category?.name || "Sin categoría"}
-        </span>
-      </div>
+      <TacticalTextCell 
+        title={row.original.name} 
+        subtext={row.original.category?.name || "Sin categoría"} 
+      />
     ),
   },
   {
     accessorKey: "type",
     header: ({ column }) => (
-      <SortableHeader column={column}>Tipo</SortableHeader>
+      <SortableHeader column={column}>Dirección</SortableHeader>
     ),
     cell: ({ row }) => <TransactionTypeCell row={row} />,
-  },
-  {
-    accessorKey: "frequency",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Frecuencia</SortableHeader>
-    ),
-    cell: ({ row }) => <FrequencyCell row={row} />,
-  },
-  {
-    accessorKey: "parts",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Progreso</SortableHeader>
-    ),
-    cell: ({ row }) => <PartsCell row={row} />,
   },
   {
     accessorKey: "amount",
@@ -142,32 +63,52 @@ export const recurrenceColumns: ColumnDef<RecurrenceDTO>[] = [
         <SortableHeader column={column}>Monto</SortableHeader>
       </div>
     ),
-    cell: ({ row }) => <AmountCell row={row} />,
-  },
-  {
-    accessorKey: "nextDate",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Próximo Pago</SortableHeader>
-    ),
     cell: ({ row }) => (
-      <div className="flex items-center gap-1.5 text-[11px] font-mono text-muted-foreground">
-        <Calendar className="h-3 w-3 opacity-50" />
-        {formatShortDate(row.original.nextDate)}
-      </div>
+      <PremiumAmountCell 
+        amount={row.original.amount} 
+        isNegative={row.original.type === "EXPENSE"} 
+      />
     ),
   },
   {
-    accessorKey: "accounts",
-    header: "Cuentas",
-    cell: ({ row }) => (
-      <div className="flex flex-col text-[10px] gap-0.5 font-mono text-muted-foreground">
-        <div className="flex items-center gap-1">
-          <span className="opacity-50">Origen:</span>
-          <span className="truncate max-w-[80px]">
-            {row.original.sourceAccount?.name || "-"}
+    accessorKey: "frequency",
+    header: "Frecuencia",
+    cell: ({ row }) => {
+      const frequency = row.original.frequency;
+      const label = frequency === "MONTHLY"
+        ? "Mensual"
+        : frequency === "WEEKLY"
+          ? "Semanal"
+          : frequency === "YEARLY"
+            ? "Anual"
+            : "Cuotas";
+      
+      return (
+        <div className="flex items-center gap-2">
+          <Clock className="h-3 w-3 text-muted-foreground opacity-50" />
+          <PremiumBadgeCell label={label} variant="accent" />
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "parts",
+    header: "Ciclos",
+    cell: ({ row }) => {
+      const { totalParts, currentPart } = row.original;
+      if (!totalParts || !currentPart)
+        return <span className="text-muted-foreground opacity-30">—</span>;
+
+      return (
+        <div className="flex items-center gap-1.5">
+          <Calendar className="h-3 w-3 text-muted-foreground opacity-50" />
+          <span className="font-mono text-[10px] font-black tracking-tighter">
+            {currentPart.toString().padStart(2, "0")}
+            <span className="text-muted-foreground opacity-30 mx-0.5">/</span>
+            {totalParts.toString().padStart(2, "0")}
           </span>
         </div>
-      </div>
-    ),
+      );
+    },
   },
 ];

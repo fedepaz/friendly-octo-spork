@@ -46,11 +46,11 @@ const configFactory = (): AppConfig => ({
   jwt: {
     secret:
       process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-prod',
-    expiresIn: process.env.JWT_EXPIRES_IN || '15m',
+    expiresIn: process.env.JWT_EXPIRES_IN || '60m',
     refreshSecret:
       process.env.JWT_REFRESH_SECRET ||
       'your-super-secret-refresh-jwt-key-change-in-prod',
-    refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '12h',
+    refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
   },
   defaultPassword: process.env.DEFAULT_PASSWORD || '',
 });

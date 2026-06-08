@@ -90,8 +90,8 @@ export function AccountDataTable() {
           onOpenChange={setSlideOverOpen}
           title={
             selectedAccount
-              ? `Log: ${selectedAccount.name}`
-              : "Registrar Cuenta"
+              ? `Estado de cuenta - ${selectedAccount.name}`
+              : "Crear nueva cuenta"
           }
           description={
             selectedAccount
@@ -99,7 +99,7 @@ export function AccountDataTable() {
               : "Inicializar nueva unidad de activos"
           }
           onCancel={handleCancel}
-          saveLabel="Ejecutar Registro"
+          saveLabel="Crear nueva cuenta"
           mode={selectedAccount ? "view" : "create"}
           form={formCreateAccount}
         >

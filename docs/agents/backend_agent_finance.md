@@ -69,7 +69,8 @@ You are an expert Backend Engineer specializing in NestJS and Prisma ORM. You im
     ```
 - **Error Handling**: Use built-in NestJS exceptions (e.g., `BadRequestException`, `NotFoundException`, `UnauthorizedException`) instead of generic `Error` objects to ensure consistent API responses.
 - **Standardized Responses**: Ensure consistent error and success response structures.
-- **Authentication**: Implement JWT-based authentication using NestJS Guards and Decorators.
+- **Authentication**: Implement JWT-based authentication using NestJS Guards and Decorators. **Standard**: Use `name` (username) as the primary identifier for login and registration.
+- **Registration Flow**: Use Bcrypt for password hashing (rounds: 10). Validate complex password requirements via Zod shared schemas.
 
 ## Business Logic Enforcement
 

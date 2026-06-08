@@ -3,13 +3,8 @@
 import { z } from "zod";
 
 export const LoginAuthSchema = z.object({
-  email: z.string().email({ message: "Email no válido" }).min(1, {
-    message: "Email es obligatorio",
-  }),
-  password: z
-    .string()
-    .min(4, { message: "Contraseña es obligatoria, mínimo 4 caracteres" })
-    .max(12, { message: "Contraseña es obligatoria, máximo 12 caracteres" }),
+  name: z.string().min(1, { message: "Nombre es obligatorio" }),
+  password: z.string().min(1, { message: "Contraseña es obligatoria" }),
 });
 
 export type LoginAuthDto = z.infer<typeof LoginAuthSchema>;
@@ -58,11 +53,55 @@ export const UserProfileSchema = z.object({
 
 export type UserProfileDto = z.infer<typeof UserProfileSchema>;
 
-export const RegisterAuthSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
-  password: z.string().min(4),
-});
+export const RegisterAuthSchema = z
+  .object({
+    name: z
+      .string()
+      .min(6, {
+        message: "El nombre debe tener al menos 6 caracteres",
+      })
+      .max(20, {
+        message: "El nombre debe tener máximo 20 caracteres",
+      })
+      .regex(/[A-Z]/, {
+        message: "El nombre debe contener al menos una letra mayúscula",
+      })
+      .regex(/[a-z]/, {
+        message: "El nombre debe contener al menos una letra minúscula",
+      })
+      .regex(/[0-9]/, {
+        message: "El nombre debe contener al menos un número",
+      })
+      .regex(/[^a-zA-Z0-9]/, {
+        message: "El nombre no debe contener espacios",
+      }),
+
+    email: z
+      .string()
+      .email({ message: "El email es inválido" })
+      .min(1, { message: "El email es obligatorio y debe ser único" }),
+    password: z
+      .string()
+      .min(6, {
+        message: "La contraseña debe tener al menos 6 caracteres",
+      })
+      .max(20, {
+        message: "La contraseña debe tener máximo 20 caracteres",
+      })
+      .regex(/[A-Z]/, {
+        message: "La contraseña debe contener al menos una letra mayúscula",
+      })
+      .regex(/[a-z]/, {
+        message: "La contraseña debe contener al menos una letra minúscula",
+      })
+      .regex(/[0-9]/, {
+        message: "La contraseña debe contener al menos un número",
+      }),
+  })
+  .refine((data) => data.name !== data.password, {
+    message: "La contraseña no puede ser la misma que el nombre",
+    path: ["password"],
+  });
 
 export type RegisterAuthDto = z.infer<typeof RegisterAuthSchema>;
 

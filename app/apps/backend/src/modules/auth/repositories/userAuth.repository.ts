@@ -8,6 +8,15 @@ import { PrismaService } from '../../../infra/prisma/prisma.service';
 export class UserAuthRepository {
   constructor(private prisma: PrismaService) {}
 
+  findByName(name: string): Promise<User | null> {
+    return this.prisma.user.findFirst({
+      where: {
+        name,
+        deletedAt: null,
+      },
+    });
+  }
+
   findByEmail(email: string): Promise<User | null> {
     return this.prisma.user.findUnique({
       where: {
