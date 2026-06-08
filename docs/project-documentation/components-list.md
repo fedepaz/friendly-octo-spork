@@ -13,6 +13,7 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `AuthDashboard` | Auth | ✅ | ✅ | ✅ | ✅ | Approved |
 | `UserTable` | Users | ✅ | ✅ | ✅ | ✅ | Approved |
 | `AccountDashboard` | Accounts | ✅ | ✅ | ✅ | ✅ | Approved |
+| `AccountCreateForm`| Accounts | ✅ | ✅ | ✅ | ✅ | Approved |
 | `RecurrencesDashboard`| Recurrences | ✅ | ✅ | ✅ | ✅ | Approved |
 | `SmartFormProvider` | Transactions| ✅ | ✅ | ✅ | ✅ | Approved |
 | `MonthSelector` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |

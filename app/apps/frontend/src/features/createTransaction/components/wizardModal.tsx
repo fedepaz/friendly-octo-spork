@@ -16,13 +16,13 @@ export function WizardModal({
   children: React.ReactNode;
 }) {
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-premium-in">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 animate-premium-in">
       <div
         className="absolute inset-0 bg-background/40 backdrop-blur-md"
         onClick={onClose}
       />
       <div className="relative w-full max-w-md bg-card/60 backdrop-blur-2xl border border-border/40 shadow-2xl flex flex-col max-h-[90dvh] rounded-none overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary/40 to-transparent" />
         <div className="flex items-center justify-between px-5 py-4 border-b border-border/40 bg-background/40">
           <div className="space-y-0.5">
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">

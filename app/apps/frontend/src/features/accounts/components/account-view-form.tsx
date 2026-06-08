@@ -47,7 +47,10 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
           Saldo Actual
         </p>
         <p className="text-2xl font-mono font-black tabular-nums">
-          {formatCurrency(selectedAccount.balance, selectedAccount.currency as Currency)}
+          {formatCurrency(
+            selectedAccount.balance,
+            selectedAccount.currency as Currency,
+          )}
         </p>
       </div>
 
@@ -68,7 +71,7 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
                 className="flex items-center justify-between px-3 py-2.5 hover:bg-muted/30 transition-colors"
               >
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-[11px] font-bold leading-none truncate max-w-[150px]">
+                  <span className="text-[11px] font-bold leading-none truncate max-w-37.5">
                     {tx.description}
                   </span>
                   <span className="text-[9px] font-mono opacity-50 uppercase">
@@ -86,7 +89,11 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
                     )}
                   >
                     {tx.displayType === "IN" ? "+" : "-"}
-                    {formatCurrency(tx.amount, selectedAccount.currency as Currency, false)}
+                    {formatCurrency(
+                      tx.amount,
+                      selectedAccount.currency as Currency,
+                      false,
+                    )}
                   </div>
                   {tx.displayType === "IN" ? (
                     <ArrowDownLeft className="h-3 w-3 text-secondary opacity-50" />
