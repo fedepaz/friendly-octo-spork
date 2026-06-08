@@ -20,6 +20,7 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `RootDashboard` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
 | `DesktopSidebar` | Layout | ✅ | ✅ | ✅ | ✅ | Premium |
 | `DashboardHeader`| Layout | ✅ | ✅ | ✅ | ✅ | Approved |
+| `AuthHeader` | Layout | ✅ | ✅ | ✅ | ✅ | Approved |
 | `MobileNavigation`| Layout | ✅ | ✅ | ✅ | ✅ | Premium |
 | `KPICard` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `FeatureCard` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |

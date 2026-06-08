@@ -8,8 +8,13 @@ import { useRouter } from "next/navigation";
 import { ChangePasswordForm } from "@/components/user-profile/user-password";
 import { LoginForm } from "./login-form";
 import { Logo } from "@/components/common/logo";
+import { RegisterForm } from "./register-form";
 
-export function AuthDashboard() {
+interface AuthDashboardProps {
+  mode: "login" | "register";
+}
+
+export function AuthDashboard({ mode = "login" }: AuthDashboardProps) {
   const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
 
   const router = useRouter();
@@ -53,9 +58,15 @@ export function AuthDashboard() {
           <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary/40 to-transparent" />
           <div className="space-y-6 relative">
             {!isChangePasswordOpen ? (
-              <LoginForm
-                onDefaultPassword={() => setIsChangePasswordOpen(true)}
-              />
+              mode === "login" ? (
+                <LoginForm
+                  onDefaultPassword={() => setIsChangePasswordOpen(true)}
+                />
+              ) : mode === "register" ? (
+                <RegisterForm
+                  onDefaultPassword={() => setIsChangePasswordOpen(true)}
+                />
+              ) : null
             ) : (
               <ChangePasswordForm onClose={() => router.push("/")} />
             )}

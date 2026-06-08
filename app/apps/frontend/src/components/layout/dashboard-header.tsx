@@ -39,14 +39,17 @@ export function DashboardHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/60 backdrop-blur-md supports-[backdrop-filter]:bg-background/40 shrink-0">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/60 backdrop-blur-md supports-backdrop-filter:bg-background/40 shrink-0">
       <div className="container mx-auto px-2">
         <div className="flex h-12 items-center justify-between">
           {/* Logo and Mobile Navigation */}
           <div className="flex items-center space-x-3">
             <MobileNavigation />
             <div className="flex items-center space-x-2 md:hidden">
-              <Logo variant="icon" className="h-4 w-auto grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-premium" />
+              <Logo
+                variant="icon"
+                className="h-4 w-auto grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-premium"
+              />
             </div>
           </div>
 
@@ -78,7 +81,14 @@ export function DashboardHeader() {
                     </p>
                     <div className="space-y-1">
                       <p className="text-[10px] text-muted-foreground leading-tight uppercase tracking-tight">
-                        Semana <span className="text-foreground font-mono">{weekNum}</span> de <span className="text-foreground font-mono">{totalWeeks}</span>
+                        Semana{" "}
+                        <span className="text-foreground font-mono">
+                          {weekNum}
+                        </span>{" "}
+                        de{" "}
+                        <span className="text-foreground font-mono">
+                          {totalWeeks}
+                        </span>
                       </p>
                       <div className="pt-2 border-t border-border/40">
                         <p className="text-[10px] text-muted-foreground/60 uppercase tracking-widest leading-tight">
