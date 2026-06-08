@@ -16,7 +16,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Progress } from "@/components/ui/progress";
 import {
   Area,
   AreaChart,
@@ -33,6 +32,7 @@ import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { SmartFormProvider } from "@/features/createTransaction";
 import { cn } from "@/lib/utils";
+import { PremiumAmountCell } from "@/components/data-display/data-table";
 
 // Mock data
 const netWorthData = [
@@ -195,28 +195,22 @@ export function RootDashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 pb-4">
-            <p className="text-2xl font-mono font-black text-destructive tracking-tighter tabular-nums">
+            <p className="text-2xl font-mono font-black text-rose-400 tracking-tighter tabular-nums">
               {formatCurrency(monthlyExpenses)}
             </p>
-            <div className="w-full h-1 bg-destructive/10 mt-2">
-              <div className="h-full bg-destructive w-[65%]" />
+            <div className="w-full h-1 bg-rose-400/10 mt-2">
+              <div className="h-full bg-rose-400 w-[65%]" />
             </div>
           </CardContent>
         </Card>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 justify-center">
           <Button
             onClick={() => openWizard()}
-            className="flex-1 bg-primary text-primary-foreground font-black text-xs uppercase tracking-widest rounded-none shadow-premium hover:opacity-90 transition-premium group"
+            className="font-black text-xs uppercase tracking-widest rounded-none shadow-premium hover:opacity-90 transition-premium group"
           >
             <PlusIcon className="mr-2 h-4 w-4 group-hover:rotate-90 transition-premium" />
             Nueva Transacción
-          </Button>
-          <Button
-            variant="outline"
-            className="flex-1 bg-card/40 border-border/40 text-foreground font-black text-xs uppercase tracking-widest rounded-none shadow-premium hover:bg-card/60 transition-premium"
-          >
-            Exportar Reporte
           </Button>
         </div>
       </div>
@@ -225,7 +219,7 @@ export function RootDashboard() {
       <div className="grid flex-1 grid-cols-1 lg:grid-cols-12 gap-3 min-h-0 overflow-y-auto lg:overflow-hidden pr-1 custom-scrollbar">
         {/* Analytics Section (Span 8) */}
         <div className="lg:col-span-8 flex flex-col gap-3 min-h-0">
-          <Card className="flex-1 bg-card/20 border-border/40 shadow-premium rounded-none min-h-[300px] flex flex-col overflow-hidden">
+          <Card className="flex-1 bg-card/20 border-border/40 shadow-premium rounded-none min-h-75 flex flex-col overflow-hidden">
             <CardHeader className="pb-4 px-5 pt-5 flex flex-row items-center justify-between shrink-0">
               <div className="space-y-1">
                 <CardTitle className="text-[11px] font-black uppercase tracking-widest text-foreground">
@@ -312,7 +306,7 @@ export function RootDashboard() {
             </CardContent>
           </Card>
 
-          <Card className="flex-1 bg-card/20 border-border/40 shadow-premium rounded-none min-h-[300px] flex flex-col overflow-hidden">
+          <Card className="flex-1 bg-card/20 border-border/40 shadow-premium rounded-none min-h-75 flex flex-col overflow-hidden">
             <CardHeader className="pb-4 px-5 pt-5 flex flex-row items-center justify-between shrink-0">
               <div className="space-y-1">
                 <CardTitle className="text-[11px] font-black uppercase tracking-widest text-foreground">
@@ -365,6 +359,7 @@ export function RootDashboard() {
                   <Bar
                     dataKey="expenses"
                     fill="var(--destructive)"
+                    opacity={0.8}
                     radius={0}
                     barSize={24}
                   />
@@ -396,9 +391,8 @@ export function RootDashboard() {
                       {account.type}
                     </p>
                   </div>
-                  <p className="font-mono text-[11px] font-black text-secondary tabular-nums">
-                    {formatCurrency(account.balance)}
-                  </p>
+
+                  <PremiumAmountCell amount={account.balance} currency="ARS" />
                 </div>
               ))}
             </CardContent>
@@ -415,7 +409,7 @@ export function RootDashboard() {
                 const percentage = (budget.spent / budget.limit) * 100;
                 const isOverBudget = percentage > 100;
                 return (
-                  <div key={budget.category} className="space-y-1.5">
+                  <div key={budget.category} className="space-y-auto">
                     <div className="flex items-center justify-between">
                       <p className="text-[9px] font-black uppercase tracking-widest text-foreground/80">
                         {budget.category}
@@ -441,12 +435,17 @@ export function RootDashboard() {
                       />
                     </div>
                     <div className="flex justify-between items-center opacity-40">
-                      <span className="text-[8px] font-mono">
-                        {formatCurrency(budget.spent)}
-                      </span>
-                      <span className="text-[8px] font-mono">
-                        {formatCurrency(budget.limit)}
-                      </span>
+                      <PremiumAmountCell
+                        amount={budget.spent}
+                        currency="ARS"
+                        isNegative={budget.spent < 0}
+                      />
+
+                      <PremiumAmountCell
+                        amount={budget.limit}
+                        currency="ARS"
+                        isNegative={budget.limit < 0}
+                      />
                     </div>
                   </div>
                 );
@@ -497,8 +496,11 @@ export function RootDashboard() {
                               : "text-foreground",
                           )}
                         >
-                          {tx.amount > 0 ? "+" : ""}
-                          {formatCurrency(tx.amount)}
+                          <PremiumAmountCell
+                            amount={tx.amount}
+                            currency="ARS"
+                            isNegative={tx.amount < 0}
+                          />
                         </TableCell>
                       </TableRow>
                     ))}

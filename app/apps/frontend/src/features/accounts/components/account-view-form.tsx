@@ -4,7 +4,11 @@
 import { AccountDTO, Currency } from "@repo/shared";
 import { formatCurrency, cn } from "@/lib/utils";
 import { ArrowDownLeft, ArrowUpRight, History } from "lucide-react";
-import { PremiumAmountCell, PremiumDateCell, TacticalTextCell } from "@/components/data-display/data-table";
+import {
+  PremiumAmountCell,
+  PremiumDateCell,
+  TacticalTextCell,
+} from "@/components/data-display/data-table";
 
 interface AccountViewFormProps {
   selectedAccount: AccountDTO;
@@ -54,12 +58,11 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-2">
           Saldo Consolidado
         </p>
-        <p className="text-3xl font-mono font-black tabular-nums tracking-tighter">
-          {formatCurrency(
-            selectedAccount.balance,
-            selectedAccount.currency as Currency,
-          )}
-        </p>
+
+        <PremiumAmountCell
+          amount={selectedAccount.balance}
+          currency={selectedAccount.currency}
+        />
       </div>
 
       {/* Recent Activity Feed */}
@@ -84,10 +87,14 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
                 className="flex items-center justify-between px-4 py-3 bg-background/20 hover:bg-muted/30 transition-premium group"
               >
                 <div className="flex items-center gap-3">
-                  <div className={cn(
-                    "flex h-7 w-7 items-center justify-center border border-border/40 shadow-inner transition-colors",
-                    tx.displayType === "IN" ? "bg-emerald-400/5 text-emerald-400/60" : "bg-rose-400/5 text-rose-400/60"
-                  )}>
+                  <div
+                    className={cn(
+                      "flex h-7 w-7 items-center justify-center border border-border/40 shadow-inner transition-colors",
+                      tx.displayType === "IN"
+                        ? "bg-emerald-400/5 text-emerald-400/60"
+                        : "bg-rose-400/5 text-rose-400/60",
+                    )}
+                  >
                     {tx.displayType === "IN" ? (
                       <ArrowDownLeft className="h-3.5 w-3.5" />
                     ) : (
@@ -103,8 +110,8 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
                 </div>
 
                 <div className="text-right">
-                  <PremiumAmountCell 
-                    amount={tx.amount} 
+                  <PremiumAmountCell
+                    amount={tx.amount}
                     currency={selectedAccount.currency as Currency}
                     isNegative={tx.displayType === "OUT"}
                     className="text-xs"

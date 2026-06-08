@@ -58,7 +58,7 @@ To provide the best possible perceived performance, we implement a two-tiered lo
 - **Typography**: 
   - **Sans**: `Oxanium` (Primary) - For a tech-futuristic, high-readability look.
   - **Mono**: `Source Code Pro` - For numerical data and financial statements.
-- **Color Palette**: Strict adherence to the semantic OKLCH token system.
+- **Color Palette**: Strict adherence to the semantic OKLCH token system. **Standard**: Use `emerald-600` for positive numbers and `rose-400` for negative/destructive numbers in financial contexts to ensure professional contrast and visual balance.
 - **Shadow System**: Utilize the 7-level shadow system (`--shadow-2xs` to `--shadow-2xl`) to create depth without rounding.
 
 ### 2. Interaction Patterns

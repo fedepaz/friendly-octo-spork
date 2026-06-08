@@ -39,7 +39,7 @@ export function getTransactionTypeStyles(type: string) {
   switch (type) {
     case "EXPENSE":
       return {
-        color: "text-destructive",
+        color: "text-destructive/80",
         bg: "bg-destructive/10",
         border: "border-destructive/30",
         label: "Gasto",

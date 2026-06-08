@@ -25,11 +25,11 @@ export function TacticalTextCell({
 }: TacticalTextCellProps) {
   return (
     <div className={cn("flex flex-col gap-0.5", className)}>
-      <span className="text-sm font-black text-foreground tracking-tighter uppercase font-oxanium truncate max-w-[200px]">
+      <span className="text-sm font-black text-foreground tracking-tighter uppercase font-oxanium truncate max-w-50">
         {title}
       </span>
       {(subtext || id) && (
-        <span className="text-[9px] font-mono text-muted-foreground/50 uppercase tracking-widest truncate max-w-[200px]">
+        <span className="text-[9px] font-mono text-muted-foreground/50 uppercase tracking-widest truncate max-w-50">
           {subtext}
           {subtext && id && " // "}
           {id && `ID: ${id.slice(-8)}`}
@@ -59,7 +59,9 @@ export function TacticalTypeCell({
   return (
     <div className={cn("flex items-center gap-2.5", className)}>
       <div className="flex h-7 w-7 items-center justify-center bg-muted/20 border border-border/40 shadow-inner">
-        <Icon className={cn("h-3.5 w-3.5 text-muted-foreground", iconClassName)} />
+        <Icon
+          className={cn("h-3.5 w-3.5 text-muted-foreground", iconClassName)}
+        />
       </div>
       <span className="text-[11px] font-bold uppercase tracking-tight text-foreground/80">
         {label}
@@ -95,11 +97,17 @@ export function PremiumAmountCell({
     <div
       className={cn(
         "font-mono text-sm font-black tabular-nums text-right transition-premium",
-        isPositive ? "text-emerald-400" : isNegative ? "text-rose-400" : "text-foreground",
+        isPositive
+          ? "text-emerald-600"
+          : isNegative
+            ? "text-rose-400"
+            : "text-foreground",
         className,
       )}
     >
-      {showSign && numAmount !== 0 && (isPositive ? "+" : isNegative ? "-" : "")}
+      {showSign &&
+        numAmount !== 0 &&
+        (isPositive ? "+" : isNegative ? "-" : "")}
       {formatCurrency(Math.abs(numAmount), currency)}
     </div>
   );
@@ -146,7 +154,13 @@ export function PremiumBadgeCell({
  * PremiumDateCell
  * Tactical monospaced date.
  */
-export function PremiumDateCell({ date, className }: { date: string | Date, className?: string }) {
+export function PremiumDateCell({
+  date,
+  className,
+}: {
+  date: string | Date;
+  className?: string;
+}) {
   const dateObj = new Date(date);
   const formattedDate = dateObj.toLocaleDateString("es-AR", {
     day: "2-digit",
@@ -155,7 +169,12 @@ export function PremiumDateCell({ date, className }: { date: string | Date, clas
   });
 
   return (
-    <span className={cn("text-[11px] font-mono font-bold text-muted-foreground/60 tracking-tighter whitespace-nowrap", className)}>
+    <span
+      className={cn(
+        "text-[11px] font-mono font-bold text-muted-foreground/60 tracking-tighter whitespace-nowrap",
+        className,
+      )}
+    >
       {formattedDate}
     </span>
   );

@@ -53,8 +53,8 @@ export function TransactionViewForm({
           className={cn(
             "text-3xl font-mono font-black tabular-nums",
             selectedTransaction.type === "EXPENSE"
-              ? "text-destructive"
-              : "text-secondary",
+              ? "text-rose-400"
+              : "text-emerald-600",
           )}
         >
           {formatCurrency(selectedTransaction.amount)}
