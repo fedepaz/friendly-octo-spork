@@ -25,8 +25,10 @@ Follow the NestJS Module-Controller-Service-Repository pattern:
 
 ### 3. Authentication & Authorization
 
+*   **Registration**: `POST /auth/register`. Validates unique `name` and `email`. Hashes password with Bcrypt (10 rounds).
+*   **Login**: `POST /auth/login`. Uses `name` and `password` as primary credentials.
 *   **Guards**: Use NestJS Guards (e.g., `JwtAuthGuard`) to protect endpoints. The project uses a `GlobalAuthGuard` registered in the `AppModule` to protect all routes by default.
-*   **Public Access**: Use the `@Public()` decorator to bypass authentication for specific controllers or methods (e.g., login, health checks).
+*   **Public Access**: Use the `@Public()` decorator to bypass authentication for specific controllers or methods (e.g., login, register, health checks).
 *   **Decorators**: Use custom decorators to extract the `User` object or `userId` from the request.
 *   **Data Isolation**: Never allow a user to access or modify data belonging to another `userId`.
 

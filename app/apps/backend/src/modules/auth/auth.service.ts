@@ -39,7 +39,7 @@ export class AuthService {
 
   async login(dto: LoginAuthDto): Promise<AuthResponseDto> {
     // validate username
-    const user = await this.userAuthRepo.findByName(dto.name as string);
+    const user = await this.userAuthRepo.findByName(dto.name);
 
     if (!user) {
       throw new UnauthorizedException({
