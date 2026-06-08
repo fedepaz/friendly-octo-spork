@@ -8,12 +8,12 @@ This document tracks all React components within the `apps/frontend/src` directo
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
 | `Button` | UI Primitives | ✅ | ✅ | ✅ | ✅ | Approved |
 | `DataTable` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
-| `SlideOverForm`| Shared | ✅ | ✅ | ✅ | ✅ | Approved |
+| `SlideOverForm`| Shared | ✅ | ✅ | ✅ | ✅ | Premium |
 | `LoginForm` | Auth | ✅ | ✅ | ✅ | ✅ | Approved |
 | `AuthDashboard` | Auth | ✅ | ✅ | ✅ | ✅ | Approved |
 | `UserTable` | Users | ✅ | ✅ | ✅ | ✅ | Approved |
 | `AccountDashboard` | Accounts | ✅ | ✅ | ✅ | ✅ | Approved |
-| `AccountCreateForm`| Accounts | ✅ | ✅ | ✅ | ✅ | Approved |
+| `AccountCreateForm`| Accounts | ✅ | ✅ | ✅ | ✅ | Premium |
 | `RecurrencesDashboard`| Recurrences | ✅ | ✅ | ✅ | ✅ | Approved |
 | `SmartFormProvider` | Transactions| ✅ | ✅ | ✅ | ✅ | Approved |
 | `MonthSelector` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |

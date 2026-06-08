@@ -37,9 +37,13 @@ function AccountTypeCell({ row }: CellProps) {
             : "Inversión";
 
   return (
-    <div className="flex items-center gap-2">
-      <Icon className="h-3.5 w-3.5 text-muted-foreground opacity-70" />
-      <span className="text-xs font-medium">{label}</span>
+    <div className="flex items-center gap-2.5">
+      <div className="flex h-7 w-7 items-center justify-center bg-muted/20 border border-border/40 shadow-inner">
+        <Icon className="h-3.5 w-3.5 text-muted-foreground" />
+      </div>
+      <span className="text-[11px] font-bold uppercase tracking-tight text-foreground/80">
+        {label}
+      </span>
     </div>
   );
 }
@@ -51,10 +55,10 @@ function CurrencyCell({ row }: CellProps) {
     <Badge
       variant="outline"
       className={cn(
-        "px-1.5 py-0 text-[10px] font-bold tabular-nums tracking-tighter",
+        "px-2 py-0.5 text-[9px] font-black tabular-nums tracking-widest rounded-none border-2 transition-premium",
         currency === "USD" || currency === "USDT"
-          ? "bg-accent/5 text-accent border-accent/20"
-          : "bg-primary/5 text-primary border-primary/20",
+          ? "bg-accent/10 text-accent border-accent/20"
+          : "bg-primary/10 text-primary border-primary/20",
       )}
     >
       {currency}
@@ -64,9 +68,13 @@ function CurrencyCell({ row }: CellProps) {
 
 function BalanceCell({ row }: CellProps) {
   const { balance, currency } = row.original;
+  const numBalance = Number(balance);
 
   return (
-    <div className="font-mono text-sm font-bold tabular-nums text-right text-foreground">
+    <div className={cn(
+      "font-mono text-sm font-black tabular-nums text-right transition-premium",
+      numBalance > 0 ? "text-emerald-400" : numBalance < 0 ? "text-rose-400" : "text-foreground"
+    )}>
       {formatCurrency(balance, currency as Currency)}
     </div>
   );
@@ -76,18 +84,23 @@ export const accountColumns: ColumnDef<AccountDTO>[] = [
   {
     id: "name",
     header: ({ column }) => (
-      <SortableHeader column={column}>Nombre</SortableHeader>
+      <SortableHeader column={column}>Identificación</SortableHeader>
     ),
     cell: ({ row }) => (
-      <span className="text-sm font-bold text-foreground tracking-tight">
-        {row.original.name}
-      </span>
+      <div className="flex flex-col gap-0.5">
+        <span className="text-sm font-black text-foreground tracking-tighter uppercase font-oxanium">
+          {row.original.name}
+        </span>
+        <span className="text-[9px] font-mono text-muted-foreground/50 uppercase tracking-widest">
+          ID: {row.original.id.slice(-8)}
+        </span>
+      </div>
     ),
   },
   {
     accessorKey: "type",
     header: ({ column }) => (
-      <SortableHeader column={column}>Tipo</SortableHeader>
+      <SortableHeader column={column}>Tipo Operativo</SortableHeader>
     ),
     cell: ({ row }) => <AccountTypeCell row={row} />,
   },
@@ -95,7 +108,7 @@ export const accountColumns: ColumnDef<AccountDTO>[] = [
     accessorKey: "currency",
     header: ({ column }) => (
       <div className="flex justify-center">
-        <SortableHeader column={column}>Moneda</SortableHeader>
+        <SortableHeader column={column}>Divisa</SortableHeader>
       </div>
     ),
     cell: ({ row }) => (
@@ -108,7 +121,7 @@ export const accountColumns: ColumnDef<AccountDTO>[] = [
     accessorKey: "balance",
     header: ({ column }) => (
       <div className="text-right">
-        <SortableHeader column={column}>Saldo</SortableHeader>
+        <SortableHeader column={column}>Saldo Consolidado</SortableHeader>
       </div>
     ),
     cell: ({ row }) => <BalanceCell row={row} />,
