@@ -69,6 +69,7 @@ To provide the best possible perceived performance, we implement a two-tiered lo
     - **Review Step**: Every wizard must end with a read-only "Review" step before submission.
     - **Submission Guard**: Use `activeStep` checks to prevent accidental submissions before the final step.
 - **Component Consistency**: Use standardized React component patterns and Shadcn/UI primitives.
+- **Tactical Icon Box**: Wrap navigation and action icons in square, bordered boxes (`h-8 w-8` min) with subtle inner shadows to provide consistent visual anchors and maintain industrial alignment.
 - **Feedback Systems**: Instant Optimistic UI updates and clear success/error toasts.
 
 ### 3. Smart Spreadsheet Experience

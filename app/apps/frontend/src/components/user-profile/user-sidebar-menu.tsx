@@ -57,17 +57,18 @@ export function UserSidebarMenu({ isCollapsed = false }: UserSidebarMenuProps) {
                 <Button
                   variant="ghost"
                   className={cn(
-                    "relative flex items-center gap-3 transition-all duration-300 agricultural-touch-target hover:bg-muted/50",
-                    isCollapsed ? "h-10 w-10 p-0 justify-center rounded-full mx-auto" : "w-full justify-start p-2 rounded-xl",
+                    "relative flex items-center gap-3 transition-premium hover:bg-primary/5 rounded-none border border-transparent hover:border-primary/20",
+                    isCollapsed ? "h-10 w-10 p-0 justify-center mx-auto" : "w-full justify-start p-2",
                   )}
                   aria-label="Perfil de usuario"
                 >
+                  {/* Tactical Avatar Box */}
                   <div className={cn(
-                    "shrink-0 bg-primary rounded-full flex items-center justify-center transition-all",
-                    isCollapsed ? "h-8 w-8" : "h-9 w-9 shadow-sm"
+                    "shrink-0 bg-primary/10 border border-primary/30 flex items-center justify-center transition-premium shadow-inner",
+                    isCollapsed ? "h-8 w-8" : "h-9 w-9"
                   )}>
                     <span className={cn(
-                      "text-primary-foreground font-black tracking-tighter",
+                      "text-primary font-black tracking-tighter font-oxanium",
                       isCollapsed ? "text-[10px]" : "text-xs"
                     )}>
                       {initials || <User className="h-4 w-4" />}
@@ -75,11 +76,11 @@ export function UserSidebarMenu({ isCollapsed = false }: UserSidebarMenuProps) {
                   </div>
                   
                   {!isCollapsed && (
-                    <div className="flex flex-col items-start min-w-0 flex-1">
-                      <p className="text-sm font-black text-foreground truncate leading-tight tracking-tight w-full text-left">
+                    <div className="flex flex-col items-start min-w-0 flex-1 overflow-hidden">
+                      <p className="text-[11px] font-black text-foreground truncate leading-tight tracking-tighter uppercase font-oxanium w-full text-left">
                         {userProfile?.name}
                       </p>
-                      <p className="text-[10px] font-bold text-muted-foreground truncate leading-tight tracking-wider uppercase opacity-70 w-full text-left">
+                      <p className="text-[8px] font-bold text-muted-foreground truncate leading-tight tracking-widest uppercase opacity-40 font-mono w-full text-left mt-0.5">
                         {userProfile?.email}
                       </p>
                     </div>
@@ -90,38 +91,38 @@ export function UserSidebarMenu({ isCollapsed = false }: UserSidebarMenuProps) {
             {isCollapsed && (
               <TooltipContent
                 side="right"
-                className="border border-border shadow-xl bg-popover"
+                className="border border-border shadow-2xl bg-popover/90 backdrop-blur-xl rounded-none p-2"
               >
                 <div className="flex flex-col gap-0.5">
-                  <p className="font-black text-xs text-primary">{userProfile?.name}</p>
-                  <p className="text-[10px] text-muted-foreground font-bold">{userProfile?.email}</p>
+                  <p className="font-black text-[10px] text-primary uppercase font-oxanium tracking-widest">{userProfile?.name}</p>
+                  <p className="text-[8px] text-muted-foreground font-bold font-mono tracking-tighter uppercase opacity-60">{userProfile?.email}</p>
                 </div>
               </TooltipContent>
             )}
           </Tooltip>
         </TooltipProvider>
         
-        <DropdownMenuContent align={isCollapsed ? "start" : "end"} side={isCollapsed ? "right" : "top"} className="w-56 p-1.5 border-border/50 shadow-2xl rounded-xl">
-          <DropdownMenuLabel className="px-2 py-1.5 flex flex-col gap-0.5">
-            <span className="text-xs font-black text-primary uppercase tracking-widest">Cuenta</span>
-            <span className="text-sm font-bold truncate">{userProfile?.name}</span>
+        <DropdownMenuContent align={isCollapsed ? "start" : "end"} side={isCollapsed ? "right" : "top"} className="w-56 p-1 bg-popover/90 backdrop-blur-xl border border-border shadow-2xl rounded-none">
+          <DropdownMenuLabel className="px-3 py-2 flex flex-col gap-0.5">
+            <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] opacity-60">Terminal de Acceso</span>
+            <span className="text-xs font-black truncate uppercase font-oxanium tracking-tight">{userProfile?.name}</span>
           </DropdownMenuLabel>
-          <DropdownMenuSeparator className="my-1 opacity-50" />
+          <DropdownMenuSeparator className="mx-1 my-1 bg-border/40" />
           <DropdownMenuItem 
             onClick={() => setOpenProfile(true)}
-            className="cursor-pointer rounded-lg focus:bg-primary/5 focus:text-primary transition-colors py-2"
+            className="cursor-pointer rounded-none focus:bg-primary/10 focus:text-primary transition-premium py-2 px-3 text-[11px] font-bold uppercase tracking-tight"
           >
             <div className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-primary/20" />
-              <span className="font-bold">Ver Perfil</span>
+              <div className="h-1.5 w-1.5 bg-primary/40 rotate-45" />
+              <span>Ver Identidad</span>
             </div>
           </DropdownMenuItem>
-          <DropdownMenuSeparator className="my-1 opacity-50" />
+          <DropdownMenuSeparator className="mx-1 my-1 bg-border/40" />
           <DropdownMenuItem 
-            className="cursor-pointer rounded-lg focus:bg-destructive/5 focus:text-destructive transition-colors py-2"
+            className="cursor-pointer rounded-none focus:bg-destructive/10 focus:text-destructive transition-premium py-2 px-3 text-[11px] font-bold uppercase tracking-tight"
           >
-            <button className="w-full text-left font-bold" onClick={handleLogout}>
-              Cerrar sesión
+            <button className="w-full text-left font-black" onClick={handleLogout}>
+              Desconectar Nodo
             </button>
           </DropdownMenuItem>
         </DropdownMenuContent>

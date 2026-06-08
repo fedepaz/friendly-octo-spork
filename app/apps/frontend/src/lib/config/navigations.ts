@@ -1,7 +1,7 @@
 // src/lib/config/navigations.ts
 
 import { ROUTES } from "@/constants/routes";
-import { Home, Settings, UserCircle } from "lucide-react";
+import { Home, Settings, History, Users, Landmark, Clock } from "lucide-react";
 
 export interface NavigationItem {
   title: string;
@@ -42,7 +42,7 @@ export const NAVIGATION_CONFIG: NavigationGroup[] = [
       {
         title: "Transacciones",
         href: ROUTES.TRANSACTIONS,
-        icon: UserCircle,
+        icon: History,
         description: "Gestión de transacciones del sistema",
         dashboard: { statsLabel: "Transacciones recientes" },
       },
@@ -57,21 +57,21 @@ export const NAVIGATION_CONFIG: NavigationGroup[] = [
       {
         title: "Usuarios",
         href: ROUTES.USERS,
-        icon: UserCircle,
+        icon: Users,
         description: "Gestión de usuarios del sistema",
         dashboard: { statsLabel: "Usuarios activos" },
       },
       {
         title: "Cuentas",
         href: ROUTES.ACCOUNTS,
-        icon: UserCircle,
+        icon: Landmark,
         description: "Gestión de cuentas del sistema",
         dashboard: { statsLabel: "Cuentas activas" },
       },
       {
         title: "Recurrencias",
         href: ROUTES.RECURRENCES,
-        icon: UserCircle,
+        icon: Clock,
         description: "Gestión de recurrencias del sistema",
         dashboard: { statsLabel: "Recurrencias activas" },
       },

@@ -18,8 +18,9 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `SmartFormProvider` | Transactions| ✅ | ✅ | ✅ | ✅ | Approved |
 | `MonthSelector` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `RootDashboard` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
-| `DesktopSidebar` | Layout | ✅ | ✅ | ✅ | ✅ | Approved |
+| `DesktopSidebar` | Layout | ✅ | ✅ | ✅ | ✅ | Premium |
 | `DashboardHeader`| Layout | ✅ | ✅ | ✅ | ✅ | Approved |
+| `MobileNavigation`| Layout | ✅ | ✅ | ✅ | ✅ | Premium |
 | `KPICard` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `FeatureCard` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `WizardModal` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
