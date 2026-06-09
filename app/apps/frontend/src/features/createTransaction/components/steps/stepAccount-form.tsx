@@ -3,11 +3,21 @@
 
 import { Label } from "@/components/ui/label";
 import { useAccounts } from "@/features/accounts/hooks/accountsHooks";
-import { CreateTransactionInput, Currency } from "@repo/shared";
+import {
+  AccountDTO,
+  AccountType,
+  CreateTransactionInput,
+  Currency,
+} from "@repo/shared";
 import { useFormContext } from "react-hook-form";
 import { formatCurrency } from "@/lib/utils";
 import { useEffect } from "react";
 import { InLineError } from "../inLineError";
+import {
+  canUseAccount,
+  filterAccountsByCompatibility,
+  getAccountDisabledReason,
+} from "@/lib/account-compability-utils";
 
 export function StepAccountsComponent() {
   const {
@@ -17,11 +27,8 @@ export function StepAccountsComponent() {
   } = useFormContext<CreateTransactionInput>();
   const watched = watch();
   const { data: accounts = [] } = useAccounts();
-  // console.log(accounts);
 
-  const isIncome = watched.type === "INCOME";
-  const isTransfer = watched.type === "TRANSFER";
-
+  const transactionType = watched.type;
   const sourceAccountId = watched.sourceAccountId;
 
   // Auto-detect card expense
@@ -35,95 +42,134 @@ export function StepAccountsComponent() {
       }
     }
   }, [sourceAccountId, accounts, setValue]);
+  // ─── SMART FILTERING USING COMPATIBILITY MATRIX ─────────────────────────
+  const sourceAccounts = filterAccountsByCompatibility(
+    accounts,
+    transactionType,
+    "source",
+    watched.targetAccountId, // Exclude target for transfers
+  );
 
-  function needsSource(type: string) {
-    return ["EXPENSE", "TRANSFER", "INVESTMENT", "PAYMENT"].includes(type);
+  const targetAccounts = filterAccountsByCompatibility(
+    accounts,
+    transactionType,
+    "target",
+    watched.sourceAccountId, // Exclude source for transfers
+  );
+
+  // ─── RENDER HELPERS ─────────────────────────────────────────────────────
+  function renderAccountButton(
+    account: AccountDTO,
+    role: "source" | "target",
+    selectedId: string | null | undefined,
+    onSelect: (id: string) => void,
+  ) {
+    const isSelected = selectedId === account.id;
+    const isDisabled = !canUseAccount(
+      transactionType,
+      account.type as AccountType,
+      role,
+    );
+    const disabledReason = getAccountDisabledReason(
+      transactionType,
+      account.type as AccountType,
+      role,
+    );
+
+    return (
+      <button
+        key={account.id}
+        type="button"
+        disabled={isDisabled}
+        onClick={() => !isDisabled && onSelect(account.id)}
+        className={`flex justify-between items-center p-3 border-2 text-left transition-all
+          ${isSelected && !isDisabled ? "border-foreground bg-muted" : ""}
+          ${!isSelected && !isDisabled ? "border-border hover:bg-muted" : ""}
+          ${isDisabled ? "border-border opacity-50 cursor-not-allowed" : ""}
+        `}
+        title={disabledReason} // Tooltip on hover
+      >
+        <div className="flex flex-col">
+          <span className="font-mono font-bold text-sm">
+            {account.name}
+            {isDisabled && (
+              <span className="text-xs text-muted-foreground ml-2">⚠</span>
+            )}
+          </span>
+          {disabledReason && isDisabled && (
+            <span className="text-xs font-mono text-muted-foreground">
+              {disabledReason}
+            </span>
+          )}
+        </div>
+        <span className="font-mono text-sm text-muted-foreground">
+          {formatCurrency(account.balance, account.currency as Currency)}
+        </span>
+      </button>
+    );
   }
 
-  function needsTarget(type: string) {
-    return ["INCOME", "TRANSFER", "RETURN"].includes(type);
-  }
-  // Source: show all accounts, no restrictions
-  // (needsSource already handles INCOME not having a source)
-  const sourceAccounts = accounts.filter((a) => {
-    if (isIncome || (isTransfer && a.type === "CARD")) return false;
-    return true;
-  });
-  // Target: exclude self, exclude CARD if INCOME
-  const targetAccounts = accounts.filter((a) => {
-    if (isIncome && a.type === "CARD") return false;
-    return true;
-  });
-
+  // ─── RENDER ─────────────────────────────────────────────────────────────
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        {watched.type === "TRANSFER"
+        {transactionType === "TRANSFER"
           ? "From where, to where?"
-          : `Which account the ${watched.type}?`}
+          : "Which account?"}
       </h3>
 
-      {needsSource(watched.type ?? "") && (
+      {/* SOURCE ACCOUNT */}
+      {canUseAccount(transactionType, "BANK", "source") && ( // Just check if ANY account can be source
         <div>
           <Label>
-            {watched.type === "TRANSFER" ? "From account" : "Account"}
+            {transactionType === "TRANSFER" ? "From account" : "Account"}
           </Label>
-          <div className="flex flex-col gap-2">
-            {/* Income accounts filtering the accounts types "CARD" in the case of income */}
-            {sourceAccounts.map((a) => (
-              <button
-                key={a.id}
-                type="button"
-                onClick={() => setValue("sourceAccountId", a.id)}
-                className={`flex justify-between items-center p-3 border-2 text-left transition-all
-                     ${
-                       watched.sourceAccountId === a.id
-                         ? "border-foreground bg-muted"
-                         : "border-border hover:bg-muted"
-                     }`}
-              >
-                <span className="font-mono font-bold text-sm">{a.name}</span>
-                <span className="font-mono font-bold text-sm">{a.type}</span>
-                <span className="font-mono text-sm text-muted-foreground">
-                  {formatCurrency(a.balance, a.currency as Currency)}
-                </span>
-              </button>
-            ))}
-          </div>
-          {errors.sourceAccountId && (
-            <InLineError message={errors.sourceAccountId.message} />
+
+          {sourceAccounts.length === 0 ? (
+            <p className="text-xs font-mono text-muted-foreground p-3 border-2 border-border">
+              No compatible accounts available for{" "}
+              {transactionType.toLowerCase()} source
+            </p>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {sourceAccounts.map((account) =>
+                renderAccountButton(account, "source", sourceAccountId, (id) =>
+                  setValue("sourceAccountId", id),
+                ),
+              )}
+            </div>
           )}
+
+          <InLineError message={errors.sourceAccountId?.message as string} />
         </div>
       )}
 
-      {needsTarget(watched.type ?? "") && (
+      {/* TARGET ACCOUNT */}
+      {canUseAccount(transactionType, "BANK", "target") && (
         <div>
           <Label>
-            {watched.type === "TRANSFER" ? "To account" : "Account"}
+            {transactionType === "TRANSFER" ? "To account" : "Account"}
           </Label>
-          <div className="flex flex-col gap-2">
-            {targetAccounts.map((a) => (
-              <button
-                key={a.id}
-                type="button"
-                onClick={() => setValue("targetAccountId", a.id)}
-                className={`flex justify-between items-center p-3 border-2 text-left transition-all
-                       ${
-                         watched.targetAccountId === a.id
-                           ? "border-foreground bg-muted"
-                           : "border-border hover:bg-muted"
-                       }`}
-              >
-                <span className="font-mono font-bold text-sm">{a.name}</span>
-                <span className="font-mono text-sm text-muted-foreground">
-                  {formatCurrency(a.balance, a.currency as Currency)}
-                </span>
-              </button>
-            ))}
-          </div>
-          {errors.targetAccountId && (
-            <InLineError message={errors.targetAccountId.message} />
+
+          {targetAccounts.length === 0 ? (
+            <p className="text-xs font-mono text-muted-foreground p-3 border-2 border-border">
+              No compatible accounts available for{" "}
+              {transactionType.toLowerCase()} target
+            </p>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {targetAccounts.map((account) =>
+                renderAccountButton(
+                  account,
+                  "target",
+                  watched.targetAccountId,
+                  (id) => setValue("targetAccountId", id),
+                ),
+              )}
+            </div>
           )}
+
+          <InLineError message={errors.targetAccountId?.message as string} />
         </div>
       )}
     </div>

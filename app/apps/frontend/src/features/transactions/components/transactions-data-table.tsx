@@ -11,7 +11,8 @@ import { MonthSelector } from "@/components/data-display/data-table/month-select
 
 export function TransactionsDataTable() {
   const [month, setMonth] = useState(new Date().getMonth());
-  const { data: transactions = [] } = useTransactionsByMonth(month + 1, 2026);
+  const year = new Date().getFullYear();
+  const { data: transactions = [] } = useTransactionsByMonth(month + 1, year);
 
   const [selectedTransaction, setSelectedTransaction] =
     useState<TransactionDTO | null>(null);

@@ -1,7 +1,7 @@
 // src/features/recurrences/api/recurrencesService.ts
 
 import { clientFetch } from "@/lib/api/client-fetch";
-import { RecurrenceDTO } from "@repo/shared";
+import { RecurrenceDTO, TransactionType } from "@repo/shared";
 
 export const recurrenceService = {
   fetchAll: () => {
@@ -12,5 +12,13 @@ export const recurrenceService = {
     return clientFetch<RecurrenceDTO | null>(`recurrences/${id}`, {
       method: "GET",
     });
+  },
+  fetchByMonth: (month: number, year: number, type: TransactionType) => {
+    return clientFetch<RecurrenceDTO[]>(
+      `recurrences/month/${month}/${year}/${type}`,
+      {
+        method: "GET",
+      },
+    );
   },
 };

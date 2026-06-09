@@ -4,7 +4,7 @@ import { Controller, Get, HttpCode, HttpStatus, Param } from '@nestjs/common';
 import { RecurrenceService } from './recurrence.service';
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
 import { AuthUser } from '../auth/types/auth-user.type';
-import { RecurrenceDTO } from '@repo/shared';
+import { RecurrenceDTO, TransactionType } from '@repo/shared';
 
 @Controller('recurrences')
 export class RecurrenceController {
@@ -25,5 +25,21 @@ export class RecurrenceController {
     @Param('id') id: string,
   ) {
     return this.recurrenceService.getRecurrenceById(user.id, id);
+  }
+
+  @Get('month/:month/:year/:type')
+  @HttpCode(HttpStatus.OK)
+  async getRecurrencesByMonth(
+    @CurrentUser() user: AuthUser,
+    @Param('month') month: number,
+    @Param('year') year: number,
+    @Param('type') transactionType: TransactionType,
+  ): Promise<RecurrenceDTO[]> {
+    return this.recurrenceService.getRecurrencesByMonth(
+      user.id,
+      month,
+      year,
+      transactionType,
+    );
   }
 }

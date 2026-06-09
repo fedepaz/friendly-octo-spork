@@ -1,4 +1,4 @@
-// src/components/data-display/data-table/month-selector.tsx
+// src/components/data-display/data-table/transType-selector.tsx
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -10,37 +10,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useBreakpoint } from "@/hooks/useMediaQuery";
 
-interface MonthSelectorProps {
-  onMonthChange: (month: number) => void;
-}
-
-import { Calendar } from "lucide-react";
+import { TransactionType, TransactionTypeSchema } from "@repo/shared";
 import { cn } from "@/lib/utils";
 
-const MONTHS = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre",
-];
+interface TransTypeSelectorProps {
+  onTransTypeChange: (type: TransactionType) => void;
+}
 
-export function MonthSelector({ onMonthChange }: MonthSelectorProps) {
-  const breakpoint = useBreakpoint();
-  const [month, setMonth] = useState(new Date().getMonth());
+export function TransTypeSelector({
+  onTransTypeChange,
+}: TransTypeSelectorProps) {
+  const [transType, setTransType] = useState<TransactionType>("EXPENSE");
 
   useEffect(() => {
-    onMonthChange(month);
-  }, [month, onMonthChange]);
+    onTransTypeChange(transType);
+  }, [transType, onTransTypeChange]);
 
   return (
     <DropdownMenu>
@@ -50,11 +35,8 @@ export function MonthSelector({ onMonthChange }: MonthSelectorProps) {
           size="sm"
           className="h-10 bg-background/40 hover:bg-background/80 border-border/60 hover:border-primary/40 rounded-none transition-premium gap-3 px-4 shadow-etched"
         >
-          <Calendar className="h-3.5 w-3.5 text-primary opacity-70" />
           <span className="text-[10px] font-black uppercase tracking-widest">
-            {breakpoint === "sm"
-              ? MONTHS[month].substring(0, 3)
-              : MONTHS[month]}
+            {transType}
           </span>
         </Button>
       </DropdownMenuTrigger>
@@ -63,24 +45,24 @@ export function MonthSelector({ onMonthChange }: MonthSelectorProps) {
         className="w-48 bg-popover/90 backdrop-blur-xl border-border shadow-2xl rounded-none p-1"
       >
         <DropdownMenuLabel className="text-[10px] uppercase tracking-widest opacity-60 px-2 py-1.5">
-          Período Mensual
+          Tipo de Transacción
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-border/40" />
         <div className="grid grid-cols-1 gap-0.5">
-          {MONTHS.map((name, index) => (
+          {TransactionTypeSchema.options.map((type) => (
             <DropdownMenuItem
-              key={name}
-              onClick={() => setMonth(index)}
+              key={type}
+              onClick={() => setTransType(type)}
               className={cn(
                 "text-[11px] font-bold uppercase tracking-tight py-2 px-3 rounded-none cursor-pointer transition-premium",
-                month === index
+                transType === type
                   ? "bg-primary/10 text-primary"
                   : "hover:bg-foreground/5",
               )}
             >
               <div className="flex items-center justify-between w-full">
-                <span>{name}</span>
-                {month === index && <div className="h-1 w-1 bg-primary" />}
+                <span>{type}</span>
+                {transType === type && <div className="h-1 w-1 bg-primary" />}
               </div>
             </DropdownMenuItem>
           ))}

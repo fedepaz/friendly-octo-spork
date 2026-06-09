@@ -29,6 +29,8 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `StepIndicator` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `TacticalDataTableCells` | Shared | ✅ | ✅ | ✅ | ✅ | Premium |
 | `KPIsDashboard` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
+| `TransTypeSelector` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
+| `MonthSelector` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `MainChartsDashboard` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
 | `AnalyticChartsBottom`| Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
 | `SidebarChartsBudget` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |

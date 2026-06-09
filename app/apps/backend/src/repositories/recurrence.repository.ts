@@ -3,6 +3,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../infra/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { TransactionType } from 'generated/prisma';
 
 export type RecurrenceWithRelations = Prisma.RecurrenceGetPayload<{
   include: {
@@ -77,50 +78,45 @@ export class RecurrenceRepository {
       },
     });
   }
+  /**
+   * Get active recurrences that are relevant for a given month.
+   *
+   * A recurrence is "active in month X" if:
+   * - It started on or before the end of that month
+   * - AND it hasn't ended before that month started (or has no end date)
+   * - AND active === true
+   */
+  async getByMonthByTransactionType(
+    userId: string,
+    month: number, // 1-12
+    year: number,
+    transactionType: TransactionType,
+  ): Promise<RecurrenceWithRelations[]> {
+    // Calculate month boundaries
+    const startOfMonth = new Date(year, month - 1, 1); // First day, 00:00:00
+    const endOfMonth = new Date(year, month, 0, 23, 59, 59); // Last day, 23:59:59
 
-  async getRecurrencesWithHistory(userId: string) {
     return this.prisma.recurrence.findMany({
       where: {
         userId,
-        active: true,
+        // Recurrence must have started on or before the end of this month
+        startDate: { lte: endOfMonth },
+        // AND either:
+        // - It ends on or after the start of this month, OR
+        // - It has no end date (ongoing)
+        OR: [{ endDate: { gte: startOfMonth } }, { endDate: null }],
+        type: transactionType,
       },
       include: {
         category: true,
         sourceAccount: true,
         targetAccount: true,
-        transactions: {
-          orderBy: { date: 'desc' },
-          // only need recent ones to check payment status
-          take: 3,
-        },
       },
-      orderBy: { nextDate: 'asc' },
-    });
-  }
-
-  // For dashboard — what's coming up next
-  async getUpcoming(userId: string) {
-    return this.prisma.recurrence.findMany({
-      where: {
-        userId,
-        active: true,
-        nextDate: { gte: new Date() },
-      },
-      include: { category: true, sourceAccount: true },
-      orderBy: { nextDate: 'asc' },
-    });
-  }
-
-  // For detecting missed payments
-  async getOverdue(userId: string) {
-    return this.prisma.recurrence.findMany({
-      where: {
-        userId,
-        active: true,
-        nextDate: { lt: new Date() },
-      },
-      include: { category: true, sourceAccount: true },
-      orderBy: { nextDate: 'asc' },
+      // Order by next occurrence date (soonest first), with nulls last
+      orderBy: [
+        { currentPart: 'desc' },
+        { nextDate: { sort: 'asc', nulls: 'last' } },
+      ],
     });
   }
 }

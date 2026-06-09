@@ -63,34 +63,27 @@ export function SmartFormProvider() {
       </form>
     </FormProvider>
   );
-}
-```
-
-### 3. The Gatekeeper Hook (`useStepValidation.ts`)
-Maps steps to specific schema fields and blocks navigation.
+### 3. The Gatekeeper & Routing Layer (`routing.ts` & `useStepValidation.ts`)
+Instead of complex `if/else` logic in the container, use a declarative routing helper.
 
 ```typescript
-import { useFormContext, Path } from "react-hook-form";
+// routing.ts
+export const STEP_CONFIGS = [
+  { id: "basic", fields: ["name"], shouldShow: () => true },
+  { id: "details", fields: ["email"], shouldShow: (v) => v.type === "PRO" },
+];
 
-// Map each step index to the fields it contains
-const stepFields: Record<number, Path<FeatureInput>[]> = {
-  0: ["name"],
-  1: ["email"],
-  2: ["notes"],
-};
-
-export function useStepValidation(activeStep: number) {
-  const { trigger } = useFormContext<FeatureInput>();
-
-  const validateCurrentStep = async () => {
-    const fields = stepFields[activeStep];
-    return await trigger(fields); // Validates ONLY these specific fields
-  };
-
-  return { validateCurrentStep };
+export function getNextStepId(currentId, values) {
+  const visible = STEP_CONFIGS.filter(s => s.shouldShow(values));
+  // logic to find next...
 }
 ```
 
+Then, use `methods.trigger()` in your container to validate only the fields defined in the current step's config.
+
+---
+
+## 🏗 Roadmap: 5 Core Layers
 ### 4. The UI Container (`FeatureContainer.tsx`)
 Handles the navigation UI (Stepper, Next/Back buttons).
 

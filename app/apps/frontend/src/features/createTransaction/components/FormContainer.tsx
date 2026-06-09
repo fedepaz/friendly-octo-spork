@@ -11,6 +11,14 @@ import { StepReviewComponent } from "./steps/stepReview-form";
 import { StepTypeComponent } from "./steps/stepType-form";
 import { StepIndicator, WizardFooter, WizardModal } from "./wizardModal";
 import { CreateTransactionInput } from "@repo/shared";
+import {
+  getNextStepId,
+  getPrevStepId,
+  getValidationFields,
+  indexToStepId,
+  STEP_CONFIGS,
+  stepIdToIndex,
+} from "@/lib/utils/step-transaction-routing";
 
 interface FormContainerProps {
   activeStep: number;
@@ -27,81 +35,86 @@ export function FormContainer({
   isSubmitting,
   onClose,
 }: FormContainerProps) {
-  const { validateCurrentStep } = useStepValidation(activeStep);
-  const { watch, setValue } = useFormContext<CreateTransactionInput>();
-  const isBudgetedExpense = watch("type") === "EXPENSE";
-  const recurrenceTransationsTypesArray = [
-    "EXPENSE",
-    "INCOME",
-    "PAYMENT",
-    "RETURN",
-    "INVESTMENT",
-  ];
-  const isRecurrenceTransactionType = recurrenceTransationsTypesArray.includes(
-    watch("type"),
-  );
+  const { watch, setValue, trigger } = useFormContext<CreateTransactionInput>();
+  const watched = watch();
 
+  // Convert numeric index to StepId
+  const currentStepId = indexToStepId(activeStep);
+
+  // Get visible steps for progress indicator
+  const visibleStepIds = STEP_CONFIGS.filter(
+    (step) => step.shouldShow?.(watched) ?? true,
+  ).map((step) => step.id);
+
+  const currentVisibleIndex = visibleStepIds.indexOf(currentStepId!);
+  const totalVisibleSteps = visibleStepIds.length;
+
+  // ─── SMART NAVIGATION ───────────────────────────────────────────────────
   const handleNext = async () => {
-    const isValid = await validateCurrentStep();
-    if (isValid) {
-      if (
-        activeStep === 3 &&
-        !isBudgetedExpense &&
-        !isRecurrenceTransactionType
-      ) {
-        // If type is not a recurrence transaction, skip recurrence step and clear values
-        setValue("isRecurrence", false);
-        setValue("frequency", null);
-        setValue("totalParts", null);
-        setActiveStep(activeStep + 3);
-        setGlobalError(null);
-        return;
-      } else if (activeStep === 3 && !isRecurrenceTransactionType) {
-        // If type is not an expense, skip on the back budget step
-        setActiveStep(activeStep - 2);
-        setGlobalError(null);
+    // Validate current step's fields (only if visible)
+    const fieldsToValidate = getValidationFields(currentStepId!, watched);
+    if (fieldsToValidate.length > 0) {
+      const isValid = await trigger(fieldsToValidate); // Type cast ok for Path
+      if (!isValid) {
+        setGlobalError("Please fill in all required fields");
         return;
       }
+    }
 
-      if (activeStep === 4 && !isBudgetedExpense) {
-        // If type is not an expense, skip budget step and clear values
+    // Clear values when skipping optional steps (optional but clean)
+    if (currentStepId === "category") {
+      const nextStep = getNextStepId("category", watched);
+      if (nextStep === "review") {
+        // Skipped both recurrence and budget → clear their values
+        setValue("isRecurrence", false);
         setValue("isBudgetedExpense", false);
-        setValue("budgetCategory", null);
-        setActiveStep(activeStep + 2);
-        setGlobalError(null);
-        return;
+      } else if (nextStep === "budget") {
+        // Skipped recurrence only
+        setValue("isRecurrence", false);
       }
-      setActiveStep(activeStep + 1);
+    }
+
+    if (currentStepId === "budget") {
+      const nextStep = getNextStepId("budget", watched);
+      if (nextStep === "review") {
+        setValue("isBudgetedExpense", false);
+      }
+    }
+
+    // Navigate to next visible step
+    const nextStepId = getNextStepId(currentStepId!, watched);
+    if (nextStepId) {
+      setActiveStep(stepIdToIndex(nextStepId));
       setGlobalError(null);
     }
   };
 
   const handleBack = () => {
-    if (activeStep === 6 && !isBudgetedExpense) {
-      // If type is not an expense, skip on the back budget step
-      setActiveStep(activeStep - 2);
+    const prevStepId = getPrevStepId(currentStepId!, watched);
+    if (prevStepId) {
+      setActiveStep(stepIdToIndex(prevStepId));
       setGlobalError(null);
-      return;
     }
   };
-  const TOTAL_STEPS = 7;
-  const isLastStep = activeStep === TOTAL_STEPS - 1;
 
+  const isLastStep = currentStepId === "review";
+
+  // ─── STEP RENDERER ──────────────────────────────────────────────────────
   const renderStep = () => {
-    switch (activeStep) {
-      case 0:
+    switch (currentStepId) {
+      case "type":
         return <StepTypeComponent />;
-      case 1:
+      case "amount":
         return <StepAmountComponent />;
-      case 2:
+      case "accounts":
         return <StepAccountsComponent />;
-      case 3:
+      case "category":
         return <StepCategoryComponent />;
-      case 4:
+      case "recurrence":
         return <StepRecurrenceComponent />;
-      case 5:
+      case "budget":
         return <StepBudgetComponent />;
-      case 6:
+      case "review":
         return <StepReviewComponent />;
       default:
         return null;
@@ -112,14 +125,19 @@ export function FormContainer({
     <WizardModal
       isOpen={true}
       onClose={onClose}
-      title="Terminal de Transacciones"
-      step={activeStep + 1}
-      totalSteps={TOTAL_STEPS}
+      title={
+        STEP_CONFIGS.find((s) => s.id === currentStepId)?.label ??
+        "Terminal de Transacciones"
+      }
+      step={currentVisibleIndex + 1}
+      totalSteps={totalVisibleSteps}
     >
-      <StepIndicator current={activeStep} total={TOTAL_STEPS} />
-      <div className="flex-1 overflow-y-auto px-5 py-6 animate-premium-in">{renderStep()}</div>
+      <StepIndicator current={currentVisibleIndex} total={totalVisibleSteps} />
+      <div className="flex-1 overflow-y-auto px-5 py-6 animate-premium-in">
+        {renderStep()}
+      </div>
       <WizardFooter
-        onBack={activeStep > 0 ? handleBack : undefined}
+        onBack={currentVisibleIndex > 0 ? handleBack : undefined}
         onNext={!isLastStep ? handleNext : undefined}
         onConfirm={isLastStep ? () => {} : undefined}
         isSubmitting={isSubmitting}

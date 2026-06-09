@@ -74,7 +74,7 @@ export function WizardFooter({
   onNext,
   onConfirm,
   isSubmitting,
-  confirmLabel = "Ejecutar ✓",
+  confirmLabel = "Grabar ✓",
 }: {
   onBack?: () => void;
   onNext?: () => void;

@@ -3,15 +3,32 @@
 
 import { useState } from "react";
 import { DataTable, SlideOverForm } from "@/components/data-display/data-table";
-import { useRecurrences } from "../hooks/recurrenceHooks";
+import { useRecurrencesByMonth } from "../hooks/recurrenceHooks";
 import { recurrenceColumns } from "./columns";
-import { RecurrenceDTO } from "@repo/shared";
+import { RecurrenceDTO, TransactionType } from "@repo/shared";
 import { RecurrenceViewForm } from "./recurrence-view-form";
+import { MonthSelector } from "@/components/data-display/data-table/month-selector";
+import { TransTypeSelector } from "@/components/data-display/data-table/transType-selector";
 
 export function RecurrencesDataTable() {
-  const { data: recurrences = [] } = useRecurrences();
+  const [month, setMonth] = useState(new Date().getMonth());
+  const year = new Date().getFullYear();
+  const [transactionType, setTransactionType] =
+    useState<TransactionType>("EXPENSE");
+  const { data: recurrences = [] } = useRecurrencesByMonth(
+    month + 1,
+    year,
+    transactionType,
+  );
   const [selectedRecurrence, setSelectedRecurrence] =
     useState<RecurrenceDTO | null>(null);
+
+  const toolbarContent = (
+    <div className="flex gap-2">
+      <TransTypeSelector onTransTypeChange={setTransactionType} />
+      <MonthSelector onMonthChange={setMonth} />
+    </div>
+  );
 
   return (
     <>
@@ -22,6 +39,7 @@ export function RecurrencesDataTable() {
         description="Lista de cuentas con pagos recurrentes"
         tableName="recurrences"
         totalCount={recurrences.length}
+        toolbarContent={toolbarContent}
         onView={(row) => setSelectedRecurrence(row)}
       />
 
