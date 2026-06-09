@@ -17,7 +17,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CustomTooltip, netWorthData } from "../../RootDashboard";
+import { netWorthData } from "@/features/dashboard/api/dashboardService";
+import { CustomTooltip } from "@/features/dashboard/utils/utils";
 
 export function AnalyticChartsMain() {
   return (

@@ -48,6 +48,10 @@ Follow the NestJS Module-Controller-Service-Repository pattern:
     *   **Recurrences**: If `frequency` is `INSTALLMENT`, `totalParts` is mandatory. For `MONTHLY`/`WEEKLY`/`YEARLY`, `totalParts` must be null.
     *   **Card Settlement**: `PAYMENT` transactions on `CARD` accounts must decrease the balance (consuming "loaded" funds) and should ideally link to the expenses being settled.
 *   **Data Enrichment for Dashboards**:
+    *   **Reporting & Aggregation Patterns**: For complex financial views (e.g., trend charts, budget summaries), use specialized "Dashboard Repositories".
+        *   **Raw SQL**: Prefer `this.prisma.$queryRaw` for multi-table aggregations.
+        *   **Time Series**: Use PostgreSQL `generate_series` to ensure gaps in data (e.g., months with no transactions) are correctly represented in charts.
+        *   **Performance**: Use `SUM(...) FILTER (WHERE ...)` for efficient conditional totals in a single pass.
     *   **Endpoint Consolidation**: Prefer merging metadata (e.g., usage counts, last used dates) into primary retrieval endpoints rather than creating multiple specialized `/meta` or `/usage` routes. This reduces network round-trips and simplifies frontend state management.
     *   **Usage Statistics**: When possible, provide "usage-based" endpoints (e.g., categories sorted by transaction count) to improve UX speed for common tasks.
     *   **Timeline Projections**: For recurring items, implement services that project future occurrences and track current-month payment status.

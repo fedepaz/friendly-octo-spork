@@ -3,9 +3,20 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { PremiumAmountCell } from "@/components/data-display/data-table";
-import { budgets } from "../../RootDashboard";
+import { useBudgetSummary } from "@/features/dashboard/hooks/dashboardHooks";
+import { LoadingSpinner } from "@/components/common/loading-spinner";
 
 export function SidebarChartsBudget() {
+  const { data: budgets, isLoading } = useBudgetSummary();
+
+  function getBudgetPercentage(spent: string, limit: string) {
+    const percentage = (parseFloat(spent) / parseFloat(limit)) * 100;
+    return Math.round(percentage);
+  }
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
   return (
     <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col max-h-[35%] overflow-hidden">
       <CardHeader className="pb-2 px-5 pt-4 shrink-0">
@@ -15,7 +26,7 @@ export function SidebarChartsBudget() {
       </CardHeader>
       <CardContent className="space-y-4 px-5 pb-4 overflow-y-auto custom-scrollbar">
         {budgets.map((budget) => {
-          const percentage = (budget.spent / budget.limit) * 100;
+          const percentage = getBudgetPercentage(budget.spent, budget.limit);
           const isOverBudget = percentage > 100;
           return (
             <div key={budget.category} className="space-y-auto">

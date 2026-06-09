@@ -28,6 +28,11 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `WizardFooter` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `StepIndicator` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `TacticalDataTableCells` | Shared | ✅ | ✅ | ✅ | ✅ | Premium |
+| `KPIsDashboard` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
+| `MainChartsDashboard` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
+| `AnalyticChartsBottom`| Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
+| `SidebarChartsBudget` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
+| `SidebarChartsAccounts`| Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
 
 ## FAANG Polish Criteria (Premium Industrial)
 - **Micro-interactions**: 200ms ease-in-out transitions, tactile hover states.

@@ -17,6 +17,7 @@ import { CategoriesModule } from './modules/categories/categories.module';
 import { RecurrencesModule } from './modules/recurrences/recurrence.module';
 import { TransactionModule } from './modules/transactions/transaction.module';
 import { UsersModule } from './modules/users/users.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { UsersModule } from './modules/users/users.module';
     AuthModule,
     PrismaModule,
     HealthModule,
+    DashboardModule,
     AccountsModule,
     CategoriesModule,
     RecurrencesModule,

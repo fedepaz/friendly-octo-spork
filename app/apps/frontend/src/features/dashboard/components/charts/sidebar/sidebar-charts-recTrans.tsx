@@ -12,7 +12,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { PremiumAmountCell } from "@/components/data-display/data-table";
-import { recentTransactions } from "../../RootDashboard";
+import { recentTransactions } from "@/features/dashboard/api/dashboardService";
 
 export function SidebarChartsRecentTransactions() {
   return (

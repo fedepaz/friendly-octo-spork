@@ -2,12 +2,11 @@
 "use client";
 
 import { AccountDTO, Currency } from "@repo/shared";
-import { formatCurrency, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { ArrowDownLeft, ArrowUpRight, History } from "lucide-react";
 import {
   PremiumAmountCell,
   PremiumDateCell,
-  TacticalTextCell,
 } from "@/components/data-display/data-table";
 
 interface AccountViewFormProps {
@@ -102,7 +101,7 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
                     )}
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-xs font-black text-foreground/80 tracking-tighter uppercase font-oxanium truncate max-w-[150px]">
+                    <span className="text-xs font-black text-foreground/80 tracking-tighter uppercase font-oxanium truncate max-w-37.5">
                       {tx.description}
                     </span>
                     <PremiumDateCell date={tx.date} className="text-[9px]" />

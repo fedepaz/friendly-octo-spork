@@ -4,83 +4,92 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
-import { accounts, incomeExpenseData } from "../RootDashboard";
 
-function formatCurrency(value: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-  }).format(value);
-}
+import {
+  useMonthlyIncomeExpense,
+  useRecentAccounts,
+} from "../../hooks/dashboardHooks";
+import { LoadingSpinner } from "@/components/common/loading-spinner";
+import { formatCurrency } from "@/lib/utils";
 
 interface KPIDashboardProps {
   onClick: () => void;
 }
 
 export function KPIsDashboard({ onClick }: KPIDashboardProps) {
-  const totalNetWorth = accounts.reduce((sum, acc) => sum + acc.balance, 0);
+  const { data: accounts = [], isLoading: isLoadingAccounts } =
+    useRecentAccounts();
+  const { data: incomeExpenseData = [], isLoading: isLoadingIncome } =
+    useMonthlyIncomeExpense();
+  const totalNetWorth = accounts.reduce(
+    (sum, acc) => sum + parseFloat(acc.balance),
+    0,
+  );
   const monthlyIncome = incomeExpenseData[incomeExpenseData.length - 1].income;
   const monthlyExpenses =
     incomeExpenseData[incomeExpenseData.length - 1].expenses;
 
+  if (isLoadingAccounts || isLoadingIncome) {
+    return <LoadingSpinner />;
+  }
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 shrink-0 ">
+    <div className="grid  grid-cols-1 lg:grid-cols-12 gap-3 min-h-0 overflow-y-auto lg:overflow-hidden pr-1 custom-scrollbar">
       {/* Top Bento Row: Stats & Quick Actions */}
-      <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
-        <CardHeader className="pb-1 px-4 pt-4">
-          <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-            Patrimonio Neto
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="px-4 pb-4">
-          <p className="text-2xl font-mono font-black text-primary tracking-tighter tabular-nums">
-            {formatCurrency(totalNetWorth)}
-          </p>
-          <div className="flex items-center gap-1.5 mt-1">
-            <span className="text-[10px] font-bold text-secondary tracking-tight">
-              +8.2%
-            </span>
-            <span className="text-[10px] text-muted-foreground/40 uppercase font-bold tracking-tighter">
-              vs mes anterior
-            </span>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="lg:col-span-8 grid md:grid-cols-3 gap-3">
+        <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
+          <CardHeader className="pb-1 px-4 pt-4">
+            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+              Patrimonio Neto
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-4 pb-4">
+            <p className="text-2xl font-mono font-black text-primary tracking-tighter tabular-nums">
+              {formatCurrency(totalNetWorth)}
+            </p>
+            <div className="flex items-center gap-1.5 mt-1">
+              <span className="text-[10px] font-bold text-secondary tracking-tight">
+                +8.2%
+              </span>
+              <span className="text-[10px] text-muted-foreground/40 uppercase font-bold tracking-tighter">
+                vs mes anterior
+              </span>
+            </div>
+          </CardContent>
+        </Card>
 
-      <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
-        <CardHeader className="pb-1 px-4 pt-4">
-          <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-            Ingresos Junio
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="px-4 pb-4">
-          <p className="text-2xl font-mono font-black text-secondary tracking-tighter tabular-nums">
-            {formatCurrency(monthlyIncome)}
-          </p>
-          <div className="w-full h-1 bg-secondary/10 mt-2">
-            <div className="h-full bg-secondary w-full" />
-          </div>
-        </CardContent>
-      </Card>
+        <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
+          <CardHeader className="pb-1 px-4 pt-4">
+            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+              Ingresos Junio
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-4 pb-4">
+            <p className="text-2xl font-mono font-black text-secondary tracking-tighter tabular-nums">
+              {formatCurrency(monthlyIncome)}
+            </p>
+            <div className="w-full h-1 bg-secondary/10 mt-2">
+              <div className="h-full bg-secondary w-full" />
+            </div>
+          </CardContent>
+        </Card>
 
-      <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
-        <CardHeader className="pb-1 px-4 pt-4">
-          <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-            Gastos Junio
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="px-4 pb-4">
-          <p className="text-2xl font-mono font-black text-rose-400 tracking-tighter tabular-nums">
-            {formatCurrency(monthlyExpenses)}
-          </p>
-          <div className="w-full h-1 bg-rose-400/10 mt-2">
-            <div className="h-full bg-rose-400 w-[65%]" />
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="flex flex-col gap-3 justify-center">
+        <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
+          <CardHeader className="pb-1 px-4 pt-4">
+            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+              Gastos Junio
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-4 pb-4">
+            <p className="text-2xl font-mono font-black text-rose-400 tracking-tighter tabular-nums">
+              {formatCurrency(monthlyExpenses)}
+            </p>
+            <div className="w-full h-1 bg-rose-400/10 mt-2">
+              <div className="h-full bg-rose-400 w-[65%]" />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+      <div className="lg:col-span-4 grid grid-cols-1  gap-3">
         <Button
           onClick={onClick}
           className="font-black text-xs uppercase tracking-widest rounded-none shadow-premium hover:opacity-90 transition-premium group"
