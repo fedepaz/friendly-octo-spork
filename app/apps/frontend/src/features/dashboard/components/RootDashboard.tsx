@@ -148,9 +148,9 @@ export function RootDashboard() {
   }
 
   return (
-    <div className="flex flex-1 flex-col gap-3 min-h-0 overflow-hidden animate-premium-in">
+    <div className="flex flex-1 flex-col gap-3 min-h-0 overflow-hidden animate-premium-in mb-3">
       {/* Top Bento Row: Stats & Quick Actions */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 shrink-0">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 shrink-0 ">
         <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
           <CardHeader className="pb-1 px-4 pt-4">
             <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">

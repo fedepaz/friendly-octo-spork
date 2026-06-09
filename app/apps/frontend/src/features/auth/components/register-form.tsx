@@ -16,6 +16,7 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
+import { InLineError } from "@/features/createTransaction/components/inLineError";
 
 interface RegisterFormProps {
   onDefaultPassword: () => void;
@@ -55,7 +56,7 @@ export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
         <FormField
           control={form.control}
           name="name"
-          render={({ field }) => (
+          render={({ field, fieldState: { error } }) => (
             <FormItem className="space-y-1.5">
               <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
                 Nombre
@@ -69,12 +70,13 @@ export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
                     {...field}
                     placeholder="lionelmessi87"
                     disabled={isLoading}
-                    className="pl-14 h-12 text-[11px] font-bold uppercase tracking-wider rounded-none border-border/40 bg-background/40 hover:border-primary/20 focus:border-primary/60 transition-premium shadow-etched"
+                    className="pl-14 h-12 text-[11px] font-bold tracking-wider rounded-none border-border/40 bg-background/40 hover:border-primary/20 focus:border-primary/60 transition-premium shadow-etched"
                     autoFocus
                     tabIndex={0}
                   />
                 </div>
               </FormControl>
+              {error && <InLineError message={error.message} />}
             </FormItem>
           )}
         />
@@ -83,7 +85,7 @@ export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
         <FormField
           control={form.control}
           name="email"
-          render={({ field }) => (
+          render={({ field, fieldState: { error } }) => (
             <FormItem className="space-y-1.5">
               <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
                 Email
@@ -97,12 +99,12 @@ export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
                     {...field}
                     placeholder="lionelmessi87@afa.ar"
                     disabled={isLoading}
-                    className="pl-14 h-12 text-[11px] font-bold uppercase tracking-wider rounded-none border-border/40 bg-background/40 hover:border-primary/20 focus:border-primary/60 transition-premium shadow-etched"
-                    autoFocus
+                    className="pl-14 h-12 text-[11px] font-bold tracking-wider rounded-none border-border/40 bg-background/40 hover:border-primary/20 focus:border-primary/60 transition-premium shadow-etched"
                     tabIndex={0}
                   />
                 </div>
               </FormControl>
+              {error && <InLineError message={error.message} />}
             </FormItem>
           )}
         />
@@ -111,7 +113,7 @@ export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
         <FormField
           control={form.control}
           name="password"
-          render={({ field }) => (
+          render={({ field, fieldState: { error } }) => (
             <FormItem className="space-y-1.5">
               <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
                 Contraseña
@@ -126,7 +128,7 @@ export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
                     type={showPassword ? "text" : "password"}
                     placeholder="********"
                     disabled={isLoading}
-                    className="pl-14 h-12 text-[11px] font-bold uppercase tracking-wider rounded-none border-border/40 bg-background/40 hover:border-primary/20 focus:border-primary/60 transition-premium shadow-etched"
+                    className="pl-14 h-12 text-[11px] font-bold tracking-wider rounded-none border-border/40 bg-background/40 hover:border-primary/20 focus:border-primary/60 transition-premium shadow-etched"
                     {...field}
                     tabIndex={0}
                   />
@@ -145,6 +147,7 @@ export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
                   </button>
                 </div>
               </FormControl>
+              {error && <InLineError message={error.message} />}
             </FormItem>
           )}
         />

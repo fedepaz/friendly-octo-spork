@@ -40,7 +40,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -245,8 +244,8 @@ export function DataTable<TData, TValue>({
   const selectedCount = table.getFilteredSelectedRowModel().rows.length;
 
   return (
-    <div className="flex-1 flex flex-col min-h-0 animate-premium-in">
-      <Card className="w-full flex-1 flex flex-col overflow-hidden bg-card/40 border-border/40 shadow-premium rounded-none">
+    <>
+      <Card className="w-full flex flex-col overflow-hidden bg-card/40 border-border/40 shadow-premium rounded-none my-2 ">
         <CardHeader className="px-5 pt-5 pb-3">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
@@ -273,9 +272,9 @@ export function DataTable<TData, TValue>({
           <div className="flex items-center px-5 py-2 space-x-3 shrink-0 border-y border-border/20 bg-background/40">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   className="h-8 bg-background/40 border-border/40 hover:border-primary/40 rounded-none text-[10px] font-black uppercase tracking-widest transition-premium px-3"
                 >
                   <Filter className="mr-2 h-3 w-3 opacity-60" />
@@ -283,7 +282,10 @@ export function DataTable<TData, TValue>({
                   <ChevronDown className="ml-2 h-2.5 w-2.5 opacity-40" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48 bg-popover/90 backdrop-blur-xl border-border shadow-2xl rounded-none p-1">
+              <DropdownMenuContent
+                align="start"
+                className="w-48 bg-popover/90 backdrop-blur-xl border-border shadow-2xl rounded-none p-1"
+              >
                 {table
                   .getAllColumns()
                   .filter((column) => column.getCanHide())
@@ -319,7 +321,7 @@ export function DataTable<TData, TValue>({
               </div>
             )}
           </div>
-          
+
           <div className="flex-1 overflow-hidden flex flex-col">
             <div className="flex-1 overflow-auto custom-scrollbar">
               <Table className="min-w-full">
@@ -390,7 +392,9 @@ export function DataTable<TData, TValue>({
             </div>
             <div className="flex flex-wrap items-center gap-6">
               <div className="flex items-center space-x-3">
-                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">Filas</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+                  Filas
+                </p>
                 <select
                   value={table.getState().pagination.pageSize}
                   onChange={(e) => {
@@ -406,7 +410,14 @@ export function DataTable<TData, TValue>({
                 </select>
               </div>
               <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-                PÁGINA <span className="text-foreground font-mono">{table.getState().pagination.pageIndex + 1}</span> DE <span className="text-foreground font-mono">{table.getPageCount()}</span>
+                PÁGINA{" "}
+                <span className="text-foreground font-mono">
+                  {table.getState().pagination.pageIndex + 1}
+                </span>{" "}
+                DE{" "}
+                <span className="text-foreground font-mono">
+                  {table.getPageCount()}
+                </span>
               </div>
               <div className="flex items-center gap-1">
                 <Button
@@ -430,7 +441,7 @@ export function DataTable<TData, TValue>({
           </div>
         </CardContent>
       </Card>
-    </div>
+    </>
   );
 }
 

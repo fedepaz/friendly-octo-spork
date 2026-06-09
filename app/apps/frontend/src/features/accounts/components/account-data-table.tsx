@@ -24,8 +24,7 @@ export function AccountDataTable() {
   );
   const [slideOverOpen, setSlideOverOpen] = useState(false);
 
-  const { mutateAsync: createAccount, isPending: isCreatingAccount } =
-    useCreateAccount();
+  const { mutateAsync: createAccount } = useCreateAccount();
 
   const formCreateAccount = useForm<CreateAccountInput>({
     resolver: zodResolver(createAccountSchema),
