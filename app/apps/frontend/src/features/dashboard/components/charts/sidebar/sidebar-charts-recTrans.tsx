@@ -23,16 +23,22 @@ import { useRecurrencesToPay } from "@/features/dashboard/hooks/dashboardHooks";
 import { RecurrenceDTO, TransactionType } from "@repo/shared";
 import { Button } from "@/components/ui/button";
 
-export function SidebarChartsRecentTransactions() {
+interface SidebarChartsRecentTransactionsProps {
+  onPayClick: (recurrenceId: string) => void;
+}
+
+export function SidebarChartsRecentTransactions({
+  onPayClick,
+}: SidebarChartsRecentTransactionsProps) {
   const { data: recurrences = [] } = useRecurrencesToPay();
 
   const recurrencesTypes = useMemo(
     () => [...new Set(recurrences.map((r) => r.type))],
-    [recurrences]
+    [recurrences],
   );
 
   const [selectedFilter, setSelectedFilter] = useState<TransactionType | null>(
-    null
+    null,
   );
 
   const activeFilter =
@@ -41,11 +47,11 @@ export function SidebarChartsRecentTransactions() {
       : recurrencesTypes[0];
 
   const handlePay = (recurrence: RecurrenceDTO) => {
-    console.log("Paying recurrence", recurrence);
+    onPayClick(recurrence.id);
   };
 
   const filteredRecurrences = recurrences.filter(
-    (r) => r.type === activeFilter
+    (r) => r.type === activeFilter,
   );
 
   const filterOptions: { label: string; value: TransactionType }[] = [

@@ -1,0 +1,89 @@
+// src/features/updateRecurrence/providers/SmartFormProviderRecurrence.tsx
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CreateTransactionInput, createTransactionSchema } from "@repo/shared";
+import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+
+import { mapServerErrorsToForm } from "@/lib/utils/form-error-mapper";
+import { ApiError } from "@/lib/api/client-fetch";
+import { parseApiError } from "@/lib/api/error-handler";
+import { FormContainerRecurrence } from "../components/FormContainerRecurrence";
+import { useCreateTransaction } from "@/features/createTransaction";
+import { useRecurrenceById } from "@/features/recurrences/hooks/recurrenceHooks";
+
+interface SmartFormProviderRecurrenceProps {
+  recurrenceId: string;
+  onClose: () => void;
+}
+
+export function SmartFormProviderRecurrence({
+  recurrenceId,
+  onClose,
+}: SmartFormProviderRecurrenceProps) {
+  const [activeStep, setActiveStep] = useState(0);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const { data: recurrenceToUpdate } = useRecurrenceById(recurrenceId);
+
+  const { mutateAsync: createTransaction, isPending: isSubmitting } =
+    useCreateTransaction();
+
+  const methods = useForm<CreateTransactionInput>({
+    mode: "onChange",
+    resolver: zodResolver(createTransactionSchema),
+    defaultValues: {
+      date: new Date(),
+      isRecurrence: false,
+    },
+  });
+
+  const onSubmit = async (data: CreateTransactionInput) => {
+    // 🛡️ Safety Guard: Only allow submission if we are on the final Review step (Step 5)
+    if (activeStep < 5) return;
+
+    try {
+      setErrorMessage(null);
+      await createTransaction(data);
+      // Toast is handled in the mutation hook (useCreateTransaction)
+      setActiveStep(0);
+      methods.reset();
+      onClose();
+    } catch (error) {
+      const parsed = parseApiError(error);
+
+      if (parsed.type === "VALIDATION" && error instanceof ApiError) {
+        // ✅ SURGICAL: Map backend validation errors to specific fields
+        mapServerErrorsToForm(error.details, methods.setError);
+      } else {
+        // ✅ GLOBAL: Show system/auth errors in the snackbar
+        setErrorMessage(parsed.message);
+      }
+    }
+  };
+
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <FormContainerRecurrence
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          setGlobalError={setErrorMessage}
+          isSubmitting={isSubmitting}
+          onClose={onClose}
+        />
+        {errorMessage && (
+          <div className="px-5 pb-5">
+            <div className="text-[10px] font-bold uppercase tracking-tight text-destructive border border-destructive/20 bg-destructive/5 p-3 flex items-start gap-2 shadow-etched animate-premium-in">
+              <div className="h-1.5 w-1.5 bg-destructive mt-1 shrink-0" />
+              <div className="flex-1">
+                <p className="font-black mb-0.5">Error de Validación</p>
+                <p className="opacity-70 leading-relaxed">{errorMessage}</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </form>
+    </FormProvider>
+  );
+}

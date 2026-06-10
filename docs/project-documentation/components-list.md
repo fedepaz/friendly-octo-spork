@@ -35,7 +35,9 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `AnalyticChartsBottom`| Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
 | `SidebarChartsBudget` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
 | `SidebarChartsAccounts`| Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
-| SidebarChartsRecentTransactions| Dashboard | ✅ | ✅ | ✅ | ✅ | Premium |
+| `SidebarChartsRecentTransactions`| Dashboard | ✅ | ✅ | ✅ | ✅ | Premium |
+| `SmartFormProviderRecurrence`| Recurrences | ✅ | ✅ | ✅ | ✅ | Approved |
+| `WizardModalRecurrence` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 
 ## FAANG Polish Criteria (Premium Industrial)
 - **Micro-interactions**: 200ms ease-in-out transitions, tactile hover states.

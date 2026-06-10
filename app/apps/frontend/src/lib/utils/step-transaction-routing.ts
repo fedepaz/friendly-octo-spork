@@ -73,6 +73,56 @@ export const STEP_CONFIGS: StepConfig[] = [
     fields: [], // Review doesn't need validation — just display
   },
 ];
+// ─── STEP DEFINITIONS FOR RECURRENCE ─────────────────────────────────────────
+export const STEP_CONFIGS_RECURRENCE: StepConfig[] = [
+  {
+    id: "type",
+    label: "Transaction Type",
+    fields: ["type"],
+  },
+  {
+    id: "amount",
+    label: "Amount & Date",
+    fields: ["amount", "date"],
+  },
+  {
+    id: "accounts",
+    label: "Accounts",
+    fields: ["sourceAccountId", "targetAccountId"],
+  },
+  {
+    id: "category",
+    label: "Category",
+    fields: ["description", "categoryId"],
+  },
+  {
+    id: "recurrence",
+    label: "Recurrence",
+    fields: [
+      "isRecurrence",
+      "recurrenceName",
+      "frequency",
+      "totalParts",
+      "isFirstPayment",
+      "isCardExpense",
+      "cardType",
+    ],
+    // ✅ Available for ALL transaction types (as you decided)
+    shouldShow: () => true,
+  },
+  {
+    id: "budget",
+    label: "Budget",
+    fields: ["isBudgetedExpense", "budgetCategory"],
+    // ✅ Only show for EXPENSE transactions
+    shouldShow: (values) => values.type === "EXPENSE",
+  },
+  {
+    id: "review",
+    label: "Review",
+    fields: [], // Review doesn't need validation — just display
+  },
+];
 
 // ─── HELPER FUNCTIONS ─────────────────────────────────────────────────────
 
