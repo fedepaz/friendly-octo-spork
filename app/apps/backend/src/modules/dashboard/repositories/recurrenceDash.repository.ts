@@ -41,6 +41,7 @@ export class RecurrenceDashRepository {
    * - It's active
    * - Its nextDate falls within the target month
    * - No transaction exists for the expected recurrencePartNumber (currentPart + 1)
+   * - Not a card expense, that is handled by the card expense service
    */
   async getToPayByMonth(userId: string): Promise<RecurrenceWithRelations[]> {
     // transactionType param removed — filtering by type is a service concern, not repo
@@ -60,9 +61,11 @@ export class RecurrenceDashRepository {
     SELECT r.* FROM "Recurrence" r
     WHERE r."userId" = ${userId}
       AND r."active" = true
+      AND r."isCardExpense" = false
       AND r."startDate" <= ${endOfMonth}
       AND (r."endDate" >= ${startOfMonth} OR r."endDate" IS NULL)
-      AND r."nextDate" BETWEEN ${startOfMonth} AND ${endOfMonth}
+      AND (r."nextDate" BETWEEN ${startOfMonth} AND ${endOfMonth}
+            OR r."startDate" BETWEEN ${startOfMonth} AND ${endOfMonth})
       AND NOT EXISTS (
         SELECT 1 FROM "Transaction" t
         WHERE t."recurrenceId" = r."id"
