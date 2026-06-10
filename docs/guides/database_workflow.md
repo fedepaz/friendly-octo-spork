@@ -13,8 +13,9 @@ The database is the single source of truth. Workflows are designed to ensure tha
 This workflow describes how data is fetched for the user to view.
 
 - **Database Operation**: A `SELECT` statement is executed on the desired table.
-- **Critical Rule**: The query **must** include a `WHERE "userId" = ?` clause to ensure a user can only ever see their own data.
-- **For Display**: To show meaningful information (like category or account names instead of just IDs), `JOIN` operations with related tables are necessary.
+- **Critical Rule**: The query **must** include a \`WHERE "userId" = ?\` clause to ensure a user can only ever see their own data.
+- **For Display**: To show meaningful information (like category or account names instead of just IDs), \`JOIN\` operations with related tables are necessary.
+- **Optimized Dashboard Queries**: For complex metrics that require cross-table state validation (e.g., checking for unpaid recurrence parts), the use of Prisma's \`$queryRaw\` is permitted and encouraged to ensure high-performance execution. These queries must still strictly adhere to user-scoping rules.
 
 ---
 

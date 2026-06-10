@@ -116,9 +116,14 @@ export class TransactionService {
     const amount = transactionData.amount;
 
     return this.prisma.$transaction(async (tx) => {
-      // ─── 1. Update Account Balances ─────────────────────────────────────────
-      await this.updateBalancesForType(transactionData, userId, amount, tx);
+      // ─── Only update if this is na catual payment now
+      const { isRecurrence, isFirstPayment, ..._data } = transactionData;
+      const shouldUpdateBalance = !isRecurrence || isFirstPayment;
 
+      // ─── 1. Update Account Balances ─────────────────────────────────────────
+      if (shouldUpdateBalance) {
+        await this.updateBalancesForType(transactionData, userId, amount, tx);
+      }
       // ─── 2. Save Transaction Record ─────────────────────────────────────────
 
       const response = await this.transactionRepo.saveTransaction(

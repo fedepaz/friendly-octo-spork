@@ -2,7 +2,12 @@
 
 import { Controller, Get, HttpCode, HttpStatus, Param } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
-import { AccountDTO, BudgetDTO, IncomeExpenseDTO } from '@repo/shared';
+import {
+  AccountDTO,
+  BudgetDTO,
+  IncomeExpenseDTO,
+  RecurrenceDTO,
+} from '@repo/shared';
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
 import { AuthUser } from '../auth/types/auth-user.type';
 
@@ -35,5 +40,13 @@ export class DashboardController {
     @Param('months') months: number,
   ): Promise<IncomeExpenseDTO[]> {
     return this.dashboardService.getMonthlyIncomeExpense(user.id, months);
+  }
+
+  @Get('toPay')
+  @HttpCode(HttpStatus.OK)
+  async getRecurrencesToPayCurrentMonth(
+    @CurrentUser() user: AuthUser,
+  ): Promise<RecurrenceDTO[]> {
+    return this.dashboardService.getRecurrencesToPayCurrentMonth(user.id);
   }
 }

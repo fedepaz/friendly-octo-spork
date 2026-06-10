@@ -1,7 +1,12 @@
 // src/features/dashboard/api/dashboardService.ts
 
 import { clientFetch } from "@/lib/api/client-fetch";
-import { AccountDTO, BudgetDTO, IncomeExpenseDTO } from "@repo/shared";
+import {
+  AccountDTO,
+  BudgetDTO,
+  IncomeExpenseDTO,
+  RecurrenceDTO,
+} from "@repo/shared";
 
 // Mock data
 export const netWorthData = [
@@ -13,43 +18,13 @@ export const netWorthData = [
   { month: "Jun", value: 58500 },
 ];
 
-export const recentTransactions = [
-  {
-    id: 1,
-    description: "Grocery Store",
-    category: "Food",
-    amount: -125.5,
-    date: "2024-06-15",
+export const recurrenceToPayDashboard = {
+  fetchRecurrencesToPayCurrentMonth: () => {
+    return clientFetch<RecurrenceDTO[]>(`dashboard/toPay`, {
+      method: "GET",
+    });
   },
-  {
-    id: 2,
-    description: "Salary Deposit",
-    category: "Income",
-    amount: 5900.0,
-    date: "2024-06-14",
-  },
-  {
-    id: 3,
-    description: "Electric Bill",
-    category: "Utilities",
-    amount: -145.2,
-    date: "2024-06-13",
-  },
-  {
-    id: 4,
-    description: "Gas Station",
-    category: "Transport",
-    amount: -52.3,
-    date: "2024-06-12",
-  },
-  {
-    id: 5,
-    description: "Freelance Payment",
-    category: "Income",
-    amount: 850.0,
-    date: "2024-06-11",
-  },
-];
+};
 
 export const budgetDashboardService = {
   fetchBudgetSummary: (month: number, year: number) => {

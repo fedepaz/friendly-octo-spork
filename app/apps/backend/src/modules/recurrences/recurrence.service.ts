@@ -68,8 +68,8 @@ export class RecurrenceService {
     if (firstPaymentTiming === 'next') {
       startDate = this.addFrequencyUnit(startDate, frequency);
     }
-
     const nextDate = this.addFrequencyUnit(startDate, frequency);
+
     const endDate = totalParts
       ? this.addFrequencyUnit(startDate, frequency, totalParts - 1)
       : null;

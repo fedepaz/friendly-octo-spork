@@ -6,6 +6,7 @@ import { DashboardService } from './dashboard.service';
 import { BudgetDashRepository } from './repositories/budgetDash.repository';
 import { AccountDashRepository } from './repositories/accountDash.repository';
 import { IncomeExpenseDashRepository } from './repositories/income-expenseDash.repository';
+import { RecurrenceDashRepository } from './repositories/recurrenceDash.repository';
 
 @Module({
   imports: [],
@@ -15,6 +16,7 @@ import { IncomeExpenseDashRepository } from './repositories/income-expenseDash.r
     BudgetDashRepository,
     AccountDashRepository,
     IncomeExpenseDashRepository,
+    RecurrenceDashRepository,
   ],
   exports: [DashboardService],
 })

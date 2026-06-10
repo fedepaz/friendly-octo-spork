@@ -12,9 +12,10 @@ import {
 
 import { cn } from "@/lib/utils";
 import { PremiumAmountCell } from "@/components/data-display/data-table";
-import { recentTransactions } from "@/features/dashboard/api/dashboardService";
+import { useRecurrencesToPay } from "@/features/dashboard/hooks/dashboardHooks";
 
 export function SidebarChartsRecentTransactions() {
+  const { data: recentTransactions = [] } = useRecurrencesToPay();
   return (
     <Card className="bg-card/40 border-border/40 shadow-premium rounded-none flex-1 min-h-0 flex flex-col overflow-hidden">
       <CardHeader className="pb-3 px-5 pt-4 shrink-0">
@@ -44,23 +45,25 @@ export function SidebarChartsRecentTransactions() {
                   <TableCell className="py-2.5 px-0">
                     <div className="flex flex-col">
                       <p className="text-[11px] font-black uppercase tracking-tight text-foreground/90 group-hover:text-primary transition-premium">
-                        {tx.description}
+                        {tx.name}
                       </p>
                       <span className="font-mono text-[8px] text-muted-foreground/40 uppercase font-bold">
-                        {tx.category}
+                        {tx.type}
                       </span>
                     </div>
                   </TableCell>
                   <TableCell
                     className={cn(
                       "font-mono text-[11px] font-black text-right tabular-nums py-2.5 px-0",
-                      tx.amount > 0 ? "text-secondary" : "text-foreground",
+                      parseFloat(tx.amount) > 0
+                        ? "text-secondary"
+                        : "text-foreground",
                     )}
                   >
                     <PremiumAmountCell
                       amount={tx.amount}
                       currency="ARS"
-                      isNegative={tx.amount < 0}
+                      isNegative={parseFloat(tx.amount) < 0}
                     />
                   </TableCell>
                 </TableRow>
