@@ -178,7 +178,7 @@ export class RecurrenceService {
       userId,
       nextDate,
       currentPart: { increment: 1 }, // assumes Prisma atomic update
-      active: isLastPart ? false : true,
+      active: data.shouldStopRecurrence ? false : isLastPart ? false : true,
       metadata: data.metadata
         ? (data.metadata as Prisma.InputJsonValue)
         : Prisma.JsonNull,

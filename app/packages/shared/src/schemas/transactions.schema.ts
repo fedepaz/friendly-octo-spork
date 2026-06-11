@@ -118,6 +118,7 @@ const createTransactionSchemaBase = z.object({
   cardType: CardTypeSchema.optional().nullable(),
   frequency: RecurrenceTypeSchema.optional().nullable(),
   totalParts: z.coerce.number().int().optional().nullable(),
+  shouldStopRecurrence: z.boolean().optional().default(false),
 });
 
 // ─── 2. CREATE SCHEMA (with cross-field validation) ─────────────────────

@@ -1,7 +1,7 @@
 // src/features/createTransaction/components/FormContainer.tsx
 
 import { useFormContext } from "react-hook-form";
-import { useStepValidation } from "../hooks/useStepValidation";
+
 import { StepAccountsComponent } from "./steps/stepAccount-form";
 import { StepAmountComponent } from "./steps/stepAmount-form";
 import { StepBudgetComponent } from "./steps/stepBudget-form";
@@ -39,7 +39,7 @@ export function FormContainer({
   const watched = watch();
 
   // Convert numeric index to StepId
-  const currentStepId = indexToStepId(activeStep);
+  const currentStepId = indexToStepId(activeStep, STEP_CONFIGS);
 
   // Get visible steps for progress indicator
   const visibleStepIds = STEP_CONFIGS.filter(
@@ -52,7 +52,11 @@ export function FormContainer({
   // ─── SMART NAVIGATION ───────────────────────────────────────────────────
   const handleNext = async () => {
     // Validate current step's fields (only if visible)
-    const fieldsToValidate = getValidationFields(currentStepId!, watched);
+    const fieldsToValidate = getValidationFields(
+      currentStepId!,
+      watched,
+      STEP_CONFIGS,
+    );
     if (fieldsToValidate.length > 0) {
       const isValid = await trigger(fieldsToValidate); // Type cast ok for Path
       if (!isValid) {
@@ -63,7 +67,7 @@ export function FormContainer({
 
     // Clear values when skipping optional steps (optional but clean)
     if (currentStepId === "category") {
-      const nextStep = getNextStepId("category", watched);
+      const nextStep = getNextStepId("category", watched, STEP_CONFIGS);
       if (nextStep === "review") {
         // Skipped both recurrence and budget → clear their values
         setValue("isRecurrence", false);
@@ -75,24 +79,24 @@ export function FormContainer({
     }
 
     if (currentStepId === "budget") {
-      const nextStep = getNextStepId("budget", watched);
+      const nextStep = getNextStepId("budget", watched, STEP_CONFIGS);
       if (nextStep === "review") {
         setValue("isBudgetedExpense", false);
       }
     }
 
     // Navigate to next visible step
-    const nextStepId = getNextStepId(currentStepId!, watched);
+    const nextStepId = getNextStepId(currentStepId!, watched, STEP_CONFIGS);
     if (nextStepId) {
-      setActiveStep(stepIdToIndex(nextStepId));
+      setActiveStep(stepIdToIndex(nextStepId, STEP_CONFIGS));
       setGlobalError(null);
     }
   };
 
   const handleBack = () => {
-    const prevStepId = getPrevStepId(currentStepId!, watched);
+    const prevStepId = getPrevStepId(currentStepId!, watched, STEP_CONFIGS);
     if (prevStepId) {
-      setActiveStep(stepIdToIndex(prevStepId));
+      setActiveStep(stepIdToIndex(prevStepId, STEP_CONFIGS));
       setGlobalError(null);
     }
   };
@@ -140,6 +144,7 @@ export function FormContainer({
         onBack={currentVisibleIndex > 0 ? handleBack : undefined}
         onNext={!isLastStep ? handleNext : undefined}
         onConfirm={isLastStep ? () => {} : undefined}
+        confirmLabel={isLastStep ? "Grabar ✓" : undefined}
         isSubmitting={isSubmitting}
       />
     </WizardModal>

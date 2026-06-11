@@ -42,7 +42,7 @@ export function FormContainerRecurrence({
   const watched = watch();
 
   // Convert numeric index to StepId
-  const currentStepId = indexToStepId(activeStep);
+  const currentStepId = indexToStepId(activeStep, STEP_CONFIGS_RECURRENCE);
 
   // Get visible steps for progress indicator
   const visibleStepIds = STEP_CONFIGS_RECURRENCE.filter(
@@ -55,7 +55,11 @@ export function FormContainerRecurrence({
   // ─── SMART NAVIGATION ───────────────────────────────────────────────────
   const handleNext = async () => {
     // Validate current step's fields (only if visible)
-    const fieldsToValidate = getValidationFields(currentStepId!, watched);
+    const fieldsToValidate = getValidationFields(
+      currentStepId!,
+      watched,
+      STEP_CONFIGS_RECURRENCE,
+    );
     if (fieldsToValidate.length > 0) {
       const isValid = await trigger(fieldsToValidate); // Type cast ok for Path
       if (!isValid) {
@@ -64,38 +68,37 @@ export function FormContainerRecurrence({
       }
     }
 
-    // Clear values when skipping optional steps (optional but clean)
-    if (currentStepId === "category") {
-      const nextStep = getNextStepId("category", watched);
-      if (nextStep === "review") {
-        // Skipped both recurrence and budget → clear their values
-        setValue("isRecurrence", false);
-        setValue("isBudgetedExpense", false);
-      } else if (nextStep === "budget") {
-        // Skipped recurrence only
-        setValue("isRecurrence", false);
-      }
-    }
-
     if (currentStepId === "budget") {
-      const nextStep = getNextStepId("budget", watched);
+      const nextStep = getNextStepId(
+        "budget",
+        watched,
+        STEP_CONFIGS_RECURRENCE,
+      );
       if (nextStep === "review") {
         setValue("isBudgetedExpense", false);
       }
     }
 
     // Navigate to next visible step
-    const nextStepId = getNextStepId(currentStepId!, watched);
+    const nextStepId = getNextStepId(
+      currentStepId!,
+      watched,
+      STEP_CONFIGS_RECURRENCE,
+    );
     if (nextStepId) {
-      setActiveStep(stepIdToIndex(nextStepId));
+      setActiveStep(stepIdToIndex(nextStepId, STEP_CONFIGS_RECURRENCE));
       setGlobalError(null);
     }
   };
 
   const handleBack = () => {
-    const prevStepId = getPrevStepId(currentStepId!, watched);
+    const prevStepId = getPrevStepId(
+      currentStepId!,
+      watched,
+      STEP_CONFIGS_RECURRENCE,
+    );
     if (prevStepId) {
-      setActiveStep(stepIdToIndex(prevStepId));
+      setActiveStep(stepIdToIndex(prevStepId, STEP_CONFIGS_RECURRENCE));
       setGlobalError(null);
     }
   };
@@ -140,6 +143,7 @@ export function FormContainerRecurrence({
         onBack={currentVisibleIndex > 0 ? handleBack : undefined}
         onNext={!isLastStep ? handleNext : undefined}
         onConfirm={isLastStep ? () => {} : undefined}
+        confirmLabel={isLastStep ? "Actualizar ✓" : undefined}
         isSubmitting={isSubmitting}
       />
     </WizardModalRecurrence>

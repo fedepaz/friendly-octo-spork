@@ -11,16 +11,14 @@ import {
 } from "../../hooks/dashboardHooks";
 import { LoadingSpinner } from "@/components/common/loading-spinner";
 import { formatCurrency } from "@/lib/utils";
+import { useWizard } from "@/providers/wizard-form-provider";
 
-interface KPIDashboardProps {
-  onClick: () => void;
-}
-
-export function KPIsDashboard({ onClick }: KPIDashboardProps) {
+export function KPIsDashboard() {
   const { data: accounts = [], isLoading: isLoadingAccounts } =
     useRecentAccounts();
   const { data: incomeExpenseData = [], isLoading: isLoadingIncome } =
     useMonthlyIncomeExpense();
+  const { openTransaction } = useWizard();
   const totalNetWorth = accounts.reduce(
     (sum, acc) => sum + parseFloat(acc.balance),
     0,
@@ -32,6 +30,11 @@ export function KPIsDashboard({ onClick }: KPIDashboardProps) {
   if (isLoadingAccounts || isLoadingIncome) {
     return <LoadingSpinner />;
   }
+
+  const handleNewTransaction = () => {
+    openTransaction();
+  };
+
   return (
     <div className="grid  grid-cols-1 lg:grid-cols-12 gap-3 min-h-0 overflow-y-auto lg:overflow-hidden pr-1 custom-scrollbar">
       {/* Top Bento Row: Stats & Quick Actions */}
@@ -91,7 +94,7 @@ export function KPIsDashboard({ onClick }: KPIDashboardProps) {
       </div>
       <div className="lg:col-span-4 grid grid-cols-1  gap-3">
         <Button
-          onClick={onClick}
+          onClick={handleNewTransaction}
           className="font-black text-xs uppercase tracking-widest rounded-none shadow-premium hover:opacity-90 transition-premium group"
         >
           <PlusIcon className="mr-2 h-4 w-4 group-hover:rotate-90 transition-premium" />

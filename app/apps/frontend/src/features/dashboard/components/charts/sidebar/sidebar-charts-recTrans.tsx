@@ -1,6 +1,6 @@
 // src/features/dashboard/components/charts/sidebar-charts-recTrans.tsx
 
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -23,13 +23,10 @@ import { useRecurrencesToPay } from "@/features/dashboard/hooks/dashboardHooks";
 import { RecurrenceDTO, TransactionType } from "@repo/shared";
 import { Button } from "@/components/ui/button";
 
-interface SidebarChartsRecentTransactionsProps {
-  onPayClick: (recurrenceId: string) => void;
-}
+import { useWizard } from "@/providers/wizard-form-provider";
 
-export function SidebarChartsRecentTransactions({
-  onPayClick,
-}: SidebarChartsRecentTransactionsProps) {
+export function SidebarChartsRecentTransactions() {
+  const { openRecurrence } = useWizard();
   const { data: recurrences = [] } = useRecurrencesToPay();
 
   const recurrencesTypes = useMemo(
@@ -47,7 +44,7 @@ export function SidebarChartsRecentTransactions({
       : recurrencesTypes[0];
 
   const handlePay = (recurrence: RecurrenceDTO) => {
-    onPayClick(recurrence.id);
+    openRecurrence(recurrence.id);
   };
 
   const filteredRecurrences = recurrences.filter(

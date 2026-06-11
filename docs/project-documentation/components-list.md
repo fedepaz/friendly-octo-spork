@@ -36,6 +36,7 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `SidebarChartsBudget` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
 | `SidebarChartsAccounts`| Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
 | `SidebarChartsRecentTransactions`| Dashboard | ✅ | ✅ | ✅ | ✅ | Premium |
+| `WizardFormProvider` | Providers | ✅ | ✅ | ✅ | ✅ | Smart Controller |
 | `SmartFormProviderRecurrence`| Recurrences | ✅ | ✅ | ✅ | ✅ | Approved |
 | `WizardModalRecurrence` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 

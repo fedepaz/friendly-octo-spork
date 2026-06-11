@@ -1,6 +1,6 @@
+// src/features/createTransaction/components/wizardModal.tsx
 import { cn } from "@/lib/utils";
 
-// src/features/createTransaction/components/wizardModal.tsx
 export function WizardModal({
   onClose,
   title,

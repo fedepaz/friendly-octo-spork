@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { InLineError } from "@/features/createTransaction/components/inLineError";
 import { BudgetCategory, CreateTransactionInput } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
+import { useRecurrenceById } from "@/features/recurrences/hooks/recurrenceHooks";
 
 const CATEGORIES = [
   "DAILY_EXPENSES",
@@ -22,8 +23,14 @@ export function StepBudgetComponent() {
     formState: { errors },
   } = useFormContext<CreateTransactionInput>();
   const watched = watch();
+  const { data: recurrence } = useRecurrenceById(watched.recurrenceId || "");
 
   const watchedTransactionType = watched.type !== "EXPENSE";
+
+  // Type guard for metadata
+  const metadata = (recurrence?.metadata as Record<string, unknown>) || {};
+  const isBudgetedRef = metadata.isBudgetedExpense === true;
+  const budgetCategoryRef = metadata.budgetCategory as string | undefined;
 
   // Toggle handler for isBudgetedExpense
   const toggleBudgetedExpense = (value: boolean) => {
@@ -36,6 +43,30 @@ export function StepBudgetComponent() {
 
   return (
     <div className="flex flex-col gap-4">
+      {recurrence && (
+        <div className="p-3 border border-border/40 bg-background/40 space-y-2">
+          <p className="text-[10px] font-black uppercase tracking-widest text-primary/60">
+            Referencia de Presupuesto
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <p className="text-[9px] font-bold text-muted-foreground/40 uppercase">Presupuestado</p>
+              <p className="text-xs font-mono font-bold">
+                {isBudgetedRef ? "SÍ" : "NO"}
+              </p>
+            </div>
+            {budgetCategoryRef && (
+              <div>
+                <p className="text-[9px] font-bold text-muted-foreground/40 uppercase">Categoría</p>
+                <p className="text-xs font-mono font-bold">
+                  {budgetCategoryRef}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
         Is this a budgeted expense?
       </h3>

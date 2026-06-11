@@ -76,11 +76,6 @@ export const STEP_CONFIGS: StepConfig[] = [
 // ─── STEP DEFINITIONS FOR RECURRENCE ─────────────────────────────────────────
 export const STEP_CONFIGS_RECURRENCE: StepConfig[] = [
   {
-    id: "type",
-    label: "Transaction Type",
-    fields: ["type"],
-  },
-  {
     id: "amount",
     label: "Amount & Date",
     fields: ["amount", "date"],
@@ -90,23 +85,11 @@ export const STEP_CONFIGS_RECURRENCE: StepConfig[] = [
     label: "Accounts",
     fields: ["sourceAccountId", "targetAccountId"],
   },
-  {
-    id: "category",
-    label: "Category",
-    fields: ["description", "categoryId"],
-  },
+
   {
     id: "recurrence",
     label: "Recurrence",
-    fields: [
-      "isRecurrence",
-      "recurrenceName",
-      "frequency",
-      "totalParts",
-      "isFirstPayment",
-      "isCardExpense",
-      "cardType",
-    ],
+    fields: ["isRecurrence", "recurrenceName", "frequency", "totalParts"],
     // ✅ Available for ALL transaction types (as you decided)
     shouldShow: () => true,
   },
@@ -131,10 +114,11 @@ export const STEP_CONFIGS_RECURRENCE: StepConfig[] = [
  */
 export function getVisibleSteps(
   values: Partial<CreateTransactionInput>,
+  config: StepConfig[],
 ): StepId[] {
-  return STEP_CONFIGS.filter((step) => step.shouldShow?.(values) ?? true).map(
-    (step) => step.id,
-  );
+  return config
+    .filter((step) => step.shouldShow?.(values) ?? true)
+    .map((step) => step.id);
 }
 
 /**
@@ -143,8 +127,9 @@ export function getVisibleSteps(
 export function getNextStepId(
   currentId: StepId,
   values: Partial<CreateTransactionInput>,
+  config: StepConfig[],
 ): StepId | null {
-  const visible = getVisibleSteps(values);
+  const visible = getVisibleSteps(values, config);
   const currentIndex = visible.indexOf(currentId);
   return visible[currentIndex + 1] ?? null;
 }
@@ -155,8 +140,9 @@ export function getNextStepId(
 export function getPrevStepId(
   currentId: StepId,
   values: Partial<CreateTransactionInput>,
+  config: StepConfig[],
 ): StepId | null {
-  const visible = getVisibleSteps(values);
+  const visible = getVisibleSteps(values, config);
   const currentIndex = visible.indexOf(currentId);
   return visible[currentIndex - 1] ?? null;
 }
@@ -164,15 +150,18 @@ export function getPrevStepId(
 /**
  * Convert StepId to numeric index (for progress bar, etc.)
  */
-export function stepIdToIndex(stepId: StepId): number {
-  return STEP_CONFIGS.findIndex((s) => s.id === stepId);
+export function stepIdToIndex(stepId: StepId, config: StepConfig[]): number {
+  return config.findIndex((s) => s.id === stepId);
 }
 
 /**
  * Convert numeric index to StepId
  */
-export function indexToStepId(index: number): StepId | null {
-  return STEP_CONFIGS[index]?.id ?? null;
+export function indexToStepId(
+  index: number,
+  config: StepConfig[],
+): StepId | null {
+  return config[index]?.id ?? null;
 }
 
 /**
@@ -181,8 +170,9 @@ export function indexToStepId(index: number): StepId | null {
 export function getValidationFields(
   stepId: StepId,
   values: Partial<CreateTransactionInput>,
+  config: StepConfig[],
 ): Array<keyof CreateTransactionInput> {
-  const step = STEP_CONFIGS.find((s) => s.id === stepId);
+  const step = config.find((s) => s.id === stepId);
   if (!step) return [];
 
   // Only validate if step is visible

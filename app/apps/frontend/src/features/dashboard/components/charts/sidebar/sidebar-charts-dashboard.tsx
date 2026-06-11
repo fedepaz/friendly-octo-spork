@@ -4,13 +4,7 @@ import { SidebarChartsAccounts } from "./sidebar-charts-accounts";
 import { SidebarChartsBudget } from "./sidebar-charts-budget";
 import { SidebarChartsRecentTransactions } from "./sidebar-charts-recTrans";
 
-interface SidebarChartsDashboardProps {
-  onPayClick: (recurrenceId: string) => void;
-}
-
-export function SidebarChartsDashboard({
-  onPayClick,
-}: SidebarChartsDashboardProps) {
+export function SidebarChartsDashboard() {
   return (
     <div className="lg:col-span-4 flex flex-col gap-3 min-h-0">
       {/* Sidebar Section Accounts */}
@@ -18,7 +12,7 @@ export function SidebarChartsDashboard({
       {/* Sidebar Section Budgets */}
       <SidebarChartsBudget />
       {/* Sidebar Section Recent Transactions */}
-      <SidebarChartsRecentTransactions onPayClick={onPayClick} />
+      <SidebarChartsRecentTransactions />
     </div>
   );
 }
