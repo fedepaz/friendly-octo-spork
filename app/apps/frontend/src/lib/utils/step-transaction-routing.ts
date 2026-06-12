@@ -89,7 +89,14 @@ export const STEP_CONFIGS_RECURRENCE: StepConfig[] = [
   {
     id: "recurrence",
     label: "Recurrence",
-    fields: ["isRecurrence", "recurrenceName", "frequency", "totalParts"],
+    fields: [
+      "isRecurrence",
+      "recurrenceName",
+      "frequency",
+      "totalParts",
+      "isCardExpense",
+      "cardType",
+    ],
     // ✅ Available for ALL transaction types (as you decided)
     shouldShow: () => true,
   },

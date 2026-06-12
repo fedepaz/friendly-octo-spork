@@ -17,7 +17,7 @@ import {
 export const dashboardQueryKeys = {
   budgetSummary: (month: number, year: number) =>
     [`dashboard/budget/${month}/${year}`] as const,
-  recentAccounts: (limit: number) => [`dashboard/accounts/${limit}`] as const,
+  recentAccounts: () => [`dashboard/recentAccounts`] as const,
   incomeExpense: (months: number) =>
     [`dashboard/income-expense/${months}`] as const,
   recurrencesToPay: () => [`dashboard/toPay`] as const,
@@ -39,8 +39,8 @@ export const useBudgetSummary = () => {
 
 export const useRecentAccounts = () => {
   return useSuspenseQuery<AccountDTO[]>({
-    queryKey: dashboardQueryKeys.recentAccounts(3),
-    queryFn: () => accountDashboardService.fetchRecentAccounts(3),
+    queryKey: dashboardQueryKeys.recentAccounts(),
+    queryFn: () => accountDashboardService.fetchRecentAccounts(),
   });
 };
 

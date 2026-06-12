@@ -87,13 +87,10 @@ export class DashboardService {
     return response.map((budget) => this.mapBudgetToDTO(budget));
   }
 
-  async getRecentAccounts(
-    userId: string,
-    limit: number = 3,
-  ): Promise<AccountDTO[]> {
+  async getRecentAccounts(userId: string): Promise<AccountDTO[]> {
     if (!userId) throw new BadRequestException('User ID is required');
     this.logger.debug(`Getting recent accounts for user ${userId}`);
-    const response = await this.accountRepo.getRecentAccounts(userId, limit);
+    const response = await this.accountRepo.getRecentAccounts(userId);
     return response;
   }
 

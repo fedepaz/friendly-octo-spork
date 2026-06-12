@@ -52,7 +52,8 @@ Follow the NestJS Module-Controller-Service-Repository pattern:
         *   **Raw SQL**: Prefer `this.prisma.$queryRaw` for multi-table aggregations.
         *   **Time Series**: Use PostgreSQL `generate_series` to ensure gaps in data (e.g., months with no transactions) are correctly represented in charts.
         *   **Performance**: Use `SUM(...) FILTER (WHERE ...)` for efficient conditional totals in a single pass.
-    *   **Endpoint Consolidation**: Prefer merging metadata (e.g., usage counts, last used dates) into primary retrieval endpoints rather than creating multiple specialized `/meta` or `/usage` routes. This reduces network round-trips and simplifies frontend state management.
+    - **Activity-Based Sorting**: When displaying "recent" entities (e.g., accounts), sort by the latest associated activity (e.g., transactions) across all relationship types (source or target) using optimized raw SQL unions.
+    - **Endpoint Consolidation**: Prefer merging metadata (e.g., usage counts, last used dates) into primary retrieval endpoints rather than creating multiple specialized `/meta` or `/usage` routes. This reduces network round-trips and simplifies frontend state management.
     *   **Usage Statistics**: When possible, provide "usage-based" endpoints (e.g., categories sorted by transaction count) to improve UX speed for common tasks.
     *   **Timeline Projections**: For recurring items, implement services that project future occurrences and track current-month payment status.
     *   **Aggregations**: Use Prisma's `groupBy` for simple daily/monthly totals. For complex comparisons (e.g., month-over-month variance), utilize `this.prisma.$queryRaw` with optimized SQL filters.

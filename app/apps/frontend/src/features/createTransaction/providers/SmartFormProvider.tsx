@@ -26,6 +26,17 @@ export function SmartFormProvider({ onClose }: { onClose: () => void }) {
       isRecurrence: false,
     },
   });
+  // Filter errors from form field state
+  const errorMessageEnd = Object.values(methods.formState.errors)
+    .map((err) => err?.message)
+    .filter(Boolean)
+    .join(", ");
+
+  const onInvalid = () => {
+    toast.error(errorMessageEnd, {
+      id: "wizard-validation-error",
+    });
+  };
 
   const onSubmit = async (data: CreateTransactionInput) => {
     // 🛡️ Safety Guard: Only allow submission if we are on the final Review step (Step 5)
@@ -47,7 +58,7 @@ export function SmartFormProvider({ onClose }: { onClose: () => void }) {
       } else {
         // ✅ GLOBAL: Show system/auth errors in the snackbar
         setErrorMessage(parsed.message);
-        toast.error(errorMessage, {
+        toast.error(parsed.message, {
           duration: 5000,
         });
       }
@@ -56,7 +67,7 @@ export function SmartFormProvider({ onClose }: { onClose: () => void }) {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <form onSubmit={methods.handleSubmit(onSubmit, onInvalid)}>
         <FormContainer
           activeStep={activeStep}
           setActiveStep={setActiveStep}
@@ -64,6 +75,18 @@ export function SmartFormProvider({ onClose }: { onClose: () => void }) {
           isSubmitting={isSubmitting}
           onClose={onClose}
         />
+        {/* STRUCTURAL FEEDBACK: Shown for server errors or global issues */}
+        {errorMessage && (
+          <div className="px-5 pb-5">
+            <div className="text-[10px] font-bold uppercase tracking-tight text-destructive border border-destructive/20 bg-destructive/5 p-3 flex items-start gap-2 shadow-etched animate-premium-in">
+              <div className="h-1.5 w-1.5 bg-destructive mt-1 shrink-0" />
+              <div className="flex-1">
+                <p className="font-black mb-0.5">Error de Operación</p>
+                <p className="opacity-70 leading-relaxed">{errorMessage}</p>
+              </div>
+            </div>
+          </div>
+        )}
       </form>
     </FormProvider>
   );

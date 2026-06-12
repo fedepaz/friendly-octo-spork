@@ -21,7 +21,7 @@ export function SidebarChartsAccounts() {
       <CardContent className="space-y-2 px-5 pb-4 overflow-y-auto custom-scrollbar">
         {accounts.map((account) => (
           <div
-            key={account.name}
+            key={account.id}
             className="flex items-center justify-between group cursor-pointer hover:translate-x-1 transition-premium border-l-2 border-transparent hover:border-primary pl-2"
           >
             <div className="min-w-0">

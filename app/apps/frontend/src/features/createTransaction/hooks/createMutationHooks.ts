@@ -19,5 +19,8 @@ export const useCreateTransaction = () => {
       const msg = `Creada la transacción: ${data.description}`;
       toast.success(msg, { duration: 3000 });
     },
+    onError: (error) => {
+      toast.error(error.message, { duration: 3000 });
+    },
   });
 };

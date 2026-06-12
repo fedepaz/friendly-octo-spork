@@ -25,13 +25,12 @@ export class DashboardController {
     return this.dashboardService.getBudgetSummary(user.id, month, year);
   }
 
-  @Get('accounts/:limit')
+  @Get('recentAccounts')
   @HttpCode(HttpStatus.OK)
   async getRecentAccounts(
     @CurrentUser() user: AuthUser,
-    @Param('limit') limit: number,
   ): Promise<AccountDTO[]> {
-    return this.dashboardService.getRecentAccounts(user.id, limit);
+    return this.dashboardService.getRecentAccounts(user.id);
   }
   @Get('income-expense/:months')
   @HttpCode(HttpStatus.OK)

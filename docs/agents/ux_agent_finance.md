@@ -61,9 +61,11 @@ To provide the best possible perceived performance, we implement a two-tiered lo
 - **Color Palette**: Strict adherence to the semantic OKLCH token system. **Standard**: Use `emerald-600` for positive numbers and `rose-400` for negative/destructive numbers in financial contexts to ensure professional contrast and visual balance.
 - **Shadow System**: Utilize the 7-level shadow system (`--shadow-2xs` to `--shadow-2xl`) to create depth without rounding.
 
-### 2. Interaction Patterns
-- **Responsive Layouts**: Zero-scroll priority across all breakpoints.
-- **Wizard & Multi-step UI**:
+- **Interaction Patterns**
+    - **Responsive Layouts**: Zero-scroll priority across all breakpoints.
+    - **Structural Error Feedback**: For critical operation errors (e.g., server failures), use a high-visibility, industrial-styled error block at the bottom of forms with the `animate-premium-in` animation.
+    - **Danger Zone**: For destructive or final actions (like stopping a recurrence), use a specialized container with a `bg-destructive/5` background, `destructive` borders, and a high-contrast button to signal risk.
+    - **Wizard & Multi-step UI**:
     - **Isolation**: Each step should focus on a single conceptual unit (e.g., "Amount", "Category").
     - **Progress Signaling**: Always include a `Stepper` or visual indicator of the current progress.
     - **Review Step**: Every wizard must end with a read-only "Review" step before submission.

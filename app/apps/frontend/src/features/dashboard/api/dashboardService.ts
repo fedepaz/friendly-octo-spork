@@ -35,8 +35,8 @@ export const budgetDashboardService = {
 };
 
 export const accountDashboardService = {
-  fetchRecentAccounts: (limit: number) => {
-    return clientFetch<AccountDTO[]>(`dashboard/accounts/${limit}`, {
+  fetchRecentAccounts: () => {
+    return clientFetch<AccountDTO[]>(`dashboard/recentAccounts`, {
       method: "GET",
     });
   },
