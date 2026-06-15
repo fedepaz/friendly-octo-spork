@@ -79,12 +79,12 @@ export class RecurrenceRepository {
     });
   }
   /**
-   * Get active recurrences that are relevant for a given month.
+   * Get recurrences that are relevant for a given month.
    *
-   * A recurrence is "active in month X" if:
+   * A recurrence is in month " if:
    * - It started on or before the end of that month
    * - AND it hasn't ended before that month started (or has no end date)
-   * - AND active === true
+   
    */
   async getByMonthByTransactionType(
     userId: string,
@@ -106,6 +106,7 @@ export class RecurrenceRepository {
         // - It has no end date (ongoing)
         OR: [{ endDate: { gte: startOfMonth } }, { endDate: null }],
         type: transactionType,
+        isCardExpense: false,
       },
       include: {
         category: true,
