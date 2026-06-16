@@ -18,6 +18,7 @@ import { RecurrencesModule } from './modules/recurrences/recurrence.module';
 import { TransactionModule } from './modules/transactions/transaction.module';
 import { UsersModule } from './modules/users/users.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { CardModule } from './modules/card/card.module';
 
 @Module({
   imports: [
@@ -67,6 +68,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
     RecurrencesModule,
     TransactionModule,
     UsersModule,
+    CardModule,
   ],
   providers: [
     {

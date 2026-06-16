@@ -20,23 +20,6 @@ export class RecurrenceService {
 
   constructor(private readonly recurrenceRepo: RecurrenceRepository) {}
 
-  async getRecurrences(userId: string): Promise<RecurrenceDTO[]> {
-    if (!userId) throw new BadRequestException('User id is required');
-    this.logger.log(`Getting recurrences for user ${userId}`);
-    const recurrences = await this.recurrenceRepo.getRecurrences(userId);
-    return recurrences.map((r) => this.mapToDTO(r));
-  }
-
-  async getRecurrenceById(
-    userId: string,
-    id: string,
-  ): Promise<RecurrenceDTO | null> {
-    if (!userId) throw new BadRequestException('User id is required');
-    this.logger.log(`Getting recurrence ${id} for user ${userId}`);
-    const recurrence = await this.recurrenceRepo.getRecurrenceById(userId, id);
-    return recurrence ? this.mapToDTO(recurrence) : null;
-  }
-
   private mapToDTO(r: RecurrenceWithRelations): RecurrenceDTO {
     return {
       ...r,
@@ -55,6 +38,23 @@ export class RecurrenceService {
           }
         : undefined,
     };
+  }
+
+  async getRecurrences(userId: string): Promise<RecurrenceDTO[]> {
+    if (!userId) throw new BadRequestException('User id is required');
+    this.logger.log(`Getting recurrences for user ${userId}`);
+    const recurrences = await this.recurrenceRepo.getRecurrences(userId);
+    return recurrences.map((r) => this.mapToDTO(r));
+  }
+
+  async getRecurrenceById(
+    userId: string,
+    id: string,
+  ): Promise<RecurrenceDTO | null> {
+    if (!userId) throw new BadRequestException('User id is required');
+    this.logger.log(`Getting recurrence ${id} for user ${userId}`);
+    const recurrence = await this.recurrenceRepo.getRecurrenceById(userId, id);
+    return recurrence ? this.mapToDTO(recurrence) : null;
   }
 
   private calculateRecurrenceDates(
