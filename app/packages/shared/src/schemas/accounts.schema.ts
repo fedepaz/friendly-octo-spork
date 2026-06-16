@@ -1,5 +1,12 @@
+// packages/shared/schemas/accounts.schema.ts
+
 import { z } from "zod";
-import { AccountType, AccountTypeSchema, Currency, CurrencySchema } from "../enums";
+import {
+  AccountType,
+  AccountTypeSchema,
+  Currency,
+  CurrencySchema,
+} from "../enums";
 import type { TransactionDTO } from "./transactions.schema";
 
 export interface AccountDTO {
@@ -34,7 +41,10 @@ export const createAccountSchema = z.object({
   type: AccountTypeSchema,
   currency: CurrencySchema,
   balance: z
-    .preprocess((val) => (val === "" || val === undefined ? "0" : String(val)), z.string())
+    .preprocess(
+      (val) => (val === "" || val === undefined ? "0" : String(val)),
+      z.string(),
+    )
     .refine((val) => !isNaN(Number(val)), "Invalid balance"),
 });
 

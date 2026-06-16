@@ -7,6 +7,7 @@ export const ROUTES = {
   ACCOUNTS: "/accounts",
   RECURRENCES: "/recurrences",
   TRANSACTIONS: "/transactions",
+  CARDS: "/cards",
 } as const;
 
 export type AppRoute = (typeof ROUTES)[keyof typeof ROUTES];

@@ -1,7 +1,15 @@
 // src/lib/config/navigations.ts
 
 import { ROUTES } from "@/constants/routes";
-import { Home, Settings, History, Users, Landmark, Clock } from "lucide-react";
+import {
+  Home,
+  Settings,
+  History,
+  Users,
+  Landmark,
+  Clock,
+  IdCardIcon,
+} from "lucide-react";
 
 export interface NavigationItem {
   title: string;
@@ -74,6 +82,13 @@ export const NAVIGATION_CONFIG: NavigationGroup[] = [
         icon: Clock,
         description: "Gestión de recurrencias del sistema",
         dashboard: { statsLabel: "Recurrencias activas" },
+      },
+      {
+        title: "Tarjeta",
+        href: ROUTES.CARDS,
+        icon: IdCardIcon,
+        description: "Gestión de tarjetas de crédito",
+        dashboard: { statsLabel: "Tarjetas de crédito" },
       },
     ],
   },

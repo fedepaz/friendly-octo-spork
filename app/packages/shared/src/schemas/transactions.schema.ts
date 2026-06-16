@@ -1,3 +1,5 @@
+// packages/shared/schemas/transactions.schema.ts
+
 import { z } from "zod";
 import {
   BudgetCategory,

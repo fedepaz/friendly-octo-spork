@@ -1,3 +1,5 @@
+// packages/shared/schemas/recurrence.schema.ts
+
 import { z } from "zod";
 import {
   CardType,
