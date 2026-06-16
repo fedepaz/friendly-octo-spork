@@ -2,8 +2,8 @@
 
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import {
-  CardExpenseWithRelations,
   CardRepository,
+  CardTransactionsWithRelations,
 } from '../../repositories/card.repository';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class CardService {
 
   async getCardTransactions(
     userId: string,
-  ): Promise<CardExpenseWithRelations[]> {
+  ): Promise<CardTransactionsWithRelations[]> {
     if (!userId) throw new BadRequestException('User ID is required');
     this.logger.log(`Getting card transactions for user ${userId}`);
     const cardTransactions = await this.cardRepo.getCardTransactions(userId);
@@ -22,7 +22,7 @@ export class CardService {
   async getCardTransactionByAccountId(
     userId: string,
     accountId: string,
-  ): Promise<CardExpenseWithRelations | null> {
+  ): Promise<CardTransactionsWithRelations | null> {
     if (!userId) throw new BadRequestException('User ID is required');
     this.logger.log(`Getting card transactions for user ${userId}`);
     const cardTransaction = await this.cardRepo.getCardTransactionByAccountId(
@@ -37,7 +37,7 @@ export class CardService {
     userId: string,
     month: number,
     year: number,
-  ): Promise<CardExpenseWithRelations[]> {
+  ): Promise<CardTransactionsWithRelations[]> {
     if (!userId) throw new BadRequestException('User ID is required');
     this.logger.log(`Getting card transactions for user ${userId}`);
     const cardTransactions = await this.cardRepo.getCardTransactionByMonth(

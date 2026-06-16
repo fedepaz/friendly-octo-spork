@@ -4,7 +4,7 @@ import { Controller, Get, HttpCode, HttpStatus, Param } from '@nestjs/common';
 import { CardService } from './card.service';
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
 import { AuthUser } from '../auth/types/auth-user.type';
-import { CardExpenseWithRelations } from '../../repositories/card.repository';
+import { CardTransactionsWithRelations } from '../../repositories/card.repository';
 
 @Controller('cards')
 export class CardController {
@@ -14,7 +14,7 @@ export class CardController {
   @HttpCode(HttpStatus.OK)
   async getCardTransactions(
     @CurrentUser() user: AuthUser,
-  ): Promise<CardExpenseWithRelations[]> {
+  ): Promise<CardTransactionsWithRelations[]> {
     return this.cardService.getCardTransactions(user.id);
   }
 
@@ -23,7 +23,7 @@ export class CardController {
   async getCardTransactionByAccountId(
     @CurrentUser() user: AuthUser,
     @Param('accountId') accountId: string,
-  ): Promise<CardExpenseWithRelations | null> {
+  ): Promise<CardTransactionsWithRelations | null> {
     return this.cardService.getCardTransactionByAccountId(user.id, accountId);
   }
 
@@ -33,7 +33,7 @@ export class CardController {
     @CurrentUser() user: AuthUser,
     @Param('month') month: number,
     @Param('year') year: number,
-  ): Promise<CardExpenseWithRelations[]> {
+  ): Promise<CardTransactionsWithRelations[]> {
     return this.cardService.getCardTransactionsByMonth(user.id, month, year);
   }
 }
