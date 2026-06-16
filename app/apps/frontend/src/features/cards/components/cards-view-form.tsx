@@ -4,25 +4,21 @@
 import { formatCurrency, cn } from "@/lib/utils";
 import { formatShortDate } from "@/lib/date-utils";
 import { Calendar, Clock } from "lucide-react";
-import { CardDTO } from "@repo/shared";
+import { CardStatementItem } from "@repo/shared";
 
 interface CardViewFormProps {
-  selectedRecurrence: CardDTO;
+  selectedCardStatementItem: CardStatementItem;
 }
 
-export function CardViewForm({ selectedRecurrence }: CardViewFormProps) {
+export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
   return (
     <div className="space-y-6">
       <div className="p-3 bg-accent/5 border border-accent/20 flex items-center justify-between">
         <div className="flex items-center gap-2 text-accent">
           <Clock className="h-4 w-4" />
-          <span className="text-2.5 font-black uppercase">
-            Frecuencia {selectedRecurrence.frequency}
-          </span>
+          <span className="text-2.5 font-black uppercase"></span>
         </div>
-        <div className="font-mono text-2.5 font-bold">
-          PRÓXIMO: {formatShortDate(selectedRecurrence.nextDate)}
-        </div>
+        <div className="font-mono text-2.5 font-bold"></div>
       </div>
 
       <div className="space-y-2">
@@ -30,19 +26,8 @@ export function CardViewForm({ selectedRecurrence }: CardViewFormProps) {
           Impacto Financiero
         </p>
         <div className="flex items-end gap-2">
-          <p
-            className={cn(
-              "text-3xl font-mono font-black tracking-tighter",
-              selectedRecurrence.type === "EXPENSE"
-                ? "text-destructive"
-                : "text-secondary",
-            )}
-          >
-            {formatCurrency(selectedRecurrence.amount)}
-          </p>
-          <span className="text-2.5 font-bold mb-1.5 opacity-50">
-            / {selectedRecurrence.frequency.toLowerCase()}
-          </span>
+          <p></p>
+          <span className="text-2.5 font-bold mb-1.5 opacity-50"></span>
         </div>
       </div>
 
@@ -53,18 +38,10 @@ export function CardViewForm({ selectedRecurrence }: CardViewFormProps) {
         <div className="bg-muted/30 p-3 border border-border">
           <div className="flex justify-between items-center mb-2">
             <span className="text-2.5 font-bold">ESTADO DE CUOTAS</span>
-            <span className="font-mono text-2.5">
-              {selectedRecurrence.currentPart} de{" "}
-              {selectedRecurrence.totalParts}
-            </span>
+            <span className="font-mono text-2.5"></span>
           </div>
           <div className="h-1 w-full bg-border overflow-hidden">
-            <div
-              className="h-full bg-primary"
-              style={{
-                width: `${((selectedRecurrence.currentPart ?? 1) / (selectedRecurrence.totalParts ?? 1)) * 100}%`,
-              }}
-            />
+            <div className="h-full bg-primary" />
           </div>
         </div>
       </div>
@@ -73,21 +50,21 @@ export function CardViewForm({ selectedRecurrence }: CardViewFormProps) {
         <div className="flex items-center justify-between p-2 bg-background border border-border font-mono text-2.5">
           <span className="opacity-50 uppercase">Origen de Fondos</span>
           <div className="flex items-center gap-2">
-            {selectedRecurrence.cardType && (
+            {selectedCardStatementItem.cardType && (
               <span className="bg-accent/10 text-accent px-1.5 py-0.5 border border-accent/20 text-[10px] font-bold">
-                {selectedRecurrence.cardType}
+                {selectedCardStatementItem.cardType.label}
               </span>
             )}
             <span className="font-bold">
-              {selectedRecurrence.sourceAccount?.name || "NO DEFINIDO"}
+              {selectedCardStatementItem.sourceAccount?.name || "NO DEFINIDO"}
             </span>
           </div>
         </div>
-        {selectedRecurrence.targetAccount && (
+        {selectedCardStatementItem.targetAccount && (
           <div className="flex items-center justify-between p-2 bg-background border border-border font-mono text-2.5">
             <span className="opacity-50 uppercase">Destino</span>
             <span className="font-bold">
-              {selectedRecurrence.targetAccount.name}
+              {selectedCardStatementItem.targetAccount.name}
             </span>
           </div>
         )}
@@ -97,9 +74,7 @@ export function CardViewForm({ selectedRecurrence }: CardViewFormProps) {
         <Calendar className="h-4 w-4" />
         <div className="text-2.5">
           <p className="font-bold uppercase leading-none">Fecha de Inicio</p>
-          <p className="font-mono">
-            {formatShortDate(selectedRecurrence.startDate)}
-          </p>
+          <p className="font-mono"></p>
         </div>
       </div>
     </div>

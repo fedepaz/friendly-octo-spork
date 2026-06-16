@@ -16,7 +16,7 @@ import {
   ArrowUpRight,
   RefreshCw,
 } from "lucide-react";
-import { CardDTO } from "@repo/shared";
+import { CardDTO, CardStatementItem } from "@repo/shared";
 
 interface CellProps {
   row: Row<CardDTO>;
@@ -42,26 +42,7 @@ function TransactionTypeCell({ row }: CellProps) {
   );
 }
 
-export const cardColumns: ColumnDef<CardDTO>[] = [
-  {
-    id: "name",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Nombre</SortableHeader>
-    ),
-    cell: ({ row }) => (
-      <TacticalTextCell
-        title={row.original.name}
-        subtext={row.original.category?.name || "Sin categoría"}
-      />
-    ),
-  },
-  {
-    accessorKey: "type",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Dirección</SortableHeader>
-    ),
-    cell: ({ row }) => <TransactionTypeCell row={row} />,
-  },
+export const cardColumns: ColumnDef<CardStatementItem>[] = [
   {
     accessorKey: "amount",
     header: ({ column }) => (
@@ -69,18 +50,13 @@ export const cardColumns: ColumnDef<CardDTO>[] = [
         <SortableHeader column={column}>Monto</SortableHeader>
       </div>
     ),
-    cell: ({ row }) => (
-      <PremiumAmountCell
-        amount={row.original.amount}
-        isNegative={row.original.type === "EXPENSE"}
-      />
-    ),
+    cell: ({ row }) => <PremiumAmountCell amount={row.original.amount} />,
   },
   {
     accessorKey: "frequency",
     header: "Frecuencia",
     cell: ({ row }) => {
-      const frequency = row.original.frequency;
+      const frequency = row.original.installmentInfo;
       const label =
         frequency === "MONTHLY"
           ? "Mensual"
@@ -94,26 +70,6 @@ export const cardColumns: ColumnDef<CardDTO>[] = [
         <div className="flex items-center gap-2">
           <Clock className="h-3 w-3 text-muted-foreground opacity-50" />
           <PremiumBadgeCell label={label} variant="accent" />
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "parts",
-    header: "Ciclos",
-    cell: ({ row }) => {
-      const { totalParts, currentPart } = row.original;
-      if (!totalParts || !currentPart)
-        return <span className="text-muted-foreground opacity-30">—</span>;
-
-      return (
-        <div className="flex items-center gap-1.5">
-          <Calendar className="h-3 w-3 text-muted-foreground opacity-50" />
-          <span className="font-mono text-[10px] font-black tracking-tighter">
-            {currentPart.toString().padStart(2, "0")}
-            <span className="text-muted-foreground opacity-30 mx-0.5">/</span>
-            {totalParts.toString().padStart(2, "0")}
-          </span>
         </div>
       );
     },

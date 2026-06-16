@@ -62,3 +62,39 @@ export const cardSchema: z.ZodType<CardDTO> = z.object({
   sourceAccount: z.lazy(() => z.any().nullable().optional()),
   targetAccount: z.lazy(() => z.any().nullable().optional()),
 }) as z.ZodType<CardDTO>;
+
+export const CardStatementItemSchema = z.object({
+  sourceId: z.string(),
+  sourceType: z.enum(["RECURRENCE", "TRANSACTION"]),
+  description: z.string(),
+  amount: z.string(), // Decimal as string
+  date: z.date(),
+  installmentInfo: z.string().nullable(),
+  cardType: CardTypeSchema.nullable(),
+  category: z
+    .object({
+      id: z.string(),
+      name: z.string(),
+      color: z.string().nullable(),
+    })
+    .nullable(),
+  sourceAccount: z
+    .object({
+      id: z.string(),
+      name: z.string(),
+    })
+    .nullable(),
+  targetAccount: z
+    .object({
+      id: z.string(),
+      name: z.string(),
+    })
+    .nullable(),
+  runningBalance: z.string(),
+});
+
+export type CardStatementItem = z.infer<typeof CardStatementItemSchema>;
+
+// For API response: array of items
+export const CardStatementResponseSchema = z.array(CardStatementItemSchema);
+export type CardStatementResponse = z.infer<typeof CardStatementResponseSchema>;

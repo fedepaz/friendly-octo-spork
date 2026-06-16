@@ -128,10 +128,10 @@ export class CardRepository {
         r."nextDate" AS date,
         CASE 
           WHEN r.frequency = 'INSTALLMENT' 
-          THEN CONCAT(r.current_part + 1, '/', r.total_parts)
+          THEN CONCAT(r."currentPart" + 1, '/', r."totalParts")
           ELSE NULL
         END AS installment_info,
-        r.card_type,
+        r."cardType" AS card_type,
         c.id AS category_id,
         c.name AS category_name,
         c.color AS category_color,
@@ -159,7 +159,7 @@ export class CardRepository {
         t.amount,
         t.date,
         NULL AS installment_info,
-        t.card_type,
+        t."cardType" AS card_type,
         c.id AS category_id,
         c.name AS category_name,
         c.color AS category_color,
@@ -173,7 +173,7 @@ export class CardRepository {
       LEFT JOIN "Account" tgt ON tgt.id = t."targetAccountId"
       WHERE t."userId" = ${userId}
         AND t."isCardExpense" = true
-        AND t.recurrenceId IS NULL
+        AND t."recurrenceId" IS NULL
         AND t.date BETWEEN ${startDate} AND ${endDate}
 
       UNION ALL
@@ -192,10 +192,10 @@ export class CardRepository {
         NULL AS category_color,
         NULL AS source_account_id,
         NULL AS source_account_name,
-        t.target_account_id AS target_account_id,
+        t."targetAccountId" AS target_account_id,
         a.name AS target_account_name
       FROM "Transaction" t
-      JOIN "Account" a ON a.id = t.target_account_id
+      JOIN "Account" a ON a.id = t."targetAccountId"
       WHERE t."userId" = ${userId}
         AND t.type = 'TRANSFER'
         AND a.type = 'CARD'

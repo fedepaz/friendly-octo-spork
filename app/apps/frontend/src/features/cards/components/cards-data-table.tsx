@@ -3,25 +3,26 @@
 
 import { useState } from "react";
 import { DataTable, SlideOverForm } from "@/components/data-display/data-table";
-import { RecurrenceDTO, TransactionType } from "@repo/shared";
+import {
+  CardStatementItem,
+  RecurrenceDTO,
+  TransactionType,
+} from "@repo/shared";
 import { CardViewForm } from "./cards-view-form";
 
 import { TransTypeSelector } from "@/components/data-display/data-table/transType-selector";
-import { useCardExpenses } from "../hooks/cardHooks";
+
 import { cardColumns } from "./columns";
+import { useCardTransactionsByMonth } from "../hooks/cardHooks";
+import { MonthSelector } from "@/components/data-display/data-table/month-selector";
 
 export function CardsDataTable() {
-  const { data: cards = [] } = useCardExpenses();
-  const [transactionType, setTransactionType] =
-    useState<TransactionType>("EXPENSE");
-  const [selectedRecurrence, setSelectedRecurrence] =
-    useState<RecurrenceDTO | null>(null);
+  const [month, setMonth] = useState(new Date().getMonth());
+  const year = new Date().getFullYear();
+  const { data: cards = [] } = useCardTransactionsByMonth(year, month + 1);
 
-  const toolbarContent = (
-    <div className="flex gap-2">
-      <TransTypeSelector onTransTypeChange={setTransactionType} />
-    </div>
-  );
+  const [selectedCardTransaction, setSelectedCardTransaction] =
+    useState<CardStatementItem | null>(null);
 
   return (
     <>
@@ -32,18 +33,18 @@ export function CardsDataTable() {
         description="Lista de pagos"
         tableName="cards"
         totalCount={cards.length}
-        toolbarContent={toolbarContent}
-        onView={(row) => setSelectedRecurrence(row)}
+        toolbarContent={<MonthSelector onMonthChange={setMonth} />}
+        onView={(row) => setSelectedCardTransaction(row)}
       />
 
       <SlideOverForm
-        open={!!selectedRecurrence}
-        onOpenChange={(open) => !open && setSelectedRecurrence(null)}
+        open={!!selectedCardTransaction}
+        onOpenChange={(open) => !open && setSelectedCardTransaction(null)}
         title="Configuración de Pago"
-        description={selectedRecurrence?.name}
+        description={selectedCardTransaction?.description}
       >
-        {selectedRecurrence && (
-          <CardViewForm selectedRecurrence={selectedRecurrence} />
+        {selectedCardTransaction && (
+          <CardViewForm selectedCardStatementItem={selectedCardTransaction} />
         )}
       </SlideOverForm>
     </>

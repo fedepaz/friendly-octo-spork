@@ -5,6 +5,7 @@ import { CardService } from './card.service';
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
 import { AuthUser } from '../auth/types/auth-user.type';
 import { CardTransactionsWithRelations } from '../../repositories/card.repository';
+import { CardStatementItem } from '@repo/shared';
 
 @Controller('cards')
 export class CardController {
@@ -27,13 +28,13 @@ export class CardController {
     return this.cardService.getCardTransactionByAccountId(user.id, accountId);
   }
 
-  @Get('month/:month/:year')
+  @Get('month/:year/:month')
   @HttpCode(HttpStatus.OK)
   async getCardTransactionsByMonth(
     @CurrentUser() user: AuthUser,
-    @Param('month') month: number,
     @Param('year') year: number,
-  ): Promise<CardTransactionsWithRelations[]> {
-    return this.cardService.getCardTransactionsByMonth(user.id, month, year);
+    @Param('month') month: number,
+  ): Promise<CardStatementItem[]> {
+    return this.cardService.getCardTransactionsByMonth(user.id, year, month);
   }
 }
