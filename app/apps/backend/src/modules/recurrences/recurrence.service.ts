@@ -172,7 +172,7 @@ export class RecurrenceService {
     const isLastPart =
       recurrence.totalParts != null &&
       recurrence.currentPart != null &&
-      recurrence.currentPart >= recurrence.totalParts;
+      recurrence.currentPart + 1 >= recurrence.totalParts;
 
     const updateRecurrenceData = {
       userId,

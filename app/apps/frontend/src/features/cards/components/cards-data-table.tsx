@@ -3,26 +3,32 @@
 
 import { useState } from "react";
 import { DataTable, SlideOverForm } from "@/components/data-display/data-table";
-import {
-  CardStatementItem,
-  RecurrenceDTO,
-  TransactionType,
-} from "@repo/shared";
-import { CardViewForm } from "./cards-view-form";
 
-import { TransTypeSelector } from "@/components/data-display/data-table/transType-selector";
+import { CardViewForm } from "./cards-view-form";
 
 import { cardColumns } from "./columns";
 import { useCardTransactionsByMonth } from "../hooks/cardHooks";
 import { MonthSelector } from "@/components/data-display/data-table/month-selector";
+import {
+  CardStatementRow,
+  mapRecurrenceToCardRow,
+  mapTransactionToCardRow,
+} from "../types/card.type";
 
 export function CardsDataTable() {
   const [month, setMonth] = useState(new Date().getMonth());
   const year = new Date().getFullYear();
-  const { data: cards = [] } = useCardTransactionsByMonth(year, month + 1);
+  const { data } = useCardTransactionsByMonth(year, month + 1);
 
   const [selectedCardTransaction, setSelectedCardTransaction] =
-    useState<CardStatementItem | null>(null);
+    useState<CardStatementRow | null>(null);
+  const transactions = data?.transactions || [];
+  const recurrences = data?.pendingRecurrences || [];
+
+  const cards: CardStatementRow[] = [
+    ...transactions.map(mapTransactionToCardRow),
+    ...recurrences.map(mapRecurrenceToCardRow),
+  ];
 
   return (
     <>

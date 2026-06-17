@@ -5,7 +5,7 @@ import {
   CardRepository,
   CardTransactionsWithRelations,
 } from '../../repositories/card.repository';
-import { RecurrenceDTO, TransactionDTO } from '@repo/shared';
+import { CardStatementDTO, RecurrenceDTO, TransactionDTO } from '@repo/shared';
 import { TransactionWithRelations } from '../../repositories/transaction.repository';
 import { RecurrenceWithRelations } from '../../repositories/recurrence.repository';
 
@@ -126,10 +126,7 @@ export class CardService {
     userId: string,
     year: number,
     month: number,
-  ): Promise<{
-    transactions: TransactionDTO[];
-    pendingRecurrences: RecurrenceDTO[];
-  }> {
+  ): Promise<CardStatementDTO> {
     if (!userId) throw new BadRequestException('User ID is required');
     this.logger.log(
       `Getting card transactions for user ${userId} in ${year}/${month}`,

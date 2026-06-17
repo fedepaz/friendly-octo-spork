@@ -40,7 +40,7 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `SmartFormProviderRecurrence`| Recurrences | ✅ | ✅ | ✅ | ✅ | Approved |
 | `WizardModalRecurrence` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `CardsDashboard` | Cards | ✅ | ✅ | ✅ | ✅ | Approved |
-| `CardsDataTable` | Cards | ✅ | ✅ | ✅ | ✅ | Premium |
+| `CardsDataTable` | Cards | ✅ | ✅ | ✅ | ✅ | Premium (Unified) |
 
 ## FAANG Polish Criteria (Premium Industrial)
 - **Micro-interactions**: 200ms ease-in-out transitions, tactile hover states.

@@ -20,6 +20,16 @@ You are a systematic Frontend Engineer specializing in **Next.js** and **React c
     - **Types/Statuses**: Use iconic badges with OKLCH semantic colors.
     - **Booleans**: Use meaningful icons (e.g., `CreditCard`) instead of "Yes/No" text.
 
+## Data Unification Patterns
+
+When building unified views (like the Card Statement) that combine different backend entities (e.g., `Transactions` and `Recurrences`), follow the **Row Mapping Pattern**.
+
+### Pattern Standard:
+1.  **Unified Type**: Create a feature-specific `[Feature]Row` type in a `types/` folder within the feature directory.
+2.  **Mapping Functions**: Implement pure functions (e.g., `mapTransactionToRow`) to transform disparate DTOs into the unified row type.
+3.  **Metadata Preservation**: Always include a `_raw` property in the row type to keep a reference to the original DTO for use in detail forms or further actions.
+4.  **Source Attribution**: Include a `source` or `status` discriminator to allow the UI to render conditional styles (e.g., "Paid" vs. "Pending" icons).
+
 **Design Adherence**:
 
 - Strictly adhere to established design conventions and color palettes.

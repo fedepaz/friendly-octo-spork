@@ -1,105 +1,18 @@
 // packages/shared/schemas/cards.schema.ts
 
-import { z } from "zod";
-import {
-  CardType,
-  CardTypeSchema,
-  RecurrenceType,
-  RecurrenceTypeSchema,
-  TransactionType,
-  TransactionTypeSchema,
-} from "../enums";
-import type { CategoryDTO } from "./categories.schema";
-import { categorySchema } from "./categories.schema";
-import type { AccountDTO } from "./accounts.schema";
+import z from "zod";
+import { TransactionDTO, transactionSchema } from "./transactions.schema";
+import { RecurrenceDTO, recurrenceSchema } from "./recurrences.schema";
 
-export interface CardDTO {
-  id: string;
-  userId: string;
-  name: string;
-  type: TransactionType;
-  amount: string;
-  frequency: RecurrenceType;
-  totalParts: number | null;
-  currentPart: number | null;
-  startDate: Date;
-  nextDate: Date | null;
-  endDate: Date | null;
-  active: boolean;
-  categoryId?: string | null;
-  sourceAccountId?: string | null;
-  targetAccountId?: string | null;
-  isCardExpense?: boolean | null;
-  cardType?: CardType | null;
-  metadata?: unknown | null;
-
-  category?: CategoryDTO | null;
-  sourceAccount?: AccountDTO | null;
-  targetAccount?: AccountDTO | null;
+// ─── Card Statement DTO ──────────────────────────────────────────────────────
+export interface CardStatementDTO {
+  transactions: TransactionDTO[];
+  pendingRecurrences: RecurrenceDTO[];
 }
 
-export const cardSchema: z.ZodType<CardDTO> = z.object({
-  id: z.string(),
-  userId: z.string(),
-  name: z.string(),
-  type: TransactionTypeSchema,
-  amount: z.string(),
-  frequency: RecurrenceTypeSchema,
-  totalParts: z.number().int().nullable().optional(),
-  currentPart: z.number().int().nullable().optional(),
-  startDate: z.date(),
-  nextDate: z.date().nullable().optional(),
-  endDate: z.date().nullable().optional(),
-  active: z.boolean(),
-  categoryId: z.string().nullable().optional(),
-  sourceAccountId: z.string().nullable().optional(),
-  targetAccountId: z.string().nullable().optional(),
-  isCardExpense: z.boolean().nullable().optional(),
-  cardType: CardTypeSchema.nullable().optional(),
-  metadata: z.unknown().nullable().optional(),
-
-  category: z.lazy(() => categorySchema.nullable().optional()),
-  sourceAccount: z.lazy(() => z.any().nullable().optional()),
-  targetAccount: z.lazy(() => z.any().nullable().optional()),
-}) as z.ZodType<CardDTO>;
-
-export const CardStatementItemSchema = z.object({
-  sourceId: z.string(),
-  sourceType: z.enum([
-    "INSTALLMENT",
-    "RECURRING",
-    "ONE_TIME",
-    "PAYMENT_TRANSFER",
-  ]),
-  description: z.string(),
-  amount: z.string(), // Decimal as string
-  date: z.date(),
-  installmentInfo: z.string().nullable(),
-  cardType: CardTypeSchema.nullable(),
-  category: z
-    .object({
-      id: z.string(),
-      name: z.string(),
-      color: z.string().nullable(),
-    })
-    .nullable(),
-  sourceAccount: z
-    .object({
-      id: z.string(),
-      name: z.string(),
-    })
-    .nullable(),
-  targetAccount: z
-    .object({
-      id: z.string(),
-      name: z.string(),
-    })
-    .nullable(),
-  runningBalance: z.string(),
+export const cardStatementSchema: z.ZodType<CardStatementDTO> = z.object({
+  transactions: z.array(transactionSchema),
+  pendingRecurrences: z.array(recurrenceSchema),
 });
 
-export type CardStatementItem = z.infer<typeof CardStatementItemSchema>;
-
-// For API response: array of items
-export const CardStatementResponseSchema = z.array(CardStatementItemSchema);
-export type CardStatementResponse = z.infer<typeof CardStatementResponseSchema>;
+export type CardStatementItem = z.infer<typeof cardStatementSchema>;

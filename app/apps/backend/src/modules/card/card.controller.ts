@@ -5,7 +5,7 @@ import { CardService } from './card.service';
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
 import { AuthUser } from '../auth/types/auth-user.type';
 import { CardTransactionsWithRelations } from '../../repositories/card.repository';
-import { RecurrenceDTO, TransactionDTO } from '@repo/shared';
+import { CardStatementDTO } from '@repo/shared';
 
 @Controller('cards')
 export class CardController {
@@ -34,10 +34,7 @@ export class CardController {
     @CurrentUser() user: AuthUser,
     @Param('year') year: number,
     @Param('month') month: number,
-  ): Promise<{
-    transactions: TransactionDTO[];
-    pendingRecurrences: RecurrenceDTO[];
-  }> {
+  ): Promise<CardStatementDTO> {
     return this.cardService.getCardTransactionsByMonth(user.id, year, month);
   }
 }
