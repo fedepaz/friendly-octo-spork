@@ -65,6 +65,15 @@ Follow the NestJS Module-Controller-Service-Repository pattern:
     ```
     *   **Benefit**: This prevents `PrismaClientValidationError` caused by passing "extra" fields that exist in the DTO but not in the database schema.
 
+## Settled vs. Projected Data Patterns
+
+When implementing monthly summaries or statements, we distinguish between **Settled Data** (actual `Transaction` records) and **Projected Data** (active `Recurrence` records due in the period but not yet paid).
+
+### Implementation Standard:
+1.  **Repository Layer**: Return an object containing both collections (e.g., `{ transactions: TransactionWithRelations[], pendingRecurrences: RecurrenceWithRelations[] }`).
+2.  **Service Layer**: Map each collection to its respective shared DTO (`TransactionDTO`, `RecurrenceDTO`).
+3.  **Consistency**: Use this pattern to allow the Frontend to explicitly visualize "Paid" vs. "Pending" states, ensuring the user has a clear view of their remaining monthly obligations.
+
 ### 5. Infrastructure & Reliability
 
 *   **Database Connectivity**: Always implement the `@prisma/adapter-pg` pattern in the `PrismaService` constructor to ensure stable connection pooling in Node.js environments.

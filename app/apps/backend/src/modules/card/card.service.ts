@@ -4,9 +4,10 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import {
   CardRepository,
   CardTransactionsWithRelations,
-  MonthlyStatementLine,
 } from '../../repositories/card.repository';
-import { CardStatementItem } from '@repo/shared';
+import { RecurrenceDTO, TransactionDTO } from '@repo/shared';
+import { TransactionWithRelations } from '../../repositories/transaction.repository';
+import { RecurrenceWithRelations } from '../../repositories/recurrence.repository';
 
 @Injectable()
 export class CardService {
@@ -14,37 +15,89 @@ export class CardService {
   constructor(private readonly cardRepo: CardRepository) {}
 
   private mapToCardTransactionDTO(
-    row: MonthlyStatementLine,
-  ): CardStatementItem {
-    return {
-      sourceId: row.source_id,
-      sourceType: row.source_type,
-      description: row.description,
-      amount: row.amount.toString(),
-      date: row.date,
-      installmentInfo: row.installment_info,
-      cardType: row.card_type,
-      category: row.category_id
-        ? {
-            id: row.category_id,
-            name: row.category_name!,
-            color: row.category_color,
-          }
-        : null,
-      sourceAccount: row.source_account_id
-        ? {
-            id: row.source_account_id,
-            name: row.source_account_name!,
-          }
-        : null,
-      targetAccount: row.target_account_id
-        ? {
-            id: row.target_account_id,
-            name: row.target_account_name!,
-          }
-        : null,
-      runningBalance: row.running_balance.toString(),
-    };
+    cardTransactions: TransactionWithRelations[],
+  ): TransactionDTO[] {
+    return cardTransactions.map((transaction) => {
+      return {
+        id: transaction.id,
+        userId: transaction.userId,
+        type: transaction.type,
+        amount: transaction.amount.toString(),
+        date: transaction.date,
+        description: transaction.description,
+        categoryId: transaction.category?.id,
+        sourceAccountId: transaction.sourceAccount?.id,
+        targetAccountId: transaction.targetAccount?.id,
+        recurrenceId: transaction.recurrence?.id,
+        recurrencePartNumber: transaction.recurrencePartNumber,
+        isBudgetedExpense: transaction.isBudgetedExpense,
+        budgetCategory: transaction.budgetCategory,
+        isCardExpense: transaction.isCardExpense,
+        cardType: transaction.cardType,
+        source: transaction.source,
+        metadata: transaction.metadata,
+        createdAt: transaction.createdAt,
+        updatedAt: transaction.updatedAt,
+        category: transaction.category,
+        sourceAccount: transaction.sourceAccount
+          ? {
+              ...transaction.sourceAccount,
+              balance: transaction.sourceAccount.balance.toString(),
+            }
+          : null,
+        targetAccount: transaction.targetAccount
+          ? {
+              ...transaction.targetAccount,
+              balance: transaction.targetAccount.balance.toString(),
+            }
+          : null,
+        recurrence: transaction.recurrence
+          ? {
+              ...transaction.recurrence,
+              amount: transaction.recurrence.amount.toString(),
+            }
+          : null,
+      };
+    });
+  }
+  private mapToCardRecurrenceDTO(
+    recurrences: RecurrenceWithRelations[],
+  ): RecurrenceDTO[] {
+    return recurrences.map((recurrence) => {
+      return {
+        id: recurrence.id,
+        userId: recurrence.userId,
+        name: recurrence.name,
+        type: recurrence.type,
+        amount: recurrence.amount.toString(),
+        frequency: recurrence.frequency,
+        totalParts: recurrence.totalParts,
+        currentPart: recurrence.currentPart,
+        startDate: recurrence.startDate,
+        nextDate: recurrence.nextDate,
+        endDate: recurrence.endDate,
+        active: recurrence.active,
+        categoryId: recurrence.category?.id,
+        sourceAccountId: recurrence.sourceAccount?.id,
+        targetAccountId: recurrence.targetAccount?.id,
+        isCardExpense: recurrence.isCardExpense,
+        cardType: recurrence.cardType,
+        metadata: recurrence.metadata,
+        category: recurrence.category,
+        sourceAccount: recurrence.sourceAccount
+          ? {
+              ...recurrence.sourceAccount,
+              balance: recurrence.sourceAccount.balance.toString(),
+            }
+          : null,
+        targetAccount: recurrence.targetAccount
+          ? {
+              ...recurrence.targetAccount,
+              balance: recurrence.targetAccount.balance.toString(),
+            }
+          : null,
+      };
+    });
   }
 
   async getCardTransactions(
@@ -73,17 +126,24 @@ export class CardService {
     userId: string,
     year: number,
     month: number,
-  ): Promise<CardStatementItem[]> {
+  ): Promise<{
+    transactions: TransactionDTO[];
+    pendingRecurrences: RecurrenceDTO[];
+  }> {
     if (!userId) throw new BadRequestException('User ID is required');
     this.logger.log(
       `Getting card transactions for user ${userId} in ${year}/${month}`,
     );
-    const cardTransactions = await this.cardRepo.getMonthlyStatement(
+    const response = await this.cardRepo.getMonthlyStatement(
       userId,
       year,
       month,
     );
-    this.logger.debug(`Got ${cardTransactions.length} card transactions`);
-    return cardTransactions.map((row) => this.mapToCardTransactionDTO(row));
+    return {
+      transactions: this.mapToCardTransactionDTO(response.transactions),
+      pendingRecurrences: this.mapToCardRecurrenceDTO(
+        response.pendingRecurrences,
+      ),
+    };
   }
 }

@@ -2,8 +2,9 @@
 
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../infra/prisma/prisma.service';
-import { CardType, Prisma } from '@prisma/client';
-import { Decimal } from '@prisma/client/runtime/client';
+import { RecurrenceWithRelations } from './recurrence.repository';
+import { Prisma } from '@prisma/client';
+import { TransactionWithRelations } from './transaction.repository';
 
 export type CardTransactionsWithRelations = Prisma.TransactionGetPayload<{
   include: {
@@ -13,31 +14,6 @@ export type CardTransactionsWithRelations = Prisma.TransactionGetPayload<{
     recurrence: true;
   };
 }>;
-export type MonthlyStatementLine = {
-  // Identification
-  source_id: string;
-  source_type: 'RECURRENCE' | 'TRANSACTION';
-
-  // Core fields
-  description: string;
-  amount: Decimal;
-  date: Date;
-  installment_info: string | null;
-  card_type: CardType | null;
-
-  // Relations (flattened)
-  category_id: string | null;
-  category_name: string | null;
-  category_color: string | null;
-
-  source_account_id: string | null;
-  source_account_name: string | null;
-  target_account_id: string | null;
-  target_account_name: string | null;
-
-  // Running balance
-  running_balance: Decimal;
-};
 
 @Injectable()
 export class CardRepository {
@@ -113,112 +89,58 @@ export class CardRepository {
     userId: string,
     year: number,
     month: number,
-  ): Promise<MonthlyStatementLine[]> {
+  ): Promise<{
+    transactions: TransactionWithRelations[];
+    pendingRecurrences: RecurrenceWithRelations[];
+  }> {
     const startDate = new Date(year, month - 1, 1);
     const endDate = new Date(year, month, 0, 23, 59, 59);
 
-    return this.prisma.$queryRaw<MonthlyStatementLine[]>`
-    WITH card_movements AS (
-      -- 1. All card recurrences due this month (installment or recurring)
-      SELECT
-        r.id AS source_id,
-        'RECURRENCE' AS source_type,
-        r.name AS description,
-        r.amount,
-        r."nextDate" AS date,
-        CASE 
-          WHEN r.frequency = 'INSTALLMENT' 
-          THEN CONCAT(r."currentPart" + 1, '/', r."totalParts")
-          ELSE NULL
-        END AS installment_info,
-        r."cardType" AS card_type,
-        c.id AS category_id,
-        c.name AS category_name,
-        c.color AS category_color,
-        src.id AS source_account_id,
-        src.name AS source_account_name,
-        tgt.id AS target_account_id,
-        tgt.name AS target_account_name
-      FROM "Recurrence" r
-      LEFT JOIN "Category" c ON c.id = r."categoryId"
-      LEFT JOIN "Account" src ON src.id = r."sourceAccountId"
-      LEFT JOIN "Account" tgt ON tgt.id = r."targetAccountId"
-      WHERE r."userId" = ${userId}
-        AND r."isCardExpense" = true
-        AND r.active = true
-        AND r."nextDate" BETWEEN ${startDate} AND ${endDate}
-        AND (r."endDate" IS NULL OR r."endDate" >= ${startDate})
+    // ── 1. Actual transactions this month that are card-related ──────────────
+    const transactions = await this.prisma.transaction.findMany({
+      where: {
+        userId,
+        date: {
+          gte: startDate,
+          lte: endDate,
+        },
+        OR: [
+          { isCardExpense: true },
+          { type: 'TRANSFER', sourceAccount: { type: 'CARD' } },
+        ],
+      },
+      include: {
+        category: true,
+        sourceAccount: true,
+        targetAccount: true,
+        recurrence: true,
+      },
+      orderBy: {
+        date: 'asc',
+      },
+    });
 
-      UNION ALL
+    // ── 2. Pending recurrences not yet paid this month ───────────────────────
+    const paidRecurrenceIds = transactions
+      .map((t) => t.recurrenceId)
+      .filter(Boolean) as string[];
 
-      -- 2. One‑time card expenses (no recurrence)
-      SELECT
-        t.id,
-        'TRANSACTION' AS source_type,
-        COALESCE(t.description, 'Card charge') AS description,
-        t.amount,
-        t.date,
-        NULL AS installment_info,
-        t."cardType" AS card_type,
-        c.id AS category_id,
-        c.name AS category_name,
-        c.color AS category_color,
-        src.id AS source_account_id,
-        src.name AS source_account_name,
-        tgt.id AS target_account_id,
-        tgt.name AS target_account_name
-      FROM "Transaction" t
-      LEFT JOIN "Category" c ON c.id = t."categoryId"
-      LEFT JOIN "Account" src ON src.id = t."sourceAccountId"
-      LEFT JOIN "Account" tgt ON tgt.id = t."targetAccountId"
-      WHERE t."userId" = ${userId}
-        AND t."isCardExpense" = true
-        AND t."recurrenceId" IS NULL
-        AND t.date BETWEEN ${startDate} AND ${endDate}
+    const pendingRecurrences = await this.prisma.recurrence.findMany({
+      where: {
+        userId,
+        isCardExpense: true,
+        active: true,
+        nextDate: { gte: startDate, lte: endDate },
+        // exclude ones already paid (a transaction was recorded this month)
+        id: { notIn: paidRecurrenceIds.length ? paidRecurrenceIds : [''] },
+      },
+      include: {
+        category: true,
+        sourceAccount: true,
+        targetAccount: true,
+      },
+    });
 
-      UNION ALL
-
-      -- 3. Payments into any card account (transfers where target is a CARD account)
-      SELECT
-        t.id,
-        'TRANSACTION' AS source_type,
-        CONCAT('Payment to ', a.name) AS description,
-        -t.amount AS amount,
-        t.date,
-        NULL AS installment_info,
-        NULL AS card_type,
-        NULL AS category_id,
-        NULL AS category_name,
-        NULL AS category_color,
-        NULL AS source_account_id,
-        NULL AS source_account_name,
-        t."targetAccountId" AS target_account_id,
-        a.name AS target_account_name
-      FROM "Transaction" t
-      JOIN "Account" a ON a.id = t."targetAccountId"
-      WHERE t."userId" = ${userId}
-        AND t.type = 'TRANSFER'
-        AND a.type = 'CARD'
-        AND t.date BETWEEN ${startDate} AND ${endDate}
-    )
-    SELECT
-      source_id,
-      source_type,
-      description,
-      amount,
-      date,
-      installment_info,
-      card_type,
-      category_id,
-      category_name,
-      category_color,
-      source_account_id,
-      source_account_name,
-      target_account_id,
-      target_account_name,
-      SUM(amount) OVER (ORDER BY date, source_id) AS running_balance
-    FROM card_movements
-    ORDER BY date, source_id
-  `;
+    return { transactions, pendingRecurrences };
   }
 }

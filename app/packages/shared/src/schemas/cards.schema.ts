@@ -65,7 +65,12 @@ export const cardSchema: z.ZodType<CardDTO> = z.object({
 
 export const CardStatementItemSchema = z.object({
   sourceId: z.string(),
-  sourceType: z.enum(["RECURRENCE", "TRANSACTION"]),
+  sourceType: z.enum([
+    "INSTALLMENT",
+    "RECURRING",
+    "ONE_TIME",
+    "PAYMENT_TRANSFER",
+  ]),
   description: z.string(),
   amount: z.string(), // Decimal as string
   date: z.date(),
