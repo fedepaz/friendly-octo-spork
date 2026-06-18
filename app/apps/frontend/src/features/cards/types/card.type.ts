@@ -58,9 +58,11 @@ export function mapTransactionToCardRow(t: TransactionDTO): CardStatementRow {
 
 export function mapRecurrenceToCardRow(r: RecurrenceDTO): CardStatementRow {
   const isInstallment = r.frequency === "INSTALLMENT";
+  // For pending recurrences, the next part is currentPart + 1
+  const nextPart = (r.currentPart ?? 0) + 1;
   const installmentInfo =
-    isInstallment && r.currentPart && r.totalParts
-      ? `${r.currentPart}/${r.totalParts}`
+    isInstallment && r.totalParts
+      ? `${nextPart}/${r.totalParts}`
       : null;
 
   return {
@@ -68,7 +70,7 @@ export function mapRecurrenceToCardRow(r: RecurrenceDTO): CardStatementRow {
     source: "pending",
     description: r.name,
     amount: r.amount,
-    date: r.startDate,
+    date: r.nextDate ?? r.startDate,
     type: r.type,
     installmentInfo,
     cardType: r.cardType ?? null,

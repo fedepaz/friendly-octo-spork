@@ -35,8 +35,8 @@ export function CardsDataTable() {
       <DataTable
         columns={cardColumns}
         data={cards}
-        title="Gastos Tarjeta de Crédito"
-        description="Lista de pagos"
+        title="Extracto de Tarjeta"
+        description="Seguimiento de consumos y cuotas proyectadas"
         tableName="cards"
         totalCount={cards.length}
         toolbarContent={<MonthSelector onMonthChange={setMonth} />}
@@ -46,7 +46,7 @@ export function CardsDataTable() {
       <SlideOverForm
         open={!!selectedCardTransaction}
         onOpenChange={(open) => !open && setSelectedCardTransaction(null)}
-        title="Configuración de Pago"
+        title="Ficha de Movimiento"
         description={selectedCardTransaction?.description}
       >
         {selectedCardTransaction && (
@@ -54,5 +54,6 @@ export function CardsDataTable() {
         )}
       </SlideOverForm>
     </>
+
   );
 }

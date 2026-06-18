@@ -15,35 +15,14 @@ import {
   ArrowDownLeft,
   ArrowUpRight,
   RefreshCw,
-  CheckCircle2,
-  CircleDashed,
   CreditCard,
+  Hash,
 } from "lucide-react";
 import { CardStatementDTO } from "@repo/shared";
 import { CardStatementRow } from "../types/card.type";
 
 interface CellProps {
   row: Row<CardStatementDTO>;
-}
-
-function TransactionTypeCell({ row }: CellProps) {
-  const type = row.original.type;
-  const styles = getTransactionTypeStyles(type);
-
-  const Icon =
-    type === "INCOME"
-      ? ArrowDownLeft
-      : type === "EXPENSE"
-        ? ArrowUpRight
-        : RefreshCw;
-
-  return (
-    <TacticalTypeCell
-      icon={Icon}
-      label={styles.label}
-      iconClassName={styles.color}
-    />
-  );
 }
 
 export const cardColumns: ColumnDef<CardStatementRow>[] = [
@@ -56,14 +35,11 @@ export const cardColumns: ColumnDef<CardStatementRow>[] = [
     cell: ({ row }) => {
       const { description, category } = row.original;
       return (
-        <div className="flex flex-col gap-0.5">
-          <span className="text-sm font-medium">{description}</span>
-          {category && (
-            <span className="text-xs text-muted-foreground">
-              {category.name}
-            </span>
-          )}
-        </div>
+        <TacticalTextCell
+          title={description}
+          subtext={category?.name}
+          className="text-sm"
+        />
       );
     },
   },
@@ -71,26 +47,39 @@ export const cardColumns: ColumnDef<CardStatementRow>[] = [
   // ── Installment info ─────────────────────────────────────────────────────
   {
     id: "installmentInfo",
-    header: "Cuotas",
+    header: "Plan / Estado",
     cell: ({ row }) => {
       const { installmentInfo, source } = row.original;
       if (installmentInfo) {
         return (
           <div className="flex items-center gap-1.5">
             <RefreshCw className="h-3 w-3 text-muted-foreground opacity-50" />
-            <PremiumBadgeCell label={installmentInfo} variant="accent" />
+            <PremiumBadgeCell
+              label={installmentInfo}
+              variant="accent"
+              className="font-black"
+            />
           </div>
         );
       }
       if (source === "pending") {
         return (
           <div className="flex items-center gap-1.5">
-            <Clock className="h-3 w-3 text-muted-foreground opacity-50" />
-            <PremiumBadgeCell label="Mensual" variant="primary" />
+            <Clock className="h-3 w-3 text-accent animate-pulse" />
+            <PremiumBadgeCell
+              label="Proyectado"
+              variant="primary"
+              className="bg-accent/10 border-accent/40 text-accent font-black"
+            />
           </div>
         );
       }
-      return <span className="text-muted-foreground text-xs">—</span>;
+      return (
+        <div className="flex items-center gap-1.5 opacity-30">
+          <CreditCard className="h-3 w-3" />
+          <span className="text-[10px] font-bold uppercase">Único</span>
+        </div>
+      );
     },
   },
 
@@ -101,11 +90,19 @@ export const cardColumns: ColumnDef<CardStatementRow>[] = [
     cell: ({ row }) => {
       const cardType = row.original.cardType;
       if (!cardType)
-        return <span className="text-muted-foreground text-xs">—</span>;
+        return (
+          <span className="text-muted-foreground text-[10px] font-mono opacity-20 italic">
+            n/a
+          </span>
+        );
       return (
         <div className="flex items-center gap-1.5">
-          <CreditCard className="h-3 w-3 text-muted-foreground opacity-50" />
-          <span className="text-xs capitalize">{cardType.toLowerCase()}</span>
+          <div className="p-1 bg-muted/40 border border-border/40">
+            <CreditCard className="h-3 w-3 text-muted-foreground" />
+          </div>
+          <span className="text-[10px] font-black uppercase tracking-wider">
+            {cardType}
+          </span>
         </div>
       );
     },
@@ -120,12 +117,15 @@ export const cardColumns: ColumnDef<CardStatementRow>[] = [
     cell: ({ row }) => {
       const date = row.original.date;
       return (
-        <span className="text-sm text-muted-foreground tabular-nums">
-          {new Date(date).toLocaleDateString("es-AR", {
-            day: "2-digit",
-            month: "short",
-          })}
-        </span>
+        <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground tabular-nums opacity-80">
+          <Calendar className="h-3 w-3 opacity-40" />
+          <span>
+            {new Date(date).toLocaleDateString("es-AR", {
+              day: "2-digit",
+              month: "short",
+            })}
+          </span>
+        </div>
       );
     },
   },
@@ -139,11 +139,14 @@ export const cardColumns: ColumnDef<CardStatementRow>[] = [
       </div>
     ),
     cell: ({ row }) => {
-      const { amount, type } = row.original;
+      const { amount, type, source } = row.original;
+      const isPending = source === "pending";
+
       return (
-        <div className={cn("text-right")}>
+        <div className={cn("text-right font-mono", isPending && "opacity-60")}>
           <PremiumAmountCell
             amount={type === "TRANSFER" ? `+${amount}` : `-${amount}`}
+            className={cn("text-sm", isPending && "italic")}
           />
         </div>
       );
