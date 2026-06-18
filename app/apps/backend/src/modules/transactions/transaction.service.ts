@@ -10,12 +10,23 @@ import {
   TransactionRepository,
   TransactionWithRelations,
 } from '../../repositories/transaction.repository';
-import { CreateTransactionInput, TransactionDTO } from '@repo/shared';
+import {
+  CreateTransactionInput,
+  TransactionDTO,
+  TransactionType,
+} from '@repo/shared';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../infra/prisma/prisma.service';
-import { AccountRepository } from '../../repositories/account.repository';
+import {
+  AccountRepository,
+  AccountWithRelations,
+} from '../../repositories/account.repository';
 
 import { RecurrenceService } from '../recurrences/recurrence.service';
+
+// ─── Account type rules ──────────────────────────────────────────────────────
+const EXPENSE_SOURCES = ['BANK', 'WALLET', 'CASH', 'CARD'] as const;
+const INCOME_TARGETS = ['BANK', 'WALLET', 'CASH'] as const;
 
 @Injectable()
 export class TransactionService {
@@ -115,6 +126,26 @@ export class TransactionService {
       ...prismaData
     } = transactionData;
     const amount = transactionData.amount;
+    const sourceAccount = transactionData.sourceAccountId
+      ? await this.accountRepo.getAccountById(
+          userId,
+          transactionData.sourceAccountId,
+        )
+      : null;
+
+    const targetAccount = transactionData.targetAccountId
+      ? await this.accountRepo.getAccountById(
+          userId,
+          transactionData.targetAccountId,
+        )
+      : null;
+
+    // Validate first before transaction block
+    this.validateAccountTypesForTransaction(
+      transactionData.type,
+      sourceAccount,
+      targetAccount,
+    );
 
     return this.prisma.$transaction(async (tx) => {
       // ─── Only update if this is na catual payment now
@@ -123,7 +154,12 @@ export class TransactionService {
 
       // ─── 1. Update Account Balances ─────────────────────────────────────────
       if (shouldUpdateBalance) {
-        await this.updateBalancesForType(transactionData, userId, amount, tx);
+        await this.updateBalancesForType(
+          transactionData,
+          amount,
+          tx,
+          sourceAccount,
+        );
       }
       // ─── 2. Save Transaction Record ─────────────────────────────────────────
 
@@ -145,141 +181,136 @@ export class TransactionService {
   // ─── Extracted: Balance logic per transaction type ─────────────────────────
   private async updateBalancesForType(
     data: CreateTransactionInput,
-    userId: string,
     amount: string | Prisma.DecimalJsLike,
     tx: Prisma.TransactionClient,
+    sourceAccount: AccountWithRelations | null,
   ): Promise<void> {
     const { type, sourceAccountId, targetAccountId } = data;
 
     switch (type) {
-      case 'EXPENSE': {
-        // Money leaves source account
-        if (!sourceAccountId) {
-          throw new BadRequestException('EXPENSE requires sourceAccountId');
-        }
+      case 'EXPENSE':
+      case 'PAYMENT': {
+        if (sourceAccount!.type === 'CARD') break; // recorded, not charged yet
         await this.accountRepo.updateBalance(
-          sourceAccountId,
+          sourceAccountId!,
           amount,
           'decrement',
           tx,
         );
         break;
       }
-
       case 'INCOME': {
-        // Money enters target account
-        if (!targetAccountId) {
-          throw new BadRequestException('INCOME requires targetAccountId');
-        }
-        const account = await this.accountRepo.getAccountById(
-          userId,
-          targetAccountId,
-        );
-        if (account?.type === 'CARD') {
-          throw new BadRequestException({
-            code: 'ACCOUNT_TYPE_RESTRICTION',
-            message:
-              'Cannot add income directly to a card account (use a transfer instead)',
-          });
-        }
         await this.accountRepo.updateBalance(
-          targetAccountId,
+          targetAccountId!,
           amount,
           'increment',
           tx,
         );
         break;
       }
+      case 'TRANSFER':
+      case 'INVESTMENT':
+      case 'RETURN': {
+        await Promise.all([
+          this.accountRepo.updateBalance(
+            sourceAccountId!,
+            amount,
+            'decrement',
+            tx,
+          ),
+          this.accountRepo.updateBalance(
+            targetAccountId!,
+            amount,
+            'increment',
+            tx,
+          ),
+        ]);
+        break;
+      }
+    }
+  }
 
+  private validateAccountTypesForTransaction(
+    type: TransactionType,
+    sourceAccount: AccountWithRelations | null,
+    targetAccount: AccountWithRelations | null,
+  ): void {
+    switch (type) {
+      case 'EXPENSE':
+      case 'PAYMENT': {
+        if (!sourceAccount)
+          throw new BadRequestException(`${type} requires a source account`);
+        if (
+          !(EXPENSE_SOURCES as readonly string[]).includes(sourceAccount.type)
+        ) {
+          throw new BadRequestException({
+            code: 'ACCOUNT_TYPE_RESTRICTION',
+            message: `${type} source account must be one of: ${EXPENSE_SOURCES.join(', ')}`,
+          });
+        }
+        break;
+      }
+      case 'INCOME': {
+        if (!targetAccount)
+          throw new BadRequestException('INCOME requires a target account');
+        if (
+          !(INCOME_TARGETS as readonly string[]).includes(targetAccount.type)
+        ) {
+          throw new BadRequestException({
+            code: 'ACCOUNT_TYPE_RESTRICTION',
+            message: `INCOME target account must be one of: ${INCOME_TARGETS.join(', ')}`,
+          });
+        }
+        break;
+      }
       case 'TRANSFER': {
-        // Move money: source ↓, target ↑
-        if (!sourceAccountId || !targetAccountId) {
+        if (!sourceAccount || !targetAccount) {
           throw new BadRequestException(
             'TRANSFER requires both source and target accounts',
           );
         }
-        await Promise.all([
-          this.accountRepo.updateBalance(
-            sourceAccountId,
-            amount,
-            'decrement',
-            tx,
-          ),
-          this.accountRepo.updateBalance(
-            targetAccountId,
-            amount,
-            'increment',
-            tx,
-          ),
-        ]);
+        // any account type can participate in a transfer
         break;
       }
-
       case 'INVESTMENT': {
-        // Money moves from source to investment target (both are assets)
-        if (!sourceAccountId || !targetAccountId) {
+        if (!sourceAccount || !targetAccount) {
           throw new BadRequestException(
             'INVESTMENT requires both source and target accounts',
           );
         }
-        await Promise.all([
-          this.accountRepo.updateBalance(
-            sourceAccountId,
-            amount,
-            'decrement',
-            tx,
-          ),
-          this.accountRepo.updateBalance(
-            targetAccountId,
-            amount,
-            'increment',
-            tx,
-          ),
-        ]);
+        if (sourceAccount.type === 'INVESTMENT') {
+          throw new BadRequestException({
+            code: 'ACCOUNT_TYPE_RESTRICTION',
+            message: 'INVESTMENT source cannot be an investment account',
+          });
+        }
+        if (targetAccount.type !== 'INVESTMENT') {
+          throw new BadRequestException({
+            code: 'ACCOUNT_TYPE_RESTRICTION',
+            message: 'INVESTMENT target must be an investment account',
+          });
+        }
         break;
       }
-
       case 'RETURN': {
-        // Investment return: source (investment) ↓, target (cash) ↑
-        if (!sourceAccountId || !targetAccountId) {
+        if (!sourceAccount || !targetAccount) {
           throw new BadRequestException(
             'RETURN requires both source and target accounts',
           );
         }
-        await Promise.all([
-          this.accountRepo.updateBalance(
-            sourceAccountId,
-            amount,
-            'decrement',
-            tx,
-          ),
-          this.accountRepo.updateBalance(
-            targetAccountId,
-            amount,
-            'increment',
-            tx,
-          ),
-        ]);
-        break;
-      }
-
-      case 'PAYMENT': {
-        // Money leaves source account
-        if (!sourceAccountId) {
-          throw new BadRequestException('EXPENSE requires sourceAccountId');
+        if (sourceAccount.type !== 'INVESTMENT') {
+          throw new BadRequestException({
+            code: 'ACCOUNT_TYPE_RESTRICTION',
+            message: 'RETURN source must be an investment account',
+          });
         }
-        await this.accountRepo.updateBalance(
-          sourceAccountId,
-          amount,
-          'decrement',
-          tx,
-        );
+        if (targetAccount.type === 'INVESTMENT') {
+          throw new BadRequestException({
+            code: 'ACCOUNT_TYPE_RESTRICTION',
+            message: 'RETURN target cannot be an investment account',
+          });
+        }
         break;
-      }
-
-      default: {
-        // 🔒 Exhaustive check: TypeScript will error if a new type is added but not handled
-        throw new BadRequestException(`Unhandled transaction type:`);
       }
     }
   }
