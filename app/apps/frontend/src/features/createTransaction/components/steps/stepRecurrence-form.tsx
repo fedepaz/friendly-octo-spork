@@ -145,46 +145,46 @@ export function StepRecurrenceComponent() {
           )}
 
           {/* First Payment Timing (only if totalParts is set) */}
-          {watched.totalParts && watched.frequency === "INSTALLMENT" && (
-            <div className="border-t border-border pt-3 mt-2">
-              <Label>First Payment</Label>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setValue("isFirstPayment", true)}
-                  className={`p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
-                    ${
-                      watched.isFirstPayment
-                        ? "border-foreground bg-muted font-bold"
-                        : "border-border text-muted-foreground hover:bg-muted"
-                    }`}
-                >
-                  Now
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setValue("isFirstPayment", false)}
-                  className={`p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
-                    ${
-                      !watched.isFirstPayment
-                        ? "border-foreground bg-muted font-bold"
-                        : "border-border text-muted-foreground hover:bg-muted"
-                    }`}
-                >
-                  Next Month
-                </button>
-              </div>
-              <p className="text-xs font-mono text-muted-foreground mt-2">
-                {watched.isFirstPayment
-                  ? "First installment charged today"
-                  : `First installment charged on next month`}
-              </p>
-            </div>
-          )}
 
           {/* Card Fields (automatically shown if account step detected a card) */}
         </div>
       )}
+      {watched.isRecurrence || watched.isCardExpense ? (
+        <div className="border-t border-border pt-3 mt-2">
+          <Label>First Payment</Label>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => setValue("isFirstPayment", true)}
+              className={`p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                ${
+                  watched.isFirstPayment
+                    ? "border-foreground bg-muted font-bold"
+                    : "border-border text-muted-foreground hover:bg-muted"
+                }`}
+            >
+              Now
+            </button>
+            <button
+              type="button"
+              onClick={() => setValue("isFirstPayment", false)}
+              className={`p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                ${
+                  !watched.isFirstPayment
+                    ? "border-foreground bg-muted font-bold"
+                    : "border-border text-muted-foreground hover:bg-muted"
+                }`}
+            >
+              Next Month
+            </button>
+          </div>
+          <p className="text-xs font-mono text-muted-foreground mt-2">
+            {watched.isFirstPayment
+              ? "First installment charged today"
+              : `First installment charged on next month`}
+          </p>
+        </div>
+      ) : null}
     </div>
   );
 }
