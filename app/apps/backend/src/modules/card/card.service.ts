@@ -5,8 +5,8 @@ import {
   CardRepository,
   CardTransactionsWithRelations,
 } from '../../repositories/card.repository';
-import { CardStatementDTO, RecurrenceDTO, TransactionDTO } from '@repo/shared';
 import { TransactionWithRelations } from '../../repositories/transaction.repository';
+import { CardStatementDTO, RecurrenceDTO, TransactionDTO } from '@repo/shared';
 import { RecurrenceWithRelations } from '../../repositories/recurrence.repository';
 
 @Injectable()
@@ -136,11 +136,47 @@ export class CardService {
       year,
       month,
     );
+    const recurrences = this.mapToCardRecurrenceDTO(response.recurrences).sort(
+      (a, b) =>
+        new Date(a.nextDate!).getTime() - new Date(b.nextDate!).getTime(),
+    );
+
+    const oneTimers = this.mapToCardTransactionDTO(response.oneTimers).sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    );
+
+    const payments = this.mapToCardTransactionDTO(response.payments).sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+    );
+
+    // ── Balance ──────────────────────────────────────────────────────────────
+    const totalRecurrences = response.recurrences.reduce(
+      (sum, r) => sum + Number(r.amount),
+      0,
+    );
+
+    const totalOneTimers = response.oneTimers.reduce(
+      (sum, t) => sum + Number(t.amount),
+      0,
+    );
+
+    const totalPayments = response.payments.reduce(
+      (sum, t) => sum + Number(t.amount),
+      0,
+    );
+
+    const balance = totalRecurrences + totalOneTimers - totalPayments;
+
     return {
-      transactions: this.mapToCardTransactionDTO(response.transactions),
-      pendingRecurrences: this.mapToCardRecurrenceDTO(
-        response.pendingRecurrences,
-      ),
+      recurrences,
+      oneTimers,
+      payments,
+      summary: {
+        totalRecurrences: totalRecurrences.toString(),
+        totalOneTimers: totalOneTimers.toString(),
+        totalPayments: totalPayments.toString(),
+        balance: balance.toString(),
+      },
     };
   }
 }

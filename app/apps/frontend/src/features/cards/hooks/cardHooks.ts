@@ -12,7 +12,7 @@ export const cardProfileQueryKeys = {
 };
 
 export const useCardTransactionsByMonth = (year: number, month: number) => {
-  return useSuspenseQuery<CardStatementDTO[], Error>({
+  return useSuspenseQuery<CardStatementDTO, Error>({
     queryKey: cardProfileQueryKeys.byMonth(year, month),
     queryFn: () => cardService.fetchByMonth(year, month),
     retry: 1, // Retry once to account for transient network issues

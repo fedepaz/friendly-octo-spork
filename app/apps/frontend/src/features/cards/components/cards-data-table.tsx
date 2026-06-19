@@ -22,12 +22,15 @@ export function CardsDataTable() {
 
   const [selectedCardTransaction, setSelectedCardTransaction] =
     useState<CardStatementRow | null>(null);
-  const transactions = data?.transactions || [];
-  const recurrences = data?.pendingRecurrences || [];
+
+  const recurrenceRows = data?.recurrences.map(mapRecurrenceToCardRow) ?? [];
+  const oneTimerRows = data?.oneTimers.map(mapTransactionToCardRow) ?? [];
+  const paymentRows = data?.payments.map(mapTransactionToCardRow) ?? [];
 
   const cards: CardStatementRow[] = [
-    ...transactions.map(mapTransactionToCardRow),
-    ...recurrences.map(mapRecurrenceToCardRow),
+    ...recurrenceRows,
+    ...oneTimerRows,
+    ...paymentRows,
   ];
 
   return (
@@ -54,6 +57,5 @@ export function CardsDataTable() {
         )}
       </SlideOverForm>
     </>
-
   );
 }

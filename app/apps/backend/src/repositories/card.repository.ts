@@ -90,24 +90,24 @@ export class CardRepository {
     year: number,
     month: number,
   ): Promise<{
-    transactions: TransactionWithRelations[];
-    pendingRecurrences: RecurrenceWithRelations[];
+    recurrences: RecurrenceWithRelations[];
+    oneTimers: TransactionWithRelations[];
+    payments: TransactionWithRelations[];
   }> {
     const startDate = new Date(year, month - 1, 1);
     const endDate = new Date(year, month, 0, 23, 59, 59);
+    const lastMonthStartDate = new Date(year, month - 2, 1);
+    const lastMonthEndDate = new Date(year, month - 1, 0, 23, 59, 59);
 
     // ── 1. Actual transactions this month that are card-related ──────────────
-    const transactions = await this.prisma.transaction.findMany({
+    const oneTimers = await this.prisma.transaction.findMany({
       where: {
         userId,
         date: {
-          gte: startDate,
-          lte: endDate,
+          gte: lastMonthStartDate,
+          lte: lastMonthEndDate,
         },
-        OR: [
-          { isCardExpense: true, recurrenceId: null },
-          { type: 'TRANSFER', targetAccount: { type: 'CARD' } },
-        ],
+        OR: [{ isCardExpense: true, recurrenceId: null }],
       },
       include: {
         category: true,
@@ -115,25 +115,35 @@ export class CardRepository {
         targetAccount: true,
         recurrence: true,
       },
-      orderBy: {
-        date: 'asc',
+    });
+
+    const payments = await this.prisma.transaction.findMany({
+      where: {
+        userId,
+        type: 'TRANSFER',
+        targetAccount: { type: 'CARD' },
+        date: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      include: {
+        category: true,
+        sourceAccount: true,
+        targetAccount: true,
+        recurrence: true,
       },
     });
 
     // ── 2. Pending recurrences not yet paid this month ───────────────────────
-    const paidRecurrenceIds = transactions
-      .map((t) => t.recurrenceId)
-      .filter(Boolean) as string[];
 
-    const pendingRecurrences = await this.prisma.recurrence.findMany({
+    const recurrences = await this.prisma.recurrence.findMany({
       where: {
         userId,
         isCardExpense: true,
         active: true,
         startDate: { lte: endDate },
         OR: [{ endDate: { gte: startDate } }, { endDate: null }],
-        // exclude ones already paid (a transaction was recorded this month)
-        id: { notIn: paidRecurrenceIds.length ? paidRecurrenceIds : [''] },
       },
       include: {
         category: true,
@@ -142,6 +152,6 @@ export class CardRepository {
       },
     });
 
-    return { transactions, pendingRecurrences };
+    return { recurrences, oneTimers, payments };
   }
 }
