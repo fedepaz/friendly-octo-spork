@@ -1,8 +1,7 @@
-// src/features/accounts/hooks/createAccountHook.ts
-
 import { AccountDTO, CreateAccountInput } from "@repo/shared";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { accountService } from "../api/accountService";
+import { mutationInvalidations } from "@/lib/query-invalidation-map";
 import { toast } from "sonner";
 
 export function useCreateAccount() {
@@ -11,8 +10,10 @@ export function useCreateAccount() {
   return useMutation<AccountDTO, Error, CreateAccountInput>({
     mutationFn: accountService.saveAccount,
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["accounts"] });
-      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      mutationInvalidations.createAccount.forEach((filters) => {
+        queryClient.invalidateQueries(filters);
+      });
+
       const msg = `Cuenta ${data.name} creada exitosamente`;
       toast.success(msg, { duration: 3000 });
     },
