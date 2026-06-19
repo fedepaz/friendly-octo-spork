@@ -18,12 +18,7 @@ import {
   CreditCard,
   Hash,
 } from "lucide-react";
-import { CardStatementDTO } from "@repo/shared";
-import { CardStatementRow } from "../types/card.type";
-
-interface CellProps {
-  row: Row<CardStatementDTO>;
-}
+import { CardStatementRow, SOURCE_LABELS, SOURCE_COLORS } from "../types/card.type";
 
 export const cardColumns: ColumnDef<CardStatementRow>[] = [
   // ── Description ─────────────────────────────────────────────────────────
@@ -40,6 +35,25 @@ export const cardColumns: ColumnDef<CardStatementRow>[] = [
           subtext={category?.name}
           className="text-sm"
         />
+      );
+    },
+  },
+
+  // ── Source / Tipo ─────────────────────────────────────────────────────────
+  {
+    id: "source",
+    header: "Tipo",
+    cell: ({ row }) => {
+      const { source } = row.original;
+      return (
+        <span
+          className={cn(
+            "inline-block px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider border",
+            SOURCE_COLORS[source],
+          )}
+        >
+          {SOURCE_LABELS[source]}
+        </span>
       );
     },
   },
@@ -62,7 +76,7 @@ export const cardColumns: ColumnDef<CardStatementRow>[] = [
           </div>
         );
       }
-      if (source === "pending") {
+      if (source === "recurrence") {
         return (
           <div className="flex items-center gap-1.5">
             <Clock className="h-3 w-3 text-accent animate-pulse" />
@@ -140,7 +154,7 @@ export const cardColumns: ColumnDef<CardStatementRow>[] = [
     ),
     cell: ({ row }) => {
       const { amount, type, source } = row.original;
-      const isPending = source === "pending";
+      const isPending = source === "recurrence";
 
       return (
         <div className={cn("text-right font-mono", isPending && "opacity-60")}>

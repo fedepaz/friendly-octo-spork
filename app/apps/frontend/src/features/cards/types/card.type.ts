@@ -2,7 +2,19 @@
 
 import { RecurrenceDTO, TransactionDTO } from "@repo/shared";
 
-export type CardRowSource = "transaction" | "pending";
+export type CardRowSource = "recurrence" | "oneTimer" | "payment";
+
+export const SOURCE_LABELS: Record<CardRowSource, string> = {
+  recurrence: "CUOTA",
+  oneTimer: "CONSUMO",
+  payment: "PAGO",
+};
+
+export const SOURCE_COLORS: Record<CardRowSource, string> = {
+  recurrence: "text-amber-400 border-amber-400/40 bg-amber-400/10",
+  oneTimer: "text-rose-400 border-rose-400/40 bg-rose-400/10",
+  payment: "text-emerald-500 border-emerald-500/40 bg-emerald-500/10",
+};
 
 export interface CardStatementRow {
   id: string;
@@ -11,7 +23,7 @@ export interface CardStatementRow {
   amount: string;
   date: Date;
   type: string;
-  installmentInfo: string | null; // 3/12 or null
+  installmentInfo: string | null;
   cardType: string | null;
   category: {
     id: string;
@@ -29,7 +41,10 @@ export interface CardStatementRow {
   _raw: TransactionDTO | RecurrenceDTO;
 }
 
-export function mapTransactionToCardRow(t: TransactionDTO): CardStatementRow {
+export function mapTransactionToCardRow(
+  t: TransactionDTO,
+  source: Extract<CardRowSource, "oneTimer" | "payment">,
+): CardStatementRow {
   const isInstallment = t.recurrence?.frequency === "INSTALLMENT";
   const installmentInfo =
     isInstallment && t.recurrencePartNumber && t.recurrence?.totalParts
@@ -38,7 +53,7 @@ export function mapTransactionToCardRow(t: TransactionDTO): CardStatementRow {
 
   return {
     id: t.id,
-    source: "transaction",
+    source,
     description: t.description ?? "Card Expense",
     amount: t.amount,
     date: t.date,
@@ -58,7 +73,6 @@ export function mapTransactionToCardRow(t: TransactionDTO): CardStatementRow {
 
 export function mapRecurrenceToCardRow(r: RecurrenceDTO): CardStatementRow {
   const isInstallment = r.frequency === "INSTALLMENT";
-  // For pending recurrences, the next part is currentPart + 1
   const nextPart = (r.currentPart ?? 0) + 1;
   const installmentInfo =
     isInstallment && r.totalParts
@@ -67,7 +81,7 @@ export function mapRecurrenceToCardRow(r: RecurrenceDTO): CardStatementRow {
 
   return {
     id: r.id,
-    source: "pending",
+    source: "recurrence",
     description: r.name,
     amount: r.amount,
     date: r.nextDate ?? r.startDate,

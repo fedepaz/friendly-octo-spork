@@ -12,7 +12,7 @@ import {
   CreditCard,
   Target,
 } from "lucide-react";
-import { CardStatementRow } from "../types/card.type";
+import { CardStatementRow, SOURCE_LABELS, SOURCE_COLORS } from "../types/card.type";
 import { RecurrenceDTO } from "@repo/shared";
 
 interface CardViewFormProps {
@@ -34,10 +34,23 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
     _raw,
   } = selectedCardStatementItem;
 
-  const isPending = source === "pending";
   const rawRecurrence =
     "frequency" in _raw ? (_raw as RecurrenceDTO) : _raw.recurrence;
   const frequency = rawRecurrence?.frequency || "ONE_TIME";
+
+  const labelMap: Record<string, string> = {
+    recurrence: "CUOTA PROYECTADA",
+    oneTimer: "CONSUMO ASENTADO",
+    payment: "PAGO REGISTRADO",
+  };
+
+  const iconMap: Record<string, typeof Clock> = {
+    recurrence: Clock,
+    oneTimer: Database,
+    payment: Database,
+  };
+
+  const Icon = iconMap[source];
 
   // Calculate progress for installments
   let progress = 0;
@@ -55,7 +68,11 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
       total,
       remaining,
       status:
-        remaining === 0 ? "FINALIZADO" : isPending ? "PENDIENTE" : "PAGADO",
+        remaining === 0
+          ? "FINALIZADO"
+          : source === "recurrence"
+            ? "PENDIENTE"
+            : "PAGADO",
     };
 
     if (remaining > 0) {
@@ -63,7 +80,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
     } else {
       installmentLabel = "FINALIZANDO PLAN";
     }
-  } else if (isPending) {
+  } else if (source === "recurrence") {
     installmentLabel =
       frequency === "MONTHLY" ? "RECURRENCIA MENSUAL" : "PENDIENTE";
   }
@@ -73,20 +90,23 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
       <div
         className={cn(
           "p-3 border-2 flex items-center justify-between animate-premium-in",
-          isPending
-            ? "bg-accent/10 border-accent/40 text-accent"
-            : "bg-primary/10 border-primary/40 text-primary",
+          SOURCE_COLORS[source],
         )}
       >
         <div className="flex items-center gap-2">
-          {isPending ? (
+          {source === "recurrence" ? (
             <Clock className="h-4 w-4 animate-pulse" />
           ) : (
             <Database className="h-4 w-4" />
           )}
-          <span className="text-2.5 font-black uppercase tracking-tighter">
-            {isPending ? "PROYECCIÓN DE PAGO" : "TRANSACCIÓN ASENTADA"}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-2.5 font-black uppercase tracking-tighter">
+              {labelMap[source]}
+            </span>
+            <span className={cn("inline-block px-1 py-0.5 text-[9px] font-black uppercase tracking-wider border", SOURCE_COLORS[source])}>
+              {SOURCE_LABELS[source]}
+            </span>
+          </div>
         </div>
         <div className="font-mono text-2.5 font-bold opacity-80">
           ID: {id.slice(-8).toUpperCase()}
@@ -117,6 +137,10 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
         </h4>
 
         <div className="bg-muted/30 p-3 border-2 border-border/60 relative overflow-hidden">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">{installmentLabel}</span>
+            <Icon className="size-3 text-muted-foreground/30" />
+          </div>
           {partsDetail ? (
             <div className="space-y-3">
               <div className="flex justify-between items-end">

@@ -42,6 +42,7 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `CardsDashboard` | Cards | ✅ | ✅ | ✅ | ✅ | Approved |
 | `CardsDataTable` | Cards | ✅ | ✅ | ✅ | ✅ | Premium (Unified) |
 | `CardViewForm` | Cards | ✅ | ✅ | ✅ | ✅ | Premium (Tactical) |
+| `CardSummaryKPIs` | Cards | ✅ | ✅ | ✅ | ✅ | Premium |
 
 ## FAANG Polish Criteria (Premium Industrial)
 - **Micro-interactions**: 200ms ease-in-out transitions, tactile hover states.
