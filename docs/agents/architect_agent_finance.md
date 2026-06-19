@@ -62,7 +62,7 @@ Data Architecture:
 
 - Entity modeling (User, Account, Transaction, Category, Recurrence)
 - **ID Standard**: Use **CUIDs** (`@id @default(cuid()) @db.VarChar(36)`) for all primary keys.
-- **Soft Deletes**: Standardize on **Soft Deletes** using `deletedAt DateTime?` and `deletedByUserId String?` fields.
+- **Soft Deletes**: Opt-in on a per-model basis (only User and Account currently have `deletedAt DateTime?` and `deletedByUserId String?`). Not required for all entities.
 - Ensure database schema designs enable and enforce the data integrity and immutability principles.
 
 **API Design**:
@@ -111,7 +111,7 @@ model Account {
   name             String        @db.VarChar(50)
   type             AccountType
   currency         Currency
-  balance          Decimal       @default(0) @db.Decimal(15, 2)
+  balance          Decimal       @default(0) @db.Decimal(19, 4)
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -146,7 +146,7 @@ model Recurrence {
   userId       String        @db.VarChar(36)
   name         String        @db.VarChar(100)
   type         TransactionType
-  amount       Decimal       @db.Decimal(15, 2)
+  amount       Decimal       @db.Decimal(19, 4)
   frequency    RecurrenceType
   totalParts   Int?
   currentPart  Int  @default(0)
@@ -181,7 +181,7 @@ model Transaction {
   id              String        @id @default(cuid()) @db.VarChar(36)
   userId          String        @db.VarChar(36)
   type            TransactionType
-  amount          Decimal       @db.Decimal(15, 2)
+  amount          Decimal       @db.Decimal(19, 4)
   date            DateTime
   description     String?       @db.VarChar(255)
   categoryId      String? @db.VarChar(36)
@@ -238,6 +238,7 @@ enum RecurrenceType {
   MONTHLY
   WEEKLY
   YEARLY
+  INSTALLMENT
 }
 
 enum BudgetCategory {

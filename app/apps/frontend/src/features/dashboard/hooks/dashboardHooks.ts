@@ -15,12 +15,13 @@ import {
 } from "../api/dashboardService";
 
 export const dashboardQueryKeys = {
+  all: () => ["dashboard"] as const,
   budgetSummary: (month: number, year: number) =>
-    [`dashboard/budget/${month}/${year}`] as const,
-  recentAccounts: () => [`dashboard/recentAccounts`] as const,
+    ["dashboard", "budget", month, year] as const,
+  recentAccounts: () => ["dashboard", "recentAccounts"] as const,
   incomeExpense: (months: number) =>
-    [`dashboard/income-expense/${months}`] as const,
-  recurrencesToPay: () => [`dashboard/toPay`] as const,
+    ["dashboard", "incomeExpense", months] as const,
+  recurrencesToPay: () => ["dashboard", "toPay"] as const,
 };
 
 export const useBudgetSummary = () => {

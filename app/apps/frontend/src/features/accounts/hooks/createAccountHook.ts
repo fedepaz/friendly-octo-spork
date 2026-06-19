@@ -12,6 +12,7 @@ export function useCreateAccount() {
     mutationFn: accountService.saveAccount,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
       const msg = `Cuenta ${data.name} creada exitosamente`;
       toast.success(msg, { duration: 3000 });
     },

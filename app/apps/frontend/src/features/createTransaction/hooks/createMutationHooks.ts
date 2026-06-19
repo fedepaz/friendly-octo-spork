@@ -11,10 +11,11 @@ export const useCreateTransaction = () => {
   return useMutation<TransactionDTO, Error, CreateTransactionInput>({
     mutationFn: createService.saveTransaction,
     onSuccess: (data) => {
-      // Invalidate so the transactions list is updated
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
-      // Invalidate so the accounts list is updated
       queryClient.invalidateQueries({ queryKey: ["accounts"] });
+      queryClient.invalidateQueries({ queryKey: ["recurrences"] });
+      queryClient.invalidateQueries({ queryKey: ["cards"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
 
       const msg = `Creada la transacción: ${data.description}`;
       toast.success(msg, { duration: 3000 });
