@@ -105,8 +105,8 @@ export class CardRepository {
           lte: endDate,
         },
         OR: [
-          { isCardExpense: true },
-          { type: 'TRANSFER', sourceAccount: { type: 'CARD' } },
+          { isCardExpense: true, recurrenceId: null },
+          { type: 'TRANSFER', targetAccount: { type: 'CARD' } },
         ],
       },
       include: {
@@ -130,7 +130,8 @@ export class CardRepository {
         userId,
         isCardExpense: true,
         active: true,
-        nextDate: { gte: startDate, lte: endDate },
+        startDate: { lte: endDate },
+        OR: [{ endDate: { gte: startDate } }, { endDate: null }],
         // exclude ones already paid (a transaction was recorded this month)
         id: { notIn: paidRecurrenceIds.length ? paidRecurrenceIds : [''] },
       },
