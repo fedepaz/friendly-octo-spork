@@ -86,4 +86,10 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 .temp
 .tmp
 # bun
-.bun 
+.bun
+
+# =========================
+# Skills & Agent Config
+# =========================
+app/.agents/
+app/skills-lock.json
