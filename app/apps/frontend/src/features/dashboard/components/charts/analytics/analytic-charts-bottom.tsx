@@ -35,7 +35,11 @@ export function AnalyticChartsBottom() {
         </div>
       </CardHeader>
       <CardContent className="flex-1 min-h-0 px-4 pb-4">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer
+          width="100%"
+          height="100%"
+          initialDimension={{ width: 0, height: 200 }}
+        >
           <BarChart data={incomeExpenseData} barGap={8}>
             <CartesianGrid
               strokeDasharray="4 4"

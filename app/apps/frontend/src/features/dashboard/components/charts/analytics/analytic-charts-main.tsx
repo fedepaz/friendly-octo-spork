@@ -47,7 +47,11 @@ export function AnalyticChartsMain() {
         </div>
       </CardHeader>
       <CardContent className="flex-1 min-h-0 px-4 pb-4">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer
+          width="100%"
+          height="100%"
+          initialDimension={{ width: 0, height: 200 }}
+        >
           <AreaChart data={netWorthData}>
             <defs>
               <linearGradient id="netWorthGradient" x1="0" y1="0" x2="0" y2="1">
