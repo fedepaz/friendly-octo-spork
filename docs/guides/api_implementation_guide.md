@@ -15,6 +15,8 @@ This guide unifies the best practices and standards for implementing API endpoin
     *   **Single**: `{"data": {...}}`
     *   **Error**: `{"error": "Error message", "details": {"field": ["validation error"]}}`
 *   **HTMX Compatibility**: Design endpoints to return HTML fragments for partial updates where appropriate (e.g., `GET /api/transactions/:id/edit` returning an edit form).
+*   **User Feedback (Toasts)**: Use the `Toast` component with `hx-swap-oob="beforeend"` to provide non-intrusive feedback (success/error) that doesn't disrupt the main UI flow.
+    *   Example: `return c.html(<><AccountsList accounts={accounts} /><Toast message="Saved!" type="success" /></>)`
 
 ### 2. Project Structure (Project Structure & Backend Engineer)
 
@@ -72,7 +74,17 @@ Follow the standard Route, Controller, and Service pattern:
 *   **Partial Updates**: Design API endpoints to return HTML fragments for HTMX to swap into the DOM, avoiding full page reloads.
 *   **XSS Prevention**: Hono JSX automatically escapes output, preventing XSS. Avoid `dangerouslySetInnerHTML` equivalents.
 
-### 8. Testing (QA & Test Engineer)
+### 8. Intent-Based Specialized Forms & Multi-Model Creation
+
+When implementing workflows that handle multiple related models (e.g., Transactions and Recurrences):
+
+1.  **Intent-Based Specialized Forms**: Instead of one complex form with toggles, prefer multiple specialized components (e.g., `TransactionForm`, `TransactionNewRecurrenceForm`, `TransactionLinkRecurrenceForm`). This simplifies the UI and reduces complex client-side state.
+2.  **Unified API Endpoint**: Different forms can target the same POST endpoint. The backend distinguishes the intent by the presence of specific fields (e.g., `recurrenceId` vs. `isRecurrence="on"`).
+3.  **Transient Flags**: Use boolean flags (like `isRecurrence`) in the schema to trigger conditional logic in the Service layer.
+4.  **Service Atomicity**: Wrap the entire creation logic in a `prisma.$transaction`.
+5.  **Service Sanitization**: Ensure the Service layer explicitly maps only valid model fields to the Repository/Prisma layer, stripping transient UI flags.
+
+### 9. Testing (QA & Test Engineer)
 
 *   **Unit Tests**:
     *   Test all service methods for business logic.
@@ -136,3 +148,4 @@ Once you've implemented a module, follow these steps for local development and v
         *   Examine the DOM for HTMX-driven updates.
         *   Simulate user interactions.
     *   **Stopping the Server**: To stop the background process, you typically need to find its process ID (PID) and kill it, or if it's managed by `bun run dev` directly, `Ctrl+C` in the terminal where it was started should work. If `bun run dev` uses `concurrently`, `Ctrl+C` will usually stop all child processes.
+If `bun run dev` uses `concurrently`, `Ctrl+C` will usually stop all child processes.

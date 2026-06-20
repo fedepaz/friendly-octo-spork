@@ -1,0 +1,13 @@
+feat: specialize transaction and recurrence forms for improved UX
+
+- Refactor TransactionForm into three specialized components:
+  - TransactionForm: Simple one-off entries without recurrence logic.
+  - TransactionNewRecurrenceForm: Integrated flow for starting a new recurring series.
+  - TransactionLinkRecurrenceForm: Pre-filled form for fulfilling existing recurrences ("bill pay").
+- Simplify client-side logic by removing complex toggle states in favor of dedicated intent-based forms.
+- Standardize hidden input patterns (recurrenceId, isRecurrence) to leverage existing backend service logic.
+- Enhance UI feedback with specialized headers and pre-filled recurrence data.
+- Update documentation:
+  - Document "Intent-Based Specialized Forms" pattern in API guide.
+  - Document "refreshDashboard" event protocol for cross-component updates.
+  - Update backend agent profiles to reflect .routes.tsx extension and new patterns.

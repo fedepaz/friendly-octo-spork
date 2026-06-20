@@ -1,0 +1,8 @@
+refactor: standardize modal workflow and prepare dashboard-centric hub
+
+- Standardize RecurrenceRow to use the global modal for viewing details.
+- Update RecurrenceEditForm title to "Update Recurrence" and center action buttons.
+- Remove redundant cancel buttons in favor of the global modal's backdrop-click closure.
+- Document the "Dashboard-as-Hub" pattern: Dashboard serves as the primary SPA-like interface using HTMX event-driven refreshes.
+- Establish HX-Trigger: "refreshDashboard" as the standard protocol for cross-component updates.
+- Refine TransactionsService logic for automatic recurrence syncing (amount/account propagation).

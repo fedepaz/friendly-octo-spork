@@ -2,9 +2,9 @@
 
 This document outlines the required database operations and workflows for Creating, Reading, and Updating data, based on the database's relational schema.
 
-### Core Principle: Data Integrity and Immutability
+### Core Philosophy: Data Integrity and Immutability
 
-The database is the single source of truth. Workflows are designed to ensure that financial calculations are always consistent and that a historical record is maintained.
+The database is the single source of truth. Workflows are designed to ensure that financial calculations are always consistent and that a historical record is maintained. The application uses PostgreSQL running in a Docker container with persistent storage.
 
 ---
 
@@ -44,10 +44,111 @@ This applies to any operation that changes an account's balance. **All operation
         2.  The `Transaction` row is updated with the new data.
         3.  The effect of the *new* transaction data is applied to the `Account` balance(s).
 
+## 3. Data Mapping and DTOs
+
+To decouple the database schema from the UI and ensure consistent data types (e.g., converting Prisma's `Decimal` to `number`), the service layer must use **Data Transfer Objects (DTOs)**.
+
+-   **Internal Mapping**: Every service should implement a private `mapToDTO` method (e.g., `mapToAccountDTO`).
+-   **Type Conversion**: This method is responsible for converting `Prisma.Decimal` values to standard JavaScript `number` types using `Number(value)`.
+-   **DTO Types**: DTO types must be defined in the feature's `.schema.ts` file using Zod inference: `export type AccountDTO = z.infer<typeof accountSchema>;`.
+
 ---
 
-## 3. The Delete Workflow
+## 4. Data Precision and Constraints
 
-As per system requirements, there is **no workflow for deleting records**.
+To ensure data integrity, storage efficiency, and consistent financial calculations, all database models must adhere to strict precision and length constraints.
 
-Once data is entered into the database, it is considered permanent and cannot be removed by a user action. This ensures a complete and unaltered financial history, which is essential for accurate tracking and future analysis.
+### Currency Precision
+
+All fields representing monetary values (e.g., `amount`, `balance`) must use the `Decimal` type with exactly two decimal places.
+
+-   **Prisma Attribute**: `@db.Decimal(15, 2)`
+-   **Why**: This prevents floating-point rounding errors and ensures that all financial data is stored and displayed consistently (e.g., `100.50` instead of `100.50000000003`).
+
+### String Length Limits (VARCHAR)
+
+To prevent database bloat and ensure predictable data sizes, all `String` fields must have explicit length limits using the `VarChar` type.
+
+-   **Standard Limits**:
+    -   **User/Account/Category Names**: `@db.VarChar(50)`
+    -   **Descriptions/Recurrence Names**: `@db.VarChar(100)` to `@db.VarChar(255)`
+    -   **Emails**: `@db.VarChar(150)`
+    -   **IDs (CUID)**: `@db.VarChar(36)`
+    -   **Colors (Hex Codes)**: `@db.VarChar(7)` (e.g., `#FF0000`)
+-   **Zod Alignment**: Always ensure that the corresponding Zod schemas in the backend include `.max(N)` validation that matches these database limits.
+
+---
+
+## 4. The Soft Delete Workflow
+
+As per system requirements, there is **no workflow for hard deleting records**.
+
+Once data is entered into the database, it is considered permanent to ensure a complete and unaltered financial history. However, to allow users to "remove" items from their active view, we use a **Soft Delete** pattern.
+
+-   **Database Operation**: An `UPDATE` statement is executed on the desired table.
+-   **Execution**:
+    1.  Set the `deletedAt` field to the current timestamp (`now()`).
+    2.  Set the `deletedByUserId` field to the ID of the user performing the action.
+-   **Critical Rule**: All `SELECT` queries for active data **must** include a `WHERE "deletedAt" IS NULL` clause to ensure soft-deleted records are hidden from the user.
+
+---
+
+## 5. Data Migration Workflows
+
+
+
+This section outlines specialized, one-time workflows for migrating and cleaning up data.
+
+
+
+### Category Consolidation Workflow
+
+
+
+This workflow is used to consolidate a large number of old, messy categories into a standardized set of master categories.
+
+
+
+1.  **Initial Analysis & Review File Generation**:
+
+    *   A script analyzes all existing transaction categories and attempts to map them to the new master categories.
+
+    *   Mappings with low confidence are written to a `review-needed.json` file in the `finance-app/` directory.
+
+
+
+2.  **Manual Review**:
+
+    *   A developer manually reviews the `review-needed.json` file.
+
+    *   For ambiguous categories, new master categories can be proposed and approved.
+
+
+
+3.  **Correction File Generation**:
+
+    *   The `finance-app/src/scripts/create-reviewed-chunks.ts` script is run.
+
+    *   This script reads all original `category_mappings_*.json` files and applies the approved corrections.
+
+    *   It generates new `reviewed-category_mappings_*.json` files for any chunks that contained updated mappings. These new files are the clean source of truth for the next step.
+
+
+
+4.  **Final Database Consolidation**:
+
+    *   The `finance-app/src/scripts/apply-consolidation.ts` script is run, specifying the `userId`.
+
+    *   This script intelligently finds and loads the complete set of mappings (using `reviewed-` files where available, and original files otherwise).
+
+    *   It then performs the database migration:
+
+        *   Creates all master categories.
+
+        *   Moves all transactions and recurrences from old categories to their new master categories.
+
+        *   Deletes the old, now-empty categories.
+
+
+
+This structured process ensures data is reviewed and cleaned before the final, destructive database operation is performed.

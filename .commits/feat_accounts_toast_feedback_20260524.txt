@@ -1,0 +1,8 @@
+feat: enhance account creation flow with HTMX toasts and improved validation
+
+- Refactor AccountsController to use zValidator for form data
+- Implement HTMX Out-of-Band (OOB) toast notifications for success/error feedback
+- Add auto-closing logic for account creation modal using inline script
+- Fix bug where initial balance was ignored in account creation schema
+- Fix repetitive error display logic in AccountForm component
+- Update API implementation guide with HTMX Toast pattern

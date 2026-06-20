@@ -1,0 +1,5 @@
+feat: implement database seeding script and configuration
+
+- Add prisma seeding configuration using the Bun runtime in package.json
+- Implement prisma/seed.ts to clear tables and seed a default user, accounts, and 25 master categories with curated colors
+- Update setup guides and backend agent profile to document database seeding workflow

@@ -1,0 +1,9 @@
+refactor: standardize data flow with DTOs and transition to table-based UI
+
+- Introduced Zod-based DTOs (AccountDTO, TransactionDTO, etc.) to decouple the database layer from the view layer.
+- Refactored Accounts and Transactions lists into table-based layouts to align with the "smart spreadsheet" UX philosophy.
+- Centralized UI styles in `typesStyleMap.ts` for consistent categorization and icon usage.
+- Simplified Sidebar by removing the Categories link and redundant footer sections.
+- Cleaned up service layers by implementing internal mapping methods (mapToDTO) and removing legacy stats logic.
+- Fixed UI artifacts and standardized loading states using LoadingSpinnerIcon and Alpine.js.
+- Updated agent profiles and database guides to mandate DTO-first architecture and table-centric UI.

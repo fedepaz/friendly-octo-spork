@@ -1,5 +1,5 @@
 // src/middleware/errorHandler.ts
-import { Context } from "hono";
+import type { Context } from "hono";
 import { ZodError } from "zod";
 import { HTTPException } from "hono/http-exception";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
@@ -15,7 +15,7 @@ export const errorHandler = (err: Error, c: Context) => {
           message: issue.message,
         })),
       },
-      400
+      400,
     );
   }
 
@@ -25,7 +25,7 @@ export const errorHandler = (err: Error, c: Context) => {
       {
         error: err.message,
       },
-      err.status
+      err.status,
     );
   }
 
@@ -36,7 +36,7 @@ export const errorHandler = (err: Error, c: Context) => {
         {
           error: "A record with this value already exists",
         },
-        409
+        409,
       );
     }
     if (err.code === "P2025") {
@@ -44,7 +44,7 @@ export const errorHandler = (err: Error, c: Context) => {
         {
           error: "Record not found",
         },
-        404
+        404,
       );
     }
   }
@@ -55,6 +55,6 @@ export const errorHandler = (err: Error, c: Context) => {
     {
       error: "Internal server error",
     },
-    500
+    500,
   );
 };

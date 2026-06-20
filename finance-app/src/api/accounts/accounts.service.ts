@@ -1,43 +1,63 @@
 // src/api/accounts/accounts.service.ts
 
+import type { AccountDTO, CreateAccountInput } from "./accounts.schema";
+import { AccountRepository } from "../repositories/account.repository";
 import type { Prisma } from "@/generated/prisma";
-import { prisma } from "../../lib/prisma";
-import type { CreateAccountInput, AccountFilterInput } from "./accounts.schema";
 
 export class AccountsService {
-  async getAccounts(userId: string, filters?: AccountFilterInput) {
-    const where: Prisma.AccountWhereInput = {
-      userId,
-      ...(filters?.type && { type: filters.type }),
-      ...(filters?.currency && { currency: filters.currency }),
+  private accountRepository = new AccountRepository();
+
+  private mapToAccountDTO(
+    account: Prisma.AccountGetPayload<object>,
+  ): AccountDTO {
+    return {
+      ...account,
+      balance: Number(account.balance), // Convert Prisma.Decimal to number
     };
-
-    const accounts = await prisma.account.findMany({
-      where,
-    });
-
-    return accounts;
   }
 
-  async getAccountById(userId: string, accountId: number) {
-    const account = await prisma.account.findUnique({
-      where: { id: accountId, userId },
-    });
-
-    return account;
+  async findAccounts(userId: string): Promise<AccountDTO[]> {
+    if (!userId) {
+      throw new Error("User id is required");
+    }
+    const accounts = await this.accountRepository.getAccounts(userId);
+    if (!accounts) {
+      throw new Error("Accounts not found");
+    }
+    return accounts.map((account) => this.mapToAccountDTO(account));
   }
 
-  async createAccount(userId: string, data: CreateAccountInput) {
-    const account = await prisma.account.create({
-      data: {
-        userId,
-        name: data.name,
-        type: data.type,
-        currency: data.currency,
-        balance: data.balance,
-      },
+  async findAccountById(
+    userId: string,
+    accountId: string,
+  ): Promise<AccountDTO> {
+    if (!accountId) {
+      throw new Error("Account id is required");
+    }
+    if (!userId) {
+      throw new Error("User id is required");
+    }
+    const account = await this.accountRepository.getAccountById(
+      userId,
+      accountId,
+    );
+
+    if (!account) {
+      throw new Error("Account not found");
+    }
+
+    return this.mapToAccountDTO(account);
+  }
+
+  async createAccount(
+    userId: string,
+    data: CreateAccountInput,
+  ): Promise<AccountDTO> {
+    const account = await this.accountRepository.saveAccount({
+      ...data,
+      userId,
     });
 
-    return account;
+    return this.mapToAccountDTO(account);
   }
 }

@@ -12,7 +12,7 @@ export class DashboardController {
     try {
       const payload = c.get("jwtPayload") as { sub: string };
       const userId = payload.sub;
-      const data = await this.dashboardService.getDashboardData(userId);
+      const data = await this.dashboardService.findDashboardData(userId);
       return c.render(<DashboardPage data={data} />);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error";

@@ -3,7 +3,7 @@
 import { DollarSignIcon } from "@/components/icons/DollarSignIcon";
 import { HamburgerMenu } from "./HamburgerMenu";
 import { Sidebar } from "./Sidebar"; // New import
-import type { FC } from "hono/jsx";
+import type { Child, FC } from "hono/jsx";
 
 interface LayoutProps {
   children?: Child;
@@ -46,7 +46,7 @@ const Layout: FC<LayoutProps> = (props) => {
 
         {/* Main content */}
         <main class="flex-1 overflow-y-auto bg-background">
-          <div class="container mx-auto p-4 md:p-6 lg:p-8 max-w-7xl">
+          <div class="w-full px-4 md:px-8 lg:px-12 py-6 md:py-8">
             {props.children}
           </div>
         </main>
@@ -57,6 +57,31 @@ const Layout: FC<LayoutProps> = (props) => {
         id="toast-container"
         class="fixed top-4 right-4 p-4 z-50 space-y-2"
       ></div>
+      {/* Modal */}
+      <div
+        id="htmx-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 pt-20"
+        style="display:none"
+        onclick="if(event.target===this)this.style.display='none'"
+      >
+        <div class="overflow-y-auto relative">
+          <div id="modal-content"></div>
+        </div>
+      </div>
+
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+  document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("htmx:afterSwap", function(e) {
+      if (e.detail.target.id === "modal-content") {
+        document.getElementById("htmx-modal").style.display = "flex";
+      }
+    });
+  });
+`,
+        }}
+      ></script>
     </div>
   );
 };

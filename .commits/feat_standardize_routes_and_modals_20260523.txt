@@ -1,0 +1,8 @@
+Refactor: standardize routing, unify modal logic, and optimize transaction workflow
+
+- Migrated all hx-* paths to top-level routes (removing /api prefix) for consistency.
+- Implemented global htmx:afterSwap listener in Layout.tsx for centralized modal management.
+- Optimized TransactionsController to return TransactionRow partials during creation.
+- Enhanced TransactionCard UI with neo-brutalist styling and increased metadata visibility.
+- Updated agent documentation (frontend, backend, ux) to reflect new architectural patterns.
+- Removed redundant Modal.tsx component.

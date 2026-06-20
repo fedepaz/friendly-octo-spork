@@ -1,92 +1,91 @@
 // src/api/recurrences/recurrences.service.ts
 
-import { prisma } from "@/lib/prisma";
+import { RecurrenceRepository } from "../repositories/recurrence.repository";
 import type {
   CreateRecurrenceInput,
-  RecurrenceFilterInput,
+  RecurrenceDTO,
+  UpdateRecurrenceInput,
 } from "./recurrences.schema";
+import { calculateNextDate } from "@/lib/date-utils";
+import { RecurrenceType } from "@/generated/prisma";
+import { Prisma } from "@/generated/prisma";
 
 export class RecurrencesService {
-  async getRecurrences(userId: string, filters?: RecurrenceFilterInput) {
-    const recurrences = await prisma.recurrence.findMany({
-      where: {
-        userId,
-        ...(filters?.frequency && { frequency: filters.frequency }),
-        ...(filters?.active && { active: filters.active }),
-      },
-      orderBy: [{ frequency: "asc" }, { name: "asc" }],
-      include: {
-        _count: {
-          select: { transactions: true },
-        },
-      },
-    });
+  private recurrenceRepository = new RecurrenceRepository();
 
-    return recurrences;
+  /**
+   * Maps a Prisma Recurrence object to the RecurrenceDTO type
+   * Converts Prisma.Decimal to number for amount field
+   */
+  private mapToRecurrenceDTO(
+    recurrence: Prisma.RecurrenceGetPayload<object>,
+  ): RecurrenceDTO {
+    return {
+      ...recurrence,
+      amount: Number(recurrence.amount), // Convert Prisma.Decimal to number
+    };
   }
 
-  async getRecurrenceById(userId: string, recurrenceId: number) {
-    const recurrence = await prisma.recurrence.findFirst({
-      where: {
-        id: recurrenceId,
-        userId,
-      },
-      include: {
-        _count: {
-          select: { transactions: true },
-        },
-        transactions: {
-          orderBy: { date: "desc" },
-          take: 10,
-        },
-      },
-    });
+  async findAllRecurrences(userId: string): Promise<RecurrenceDTO[]> {
+    if (!userId) {
+      throw new Error("User id is required");
+    }
+    const recurrences = await this.recurrenceRepository.getRecurrences(userId);
+    return recurrences.map((recurrence) => this.mapToRecurrenceDTO(recurrence));
+  }
+
+  async findRecurrenceById(
+    userId: string,
+    recurrenceId: string,
+  ): Promise<RecurrenceDTO> {
+    if (!userId) {
+      throw new Error("User id is required");
+    }
+    if (!recurrenceId) {
+      throw new Error("Recurrence id is required");
+    }
+    const recurrence = await this.recurrenceRepository.getRecurrenceById(
+      userId,
+      recurrenceId,
+    );
 
     if (!recurrence) {
       throw new Error("Recurrence not found");
     }
 
-    return recurrence;
+    return this.mapToRecurrenceDTO(recurrence);
   }
 
-  async createRecurrence(userId: string, data: CreateRecurrenceInput) {
-    const startDate = new Date(data.startDate || new Date());
-    const nextDate = this.calculateNextDate(startDate, data.frequency);
-    const recurrence = await prisma.recurrence.create({
-      data: {
-        userId,
-        name: data.name,
-        frequency: data.frequency,
-        totalParts: data.totalParts,
-        currentPart: data.currentPart,
-        startDate: startDate,
-        nextDate: nextDate,
-        active: data.active,
-      },
+  async createRecurrence(
+    userId: string,
+    data: CreateRecurrenceInput,
+  ): Promise<RecurrenceDTO> {
+    const startDate = new Date(data.startDate);
+    const nextDate = calculateNextDate(
+      startDate,
+      data.frequency as RecurrenceType,
+    );
+
+    // Validation removed: calculateNextDate always returns a date >= startDate
+    // The actual validation for future dates happens in calculateNextDate itself
+    const recurrence = await this.recurrenceRepository.saveRecurrence({
+      ...data,
+      startDate,
+      nextDate,
+      userId,
     });
 
-    return recurrence;
+    return this.mapToRecurrenceDTO(recurrence);
   }
-  private calculateNextDate(currentDate: Date, frequency: string): Date {
-    const next = new Date(currentDate);
 
-    switch (frequency) {
-      case "MONTHLY":
-        next.setMonth(next.getMonth() + 1);
-        break;
-      case "WEEKLY":
-        next.setDate(next.getDate() + 7);
-        break;
-      case "YEARLY":
-        next.setFullYear(next.getFullYear() + 1);
-        break;
-      case "INSTALLMENT":
-        next.setMonth(next.getMonth() + 1);
-        break;
-      default:
-        throw new Error("Invalid frequency");
-    }
-
-    return next;
+  async updateRecurrence(
+    id: string,
+    data: UpdateRecurrenceInput,
+  ): Promise<RecurrenceDTO> {
+    const recurrence = await this.recurrenceRepository.updateRecurrence(
+      id,
+      data,
+    );
+    return this.mapToRecurrenceDTO(recurrence);
   }
 }

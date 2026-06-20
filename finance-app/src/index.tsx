@@ -8,17 +8,10 @@ import { logger } from "hono/logger";
 import { cors } from "hono/cors";
 import authRoutes from "./api/auth/auth.routes";
 import { ErrorPage } from "./pages/ErrorPage";
-import categoriesRoutes from "./api/categories/categories.routes";
 import recurrencesRoutes from "./api/recurrences/recurrences.routes";
+import transactionsRoutes from "./api/transactions/transactions.routes";
 import dashboardRoutes from "./api/dashboard/dashboard.routes";
 import Injection from "./styles/injection";
-
-import expensesRoutes from "./api/expenses/expenses.routes";
-import incomesRoutes from "./api/incomes/incomes.routes";
-import investmentsRoutes from "./api/investments/investments.routes";
-import paymentsRoutes from "./api/payments/payments.routes";
-import returnsRoutes from "./api/returns/returns.routes";
-import transfersRoutes from "./api/transfers/transfers.routes";
 
 const app = new Hono();
 
@@ -33,7 +26,7 @@ app.use("*", cors());
 app.use(
   jsxRenderer(({ children }) => {
     return <Injection>{children}</Injection>;
-  })
+  }),
 );
 
 // Serve the compiled stylesheet
@@ -50,30 +43,14 @@ app.route("/", authRoutes);
 // Apply auth middleware to all protected routes
 app.use("/dashboard/*", requireAuth, refreshTokenIfNeeded);
 app.use("/accounts/*", requireAuth, refreshTokenIfNeeded);
-app.use("/categories/*", requireAuth, refreshTokenIfNeeded);
 app.use("/recurrences/*", requireAuth, refreshTokenIfNeeded);
 app.use("/transactions/*", requireAuth, refreshTokenIfNeeded);
-
-app.use("/incomes/*", requireAuth, refreshTokenIfNeeded);
-app.use("/expenses/*", requireAuth, refreshTokenIfNeeded);
-app.use("/transfers/*", requireAuth, refreshTokenIfNeeded);
-app.use("/investments/*", requireAuth, refreshTokenIfNeeded);
-app.use("/returns/*", requireAuth, refreshTokenIfNeeded);
-app.use("/payments/*", requireAuth, refreshTokenIfNeeded);
-
 app.use("/api/*", requireAuth, refreshTokenIfNeeded);
 
 // Mount the protected API routes
 app.route("/accounts", accountsRoutes);
-app.route("/categories", categoriesRoutes);
 app.route("/recurrences", recurrencesRoutes);
-
-app.route("/incomes", incomesRoutes);
-app.route("/expenses", expensesRoutes);
-app.route("/transfers", transfersRoutes);
-app.route("/investments", investmentsRoutes);
-app.route("/returns", returnsRoutes);
-app.route("/payments", paymentsRoutes);
+app.route("/transactions", transactionsRoutes);
 
 app.route("/dashboard", dashboardRoutes);
 

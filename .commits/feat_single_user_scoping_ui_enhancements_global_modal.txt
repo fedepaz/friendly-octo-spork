@@ -1,0 +1,23 @@
+feat: Implement single-user data scoping, enhance UI for accounts/recurrences/transactions, and introduce global HTMX modal
+
+This commit introduces several significant improvements across the application:
+
+- **Single-User Data Scoping:** All `find*ById` methods in `CategoriesService`, `RecurrencesService`, and `TransactionService`, as well as their corresponding repository methods (`AccountRepository`, `CategoriesRepository`, `RecurrenceRepository`, `TransactionRepository`), now explicitly require a `userId` parameter. This ensures that all data access is correctly scoped to the current user, aligning with the single-user core philosophy. The `id` parameters have also been consistently updated to `string` types where necessary.
+
+- **Enhanced Recurrence and Transaction Data Handling:**
+  - `TransactionRepository` now uses `TransactionWithRelations` type, enabling eager loading of related `category`, `sourceAccount`, `targetAccount`, and `recurrence` data.
+  - `TransactionService`'s `mapToTransactionDTO` has been updated to handle the new `TransactionWithRelations` structure, ensuring proper type conversion and null handling for all fields.
+  - The `transactionSchema` has been expanded to include `userId`, `categoryId`, `sourceAccountId`, `targetAccountId`, `recurrenceId`, `recurrencePartNumber`, `isBudgetedExpense`, `budgetCategory`, `isCardExpense`, `cardType`, and `source` fields, reflecting a more comprehensive transaction model.
+
+- **Major UI Overhaul for Listings and Detail Views:**
+  - **Global HTMX Modal:** A new global HTMX modal has been integrated into `Layout.tsx`. This modal provides a consistent and efficient way to display detail views (e.g., `RecurrenceCard`) and future edit forms without full page reloads.
+  - **Accounts List Enhancements:** `AccountRow` now includes dynamic icons based on account type, type badges, currency pills, and improved balance formatting with conditional styling for positive/negative values.
+  - **Recurrences List Redesign:** The `RecurrencesList` now utilizes a new `RecurrenceRow` component (replacing the old `RecurrenceCard` for list display) to present recurrences in a structured table format, with clear information on frequency, amount, progress, next charge date, and active status. The empty state UI has also been significantly improved.
+  - **Transactions List Redesign:** `TransactionList` has been transformed into a table-based view with detailed columns for day, amount (with conditional styling), description, type, category (with color-coded pills), and accounts (source/target for transfers). Month navigation has been refined with HTMX-driven buttons, and a more informative empty state is included.
+  - **New `getRecurrenceById` Endpoint:** A new GET endpoint `/recurrences/:id` has been added to `RecurrencesController` to serve the `RecurrenceCard` (now used as a detail view) within the new global modal.
+
+- **Improved Styling Utilities:**
+  - `typesStyleMap.ts` now includes `recurrenceTypeIcons` and `recurrenceTypeStyles` to provide consistent visual styling and icons for different recurrence types across the application.
+  - Minor fixes for `zod` error handling in `transactions.routes.ts` and type assertions in `scripts/`.
+
+These changes significantly enhance the application's data integrity, user experience, and prepare the groundwork for further feature development by establishing robust UI and data access patterns.

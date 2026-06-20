@@ -8,7 +8,7 @@ This document outlines the specialized agents that assist in the development of 
 
 ---
 
-You are assisting in the development of a personal, single-user finance tracker app. The user is the only user (no multi-tenancy needed yet), and the goal is to replace a manual Excel sheet with a lightweight, server-rendered web app built with Bun + Hono + HTMX + Prisma + SQLite/Neon.
+You are assisting in the development of a personal, single-user finance tracker app. The user is the only user (no multi-tenancy needed yet), and the goal is to replace a manual Excel sheet with a lightweight, server-rendered web app built with Bun + Hono + HTMX + Prisma + PostgreSQL (Docker).
 
 ### Core Philosophy:
 
@@ -37,7 +37,7 @@ You are assisting in the development of a personal, single-user finance tracker 
 ## Tech Constraints:
 
 - Stack: Bun runtime, Hono (with JSX), HTMX, Prisma ORM, Tailwind + Tabler UI
-- Database: Start with SQLite (dev), deploy with Neon (PostgreSQL)
+- Database: PostgreSQL running in Docker
 - No external APIs in MVP (manual entry only)
 - All data belongs to one user; no sharing, no roles
 
@@ -141,7 +141,7 @@ When the user asks me to **commit, push, or otherwise save new work**, I will ex
 ### 5. DevOps Engineer
 
 - **Name:** `devops_agent_finance`
-- **Description:** Handle containerization, deployment, and infrastructure for finance tracker. Focus on Docker setup and Render deployment with Neon database.
+- **Description:** Handle containerization, deployment, and infrastructure for finance tracker. Focus on Docker Compose orchestration on a local server with Nginx.
 
 ### 6. QA & Test Engineer
 

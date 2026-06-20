@@ -1,0 +1,31 @@
+feat: Implement transaction and recurrence forms with HTMX modals
+
+This commit introduces comprehensive functionality for managing transactions
+and recurring financial entries, leveraging Hono, HTMX, Alpine.js, and Zod.
+
+Key changes include:
+- **Transaction Forms:** Refactored `TransactionForm.tsx` to use a single
+  'amount' input, streamlining client-side Alpine.js logic for regular
+  and installment transactions.
+- **Recurrence Management:** Introduced dedicated forms:
+    - `TransactionNewRecurrenceForm.tsx` for creating a transaction with a
+      new recurring entry.
+    - `TransactionLinkRecurrenceForm.tsx` for creating a transaction and
+      linking it to an existing recurrence.
+- **HTMX Modals:** Implemented a robust pattern for loading these forms
+  into a generic modal (`#modal-content`) via `hxGet` requests from the
+  Dashboard and Recurrence List pages. This enhances user experience
+  without full page reloads.
+- **Centralized Zod Validation:** Standardized `zValidator` usage in Hono
+  routes (`accounts.routes.tsx`, `transactions.routes.tsx`) with custom
+  error handling to return HTMX `Toast` components,
+  field-specific validation feedback.
+- **UI Enhancements:** Integrated `LoadingSpinnerIcon` into submit buttons
+  for better visual feedback during form processing.
+- **User Scoping:** Enhanced `categories.service.ts` to include `userId`
+  in `findCategoryById` for improved data isolation.
+
+These changes align with the project's core philosophy of "Ultra-minimal UX"
+and "SSR-first," emphasizing speed, keyboard-friendliness, and server-rendered
+HTML with HTMX for dynamic interactions. Alpine.js is used for ephemeral
+client-side state within components.

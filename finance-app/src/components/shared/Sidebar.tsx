@@ -4,26 +4,12 @@ import type { FC } from "hono/jsx";
 import {
   DollarSignIcon,
   LightbulbIcon,
-  XIcon,
-  CreditCardIcon,
-  TagIcon,
-  ClipboardIcon,
-  SparklesIcon,
-  AlertTriangleIcon,
-  CalendarDaysIcon,
   CalendarIcon,
-  CheckIcon,
   FolderIcon,
-  InfoIcon,
   LandmarkIcon,
   LineChartIcon,
-  TrendingUpIcon,
-  UserIcon,
   WalletIcon,
-  SadFaceIcon,
-  HappyFaceIcon,
 } from "@/components/icons";
-import { Button } from "./Button";
 
 interface SidebarProps {
   activeNavItem?: string;
@@ -37,16 +23,8 @@ export const Sidebar: FC<SidebarProps> = ({
   const navLinks = [
     { href: "/dashboard", label: "Dashboard", icon: "line-chart" },
     { href: "/accounts", label: "Accounts", icon: "landmark" },
-    { href: "/categories", label: "Categories", icon: "folder" },
     { href: "/recurrences", label: "Recurrences", icon: "calendar" },
     { href: "/transactions", label: "Transactions", icon: "wallet" },
-
-    { href: "/incomes", label: "Incomes", icon: "credit-card" },
-    { href: "/expenses", label: "Expenses", icon: "tag" },
-    { href: "/transfers", label: "Transfers", icon: "clipboard" },
-    { href: "/investments", label: "Investments", icon: "sparkles" },
-    { href: "/returns", label: "Returns", icon: "alert-triangle" },
-    { href: "/payments", label: "Payments", icon: "calendar-days" },
   ];
 
   return (
@@ -113,46 +91,14 @@ export const Sidebar: FC<SidebarProps> = ({
               >
                 {(() => {
                   switch (link.icon) {
-                    case "credit-card":
-                      return <CreditCardIcon />;
-                    case "tag":
-                      return <TagIcon />;
-                    case "clipboard":
-                      return <ClipboardIcon />;
-                    case "sparkles":
-                      return <SparklesIcon />;
-                    case "alert-triangle":
-                      return <AlertTriangleIcon />;
-                    case "calendar-days":
-                      return <CalendarDaysIcon />;
-                    case "calendar":
-                      return <CalendarIcon />;
-                    case "check":
-                      return <CheckIcon />;
-                    case "dollar-sign":
-                      return <DollarSignIcon />;
-                    case "folder":
-                      return <FolderIcon />;
-                    case "info":
-                      return <InfoIcon />;
-                    case "landmark":
-                      return <LandmarkIcon />;
-                    case "lightbulb":
-                      return <LightbulbIcon />;
                     case "line-chart":
                       return <LineChartIcon />;
-                    case "trending-up":
-                      return <TrendingUpIcon />;
-                    case "user":
-                      return <UserIcon />;
+                    case "landmark":
+                      return <LandmarkIcon />;
+                    case "calendar":
+                      return <CalendarIcon />;
                     case "wallet":
                       return <WalletIcon />;
-                    case "x":
-                      return <XIcon />;
-                    case "sad-face":
-                      return <SadFaceIcon />;
-                    case "happy-face":
-                      return <HappyFaceIcon />;
                     default:
                       return null; // Or a default icon
                   }
@@ -166,25 +112,6 @@ export const Sidebar: FC<SidebarProps> = ({
           );
         })}
       </nav>
-
-      {/* Sidebar Footer */}
-      <div class="p-4 border-t-2 border-border bg-muted/30 rounded-none">
-        <div class="bg-accent/10 border-2 border-accent/30 rounded-none p-4">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">
-              <LightbulbIcon />
-            </span>
-            <div>
-              <p class="text-sm font-semibold uppercase tracking-wide text-foreground">
-                Pro Tip
-              </p>
-              <p class="text-xs text-muted-foreground">
-                Track daily expenses to stay within budget
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
     </aside>
   );
 };

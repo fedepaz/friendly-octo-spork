@@ -161,14 +161,15 @@ Priority: **HIGH** (main user interface)
 
 ---
 
-## 🚢 Phase 5: Deployment Preparation
+## 🚢 Phase 5: Self-Hosted Deployment
 
-- [ ] Set up Docker configuration
-- [ ] Configure environment variables
-- [ ] Set up database migrations for production
-- [ ] Set up database migrations for production
-- [ ] Add monitoring/logging
-- [ ] Write deployment documentation
+- [ ] Provision Ubuntu Server (local laptop)
+- [ ] Install Docker and Docker Compose
+- [ ] Configure `docker-compose.yml` (App, Postgres, Nginx)
+- [ ] Set up Nginx reverse proxy for local network access
+- [ ] Configure `.env` with production secrets
+- [ ] (Future) Set up Cloudflare Tunnel for remote access
+- [ ] Write maintenance and backup documentation
 
 ---
 
@@ -176,15 +177,11 @@ Priority: **HIGH** (main user interface)
 
 ### Environment Variables Needed
 ```env
-# Database
-DATABASE_URL="postgresql://user:pass@localhost:5432/finance_tracker"
-
-# Clerk Auth
-CLERK_SECRET_KEY="sk_test_..."
-CLERK_PUBLISHABLE_KEY="pk_test_..."
+# Database (Internal Docker Network)
+DATABASE_URL="postgresql://user:password@postgres:5432/finance-app"
 
 # App
-NODE_ENV="development"
+NODE_ENV="production"
 PORT="3000"
 FRONTEND_URL="http://localhost:3000"
 ```

@@ -126,7 +126,9 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   passwordHash: 'passwordHash',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedByUserId: 'deletedByUserId',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.AccountScalarFieldEnum = {
@@ -137,14 +139,15 @@ exports.Prisma.AccountScalarFieldEnum = {
   currency: 'currency',
   balance: 'balance',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedByUserId: 'deletedByUserId',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   name: 'name',
-  type: 'type',
   color: 'color',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -230,13 +233,6 @@ exports.Currency = exports.$Enums.Currency = {
   ARS: 'ARS',
   USD: 'USD',
   USDT: 'USDT'
-};
-
-exports.CategoryType = exports.$Enums.CategoryType = {
-  GASTO: 'GASTO',
-  PAGO: 'PAGO',
-  INGRESO: 'INGRESO',
-  RENDIMIENTO: 'RENDIMIENTO'
 };
 
 exports.TransactionType = exports.$Enums.TransactionType = {

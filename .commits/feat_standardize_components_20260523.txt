@@ -1,0 +1,8 @@
+Design: standardize list and card components with Neo-Brutalist UI
+
+- Refactored Account, Transaction, and Recurrence cards with high-impact Neo-Brutalist styling (4px borders, hard shadows, decorative corners).
+- Standardized Row components (AccountRow, TransactionRow, RecurrenceRow) for a cleaner, high-density spreadsheet view.
+- Ensured consistent monospaced numerical alignment across all table rows for better scanning of financial data.
+- Updated table headers in all List components with technical bold-uppercase typography.
+- Enhanced detail cards with additional DTO metadata (Progress bars, Account IDs, specific status badges).
+- Updated UX agent documentation to formalize monospaced numerical alignment rules.

@@ -1,46 +1,30 @@
 // src/pages/TransactionPage.tsx
 
-import { TransactionForm } from "@/components/transactions/TransactionForm";
 import { TransactionList } from "@/components/transactions/TransactionList";
 import type { FC } from "hono/jsx";
 import Layout from "@/components/shared/Layout";
-import type { TransactionResponse } from "@/api/transactions/transactions.schema";
+import type { TransactionDTO } from "@/api/transactions/transactions.schema";
 
 interface TransactionPageProps {
-  transactions: TransactionResponse[];
+  transactions: TransactionDTO[];
   currentMonth: string;
-  transactionType:
-    | "expenses"
-    | "incomes"
-    | "payments"
-    | "investments"
-    | "returns"
-    | "transfers";
-  title: string;
-  navItem: string;
 }
 
 export const TransactionPage: FC<TransactionPageProps> = ({
-  transactions,
+  transactions = [],
   currentMonth,
-  transactionType,
-  title,
-  navItem,
 }) => {
   return (
-    <Layout activeNavItem={navItem}>
-      <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">
-        {title}
-      </h1>
-      <div id="transactions-container">
-        <TransactionList
-          transactions={transactions}
-          currentMonth={currentMonth}
-          transactionType={transactionType}
-        />
+    <Layout activeNavItem="/transactions">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          Transactions
+        </h1>
       </div>
-
-      <TransactionForm transactionType={transactionType} />
+      <TransactionList
+        transactions={transactions}
+        currentMonth={currentMonth}
+      />
     </Layout>
   );
 };

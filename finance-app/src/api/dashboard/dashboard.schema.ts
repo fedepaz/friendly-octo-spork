@@ -1,8 +1,6 @@
 // src/schemas/createAccountSchema.ts
 
 import z from "zod";
-import { transactionSchema } from "../transactions/transactions.schema";
-import { categorySchema } from "../categories/categories.schema";
 import { accountSchema } from "../accounts/accounts.schema";
 
 export const dashboardSchema = z.object({
@@ -10,8 +8,6 @@ export const dashboardSchema = z.object({
   monthlyBudget: z.number(),
   dailyAverage: z.number(),
   expenseCount: z.number(),
-  recentTransactions: z.array(transactionSchema),
-  categories: z.array(categorySchema),
   accounts: z.array(accountSchema),
 });
 

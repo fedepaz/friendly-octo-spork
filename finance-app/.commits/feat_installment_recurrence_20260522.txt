@@ -1,0 +1,13 @@
+feat: Add INSTALLMENT recurrence type and improve recurrence handling
+
+This commit introduces a new `INSTALLMENT` recurrence type to the application, enhancing flexibility for tracking payments and financial obligations.
+
+Key changes include:
+
+- **Database Schema Update:** Added `INSTALLMENT` to the `RecurrenceType` enum in `prisma/schema.prisma` and updated the generated Prisma client.
+- **Prisma Configuration Enhancement:** Integrated `dotenv` and configured `DATABASE_URL` via environment variables for improved deployment flexibility and security.
+- **Recurrence Creation Refinement:** Implemented Zod-based schema validation (`createRecurrenceSchema`) for creating new recurrences, replacing a simpler parsing method with a more robust and error-resistant approach.
+- **Improved Recurrence Date Calculation:** Modified `calculateNextDate` to automatically advance recurrence dates to the future if the initially calculated date falls in the past, preventing erroneous past-dated recurrences. This also includes handling for the new `INSTALLMENT` type (defaults to monthly advancement).
+- **Separation of Concerns for Recurrence Forms:** Refactored the recurrence forms such that `RecurrenceForm` is now dedicated solely to creating new recurrences, and a new `RecurrenceEditForm` (referenced in the controller) is used for editing existing ones, leading to clearer component responsibilities and better maintainability.
+
+These changes improve the data model, API robustness, and user experience for managing recurring financial events within the application.

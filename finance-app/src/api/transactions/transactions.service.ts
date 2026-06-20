@@ -1,271 +1,282 @@
 // src/api/transactions/transactions.service.ts
 
 import {
-  prisma,
-  TRANSACTION_INCLUDES,
+  TransactionRepository,
   type TransactionWithRelations,
-} from "@/lib/prisma";
-import type {
-  CreateTransactionInput,
-  TransactionResponse,
+} from "../repositories/transaction.repository";
+import { AccountRepository } from "../repositories/account.repository";
+import { RecurrenceRepository } from "../repositories/recurrence.repository";
+import {
+  type CreateTransactionInput,
+  type TransactionDTO,
+  validateTransactionType,
 } from "./transactions.schema";
-import { Prisma, TransactionType } from "@/generated/prisma";
+import { Prisma, TransactionType, RecurrenceType } from "@/generated/prisma";
+import { prisma } from "@/lib/prisma";
+import { calculateNextDate } from "@/lib/date-utils";
 
 export class TransactionsService {
-  private mapTransactionToResponse(
-    tx: TransactionWithRelations
-  ): TransactionResponse {
+  private transactionRepository = new TransactionRepository();
+  private accountRepository = new AccountRepository();
+  private recurrenceRepository = new RecurrenceRepository();
+
+  private mapToTransactionDTO(
+    transaction: TransactionWithRelations,
+  ): TransactionDTO {
     return {
-      id: tx.id,
-      type: tx.type,
-      amount: tx.amount.toNumber(), // Decimal → number
-      date: tx.date,
-      description: tx.description,
-      metadata: tx.metadata as Record<string, unknown> | null,
-      createdAt: tx.createdAt,
-      updatedAt: tx.updatedAt,
-
-      // Map category
-      category: tx.category
+      ...transaction,
+      amount: Number(transaction.amount),
+      recurrencePartNumber: transaction.recurrencePartNumber ?? null,
+      isBudgetedExpense: transaction.isBudgetedExpense ?? null,
+      budgetCategory: transaction.budgetCategory ?? null,
+      isCardExpense: transaction.isCardExpense ?? null,
+      cardType: transaction.cardType ?? null,
+      source: transaction.source ?? null,
+      metadata: transaction.metadata as Record<string, unknown> | null,
+      category: transaction.category
         ? {
-            id: tx.category.id,
-            name: tx.category.name,
-            type: tx.category.type,
-            color: tx.category.color,
+            ...transaction.category,
+            color: transaction.category.color ?? null,
           }
         : null,
-
-      // Map source account
-      sourceAccount: tx.sourceAccount
+      sourceAccount: transaction.sourceAccount
         ? {
-            id: tx.sourceAccount.id,
-            name: tx.sourceAccount.name,
-            type: tx.sourceAccount.type,
-            currency: tx.sourceAccount.currency,
-            balance: tx.sourceAccount.balance.toNumber(), // Decimal → number
+            ...transaction.sourceAccount,
+            balance: Number(transaction.sourceAccount.balance),
           }
         : null,
-
-      // Map target account
-      targetAccount: tx.targetAccount
+      targetAccount: transaction.targetAccount
         ? {
-            id: tx.targetAccount.id,
-            name: tx.targetAccount.name,
-            type: tx.targetAccount.type,
-            currency: tx.targetAccount.currency,
-            balance: tx.targetAccount.balance.toNumber(), // Decimal → number
+            ...transaction.targetAccount,
+            balance: Number(transaction.targetAccount.balance),
           }
         : null,
-
-      // Map recurrence
-      recurrence: tx.recurrence
+      recurrence: transaction.recurrence
         ? {
-            id: tx.recurrence.id,
-            name: tx.recurrence.name,
-            frequency: tx.recurrence.frequency,
-            totalParts: tx.recurrence.totalParts,
-            currentPart: tx.recurrence.currentPart,
-            startDate: tx.recurrence.startDate,
-            nextDate: tx.recurrence.nextDate,
-            active: tx.recurrence.active,
+            ...transaction.recurrence,
+            amount: Number(transaction.recurrence.amount),
+            totalParts: transaction.recurrence.totalParts ?? null,
+            currentPart: transaction.recurrence.currentPart ?? null,
+            nextDate: transaction.recurrence.nextDate ?? null,
+            endDate: transaction.recurrence.endDate ?? null,
+            categoryId: transaction.recurrence.categoryId ?? null,
+            sourceAccountId: transaction.recurrence.sourceAccountId ?? null,
+            targetAccountId: transaction.recurrence.targetAccountId ?? null,
+            isCardExpense: transaction.recurrence.isCardExpense ?? null,
+            cardType: transaction.recurrence.cardType ?? null,
+            metadata: transaction.recurrence.metadata,
           }
         : null,
     };
   }
 
-  // Get by trasnsactionType and by month
-  async getTransactionsByType(
+  async findAllTransactions(
     userId: string,
-    transactionType: TransactionType,
-    filters?: { month?: string }
-  ): Promise<TransactionResponse[]> {
-    const whereClause: Prisma.TransactionWhereInput = {
-      userId,
-      type: transactionType,
-    };
-    if (filters?.month) {
-      const [year, month] = filters.month.split("-");
-      if (!year || !month) return [];
-      whereClause.date = {
-        gte: new Date(+year, +month - 1, 1),
-        lte: new Date(+year, +month, 1),
-      };
+    month?: string,
+  ): Promise<TransactionDTO[]> {
+    if (!userId) {
+      throw new Error("User id is required");
     }
-    const transactions = await prisma.transaction.findMany({
-      where: whereClause,
-      include: {
-        category: true,
-        sourceAccount: true,
-        targetAccount: true,
-        recurrence: true,
-      },
-      orderBy: { date: "desc" },
-    });
 
-    return transactions.map((tx) => this.mapTransactionToResponse(tx));
+    let startDate: Date | undefined;
+    let endDate: Date | undefined;
+
+    if (month) {
+      const [year, m] = month.split("-").map(Number);
+      if (year && m) {
+        startDate = new Date(year, m - 1, 1);
+        endDate = new Date(year, m, 0, 23, 59, 59, 999); // Last day of the month
+      }
+    }
+
+    const transactions = await this.transactionRepository.getTransactions(
+      userId,
+      { startDate, endDate },
+    );
+
+    if (!transactions) {
+      throw new Error("Transactions not found");
+    }
+    return transactions.map((transaction) =>
+      this.mapToTransactionDTO(transaction),
+    );
   }
 
-  // GET transaction by id
-  async getTransactionById(
-    transactionId: number
-  ): Promise<TransactionResponse> {
-    const transaction = await prisma.transaction.findUnique({
-      where: { id: transactionId },
-      include: TRANSACTION_INCLUDES,
-    });
+  async findTransactionById(
+    userId: string,
+    transactionId: string,
+  ): Promise<TransactionDTO> {
+    if (!transactionId) {
+      throw new Error("Transaction id is required");
+    }
+
+    if (!userId) {
+      throw new Error("User id is required");
+    }
+    const transaction = await this.transactionRepository.getTransactionById(
+      userId,
+      transactionId,
+    );
 
     if (!transaction) {
-      throw new Error(`Transaction with id ${transactionId} not found`);
-      // Or return a default/empty response if your design allows it
+      throw new Error("Transaction not found");
     }
-    return this.mapTransactionToResponse(transaction);
+
+    return this.mapToTransactionDTO(transaction);
   }
 
-  // CREATE transaction with balance updates
-  async createTransaction(userId: string, data: CreateTransactionInput) {
-    return await prisma.$transaction(async (tx) => {
-      // 1. Create the transaction
-      const transaction = await tx.transaction.create({
-        data: {
-          userId,
-          type: data.type,
-          amount: new Prisma.Decimal(data.amount),
-          date: data.date,
-          description: data.description,
-          categoryId: data.categoryId,
-          sourceAccountId: data.sourceAccountId,
-          targetAccountId: data.targetAccountId,
-          recurrenceId: data.recurrenceId,
-          metadata: data.metadata as Prisma.InputJsonValue,
-        },
-        include: {
-          category: true,
-          sourceAccount: true,
-          targetAccount: true,
-        },
-      });
+  async createTransaction(
+    userId: string,
+    data: CreateTransactionInput,
+  ): Promise<TransactionDTO> {
+    // 1. Validation
+    const { isValid, errors } = validateTransactionType(data);
+    if (!isValid) {
+      throw new Error(`Validation failed: ${JSON.stringify(errors)}`);
+    }
 
-      // 2. Update account balances based on transaction type
-      switch (data.type) {
-        case "EXPENSE":
-        case "PAYMENT":
-          if (data.sourceAccountId) {
-            await tx.account.update({
-              where: { id: data.sourceAccountId },
-              data: {
-                balance: {
-                  decrement: new Prisma.Decimal(data.amount),
-                },
-              },
-            });
-          }
-          break;
+    // 2. Atomic Transaction
+    const result = await prisma.$transaction(async (tx) => {
+      const amount = new Prisma.Decimal(data.amount);
 
-        case "INCOME":
-        case "RETURN":
-          if (data.targetAccountId) {
-            await tx.account.update({
-              where: { id: data.targetAccountId },
-              data: {
-                balance: {
-                  increment: new Prisma.Decimal(data.amount),
-                },
-              },
-            });
-          }
-          break;
+      // A. Handle Recurrence (Existing or New)
+      let finalRecurrenceId = data.recurrenceId;
+      let partNumber = undefined;
 
-        case "TRANSFER":
-          if (data.sourceAccountId && data.targetAccountId) {
-            // Deduct from source
-            await tx.account.update({
-              where: { id: data.sourceAccountId },
-              data: {
-                balance: {
-                  decrement: new Prisma.Decimal(data.amount),
-                },
-              },
-            });
+      if (data.isRecurrence && data.frequency) {
+        // Create new recurrence
+        const recurrence = await this.recurrenceRepository.saveRecurrence(
+          {
+            userId,
+            name: data.description,
+            type: data.type,
+            amount,
+            frequency: data.frequency as RecurrenceType,
+            totalParts: data.totalParts,
+            currentPart: 1,
+            startDate: new Date(data.date),
+            nextDate: calculateNextDate(
+              new Date(data.date),
+              data.frequency as RecurrenceType,
+            ),
+            categoryId: data.categoryId,
+            sourceAccountId: data.sourceAccountId,
+            targetAccountId: data.targetAccountId,
+          },
+          tx,
+        );
+        finalRecurrenceId = recurrence.id;
+        partNumber = 1;
+      } else if (data.recurrenceId) {
+        // Update existing recurrence
+        const recurrence = await this.recurrenceRepository.getRecurrenceById(
+          data.recurrenceId,
+        );
 
-            // Add to target
-            await tx.account.update({
-              where: { id: data.targetAccountId },
-              data: {
-                balance: {
-                  increment: new Prisma.Decimal(data.amount),
-                },
-              },
-            });
-          }
-          break;
+        if (recurrence && recurrence.userId === userId) {
+          const newCurrentPart = recurrence.currentPart + 1;
+          const isActive = recurrence.totalParts
+            ? newCurrentPart < recurrence.totalParts
+            : true;
 
-        case "INVESTMENT":
-          if (data.sourceAccountId) {
-            await tx.account.update({
-              where: { id: data.sourceAccountId },
-              data: {
-                balance: {
-                  decrement: new Prisma.Decimal(data.amount),
-                },
-              },
-            });
-          }
-          break;
-      }
-
-      // 3. Update recurrence if linked
-      if (data.recurrenceId) {
-        const recurrence = await tx.recurrence.findUnique({
-          where: { id: data.recurrenceId },
-        });
-
-        if (recurrence) {
-          const newCurrentPart = (recurrence.currentPart || 0) + 1;
-          const isComplete =
-            recurrence.totalParts !== null &&
-            newCurrentPart >= recurrence.totalParts;
-
-          // Calculate next date based on frequency
-          const nextDate = this.calculateNextDate(
-            data.date,
-            recurrence.frequency
+          const nextDate = calculateNextDate(
+            recurrence.nextDate || new Date(),
+            recurrence.frequency,
           );
 
-          await tx.recurrence.update({
-            where: { id: data.recurrenceId },
-            data: {
+          await this.recurrenceRepository.updateRecurrence(
+            recurrence.id,
+            {
               currentPart: newCurrentPart,
-              nextDate: isComplete ? null : nextDate,
-              active: !isComplete,
+              active: isActive,
+              nextDate: isActive ? nextDate : null,
             },
-          });
+            tx,
+          );
+          partNumber = newCurrentPart;
         }
+      }
+
+      // B. Create the transaction row
+      const finalData = {
+        type: data.type,
+        amount,
+        date: new Date(data.date),
+        description: data.description,
+        categoryId: data.categoryId,
+        sourceAccountId: data.sourceAccountId,
+        targetAccountId: data.targetAccountId,
+        userId,
+        recurrenceId: finalRecurrenceId,
+        recurrencePartNumber: partNumber,
+        metadata: data.metadata as Prisma.InputJsonValue,
+      };
+
+      const transaction = await this.transactionRepository.saveTransaction(
+        finalData,
+        tx,
+      );
+
+      // C. Update Account balance(s)
+      switch (data.type) {
+        case TransactionType.EXPENSE:
+        case TransactionType.PAYMENT:
+          if (data.sourceAccountId) {
+            await this.accountRepository.updateBalance(
+              data.sourceAccountId,
+              amount,
+              "decrement",
+              tx,
+            );
+          }
+          break;
+
+        case TransactionType.INCOME:
+          if (data.targetAccountId) {
+            await this.accountRepository.updateBalance(
+              data.targetAccountId,
+              amount,
+              "increment",
+              tx,
+            );
+          }
+          break;
+
+        case TransactionType.TRANSFER:
+        case TransactionType.INVESTMENT:
+          if (data.sourceAccountId) {
+            await this.accountRepository.updateBalance(
+              data.sourceAccountId,
+              amount,
+              "decrement",
+              tx,
+            );
+          }
+          if (data.targetAccountId) {
+            await this.accountRepository.updateBalance(
+              data.targetAccountId,
+              amount,
+              "increment",
+              tx,
+            );
+          }
+          break;
+
+        case TransactionType.RETURN:
+          if (data.targetAccountId) {
+            await this.accountRepository.updateBalance(
+              data.targetAccountId,
+              amount,
+              "increment",
+              tx,
+            );
+          }
+          break;
       }
 
       return transaction;
     });
-  }
 
-  // Helper: Calculate next recurrence date
-  private calculateNextDate(
-    currentDate: Date,
-    frequency: "MONTHLY" | "WEEKLY" | "YEARLY" | "INSTALLMENT"
-  ): Date {
-    const next = new Date(currentDate);
-
-    switch (frequency) {
-      case "MONTHLY":
-      case "INSTALLMENT":
-        next.setMonth(next.getMonth() + 1);
-        break;
-      case "WEEKLY":
-        next.setDate(next.getDate() + 7);
-        break;
-      case "YEARLY":
-        next.setFullYear(next.getFullYear() + 1);
-        break;
-    }
-
-    return next;
+    return this.mapToTransactionDTO(result);
   }
 }
