@@ -12,6 +12,7 @@ export interface BudgetInterface {
   color: string;
 }
 
+// TODO: Move BUDGET_CONFIG to a user-configurable source (DB or config file)
 // Hardcoded limits & colors per BudgetCategory
 const BUDGET_CONFIG: Record<BudgetCategory, { limit: number; color: string }> =
   {

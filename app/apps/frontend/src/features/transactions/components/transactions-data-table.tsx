@@ -8,10 +8,11 @@ import { transactionsColumns } from "./columns";
 import { TransactionDTO } from "@repo/shared";
 import { TransactionViewForm } from "./transactions-view-form";
 import { MonthSelector } from "@/components/data-display/data-table/month-selector";
+import { getCurrentMonth, getCurrentYear } from "@/lib/date-utils";
 
 export function TransactionsDataTable() {
-  const [month, setMonth] = useState(new Date().getMonth());
-  const year = new Date().getFullYear();
+  const [month, setMonth] = useState(getCurrentMonth() - 1);
+  const year = getCurrentYear();
   const { data: transactions = [] } = useTransactionsByMonth(month + 1, year);
 
   const [selectedTransaction, setSelectedTransaction] =

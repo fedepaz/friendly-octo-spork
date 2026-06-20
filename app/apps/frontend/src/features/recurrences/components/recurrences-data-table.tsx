@@ -9,10 +9,11 @@ import { RecurrenceDTO, TransactionType } from "@repo/shared";
 import { RecurrenceViewForm } from "./recurrence-view-form";
 import { MonthSelector } from "@/components/data-display/data-table/month-selector";
 import { TransTypeSelector } from "@/components/data-display/data-table/transType-selector";
+import { getCurrentMonth, getCurrentYear } from "@/lib/date-utils";
 
 export function RecurrencesDataTable() {
-  const [month, setMonth] = useState(new Date().getMonth());
-  const year = new Date().getFullYear();
+  const [month, setMonth] = useState(getCurrentMonth() - 1);
+  const year = getCurrentYear();
   const [transactionType, setTransactionType] =
     useState<TransactionType>("EXPENSE");
   const { data: recurrences = [] } = useRecurrencesByMonth(

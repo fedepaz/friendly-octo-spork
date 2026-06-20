@@ -46,7 +46,10 @@ import { RequestIdMiddleware } from './shared/middleware/request-id.middleware';
         redact: [
           'req.headers.authorization',
           'req.body.password',
+          'req.body.newPassword',
+          'req.body.currentPassword',
           'req.body.token',
+          'req.body.refreshToken',
         ],
         customProps: (req: IncomingMessage) => ({
           correlationId: req.headers?.['x-correlation-id'],

@@ -18,10 +18,11 @@ import {
 } from "../types/card.type";
 import { cn, formatCurrency } from "@/lib/utils";
 import { Repeat, ShoppingCart, ArrowLeftRight, Banknote } from "lucide-react";
+import { getCurrentMonth, getCurrentYear } from "@/lib/date-utils";
 
 export function CardsDataTable() {
-  const [month, setMonth] = useState(new Date().getMonth());
-  const year = new Date().getFullYear();
+  const [month, setMonth] = useState(getCurrentMonth() - 1);
+  const year = getCurrentYear();
   const { data } = useCardTransactionsByMonth(year, month + 1);
 
   const [selectedCardTransaction, setSelectedCardTransaction] =

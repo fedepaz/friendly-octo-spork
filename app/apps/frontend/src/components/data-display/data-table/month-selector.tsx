@@ -18,6 +18,7 @@ interface MonthSelectorProps {
 
 import { Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getCurrentMonth } from "@/lib/date-utils";
 
 const MONTHS = [
   "Enero",
@@ -36,7 +37,7 @@ const MONTHS = [
 
 export function MonthSelector({ onMonthChange }: MonthSelectorProps) {
   const breakpoint = useBreakpoint();
-  const [month, setMonth] = useState(new Date().getMonth());
+  const [month, setMonth] = useState(getCurrentMonth() - 1);
 
   useEffect(() => {
     onMonthChange(month);
