@@ -52,6 +52,11 @@ To provide the best possible perceived performance, we implement a two-tiered lo
 **Level 2: Granular Content Streaming (In-Page `<Suspense>`)**
 - **Convention**: Wrap data-fetching components in a `<Suspense>` boundary using colocated skeletons (`{ComponentName}Skeleton.tsx`).
 
+**Level 3: Modal/Wizard Nested Suspense (Inner Content)**
+- **Convention**: When a wizard or modal step triggers a `useSuspenseQuery`, place the `<Suspense>` boundary around only the step's content area, not the container shell.
+- **Why**: The modal's backdrop, header, step indicator, and footer remain visible while the inner content loads — avoiding a visual "blink" where the entire modal disappears and reappears.
+- **Pattern**: The shell component (e.g., `WizardModal`) stays outside `<Suspense>`, and only `{renderStep()}` inside the content area is wrapped.
+
 ## Design Standards
 
 ### 1. Visual Language

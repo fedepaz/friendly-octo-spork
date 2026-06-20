@@ -9,15 +9,12 @@ import {
   useMonthlyIncomeExpense,
   useRecentAccounts,
 } from "../../hooks/dashboardHooks";
-import { LoadingSpinner } from "@/components/common/loading-spinner";
 import { formatCurrency } from "@/lib/utils";
 import { useWizard } from "@/providers/wizard-form-provider";
 
 export function KPIsDashboard() {
-  const { data: accounts = [], isLoading: isLoadingAccounts } =
-    useRecentAccounts();
-  const { data: incomeExpenseData = [], isLoading: isLoadingIncome } =
-    useMonthlyIncomeExpense();
+  const { data: accounts = [] } = useRecentAccounts();
+  const { data: incomeExpenseData = [] } = useMonthlyIncomeExpense();
   const { openTransaction } = useWizard();
   const totalNetWorth = accounts.reduce(
     (sum, acc) => sum + parseFloat(acc.balance),
@@ -26,10 +23,6 @@ export function KPIsDashboard() {
   const monthlyIncome = incomeExpenseData[incomeExpenseData.length - 1].income;
   const monthlyExpenses =
     incomeExpenseData[incomeExpenseData.length - 1].expenses;
-
-  if (isLoadingAccounts || isLoadingIncome) {
-    return <LoadingSpinner />;
-  }
 
   const handleNewTransaction = () => {
     openTransaction();

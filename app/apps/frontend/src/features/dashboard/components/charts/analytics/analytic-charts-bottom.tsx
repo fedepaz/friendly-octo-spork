@@ -19,14 +19,9 @@ import {
 } from "@/components/ui/card";
 import { CustomTooltip } from "@/features/dashboard/utils/utils";
 import { useMonthlyIncomeExpense } from "@/features/dashboard/hooks/dashboardHooks";
-import { LoadingSpinner } from "@/components/common/loading-spinner";
 
 export function AnalyticChartsBottom() {
-  const { data: incomeExpenseData = [], isLoading } = useMonthlyIncomeExpense();
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
+  const { data: incomeExpenseData = [] } = useMonthlyIncomeExpense();
   return (
     <Card className="flex-1 bg-card/20 border-border/40 shadow-premium rounded-none min-h-75 flex flex-col overflow-hidden">
       <CardHeader className="pb-4 px-5 pt-5 flex flex-row items-center justify-between shrink-0">

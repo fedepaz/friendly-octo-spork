@@ -1,6 +1,8 @@
 // src/features/createTransaction/components/FormContainer.tsx
 
+import { Suspense } from "react";
 import { useFormContext } from "react-hook-form";
+import { WizardStepSkeleton } from "./transactions-wizard-skeleton";
 
 import { StepAccountsComponent } from "./steps/stepAccount-form";
 import { StepAmountComponent } from "./steps/stepAmount-form";
@@ -138,7 +140,9 @@ export function FormContainer({
     >
       <StepIndicator current={currentVisibleIndex} total={totalVisibleSteps} />
       <div className="flex-1 overflow-y-auto px-5 py-6 animate-premium-in">
-        {renderStep()}
+        <Suspense fallback={<WizardStepSkeleton />}>
+          {renderStep()}
+        </Suspense>
       </div>
       <WizardFooter
         onBack={currentVisibleIndex > 0 ? handleBack : undefined}

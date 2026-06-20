@@ -69,6 +69,18 @@ When building unified views (like the Card Statement) that combine different bac
 - **React Query**: Central to data fetching and mutations, providing caching, background refetching, and error handling.
 - **Optimistic UI**: Implement optimistic updates for a snappy user experience where appropriate.
 - **Global State**: Use React Query for server state; for true client-side global state, React Context is preferred.
+- **Query Invalidation Map**: All data mutations use the centralized map in
+  `src/lib/query-invalidation-map.ts`. Each mutation is registered with the
+  query keys it invalidates on success. Mutation hooks never call
+  `invalidateQueries` inline — they read from the map. This ensures every
+  mutation refreshes all related screens automatically.
+- **`useSuspenseQuery` Pattern**: All data-fetching queries use `useSuspenseQuery` (not `useQuery`). This means:
+  - Components do NOT destructure `isLoading` — it is always `undefined`.
+  - Data is guaranteed to be available when the component renders (or a `<Suspense>` fallback is shown).
+  - Each query must have a `<Suspense>` boundary above it — the boundary should be as granular as possible (wrap only what depends on the data).
+  - **Auth exceptions**: `useAuthUserProfile` and `usePermissions` still use `useQuery` with `enabled` flag — auth must not suspend to avoid blocking the entire app on first load.
+- **Nested Suspense**: For modals/wizards, place `<Suspense>` inside the shell component (only around the content that fetches data), not outside the entire modal. This keeps the backdrop, header, and footer visible while content loads.
+- **Colocated Skeletons**: Every `<Suspense>` fallback is a dedicated skeleton component colocated with the feature it represents, matching the exact layout of the real content.
 
 ## Implementation Workflow
 

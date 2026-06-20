@@ -4,18 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { PremiumAmountCell } from "@/components/data-display/data-table";
 import { useBudgetSummary } from "@/features/dashboard/hooks/dashboardHooks";
-import { LoadingSpinner } from "@/components/common/loading-spinner";
 
 export function SidebarChartsBudget() {
-  const { data: budgets, isLoading } = useBudgetSummary();
+  const { data: budgets } = useBudgetSummary();
 
   function getBudgetPercentage(spent: string, limit: string) {
     const percentage = (parseFloat(spent) / parseFloat(limit)) * 100;
     return Math.round(percentage);
-  }
-
-  if (isLoading) {
-    return <LoadingSpinner />;
   }
   return (
     <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col max-h-[35%] overflow-hidden">

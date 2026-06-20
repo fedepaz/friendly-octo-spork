@@ -3,14 +3,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PremiumAmountCell } from "@/components/data-display/data-table";
 import { useRecentAccounts } from "@/features/dashboard/hooks/dashboardHooks";
-import { LoadingSpinner } from "@/components/common/loading-spinner";
 
 export function SidebarChartsAccounts() {
-  const { data: accounts = [], isLoading } = useRecentAccounts();
-
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
+  const { data: accounts = [] } = useRecentAccounts();
   return (
     <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col max-h-[25%] overflow-hidden">
       <CardHeader className="pb-2 px-5 pt-4 shrink-0">
