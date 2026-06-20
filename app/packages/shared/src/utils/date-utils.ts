@@ -20,6 +20,9 @@ export function calculateNextDate(
     case "YEARLY":
       next.setFullYear(next.getFullYear() + 1);
       break;
+    case "INSTALLMENT":
+      next.setMonth(next.getMonth() + 1);
+      break;
     default:
       next.setMonth(next.getMonth() + 1);
   }
@@ -28,7 +31,7 @@ export function calculateNextDate(
   now.setHours(12, 0, 0, 0);
   next.setHours(12, 0, 0, 0);
 
-  while (next < now) {
+    while (next < now) {
     switch (frequency) {
       case "MONTHLY":
         next.setMonth(next.getMonth() + 1);
@@ -38,6 +41,9 @@ export function calculateNextDate(
         break;
       case "YEARLY":
         next.setFullYear(next.getFullYear() + 1);
+        break;
+      case "INSTALLMENT":
+        next.setMonth(next.getMonth() + 1);
         break;
       default:
         next.setMonth(next.getMonth() + 1);

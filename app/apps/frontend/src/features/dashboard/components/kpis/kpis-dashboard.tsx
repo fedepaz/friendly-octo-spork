@@ -24,6 +24,10 @@ export function KPIsDashboard() {
   const monthlyExpenses =
     incomeExpenseData[incomeExpenseData.length - 1].expenses;
 
+  const currentMonth = new Date().toLocaleDateString("es-AR", {
+    month: "long",
+  });
+
   const handleNewTransaction = () => {
     openTransaction();
   };
@@ -43,9 +47,6 @@ export function KPIsDashboard() {
               {formatCurrency(totalNetWorth)}
             </p>
             <div className="flex items-center gap-1.5 mt-1">
-              <span className="text-[10px] font-bold text-secondary tracking-tight">
-                +8.2%
-              </span>
               <span className="text-[10px] text-muted-foreground/40 uppercase font-bold tracking-tighter">
                 vs mes anterior
               </span>
@@ -56,7 +57,7 @@ export function KPIsDashboard() {
         <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
           <CardHeader className="pb-1 px-4 pt-4">
             <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-              Ingresos Junio
+              Ingresos {currentMonth}
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 pb-4">
@@ -72,7 +73,7 @@ export function KPIsDashboard() {
         <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
           <CardHeader className="pb-1 px-4 pt-4">
             <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-              Gastos Junio
+              Gastos {currentMonth}
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 pb-4">

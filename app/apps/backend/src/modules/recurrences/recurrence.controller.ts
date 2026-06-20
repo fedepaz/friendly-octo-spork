@@ -1,6 +1,14 @@
 // backend/src/modules/recurrences/recurrence.controller.ts
 
-import { Controller, Get, HttpCode, HttpStatus, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { RecurrenceService } from './recurrence.service';
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
 import { AuthUser } from '../auth/types/auth-user.type';
@@ -22,7 +30,7 @@ export class RecurrenceController {
   @HttpCode(HttpStatus.OK)
   async getRecurrenceById(
     @CurrentUser() user: AuthUser,
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
   ) {
     return this.recurrenceService.getRecurrenceById(user.id, id);
   }
@@ -31,8 +39,8 @@ export class RecurrenceController {
   @HttpCode(HttpStatus.OK)
   async getRecurrencesByMonth(
     @CurrentUser() user: AuthUser,
-    @Param('month') month: number,
-    @Param('year') year: number,
+    @Param('month', ParseIntPipe) month: number,
+    @Param('year', ParseIntPipe) year: number,
     @Param('type') transactionType: TransactionType,
   ): Promise<RecurrenceDTO[]> {
     return this.recurrenceService.getRecurrencesByMonth(

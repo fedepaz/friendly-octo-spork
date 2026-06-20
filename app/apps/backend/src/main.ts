@@ -28,21 +28,11 @@ async function bootstrap() {
     .map((origin) => origin.trim())
     .filter(Boolean);
 
-  const DATABASE_URL = configService.get<string>(
-    'config.database_dev.databaseUrl',
-  );
-  const DATABASE_HOST = configService.get<string>('config.database_dev.host');
-  const DATABASE_PORT = configService.get<number>('config.database_dev.port');
-  const DATABASE_DATABASE_NAME = configService.get<string>(
-    'config.database_dev.databaseName',
-  );
-  const DATABASE_USER = configService.get<string>('config.database_dev.user');
-
   app.enableCors({
     origin: corsOrigins,
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    methods: ['GET', 'POST', 'OPTIONS'],
   });
 
   // Enable shutdown hooks for graceful database connection closing
@@ -54,14 +44,6 @@ async function bootstrap() {
       port,
       environment: env,
       corsOrigins,
-    });
-
-    console.log('🚀 Database connection', {
-      DATABASE_URL,
-      DATABASE_HOST,
-      DATABASE_PORT,
-      DATABASE_DATABASE_NAME,
-      DATABASE_USER,
     });
   } catch (error) {
     console.error('❌ BACKEND STARTUP FAILED');

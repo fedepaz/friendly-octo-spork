@@ -17,10 +17,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { netWorthData } from "@/features/dashboard/api/dashboardService";
+import { useMonthlyIncomeExpense } from "../../../hooks/dashboardHooks";
 import { CustomTooltip } from "@/features/dashboard/utils/utils";
 
 export function AnalyticChartsMain() {
+  const { data: incomeExpenseData = [] } = useMonthlyIncomeExpense();
+
+  const netWorthData = incomeExpenseData.map((item) => ({
+    month: item.month,
+    value: parseFloat(item.income) - parseFloat(item.expenses),
+  }));
+
   return (
     <Card className="flex-1 bg-card/20 border-border/40 shadow-premium rounded-none min-h-75 flex flex-col overflow-hidden">
       <CardHeader className="pb-4 px-5 pt-5 flex flex-row items-center justify-between shrink-0">

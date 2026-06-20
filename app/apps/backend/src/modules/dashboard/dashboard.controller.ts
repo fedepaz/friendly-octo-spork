@@ -1,6 +1,13 @@
 // src/modules/dashboard/dashboard.controller.ts
 
-import { Controller, Get, HttpCode, HttpStatus, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import {
   AccountDTO,
@@ -19,8 +26,8 @@ export class DashboardController {
   @HttpCode(HttpStatus.OK)
   async getDashboard(
     @CurrentUser() user: AuthUser,
-    @Param('month') month: number,
-    @Param('year') year: number,
+    @Param('month', ParseIntPipe) month: number,
+    @Param('year', ParseIntPipe) year: number,
   ): Promise<BudgetDTO[]> {
     return this.dashboardService.getBudgetSummary(user.id, month, year);
   }
@@ -36,7 +43,7 @@ export class DashboardController {
   @HttpCode(HttpStatus.OK)
   async getMonthlyIncomeExpense(
     @CurrentUser() user: AuthUser,
-    @Param('months') months: number,
+    @Param('months', ParseIntPipe) months: number,
   ): Promise<IncomeExpenseDTO[]> {
     return this.dashboardService.getMonthlyIncomeExpense(user.id, months);
   }

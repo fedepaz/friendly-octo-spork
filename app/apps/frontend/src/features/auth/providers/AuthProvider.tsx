@@ -4,7 +4,7 @@
 import { createContext, useContext, useEffect } from "react";
 import {
   useAuthUserProfile,
-  userProfileQueryKeys,
+  authQueryKeys,
 } from "../hooks/use-authUser";
 import { useAuth } from "../hooks/useAuth";
 import {
@@ -38,10 +38,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (auth.isSignedIn) {
-      queryClient.invalidateQueries({ queryKey: userProfileQueryKeys.me() });
+      queryClient.invalidateQueries({ queryKey: authQueryKeys.profile() });
       queryClient.invalidateQueries({ queryKey: permissionsQueryKeys.me() });
     } else {
-      queryClient.removeQueries({ queryKey: userProfileQueryKeys.me() });
+      queryClient.removeQueries({ queryKey: authQueryKeys.profile() });
       queryClient.removeQueries({ queryKey: permissionsQueryKeys.me() });
     }
   }, [auth.isSignedIn, queryClient]);

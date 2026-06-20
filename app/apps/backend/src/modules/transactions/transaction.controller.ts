@@ -7,6 +7,8 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
+  ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
@@ -34,7 +36,7 @@ export class TransactionController {
   @HttpCode(HttpStatus.OK)
   async getTransactionById(
     @CurrentUser() user: AuthUser,
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
   ): Promise<TransactionDTO | null> {
     return this.transactionService.getTransactionById(user.id, id);
   }
@@ -43,8 +45,8 @@ export class TransactionController {
   @HttpCode(HttpStatus.OK)
   async getTransactionsByMonth(
     @CurrentUser() user: AuthUser,
-    @Param('month') month: number,
-    @Param('year') year: number,
+    @Param('month', ParseIntPipe) month: number,
+    @Param('year', ParseIntPipe) year: number,
   ): Promise<TransactionDTO[]> {
     return this.transactionService.getTransactionsByMonth(user.id, month, year);
   }

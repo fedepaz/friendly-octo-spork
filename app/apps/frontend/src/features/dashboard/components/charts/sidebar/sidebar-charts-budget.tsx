@@ -53,13 +53,13 @@ export function SidebarChartsBudget() {
                 <PremiumAmountCell
                   amount={budget.spent}
                   currency="ARS"
-                  isNegative={budget.spent < 0}
+                  isNegative={Number(budget.spent) < 0}
                 />
 
                 <PremiumAmountCell
                   amount={budget.limit}
                   currency="ARS"
-                  isNegative={budget.limit < 0}
+                  isNegative={Number(budget.limit) < 0}
                 />
               </div>
             </div>

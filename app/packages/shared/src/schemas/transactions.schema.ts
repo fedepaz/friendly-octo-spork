@@ -26,6 +26,7 @@ export interface TransactionDTO {
   sourceAccountId?: string | null;
   targetAccountId?: string | null;
   recurrenceId?: string | null;
+  recurrenceName?: string | null;
   recurrencePartNumber?: number | null;
   isBudgetedExpense?: boolean | null;
   budgetCategory?: BudgetCategory | null;

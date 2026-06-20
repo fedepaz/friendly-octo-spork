@@ -100,7 +100,6 @@ export const transactionsColumns: ColumnDef<TransactionDTO>[] = [
     cell: ({ row }) => (
       <PremiumAmountCell
         amount={row.original.amount}
-        type={row.original.type}
       />
     ),
   },

@@ -74,8 +74,10 @@ export class AuthService {
       name: user.name,
     });
 
+    const defaultPassword = this.config.get<string>('config.defaultPassword');
     const isDefaultPassword =
-      dto.password === this.config.get('config.defaultPassword');
+      !!defaultPassword &&
+      (await bcrypt.compare(defaultPassword, user.passwordHash));
 
     return {
       user: {
@@ -231,8 +233,10 @@ export class AuthService {
       name: user.name,
     });
 
+    const defaultPassword = this.config.get<string>('config.defaultPassword');
     const isDefaultPassword =
-      dto.password === this.config.get('config.defaultPassword');
+      !!defaultPassword &&
+      (await bcrypt.compare(defaultPassword, passwordHash));
 
     return {
       user: {

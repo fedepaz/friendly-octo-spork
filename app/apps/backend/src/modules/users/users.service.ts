@@ -20,15 +20,18 @@ export class UsersService {
     if (!userId) throw new BadRequestException('UserId is required');
     this.logger.log(`Getting all users for userId: ${userId}`);
 
-    const users = await this.userRepository.getAllUsers();
+    const user = await this.userRepository.getUserById(userId);
+    if (!user) throw new NotFoundException('User not found');
 
-    return users.map((user) => ({
-      id: user.id,
-      name: user.name,
-      email: user.email || '',
-      isActive: !user.deletedAt,
-      createdAt: user.createdAt,
-    }));
+    return [
+      {
+        id: user.id,
+        name: user.name,
+        email: user.email || '',
+        isActive: !user.deletedAt,
+        createdAt: user.createdAt,
+      },
+    ];
   }
 
   async getProfile(userId: string): Promise<UserProfileDto> {

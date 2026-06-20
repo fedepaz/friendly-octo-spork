@@ -7,6 +7,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
 import { AccountService } from './account.service';
@@ -31,7 +32,10 @@ export class AccountController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  async getAccountById(@CurrentUser() user: AuthUser, @Param('id') id: string) {
+  async getAccountById(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ) {
     return this.accountsService.getAccountById(user.id, id);
   }
 

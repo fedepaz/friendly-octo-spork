@@ -136,6 +136,8 @@ model Transaction {
   @@index([categoryId])
   @@index([recurrenceId])
   @@index([userId, categoryId])
+  @@index([sourceAccountId])
+  @@index([targetAccountId])
 }
 
 enum TransactionType {
