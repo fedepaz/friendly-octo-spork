@@ -1,0 +1,97 @@
+// src/components/layout/user-menu.tsx
+"use client";
+
+import { useEffect, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "../ui/dialog";
+import { UserProfileInfo } from "./user-info";
+import { ChangePasswordForm } from "./user-password";
+import { useAuthContext } from "@/features/auth/providers/AuthProvider";
+import { Logo } from "../common/logo";
+
+interface UserMenuProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export function UserMenu({ open, onOpenChange }: UserMenuProps) {
+  const [tab, setTab] = useState<"info" | "password">("info");
+  const { userProfile, isLoading } = useAuthContext();
+
+  useEffect(() => {
+    if (open && !userProfile && !isLoading) {
+      onOpenChange(false);
+    }
+  }, [open, userProfile, isLoading, onOpenChange]);
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="p-0 sm:max-w-xl md:max-w-2xl bg-background/80 backdrop-blur-md border border-border shadow-lg rounded-lg [&>button]:hidden max-h-[90dvh] overflow-auto">
+        <div className="flex flex-col md:flex-row w-full font-sans">
+          {/* Sidebar */}
+          <nav className="flex-shrink-0 w-full md:w-40 bg-background/60 border-b md:border-b-0 md:border-r border-border p-2 md:p-4 space-x-2 md:space-x-0 space-y-0 md:space-y-2 overflow-x-auto">
+            <button
+              onClick={() => setTab("info")}
+              className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 cursor-pointer
+                ${
+                  tab === "info"
+                    ? "bg-primary/10 text-primary font-semibold"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                }
+              `}
+            >
+              Información de Perfil
+            </button>
+
+            <button
+              onClick={() => setTab("password")}
+              className={`flex-shrink-0 px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 cursor-pointer
+                ${
+                  tab === "password"
+                    ? "bg-primary/10 text-primary font-semibold"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                }
+              `}
+            >
+              Cambiar Contraseña
+            </button>
+          </nav>
+
+          {/* Content */}
+          <div className="flex-1 p-4 md:p-6 overflow-auto">
+            <div className="flex gap-2 items-center mb-4">
+              <div className="bg-gradient-to-r from-primary to-primary/80 px-3 py-1.5 shrink-0 rounded">
+                <div className="h-8 w-8  bg-primary-foreground/80 flex items-center justify-center">
+                  <Logo variant="icon" />
+                </div>
+              </div>
+              <DialogTitle className="text-xl font-semibold font-sans">
+                {tab === "info" && "Perfil de Usuario"}
+
+                {tab === "password" && "Cambiar Contraseña"}
+              </DialogTitle>
+              <DialogDescription className="sr-only">
+                Gestión de información de perfil, edición y cambio de contraseña
+              </DialogDescription>
+            </div>
+
+            {tab === "info" && <UserProfileInfo />}
+
+            {tab === "password" && (
+              <ChangePasswordForm
+                onClose={() => {
+                  setTab("info");
+                  onOpenChange(false);
+                }}
+              />
+            )}
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}

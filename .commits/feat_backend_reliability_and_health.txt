@@ -1,0 +1,10 @@
+feat(backend): implement robust PG adapter and adaptive health system
+
+- Migrate Prisma connection to `@prisma/adapter-pg` for better stability.
+- Implement `HealthModule` with adaptive caching and failure tracking.
+- Standardize environment variables naming (DATABASE_*).
+- Add `@Public()` decorator for unauthorized endpoint access.
+- Refactor Prisma schema to use native DB foreign key integrity.
+- Update architectural documentation to reflect new connectivity and reliability standards.
+- Add `pg` and `@prisma/adapter-pg` dependencies.
+- Fix tsconfig and nest-cli.json for optimized build and asset handling.

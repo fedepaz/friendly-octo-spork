@@ -1,0 +1,9 @@
+feat: enhance dashboard with account summary and pending bills; refactor transaction forms
+
+- Add AccountsSummary and PendingRecurrences components to the Dashboard.
+- Update DashboardRepository to calculate monthly stats and fetch pending recurrences.
+- Specialize transaction forms (New, Link, Base) to simplify logic and remove complex hx-targets.
+- Implement 'refreshDashboard' trigger on successful transactions for automatic UI updates.
+- Refine transaction schema validation for Investment/Return types.
+- Standardize Toast OOB pattern across transaction and account workflows.
+- Update documentation to reflect refreshDashboard protocol and HTMX-compatible validation responses.

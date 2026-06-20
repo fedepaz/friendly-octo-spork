@@ -1,0 +1,10 @@
+feat(backend): initialize NestJS stack and Prisma infrastructure (WIP)
+
+- Initialize NestJS backend in `app/apps/backend` with modular architecture.
+- Implement robust Prisma schema (Users, Accounts, Transactions, etc.).
+- Add enhanced `PrismaService` with retry logic and health checks.
+- Implement Repository pattern for core entities with userId scoping.
+- Set up logging infrastructure (pino) and monorepo configuration.
+- Update architectural documentation to reflect NestJS standards.
+
+WIP: Troubleshooting database connectivity in local/docker environment.

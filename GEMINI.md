@@ -8,44 +8,45 @@ This document outlines the specialized agents that assist in the development of 
 
 ---
 
-You are assisting in the development of a personal, single-user finance tracker app. The user is the only user (no multi-tenancy needed yet), and the goal is to replace a manual Excel sheet with a lightweight, server-rendered web app built with Bun + Hono + HTMX + Prisma + PostgreSQL (Docker).
+You are assisting in the development of a personal, single-user finance tracker app. The user is the only user (no multi-tenancy needed yet), and the goal is to replace a manual Excel sheet with a lightweight web app built with Next.js (Frontend), NestJS (Backend), Prisma (ORM), and PostgreSQL (Docker), managed in a monorepo with pnpm and Turbo.
 
 ### Core Philosophy:
 
-- One source of truth: All financial activity (income, expenses, recurring payments, investments) is stored as typed transactions in a single Transaction table (or equivalent), with clear categories and metadata.
-- No complex auth: For now, assume a single hardcoded user (or a simple User table for future scaling). Skip login flows unless explicitly requested.
-- Ultra-minimal UX: The interface must feel like a smart spreadsheet—fast, keyboard-friendly, and form-based. Use HTMX for dynamic interactions (inline edits, form submissions, partial updates) without client-side JS frameworks.
-- SSR-first: All pages are server-rendered with Hono JSX. No React hydration or SPAs.
+- One source of truth: All financial activity (income, expenses, recurring payments, investments) is stored as typed transactions in a single Transaction table, with clear categories and metadata.
+- **Debt Tracking**: The app uses a "Load & Settle" workflow for Credit Cards. Debt is tracked via `CARD` accounts. You load them with money from your bank to pay off accumulated expenses one-by-one.
+- No complex auth: For now, assume a single hardcoded user. Skip login flows unless explicitly requested.
+- Ultra-minimal UX: The interface must feel like a smart spreadsheet—fast, keyboard-friendly, and functional.
+- Shared Validation: Use Zod for validation schemas, shared across the monorepo in `packages/shared`.
 
 ## User Workflow (Key Mental Model):
 
 1. **Start of month**: User logs income (e.g., salary). System auto-calculates:
-   -Total income
-   -Pending recurring payments (bills, subscriptions)
-   -Available budget = income − fixed costs
-   -Optional: auto-reserve for investments
-2. **During month**: User logs daily expenses (groceries, coffee) and marks recurring payments as paid. System shows:
-   -Current balance
-   -Daily spending limit (based on remaining budget / days left)
-   -YTD or monthly spend totals
+   - Total income
+   - Pending recurring payments (subscriptions) and installments (loans/purchases)
+   - Available budget = income − fixed costs
+2. **During month**: 
+   - User logs daily expenses. 
+   - **Card Workflow**: User swipes card (Debt Gap increases). User transfers money to Card Account (Balance increases). User settles expenses (Balance decreases, Gap decreases).
+   - System shows current balance and daily spending limit.
 3. **End of month**: System generates a summary:
-   -Totals by category
-   -Variance vs. budget
-   -Suggestions (“You spent 20% more on food—consider lowering next month”)
-   -Auto-creates next month’s recurring payment skeleton
+   - Totals by category
+   - Variance vs. budget
+   - Auto-creates next month’s recurring payment/installment skeleton.
 
 ## Tech Constraints:
 
-- Stack: Bun runtime, Hono (with JSX), HTMX, Prisma ORM, Tailwind + Tabler UI
+- Stack: Next.js (Frontend), NestJS (Backend), Prisma ORM, Tailwind + UI Components
+- Package Management: pnpm + Turbo (Monorepo)
 - Database: PostgreSQL running in Docker
+- Validation: Zod (Shared)
 - No external APIs in MVP (manual entry only)
 - All data belongs to one user; no sharing, no roles
 
 ## Design Principle:
 
-“If it can be done in one HTML form with HTMX, do it. If it requires a modal or client-side state, reconsider.”
+“Keep it simple and functional. Use React components for high density and modern interactions.”
 
-- For icons, always use the `/icons/` methods to ensure consistency and maintainability.
+- For icons, maintain consistency and maintainability across the UI.
 
 **Always optimize for developer simplicity and user speed—not feature completeness**
 
@@ -74,7 +75,7 @@ When the user asks me to check and summarize changes in the codebase, I will fol
 
 ### Rule: Workflow for Conducting Research
 
-When the user asks a question that requires research (e.g., "how to implement X in Hono," "what is the best library for Y"), I will follow this protocol:
+When the user asks a question that requires research (e.g., "how to implement X in NestJS," "what is the best library for Y"), I will follow this protocol:
 
 1.  **Prioritize Specialized Documentation**: My first step will always be to seek structured, high-quality information using specialized tools. I will prioritize them in this order:
 
@@ -116,46 +117,63 @@ When the user asks me to **commit, push, or otherwise save new work**, I will ex
 
 ---
 
+### Rule: Workflow for UX/UI Feature Review
+
+When asked to review a new feature's UI/UX, follow this procedure:
+
+1.  **Activate Specialized Skill**: Use `activate_skill` with `ui-ux-pro-max`.
+2.  **Analyze Against Guidelines**: Evaluate the feature's components against `docs/agents/ux_agent_finance.md` and the `ui-ux-pro-max` intelligence.
+3.  **Check Core Areas**:
+    - **Color Tokens**: Verify use of OKLCH variables (no hardcoded hex/colors).
+    - **Responsiveness**: Ensure mobile-first and adaptive layouts (Zero-Scroll standard).
+    - **Skeleton Strategy**: Verify Level 1 (`loading.tsx`) and Level 2 (`Suspense`) implementations.
+    - **Component Patterns**: Check for `SlideOverForm`, `DataTable`, etc.
+4.  **Propose Improvements**: Suggest specific code changes to align with standards.
+5.  **Update Documentation**: Append new components to `docs/project-documentation/components-list.md`.
+6.  **Seek Approval**: Present the analysis and documentation updates to the user.
+
+---
+
 ## Agent Roster
 
 ### 1. Product Manager
 
 - **Name:** `pm_agent_finance`
-- **Description:** Transform finance tracking requirements into structured product plans. Create user stories for expense tracking, payment management, and financial reporting features.
+- **Description:** Transform finance tracking requirements into structured product plans for Next.js/NestJS. Create user stories for expense tracking, payment management, and financial reporting features.
 
 ### 2. System Architect
 
 - **Name:** `architect_agent_finance`
-- **Description:** Transform product requirements into technical architecture for finance tracker. Design Prisma schemas, Hono API contracts, and HTMX interaction patterns.
+- **Description:** Transform product requirements into technical architecture for a Next.js/NestJS monorepo. Design Prisma schemas, NestJS modules, and React component hierarchies.
 
 ### 3. Backend Engineer
 
 - **Name:** `backend_agent_finance`
-- **Description:** Implement Hono APIs, Prisma models, and business logic for finance tracker. Handle database migrations, validation, and server-side HTML rendering.
+- **Description:** Implement NestJS modules, Prisma models, and business logic. Handle database migrations, validation (Zod), and API development.
 
 ### 4. Frontend Engineer
 
 - **Name:** `frontend_agent_finance`
-- **Description:** Implement HTMX + Tabler UI interfaces with server-side rendering. Create Hono JSX templates, HTMX interactions, and Tailwind styling according to design specs.
+- **Description:** Implement Next.js interfaces with React components. Create page layouts, interactive components, and Tailwind styling.
 
 ### 5. DevOps Engineer
 
 - **Name:** `devops_agent_finance`
-- **Description:** Handle containerization, deployment, and infrastructure for finance tracker. Focus on Docker Compose orchestration on a local server with Nginx.
+- **Description:** Handle containerization, deployment, and infrastructure for the monorepo. Focus on Docker Compose orchestration and CI/CD for Next.js/NestJS.
 
 ### 6. QA & Test Engineer
 
 - **Name:** `qa_agent_finance`
-- **Description:** Test automation for Bun + Hono + HTMX stack. Write backend API tests, HTMX interaction tests, and end-to-end user journey validation.
+- **Description:** Test automation for Next.js + NestJS. Write unit tests (Jest), API tests (Supertest), and end-to-end user journey validation.
 
 ### 7. Security Analyst
 
 - **Name:** `security_agent_finance`
-- **Description:** Security analysis for Bun + Hono + Prisma + Clerk stack. Focus on financial data protection, authentication security, and API vulnerabilities.
+- **Description:** Security analysis for the Next.js/NestJS/Prisma stack. Focus on financial data protection, authentication security, and API vulnerabilities.
 
 ### 8. UX/UI Designer
 
 - **Name:** `ux_agent_finance`
-- **Description:** Design user experiences and visual interfaces for finance tracker using Tabler UI + Tailwind. Create HTMX-compatible interaction patterns and SSR-optimized designs.
+- **Description:** Design user experiences and visual interfaces for Next.js. Create modern, responsive interaction patterns and React-optimized designs.
 
 ---
