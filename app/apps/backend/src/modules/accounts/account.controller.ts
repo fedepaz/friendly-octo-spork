@@ -34,7 +34,7 @@ export class AccountController {
   async getAccountById(
     @CurrentUser() user: AuthUser,
     @Param('id') id: string,
-  ) {
+  ): Promise<AccountDTO | null> {
     return this.accountsService.getAccountById(user.id, id);
   }
 

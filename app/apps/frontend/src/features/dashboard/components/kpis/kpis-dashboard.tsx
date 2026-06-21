@@ -15,7 +15,7 @@ import { useWizard } from "@/providers/wizard-form-provider";
 export function KPIsDashboard() {
   const { data: accounts = [] } = useRecentAccounts();
   const { data: incomeExpenseData = [] } = useMonthlyIncomeExpense();
-  const { openTransaction } = useWizard();
+  const { openTransaction, openCard } = useWizard();
   const totalNetWorth = accounts.reduce(
     (sum, acc) => sum + parseFloat(acc.balance),
     0,
@@ -30,6 +30,10 @@ export function KPIsDashboard() {
 
   const handleNewTransaction = () => {
     openTransaction();
+  };
+
+  const handleCloseCard = () => {
+    openCard();
   };
 
   return (
@@ -87,6 +91,13 @@ export function KPIsDashboard() {
         </Card>
       </div>
       <div className="lg:col-span-4 grid grid-cols-1  gap-3">
+        <Button
+          onClick={handleCloseCard}
+          className="font-black text-xs uppercase tracking-widest rounded-none shadow-premium hover:opacity-90 transition-premium group"
+        >
+          <PlusIcon className="mr-2 h-4 w-4 group-hover:rotate-90 transition-premium" />
+          Cierre Tarjeta
+        </Button>
         <Button
           onClick={handleNewTransaction}
           className="font-black text-xs uppercase tracking-widest rounded-none shadow-premium hover:opacity-90 transition-premium group"

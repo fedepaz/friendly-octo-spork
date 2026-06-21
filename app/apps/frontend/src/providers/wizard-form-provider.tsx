@@ -3,14 +3,17 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 import { SmartFormProvider } from "@/features/createTransaction";
-import { SmartFormProviderRecurrence } from "@/features/updateRecurrence/providers/SmartFormProviderRecurrence";
+import { SmartFormProviderRecurrence } from "@/features/updateRecurrence/";
+import { SmartFormProviderCard } from "@/features/updateCardBalance";
 
-type WizardType = "transaction" | "recurrence" | null;
+type WizardType = "transaction" | "recurrence" | "card" | null;
 
 interface WizardContextType {
   openTransaction: () => void;
   openRecurrence: (id: string) => void;
+  openCard: () => void;
   closeWizard: () => void;
+
   activeWizard: WizardType;
   recurrenceId: string | null;
 }
@@ -36,11 +39,17 @@ export function WizardFormProvider({ children }: { children: ReactNode }) {
     setRecurrenceId(null);
   };
 
+  const openCard = () => {
+    setActiveWizard("card");
+    setRecurrenceId(null);
+  };
+
   return (
     <WizardContext.Provider
       value={{
         openTransaction,
         openRecurrence,
+        openCard,
         closeWizard,
         activeWizard,
         recurrenceId,
@@ -66,6 +75,10 @@ function WizardPortal() {
         onClose={closeWizard}
       />
     );
+  }
+
+  if (activeWizard === "card") {
+    return <SmartFormProviderCard onClose={closeWizard} />;
   }
 
   return null;
