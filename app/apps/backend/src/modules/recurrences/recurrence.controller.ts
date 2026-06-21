@@ -7,7 +7,6 @@ import {
   HttpStatus,
   Param,
   ParseIntPipe,
-  ParseUUIDPipe,
 } from '@nestjs/common';
 import { RecurrenceService } from './recurrence.service';
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
@@ -30,7 +29,7 @@ export class RecurrenceController {
   @HttpCode(HttpStatus.OK)
   async getRecurrenceById(
     @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param('id') id: string,
   ) {
     return this.recurrenceService.getRecurrenceById(user.id, id);
   }

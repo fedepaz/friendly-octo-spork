@@ -7,7 +7,6 @@ import {
   HttpStatus,
   Param,
   ParseIntPipe,
-  ParseUUIDPipe,
 } from '@nestjs/common';
 import { CardService } from './card.service';
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
@@ -31,7 +30,7 @@ export class CardController {
   @HttpCode(HttpStatus.OK)
   async getCardTransactionByAccountId(
     @CurrentUser() user: AuthUser,
-    @Param('accountId', ParseUUIDPipe) accountId: string,
+    @Param('accountId') accountId: string,
   ): Promise<CardTransactionsWithRelations | null> {
     return this.cardService.getCardTransactionByAccountId(user.id, accountId);
   }

@@ -8,7 +8,6 @@ import {
   HttpStatus,
   Param,
   ParseIntPipe,
-  ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
@@ -36,7 +35,7 @@ export class TransactionController {
   @HttpCode(HttpStatus.OK)
   async getTransactionById(
     @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param('id') id: string,
   ): Promise<TransactionDTO | null> {
     return this.transactionService.getTransactionById(user.id, id);
   }
