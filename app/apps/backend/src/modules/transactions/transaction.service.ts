@@ -12,6 +12,7 @@ import {
 } from '../../repositories/transaction.repository';
 import {
   CreateTransactionInput,
+  RecurrenceDTO,
   TransactionDTO,
   TransactionType,
 } from '@repo/shared';
@@ -161,18 +162,25 @@ export class TransactionService {
           sourceAccount,
         );
       }
+
+      // ─── 2. Create/Update Recurrence ────────────────────────────────────────
+      const recurrenceData = await this.createOrUpdateRecurrence(
+        transactionData,
+        userId,
+        tx,
+      );
+
       // ─── 2. Save Transaction Record ─────────────────────────────────────────
 
       const response = await this.transactionRepo.saveTransaction(
         {
           ...prismaData,
           userId,
+          recurrenceId: recurrenceData?.id,
           metadata: prismaData.metadata ? prismaData.metadata : Prisma.JsonNull,
         },
         tx,
       );
-      // ─── 2. Create/Update Recurrence ────────────────────────────────────────
-      await this.createOrUpdateRecurrence(transactionData, userId, tx);
 
       return this.mapToDTO(response);
     });
@@ -318,26 +326,29 @@ export class TransactionService {
     data: CreateTransactionInput,
     userId: string,
     tx: Prisma.TransactionClient,
-  ): Promise<void> {
+  ): Promise<RecurrenceDTO | null> {
     // If it's not a recurrence and no ID is provided, do nothing
     if (!data.recurrenceId && !data.isRecurrence) {
-      return;
+      return null;
     }
+
+    let response: RecurrenceDTO | null = null;
 
     if (data.recurrenceId) {
       // Update existing recurrence
-      await this.recurrenceService.updateRecurrenceForTransaction(
+      response = await this.recurrenceService.updateRecurrenceForTransaction(
         data.recurrenceId,
         userId,
         data,
         tx,
       );
     } else if (data.isRecurrence) {
-      await this.recurrenceService.createRecurrenceForTransaction(
+      response = await this.recurrenceService.createRecurrenceForTransaction(
         data,
         userId,
         tx,
       );
     }
+    return response;
   }
 }

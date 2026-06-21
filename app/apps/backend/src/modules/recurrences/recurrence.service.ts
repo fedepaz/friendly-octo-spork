@@ -60,7 +60,7 @@ export class RecurrenceService {
   private calculateRecurrenceDates(
     transactionDate: Date,
     frequency: RecurrenceType,
-    totalParts?: number,
+    totalParts: number | null,
     firstPaymentTiming: 'now' | 'next' = 'now',
   ): { startDate: Date; nextDate: Date; endDate: Date | null } {
     let startDate = new Date(transactionDate);
@@ -107,7 +107,7 @@ export class RecurrenceService {
     data: CreateTransactionInput,
     userId: string,
     tx: Prisma.TransactionClient,
-  ) {
+  ): Promise<RecurrenceDTO> {
     if (!data.recurrenceName) {
       throw new BadRequestException('Recurrence name is required');
     }
@@ -115,7 +115,9 @@ export class RecurrenceService {
     const { startDate, nextDate, endDate } = this.calculateRecurrenceDates(
       data.date,
       data.frequency!,
-      data.totalParts ?? 1,
+      data.frequency === RecurrenceTypeSchema.enum.INSTALLMENT
+        ? (data.totalParts ?? 1)
+        : (data.totalParts ?? null),
       data.isFirstPayment ? 'now' : 'next',
     );
     const createRecurrenceData = {
@@ -139,7 +141,11 @@ export class RecurrenceService {
         : Prisma.JsonNull,
     };
 
-    await this.recurrenceRepo.saveRecurrence(createRecurrenceData, tx);
+    const newRecurrence = await this.recurrenceRepo.saveRecurrence(
+      createRecurrenceData,
+      tx,
+    );
+    return this.mapToDTO(newRecurrence);
   }
 
   async updateRecurrenceForTransaction(
@@ -147,7 +153,7 @@ export class RecurrenceService {
     userId: string,
     data: CreateTransactionInput,
     tx: Prisma.TransactionClient,
-  ): Promise<void> {
+  ): Promise<RecurrenceDTO> {
     if (!recurrenceId) {
       throw new BadRequestException('Recurrence id is required');
     }
@@ -185,11 +191,12 @@ export class RecurrenceService {
     };
 
     this.logger.log(`Updating recurrence ${recurrenceId} for user ${userId}`);
-    await this.recurrenceRepo.updateRecurrence(
+    const updatedRecurrence = await this.recurrenceRepo.updateRecurrence(
       recurrenceId,
       updateRecurrenceData,
       tx,
     );
+    return this.mapToDTO(updatedRecurrence);
   }
 
   async getRecurrencesByMonth(
