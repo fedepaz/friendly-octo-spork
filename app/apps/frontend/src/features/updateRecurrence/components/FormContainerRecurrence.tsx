@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import { useFormContext } from "react-hook-form";
-import { WizardStepSkeleton } from "@/features/createTransaction/components/transactions-wizard-skeleton";
+import { WizardStepSkeleton } from "@/components/ui/wizard-step-skeleton";
 
 import { StepAccountsComponent } from "./steps/stepAccount-form";
 import { StepAmountComponent } from "./steps/stepAmount-form";
@@ -13,8 +13,8 @@ import { StepReviewComponent } from "./steps/stepReview-form";
 import {
   StepIndicator,
   WizardFooter,
-  WizardModalRecurrence,
-} from "./wizardModalRecurrence";
+  WizardModal,
+} from "@/components/ui/wizard-modal";
 import { CreateTransactionInput } from "@repo/shared";
 import {
   getNextStepId,
@@ -127,7 +127,7 @@ export function FormContainerRecurrence({
   };
 
   return (
-    <WizardModalRecurrence
+    <WizardModal
       isOpen={true}
       onClose={onClose}
       title={
@@ -150,6 +150,6 @@ export function FormContainerRecurrence({
         confirmLabel={isLastStep ? "Actualizar ✓" : undefined}
         isSubmitting={isSubmitting}
       />
-    </WizardModalRecurrence>
+    </WizardModal>
   );
 }

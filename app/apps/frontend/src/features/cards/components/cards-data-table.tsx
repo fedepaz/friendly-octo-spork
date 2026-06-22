@@ -82,7 +82,7 @@ export function CardsDataTable() {
                 "size-3.5 opacity-40",
                 isPositiveBalance
                   ? "text-destructive"
-                  : "text-emerald-500",
+                  : "text-secondary",
               )}
             />
           </CardHeader>
@@ -90,7 +90,7 @@ export function CardsDataTable() {
             <p
               className={cn(
                 "text-2xl font-mono font-black tracking-tighter tabular-nums",
-                isPositiveBalance ? "text-destructive" : "text-emerald-500",
+                isPositiveBalance ? "text-destructive" : "text-secondary",
               )}
             >
               {formatCurrency(balance)}

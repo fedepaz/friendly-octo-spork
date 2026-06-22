@@ -4,7 +4,7 @@
 import { Label } from "@/components/ui/label";
 import { CardType, CreateTransactionInput } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
-import { InLineError } from "../inLineError";
+import { InLineError } from "@/components/ui/in-line-error";
 
 const FREQUENCIES = ["MONTHLY", "WEEKLY", "YEARLY", "INSTALLMENT"] as const;
 

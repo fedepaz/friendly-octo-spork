@@ -1,4 +1,4 @@
-// src/features/createTransaction/components/wizardModal.tsx
+// src/components/ui/wizard-modal.tsx
 import { cn } from "@/lib/utils";
 
 export function WizardModal({
@@ -73,26 +73,30 @@ export function WizardFooter({
   onBack,
   onNext,
   onConfirm,
+  showBackButton = true,
   isSubmitting,
   confirmLabel = "Grabar ✓",
 }: {
   onBack?: () => void;
   onNext?: () => void;
   onConfirm?: () => void;
+  showBackButton?: boolean;
   isSubmitting?: boolean;
   confirmLabel?: string;
 }) {
   return (
     <div className="px-5 py-5 border-t border-border/40 bg-background/60 backdrop-blur-md grid grid-cols-2 gap-4">
-      <button
-        key="back-button"
-        type="button"
-        onClick={onBack}
-        disabled={!onBack}
-        className="h-11 px-4 text-[10px] font-black uppercase tracking-widest border border-border/20 bg-background/40 text-muted-foreground/60 hover:text-foreground hover:border-primary/40 transition-premium disabled:opacity-20 rounded-none shadow-etched cursor-pointer"
-      >
-        ← Retroceder
-      </button>
+      {showBackButton && (
+        <button
+          key="back-button"
+          type="button"
+          onClick={onBack}
+          disabled={!onBack}
+          className="h-11 px-4 text-[10px] font-black uppercase tracking-widest border border-border/20 bg-background/40 text-muted-foreground/60 hover:text-foreground hover:border-primary/40 transition-premium disabled:opacity-20 rounded-none shadow-etched cursor-pointer"
+        >
+          ← Retroceder
+        </button>
+      )}
       {onConfirm ? (
         <button
           key="confirm-button"

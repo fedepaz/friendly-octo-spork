@@ -5,7 +5,7 @@ import { CardType, CreateTransactionInput } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
 import { useRecurrenceById } from "@/features/recurrences/hooks/recurrenceHooks";
 import { Label } from "@/components/ui/label";
-import { InLineError } from "@/features/createTransaction/components/inLineError";
+import { InLineError } from "@/components/ui/in-line-error";
 
 export function StepRecurrenceComponent() {
   const {

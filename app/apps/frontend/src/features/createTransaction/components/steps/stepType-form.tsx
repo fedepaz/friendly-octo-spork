@@ -3,7 +3,7 @@
 
 import { CreateTransactionInput, TransactionType } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
-import { InLineError } from "../inLineError";
+import { InLineError } from "@/components/ui/in-line-error";
 
 const TRANSACTION_TYPES = [
   {

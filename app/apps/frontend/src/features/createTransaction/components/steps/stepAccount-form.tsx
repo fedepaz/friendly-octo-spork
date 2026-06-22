@@ -12,7 +12,7 @@ import {
 import { useFormContext } from "react-hook-form";
 import { formatCurrency } from "@/lib/utils";
 import { useEffect } from "react";
-import { InLineError } from "../inLineError";
+import { InLineError } from "@/components/ui/in-line-error";
 import {
   canUseAccount,
   filterAccountsByCompatibility,

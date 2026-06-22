@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { CreateTransactionInput } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
 import { useEffect } from "react";
-import { InLineError } from "../inLineError";
+import { InLineError } from "@/components/ui/in-line-error";
 
 export function StepAmountComponent() {
   const {

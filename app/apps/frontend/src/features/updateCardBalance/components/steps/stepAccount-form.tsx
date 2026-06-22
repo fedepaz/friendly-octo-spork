@@ -7,7 +7,7 @@ import { CardCloseInputDTO, Currency } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
 import { formatCurrency } from "@/lib/utils";
 
-import { InLineError } from "@/features/createTransaction/components/inLineError";
+import { InLineError } from "@/components/ui/in-line-error";
 
 export function StepAccountsComponent() {
   const {

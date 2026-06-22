@@ -81,11 +81,11 @@ export function KPIsDashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 pb-4">
-            <p className="text-2xl font-mono font-black text-rose-400 tracking-tighter tabular-nums">
+            <p className="text-2xl font-mono font-black text-destructive tracking-tighter tabular-nums">
               {formatCurrency(monthlyExpenses)}
             </p>
-            <div className="w-full h-1 bg-rose-400/10 mt-2">
-              <div className="h-full bg-rose-400 w-[65%]" />
+            <div className="w-full h-1 bg-destructive/10 mt-2">
+              <div className="h-full bg-destructive w-[65%]" />
             </div>
           </CardContent>
         </Card>

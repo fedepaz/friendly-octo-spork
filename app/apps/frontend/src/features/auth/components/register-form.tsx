@@ -16,7 +16,7 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import { InLineError } from "@/features/createTransaction/components/inLineError";
+import { InLineError } from "@/components/ui/in-line-error";
 
 interface RegisterFormProps {
   onDefaultPassword: () => void;

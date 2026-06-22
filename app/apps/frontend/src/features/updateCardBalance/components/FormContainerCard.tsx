@@ -9,8 +9,8 @@ import { StepReviewComponent } from "./steps/stepReview-form";
 import {
   StepIndicator,
   WizardFooter,
-  WizardModalCard,
-} from "./wizardModalCard";
+  WizardModal,
+} from "@/components/ui/wizard-modal";
 import { CardCloseInputDTO } from "@repo/shared";
 import {
   getCardNextStepId,
@@ -20,7 +20,7 @@ import {
   STEP_CONFIGS_CARD_CLOSE,
   stepIdCardToIndex,
 } from "@/lib/utils/step-transaction-routing";
-import { WizardStepSkeleton } from "@/features/createTransaction/components/transactions-wizard-skeleton";
+import { WizardStepSkeleton } from "@/components/ui/wizard-step-skeleton";
 import { StepConfirmComponent } from "./steps/stepConfirm-form";
 import { StepAccountsComponent } from "./steps/stepAccount-form";
 
@@ -113,7 +113,7 @@ export function FormContainerCard({
   };
 
   return (
-    <WizardModalCard
+    <WizardModal
       isOpen={true}
       onClose={onClose}
       title={
@@ -131,7 +131,7 @@ export function FormContainerCard({
         <WizardFooter
           onConfirm={onClose}
           confirmLabel="Cerrar"
-          onClose={false}
+          showBackButton={false}
           isSubmitting={isSubmitting}
         />
       ) : (
@@ -155,6 +155,6 @@ export function FormContainerCard({
           isSubmitting={isSubmitting}
         />
       )}
-    </WizardModalCard>
+    </WizardModal>
   );
 }

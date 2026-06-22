@@ -1,4 +1,4 @@
-// src/features/createTransaction/components/transactions-wizard-skeleton.tsx
+// src/components/ui/wizard-step-skeleton.tsx
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";

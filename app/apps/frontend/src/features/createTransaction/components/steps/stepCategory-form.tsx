@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { CreateTransactionInput } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
 import { useCategorie } from "../../hooks/useCategoriesHook";
-import { InLineError } from "../inLineError";
+import { InLineError } from "@/components/ui/in-line-error";
 
 export function StepCategoryComponent() {
   const {

@@ -132,8 +132,8 @@ export function SidebarChartsRecentTransactions() {
                             className={cn(
                               "p-0.5 border border-border/20",
                               recurrence.type === "INCOME"
-                                ? "text-emerald-500/60"
-                                : "text-rose-500/60",
+                                ? "text-secondary/60"
+                                : "text-destructive/60",
                             )}
                           >
                             {recurrence.type === "INCOME" ? (

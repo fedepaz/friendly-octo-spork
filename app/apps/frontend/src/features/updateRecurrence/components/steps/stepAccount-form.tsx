@@ -18,7 +18,7 @@ import {
   filterAccountsByCompatibility,
   getAccountDisabledReason,
 } from "@/lib/account-compability-utils";
-import { InLineError } from "@/features/createTransaction/components/inLineError";
+import { InLineError } from "@/components/ui/in-line-error";
 
 export function StepAccountsComponent() {
   const {

@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import { useFormContext } from "react-hook-form";
-import { WizardStepSkeleton } from "./transactions-wizard-skeleton";
+import { WizardStepSkeleton } from "@/components/ui/wizard-step-skeleton";
 
 import { StepAccountsComponent } from "./steps/stepAccount-form";
 import { StepAmountComponent } from "./steps/stepAmount-form";
@@ -11,7 +11,7 @@ import { StepCategoryComponent } from "./steps/stepCategory-form";
 import { StepRecurrenceComponent } from "./steps/stepRecurrence-form";
 import { StepReviewComponent } from "./steps/stepReview-form";
 import { StepTypeComponent } from "./steps/stepType-form";
-import { StepIndicator, WizardFooter, WizardModal } from "./wizardModal";
+import { StepIndicator, WizardFooter, WizardModal } from "@/components/ui/wizard-modal";
 import { CreateTransactionInput } from "@repo/shared";
 import {
   getNextStepId,

@@ -98,9 +98,9 @@ export function PremiumAmountCell({
       className={cn(
         "font-mono text-sm font-black tabular-nums text-right transition-premium",
         isPositive
-          ? "text-emerald-600"
+          ? "text-secondary"
           : isNegative
-            ? "text-rose-400"
+            ? "text-destructive"
             : "text-foreground",
         className,
       )}
@@ -130,10 +130,10 @@ export function PremiumBadgeCell({
 }: PremiumBadgeCellProps) {
   const variants = {
     primary: "bg-primary/10 text-primary border-primary/20",
-    secondary: "bg-emerald-400/10 text-emerald-400 border-emerald-400/20",
+    secondary: "bg-secondary/10 text-secondary border-secondary/20",
     accent: "bg-accent/10 text-accent border-accent/20",
     muted: "bg-muted/10 text-muted-foreground border-border/40",
-    destructive: "bg-rose-400/10 text-rose-400 border-rose-400/20",
+    destructive: "bg-destructive/10 text-destructive border-destructive/20",
   };
 
   return (
