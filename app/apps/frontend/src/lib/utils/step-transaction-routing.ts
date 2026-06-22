@@ -1,6 +1,6 @@
 // src/lib/utils/step-transaction-routing.ts
 
-import { CreateTransactionInput } from "@repo/shared";
+import { CardCloseInputDTO, CreateTransactionInput } from "@repo/shared";
 
 export type StepId =
   | "type"
@@ -115,14 +115,18 @@ export const STEP_CONFIGS_RECURRENCE: StepConfig[] = [
 ];
 
 // ─── STEP DEFINITIONS FOR CARDS ─────────────────────────────────────────
-export const STEP_CONFIGS_CARD_CLOSE: StepConfig[] = [
+export const STEP_CONFIGS_CARD_CLOSE: CardStepConfig[] = [
   {
-    id: "recurrence",
+    id: "update",
     label: "Actualizar",
     fields: [],
     shouldShow: () => true,
   },
-
+  {
+    id: "confirm",
+    label: "Confirmar",
+    fields: [], // Review doesn't need validation — just display
+  },
   {
     id: "review",
     label: "Confirmar",
@@ -204,4 +208,97 @@ export function getValidationFields(
   }
 
   return step.fields;
+}
+
+/**
+ * Get fields to validate for a given step on cards
+ */
+export function getCardValidationFields(
+  stepId: CardStepId,
+  values: Partial<CardCloseInputDTO>,
+  config: CardStepConfig[],
+): Array<keyof CardCloseInputDTO> {
+  const step = config.find((s) => s.id === stepId);
+  if (!step) return [];
+
+  // Only validate if step is visible
+  if (step.shouldShow && !step.shouldShow(values)) {
+    return [];
+  }
+
+  return step.fields;
+}
+
+export type CardStepId = "update" | "confirm" | "review";
+
+export interface CardStepConfig {
+  id: CardStepId;
+  label: string;
+  /** Fields to validate when this step is active */
+  fields: Array<keyof CardCloseInputDTO>;
+  /**
+   * Determine if this step should be shown.
+   * Return true = show, false = skip.
+   */
+  shouldShow?: (values: Partial<CardCloseInputDTO>) => boolean;
+}
+
+// ─── HELPER FUNCTIONS ─────────────────────────────────────────────────────
+
+/**
+ * Get the list of visible step IDs based on current form values
+ */
+export function getCardVisibleSteps(
+  values: Partial<CardCloseInputDTO>,
+  config: CardStepConfig[],
+): CardStepId[] {
+  return config
+    .filter((step) => step.shouldShow?.(values) ?? true)
+    .map((step) => step.id);
+}
+
+/**
+ * Get the next visible step ID after the current one
+ */
+export function getCardNextStepId(
+  currentId: CardStepId,
+  values: Partial<CardCloseInputDTO>,
+  config: CardStepConfig[],
+): CardStepId | null {
+  const visible = getCardVisibleSteps(values, config);
+  const currentIndex = visible.indexOf(currentId);
+  return visible[currentIndex + 1] ?? null;
+}
+
+/**
+ * Get the previous visible step ID before the current one
+ */
+export function getCardPrevStepId(
+  currentId: CardStepId,
+  values: Partial<CardCloseInputDTO>,
+  config: CardStepConfig[],
+): CardStepId | null {
+  const visible = getCardVisibleSteps(values, config);
+  const currentIndex = visible.indexOf(currentId);
+  return visible[currentIndex - 1] ?? null;
+}
+
+/**
+ * Convert StepId to numeric index (for progress bar, etc.)
+ */
+export function stepIdCardToIndex(
+  stepId: CardStepId,
+  config: CardStepConfig[],
+): number {
+  return config.findIndex((s) => s.id === stepId);
+}
+
+/**
+ * Convert numeric index to StepId
+ */
+export function indexCardToStepId(
+  index: number,
+  config: CardStepConfig[],
+): CardStepId | null {
+  return config[index]?.id ?? null;
 }

@@ -1,18 +1,25 @@
 // backend/src/modules/card/card.controller.ts
 
 import {
+  Body,
   Controller,
   Get,
   HttpCode,
   HttpStatus,
   Param,
   ParseIntPipe,
+  Post,
 } from '@nestjs/common';
 import { CardService } from './card.service';
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
 import { AuthUser } from '../auth/types/auth-user.type';
 import { CardTransactionsWithRelations } from '../../repositories/card.repository';
-import { CardStatementDTO } from '@repo/shared';
+import {
+  CardCloseInputDTO,
+  cardCloseSchema,
+  CardStatementDTO,
+} from '@repo/shared';
+import { ZodValidationPipe } from '../../shared/pipes/zod-validation-pipe';
 
 @Controller('cards')
 export class CardController {
@@ -43,5 +50,14 @@ export class CardController {
     @Param('month', ParseIntPipe) month: number,
   ): Promise<CardStatementDTO> {
     return this.cardService.getCardTransactionsByMonth(user.id, year, month);
+  }
+
+  @Post('close')
+  @HttpCode(HttpStatus.OK)
+  async closeCard(
+    @CurrentUser() user: AuthUser,
+    @Body(new ZodValidationPipe(cardCloseSchema)) data: CardCloseInputDTO,
+  ): Promise<void> {
+    return this.cardService.closeCard(user.id, data);
   }
 }

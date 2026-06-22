@@ -11,14 +11,14 @@ import {
   WizardFooter,
   WizardModalCard,
 } from "./wizardModalCard";
-import { CreateTransactionInput } from "@repo/shared";
+import { CardCloseInputDTO } from "@repo/shared";
 import {
-  getNextStepId,
-  getPrevStepId,
-  getValidationFields,
-  indexToStepId,
+  getCardNextStepId,
+  getCardPrevStepId,
+  getCardValidationFields,
+  indexCardToStepId,
   STEP_CONFIGS_CARD_CLOSE,
-  stepIdToIndex,
+  stepIdCardToIndex,
 } from "@/lib/utils/step-transaction-routing";
 import { WizardStepSkeleton } from "@/features/createTransaction/components/transactions-wizard-skeleton";
 import { StepConfirmComponent } from "./steps/stepConfirm-form";
@@ -38,11 +38,11 @@ export function FormContainerCard({
   isSubmitting,
   onClose,
 }: FormContainerProps) {
-  const { watch, setValue, trigger } = useFormContext<CreateTransactionInput>();
+  const { watch, setValue, trigger } = useFormContext<CardCloseInputDTO>();
   const watched = watch();
 
   // Convert numeric index to StepId
-  const currentStepId = indexToStepId(activeStep, STEP_CONFIGS_CARD_CLOSE);
+  const currentStepId = indexCardToStepId(activeStep, STEP_CONFIGS_CARD_CLOSE);
 
   // Get visible steps for progress indicator
   const visibleStepIds = STEP_CONFIGS_CARD_CLOSE.filter(
@@ -55,7 +55,7 @@ export function FormContainerCard({
   // ─── SMART NAVIGATION ───────────────────────────────────────────────────
   const handleNext = async () => {
     // Validate current step's fields (only if visible)
-    const fieldsToValidate = getValidationFields(
+    const fieldsToValidate = getCardValidationFields(
       currentStepId!,
       watched,
       STEP_CONFIGS_CARD_CLOSE,
@@ -68,54 +68,26 @@ export function FormContainerCard({
       }
     }
 
-    // Clear values when skipping optional steps (optional but clean)
-    if (currentStepId === "category") {
-      const nextStep = getNextStepId(
-        "category",
-        watched,
-        STEP_CONFIGS_CARD_CLOSE,
-      );
-      if (nextStep === "review") {
-        // Skipped both recurrence and budget → clear their values
-        setValue("isRecurrence", false);
-        setValue("isBudgetedExpense", false);
-      } else if (nextStep === "budget") {
-        // Skipped recurrence only
-        setValue("isRecurrence", false);
-      }
-    }
-
-    if (currentStepId === "budget") {
-      const nextStep = getNextStepId(
-        "budget",
-        watched,
-        STEP_CONFIGS_CARD_CLOSE,
-      );
-      if (nextStep === "review") {
-        setValue("isBudgetedExpense", false);
-      }
-    }
-
     // Navigate to next visible step
-    const nextStepId = getNextStepId(
+    const nextStepId = getCardNextStepId(
       currentStepId!,
       watched,
       STEP_CONFIGS_CARD_CLOSE,
     );
     if (nextStepId) {
-      setActiveStep(stepIdToIndex(nextStepId, STEP_CONFIGS_CARD_CLOSE));
+      setActiveStep(stepIdCardToIndex(nextStepId, STEP_CONFIGS_CARD_CLOSE));
       setGlobalError(null);
     }
   };
 
   const handleBack = () => {
-    const prevStepId = getPrevStepId(
+    const prevStepId = getCardPrevStepId(
       currentStepId!,
       watched,
       STEP_CONFIGS_CARD_CLOSE,
     );
     if (prevStepId) {
-      setActiveStep(stepIdToIndex(prevStepId, STEP_CONFIGS_CARD_CLOSE));
+      setActiveStep(stepIdCardToIndex(prevStepId, STEP_CONFIGS_CARD_CLOSE));
       setGlobalError(null);
     }
   };
@@ -125,11 +97,10 @@ export function FormContainerCard({
   // ─── STEP RENDERER ──────────────────────────────────────────────────────
   const renderStep = () => {
     switch (currentStepId) {
-      case "recurrence":
+      case "update":
         return <StepUpdateComponent />;
-      case "review":
+      case "confirm":
         return <StepConfirmComponent />;
-
       case "review":
         return <StepReviewComponent />;
       default:

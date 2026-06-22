@@ -1,7 +1,7 @@
 // src/features/updateCardBalance/providers/SmartFormProviderCard.tsx
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateTransactionInput, createTransactionSchema } from "@repo/shared";
+import { CardCloseInputDTO, cardCloseSchema } from "@repo/shared";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -9,23 +9,21 @@ import { mapServerErrorsToForm } from "@/lib/utils/form-error-mapper";
 import { ApiError } from "@/lib/api/client-fetch";
 import { parseApiError } from "@/lib/api/error-handler";
 import { toast } from "sonner";
-import { useCreateTransaction } from "@/features/createTransaction";
+
 import { FormContainerCard } from "../components/FormContainerCard";
+import { useUpdateCardBalance } from "../hooks/updateCardMutationHooks";
 
 export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const { mutateAsync: createTransaction, isPending: isSubmitting } =
-    useCreateTransaction();
+    useUpdateCardBalance();
 
-  const methods = useForm<CreateTransactionInput>({
+  const methods = useForm<CardCloseInputDTO>({
     mode: "onChange",
-    resolver: zodResolver(createTransactionSchema),
-    defaultValues: {
-      date: new Date(),
-      isRecurrence: false,
-    },
+    resolver: zodResolver(cardCloseSchema),
+    defaultValues: {},
   });
   // Filter errors from form field state
   const errorMessageEnd = Object.values(methods.formState.errors)
@@ -39,7 +37,7 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
     });
   };
 
-  const onSubmit = async (data: CreateTransactionInput) => {
+  const onSubmit = async (data: CardCloseInputDTO) => {
     // 🛡️ Safety Guard: Only allow submission if we are on the final Review step (Step 5)
     if (activeStep < 5) return;
 
