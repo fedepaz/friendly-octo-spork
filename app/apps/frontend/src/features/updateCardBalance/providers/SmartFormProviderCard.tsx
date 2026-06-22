@@ -27,7 +27,7 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
     resolver: zodResolver(cardCloseSchema),
     defaultValues: {
       year: now.getFullYear(),
-      month: now.getMonth() + 1,
+      month: now.getMonth() + 2,
       recurencesTransactions: [],
     },
   });

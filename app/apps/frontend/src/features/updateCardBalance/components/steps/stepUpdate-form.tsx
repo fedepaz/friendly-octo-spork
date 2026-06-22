@@ -2,12 +2,18 @@
 "use client";
 
 import { useCardTransactionsByMonth } from "@/features/cards/hooks/cardHooks";
-import { CardCloseInputDTO, CreateTransactionInput, RecurrenceDTO } from "@repo/shared";
+import {
+  CardCloseInputDTO,
+  CreateTransactionInput,
+  RecurrenceDTO,
+} from "@repo/shared";
 import { useFormContext } from "react-hook-form";
-import { formatCurrency } from "@/lib/utils";
+
 import { useEffect, useState } from "react";
 
-function recurrenceToTransactionInput(r: RecurrenceDTO): CreateTransactionInput {
+function recurrenceToTransactionInput(
+  r: RecurrenceDTO,
+): CreateTransactionInput {
   return {
     type: r.type,
     amount: r.amount,
@@ -37,23 +43,25 @@ export function StepUpdateComponent() {
     watched.month,
   );
 
-  const allRecurrences = statement?.recurrences ?? [];
-  const openEnded = allRecurrences.filter((r) => r.frequency !== "INSTALLMENT");
-  const installments = allRecurrences.filter((r) => r.frequency === "INSTALLMENT");
+  const openEnded = statement?.recurrences.filter(
+    (r) => r.frequency !== "INSTALLMENT",
+  );
 
   // Track which open-ended recurrences have edited amounts
-  const [editedAmounts, setEditedAmounts] = useState<Record<string, string>>({});
+  const [editedAmounts, setEditedAmounts] = useState<Record<string, string>>(
+    {},
+  );
   const [enabledIds, setEnabledIds] = useState<Set<string>>(new Set());
 
   // On mount: build recurencesTransactions from ALL recurrences
   useEffect(() => {
-    if (allRecurrences.length === 0) return;
+    if (statement?.recurrences.length === 0) return;
 
-    const transactions: CreateTransactionInput[] = allRecurrences.map((r) =>
-      recurrenceToTransactionInput(r),
+    const transactions: CreateTransactionInput[] = statement.recurrences.map(
+      (r) => recurrenceToTransactionInput(r),
     );
     setValue("recurencesTransactions", transactions, { shouldValidate: false });
-  }, [allRecurrences, setValue]);
+  }, [statement, setValue]);
 
   const toggleEnabled = (id: string) => {
     setEnabledIds((prev) => {
@@ -84,7 +92,8 @@ export function StepUpdateComponent() {
         Cuotas abiertas
       </h3>
       <p className="text-xs font-mono text-muted-foreground">
-        Solo cuotas mensuales/semanales/anuales. Las cuotas fijas ya tienen monto asignado.
+        Solo cuotas mensuales/semanales/anuales. Las cuotas fijas ya tienen
+        monto asignado.
       </p>
 
       {openEnded.length === 0 ? (
@@ -145,33 +154,6 @@ export function StepUpdateComponent() {
               </div>
             );
           })}
-        </div>
-      )}
-
-      {/* Summary of installments (read-only) */}
-      {installments.length > 0 && (
-        <div className="mt-2">
-          <p className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground mb-2">
-            Cuotas fijas ({installments.length})
-          </p>
-          <div className="flex flex-col gap-1">
-            {installments.map((r) => (
-              <div
-                key={r.id}
-                className="flex justify-between items-center px-3 py-2 border border-border/50"
-              >
-                <span className="font-mono text-xs text-muted-foreground truncate">
-                  {r.name}
-                  <span className="ml-2 text-[10px]">
-                    {(r.currentPart ?? 0) + 1}/{r.totalParts}
-                  </span>
-                </span>
-                <span className="font-mono text-xs text-muted-foreground">
-                  {formatCurrency(r.amount)}
-                </span>
-              </div>
-            ))}
-          </div>
         </div>
       )}
     </div>

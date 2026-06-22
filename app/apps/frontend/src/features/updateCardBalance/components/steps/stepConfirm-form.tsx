@@ -2,37 +2,31 @@
 "use client";
 
 import { useCardTransactionsByMonth } from "@/features/cards/hooks/cardHooks";
-import { CardCloseInputDTO, RecurrenceDTO, TransactionDTO } from "@repo/shared";
+import { CardCloseInputDTO } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
 import { formatCurrency } from "@/lib/utils";
 import { useState } from "react";
+import { useAccountById } from "@/features/accounts/hooks/accountsHooks";
+import { getLocalDateStr } from "@/lib/date-utils";
 
 export function StepConfirmComponent() {
   const { watch } = useFormContext<CardCloseInputDTO>();
   const watched = watch();
+  const { data: account } = useAccountById(watched.cardAccountId);
   const { data: statement } = useCardTransactionsByMonth(
     watched.year,
     watched.month,
   );
 
   const recurrencesTransactions = watched.recurencesTransactions ?? [];
-  const oneTimers = statement?.oneTimers ?? [];
-  const summary = statement?.summary;
-
-  const recurrencesTotal = recurrencesTransactions.reduce(
-    (sum, t) => sum + Number(t.amount),
-    0,
-  );
-  const oneTimersTotal = oneTimers.reduce(
-    (sum, t) => sum + Number(t.amount),
-    0,
-  );
-  const totalToDeduct = recurrencesTotal + oneTimersTotal;
-  const currentBalance = summary ? Number(summary.balance) : 0;
-  const newBalance = currentBalance - totalToDeduct;
-
+  const oneTimers = statement?.oneTimers;
+  const recurrencesTotal = statement.summary.totalRecurrences;
+  const oneTimersTotal = statement.summary.totalOneTimers;
   const [showRecurrences, setShowRecurrences] = useState(false);
   const [showOneTimers, setShowOneTimers] = useState(false);
+
+  if (!account) return null;
+  const currentBalance = account.balance;
 
   // Group recurrences by frequency for display
   const installments = recurrencesTransactions.filter(
@@ -42,6 +36,8 @@ export function StepConfirmComponent() {
     (t) => t.frequency !== "INSTALLMENT",
   );
 
+  const totalToDeduct = parseInt(recurrencesTotal) + parseInt(oneTimersTotal);
+  const newBalance = parseInt(currentBalance) - totalToDeduct;
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
@@ -66,7 +62,7 @@ export function StepConfirmComponent() {
           className="flex justify-between items-center px-4 py-3 w-full text-left hover:bg-muted/50 transition-colors"
         >
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
-            Cuotas ({recurrencesTransactions.length})
+            Cantidad ({recurrencesTransactions.length})
           </span>
           <div className="flex items-center gap-2">
             <span className="text-sm font-mono font-bold text-foreground">
@@ -90,6 +86,9 @@ export function StepConfirmComponent() {
                     <span className="font-mono text-xs text-muted-foreground truncate">
                       {t.description}
                     </span>
+                    <span className="font-mono text-xs text-muted-foreground truncate">
+                      {getLocalDateStr(t.date)}
+                    </span>
                     <span className="font-mono text-xs text-foreground shrink-0 ml-2">
                       {formatCurrency(t.amount)}
                     </span>
@@ -106,6 +105,9 @@ export function StepConfirmComponent() {
                   <div key={i} className="flex justify-between py-1">
                     <span className="font-mono text-xs text-muted-foreground truncate">
                       {t.description}
+                    </span>
+                    <span className="font-mono text-xs text-muted-foreground truncate">
+                      {getLocalDateStr(t.date)}
                     </span>
                     <span className="font-mono text-xs text-foreground shrink-0 ml-2">
                       {formatCurrency(t.amount)}
@@ -124,7 +126,7 @@ export function StepConfirmComponent() {
           className="flex justify-between items-center px-4 py-3 w-full text-left hover:bg-muted/50 transition-colors"
         >
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
-            Gastos varios ({oneTimers.length})
+            Gastos Únicos ({oneTimers.length})
           </span>
           <div className="flex items-center gap-2">
             <span className="text-sm font-mono font-bold text-foreground">
