@@ -8,6 +8,7 @@ import {
 import { TransactionWithRelations } from '../../repositories/transaction.repository';
 import {
   CardCloseInputDTO,
+  CardCloseResponseDTO,
   CardStatementDTO,
   RecurrenceDTO,
   TransactionDTO,
@@ -193,7 +194,10 @@ export class CardService {
     };
   }
 
-  async closeCard(userId: string, data: CardCloseInputDTO): Promise<void> {
+  async closeCard(
+    userId: string,
+    data: CardCloseInputDTO,
+  ): Promise<CardCloseResponseDTO> {
     if (!userId) throw new BadRequestException('User ID is required');
     this.logger.log(`Closing card for user ${userId}`);
     const { cardAccountId, year, month, recurencesTransactions } = data;
@@ -229,5 +233,15 @@ export class CardService {
         tx,
       );
     });
+    const accountResponse = await this.accountRepo.getAccountById(
+      userId,
+      cardAccountId,
+    );
+
+    return {
+      success: true,
+      accountName: accountResponse?.name,
+      closeBalance: accountResponse?.balance.toString(),
+    };
   }
 }

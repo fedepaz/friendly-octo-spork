@@ -1,6 +1,6 @@
 // src/features/updateCardBalance/hooks/updateCardMutationHooks.ts
 
-import { CardCloseInputDTO } from "@repo/shared";
+import { CardCloseInputDTO, CardCloseResponseDTO } from "@repo/shared";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateCardService } from "../api/updateCardService";
 import { mutationInvalidations } from "@/lib/query-invalidation-map";
@@ -9,14 +9,14 @@ import { toast } from "sonner";
 export const useUpdateCardBalance = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<void, Error, CardCloseInputDTO>({
+  return useMutation<CardCloseResponseDTO, Error, CardCloseInputDTO>({
     mutationFn: updateCardService.updateCardBalance,
-    onSuccess: () => {
+    onSuccess: (data) => {
       mutationInvalidations.updateCardBalance.forEach((filters) => {
         queryClient.invalidateQueries(filters);
       });
 
-      const msg = `Actualizado el saldo de tarjeta`;
+      const msg = `Actualizado el saldo de tarjeta ${data.accountName} con saldo ${data.closeBalance}`;
       toast.success(msg, { duration: 3000 });
     },
     onError: (error) => {

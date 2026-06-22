@@ -54,3 +54,17 @@ export const cardCloseSchema: z.ZodType<CardCloseInputDTO> = z.object({
     CreateTransactionInput[]
   >,
 });
+
+// ─── Card Close response DTO ────────────────────────────────────────────────────
+export interface CardCloseResponseDTO {
+  success: boolean;
+  accountName?: string;
+  closeBalance?: string;
+}
+
+export const cardCloseResponseSchema: z.ZodType<CardCloseResponseDTO> =
+  z.object({
+    success: z.boolean(),
+    accountName: z.string().optional(),
+    closeBalance: z.string().optional(),
+  });

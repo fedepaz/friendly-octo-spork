@@ -16,6 +16,7 @@ import { AuthUser } from '../auth/types/auth-user.type';
 import { CardTransactionsWithRelations } from '../../repositories/card.repository';
 import {
   CardCloseInputDTO,
+  CardCloseResponseDTO,
   cardCloseSchema,
   CardStatementDTO,
 } from '@repo/shared';
@@ -57,7 +58,7 @@ export class CardController {
   async closeCard(
     @CurrentUser() user: AuthUser,
     @Body(new ZodValidationPipe(cardCloseSchema)) data: CardCloseInputDTO,
-  ): Promise<void> {
+  ): Promise<CardCloseResponseDTO> {
     return this.cardService.closeCard(user.id, data);
   }
 }

@@ -20,7 +20,10 @@ export function StepConfirmComponent() {
 
   const recurrencesTransactions = watched.recurencesTransactions ?? [];
   const oneTimers = statement?.oneTimers;
-  const recurrencesTotal = statement.summary.totalRecurrences;
+  const recurrencesTotal = watched.recurencesTransactions.reduce(
+    (sum, t) => sum + Number(t.amount),
+    0,
+  );
   const oneTimersTotal = statement.summary.totalOneTimers;
   const [showRecurrences, setShowRecurrences] = useState(false);
   const [showOneTimers, setShowOneTimers] = useState(false);
@@ -36,7 +39,7 @@ export function StepConfirmComponent() {
     (t) => t.frequency !== "INSTALLMENT",
   );
 
-  const totalToDeduct = parseInt(recurrencesTotal) + parseInt(oneTimersTotal);
+  const totalToDeduct = recurrencesTotal + parseInt(oneTimersTotal);
   const newBalance = parseInt(currentBalance) - totalToDeduct;
   return (
     <div className="flex flex-col gap-4">

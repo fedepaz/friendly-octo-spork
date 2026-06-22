@@ -127,25 +127,34 @@ export function FormContainerCard({
       <div className="flex-1 overflow-y-auto px-5 py-6 animate-premium-in">
         <Suspense fallback={<WizardStepSkeleton />}>{renderStep()}</Suspense>
       </div>
-      <WizardFooter
-        onBack={currentVisibleIndex > 0 ? handleBack : undefined}
-        onNext={!isConfirmStep && !isReviewStep ? handleNext : undefined}
-        onConfirm={
-          isConfirmStep
-            ? () => {} // type="submit" triggers form submit
-            : isReviewStep
-              ? onClose
-              : undefined
-        }
-        confirmLabel={
-          isConfirmStep
-            ? "Confirmar cierre"
-            : isReviewStep
-              ? "Cerrar"
-              : undefined
-        }
-        isSubmitting={isSubmitting}
-      />
+      {isReviewStep ? (
+        <WizardFooter
+          onConfirm={onClose}
+          confirmLabel="Cerrar"
+          onClose={false}
+          isSubmitting={isSubmitting}
+        />
+      ) : (
+        <WizardFooter
+          onBack={currentVisibleIndex > 0 ? handleBack : undefined}
+          onNext={!isConfirmStep && !isReviewStep ? handleNext : undefined}
+          onConfirm={
+            isConfirmStep
+              ? () => {} // type="submit" triggers form submit
+              : isReviewStep
+                ? onClose
+                : undefined
+          }
+          confirmLabel={
+            isConfirmStep
+              ? "Confirmar cierre"
+              : isReviewStep
+                ? "Cerrar"
+                : undefined
+          }
+          isSubmitting={isSubmitting}
+        />
+      )}
     </WizardModalCard>
   );
 }
