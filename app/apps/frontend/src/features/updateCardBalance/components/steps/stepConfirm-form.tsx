@@ -1,178 +1,175 @@
 // src/features/updateCardBalance/components/steps/stepConfirm-form.tsx
 "use client";
 
-import { Label } from "@/components/ui/label";
-import { useAccounts } from "@/features/accounts/hooks/accountsHooks";
-import {
-  AccountDTO,
-  AccountType,
-  CreateTransactionInput,
-  Currency,
-} from "@repo/shared";
+import { useCardTransactionsByMonth } from "@/features/cards/hooks/cardHooks";
+import { CardCloseInputDTO, RecurrenceDTO, TransactionDTO } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
 import { formatCurrency } from "@/lib/utils";
-import { useEffect } from "react";
-
-import {
-  canUseAccount,
-  filterAccountsByCompatibility,
-  getAccountDisabledReason,
-} from "@/lib/account-compability-utils";
-import { InLineError } from "@/features/createTransaction/components/inLineError";
+import { useState } from "react";
 
 export function StepConfirmComponent() {
-  const {
-    setValue,
-    watch,
-    formState: { errors },
-  } = useFormContext<CreateTransactionInput>();
+  const { watch } = useFormContext<CardCloseInputDTO>();
   const watched = watch();
-  const { data: accounts = [] } = useAccounts();
-
-  const transactionType = watched.type;
-  const sourceAccountId = watched.sourceAccountId;
-
-  // Auto-detect card expense
-  useEffect(() => {
-    if (sourceAccountId) {
-      const account = accounts.find((a) => a.id === sourceAccountId);
-      if (account?.type === "CARD") {
-        setValue("isCardExpense", true);
-      } else {
-        setValue("isCardExpense", false);
-      }
-    }
-  }, [sourceAccountId, accounts, setValue]);
-  // ─── SMART FILTERING USING COMPATIBILITY MATRIX ─────────────────────────
-  const sourceAccounts = filterAccountsByCompatibility(
-    accounts,
-    transactionType,
-    "source",
-    watched.targetAccountId, // Exclude target for transfers
+  const { data: statement } = useCardTransactionsByMonth(
+    watched.year,
+    watched.month,
   );
 
-  const targetAccounts = filterAccountsByCompatibility(
-    accounts,
-    transactionType,
-    "target",
-    watched.sourceAccountId, // Exclude source for transfers
+  const recurrencesTransactions = watched.recurencesTransactions ?? [];
+  const oneTimers = statement?.oneTimers ?? [];
+  const summary = statement?.summary;
+
+  const recurrencesTotal = recurrencesTransactions.reduce(
+    (sum, t) => sum + Number(t.amount),
+    0,
+  );
+  const oneTimersTotal = oneTimers.reduce(
+    (sum, t) => sum + Number(t.amount),
+    0,
+  );
+  const totalToDeduct = recurrencesTotal + oneTimersTotal;
+  const currentBalance = summary ? Number(summary.balance) : 0;
+  const newBalance = currentBalance - totalToDeduct;
+
+  const [showRecurrences, setShowRecurrences] = useState(false);
+  const [showOneTimers, setShowOneTimers] = useState(false);
+
+  // Group recurrences by frequency for display
+  const installments = recurrencesTransactions.filter(
+    (t) => t.frequency === "INSTALLMENT",
+  );
+  const openEnded = recurrencesTransactions.filter(
+    (t) => t.frequency !== "INSTALLMENT",
   );
 
-  // ─── RENDER HELPERS ─────────────────────────────────────────────────────
-  function renderAccountButton(
-    account: AccountDTO,
-    role: "source" | "target",
-    selectedId: string | null | undefined,
-    onSelect: (id: string) => void,
-  ) {
-    const isSelected = selectedId === account.id;
-    const isDisabled = !canUseAccount(
-      transactionType,
-      account.type as AccountType,
-      role,
-    );
-    const disabledReason = getAccountDisabledReason(
-      transactionType,
-      account.type as AccountType,
-      role,
-    );
-
-    return (
-      <button
-        key={account.id}
-        type="button"
-        disabled={isDisabled}
-        onClick={() => !isDisabled && onSelect(account.id)}
-        className={`flex justify-between items-center p-3 border-2 text-left transition-all
-          ${isSelected && !isDisabled ? "border-foreground bg-muted" : ""}
-          ${!isSelected && !isDisabled ? "border-border hover:bg-muted" : ""}
-          ${isDisabled ? "border-border opacity-50 cursor-not-allowed" : ""}
-        `}
-        title={disabledReason} // Tooltip on hover
-      >
-        <div className="flex flex-col">
-          <span className="font-mono font-bold text-sm">
-            {account.name}
-            {isDisabled && (
-              <span className="text-xs text-muted-foreground ml-2">⚠</span>
-            )}
-          </span>
-          {disabledReason && isDisabled && (
-            <span className="text-xs font-mono text-muted-foreground">
-              {disabledReason}
-            </span>
-          )}
-        </div>
-        <span className="font-mono text-sm text-muted-foreground">
-          {formatCurrency(account.balance, account.currency as Currency)}
-        </span>
-      </button>
-    );
-  }
-
-  // ─── RENDER ─────────────────────────────────────────────────────────────
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        {transactionType === "TRANSFER"
-          ? "From where, to where?"
-          : "Which account?"}
+        Resumen del cierre
       </h3>
 
-      {/* SOURCE ACCOUNT */}
-      {canUseAccount(transactionType, "BANK", "source") && ( // Just check if ANY account can be source
-        <div>
-          <Label>
-            {transactionType === "TRANSFER" ? "From account" : "Account"}
-          </Label>
-
-          {sourceAccounts.length === 0 ? (
-            <p className="text-xs font-mono text-muted-foreground p-3 border-2 border-border">
-              No compatible accounts available for{" "}
-              {transactionType.toLowerCase()} source
-            </p>
-          ) : (
-            <div className="flex flex-col gap-2">
-              {sourceAccounts.map((account) =>
-                renderAccountButton(account, "source", sourceAccountId, (id) =>
-                  setValue("sourceAccountId", id),
-                ),
-              )}
-            </div>
-          )}
-
-          <InLineError message={errors.sourceAccountId?.message as string} />
+      {/* Balance summary */}
+      <div className="border-2 border-border divide-y divide-border">
+        <div className="flex justify-between px-4 py-3">
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
+            Balance actual
+          </span>
+          <span className="text-sm font-mono font-bold text-foreground">
+            {formatCurrency(currentBalance)}
+          </span>
         </div>
-      )}
 
-      {/* TARGET ACCOUNT */}
-      {canUseAccount(transactionType, "BANK", "target") && (
-        <div>
-          <Label>
-            {transactionType === "TRANSFER" ? "To account" : "Account"}
-          </Label>
+        {/* Recurrences section */}
+        <button
+          type="button"
+          onClick={() => setShowRecurrences(!showRecurrences)}
+          className="flex justify-between items-center px-4 py-3 w-full text-left hover:bg-muted/50 transition-colors"
+        >
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
+            Cuotas ({recurrencesTransactions.length})
+          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-mono font-bold text-foreground">
+              {formatCurrency(recurrencesTotal)}
+            </span>
+            <span className="text-[10px] font-mono text-muted-foreground">
+              {showRecurrences ? "▲" : "▼"}
+            </span>
+          </div>
+        </button>
 
-          {targetAccounts.length === 0 ? (
-            <p className="text-xs font-mono text-muted-foreground p-3 border-2 border-border">
-              No compatible accounts available for{" "}
-              {transactionType.toLowerCase()} target
-            </p>
-          ) : (
-            <div className="flex flex-col gap-2">
-              {targetAccounts.map((account) =>
-                renderAccountButton(
-                  account,
-                  "target",
-                  watched.targetAccountId,
-                  (id) => setValue("targetAccountId", id),
-                ),
-              )}
-            </div>
-          )}
+        {showRecurrences && (
+          <div className="divide-y divide-border/50">
+            {installments.length > 0 && (
+              <div className="px-4 py-2">
+                <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-1">
+                  Cuotas fijas
+                </p>
+                {installments.map((t, i) => (
+                  <div key={i} className="flex justify-between py-1">
+                    <span className="font-mono text-xs text-muted-foreground truncate">
+                      {t.description}
+                    </span>
+                    <span className="font-mono text-xs text-foreground shrink-0 ml-2">
+                      {formatCurrency(t.amount)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+            {openEnded.length > 0 && (
+              <div className="px-4 py-2">
+                <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-1">
+                  Cuotas abiertas
+                </p>
+                {openEnded.map((t, i) => (
+                  <div key={i} className="flex justify-between py-1">
+                    <span className="font-mono text-xs text-muted-foreground truncate">
+                      {t.description}
+                    </span>
+                    <span className="font-mono text-xs text-foreground shrink-0 ml-2">
+                      {formatCurrency(t.amount)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
-          <InLineError message={errors.targetAccountId?.message as string} />
+        {/* One-timers section */}
+        <button
+          type="button"
+          onClick={() => setShowOneTimers(!showOneTimers)}
+          className="flex justify-between items-center px-4 py-3 w-full text-left hover:bg-muted/50 transition-colors"
+        >
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
+            Gastos varios ({oneTimers.length})
+          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-mono font-bold text-foreground">
+              {formatCurrency(oneTimersTotal)}
+            </span>
+            <span className="text-[10px] font-mono text-muted-foreground">
+              {showOneTimers ? "▲" : "▼"}
+            </span>
+          </div>
+        </button>
+
+        {showOneTimers && (
+          <div className="px-4 py-2 divide-y divide-border/50">
+            {oneTimers.map((t, i) => (
+              <div key={i} className="flex justify-between py-1">
+                <span className="font-mono text-xs text-muted-foreground truncate">
+                  {t.description ?? "—"}
+                </span>
+                <span className="font-mono text-xs text-foreground shrink-0 ml-2">
+                  {formatCurrency(t.amount)}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Totals */}
+        <div className="flex justify-between px-4 py-3 bg-muted/30">
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
+            Total a descontar
+          </span>
+          <span className="text-sm font-mono font-bold text-destructive">
+            -{formatCurrency(totalToDeduct)}
+          </span>
         </div>
-      )}
+
+        <div className="flex justify-between px-4 py-3">
+          <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
+            Nuevo saldo
+          </span>
+          <span className="text-sm font-mono font-bold text-foreground">
+            {formatCurrency(newBalance)}
+          </span>
+        </div>
+      </div>
     </div>
   );
 }

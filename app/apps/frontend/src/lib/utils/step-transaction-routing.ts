@@ -117,20 +117,25 @@ export const STEP_CONFIGS_RECURRENCE: StepConfig[] = [
 // ─── STEP DEFINITIONS FOR CARDS ─────────────────────────────────────────
 export const STEP_CONFIGS_CARD_CLOSE: CardStepConfig[] = [
   {
+    id: "accounts",
+    label: "Tarjeta",
+    fields: ["cardAccountId"],
+  },
+  {
     id: "update",
-    label: "Actualizar",
+    label: "Cuotas abiertas",
     fields: [],
     shouldShow: () => true,
   },
   {
     id: "confirm",
-    label: "Confirmar",
-    fields: [], // Review doesn't need validation — just display
+    label: "Confirmar cierre",
+    fields: [],
   },
   {
     id: "review",
-    label: "Confirmar",
-    fields: [], // Review doesn't need validation — just display
+    label: "Resumen",
+    fields: [],
   },
 ];
 
@@ -229,7 +234,7 @@ export function getCardValidationFields(
   return step.fields;
 }
 
-export type CardStepId = "update" | "confirm" | "review";
+export type CardStepId = "accounts" | "update" | "confirm" | "review";
 
 export interface CardStepConfig {
   id: CardStepId;

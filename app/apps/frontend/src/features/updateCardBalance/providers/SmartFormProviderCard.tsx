@@ -13,19 +13,25 @@ import { toast } from "sonner";
 import { FormContainerCard } from "../components/FormContainerCard";
 import { useUpdateCardBalance } from "../hooks/updateCardMutationHooks";
 
+const now = new Date();
+
 export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const { mutateAsync: createTransaction, isPending: isSubmitting } =
+  const { mutateAsync: closeCard, isPending: isSubmitting } =
     useUpdateCardBalance();
 
   const methods = useForm<CardCloseInputDTO>({
     mode: "onChange",
     resolver: zodResolver(cardCloseSchema),
-    defaultValues: {},
+    defaultValues: {
+      year: now.getFullYear(),
+      month: now.getMonth() + 1,
+      recurencesTransactions: [],
+    },
   });
-  // Filter errors from form field state
+
   const errorMessageEnd = Object.values(methods.formState.errors)
     .map((err) => err?.message)
     .filter(Boolean)
@@ -38,24 +44,20 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
   };
 
   const onSubmit = async (data: CardCloseInputDTO) => {
-    // 🛡️ Safety Guard: Only allow submission if we are on the final Review step (Step 5)
-    if (activeStep < 5) return;
+    // Only submit on the confirm step (index 2)
+    if (activeStep < 2) return;
 
     try {
       setErrorMessage(null);
-      await createTransaction(data);
-      // Toast is handled in the mutation hook (useCreateTransaction)
-      setActiveStep(0);
-      methods.reset();
-      onClose();
+      await closeCard(data);
+      // Advance to review step (index 3)
+      setActiveStep(3);
     } catch (error) {
       const parsed = parseApiError(error);
 
       if (parsed.type === "VALIDATION" && error instanceof ApiError) {
-        // ✅ SURGICAL: Map backend validation errors to specific fields
         mapServerErrorsToForm(error.details, methods.setError);
       } else {
-        // ✅ GLOBAL: Show system/auth errors in the snackbar
         setErrorMessage(parsed.message);
         toast.error(parsed.message, {
           duration: 5000,
@@ -74,13 +76,12 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
           isSubmitting={isSubmitting}
           onClose={onClose}
         />
-        {/* STRUCTURAL FEEDBACK: Shown for server errors or global issues */}
         {errorMessage && (
           <div className="px-5 pb-5">
             <div className="text-[10px] font-bold uppercase tracking-tight text-destructive border border-destructive/20 bg-destructive/5 p-3 flex items-start gap-2 shadow-etched animate-premium-in">
               <div className="h-1.5 w-1.5 bg-destructive mt-1 shrink-0" />
               <div className="flex-1">
-                <p className="font-black mb-0.5">Error de Operación</p>
+                <p className="font-black mb-0.5">Error de Operacion</p>
                 <p className="opacity-70 leading-relaxed">{errorMessage}</p>
               </div>
             </div>

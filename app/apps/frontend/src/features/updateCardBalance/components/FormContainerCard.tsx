@@ -22,6 +22,7 @@ import {
 } from "@/lib/utils/step-transaction-routing";
 import { WizardStepSkeleton } from "@/features/createTransaction/components/transactions-wizard-skeleton";
 import { StepConfirmComponent } from "./steps/stepConfirm-form";
+import { StepAccountsComponent } from "./steps/stepAccount-form";
 
 interface FormContainerProps {
   activeStep: number;
@@ -38,7 +39,7 @@ export function FormContainerCard({
   isSubmitting,
   onClose,
 }: FormContainerProps) {
-  const { watch, setValue, trigger } = useFormContext<CardCloseInputDTO>();
+  const { watch, trigger } = useFormContext<CardCloseInputDTO>();
   const watched = watch();
 
   // Convert numeric index to StepId
@@ -92,11 +93,14 @@ export function FormContainerCard({
     }
   };
 
-  const isLastStep = currentStepId === "review";
+  const isConfirmStep = currentStepId === "confirm";
+  const isReviewStep = currentStepId === "review";
 
   // ─── STEP RENDERER ──────────────────────────────────────────────────────
   const renderStep = () => {
     switch (currentStepId) {
+      case "accounts":
+        return <StepAccountsComponent />;
       case "update":
         return <StepUpdateComponent />;
       case "confirm":
@@ -125,9 +129,21 @@ export function FormContainerCard({
       </div>
       <WizardFooter
         onBack={currentVisibleIndex > 0 ? handleBack : undefined}
-        onNext={!isLastStep ? handleNext : undefined}
-        onConfirm={isLastStep ? () => {} : undefined}
-        confirmLabel={isLastStep ? "Grabar ✓" : undefined}
+        onNext={!isConfirmStep && !isReviewStep ? handleNext : undefined}
+        onConfirm={
+          isConfirmStep
+            ? () => {} // type="submit" triggers form submit
+            : isReviewStep
+              ? onClose
+              : undefined
+        }
+        confirmLabel={
+          isConfirmStep
+            ? "Confirmar cierre"
+            : isReviewStep
+              ? "Cerrar"
+              : undefined
+        }
         isSubmitting={isSubmitting}
       />
     </WizardModalCard>

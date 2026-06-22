@@ -1,176 +1,177 @@
 // src/features/updateCardBalance/components/steps/stepUpdate-form.tsx
 "use client";
 
-import { Label } from "@/components/ui/label";
-import { useAccounts } from "@/features/accounts/hooks/accountsHooks";
-import {
-  AccountDTO,
-  AccountType,
-  CreateTransactionInput,
-  Currency,
-} from "@repo/shared";
+import { useCardTransactionsByMonth } from "@/features/cards/hooks/cardHooks";
+import { CardCloseInputDTO, CreateTransactionInput, RecurrenceDTO } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
 import { formatCurrency } from "@/lib/utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import {
-  canUseAccount,
-  filterAccountsByCompatibility,
-  getAccountDisabledReason,
-} from "@/lib/account-compability-utils";
-import { InLineError } from "@/features/createTransaction/components/inLineError";
+function recurrenceToTransactionInput(r: RecurrenceDTO): CreateTransactionInput {
+  return {
+    type: r.type,
+    amount: r.amount,
+    date: new Date(),
+    description: r.name,
+    categoryId: r.categoryId ?? undefined,
+    sourceAccountId: r.sourceAccountId ?? undefined,
+    targetAccountId: r.targetAccountId ?? undefined,
+    isCardExpense: true,
+    cardType: r.cardType ?? undefined,
+    recurrenceId: r.id,
+    recurrenceName: r.name,
+    isRecurrence: true,
+    frequency: r.frequency,
+    totalParts: r.totalParts ?? undefined,
+    isBudgetedExpense: false,
+    isFirstPayment: false,
+    shouldStopRecurrence: false,
+  };
+}
 
 export function StepUpdateComponent() {
-  const {
-    setValue,
-    watch,
-    formState: { errors },
-  } = useFormContext<CreateTransactionInput>();
+  const { watch, setValue } = useFormContext<CardCloseInputDTO>();
   const watched = watch();
-  const { data: accounts = [] } = useAccounts();
+  const { data: statement } = useCardTransactionsByMonth(
+    watched.year,
+    watched.month,
+  );
 
-  const transactionType = watched.type;
-  const sourceAccountId = watched.sourceAccountId;
+  const allRecurrences = statement?.recurrences ?? [];
+  const openEnded = allRecurrences.filter((r) => r.frequency !== "INSTALLMENT");
+  const installments = allRecurrences.filter((r) => r.frequency === "INSTALLMENT");
 
-  // Auto-detect card expense
+  // Track which open-ended recurrences have edited amounts
+  const [editedAmounts, setEditedAmounts] = useState<Record<string, string>>({});
+  const [enabledIds, setEnabledIds] = useState<Set<string>>(new Set());
+
+  // On mount: build recurencesTransactions from ALL recurrences
   useEffect(() => {
-    if (sourceAccountId) {
-      const account = accounts.find((a) => a.id === sourceAccountId);
-      if (account?.type === "CARD") {
-        setValue("isCardExpense", true);
+    if (allRecurrences.length === 0) return;
+
+    const transactions: CreateTransactionInput[] = allRecurrences.map((r) =>
+      recurrenceToTransactionInput(r),
+    );
+    setValue("recurencesTransactions", transactions, { shouldValidate: false });
+  }, [allRecurrences, setValue]);
+
+  const toggleEnabled = (id: string) => {
+    setEnabledIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
       } else {
-        setValue("isCardExpense", false);
+        next.add(id);
       }
-    }
-  }, [sourceAccountId, accounts, setValue]);
-  // ─── SMART FILTERING USING COMPATIBILITY MATRIX ─────────────────────────
-  const sourceAccounts = filterAccountsByCompatibility(
-    accounts,
-    transactionType,
-    "source",
-    watched.targetAccountId, // Exclude target for transfers
-  );
+      return next;
+    });
+  };
 
-  const targetAccounts = filterAccountsByCompatibility(
-    accounts,
-    transactionType,
-    "target",
-    watched.sourceAccountId, // Exclude source for transfers
-  );
+  const handleAmountChange = (id: string, newAmount: string) => {
+    setEditedAmounts((prev) => ({ ...prev, [id]: newAmount }));
 
-  // ─── RENDER HELPERS ─────────────────────────────────────────────────────
-  function renderAccountButton(
-    account: AccountDTO,
-    role: "source" | "target",
-    selectedId: string | null | undefined,
-    onSelect: (id: string) => void,
-  ) {
-    const isSelected = selectedId === account.id;
-    const isDisabled = !canUseAccount(
-      transactionType,
-      account.type as AccountType,
-      role,
+    // Update the corresponding item in recurencesTransactions
+    const current = watch("recurencesTransactions");
+    const updated = current.map((t) =>
+      t.recurrenceId === id ? { ...t, amount: newAmount } : t,
     );
-    const disabledReason = getAccountDisabledReason(
-      transactionType,
-      account.type as AccountType,
-      role,
-    );
+    setValue("recurencesTransactions", updated, { shouldValidate: false });
+  };
 
-    return (
-      <button
-        key={account.id}
-        type="button"
-        disabled={isDisabled}
-        onClick={() => !isDisabled && onSelect(account.id)}
-        className={`flex justify-between items-center p-3 border-2 text-left transition-all
-          ${isSelected && !isDisabled ? "border-foreground bg-muted" : ""}
-          ${!isSelected && !isDisabled ? "border-border hover:bg-muted" : ""}
-          ${isDisabled ? "border-border opacity-50 cursor-not-allowed" : ""}
-        `}
-        title={disabledReason} // Tooltip on hover
-      >
-        <div className="flex flex-col">
-          <span className="font-mono font-bold text-sm">
-            {account.name}
-            {isDisabled && (
-              <span className="text-xs text-muted-foreground ml-2">⚠</span>
-            )}
-          </span>
-          {disabledReason && isDisabled && (
-            <span className="text-xs font-mono text-muted-foreground">
-              {disabledReason}
-            </span>
-          )}
-        </div>
-        <span className="font-mono text-sm text-muted-foreground">
-          {formatCurrency(account.balance, account.currency as Currency)}
-        </span>
-      </button>
-    );
-  }
-
-  // ─── RENDER ─────────────────────────────────────────────────────────────
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        {transactionType === "TRANSFER"
-          ? "From where, to where?"
-          : "Which account?"}
+        Cuotas abiertas
       </h3>
+      <p className="text-xs font-mono text-muted-foreground">
+        Solo cuotas mensuales/semanales/anuales. Las cuotas fijas ya tienen monto asignado.
+      </p>
 
-      {/* SOURCE ACCOUNT */}
-      {canUseAccount(transactionType, "BANK", "source") && ( // Just check if ANY account can be source
-        <div>
-          <Label>
-            {transactionType === "TRANSFER" ? "From account" : "Account"}
-          </Label>
+      {openEnded.length === 0 ? (
+        <p className="text-xs font-mono text-muted-foreground p-3 border-2 border-border">
+          No hay cuotas abiertas para este mes
+        </p>
+      ) : (
+        <div className="flex flex-col gap-2">
+          {openEnded.map((r) => {
+            const isEnabled = enabledIds.has(r.id);
+            const amount = editedAmounts[r.id] ?? r.amount;
 
-          {sourceAccounts.length === 0 ? (
-            <p className="text-xs font-mono text-muted-foreground p-3 border-2 border-border">
-              No compatible accounts available for{" "}
-              {transactionType.toLowerCase()} source
-            </p>
-          ) : (
-            <div className="flex flex-col gap-2">
-              {sourceAccounts.map((account) =>
-                renderAccountButton(account, "source", sourceAccountId, (id) =>
-                  setValue("sourceAccountId", id),
-                ),
-              )}
-            </div>
-          )}
+            return (
+              <div
+                key={r.id}
+                className="flex items-center gap-3 p-3 border-2 border-border"
+              >
+                {/* Toggle button */}
+                <button
+                  type="button"
+                  onClick={() => toggleEnabled(r.id)}
+                  className={`shrink-0 w-10 h-6 rounded-none border-2 transition-all ${
+                    isEnabled
+                      ? "border-foreground bg-foreground"
+                      : "border-border bg-background"
+                  }`}
+                >
+                  <div
+                    className={`w-4 h-4 transition-all ${
+                      isEnabled
+                        ? "translate-x-5 bg-background"
+                        : "translate-x-0.5 bg-muted-foreground"
+                    }`}
+                  />
+                </button>
 
-          <InLineError message={errors.sourceAccountId?.message as string} />
+                {/* Name + frequency */}
+                <div className="flex-1 min-w-0">
+                  <span className="font-mono font-bold text-sm truncate block">
+                    {r.name}
+                  </span>
+                  <span className="text-[10px] font-mono text-muted-foreground uppercase">
+                    {r.frequency}
+                  </span>
+                </div>
+
+                {/* Amount field */}
+                <input
+                  type="text"
+                  inputMode="decimal"
+                  value={amount}
+                  disabled={!isEnabled}
+                  onChange={(e) => handleAmountChange(r.id, e.target.value)}
+                  className={`w-28 bg-background border-2 px-3 py-2 text-sm font-mono text-right transition-all
+                    ${isEnabled ? "border-foreground focus:outline-none" : "border-border opacity-60"}
+                  `}
+                />
+              </div>
+            );
+          })}
         </div>
       )}
 
-      {/* TARGET ACCOUNT */}
-      {canUseAccount(transactionType, "BANK", "target") && (
-        <div>
-          <Label>
-            {transactionType === "TRANSFER" ? "To account" : "Account"}
-          </Label>
-
-          {targetAccounts.length === 0 ? (
-            <p className="text-xs font-mono text-muted-foreground p-3 border-2 border-border">
-              No compatible accounts available for{" "}
-              {transactionType.toLowerCase()} target
-            </p>
-          ) : (
-            <div className="flex flex-col gap-2">
-              {targetAccounts.map((account) =>
-                renderAccountButton(
-                  account,
-                  "target",
-                  watched.targetAccountId,
-                  (id) => setValue("targetAccountId", id),
-                ),
-              )}
-            </div>
-          )}
-
-          <InLineError message={errors.targetAccountId?.message as string} />
+      {/* Summary of installments (read-only) */}
+      {installments.length > 0 && (
+        <div className="mt-2">
+          <p className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground mb-2">
+            Cuotas fijas ({installments.length})
+          </p>
+          <div className="flex flex-col gap-1">
+            {installments.map((r) => (
+              <div
+                key={r.id}
+                className="flex justify-between items-center px-3 py-2 border border-border/50"
+              >
+                <span className="font-mono text-xs text-muted-foreground truncate">
+                  {r.name}
+                  <span className="ml-2 text-[10px]">
+                    {(r.currentPart ?? 0) + 1}/{r.totalParts}
+                  </span>
+                </span>
+                <span className="font-mono text-xs text-muted-foreground">
+                  {formatCurrency(r.amount)}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
