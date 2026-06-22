@@ -100,6 +100,7 @@ const createTransactionSchemaBase = z.object({
   recurrenceName: z
     .preprocess((val) => (val === "" ? null : val), z.string().nullable())
     .optional(),
+  source: z.string().optional().nullable(),
   metadata: z.unknown().optional().nullable(),
 
   isBudgetedExpense: z

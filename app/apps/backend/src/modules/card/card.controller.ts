@@ -52,6 +52,19 @@ export class CardController {
   ): Promise<CardStatementDTO> {
     return this.cardService.getCardTransactionsByMonth(user.id, year, month);
   }
+  @Get('close/:year/:month')
+  @HttpCode(HttpStatus.OK)
+  async getCardTransactionsForPayStatement(
+    @CurrentUser() user: AuthUser,
+    @Param('year', ParseIntPipe) year: number,
+    @Param('month', ParseIntPipe) month: number,
+  ): Promise<CardStatementDTO> {
+    return this.cardService.getCardTransactionsForPayStatement(
+      user.id,
+      year,
+      month,
+    );
+  }
 
   @Post('close')
   @HttpCode(HttpStatus.OK)

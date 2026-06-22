@@ -12,12 +12,12 @@ import { toast } from "sonner";
 
 import { FormContainerCard } from "../components/FormContainerCard";
 import { useUpdateCardBalance } from "../hooks/updateCardMutationHooks";
-
-const now = new Date();
+import { getCurrentMonthYear } from "@/lib/date-utils";
 
 export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { month, year } = getCurrentMonthYear();
 
   const { mutateAsync: closeCard, isPending: isSubmitting } =
     useUpdateCardBalance();
@@ -26,8 +26,8 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
     mode: "onChange",
     resolver: zodResolver(cardCloseSchema),
     defaultValues: {
-      year: now.getFullYear(),
-      month: now.getMonth() + 2,
+      year: year,
+      month: month + 1,
       recurencesTransactions: [],
     },
   });

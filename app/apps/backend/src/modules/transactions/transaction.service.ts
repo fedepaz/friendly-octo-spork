@@ -177,6 +177,7 @@ export class TransactionService {
           ...prismaData,
           userId,
           recurrenceId: recurrenceData?.id,
+          recurrencePartNumber: recurrenceData?.currentPart,
           metadata: prismaData.metadata ? prismaData.metadata : Prisma.JsonNull,
         },
         tx,
@@ -350,5 +351,27 @@ export class TransactionService {
       );
     }
     return response;
+  }
+
+  async updateTransactionSource(
+    userId: string,
+    transactionId: string,
+    source: string,
+  ): Promise<void> {
+    if (!userId) throw new BadRequestException('User id is required');
+    if (!transactionId)
+      throw new BadRequestException('Transaction id is required');
+    this.logger.log(
+      `Updating transaction ${transactionId} source for user ${userId}`,
+    );
+    await this.prisma.transaction.update({
+      where: {
+        id: transactionId,
+        userId,
+      },
+      data: {
+        source,
+      },
+    });
   }
 }

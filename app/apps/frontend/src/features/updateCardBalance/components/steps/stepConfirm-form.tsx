@@ -1,19 +1,19 @@
 // src/features/updateCardBalance/components/steps/stepConfirm-form.tsx
 "use client";
 
-import { useCardTransactionsByMonth } from "@/features/cards/hooks/cardHooks";
 import { CardCloseInputDTO } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
 import { formatCurrency } from "@/lib/utils";
 import { useState } from "react";
 import { useAccountById } from "@/features/accounts/hooks/accountsHooks";
 import { getLocalDateStr } from "@/lib/date-utils";
+import { useUpdateCardTransactionsForPayStatement } from "../../hooks/updateCardHooks";
 
 export function StepConfirmComponent() {
   const { watch } = useFormContext<CardCloseInputDTO>();
   const watched = watch();
   const { data: account } = useAccountById(watched.cardAccountId);
-  const { data: statement } = useCardTransactionsByMonth(
+  const { data: statement } = useUpdateCardTransactionsForPayStatement(
     watched.year,
     watched.month,
   );

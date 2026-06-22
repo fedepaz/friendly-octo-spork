@@ -1,7 +1,6 @@
 // src/features/updateCardBalance/components/steps/stepUpdate-form.tsx
 "use client";
 
-import { useCardTransactionsByMonth } from "@/features/cards/hooks/cardHooks";
 import {
   CardCloseInputDTO,
   CreateTransactionInput,
@@ -10,6 +9,7 @@ import {
 import { useFormContext } from "react-hook-form";
 
 import { useEffect, useState } from "react";
+import { useUpdateCardTransactionsForPayStatement } from "../../hooks/updateCardHooks";
 
 function recurrenceToTransactionInput(
   r: RecurrenceDTO,
@@ -38,7 +38,7 @@ function recurrenceToTransactionInput(
 export function StepUpdateComponent() {
   const { watch, setValue } = useFormContext<CardCloseInputDTO>();
   const watched = watch();
-  const { data: statement } = useCardTransactionsByMonth(
+  const { data: statement } = useUpdateCardTransactionsForPayStatement(
     watched.year,
     watched.month,
   );
