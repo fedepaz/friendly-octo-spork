@@ -1,7 +1,12 @@
 // packages/shared/schemas/cards.schema.ts
 
 import z from "zod";
-import { TransactionDTO, transactionSchema } from "./transactions.schema";
+import {
+  CreateTransactionInput,
+  createTransactionSchema,
+  TransactionDTO,
+  transactionSchema,
+} from "./transactions.schema";
 import { RecurrenceDTO, recurrenceSchema } from "./recurrences.schema";
 
 // ─── Card Statement DTO ──────────────────────────────────────────────────────
@@ -32,3 +37,20 @@ export const cardStatementSchema: z.ZodType<CardStatementDTO> = z.object({
 });
 
 export type CardStatementItem = z.infer<typeof cardStatementSchema>;
+
+// ─── Card Close input DTO ──────────────────────────────────────────────────────
+export interface CardCloseInputDTO {
+  cardAccountId: string;
+  year: number;
+  month: number;
+  recurencesTransactions: CreateTransactionInput[];
+}
+
+export const cardCloseSchema: z.ZodType<CardCloseInputDTO> = z.object({
+  cardAccountId: z.string(),
+  year: z.number(),
+  month: z.number(),
+  recurencesTransactions: z.array(z.any()) as z.ZodType<
+    CreateTransactionInput[]
+  >,
+});

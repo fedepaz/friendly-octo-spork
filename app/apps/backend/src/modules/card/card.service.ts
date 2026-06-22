@@ -6,13 +6,26 @@ import {
   CardTransactionsWithRelations,
 } from '../../repositories/card.repository';
 import { TransactionWithRelations } from '../../repositories/transaction.repository';
-import { CardStatementDTO, RecurrenceDTO, TransactionDTO } from '@repo/shared';
+import {
+  CardCloseInputDTO,
+  CardStatementDTO,
+  RecurrenceDTO,
+  TransactionDTO,
+} from '@repo/shared';
 import { RecurrenceWithRelations } from '../../repositories/recurrence.repository';
+import { PrismaService } from '../../infra/prisma/prisma.service';
+import { TransactionService } from '../transactions/transaction.service';
+import { AccountRepository } from '../../repositories/account.repository';
 
 @Injectable()
 export class CardService {
   private readonly logger = new Logger(CardService.name);
-  constructor(private readonly cardRepo: CardRepository) {}
+  constructor(
+    private readonly cardRepo: CardRepository,
+    private readonly prisma: PrismaService,
+    private readonly transactionService: TransactionService,
+    private readonly accountRepo: AccountRepository,
+  ) {}
 
   private mapToCardTransactionDTO(
     cardTransactions: TransactionWithRelations[],
@@ -178,5 +191,43 @@ export class CardService {
         balance: balance.toString(),
       },
     };
+  }
+
+  async closeCard(userId: string, data: CardCloseInputDTO): Promise<void> {
+    if (!userId) throw new BadRequestException('User ID is required');
+    this.logger.log(`Closing card for user ${userId}`);
+    const { cardAccountId, year, month, recurencesTransactions } = data;
+
+    await this.prisma.$transaction(async (tx) => {
+      // ─── 1 Save Recurrences ──────────────────────────────────────────────────────
+      for (const t of recurencesTransactions) {
+        await this.transactionService.saveTransaction(userId, t);
+      }
+      // ─── 2 Get one-timers from DB ──────────────────────────────────────────────────────
+      const { oneTimers } = await this.cardRepo.getMonthlyStatement(
+        userId,
+        year,
+        month,
+      );
+      const oneTimersTotal = oneTimers.reduce(
+        (sum, t) => sum + Number(t.amount),
+        0,
+      );
+
+      // ─── 3 Sum recurrences
+      const recurrencesTotal = recurencesTransactions.reduce(
+        (sum, t) => sum + Number(t.amount),
+        0,
+      );
+
+      // ─── 4 Update card account balance
+      const total = recurrencesTotal + oneTimersTotal;
+      await this.accountRepo.updateBalance(
+        cardAccountId,
+        total,
+        'decrement',
+        tx,
+      );
+    });
   }
 }

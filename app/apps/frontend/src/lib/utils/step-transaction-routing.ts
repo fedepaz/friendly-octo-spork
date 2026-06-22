@@ -114,6 +114,22 @@ export const STEP_CONFIGS_RECURRENCE: StepConfig[] = [
   },
 ];
 
+// ─── STEP DEFINITIONS FOR CARDS ─────────────────────────────────────────
+export const STEP_CONFIGS_CARD_CLOSE: StepConfig[] = [
+  {
+    id: "recurrence",
+    label: "Actualizar",
+    fields: [],
+    shouldShow: () => true,
+  },
+
+  {
+    id: "review",
+    label: "Confirmar",
+    fields: [], // Review doesn't need validation — just display
+  },
+];
+
 // ─── HELPER FUNCTIONS ─────────────────────────────────────────────────────
 
 /**
