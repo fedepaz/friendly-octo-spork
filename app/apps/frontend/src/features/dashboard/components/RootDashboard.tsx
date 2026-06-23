@@ -5,7 +5,6 @@ import { Suspense, useEffect } from "react";
 import { KPIsDashboard } from "./kpis/kpis-dashboard";
 import { MainChartsDashboard } from "./charts/main-charts-dashboard";
 import { DashboardKPIsSkeleton } from "./kpis/dashboard-kpis-skeleton";
-import { DashboardChartsSkeleton } from "./charts/dashboard-charts-skeleton";
 import { useWizard } from "@/providers/wizard-form-provider";
 
 export function RootDashboard() {
@@ -27,9 +26,7 @@ export function RootDashboard() {
       <Suspense fallback={<DashboardKPIsSkeleton />}>
         <KPIsDashboard />
       </Suspense>
-      <Suspense fallback={<DashboardChartsSkeleton />}>
-        <MainChartsDashboard />
-      </Suspense>
+      <MainChartsDashboard />
     </div>
   );
 }
