@@ -2,6 +2,8 @@
 
 import { TransactionsDashboard } from "@/features/transactions";
 
+export const dynamic = "force-dynamic";
+
 export default function Page() {
   return <TransactionsDashboard />;
 }
