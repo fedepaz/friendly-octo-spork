@@ -18,9 +18,11 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
 
+  const logger = app.get(Logger);
+
   const env = configService.get<string>('config.environment');
 
-  const port = Number(process.env.PORT);
+  const port = configService.get<number>('config.port', 3001);
 
   const corsOrigins = configService
     .get<string>('config.cors.origins', '')
@@ -40,14 +42,14 @@ async function bootstrap() {
 
   try {
     await app.listen(port, '0.0.0.0');
-    console.log('🚀 Backend started', {
+    logger.log({
+      msg: 'Backend started',
       port,
       environment: env,
       corsOrigins,
     });
-  } catch (error) {
-    console.error('❌ BACKEND STARTUP FAILED');
-    console.error(`   Error: ${error}`);
+  } catch (error: unknown) {
+    logger.error({ msg: 'BACKEND STARTUP FAILED', error: String(error) });
     process.exit(1); // Crash immediately - no point continuing
   }
 }
