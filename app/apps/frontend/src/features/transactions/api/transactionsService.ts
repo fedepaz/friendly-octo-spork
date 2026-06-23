@@ -1,11 +1,14 @@
 // src/features/transactions/api/transactionsService.ts
 
 import { clientFetch } from "@/lib/api/client-fetch";
-import { TransactionDTO } from "@repo/shared";
+import { PaginatedResponse, TransactionDTO } from "@repo/shared";
 
 export const transactionService = {
-  fetchAll: () => {
-    return clientFetch<TransactionDTO[]>("transactions", { method: "GET" });
+  fetchAll: (page = 1, limit = 50) => {
+    return clientFetch<PaginatedResponse<TransactionDTO>>(
+      `transactions?page=${page}&limit=${limit}`,
+      { method: "GET" },
+    );
   },
 
   fetchById: (id: string) => {

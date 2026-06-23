@@ -12,6 +12,7 @@ import {
 } from '../../repositories/transaction.repository';
 import {
   CreateTransactionInput,
+  PaginatedResponse,
   RecurrenceDTO,
   TransactionDTO,
   TransactionType,
@@ -83,11 +84,25 @@ export class TransactionService {
     };
   }
 
-  async getTransactions(userId: string): Promise<TransactionDTO[]> {
+  async getTransactions(
+    userId: string,
+    page = 1,
+    limit = 50,
+  ): Promise<PaginatedResponse<TransactionDTO>> {
     if (!userId) throw new BadRequestException('User id is required');
     this.logger.log(`Getting transactions for user ${userId}`);
-    const response = await this.transactionRepo.getTransactions(userId);
-    return response.map((transaction) => this.mapToDTO(transaction));
+    const { data, total } = await this.transactionRepo.getTransactions(
+      userId,
+      page,
+      limit,
+    );
+    return {
+      data: data.map((transaction) => this.mapToDTO(transaction)),
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 
   async getTransactionsByMonth(userId: string, month: number, year: number) {
