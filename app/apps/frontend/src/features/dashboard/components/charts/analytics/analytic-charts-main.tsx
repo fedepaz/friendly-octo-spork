@@ -33,10 +33,10 @@ export function AnalyticChartsMain() {
       <CardHeader className="pb-4 px-5 pt-5 flex flex-row items-center justify-between shrink-0">
         <div className="space-y-1">
           <CardTitle className="text-[11px] font-black uppercase tracking-widest text-foreground">
-            Proyección de Patrimonio
+            Evolución de Patrimonio
           </CardTitle>
           <CardDescription className="text-[10px] uppercase font-bold text-muted-foreground/40 tracking-tight">
-            Evolución histórica y tendencia actual
+            Evolución histórica del patrimonio neto mensual
           </CardDescription>
         </div>
         <div className="flex gap-2">

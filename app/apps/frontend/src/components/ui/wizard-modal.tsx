@@ -20,6 +20,7 @@ export function WizardModal({
   children: React.ReactNode;
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -30,17 +31,32 @@ export function WizardModal({
 
   useEffect(() => {
     if (!isOpen) return;
-    closeRef.current?.focus();
+    const focusable = contentRef.current?.querySelector<HTMLElement>(
+      'input, button, select, textarea, [tabindex]:not([tabindex="-1"])',
+    );
+    if (focusable) {
+      focusable.focus();
+    } else {
+      closeRef.current?.focus();
+    }
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, handleKeyDown]);
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 animate-premium-in">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+      className="fixed inset-0 z-100 flex items-center justify-center p-4 animate-premium-in"
+    >
       <div
         className="absolute inset-0 bg-background/40 backdrop-blur-md"
         onClick={onClose}
       />
-      <div className="relative w-full max-w-md bg-card/60 backdrop-blur-2xl border border-border/40 shadow-2xl flex flex-col max-h-[90dvh] rounded-none overflow-hidden">
+      <div
+        ref={contentRef}
+        className="relative w-full max-w-md bg-card/60 backdrop-blur-2xl border border-border/40 shadow-2xl flex flex-col max-h-[90dvh] rounded-none overflow-hidden"
+      >
         <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary/40 to-transparent" />
         <div className="flex items-center justify-between px-5 py-4 border-b border-border/40 bg-background/40">
           <div className="space-y-0.5">
@@ -74,7 +90,13 @@ export function StepIndicator({
   total: number;
 }) {
   return (
-    <div className="flex items-center gap-1 px-5 pt-4 bg-background/20">
+    <div
+      role="progressbar"
+      aria-valuenow={current + 1}
+      aria-valuemin={0}
+      aria-valuemax={total}
+      aria-label={`Paso ${current + 1} de ${total}`}
+      className="flex items-center gap-1 px-5 pt-4 bg-background/20">
       {Array.from({ length: total }).map((_, i) => (
         <div
           key={i}
@@ -83,6 +105,7 @@ export function StepIndicator({
             i <= current
               ? "bg-primary shadow-[0_0_8px_rgba(var(--primary),0.3)]"
               : "bg-border/20",
+            i === current && "shadow-[0_0_12px_rgba(var(--primary),0.5)]",
           )}
         />
       ))}

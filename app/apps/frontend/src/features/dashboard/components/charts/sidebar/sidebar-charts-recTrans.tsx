@@ -66,7 +66,7 @@ export function SidebarChartsRecentTransactions() {
   });
 
   return (
-    <Card className="bg-card/40 border-border/40 shadow-premium rounded-none flex-1 min-h-0 flex flex-col overflow-hidden">
+    <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col flex-1 min-h-0 overflow-hidden">
       <CardHeader className="pb-3 px-5 pt-4 shrink-0 flex flex-row items-center justify-between">
         <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 font-sans">
           Pendientes
@@ -94,8 +94,8 @@ export function SidebarChartsRecentTransactions() {
         <div className="h-full overflow-y-auto pr-1 custom-scrollbar">
           {filteredRecurrences.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-32 text-center border border-dashed border-border/20">
-              <p className="text-[9px] text-muted-foreground/40 mt-1 uppercase font-black tracking-widest">
-                Sin registros {`(${activeFilter})`}
+              <p className="text-[9px] text-secondary mt-1 uppercase font-black tracking-widest">
+                ✓ Todo al día {`(${activeFilter})`}
               </p>
             </div>
           ) : (

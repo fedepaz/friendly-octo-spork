@@ -13,7 +13,7 @@ export function SidebarChartsBudget() {
     return Math.round(percentage);
   }
   return (
-    <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col max-h-[35%] overflow-hidden">
+    <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col flex-1 min-h-0 overflow-hidden">
       <CardHeader className="pb-2 px-5 pt-4 shrink-0">
         <CardTitle className="text-[10px] font-black uppercase tracking-widest text-secondary">
           Estado de Presupuestos

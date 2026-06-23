@@ -11,7 +11,7 @@ import {
   WizardFooter,
   WizardModal,
 } from "@/components/ui/wizard-modal";
-import { CardCloseInputDTO } from "@repo/shared";
+import { CardCloseInputDTO, CardCloseResponseDTO } from "@repo/shared";
 import {
   getCardNextStepId,
   getCardPrevStepId,
@@ -30,6 +30,7 @@ interface FormContainerProps {
   setGlobalError: (error: string | null) => void;
   isSubmitting?: boolean;
   onClose: () => void;
+  closeResponse: CardCloseResponseDTO | null;
 }
 
 export function FormContainerCard({
@@ -38,6 +39,7 @@ export function FormContainerCard({
   setGlobalError,
   isSubmitting,
   onClose,
+  closeResponse,
 }: FormContainerProps) {
   const { watch, trigger } = useFormContext<CardCloseInputDTO>();
   const watched = watch();
@@ -106,7 +108,7 @@ export function FormContainerCard({
       case "confirm":
         return <StepConfirmComponent />;
       case "review":
-        return <StepReviewComponent />;
+        return <StepReviewComponent closeResponse={closeResponse} />;
       default:
         return null;
     }

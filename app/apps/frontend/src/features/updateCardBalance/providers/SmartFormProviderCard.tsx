@@ -1,7 +1,7 @@
 // src/features/updateCardBalance/providers/SmartFormProviderCard.tsx
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CardCloseInputDTO, cardCloseSchema } from "@repo/shared";
+import { CardCloseInputDTO, CardCloseResponseDTO, cardCloseSchema } from "@repo/shared";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -17,6 +17,7 @@ import { getCurrentMonthYear } from "@/lib/date-utils";
 export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [closeResponse, setCloseResponse] = useState<CardCloseResponseDTO | null>(null);
   const { month, year } = getCurrentMonthYear();
 
   const { mutateAsync: closeCard, isPending: isSubmitting } =
@@ -49,7 +50,8 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
 
     try {
       setErrorMessage(null);
-      await closeCard(data);
+      const response = await closeCard(data);
+      setCloseResponse(response);
       // Advance to review step (index 3)
       setActiveStep(3);
     } catch (error) {
@@ -75,6 +77,7 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
           setGlobalError={setErrorMessage}
           isSubmitting={isSubmitting}
           onClose={onClose}
+          closeResponse={closeResponse}
         />
         {errorMessage && (
           <div className="px-5 pb-5">

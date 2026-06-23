@@ -22,6 +22,7 @@ import {
   ChevronRight,
   Eye,
   Filter,
+  Search,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -48,6 +49,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 import { ExportDropdown } from "@/components/data-display/data-table/export-dropdown";
 import { usePermission } from "@/hooks/usePermission";
 import { useBreakpoint } from "@/hooks/useMediaQuery";
@@ -306,6 +309,16 @@ export function DataTable<TData, TValue>({
               </DropdownMenuContent>
             </DropdownMenu>
 
+            <div className="relative flex-1 max-w-sm">
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/40" />
+              <Input
+                value={globalFilter}
+                onChange={(e) => setGlobalFilter(e.target.value)}
+                placeholder="Buscar..."
+                className="h-8 pl-7 text-[10px] font-mono font-bold bg-background/40 border-border/40 focus:border-primary/40 rounded-none"
+              />
+            </div>
+
             {dataTablePermissions.canRead && (
               <ExportDropdown
                 onExport={handleExport}
@@ -316,7 +329,7 @@ export function DataTable<TData, TValue>({
             )}
 
             {toolbarContent && (
-              <div className="flex-1 flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 {toolbarContent}
               </div>
             )}
@@ -391,23 +404,25 @@ export function DataTable<TData, TValue>({
               {`${table.getFilteredSelectedRowModel().rows.length} / ${table.getFilteredRowModel().rows.length} SELECCIONADOS`}
             </div>
             <div className="flex flex-wrap items-center gap-6">
-              <div className="flex items-center space-x-3">
-                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+              <div className="flex items-center space-x-1">
+                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mr-1">
                   Filas
                 </p>
-                <select
-                  value={table.getState().pagination.pageSize}
-                  onChange={(e) => {
-                    table.setPageSize(Number(e.target.value));
-                  }}
-                  className="h-8 w-16 bg-background/40 border border-border/40 text-[11px] font-mono font-black text-center focus:border-primary/40 focus:outline-none transition-premium"
-                >
-                  {[10, 20, 30, 40, 50, 100].map((pageSize) => (
-                    <option key={pageSize} value={pageSize}>
-                      {pageSize}
-                    </option>
-                  ))}
-                </select>
+                {[10, 20, 50, 100].map((size) => (
+                  <button
+                    key={size}
+                    type="button"
+                    onClick={() => table.setPageSize(size)}
+                    className={cn(
+                      "h-7 w-8 text-[10px] font-mono font-black border transition-premium cursor-pointer",
+                      table.getState().pagination.pageSize === size
+                        ? "bg-primary border-primary text-primary-foreground"
+                        : "bg-background/40 border-border/40 text-muted-foreground hover:border-primary/40",
+                    )}
+                  >
+                    {size}
+                  </button>
+                ))}
               </div>
               <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
                 PÁGINA{" "}

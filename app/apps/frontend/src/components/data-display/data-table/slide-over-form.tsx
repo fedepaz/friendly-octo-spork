@@ -1,7 +1,7 @@
 "use client";
 
 import { FieldValues, UseFormReturn } from "react-hook-form";
-import { Eye, Plus, X } from "lucide-react";
+import { Eye, Plus } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -67,6 +67,7 @@ export function SlideOverForm<T extends FieldValues>({
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
+        hideDefaultClose
         className={cn(
           "w-full sm:max-w-md flex flex-col p-0 bg-background/80 backdrop-blur-xl border-l border-border/40 shadow-2xl rounded-none overflow-hidden animate-premium-in",
           className,
@@ -76,28 +77,18 @@ export function SlideOverForm<T extends FieldValues>({
         <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary/40 to-transparent" />
 
         <SheetHeader className="px-6 py-5 border-b border-border/40 bg-background/40 shrink-0 relative">
-          <div className="flex items-center justify-between">
-            <div className="space-y-1">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
-                {isCreateMode ? "Sistema // Registro" : "Sistema // Vista"}
-              </span>
-              <SheetTitle className="text-xl font-oxanium font-black tracking-tighter uppercase leading-none">
-                {title}
-              </SheetTitle>
-              {description && (
-                <p className="text-[10px] font-mono uppercase text-muted-foreground opacity-50 tracking-tight">
-                  {description}
-                </p>
-              )}
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8 rounded-none hover:bg-primary/10 hover:text-primary transition-premium"
-              onClick={handleCancel}
-            >
-              <X className="h-4 w-4" />
-            </Button>
+          <div className="space-y-1">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
+              {isCreateMode ? "Sistema // Registro" : "Sistema // Vista"}
+            </span>
+            <SheetTitle className="text-xl font-oxanium font-black tracking-tighter uppercase leading-none">
+              {title}
+            </SheetTitle>
+            {description && (
+              <p className="text-[10px] font-mono uppercase text-muted-foreground opacity-50 tracking-tight">
+                {description}
+              </p>
+            )}
           </div>
         </SheetHeader>
 
