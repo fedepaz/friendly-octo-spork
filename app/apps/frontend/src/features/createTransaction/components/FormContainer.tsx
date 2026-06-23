@@ -1,4 +1,5 @@
 // src/features/createTransaction/components/FormContainer.tsx
+"use client";
 
 import { Suspense } from "react";
 import { useFormContext } from "react-hook-form";

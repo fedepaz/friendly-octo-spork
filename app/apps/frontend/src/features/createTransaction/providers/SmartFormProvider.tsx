@@ -1,4 +1,5 @@
 // src/features/createTransaction/providers/SmartFormProvider.tsx
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTransactionInput, createTransactionSchema } from "@repo/shared";

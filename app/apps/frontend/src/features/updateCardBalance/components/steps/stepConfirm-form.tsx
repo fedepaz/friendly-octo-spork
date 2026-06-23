@@ -18,9 +18,9 @@ export function StepConfirmComponent() {
     watched.month,
   );
 
-  const recurrencesTransactions = watched.recurencesTransactions ?? [];
+  const recurrencesTransactions = watched.recurrencesTransactions ?? [];
   const oneTimers = statement?.oneTimers;
-  const recurrencesTotal = watched.recurencesTransactions.reduce(
+  const recurrencesTotal = watched.recurrencesTransactions.reduce(
     (sum, t) => sum + Number(t.amount),
     0,
   );

@@ -53,14 +53,14 @@ export function StepUpdateComponent() {
   );
   const [enabledIds, setEnabledIds] = useState<Set<string>>(new Set());
 
-  // On mount: build recurencesTransactions from ALL recurrences
+  // On mount: build recurrencesTransactions from ALL recurrences
   useEffect(() => {
     if (statement?.recurrences.length === 0) return;
 
     const transactions: CreateTransactionInput[] = statement.recurrences.map(
       (r) => recurrenceToTransactionInput(r),
     );
-    setValue("recurencesTransactions", transactions, { shouldValidate: false });
+    setValue("recurrencesTransactions", transactions, { shouldValidate: false });
   }, [statement, setValue]);
 
   const toggleEnabled = (id: string) => {
@@ -78,12 +78,12 @@ export function StepUpdateComponent() {
   const handleAmountChange = (id: string, newAmount: string) => {
     setEditedAmounts((prev) => ({ ...prev, [id]: newAmount }));
 
-    // Update the corresponding item in recurencesTransactions
-    const current = watch("recurencesTransactions");
+    // Update the corresponding item in recurrencesTransactions
+    const current = watch("recurrencesTransactions");
     const updated = current.map((t) =>
       t.recurrenceId === id ? { ...t, amount: newAmount } : t,
     );
-    setValue("recurencesTransactions", updated, { shouldValidate: false });
+    setValue("recurrencesTransactions", updated, { shouldValidate: false });
   };
 
   return (

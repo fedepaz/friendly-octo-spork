@@ -29,7 +29,7 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
     defaultValues: {
       year: year,
       month: month + 1,
-      recurencesTransactions: [],
+      recurrencesTransactions: [],
     },
   });
 

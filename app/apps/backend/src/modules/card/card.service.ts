@@ -258,7 +258,7 @@ export class CardService {
   ): Promise<CardCloseResponseDTO> {
     if (!userId) throw new BadRequestException('User ID is required');
     this.logger.log(`Closing card for user ${userId}`);
-    const { cardAccountId, year, month, recurencesTransactions } = data;
+    const { cardAccountId, year, month, recurrencesTransactions } = data;
 
     const { oneTimers } = await this.cardRepo.getMonthlyForPayStatement(
       userId,
@@ -268,7 +268,7 @@ export class CardService {
 
     await this.prisma.$transaction(async (tx) => {
       // ─── 1 Save Recurrences
-      for (const t of recurencesTransactions) {
+      for (const t of recurrencesTransactions) {
         // Add a tag to source value on transactions
         t.source = `${t.recurrenceName} — CARD-CLOSE`;
         await this.transactionService.saveTransaction(userId, t);
@@ -292,7 +292,7 @@ export class CardService {
       );
 
       // ─── 4 Sum recurrences
-      const recurrencesTotal = recurencesTransactions.reduce(
+      const recurrencesTotal = recurrencesTransactions.reduce(
         (sum, t) => sum + Number(t.amount),
         0,
       );

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useLogin } from "../hooks/useLogin";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { LoginAuthDto, LoginAuthSchema } from "@repo/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,7 +42,9 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
       if (response.isDefaultPassword) {
         onDefaultPassword();
       }
-    } catch {}
+    } catch {
+      toast.error("Error al iniciar sesión. Revisá tus credenciales.");
+    }
   }
 
   return (

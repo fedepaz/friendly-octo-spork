@@ -205,6 +205,7 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const allColumns = table.getAllColumns();
     const columnsId = allColumns.map((column) => column.id);
@@ -232,7 +233,8 @@ export function DataTable<TData, TValue>({
     });
 
     setColumnVisibility(visibility);
-  }, [breakpoint, table]);
+  }, [breakpoint]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const handleExport = (format: "csv" | "excel" | "json" | "pdf") => {
     if (onExport) {

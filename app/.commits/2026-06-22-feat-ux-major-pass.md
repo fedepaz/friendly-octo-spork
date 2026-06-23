@@ -1,4 +1,4 @@
-feat(ux): major UX pass — SlideOver single close, StepReview response, dashboard deltas, DataTable search, a11y fixes
+feat(ux): major UX pass — SlideOver close, StepReview response, dashboard deltas, DataTable search
 
 Collapse SlideOverForm to single footer close (hideDefaultClose on SheetContent).
 Show CardCloseResponseDTO (accountName, closeBalance) in card close wizard review step.

@@ -87,7 +87,7 @@ export const RegisterAuthSchema = z
       .regex(/[0-9]/, {
         message: "El nombre debe contener al menos un número",
       })
-      .regex(/[^a-zA-Z0-9]/, {
+      .regex(/^[a-zA-Z0-9]+$/, {
         message: "El nombre no debe contener caracteres especiales",
       }),
 

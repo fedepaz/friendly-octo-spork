@@ -13,7 +13,7 @@ export function StepReviewComponent({
   const { watch } = useFormContext<CardCloseInputDTO>();
   const watched = watch();
 
-  const recurrencesCount = watched.recurencesTransactions?.length ?? 0;
+  const recurrencesCount = watched.recurrencesTransactions?.length ?? 0;
 
   const monthNames = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
