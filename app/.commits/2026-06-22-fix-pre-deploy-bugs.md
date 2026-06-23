@@ -1,4 +1,4 @@
-fix: pre-deploy bug fixes — `"use client"` directives, inverted regex, empty catches, re-render loop, typo
+fix: pre-deploy bugs — `"use client"`, inverted regex, empty catches, re-render loop, typo
 
 - Add missing `"use client"` to SmartFormProvider and FormContainer (hooks in server component)
 - Fix inverted regex in RegisterAuthSchema name field (`/[^a-zA-Z0-9]/` → `/^[a-zA-Z0-9]+$/`)
