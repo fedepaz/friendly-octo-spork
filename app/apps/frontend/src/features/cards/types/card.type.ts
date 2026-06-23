@@ -11,7 +11,7 @@ export const SOURCE_LABELS: Record<CardRowSource, string> = {
 };
 
 export const SOURCE_COLORS: Record<CardRowSource, string> = {
-  recurrence: "text-amber-400 border-amber-400/40 bg-amber-400/10",
+  recurrence: "text-warning border-warning/40 bg-warning/10",
   oneTimer: "text-destructive border-destructive/40 bg-destructive/10",
   payment: "text-secondary border-secondary/40 bg-secondary/10",
 };

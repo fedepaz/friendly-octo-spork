@@ -1,7 +1,11 @@
 // src/components/ui/wizard-modal.tsx
+"use client";
+
 import { cn } from "@/lib/utils";
+import { useEffect, useRef, useCallback } from "react";
 
 export function WizardModal({
+  isOpen,
   onClose,
   title,
   step,
@@ -15,6 +19,21 @@ export function WizardModal({
   totalSteps: number;
   children: React.ReactNode;
 }) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    },
+    [onClose],
+  );
+
+  useEffect(() => {
+    if (!isOpen) return;
+    closeRef.current?.focus();
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, handleKeyDown]);
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center p-4 animate-premium-in">
       <div
@@ -33,8 +52,10 @@ export function WizardModal({
             </p>
           </div>
           <button
+            ref={closeRef}
+            autoFocus
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center border border-border/20 text-muted-foreground/40 hover:text-foreground hover:bg-foreground/5 transition-premium rounded-none cursor-pointer"
+            className="w-8 h-8 flex items-center justify-center border border-border/20 text-muted-foreground/40 hover:text-foreground hover:bg-foreground/5 transition-premium rounded-none cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
           >
             <span className="text-[10px] font-black uppercase">Esc</span>
           </button>
@@ -92,8 +113,8 @@ export function WizardFooter({
           type="button"
           onClick={onBack}
           disabled={!onBack}
-          className="h-11 px-4 text-[10px] font-black uppercase tracking-widest border border-border/20 bg-background/40 text-muted-foreground/60 hover:text-foreground hover:border-primary/40 transition-premium disabled:opacity-20 rounded-none shadow-etched cursor-pointer"
-        >
+          className="h-11 px-4 text-[10px] font-black uppercase tracking-widest border border-border/20 bg-background/40 text-muted-foreground/60 hover:text-foreground hover:border-primary/40 transition-premium disabled:opacity-20 rounded-none shadow-etched cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+          >
           ← Retroceder
         </button>
       )}
@@ -103,7 +124,7 @@ export function WizardFooter({
           type="submit"
           onClick={onConfirm}
           disabled={isSubmitting}
-          className="h-11 px-4 text-[10px] font-black uppercase tracking-widest bg-primary text-primary-foreground hover:opacity-90 transition-premium disabled:opacity-50 rounded-none shadow-premium cursor-pointer"
+          className="h-11 px-4 text-[10px] font-black uppercase tracking-widest bg-primary text-primary-foreground hover:opacity-90 transition-premium disabled:opacity-50 rounded-none shadow-premium cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
         >
           {isSubmitting ? "Procesando..." : confirmLabel}
         </button>
@@ -113,7 +134,7 @@ export function WizardFooter({
           type="button"
           onClick={onNext}
           disabled={!onNext}
-          className="h-11 px-4 text-[10px] font-black uppercase tracking-widest bg-foreground text-background hover:bg-foreground/90 transition-premium disabled:opacity-50 rounded-none shadow-premium cursor-pointer"
+          className="h-11 px-4 text-[10px] font-black uppercase tracking-widest bg-foreground text-background hover:bg-foreground/90 transition-premium disabled:opacity-50 rounded-none shadow-premium cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
         >
           Siguiente →
         </button>

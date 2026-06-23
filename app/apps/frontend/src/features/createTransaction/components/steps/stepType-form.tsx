@@ -68,7 +68,7 @@ export function StepTypeComponent() {
               setValue("sourceAccountId", null);
               setValue("targetAccountId", null);
             }}
-            className={`flex flex-col gap-1 p-4 border-2 text-left transition-all hover:bg-muted
+            className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 flex flex-col gap-1 p-4 border-2 text-left transition-all hover:bg-muted
               ${watchedType === value ? `${color} bg-muted` : "border-border text-muted-foreground"}
             `}
           >

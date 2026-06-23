@@ -115,7 +115,7 @@ export function StepUpdateComponent() {
                 <button
                   type="button"
                   onClick={() => toggleEnabled(r.id)}
-                  className={`shrink-0 w-10 h-6 rounded-none border-2 transition-all ${
+                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 shrink-0 w-10 h-6 rounded-none border-2 transition-all ${
                     isEnabled
                       ? "border-foreground bg-foreground"
                       : "border-border bg-background"

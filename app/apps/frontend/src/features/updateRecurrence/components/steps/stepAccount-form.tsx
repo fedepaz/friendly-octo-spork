@@ -83,7 +83,7 @@ export function StepAccountsComponent() {
         type="button"
         disabled={isDisabled}
         onClick={() => !isDisabled && onSelect(account.id)}
-        className={`flex justify-between items-center p-3 border-2 text-left transition-all
+        className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 flex justify-between items-center p-3 border-2 text-left transition-all
           ${isSelected && !isDisabled ? "border-foreground bg-muted" : ""}
           ${!isSelected && !isDisabled ? "border-border hover:bg-muted" : ""}
           ${isDisabled ? "border-border opacity-50 cursor-not-allowed" : ""}

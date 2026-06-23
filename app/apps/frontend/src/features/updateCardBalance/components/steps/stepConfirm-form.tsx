@@ -62,7 +62,7 @@ export function StepConfirmComponent() {
         <button
           type="button"
           onClick={() => setShowRecurrences(!showRecurrences)}
-          className="flex justify-between items-center px-4 py-3 w-full text-left hover:bg-muted/50 transition-colors"
+          className="cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 flex justify-between items-center px-4 py-3 w-full text-left hover:bg-muted/50 transition-colors"
         >
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
             Cantidad ({recurrencesTransactions.length})
@@ -126,7 +126,7 @@ export function StepConfirmComponent() {
         <button
           type="button"
           onClick={() => setShowOneTimers(!showOneTimers)}
-          className="flex justify-between items-center px-4 py-3 w-full text-left hover:bg-muted/50 transition-colors"
+          className="cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 flex justify-between items-center px-4 py-3 w-full text-left hover:bg-muted/50 transition-colors"
         >
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
             Gastos Únicos ({oneTimers.length})

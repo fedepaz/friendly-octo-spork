@@ -45,7 +45,7 @@ export function StepBudgetComponent() {
           type="button"
           onClick={() => toggleBudgetedExpense(true)}
           disabled={watchedTransactionType}
-          className={`p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
             ${
               watched.isBudgetedExpense
                 ? "border-foreground bg-muted"
@@ -57,7 +57,7 @@ export function StepBudgetComponent() {
         <button
           type="button"
           onClick={() => toggleBudgetedExpense(false)}
-          className={`p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
             ${
               !watched.isBudgetedExpense
                 ? "border-foreground bg-muted"
@@ -81,7 +81,7 @@ export function StepBudgetComponent() {
                   onClick={() => {
                     setValue("budgetCategory", c as BudgetCategory);
                   }}
-                  className={`p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
                     ${
                       watched.budgetCategory === c
                         ? "border-foreground bg-muted font-bold"

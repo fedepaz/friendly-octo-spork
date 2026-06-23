@@ -34,6 +34,7 @@ Variables are mapped via `RootLayout` using:
 |---------|-------|---------|
 | Positive amounts / Income | `text-secondary` | Green-tinted balance for positive financial values |
 | Negative amounts / Expenses | `text-destructive` | Red-tinted balance for negative financial values |
+| Warning / Caution states | `text-warning` | Amber-tinted for card installments, warnings |
 | Neutral | `text-foreground` | Default text for zero or informational values |
 | Primary actions | `bg-primary` / `text-primary` | CTAs, active states, selected items |
 | Secondary actions | `bg-foreground` / `text-background` | Next/navigation buttons |
@@ -72,4 +73,6 @@ Depth is managed using the following tokens:
 
 - Always use semantic HTML elements (`button`, `label`, `nav`, `main`)
 - Icon-only controls **must** include `aria-label=""`
-- Focus states must be visible and use `ring-ring` or shadow elevation
+- Focus states must be visible: use `focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2` on native elements, `focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring` on shadcn Button
+- All interactive elements (buttons, links, clickable elements) must have `cursor-pointer`
+- `prefers-reduced-motion` disables all `animate-premium-*` transitions

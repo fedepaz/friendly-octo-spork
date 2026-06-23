@@ -1,13 +1,11 @@
 // src/features/auth/components/AuthDashboard.tsx
 "use client";
 
-import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import { ChangePasswordForm } from "@/components/user-profile/user-password";
 import { LoginForm } from "./login-form";
-import { Logo } from "@/components/common/logo";
 import { RegisterForm } from "./register-form";
 
 interface AuthDashboardProps {

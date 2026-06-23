@@ -45,7 +45,7 @@ export function StepCategoryComponent() {
               key={c.id}
               type="button"
               onClick={() => setValue("categoryId", c.id)}
-              className={`p-3 border-2 text-left transition-all font-mono text-sm
+              className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 text-left transition-all font-mono text-sm
                   ${
                     watchedCategoryId === c.id
                       ? "border-foreground bg-muted font-bold"
@@ -59,7 +59,7 @@ export function StepCategoryComponent() {
         <button
           type="button"
           onClick={() => setValue("categoryId", null)}
-          className="mt-2 text-xs font-mono text-muted-foreground underline"
+          className="cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 mt-2 text-xs font-mono text-muted-foreground underline"
         >
           No category
         </button>

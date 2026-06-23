@@ -134,6 +134,7 @@ export function MobileNavigation() {
                             key={item.href}
                             href={item.href}
                             onClick={() => setIsOpen(false)}
+                            className="cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
                           >
                             <div
                               className={cn(

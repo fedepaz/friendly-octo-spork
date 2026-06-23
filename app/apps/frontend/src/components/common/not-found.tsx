@@ -23,7 +23,7 @@ export function NotFoundPage() {
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <Link
             href={"/"}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
           >
             Volver a la página de inicio
           </Link>

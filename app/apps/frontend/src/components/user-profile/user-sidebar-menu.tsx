@@ -121,7 +121,7 @@ export function UserSidebarMenu({ isCollapsed = false }: UserSidebarMenuProps) {
           <DropdownMenuItem 
             className="cursor-pointer rounded-none focus:bg-destructive/10 focus:text-destructive transition-premium py-2 px-3 text-[11px] font-bold uppercase tracking-tight"
           >
-            <button className="w-full text-left font-black" onClick={handleLogout}>
+            <button className="w-full text-left font-black cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2" onClick={handleLogout}>
               Desconectar Nodo
             </button>
           </DropdownMenuItem>

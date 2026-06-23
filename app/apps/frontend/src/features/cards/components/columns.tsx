@@ -1,22 +1,18 @@
 // src/features/cards/components/columns.tsx
 
-import { Row, type ColumnDef } from "@tanstack/react-table";
+import { type ColumnDef } from "@tanstack/react-table";
 import {
   SortableHeader,
   TacticalTextCell,
   PremiumAmountCell,
   PremiumBadgeCell,
-  TacticalTypeCell,
 } from "@/components/data-display/data-table";
-import { cn, getTransactionTypeStyles } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import {
   Calendar,
   Clock,
-  ArrowDownLeft,
-  ArrowUpRight,
   RefreshCw,
   CreditCard,
-  Hash,
 } from "lucide-react";
 import { CardStatementRow, SOURCE_LABELS, SOURCE_COLORS } from "../types/card.type";
 

@@ -43,7 +43,7 @@ export function StepAccountsComponent() {
                   key={account.id}
                   type="button"
                   onClick={() => setValue("cardAccountId", account.id)}
-                  className={`flex justify-between items-center p-3 border-2 text-left transition-all
+                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 flex justify-between items-center p-3 border-2 text-left transition-all
                     ${isSelected ? "border-foreground bg-muted" : "border-border hover:bg-muted"}
                   `}
                 >
