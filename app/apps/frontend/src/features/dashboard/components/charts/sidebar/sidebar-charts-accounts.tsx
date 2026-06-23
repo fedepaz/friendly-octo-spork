@@ -17,7 +17,7 @@ export function SidebarChartsAccounts() {
         {accounts.map((account) => (
           <div
             key={account.id}
-            className="flex items-center justify-between group cursor-pointer hover:translate-x-1 transition-premium border-l-2 border-transparent hover:border-primary pl-2"
+            className="flex items-center justify-between group hover:translate-x-1 transition-premium border-l-2 border-transparent hover:border-primary pl-2"
           >
             <div className="min-w-0">
               <p className="text-[11px] font-black text-foreground truncate uppercase tracking-tighter">

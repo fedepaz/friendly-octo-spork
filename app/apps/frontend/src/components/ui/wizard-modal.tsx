@@ -74,7 +74,13 @@ export function StepIndicator({
   total: number;
 }) {
   return (
-    <div className="flex items-center gap-1 px-5 pt-4 bg-background/20">
+    <div
+      role="progressbar"
+      aria-valuenow={current + 1}
+      aria-valuemin={0}
+      aria-valuemax={total}
+      aria-label={`Paso ${current + 1} de ${total}`}
+      className="flex items-center gap-1 px-5 pt-4 bg-background/20">
       {Array.from({ length: total }).map((_, i) => (
         <div
           key={i}

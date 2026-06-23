@@ -93,6 +93,7 @@ export function SlideOverForm<T extends FieldValues>({
             <Button
               variant="ghost"
               size="icon"
+              aria-label="Cerrar"
               className="h-8 w-8 rounded-none hover:bg-primary/10 hover:text-primary transition-premium"
               onClick={handleCancel}
             >
