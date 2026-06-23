@@ -24,9 +24,11 @@ This document tracks all React components within the `apps/frontend/src` directo
 | `MobileNavigation`| Layout | ✅ | ✅ | ✅ | ✅ | Premium |
 | `KPICard` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
 | `FeatureCard` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
-| `WizardModal` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
-| `WizardFooter` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
-| `StepIndicator` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |
+| `WizardModal` | Shared (UI) | ✅ | ✅ | ✅ | ✅ | Approved |
+| `WizardFooter` | Shared (UI) | ✅ | ✅ | ✅ | ✅ | Approved |
+| `StepIndicator` | Shared (UI) | ✅ | ✅ | ✅ | ✅ | Approved |
+| `InLineError` | Shared (UI) | ✅ | ✅ | ✅ | ✅ | Approved |
+| `WizardStepSkeleton` | Shared (UI) | ✅ | ✅ | ✅ | ✅ | Approved |
 | `TacticalDataTableCells` | Shared | ✅ | ✅ | ✅ | ✅ | Premium |
 | `KPIsDashboard` | Dashboard | ✅ | ✅ | ✅ | ✅ | Approved |
 | `TransTypeSelector` | Shared | ✅ | ✅ | ✅ | ✅ | Approved |

@@ -149,19 +149,14 @@ export class TransactionService {
     );
 
     return this.prisma.$transaction(async (tx) => {
-      // ─── Only update if this is na catual payment now
-      const { isRecurrence, isFirstPayment, ..._data } = transactionData;
-      const shouldUpdateBalance = !isRecurrence || isFirstPayment;
-
       // ─── 1. Update Account Balances ─────────────────────────────────────────
-      if (shouldUpdateBalance) {
-        await this.updateBalancesForType(
-          transactionData,
-          amount,
-          tx,
-          sourceAccount,
-        );
-      }
+
+      await this.updateBalancesForType(
+        transactionData,
+        amount,
+        tx,
+        sourceAccount,
+      );
 
       // ─── 2. Create/Update Recurrence ────────────────────────────────────────
       const recurrenceData = await this.createOrUpdateRecurrence(

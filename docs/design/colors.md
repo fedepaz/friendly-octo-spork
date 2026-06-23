@@ -28,6 +28,18 @@ Variables are mapped via `RootLayout` using:
 
 ## Token Categories
 
+### Semantic Color Mapping
+
+| Context | Token | Purpose |
+|---------|-------|---------|
+| Positive amounts / Income | `text-secondary` | Green-tinted balance for positive financial values |
+| Negative amounts / Expenses | `text-destructive` | Red-tinted balance for negative financial values |
+| Neutral | `text-foreground` | Default text for zero or informational values |
+| Primary actions | `bg-primary` / `text-primary` | CTAs, active states, selected items |
+| Secondary actions | `bg-foreground` / `text-background` | Next/navigation buttons |
+| Muted text | `text-muted-foreground` | Labels, hints, disabled text |
+| Borders | `border-border` | Default border color |
+
 ### Background & Core Tokens (OKLCH)
 
 | Token                 | Purpose                           |
