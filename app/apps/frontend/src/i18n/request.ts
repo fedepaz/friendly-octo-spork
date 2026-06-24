@@ -199,12 +199,12 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ).default,
       ...(
         await import(
-          `../features/auth/components/LoginForm/messages/${locale}.json`
+          `../features/auth/components/AuthLoginForm/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/auth/components/RegisterForm/messages/${locale}.json`
+          `../features/auth/components/AuthRegisterForm/messages/${locale}.json`
         )
       ).default,
       ...(

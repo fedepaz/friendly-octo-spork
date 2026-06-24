@@ -93,3 +93,8 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 # =========================
 app/.agents/
 app/skills-lock.json
+
+# =========================
+# Playwright MCP
+# =========================
+.playwright-mcp/

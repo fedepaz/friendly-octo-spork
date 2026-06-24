@@ -10,7 +10,10 @@ function getRandomMessage(messages: string[]) {
 
 export function LoadingSpinner() {
   const lsT = useTranslations("LoadingSpinner");
-  const messages = useMemo(() => lsT("messages") as unknown as string[], [lsT]);
+  const messages = useMemo(() => {
+    const raw = lsT.raw("messages") as Record<string, string>;
+    return Object.values(raw);
+  }, [lsT]);
   const [currentMessage, setCurrentMessage] = useState(
     () => messages[12] || "",
   );

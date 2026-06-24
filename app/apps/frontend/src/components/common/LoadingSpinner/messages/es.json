@@ -1,19 +1,19 @@
 {
   "LoadingSpinner": {
-    "messages": [
-      "Compilando con Internet Explorer 6...",
-      "Esperando que Flash Player se actualice...",
-      "Desfragmentando el disco duro del servidor...",
-      "Reiniciando Windows ME por tercera vez...",
-      "Descargando 56k de pura nostalgia...",
-      "Buscando drivers en DriverGuide.com...",
-      "Esperando que termine de cargar RealPlayer...",
-      "Liberando memoria con el Administrador de Tareas...",
-      "Rogando que no sea una Pantalla Azul...",
-      "Conectando por dial-up a las 3 AM...",
-      "Instalando 47 barras de herramientas de Ask Jeeves...",
-      "Esperando que WinRAR deje de pedir licencia...",
-      "Actualizando biblioteca de Winamp..."
-    ]
+    "messages": {
+      "0": "Compilando con Internet Explorer 6...",
+      "1": "Esperando que Flash Player se actualice...",
+      "2": "Desfragmentando el disco duro del servidor...",
+      "3": "Reiniciando Windows ME por tercera vez...",
+      "4": "Descargando 56k de pura nostalgia...",
+      "5": "Buscando drivers en DriverGuide.com...",
+      "6": "Esperando que termine de cargar RealPlayer...",
+      "7": "Liberando memoria con el Administrador de Tareas...",
+      "8": "Rogando que no sea una Pantalla Azul...",
+      "9": "Conectando por dial-up a las 3 AM...",
+      "10": "Instalando 47 barras de herramientas de Ask Jeeves...",
+      "11": "Esperando que WinRAR deje de pedir licencia...",
+      "12": "Actualizando biblioteca de Winamp..."
+    }
   }
 }

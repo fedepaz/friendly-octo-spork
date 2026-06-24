@@ -2,6 +2,7 @@
   "AnalyticChartsMain": {
     "title": "Net Worth Evolution",
     "description": "Historical evolution of monthly net worth",
-    "actualLabel": "Actual"
+    "actualLabel": "Actual",
+    "real": "Real"
   }
 }
