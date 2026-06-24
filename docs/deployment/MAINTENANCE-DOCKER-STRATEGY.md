@@ -1,46 +1,51 @@
-# 🛠️ Maintenance & Operations
+# Maintenance & Operations
 
 Essential commands and checklists for keeping the platform running smoothly.
 
-## 🧰 Common Commands
+## Common Commands
 
 ### Logs & Monitoring
 ```bash
 # View live logs for specific services
-docker-compose logs -f nextjs
-docker-compose logs -f api
-docker-compose logs -f nginx
+docker compose logs -f nextjs
+docker compose logs -f api
+docker compose logs -f nginx
+docker compose logs -f db
 ```
 
 ### Management
 ```bash
 # Restart a specific service
-docker-compose restart nextjs
+docker compose restart nextjs
 
 # Rebuild and update one service (no downtime for others)
-docker-compose up -d --build nextjs
+docker compose up -d --build nextjs
 
 # Remove unused images to save disk space
 docker image prune -f
+
+# Check container health
+docker ps --filter "health=healthy"
 ```
 
-### Windows Resilience
-If running on a local Windows machine without full Docker management:
-1.  Navigate to `docs/scripts/`.
-2.  Run `startapp.bat`. This script will:
-    - Change directory to the project root.
-    - Execute `pnpm start`.
-    - Automatically restart the application after a 5-second delay if it crashes.
-
-### Backups
+### Database
 ```bash
-# Manual database dump
-docker-compose exec mariadb mysqldump -u root -p$DB_ROOT_PASSWORD proplanta > ./backups/backup-$(date +%F).sql
+# Connect to PostgreSQL
+docker compose exec db psql -U user -d finance-app
+
+# Manual database dump (backup)
+docker compose exec db pg_dump -U user finance-app > ./backups/backup-$(date +%F).sql
+
+# Restore from backup
+cat ./backups/backup-2026-06-24.sql | docker compose exec -T db psql -U user -d finance-app
+
+# List all databases
+docker compose exec db psql -U user -l
 ```
 
 ---
 
-## ✅ Pre-Launch Checklist
+## Pre-Launch Checklist
 
 ### Server
 - [ ] Minimal OS installed.
@@ -49,8 +54,13 @@ docker-compose exec mariadb mysqldump -u root -p$DB_ROOT_PASSWORD proplanta > ./
 
 ### Application
 - [ ] `docker-compose.yml` uses service names, not `localhost`.
-- [ ] Health checks pass for all services.
+- [ ] Health checks pass for all services (`docker compose ps`).
 - [ ] `.env` file populated with production secrets.
+- [ ] Dockerfiles exist for both frontend and backend.
+
+### Database
+- [ ] PostgreSQL volume mounted for data persistence.
+- [ ] Backup strategy in place (cron or manual).
 
 ### Network
 - [ ] Cloudflare DNS A record exists.
