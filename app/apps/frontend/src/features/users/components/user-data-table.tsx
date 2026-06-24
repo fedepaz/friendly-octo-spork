@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useUsers } from "../hooks/usersHooks";
 import { DataTable, SlideOverForm } from "@/components/data-display/data-table";
 import { userColumns } from "./columns";
@@ -9,6 +10,7 @@ import { UserProfileDto } from "@repo/shared";
 import { UserViewForm } from "./users-view-form";
 
 export function UsersDataTable() {
+  const udT = useTranslations("UsersDashboard");
   const { data: users = [] } = useUsers();
   const [selectedUser, setSelectedUser] = useState<UserProfileDto | null>(null);
 
@@ -17,8 +19,8 @@ export function UsersDataTable() {
       <DataTable
         columns={userColumns}
         data={users}
-        title="Directorio de Operadores"
-        description="Gestión de identidades y privilegios del sistema"
+        title={udT("title")}
+        description={udT("description")}
         tableName="users"
         totalCount={users.length}
         onView={(row) => setSelectedUser(row)}
@@ -27,8 +29,8 @@ export function UsersDataTable() {
       <SlideOverForm
         open={!!selectedUser}
         onOpenChange={(open) => !open && setSelectedUser(null)}
-        title="Terminal de Seguridad"
-        description={`IDENTIDAD: ${selectedUser?.name?.toUpperCase()}`}
+        title={udT("slideOverTitle")}
+        description={udT("identityPrefix") + selectedUser?.name?.toUpperCase()}
       >
         {selectedUser && <UserViewForm selectedUser={selectedUser} />}
       </SlideOverForm>

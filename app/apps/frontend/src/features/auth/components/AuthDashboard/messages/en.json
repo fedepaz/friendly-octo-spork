@@ -1,0 +1,8 @@
+{
+  "AuthDashboard": {
+    "loginTitle": "Sign In",
+    "registerTitle": "Create Account",
+    "loginDescription": "To access the application",
+    "registerDescription": "You need an account to use the application"
+  }
+}

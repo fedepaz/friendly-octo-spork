@@ -1,0 +1,10 @@
+{
+  "UsersViewForm": {
+    "unknownIdentity": "IDENTIDAD DESCONOCIDA",
+    "email": "Correo Electrónico",
+    "systemStatus": "Estado del Sistema",
+    "authorizedAccess": "ACCESO AUTORIZADO",
+    "restrictedAccess": "ACCESO RESTRINGIDO",
+    "registrationDate": "Fecha de Registro"
+  }
+}

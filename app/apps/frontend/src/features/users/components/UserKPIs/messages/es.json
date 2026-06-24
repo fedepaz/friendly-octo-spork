@@ -1,0 +1,13 @@
+{
+  "UserKPIs": {
+    "totalOperators": "Operadores Totales",
+    "registeredIdentities": "IDENTIDADES REGISTRADAS",
+    "vsPreviousPeriod": "VS PERÍODO ANTERIOR",
+    "activeIdentities": "Identidades Activas",
+    "onlineAvailable": "EN LÍNEA / DISPONIBLES",
+    "suspendedAccess": "Accesos Suspendidos",
+    "requireReview": "REQUIEREN REVISIÓN",
+    "networkLinks": "Enlaces de Red",
+    "verifiedEmails": "CORREOS VERIFICADOS"
+  }
+}

@@ -1,5 +1,3 @@
-// src/components/data-display/data-table/transType-selector.tsx
-
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +11,7 @@ import {
 
 import { TransactionType, TransactionTypeSchema } from "@repo/shared";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface TransTypeSelectorProps {
   onTransTypeChange: (type: TransactionType) => void;
@@ -21,6 +20,7 @@ interface TransTypeSelectorProps {
 export function TransTypeSelector({
   onTransTypeChange,
 }: TransTypeSelectorProps) {
+  const ttsT = useTranslations("TransTypeSelector");
   const [transType, setTransType] = useState<TransactionType>("EXPENSE");
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export function TransTypeSelector({
         className="w-48 bg-popover/90 backdrop-blur-xl border-border shadow-2xl rounded-none p-1"
       >
         <DropdownMenuLabel className="text-[10px] uppercase tracking-widest opacity-60 px-2 py-1.5">
-          Tipo de Transacción
+          {ttsT("label")}
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-border/40" />
         <div className="grid grid-cols-1 gap-0.5">

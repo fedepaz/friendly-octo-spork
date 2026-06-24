@@ -59,6 +59,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useTranslations } from "next-intl";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -96,6 +97,7 @@ export function DataTable<TData, TValue>({
   enableSelection,
   toolbarContent,
 }: DataTableProps<TData, TValue>) {
+  const dtT = useTranslations("DataTable");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -118,14 +120,14 @@ export function DataTable<TData, TValue>({
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Seleccionar todo"
+        aria-label={dtT("selectAllLabel")}
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Seleccionar fila"
+        aria-label={dtT("selectRowLabel")}
       />
     ),
     enableSorting: false,
@@ -138,7 +140,7 @@ export function DataTable<TData, TValue>({
     accessorKey: "actions",
     header: ({}) => {
       if (!allowedActions.canView) return null;
-      return <HeaderComponent titulo="Acciones" />;
+      return <HeaderComponent titulo={dtT("actionsHeader")} />;
     },
     cell: ({ row }) => {
       if (!allowedActions.canView) return null;
@@ -152,7 +154,7 @@ export function DataTable<TData, TValue>({
                 size="sm"
                 className="min-h-10 text-muted-foreground"
                 onClick={() => onView?.(row.original)}
-                aria-label="Ver detalles"
+                aria-label={dtT("viewDetailsLabel")}
               >
                 <Eye className="h-4 w-4" />
               </Button>
@@ -161,7 +163,7 @@ export function DataTable<TData, TValue>({
               side="top"
               className="border border-border shadow-md bg-popover"
             >
-              <p>Ver detalles</p>
+              <p>{dtT("viewDetailsLabel")}</p>
             </TooltipContent>
           </Tooltip>
         </div>
@@ -427,11 +429,11 @@ export function DataTable<TData, TValue>({
                 ))}
               </div>
               <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-                PÁGINA{" "}
+                {dtT("pageLabel")}{" "}
                 <span className="text-foreground font-mono">
                   {table.getState().pagination.pageIndex + 1}
                 </span>{" "}
-                DE{" "}
+                {dtT("ofLabel")}{" "}
                 <span className="text-foreground font-mono">
                   {table.getPageCount()}
                 </span>
@@ -462,7 +464,6 @@ export function DataTable<TData, TValue>({
   );
 }
 
-// Sortable header component
 export function SortableHeader({
   column,
   children,
@@ -471,6 +472,7 @@ export function SortableHeader({
   column: any;
   children: ReactNode;
 }) {
+  const shT = useTranslations("DataTable");
   const isSorted = column.getIsSorted();
 
   return (
@@ -482,10 +484,10 @@ export function SortableHeader({
           className="h-auto p-0 font-semibold hover:bg-transparent"
           aria-label={
             isSorted === "asc"
-              ? "Ordenar descendente"
+              ? shT("sortDescLabel")
               : isSorted === "desc"
-                ? "Quitar orden"
-                : "Ordenar ascendente"
+                ? shT("clearSortLabel")
+                : shT("sortAscLabel")
           }
         >
           {children}
@@ -495,10 +497,10 @@ export function SortableHeader({
       <TooltipContent side="top" className="border border-border shadow-md">
         <p>
           {isSorted === "asc"
-            ? "Click para orden descendente"
+            ? shT("sortDescTooltip")
             : isSorted === "desc"
-              ? "Click para quitar orden"
-              : "Click para orden ascendente"}
+              ? shT("clearSortTooltip")
+              : shT("sortAscTooltip")}
         </p>
       </TooltipContent>
     </Tooltip>

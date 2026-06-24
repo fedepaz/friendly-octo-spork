@@ -1,0 +1,10 @@
+{
+  "DashboardKPIs": {
+    "netWorth": "Net Worth",
+    "vsPrevMonth": "vs prev. month",
+    "incomeTitle": "Income {month}",
+    "expensesTitle": "Expenses {month}",
+    "newTransaction": "New Transaction",
+    "cardClosing": "Card Closing"
+  }
+}

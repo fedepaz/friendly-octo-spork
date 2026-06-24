@@ -17,10 +17,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
 import { useMonthlyIncomeExpense } from "../../../hooks/dashboardHooks";
 import { CustomTooltip } from "@/features/dashboard/utils/utils";
 
 export function AnalyticChartsMain() {
+  const acmT = useTranslations("AnalyticChartsMain");
   const { data: incomeExpenseData = [] } = useMonthlyIncomeExpense();
 
   const netWorthData = incomeExpenseData.map((item) => ({
@@ -33,16 +35,16 @@ export function AnalyticChartsMain() {
       <CardHeader className="pb-4 px-5 pt-5 flex flex-row items-center justify-between shrink-0">
         <div className="space-y-1">
           <CardTitle className="text-[11px] font-black uppercase tracking-widest text-foreground">
-            Evolución de Patrimonio
+            {acmT("title")}
           </CardTitle>
           <CardDescription className="text-[10px] uppercase font-bold text-muted-foreground/40 tracking-tight">
-            Evolución histórica del patrimonio neto mensual
+            {acmT("description")}
           </CardDescription>
         </div>
         <div className="flex gap-2">
           <div className="h-2 w-2 bg-primary" />
           <span className="text-[9px] font-bold uppercase tracking-tighter opacity-60">
-            Real
+            {acmT("real")}
           </span>
         </div>
       </CardHeader>

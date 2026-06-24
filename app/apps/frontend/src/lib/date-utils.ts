@@ -29,12 +29,13 @@ export const getTotalWeeks = (year: number) => {
 };
 
 /**
- * Format a date string in Spanish (Argentina) locale.
+ * Format a date string in the given locale.
  * @param date The date to format.
+ * @param locale The locale string (default "es-AR").
  * @returns Formatted date string.
  */
-export const formatSpanishDate = (date: Date) => {
-  return date.toLocaleDateString("es-AR", {
+export const formatSpanishDate = (date: Date, locale = "es-AR") => {
+  return date.toLocaleDateString(locale, {
     year: "numeric",
     month: "long",
     day: "numeric",

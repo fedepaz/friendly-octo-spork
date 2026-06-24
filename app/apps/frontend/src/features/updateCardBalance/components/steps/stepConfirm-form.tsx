@@ -3,6 +3,7 @@
 
 import { CardCloseInputDTO } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { formatCurrency } from "@/lib/utils";
 import { useState } from "react";
 import { useAccountById } from "@/features/accounts/hooks/accountsHooks";
@@ -25,6 +26,7 @@ export function StepConfirmComponent() {
     0,
   );
   const oneTimersTotal = statement.summary.totalOneTimers;
+  const scfT = useTranslations("StepConfirmForm");
   const [showRecurrences, setShowRecurrences] = useState(false);
   const [showOneTimers, setShowOneTimers] = useState(false);
 
@@ -44,14 +46,14 @@ export function StepConfirmComponent() {
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        Resumen del cierre
+        {scfT("title")}
       </h3>
 
       {/* Balance summary */}
       <div className="border-2 border-border divide-y divide-border">
         <div className="flex justify-between px-4 py-3">
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
-            Balance actual
+            {scfT("currentBalance")}
           </span>
           <span className="text-sm font-mono font-bold text-foreground">
             {formatCurrency(currentBalance)}
@@ -65,7 +67,7 @@ export function StepConfirmComponent() {
           className="cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 flex justify-between items-center px-4 py-3 w-full text-left hover:bg-muted/50 transition-colors"
         >
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
-            Cantidad ({recurrencesTransactions.length})
+            {scfT("recurrencesCount", { count: recurrencesTransactions.length })}
           </span>
           <div className="flex items-center gap-2">
             <span className="text-sm font-mono font-bold text-foreground">
@@ -82,7 +84,7 @@ export function StepConfirmComponent() {
             {installments.length > 0 && (
               <div className="px-4 py-2">
                 <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-1">
-                  Cuotas fijas
+                  {scfT("installments")}
                 </p>
                 {installments.map((t, i) => (
                   <div key={i} className="flex justify-between py-1">
@@ -102,7 +104,7 @@ export function StepConfirmComponent() {
             {openEnded.length > 0 && (
               <div className="px-4 py-2">
                 <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-1">
-                  Cuotas abiertas
+                  {scfT("openEnded")}
                 </p>
                 {openEnded.map((t, i) => (
                   <div key={i} className="flex justify-between py-1">
@@ -129,7 +131,7 @@ export function StepConfirmComponent() {
           className="cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 flex justify-between items-center px-4 py-3 w-full text-left hover:bg-muted/50 transition-colors"
         >
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
-            Gastos Únicos ({oneTimers.length})
+            {scfT("oneTimers", { count: oneTimers.length })}
           </span>
           <div className="flex items-center gap-2">
             <span className="text-sm font-mono font-bold text-foreground">
@@ -159,7 +161,7 @@ export function StepConfirmComponent() {
         {/* Totals */}
         <div className="flex justify-between px-4 py-3 bg-muted/30">
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
-            Total a descontar
+            {scfT("totalToDeduct")}
           </span>
           <span className="text-sm font-mono font-bold text-destructive">
             -{formatCurrency(totalToDeduct)}
@@ -168,7 +170,7 @@ export function StepConfirmComponent() {
 
         <div className="flex justify-between px-4 py-3">
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
-            Nuevo saldo
+            {scfT("newBalance")}
           </span>
           <span className="text-sm font-mono font-bold text-foreground">
             {formatCurrency(newBalance)}

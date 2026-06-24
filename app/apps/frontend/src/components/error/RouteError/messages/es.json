@@ -1,0 +1,7 @@
+{
+  "RouteError": {
+    "title": "Algo salió mal",
+    "defaultMessage": "Ocurrió un error inesperado. Intentalo de nuevo.",
+    "retry": "Reintentar"
+  }
+}

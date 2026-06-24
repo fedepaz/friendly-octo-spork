@@ -1,0 +1,14 @@
+{
+  "RecurrenceColumns": {
+    "nameHeader": "Nombre",
+    "noCategory": "Sin categoría",
+    "directionHeader": "Dirección",
+    "amountHeader": "Monto",
+    "frequencyHeader": "Frecuencia",
+    "monthly": "Mensual",
+    "weekly": "Semanal",
+    "yearly": "Anual",
+    "installments": "Cuotas",
+    "cyclesHeader": "Ciclos"
+  }
+}

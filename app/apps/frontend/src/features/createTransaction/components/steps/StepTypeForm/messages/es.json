@@ -1,0 +1,17 @@
+{
+  "StepTypeForm": {
+    "title": "¿Qué tipo de transacción?",
+    "expense": "Gasto",
+    "expenseHint": "Dinero que sale",
+    "income": "Ingreso",
+    "incomeHint": "Dinero que entra",
+    "transfer": "Transferencia",
+    "transferHint": "Mover entre cuentas",
+    "investment": "Inversión",
+    "investmentHint": "Poner dinero a trabajar",
+    "return": "Retorno",
+    "returnHint": "Retorno de inversión",
+    "payment": "Pago",
+    "paymentHint": "Pago de tarjeta / préstamo"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "StepCardReviewForm": {
+    "title": "Cierre realizado",
+    "month": "Mes",
+    "transactions": "Transacciones",
+    "account": "Cuenta",
+    "finalBalance": "Saldo final",
+    "months": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+  }
+}

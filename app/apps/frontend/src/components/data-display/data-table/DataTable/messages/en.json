@@ -1,0 +1,16 @@
+{
+  "DataTable": {
+    "pageLabel": "PAGE",
+    "ofLabel": "OF",
+    "selectAllLabel": "Select all",
+    "selectRowLabel": "Select row",
+    "viewDetailsLabel": "View details",
+    "actionsHeader": "Actions",
+    "sortAscLabel": "Sort ascending",
+    "sortDescLabel": "Sort descending",
+    "clearSortLabel": "Clear sort",
+    "sortAscTooltip": "Click to sort ascending",
+    "sortDescTooltip": "Click to sort descending",
+    "clearSortTooltip": "Click to clear sort"
+  }
+}

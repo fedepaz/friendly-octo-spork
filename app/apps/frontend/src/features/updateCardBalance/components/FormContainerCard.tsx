@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import { useFormContext } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 import { StepUpdateComponent } from "./steps/stepUpdate-form";
 import { StepReviewComponent } from "./steps/stepReview-form";
@@ -43,6 +44,7 @@ export function FormContainerCard({
 }: FormContainerProps) {
   const { watch, trigger } = useFormContext<CardCloseInputDTO>();
   const watched = watch();
+  const fccT = useTranslations("FormContainerCard");
 
   // Convert numeric index to StepId
   const currentStepId = indexCardToStepId(activeStep, STEP_CONFIGS_CARD_CLOSE);
@@ -66,7 +68,7 @@ export function FormContainerCard({
     if (fieldsToValidate.length > 0) {
       const isValid = await trigger(fieldsToValidate); // Type cast ok for Path
       if (!isValid) {
-        setGlobalError("Please fill in all required fields");
+        setGlobalError(fccT("fillRequiredFields"));
         return;
       }
     }
@@ -120,7 +122,7 @@ export function FormContainerCard({
       onClose={onClose}
       title={
         STEP_CONFIGS_CARD_CLOSE.find((s) => s.id === currentStepId)?.label ??
-        "Terminal de Transacciones"
+        fccT("defaultTitle")
       }
       step={currentVisibleIndex + 1}
       totalSteps={totalVisibleSteps}
@@ -132,7 +134,7 @@ export function FormContainerCard({
       {isReviewStep ? (
         <WizardFooter
           onConfirm={onClose}
-          confirmLabel="Cerrar"
+          confirmLabel={fccT("closeLabel")}
           showBackButton={false}
           isSubmitting={isSubmitting}
         />
@@ -149,9 +151,9 @@ export function FormContainerCard({
           }
           confirmLabel={
             isConfirmStep
-              ? "Confirmar cierre"
+              ? fccT("confirmLabel")
               : isReviewStep
-                ? "Cerrar"
+                ? fccT("closeLabel")
                 : undefined
           }
           isSubmitting={isSubmitting}

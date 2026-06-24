@@ -1,0 +1,7 @@
+{
+  "TransactionsDashboard": {
+    "title": "Transacciones",
+    "description": "Lista de transacciones recientes",
+    "slideOverTitle": "Detalle de Transacción"
+  }
+}

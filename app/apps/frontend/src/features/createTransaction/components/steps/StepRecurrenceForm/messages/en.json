@@ -1,0 +1,18 @@
+{
+  "StepRecurrenceForm": {
+    "cardTypeLabel": "Card Type",
+    "title": "Does this repeat?",
+    "yes": "Yes",
+    "no": "No",
+    "recurrenceNameLabel": "Recurrence Name",
+    "recurrenceNamePlaceholder": "e.g. Monthly Rent, Netflix Subscription...",
+    "frequencyLabel": "Frequency",
+    "totalInstallmentsLabel": "Total Installments",
+    "totalInstallmentsPlaceholder": "e.g. 9",
+    "firstPaymentLabel": "First Payment",
+    "now": "Now",
+    "nextMonth": "Next Month",
+    "chargedToday": "First installment charged today",
+    "chargedNextMonth": "First installment charged on next month"
+  }
+}

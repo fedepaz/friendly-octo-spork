@@ -1,0 +1,12 @@
+{
+  "AccountDashboard": {
+    "title": "Terminal de Cuentas",
+    "description": "Gestión de activos y pasivos del sistema",
+    "createLabel": "Registrar nueva unidad de cuenta",
+    "viewTitle": "Estado de cuenta - {name}",
+    "viewDesc": "Análisis de flujo en {currency} // {type}",
+    "createTitle": "Crear nueva cuenta",
+    "createDesc": "Inicializar nueva unidad de activos",
+    "saveLabel": "Crear nueva cuenta"
+  }
+}

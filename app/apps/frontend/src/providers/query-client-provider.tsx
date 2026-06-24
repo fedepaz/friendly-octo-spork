@@ -11,12 +11,14 @@ import {
 } from "@tanstack/react-query";
 import { ReactNode, useState } from "react";
 import { useError } from "./error-provider";
+import { useTranslations } from "next-intl";
 
 interface Props {
   children: ReactNode;
 }
 
 export function ReactClientProvider({ children }: Props) {
+  const qcpT = useTranslations("QueryClientProvider");
   const { handleError } = useError();
   const [queryClient] = useState(
     () =>
@@ -33,7 +35,7 @@ export function ReactClientProvider({ children }: Props) {
         },
         queryCache: new QueryCache({
           onError: (error, query) => {
-            const context = query.meta?.context || "Petición API";
+            const context = query.meta?.context || qcpT("apiRequest");
             handleError(error, {
               context: context as string,
               shouldRedirect: false,
@@ -43,7 +45,7 @@ export function ReactClientProvider({ children }: Props) {
         }),
         mutationCache: new MutationCache({
           onError: (error, variables, context, mutation) => {
-            const operation = mutation.meta?.operation || "Mutación API";
+            const operation = mutation.meta?.operation || qcpT("apiMutation");
             handleError(error, {
               context: operation as string,
               shouldRedirect: false,

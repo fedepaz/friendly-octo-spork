@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 
 import { CreateTransactionInput } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { InLineError } from "@/components/ui/in-line-error";
 
@@ -14,6 +15,7 @@ export function StepAmountComponent() {
     setValue,
     formState: { errors },
   } = useFormContext<CreateTransactionInput>();
+  const amT = useTranslations("StepAmountForm");
 
   useEffect(() => {
     const today = new Date();
@@ -23,15 +25,15 @@ export function StepAmountComponent() {
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        How much?
+        {amT("title")}
       </h3>
       <div>
-        <Label>Amount</Label>
+        <Label>{amT("amountLabel")}</Label>
         <input
           {...register("amount")}
           type="text"
           inputMode="decimal"
-          placeholder="0.00"
+          placeholder={amT("amountPlaceholder")}
           autoFocus
           className="w-full bg-background border-2 border-border px-4 py-3 text-2xl font-mono text-right focus:outline-none focus:border-foreground transition-colors"
         />

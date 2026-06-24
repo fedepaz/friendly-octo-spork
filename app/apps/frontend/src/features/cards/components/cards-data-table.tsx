@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { DataTable, SlideOverForm } from "@/components/data-display/data-table";
 import { KPICard } from "@/components/data-display/kpi-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,6 +22,7 @@ import { Repeat, ShoppingCart, ArrowLeftRight, Banknote } from "lucide-react";
 import { getCurrentMonth, getCurrentYear } from "@/lib/date-utils";
 
 export function CardsDataTable() {
+  const cdT = useTranslations("CardsDashboard");
   const [month, setMonth] = useState(getCurrentMonth() - 1);
   const year = getCurrentYear();
   const { data } = useCardTransactionsByMonth(year, month + 1);
@@ -48,21 +50,21 @@ export function CardsDataTable() {
     <>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 shrink-0 animate-premium-in">
         <KPICard
-          title="Cuotas Proyectadas"
+          title={cdT("kpiProjectedInstallments")}
           value={formatCurrency(Number(summary?.totalRecurrences ?? 0))}
-          description="PRÓXIMOS VENCIMIENTOS"
+          description={cdT("kpiProjectedInstallmentsDesc")}
           icon={Repeat}
         />
         <KPICard
-          title="Consumos del Mes"
+          title={cdT("kpiMonthlyConsumption")}
           value={formatCurrency(Number(summary?.totalOneTimers ?? 0))}
-          description="GASTOS A CARGO"
+          description={cdT("kpiMonthlyConsumptionDesc")}
           icon={ShoppingCart}
         />
         <KPICard
-          title="Pagos Realizados"
+          title={cdT("kpiPaymentsMade")}
           value={formatCurrency(Number(summary?.totalPayments ?? 0))}
-          description="TRANSFERENCIAS A LA CUENTA"
+          description={cdT("kpiPaymentsMadeDesc")}
           icon={ArrowLeftRight}
         />
         <Card
@@ -75,7 +77,7 @@ export function CardsDataTable() {
         >
           <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 pt-4 pb-1">
             <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-              Deuda Total
+              {cdT("debtTotal")}
             </CardTitle>
             <Banknote
               className={cn(
@@ -97,8 +99,8 @@ export function CardsDataTable() {
             </p>
             <p className="text-[10px] font-bold uppercase text-muted-foreground/40 leading-none mt-1 tracking-tight">
               {isPositiveBalance
-                ? "SALDO A PAGAR"
-                : "SIN DEUDA PENDIENTE"}
+                ? cdT("balanceToPay")
+                : cdT("noDebt")}
             </p>
           </CardContent>
         </Card>
@@ -107,8 +109,8 @@ export function CardsDataTable() {
       <DataTable
         columns={cardColumns}
         data={cards}
-        title="Extracto de Tarjeta"
-        description="Seguimiento de consumos y cuotas proyectadas"
+        title={cdT("tableTitle")}
+        description={cdT("tableDescription")}
         tableName="cards"
         totalCount={cards.length}
         toolbarContent={<MonthSelector onMonthChange={setMonth} />}
@@ -118,7 +120,7 @@ export function CardsDataTable() {
       <SlideOverForm
         open={!!selectedCardTransaction}
         onOpenChange={(open) => !open && setSelectedCardTransaction(null)}
-        title="Ficha de Movimiento"
+        title={cdT("slideOverTitle")}
         description={selectedCardTransaction?.description}
       >
         {selectedCardTransaction && (

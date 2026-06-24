@@ -1,39 +1,27 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 
-const messages = [
-  "Compilando con Internet Explorer 6...",
-  "Esperando que Flash Player se actualice...",
-  "Desfragmentando el disco duro del servidor...",
-  "Reiniciando Windows ME por tercera vez...",
-  "Descargando 56k de pura nostalgia...",
-  "Buscando drivers en DriverGuide.com...",
-  "Esperando que termine de cargar RealPlayer...",
-  "Liberando memoria con el Administrador de Tareas...",
-  "Rogando que no sea una Pantalla Azul...",
-  "Conectando por dial-up a las 3 AM...",
-  "Instalando 47 barras de herramientas de Ask Jeeves...",
-  "Esperando que WinRAR deje de pedir licencia...",
-];
-
-function getRandomMessage() {
+function getRandomMessage(messages: string[]) {
   return messages[Math.floor(Math.random() * messages.length)];
 }
 
 export function LoadingSpinner() {
+  const lsT = useTranslations("LoadingSpinner");
+  const messages = useMemo(() => lsT("messages") as unknown as string[], [lsT]);
   const [currentMessage, setCurrentMessage] = useState(
-    () => "Actualizando biblioteca de Winamp...",
+    () => messages[12] || "",
   );
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentMessage(getRandomMessage());
+      setCurrentMessage(getRandomMessage(messages));
     }, 2000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [messages]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-dvh bg-background">

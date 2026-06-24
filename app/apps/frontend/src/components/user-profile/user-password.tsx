@@ -16,12 +16,14 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Eye, EyeOff, Lock } from "lucide-react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface ChangePasswordFormProps {
   onClose: () => void;
 }
 
 export function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
+  const pwT = useTranslations("UserPassword");
   const { changePasswordAsync, isLoading, reset } = useChangePassword();
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
@@ -56,32 +58,29 @@ export function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
           name="currentPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-sans text-[10px] uppercase tracking-widest opacity-60">Contraseña actual</FormLabel>
+              <FormLabel className="font-sans text-[10px] uppercase tracking-widest opacity-60">{pwT("currentPasswordLabel")}</FormLabel>
               <FormControl>
                 <div className="relative">
-                  {/* Ícono de candado */}
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
                     <Lock className="h-4 w-4 text-muted-foreground" />
                   </div>
 
-                  {/* Input con padding ajustado */}
                   <Input
                     placeholder="••••••••"
                     type={showCurrent ? "text" : "password"}
                     {...field}
                     disabled={isLoading}
-                    className="pl-9 pr-10 rounded-none border-2" // Espacio para ícono + botón
+                    className="pl-9 pr-10 rounded-none border-2"
                   />
 
-                  {/* Botón toggle - SIN tabIndex={-1} para accesibilidad */}
                   <button
                     type="button"
                     onClick={() => setShowCurrent(!showCurrent)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 rounded-none border border-border"
                     aria-label={
                       showCurrent
-                        ? "Ocultar contraseña actual"
-                        : "Mostrar contraseña actual"
+                        ? pwT("hideCurrent")
+                        : pwT("showCurrent")
                     }
                   >
                     {showCurrent ? (
@@ -102,7 +101,7 @@ export function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
           name="newPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-sans text-[10px] uppercase tracking-widest opacity-60">Nueva contraseña</FormLabel>
+              <FormLabel className="font-sans text-[10px] uppercase tracking-widest opacity-60">{pwT("newPasswordLabel")}</FormLabel>
               <FormControl>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -123,8 +122,8 @@ export function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
                     className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 rounded-none border border-border"
                     aria-label={
                       showNew
-                        ? "Ocultar nueva contraseña"
-                        : "Mostrar nueva contraseña"
+                        ? pwT("hideNew")
+                        : pwT("showNew")
                     }
                   >
                     {showNew ? (
@@ -144,7 +143,7 @@ export function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
           className="w-full bg-primary rounded-none p-2 cursor-pointer border-2 border-primary-foreground/20 font-sans font-bold uppercase tracking-wider"
           disabled={isLoading || !form.formState.isDirty}
         >
-          Actualizar
+          {pwT("submitButton")}
         </Button>
       </form>
     </Form>

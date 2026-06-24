@@ -1,6 +1,6 @@
 // src/components/data-display/data-table/month-selector.tsx
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -19,25 +19,32 @@ interface MonthSelectorProps {
 import { Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { getCurrentMonth } from "@/lib/date-utils";
+import { useTranslations } from "next-intl";
 
-const MONTHS = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre",
-];
+const MONTH_KEYS = [
+  "january",
+  "february",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+] as const;
 
 export function MonthSelector({ onMonthChange }: MonthSelectorProps) {
+  const msT = useTranslations("MonthSelector");
   const breakpoint = useBreakpoint();
   const [month, setMonth] = useState(getCurrentMonth() - 1);
+
+  const MONTHS = useMemo(
+    () => MONTH_KEYS.map((key) => msT(key)),
+    [msT],
+  );
 
   useEffect(() => {
     onMonthChange(month);
@@ -64,7 +71,7 @@ export function MonthSelector({ onMonthChange }: MonthSelectorProps) {
         className="w-48 bg-popover/90 backdrop-blur-xl border-border shadow-2xl rounded-none p-1"
       >
         <DropdownMenuLabel className="text-[10px] uppercase tracking-widest opacity-60 px-2 py-1.5">
-          Período Mensual
+          {msT("monthlyPeriod")}
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-border/40" />
         <div className="grid grid-cols-1 gap-0.5">

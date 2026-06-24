@@ -1,0 +1,10 @@
+{
+  "AuthLoginForm": {
+    "usernameLabel": "User ID",
+    "passwordLabel": "Password",
+    "submitText": "Sign In",
+    "showPassword": "Show",
+    "hidePassword": "Hide",
+    "errorMessage": "Error signing in. Check your credentials."
+  }
+}

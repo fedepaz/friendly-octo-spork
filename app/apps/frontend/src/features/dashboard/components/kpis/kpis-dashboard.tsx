@@ -11,8 +11,11 @@ import {
 } from "../../hooks/dashboardHooks";
 import { cn, formatCurrency } from "@/lib/utils";
 import { useWizard } from "@/providers/wizard-form-provider";
+import { useTranslations, useLocale } from "next-intl";
 
 export function KPIsDashboard() {
+  const kpT = useTranslations("DashboardKPIs");
+  const locale = useLocale();
   const { data: accounts = [] } = useRecentAccounts();
   const { data: incomeExpenseData = [] } = useMonthlyIncomeExpense();
   const { openTransaction, openCard } = useWizard();
@@ -34,7 +37,7 @@ export function KPIsDashboard() {
     parseFloat(incomeExpenseData[lastIdx - 1]?.expenses ?? "0");
   const netFlowDelta = currentNetFlow - prevNetFlow;
 
-  const currentMonth = new Date().toLocaleDateString("es-AR", {
+  const currentMonth = new Date().toLocaleDateString(locale, {
     month: "long",
   });
 
@@ -53,7 +56,7 @@ export function KPIsDashboard() {
         <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
           <CardHeader className="pb-1 px-4 pt-4">
             <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-              Patrimonio Neto
+              {kpT("netWorth")}
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 pb-4">
@@ -67,7 +70,7 @@ export function KPIsDashboard() {
               )}>
                 {netFlowDelta >= 0 ? "+" : ""}
                 {formatCurrency(Math.abs(netFlowDelta))}
-                <span className="text-muted-foreground/40 ml-1">vs mes ant.</span>
+                <span className="text-muted-foreground/40 ml-1">{kpT("vsPrevMonth")}</span>
               </span>
             </div>
           </CardContent>
@@ -76,7 +79,7 @@ export function KPIsDashboard() {
         <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
           <CardHeader className="pb-1 px-4 pt-4">
             <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-              Ingresos {currentMonth}
+              {kpT("incomeTitle", { month: currentMonth })}
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 pb-4">
@@ -89,7 +92,7 @@ export function KPIsDashboard() {
         <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
           <CardHeader className="pb-1 px-4 pt-4">
             <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-              Gastos {currentMonth}
+              {kpT("expensesTitle", { month: currentMonth })}
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 pb-4">
@@ -105,7 +108,7 @@ export function KPIsDashboard() {
           className="font-black text-xs uppercase tracking-widest rounded-none shadow-premium bg-primary text-primary-foreground hover:opacity-90 transition-premium group h-11"
         >
           <PlusIcon className="mr-2 h-4 w-4 group-hover:rotate-90 transition-premium" />
-          Nueva Transacción
+          {kpT("newTransaction")}
         </Button>
         <Button
           onClick={handleCloseCard}
@@ -113,7 +116,7 @@ export function KPIsDashboard() {
           className="font-black text-xs uppercase tracking-widest rounded-none border-border/40 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-premium group h-11"
         >
           <PlusIcon className="mr-2 h-4 w-4 group-hover:rotate-90 transition-premium" />
-          Cierre Tarjeta
+          {kpT("cardClosing")}
         </Button>
       </div>
     </div>

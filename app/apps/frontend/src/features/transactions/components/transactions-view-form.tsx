@@ -1,6 +1,7 @@
 // src/features/transactions/components/transactions-view-form.tsx
 "use client";
 
+import { useTranslations } from "next-intl";
 import { TransactionDTO } from "@repo/shared";
 import { formatCurrency, getTransactionTypeStyles, cn } from "@/lib/utils";
 import { formatShortDate } from "@/lib/date-utils";
@@ -12,11 +13,13 @@ interface TransactionViewFormProps {
 export function TransactionViewForm({
   selectedTransaction,
 }: TransactionViewFormProps) {
+  const tvfT = useTranslations("TransactionsViewForm");
+
   return (
     <div className="space-y-6">
       <div className="p-4 bg-background border-l-4 border-primary">
         <p className="text-2.5 uppercase font-bold text-muted-foreground mb-1">
-          Fecha de Operación
+          {tvfT("operationDate")}
         </p>
         <p className="text-sm font-semibold">
           {formatShortDate(selectedTransaction.date)}
@@ -26,7 +29,7 @@ export function TransactionViewForm({
       <div className="grid grid-cols-2 gap-4">
         <div className="p-3 bg-muted/30 border border-border">
           <p className="text-2.5 uppercase font-bold text-muted-foreground opacity-50">
-            Tipo
+            {tvfT("type")}
           </p>
           <p
             className={cn(
@@ -39,16 +42,16 @@ export function TransactionViewForm({
         </div>
         <div className="p-3 bg-muted/30 border border-border text-right">
           <p className="text-2.5 uppercase font-bold text-muted-foreground opacity-50">
-            Categoría
+            {tvfT("category")}
           </p>
           <p className="text-xs font-semibold">
-            {selectedTransaction.category?.name || "SIN CATEGORÍA"}
+            {selectedTransaction.category?.name || tvfT("noCategory")}
           </p>
         </div>
       </div>
 
       <div className="p-4 bg-primary/5 border border-primary/20 text-center">
-        <p className="text-2.5 uppercase font-bold text-primary mb-1">Monto</p>
+        <p className="text-2.5 uppercase font-bold text-primary mb-1">{tvfT("amount")}</p>
         <p
           className={cn(
             "text-3xl font-mono font-black tabular-nums",
@@ -63,23 +66,23 @@ export function TransactionViewForm({
 
       <div className="space-y-3">
         <h4 className="text-2.5 font-bold uppercase tracking-widest text-muted-foreground border-b border-border pb-1">
-          Flujo de Fondos
+          {tvfT("fundFlow")}
         </h4>
         <div className="grid grid-cols-2 gap-2 text-2.75 font-mono">
-          <div className="opacity-50">ORIGEN:</div>
+          <div className="opacity-50">{tvfT("origin")}</div>
           <div className="text-right">
-            {selectedTransaction.sourceAccount?.name || "N/A"}
+            {selectedTransaction.sourceAccount?.name || tvfT("na")}
           </div>
-          <div className="opacity-50">DESTINO:</div>
+          <div className="opacity-50">{tvfT("destination")}</div>
           <div className="text-right">
-            {selectedTransaction.targetAccount?.name || "N/A"}
+            {selectedTransaction.targetAccount?.name || tvfT("na")}
           </div>
         </div>
       </div>
 
       <div className="space-y-2">
         <div className="flex items-center justify-between p-2 border border-dashed border-border text-2.5 font-bold">
-          <span className="opacity-60">GASTO CON TARJETA</span>
+          <span className="opacity-60">{tvfT("cardExpense")}</span>
           <div className="flex items-center gap-2">
             {selectedTransaction.cardType && (
               <span className="bg-accent/10 text-accent px-1.5 py-0.5 border border-accent/20">
@@ -91,13 +94,13 @@ export function TransactionViewForm({
                 selectedTransaction.isCardExpense ? "text-accent" : "opacity-20"
               }
             >
-              {selectedTransaction.isCardExpense ? "CONFIRMADO" : "NO"}
+              {selectedTransaction.isCardExpense ? tvfT("confirmed") : tvfT("no")}
             </span>
           </div>
         </div>
         {selectedTransaction.recurrence && (
           <div className="flex items-center justify-between p-2 border border-dashed border-border text-2.5 font-bold">
-            <span className="opacity-60">RECURRENCIA</span>
+            <span className="opacity-60">{tvfT("recurrence")}</span>
             <div className="flex items-center gap-2">
               <span className="bg-primary/10 text-primary px-1.5 py-0.5 border border-primary/20">
                 {selectedTransaction.recurrence.name}
@@ -110,7 +113,7 @@ export function TransactionViewForm({
         )}
 
         <div className="flex items-center justify-between p-2 border border-dashed border-border text-2.5 font-bold">
-          <span className="opacity-60">PRESUPUESTADO</span>
+          <span className="opacity-60">{tvfT("budgeted")}</span>
           <div className="flex items-center gap-2">
             {selectedTransaction.budgetCategory && (
               <span className="bg-primary/10 text-primary px-1.5 py-0.5 border border-primary/20">
@@ -124,7 +127,7 @@ export function TransactionViewForm({
                   : "opacity-20"
               }
             >
-              {selectedTransaction.isBudgetedExpense ? "SÍ" : "NO"}
+              {selectedTransaction.isBudgetedExpense ? tvfT("yes") : tvfT("no")}
             </span>
           </div>
         </div>

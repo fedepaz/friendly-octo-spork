@@ -1,0 +1,8 @@
+{
+  "UsersDashboard": {
+    "title": "Operator Directory",
+    "description": "Management of system identities and privileges",
+    "slideOverTitle": "Security Terminal",
+    "identityPrefix": "IDENTITY: "
+  }
+}

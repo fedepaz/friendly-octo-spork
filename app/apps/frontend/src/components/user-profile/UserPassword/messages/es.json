@@ -1,0 +1,11 @@
+{
+  "UserPassword": {
+    "currentPasswordLabel": "Contraseña actual",
+    "newPasswordLabel": "Nueva contraseña",
+    "submitButton": "Actualizar",
+    "hideCurrent": "Ocultar contraseña actual",
+    "showCurrent": "Mostrar contraseña actual",
+    "hideNew": "Ocultar nueva contraseña",
+    "showNew": "Mostrar nueva contraseña"
+  }
+}

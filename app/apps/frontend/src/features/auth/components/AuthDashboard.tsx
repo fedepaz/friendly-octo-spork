@@ -1,4 +1,3 @@
-// src/features/auth/components/AuthDashboard.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -7,12 +6,14 @@ import { useRouter } from "next/navigation";
 import { ChangePasswordForm } from "@/components/user-profile/user-password";
 import { LoginForm } from "./login-form";
 import { RegisterForm } from "./register-form";
+import { useTranslations } from "next-intl";
 
 interface AuthDashboardProps {
   mode: "login" | "register";
 }
 
 export function AuthDashboard({ mode = "login" }: AuthDashboardProps) {
+  const t = useTranslations("AuthDashboard");
   const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
 
   const router = useRouter();
@@ -29,15 +30,14 @@ export function AuthDashboard({ mode = "login" }: AuthDashboardProps) {
     <>
       <div className="text-center space-y-1">
         <h1 className="text-[12px] font-black uppercase tracking-[0.3em] text-primary">
-          {mode === "login" ? "Iniciar Sesión" : "Crear cuenta"}
+          {mode === "login" ? t("loginTitle") : t("registerTitle")}
         </h1>
         <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground/30">
           {mode === "login"
-            ? "Para ingresar a la aplicación"
-            : "Para utilizar la aplicación debes tener una cuenta"}
+            ? t("loginDescription")
+            : t("registerDescription")}
         </p>
       </div>
-      {/* Form Card */}
       {!isChangePasswordOpen ? (
         mode === "login" ? (
           <LoginForm onDefaultPassword={() => setIsChangePasswordOpen(true)} />

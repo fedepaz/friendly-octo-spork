@@ -1,0 +1,17 @@
+{
+  "StepTypeForm": {
+    "title": "What type of transaction?",
+    "expense": "Expense",
+    "expenseHint": "Money going out",
+    "income": "Income",
+    "incomeHint": "Money coming in",
+    "transfer": "Transfer",
+    "transferHint": "Move between accounts",
+    "investment": "Investment",
+    "investmentHint": "Put money to work",
+    "return": "Return",
+    "returnHint": "Investment coming back",
+    "payment": "Payment",
+    "paymentHint": "Card / loan payment"
+  }
+}

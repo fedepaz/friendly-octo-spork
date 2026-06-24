@@ -1,0 +1,33 @@
+{
+  "CardsViewForm": {
+    "sourceRecurrence": "CUOTA PROYECTADA",
+    "sourceOneTimer": "CONSUMO ASENTADO",
+    "sourcePayment": "PAGO REGISTRADO",
+    "singlePayment": "PAGO ÚNICO",
+    "installmentOf": "CUOTA {current} DE {total}",
+    "statusCompleted": "FINALIZADO",
+    "statusPending": "PENDIENTE",
+    "statusPaid": "PAGADO",
+    "remaining": "{remaining} RESTANTES",
+    "completingPlan": "FINALIZANDO PLAN",
+    "monthlyRecurrence": "RECURRENCIA MENSUAL",
+    "pendingLabel": "PENDIENTE",
+    "idPrefix": "ID:",
+    "financialImpact": "Impacto Financiero",
+    "currency": "ARS",
+    "expenseStructure": "Estructura del Gasto",
+    "installmentProgress": "Progreso de Cuotas",
+    "statusLabel": "Status",
+    "progressStart": "Inicio",
+    "progressComplete": "{progress}% Completo",
+    "progressEnd": "Fin",
+    "chargeType": "Tipo de Cargo",
+    "singleDirectPayment": "PAGO ÚNICO / DIRECTO",
+    "origin": "Origen",
+    "notAssigned": "SIN ASIGNAR",
+    "destination": "Destino",
+    "registrationDate": "Fecha de Registro",
+    "category": "Categoría",
+    "systemMetadata": "Metadatos del Sistema"
+  }
+}

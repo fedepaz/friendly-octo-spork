@@ -1,0 +1,8 @@
+{
+  "FormContainerCard": {
+    "fillRequiredFields": "Por favor complete todos los campos obligatorios",
+    "defaultTitle": "Terminal de Transacciones",
+    "confirmLabel": "Confirmar cierre",
+    "closeLabel": "Cerrar"
+  }
+}

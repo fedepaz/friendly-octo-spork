@@ -17,20 +17,22 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
 import { CustomTooltip } from "@/features/dashboard/utils/utils";
 import { useMonthlyIncomeExpense } from "@/features/dashboard/hooks/dashboardHooks";
 
 export function AnalyticChartsBottom() {
+  const acbT = useTranslations("AnalyticChartsBottom");
   const { data: incomeExpenseData = [] } = useMonthlyIncomeExpense();
   return (
     <Card className="flex-1 bg-card/20 border-border/40 shadow-premium rounded-none min-h-75 flex flex-col overflow-hidden">
       <CardHeader className="pb-4 px-5 pt-5 flex flex-row items-center justify-between shrink-0">
         <div className="space-y-1">
           <CardTitle className="text-[11px] font-black uppercase tracking-widest text-foreground">
-            Flujo de Caja
+            {acbT("title")}
           </CardTitle>
           <CardDescription className="text-[10px] uppercase font-bold text-muted-foreground/40 tracking-tight">
-            Comparativa de ingresos y gastos operativos
+            {acbT("description")}
           </CardDescription>
         </div>
       </CardHeader>

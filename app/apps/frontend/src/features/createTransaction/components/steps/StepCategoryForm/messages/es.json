@@ -1,0 +1,9 @@
+{
+  "StepCategoryForm": {
+    "title": "¿Para qué fue?",
+    "descriptionLabel": "Descripción",
+    "descriptionPlaceholder": "ej. Netflix, Alquiler, Salario...",
+    "categoryLabel": "Categoría",
+    "noCategory": "Sin categoría"
+  }
+}

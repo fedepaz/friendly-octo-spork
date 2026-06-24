@@ -1,9 +1,0 @@
-// src/app/(auth)/login/page.tsx
-
-import { AuthDashboard } from "@/features/auth";
-
-export const dynamic = "force-dynamic";
-
-export default function LoginPage() {
-  return <AuthDashboard mode="login" />;
-}

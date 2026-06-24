@@ -12,6 +12,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 type SlideOverMode = "create" | "view";
 
@@ -44,6 +45,7 @@ export function SlideOverForm<T extends FieldValues>({
   mode = "view",
   className,
 }: SlideOverFormProps<T>) {
+  const sofT = useTranslations("SlideOverForm");
   const isViewMode = mode === "view";
   const isCreateMode = mode === "create";
 
@@ -55,8 +57,8 @@ export function SlideOverForm<T extends FieldValues>({
   };
 
   const getActionLabel = () => {
-    if (isCreateMode) return saveLabel || "Crear";
-    return "Cerrar Terminal";
+    if (isCreateMode) return saveLabel || sofT("createAction");
+    return sofT("closeAction");
   };
 
   const getIcon = () => {
@@ -79,7 +81,7 @@ export function SlideOverForm<T extends FieldValues>({
         <SheetHeader className="px-6 py-5 border-b border-border/40 bg-background/40 shrink-0 relative">
           <div className="space-y-1">
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
-              {isCreateMode ? "Sistema // Registro" : "Sistema // Vista"}
+              {isCreateMode ? sofT("createBadge") : sofT("viewBadge")}
             </span>
             <SheetTitle className="text-xl font-oxanium font-black tracking-tighter uppercase leading-none">
               {title}
@@ -119,7 +121,7 @@ export function SlideOverForm<T extends FieldValues>({
                 className="flex-1 h-12 text-[11px] font-oxanium font-black uppercase tracking-[0.2em] rounded-none border-2 border-border/20 hover:border-primary/40 bg-background/40 transition-premium shadow-etched"
                 variant="outline"
               >
-                Anular
+                {sofT("cancelAction")}
               </Button>
               <Button
                 type={formId ? "submit" : "button"}

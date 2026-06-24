@@ -3,6 +3,7 @@
 
 import { CardType, CreateTransactionInput } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { useRecurrenceById } from "@/features/recurrences/hooks/recurrenceHooks";
 import { Label } from "@/components/ui/label";
 import { InLineError } from "@/components/ui/in-line-error";
@@ -15,6 +16,7 @@ export function StepRecurrenceComponent() {
   } = useFormContext<CreateTransactionInput>();
   const watched = watch();
   const recurrenceId = watched.recurrenceId;
+  const sreT = useTranslations("StepRecForm");
   const { data: recurrence } = useRecurrenceById(recurrenceId || "");
 
   // Toggle handler for isRecurrence
@@ -33,7 +35,7 @@ export function StepRecurrenceComponent() {
     <div className="flex flex-col gap-4">
       {watched.isCardExpense && (
         <div className="border-t border-border pt-3 mt-2">
-          <Label className="text-sm font-mono mb-2 block">Card Type</Label>
+          <Label className="text-sm font-mono mb-2 block">{sreT("cardTypeLabel")}</Label>
           <div className="grid grid-cols-2 gap-2">
             {["VISA", "MASTERCARD", "AMEX", "MAESTRO"].map((card) => (
               <button
@@ -61,13 +63,13 @@ export function StepRecurrenceComponent() {
           <div className="grid grid-cols-2 gap-2">
             <div>
               <p className="text-[9px] font-bold text-muted-foreground/40 uppercase">
-                Nombre
+                {sreT("name")}
               </p>
               <p className="text-xs font-mono font-bold">{recurrence.name}</p>
             </div>
             <div>
               <p className="text-[9px] font-bold text-muted-foreground/40 uppercase">
-                Frecuencia
+                {sreT("frequency")}
               </p>
               <p className="text-xs font-mono font-bold">
                 {recurrence.frequency}
@@ -76,7 +78,7 @@ export function StepRecurrenceComponent() {
             {recurrence.totalParts && (
               <div>
                 <p className="text-[9px] font-bold text-muted-foreground/40 uppercase">
-                  Progreso
+                  {sreT("progress")}
                 </p>
                 <p className="text-xs font-mono font-bold">
                   {recurrence.currentPart} / {recurrence.totalParts}
@@ -88,7 +90,7 @@ export function StepRecurrenceComponent() {
       )}
 
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        Does this ends?
+        {sreT("title")}
       </h3>
 
       <div className="grid grid-cols-2 gap-3">
@@ -102,7 +104,7 @@ export function StepRecurrenceComponent() {
                 : "border-border text-muted-foreground hover:bg-muted"
             }`}
         >
-          Yes
+          {sreT("yes")}
         </button>
         <button
           type="button"
@@ -114,17 +116,17 @@ export function StepRecurrenceComponent() {
                 : "border-border text-muted-foreground hover:bg-muted"
             }`}
         >
-          No
+          {sreT("no")}
         </button>
       </div>
 
       {/* STOP RECURRENCE SECTION */}
       <div className="mt-4 p-4 border-2 border-destructive/20 bg-destructive/5 space-y-3">
         <p className="text-xs font-black uppercase tracking-widest text-destructive">
-          Zona de Peligro
+          {sreT("dangerZone")}
         </p>
         <p className="text-[12px] text-muted-foreground/60 leading-relaxed font-sans">
-          Desactiva los pagos
+          {sreT("dangerDesc")}
         </p>
         <button
           type="button"
@@ -137,8 +139,8 @@ export function StepRecurrenceComponent() {
             }`}
         >
           {watched.shouldStopRecurrence
-            ? "Detener Recurrencia ✓"
-            : "Detener después de este pago"}
+            ? sreT("stopLabelActive")
+            : sreT("stopLabel")}
         </button>
       </div>
     </div>

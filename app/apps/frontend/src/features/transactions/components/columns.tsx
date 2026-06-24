@@ -1,6 +1,7 @@
 // src/features/transactions/components/columns.tsx
 
-import { Row, type ColumnDef } from "@tanstack/react-table";
+import { Row, type ColumnDef, type Column } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
 import { TransactionDTO } from "@repo/shared";
 import { getTransactionTypeStyles } from "@/lib/utils";
 import {
@@ -27,6 +28,10 @@ import {
 
 interface CellProps {
   row: Row<TransactionDTO>;
+}
+
+interface HeaderProps {
+  column: Column<TransactionDTO>;
 }
 
 function TransactionTypeCell({ row }: CellProps) {
@@ -63,72 +68,95 @@ function TransactionTypeCell({ row }: CellProps) {
   );
 }
 
+function DateHeader({ column }: HeaderProps) {
+  const tcT = useTranslations("TransactionColumns");
+  return <SortableHeader column={column}>{tcT("dateHeader")}</SortableHeader>;
+}
+
+function TypeHeader({ column }: HeaderProps) {
+  const tcT = useTranslations("TransactionColumns");
+  return <SortableHeader column={column}>{tcT("typeHeader")}</SortableHeader>;
+}
+
+function DescriptionHeader({ column }: HeaderProps) {
+  const tcT = useTranslations("TransactionColumns");
+  return <SortableHeader column={column}>{tcT("descriptionHeader")}</SortableHeader>;
+}
+
+function DescriptionCell({ row }: CellProps) {
+  const tcT = useTranslations("TransactionColumns");
+  return (
+    <TacticalTextCell
+      title={row.original.category?.name || tcT("noCategory")}
+      subtext={row.original.description?.replaceAll("\n", " ")}
+    />
+  );
+}
+
+function AmountHeader({ column }: HeaderProps) {
+  const tcT = useTranslations("TransactionColumns");
+  return (
+    <div className="text-right">
+      <SortableHeader column={column}>{tcT("amountHeader")}</SortableHeader>
+    </div>
+  );
+}
+
+function FlagsCell({ row }: CellProps) {
+  const tcT = useTranslations("TransactionColumns");
+  return (
+    <div className="flex items-center gap-1.5 justify-end">
+      {row.original.isCardExpense && (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <CreditCard className="h-3.5 w-3.5 text-accent opacity-70 hover:opacity-100 transition-opacity" />
+          </TooltipTrigger>
+          <TooltipContent side="top">{tcT("cardExpenseTooltip")}</TooltipContent>
+        </Tooltip>
+      )}
+      {row.original.isBudgetedExpense && (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Receipt className="h-3.5 w-3.5 text-primary opacity-70 hover:opacity-100 transition-opacity" />
+          </TooltipTrigger>
+          <TooltipContent side="top">{tcT("budgetedExpenseTooltip")}</TooltipContent>
+        </Tooltip>
+      )}
+      {!row.original.isCardExpense && !row.original.isBudgetedExpense && (
+        <Minus className="h-3.5 w-3.5 opacity-10" />
+      )}
+    </div>
+  );
+}
+
 export const transactionsColumns: ColumnDef<TransactionDTO>[] = [
   {
     accessorKey: "date",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Fecha</SortableHeader>
-    ),
+    header: DateHeader,
     cell: ({ row }) => <PremiumDateCell date={row.original.date} />,
   },
   {
     accessorKey: "type",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Tipo</SortableHeader>
-    ),
+    header: TypeHeader,
     cell: ({ row }) => <TransactionTypeCell row={row} />,
   },
   {
     accessorKey: "description",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Descripción</SortableHeader>
-    ),
-    cell: ({ row }) => (
-      <TacticalTextCell
-        title={row.original.category?.name || "Sin categoría"}
-        subtext={row.original.description?.replaceAll("\n", " ")}
-      />
-    ),
+    header: DescriptionHeader,
+    cell: DescriptionCell,
   },
   {
     accessorKey: "amount",
-    header: ({ column }) => (
-      <div className="text-right">
-        <SortableHeader column={column}>Monto</SortableHeader>
-      </div>
-    ),
+    header: AmountHeader,
     cell: ({ row }) => (
       <PremiumAmountCell
         amount={row.original.amount}
       />
     ),
   },
-
   {
     id: "flags",
     header: "",
-    cell: ({ row }) => (
-      <div className="flex items-center gap-1.5 justify-end">
-        {row.original.isCardExpense && (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <CreditCard className="h-3.5 w-3.5 text-accent opacity-70 hover:opacity-100 transition-opacity" />
-            </TooltipTrigger>
-            <TooltipContent side="top">Gasto con Tarjeta</TooltipContent>
-          </Tooltip>
-        )}
-        {row.original.isBudgetedExpense && (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Receipt className="h-3.5 w-3.5 text-primary opacity-70 hover:opacity-100 transition-opacity" />
-            </TooltipTrigger>
-            <TooltipContent side="top">Gasto Presupuestado</TooltipContent>
-          </Tooltip>
-        )}
-        {!row.original.isCardExpense && !row.original.isBudgetedExpense && (
-          <Minus className="h-3.5 w-3.5 opacity-10" />
-        )}
-      </div>
-    ),
+    cell: FlagsCell,
   },
 ];

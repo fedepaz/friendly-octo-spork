@@ -1,0 +1,8 @@
+{
+  "UserColumns": {
+    "identityHeader": "Identidad",
+    "noName": "Sin nombre",
+    "rankAccessHeader": "Rango / Acceso",
+    "statusHeader": "Estado"
+  }
+}

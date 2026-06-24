@@ -1,0 +1,10 @@
+{
+  "DashboardKPIs": {
+    "netWorth": "Patrimonio Neto",
+    "vsPrevMonth": "vs mes ant.",
+    "incomeTitle": "Ingresos {month}",
+    "expensesTitle": "Gastos {month}",
+    "newTransaction": "Nueva Transacción",
+    "cardClosing": "Cierre Tarjeta"
+  }
+}

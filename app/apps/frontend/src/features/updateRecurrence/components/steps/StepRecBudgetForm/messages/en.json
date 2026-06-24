@@ -1,0 +1,13 @@
+{
+  "StepRecBudgetForm": {
+    "budgetRef": "Referencia de Presupuesto",
+    "budgeted": "Presupuestado",
+    "category": "Categoría",
+    "yes": "SÍ",
+    "no": "NO",
+    "title": "Is this a budgeted expense?",
+    "budgetYes": "Yes",
+    "budgetNo": "No",
+    "budgetCategoryLabel": "Budget Category"
+  }
+}

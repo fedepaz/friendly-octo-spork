@@ -1,0 +1,9 @@
+{
+  "StepCategoryForm": {
+    "title": "What was this for?",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "e.g. Netflix, Rent, Salary...",
+    "categoryLabel": "Category",
+    "noCategory": "No category"
+  }
+}

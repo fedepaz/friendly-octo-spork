@@ -1,9 +1,9 @@
-// src/components/error/route-error.tsx
 "use client";
 
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, RefreshCw } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface RouteErrorProps {
   error: Error & { digest?: string };
@@ -11,6 +11,7 @@ interface RouteErrorProps {
 }
 
 export function RouteError({ error, reset }: RouteErrorProps) {
+  const reT = useTranslations("RouteError");
   useEffect(() => {
     console.error("Route error:", error);
   }, [error]);
@@ -21,13 +22,13 @@ export function RouteError({ error, reset }: RouteErrorProps) {
         <div className="w-16 h-16 rounded-full bg-accent flex items-center justify-center mx-auto">
           <AlertTriangle className="w-8 h-8 text-primary" />
         </div>
-        <h2 className="text-2xl font-bold text-foreground">Algo salió mal</h2>
+        <h2 className="text-2xl font-bold text-foreground">{reT("title")}</h2>
         <p className="text-muted-foreground text-sm">
-          {error.message || "Ocurrió un error inesperado. Intentalo de nuevo."}
+          {error.message || reT("defaultMessage")}
         </p>
         <Button onClick={reset} className="bg-primary">
           <RefreshCw className="w-4 h-4 mr-2" />
-          Reintentar
+          {reT("retry")}
         </Button>
       </div>
     </div>

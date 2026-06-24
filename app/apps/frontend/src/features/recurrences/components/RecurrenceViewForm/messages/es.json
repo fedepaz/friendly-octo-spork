@@ -1,0 +1,15 @@
+{
+  "RecurrenceViewForm": {
+    "frequency": "Frecuencia {frequency}",
+    "next": "PRÓXIMO:",
+    "financialImpact": "Impacto Financiero",
+    "perUnit": "/ {frequency}",
+    "planProgress": "Progreso del Plan",
+    "installmentStatus": "ESTADO DE CUOTAS",
+    "installmentCount": "{current} de {total}",
+    "originFunds": "Origen de Fondos",
+    "notDefined": "NO DEFINIDO",
+    "destination": "Destino",
+    "startDate": "Fecha de Inicio"
+  }
+}

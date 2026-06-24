@@ -2,6 +2,7 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { useIsMounted } from "@/hooks/useIsMounted";
@@ -12,6 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 
 export function ThemeToggle() {
+  const ttT = useTranslations("ThemeToggle");
   const { theme, setTheme } = useTheme();
 
   const mounted = useIsMounted();
@@ -31,7 +33,7 @@ export function ThemeToggle() {
     );
   }
 
-  const label = theme === "dark" ? "Modo claro" : "Modo oscuro";
+  const label = theme === "dark" ? ttT("lightMode") : ttT("darkMode");
 
   return (
     <Tooltip>

@@ -1,0 +1,16 @@
+{
+  "DataTable": {
+    "pageLabel": "PÁGINA",
+    "ofLabel": "DE",
+    "selectAllLabel": "Seleccionar todo",
+    "selectRowLabel": "Seleccionar fila",
+    "viewDetailsLabel": "Ver detalles",
+    "actionsHeader": "Acciones",
+    "sortAscLabel": "Ordenar ascendente",
+    "sortDescLabel": "Ordenar descendente",
+    "clearSortLabel": "Quitar orden",
+    "sortAscTooltip": "Click para orden ascendente",
+    "sortDescTooltip": "Click para orden descendente",
+    "clearSortTooltip": "Click para quitar orden"
+  }
+}

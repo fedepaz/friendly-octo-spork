@@ -1,0 +1,8 @@
+{
+  "UserSidebarMenu": {
+    "avatarLabel": "User profile",
+    "terminalLabel": "Access Terminal",
+    "viewIdentity": "View Identity",
+    "disconnect": "Disconnect Node"
+  }
+}

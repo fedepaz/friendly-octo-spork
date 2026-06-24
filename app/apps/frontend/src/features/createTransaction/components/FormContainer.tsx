@@ -3,6 +3,7 @@
 
 import { Suspense } from "react";
 import { useFormContext } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { WizardStepSkeleton } from "@/components/ui/wizard-step-skeleton";
 
 import { StepAccountsComponent } from "./steps/stepAccount-form";
@@ -40,6 +41,7 @@ export function FormContainer({
 }: FormContainerProps) {
   const { watch, setValue, trigger } = useFormContext<CreateTransactionInput>();
   const watched = watch();
+  const fcT = useTranslations("FormContainer");
 
   // Convert numeric index to StepId
   const currentStepId = indexToStepId(activeStep, STEP_CONFIGS);
@@ -63,7 +65,7 @@ export function FormContainer({
     if (fieldsToValidate.length > 0) {
       const isValid = await trigger(fieldsToValidate); // Type cast ok for Path
       if (!isValid) {
-        setGlobalError("Please fill in all required fields");
+        setGlobalError(fcT("fillRequiredFields"));
         return;
       }
     }
@@ -134,7 +136,7 @@ export function FormContainer({
       onClose={onClose}
       title={
         STEP_CONFIGS.find((s) => s.id === currentStepId)?.label ??
-        "Terminal de Transacciones"
+        fcT("defaultTitle")
       }
       step={currentVisibleIndex + 1}
       totalSteps={totalVisibleSteps}
@@ -149,7 +151,7 @@ export function FormContainer({
         onBack={currentVisibleIndex > 0 ? handleBack : undefined}
         onNext={!isLastStep ? handleNext : undefined}
         onConfirm={isLastStep ? () => {} : undefined}
-        confirmLabel={isLastStep ? "Grabar ✓" : undefined}
+        confirmLabel={isLastStep ? fcT("confirmLabel") : undefined}
         isSubmitting={isSubmitting}
       />
     </WizardModal>

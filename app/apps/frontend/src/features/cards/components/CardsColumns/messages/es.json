@@ -1,0 +1,13 @@
+{
+  "CardsColumns": {
+    "description": "Descripción",
+    "type": "Tipo",
+    "planStatus": "Plan / Estado",
+    "projected": "Proyectado",
+    "single": "Único",
+    "card": "Tarjeta",
+    "notAvailable": "n/a",
+    "date": "Fecha",
+    "amount": "Monto"
+  }
+}

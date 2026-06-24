@@ -10,6 +10,7 @@ import {
   Currency,
 } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { formatCurrency } from "@/lib/utils";
 import { useEffect } from "react";
 import { InLineError } from "@/components/ui/in-line-error";
@@ -27,6 +28,7 @@ export function StepAccountsComponent() {
   } = useFormContext<CreateTransactionInput>();
   const watched = watch();
   const { data: accounts = [] } = useAccounts();
+  const saT = useTranslations("StepAccountForm");
 
   const transactionType = watched.type;
   const sourceAccountId = watched.sourceAccountId;
@@ -114,21 +116,20 @@ export function StepAccountsComponent() {
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
         {transactionType === "TRANSFER"
-          ? "From where, to where?"
-          : "Which account?"}
+          ? saT("titleTransfer")
+          : saT("titleDefault")}
       </h3>
 
       {/* SOURCE ACCOUNT */}
       {canUseAccount(transactionType, "BANK", "source") && ( // Just check if ANY account can be source
         <div>
           <Label>
-            {transactionType === "TRANSFER" ? "From account" : "Account"}
+            {transactionType === "TRANSFER" ? saT("fromAccount") : saT("account")}
           </Label>
 
           {sourceAccounts.length === 0 ? (
             <p className="text-xs font-mono text-muted-foreground p-3 border-2 border-border">
-              No compatible accounts available for{" "}
-              {transactionType.toLowerCase()} source
+              {saT("noCompatibleSource", { type: transactionType.toLowerCase() })}
             </p>
           ) : (
             <div className="flex flex-col gap-2">
@@ -148,13 +149,12 @@ export function StepAccountsComponent() {
       {canUseAccount(transactionType, "BANK", "target") && (
         <div>
           <Label>
-            {transactionType === "TRANSFER" ? "To account" : "Account"}
+            {transactionType === "TRANSFER" ? saT("toAccount") : saT("account")}
           </Label>
 
           {targetAccounts.length === 0 ? (
             <p className="text-xs font-mono text-muted-foreground p-3 border-2 border-border">
-              No compatible accounts available for{" "}
-              {transactionType.toLowerCase()} target
+              {saT("noCompatibleTarget", { type: transactionType.toLowerCase() })}
             </p>
           ) : (
             <div className="flex flex-col gap-2">

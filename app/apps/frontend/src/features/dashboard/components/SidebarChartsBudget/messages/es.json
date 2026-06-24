@@ -1,0 +1,13 @@
+{
+  "SidebarChartsBudget": {
+    "title": "Resumen de Gastos",
+    "perDay": "/día",
+    "dayAbbrev": "d",
+    "category_dailyExpenses": "Gastos Diarios",
+    "category_foodGroceries": "Alimentos",
+    "category_entertainment": "Entretenimiento",
+    "category_transportation": "Transporte",
+    "category_health": "Salud",
+    "category_utilities": "Servicios"
+  }
+}

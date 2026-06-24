@@ -1,6 +1,7 @@
 // src/features/users/components/columns.tsx
 
-import { Row, type ColumnDef } from "@tanstack/react-table";
+import { Row, type ColumnDef, type Column } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
 import { 
   SortableHeader, 
   TacticalTextCell, 
@@ -12,6 +13,11 @@ import { User, Shield, UserCircle } from "lucide-react";
 interface CellProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   row: Row<any>;
+}
+
+interface HeaderProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  column: Column<any>;
 }
 
 function RoleCell({ row }: CellProps) {
@@ -26,36 +32,52 @@ function RoleCell({ row }: CellProps) {
   );
 }
 
+function NameHeader({ column }: HeaderProps) {
+  const ucT = useTranslations("UserColumns");
+  return <SortableHeader column={column}>{ucT("identityHeader")}</SortableHeader>;
+}
+
+function NameCell({ row }: CellProps) {
+  const ucT = useTranslations("UserColumns");
+  return (
+    <div className="flex items-center gap-3">
+      <div className="flex h-8 w-8 items-center justify-center bg-primary/10 border border-primary/20">
+        <UserCircle className="h-5 w-5 text-primary" />
+      </div>
+      <TacticalTextCell 
+        title={row.original.name || ucT("noName")} 
+        subtext={row.original.email} 
+        id={row.original.id} 
+      />
+    </div>
+  );
+}
+
+function RoleHeader({ column }: HeaderProps) {
+  const ucT = useTranslations("UserColumns");
+  return <SortableHeader column={column}>{ucT("rankAccessHeader")}</SortableHeader>;
+}
+
+function StatusHeader() {
+  const ucT = useTranslations("UserColumns");
+  return ucT("statusHeader");
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const userColumns: ColumnDef<any>[] = [
   {
     accessorKey: "name",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Identidad</SortableHeader>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center gap-3">
-        <div className="flex h-8 w-8 items-center justify-center bg-primary/10 border border-primary/20">
-          <UserCircle className="h-5 w-5 text-primary" />
-        </div>
-        <TacticalTextCell 
-          title={row.original.name || "Sin nombre"} 
-          subtext={row.original.email} 
-          id={row.original.id} 
-        />
-      </div>
-    ),
+    header: NameHeader,
+    cell: NameCell,
   },
   {
     accessorKey: "role",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Rango / Acceso</SortableHeader>
-    ),
+    header: RoleHeader,
     cell: ({ row }) => <RoleCell row={row} />,
   },
   {
     accessorKey: "status",
-    header: "Estado",
+    header: StatusHeader,
     cell: ({ row }) => {
       const status = row.original.status || "ACTIVE";
       return (

@@ -1,0 +1,11 @@
+{
+  "UserPassword": {
+    "currentPasswordLabel": "Current password",
+    "newPasswordLabel": "New password",
+    "submitButton": "Update",
+    "hideCurrent": "Hide current password",
+    "showCurrent": "Show current password",
+    "hideNew": "Hide new password",
+    "showNew": "Show new password"
+  }
+}

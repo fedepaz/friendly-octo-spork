@@ -1,0 +1,9 @@
+{
+  "AuthHooks": {
+    "defaultPassword": "Default password, a form to change it will open",
+    "loginSuccess": "Successful login as {name}",
+    "registerSuccess": "Successful registration as {name}",
+    "passwordUpdated": "Password updated successfully",
+    "logoutSuccess": "Session closed successfully"
+  }
+}

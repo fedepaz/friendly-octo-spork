@@ -1,0 +1,12 @@
+{
+  "StepConfirmForm": {
+    "title": "Resumen del cierre",
+    "currentBalance": "Balance actual",
+    "recurrencesCount": "Cantidad ({count})",
+    "installments": "Cuotas fijas",
+    "openEnded": "Cuotas abiertas",
+    "oneTimers": "Gastos Únicos ({count})",
+    "totalToDeduct": "Total a descontar",
+    "newBalance": "Nuevo saldo"
+  }
+}

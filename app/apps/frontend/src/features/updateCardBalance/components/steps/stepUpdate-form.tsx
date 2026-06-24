@@ -7,7 +7,7 @@ import {
   RecurrenceDTO,
 } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
-
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useUpdateCardTransactionsForPayStatement } from "../../hooks/updateCardHooks";
 
@@ -38,6 +38,7 @@ function recurrenceToTransactionInput(
 export function StepUpdateComponent() {
   const { watch, setValue } = useFormContext<CardCloseInputDTO>();
   const watched = watch();
+  const suT = useTranslations("StepUpdateForm");
   const { data: statement } = useUpdateCardTransactionsForPayStatement(
     watched.year,
     watched.month,
@@ -89,16 +90,15 @@ export function StepUpdateComponent() {
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        Cuotas abiertas
+        {suT("title")}
       </h3>
       <p className="text-xs font-mono text-muted-foreground">
-        Solo cuotas mensuales/semanales/anuales. Las cuotas fijas ya tienen
-        monto asignado.
+        {suT("description")}
       </p>
 
       {openEnded.length === 0 ? (
         <p className="text-xs font-mono text-muted-foreground p-3 border-2 border-border">
-          No hay cuotas abiertas para este mes
+          {suT("noOpenEnded")}
         </p>
       ) : (
         <div className="flex flex-col gap-2">

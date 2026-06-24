@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTransactionInput, createTransactionSchema } from "@repo/shared";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { FormContainer } from "../components/FormContainer";
 import { useCreateTransaction } from "../hooks/createMutationHooks";
 import { mapServerErrorsToForm } from "@/lib/utils/form-error-mapper";
@@ -15,6 +16,7 @@ import { toast } from "sonner";
 export function SmartFormProvider({ onClose }: { onClose: () => void }) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const sfpT = useTranslations("SmartFormProvider");
 
   const { mutateAsync: createTransaction, isPending: isSubmitting } =
     useCreateTransaction();
@@ -89,7 +91,7 @@ export function SmartFormProvider({ onClose }: { onClose: () => void }) {
             >
               <div className="h-1.5 w-1.5 bg-destructive mt-1 shrink-0" />
               <div className="flex-1">
-                <p className="font-black mb-0.5">Error de Operación</p>
+                <p className="font-black mb-0.5">{sfpT("operationError")}</p>
                 <p className="opacity-70 leading-relaxed">{errorMessage}</p>
               </div>
             </div>

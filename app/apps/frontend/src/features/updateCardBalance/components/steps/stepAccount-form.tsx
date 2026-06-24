@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { useAccounts } from "@/features/accounts/hooks/accountsHooks";
 import { CardCloseInputDTO, Currency } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { formatCurrency } from "@/lib/utils";
 
 import { InLineError } from "@/components/ui/in-line-error";
@@ -17,6 +18,7 @@ export function StepAccountsComponent() {
   } = useFormContext<CardCloseInputDTO>();
   const watched = watch();
   const { data: accounts = [] } = useAccounts();
+  const scaT = useTranslations("StepCardAccountForm");
 
   const cardAccountId = watched.cardAccountId;
   const cardAccounts = accounts.filter((a) => a.type === "CARD");
@@ -24,15 +26,15 @@ export function StepAccountsComponent() {
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        Seleccionar tarjeta
+        {scaT("title")}
       </h3>
 
       <div>
-        <Label>Tarjeta</Label>
+        <Label>{scaT("cardLabel")}</Label>
 
         {cardAccounts.length === 0 ? (
           <p className="text-xs font-mono text-muted-foreground p-3 border-2 border-border">
-            No hay tarjetas disponibles
+            {scaT("noCards")}
           </p>
         ) : (
           <div className="flex flex-col gap-2">

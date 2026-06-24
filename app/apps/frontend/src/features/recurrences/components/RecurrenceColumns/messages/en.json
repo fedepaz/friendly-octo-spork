@@ -1,0 +1,14 @@
+{
+  "RecurrenceColumns": {
+    "nameHeader": "Name",
+    "noCategory": "Uncategorized",
+    "directionHeader": "Direction",
+    "amountHeader": "Amount",
+    "frequencyHeader": "Frequency",
+    "monthly": "Monthly",
+    "weekly": "Weekly",
+    "yearly": "Yearly",
+    "installments": "Installments",
+    "cyclesHeader": "Cycles"
+  }
+}

@@ -1,9 +1,8 @@
-// src/components/layout/mobile-navigation.tsx
-
 "use client";
 
 import { cn } from "@/lib/utils";
 import { Menu, ChevronDown } from "lucide-react";
+import type { ComponentType } from "react";
 
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -21,11 +20,12 @@ import Link from "next/link";
 import { NAVIGATION_CONFIG } from "@/lib/config/navigations";
 import { Logo } from "@/components/common/logo";
 import { UserSidebarMenu } from "../user-profile/user-sidebar-menu";
+import { useTranslations } from "next-intl";
 
 interface NavigationItem {
   title: string;
   href: string;
-  icon: React.ElementType;
+  icon: ComponentType<{ className?: string }>;
   description?: string;
   badge?: string;
   badgeVariant?: "default" | "secondary" | "destructive" | "outline";
@@ -34,11 +34,18 @@ interface NavigationItem {
 interface NavigationGroup {
   id: string;
   title: string;
-  icon: React.ElementType;
+  icon: ComponentType<{ className?: string }>;
   items: NavigationItem[];
 }
 
+function getNavKey(href: string): string {
+  const key = href.replace(/^\//, "");
+  return key || "dashboard";
+}
+
 export function MobileNavigation() {
+  const mnT = useTranslations("MobileNavigation");
+  const navT = useTranslations("navigation");
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(
@@ -59,7 +66,6 @@ export function MobileNavigation() {
     return NAVIGATION_CONFIG.map((group) => {
       const filteredItems = group.items.filter((item) => {
         if (!item.requiredPermission) return true;
-        // In single-user mode, all items are visible
         return true;
       });
 
@@ -77,29 +83,26 @@ export function MobileNavigation() {
           variant="ghost"
           size="icon"
           className="md:hidden h-10 w-10 flex items-center justify-center hover:bg-primary/5 transition-premium"
-          aria-label="Abrir menú de navegación"
+          aria-label={mnT("openMenuLabel")}
         >
           <Menu className="h-5 w-5" />
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="w-72 p-0 h-dvh bg-background/95 backdrop-blur-xl border-r border-border/40 rounded-none flex flex-col overflow-hidden animate-premium-in">
         <SheetHeader className="sr-only">
-          <SheetTitle>Navegación móvil</SheetTitle>
+          <SheetTitle>{mnT("sheetTitle")}</SheetTitle>
           <SheetDescription>
-            Menú de navegación lateral para dispositivos móviles
+            {mnT("sheetDescription")}
           </SheetDescription>
         </SheetHeader>
         
-        {/* Tactical Header Gradient */}
         <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary/40 to-transparent" />
 
         <div className="flex flex-col h-full">
-          {/* Header */}
           <div className="p-5 border-b border-border/40 shrink-0 bg-background/40">
             <Logo variant="sidebar" className="h-6 w-auto grayscale opacity-80" />
           </div>
 
-          {/* Navigation Items */}
           <nav className="flex-1 p-2 space-y-4 overflow-y-auto custom-scrollbar">
             {visibleNavigation.map((group) => {
               const GroupIcon = group.icon;
@@ -107,14 +110,13 @@ export function MobileNavigation() {
 
               return (
                 <div key={group.id} className="space-y-1">
-                  {/* Group Header */}
                   <Button
                     variant="ghost"
                     onClick={() => toggleGroup(group.id)}
                     className="w-full justify-start gap-3 px-3 font-black text-[10px] uppercase tracking-[0.2em] text-muted-foreground/40 hover:text-primary hover:bg-transparent transition-premium h-8"
                   >
                     <GroupIcon className="h-3.5 w-3.5 shrink-0 opacity-40" />
-                    <span className="flex-1 text-left">{group.title}</span>
+                    <span className="flex-1 text-left">{navT(group.id)}</span>
                     <ChevronDown
                       className={cn(
                         "h-3 w-3 transition-transform duration-300 opacity-30",
@@ -123,7 +125,6 @@ export function MobileNavigation() {
                     />
                   </Button>
 
-                  {/* Group Items */}
                   {isExpanded && (
                     <div className="space-y-1 animate-premium-in">
                       {group.items.map((item) => {
@@ -148,7 +149,6 @@ export function MobileNavigation() {
                                 <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary shadow-[0_0_10px_rgba(var(--primary),0.5)]" />
                               )}
                               
-                              {/* Tactical Icon Box */}
                               <div className={cn(
                                 "flex h-8 w-8 items-center justify-center border transition-premium shrink-0",
                                 isActive 
@@ -160,11 +160,11 @@ export function MobileNavigation() {
 
                               <div className="flex-1 min-w-0">
                                 <p className="text-[11px] font-black tracking-tighter uppercase font-oxanium truncate">
-                                  {item.title}
+                                  {navT(getNavKey(item.href))}
                                 </p>
                                 {item.description && (
                                   <p className="text-[8px] font-mono font-bold text-muted-foreground/30 uppercase tracking-widest truncate leading-tight">
-                                    {item.description}
+                                    {navT(getNavKey(item.href) + "Desc")}
                                   </p>
                                 )}
                               </div>
@@ -185,7 +185,6 @@ export function MobileNavigation() {
             })}
           </nav>
 
-          {/* User Info */}
           <div className="p-3 border-t border-border/40 shrink-0 bg-background/20">
             <UserSidebarMenu />
           </div>

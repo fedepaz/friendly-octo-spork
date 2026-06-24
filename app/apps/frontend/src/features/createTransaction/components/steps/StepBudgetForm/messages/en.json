@@ -1,0 +1,8 @@
+{
+  "StepBudgetForm": {
+    "title": "Is this a budgeted expense?",
+    "yes": "Yes",
+    "no": "No",
+    "budgetCategoryLabel": "Budget Category"
+  }
+}

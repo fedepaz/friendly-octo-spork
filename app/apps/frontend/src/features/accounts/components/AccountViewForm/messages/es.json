@@ -1,0 +1,10 @@
+{
+  "AccountViewForm": {
+    "operativeType": "Tipo Operativo",
+    "baseCurrency": "Divisa Base",
+    "consolidatedBalance": "Saldo Consolidado",
+    "terminalHistory": "Historial de Terminal",
+    "lastRecords": "Últimos 5 registros",
+    "noMovements": "Sin movimientos registrados"
+  }
+}

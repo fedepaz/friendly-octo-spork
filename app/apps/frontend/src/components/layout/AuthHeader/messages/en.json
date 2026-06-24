@@ -1,0 +1,8 @@
+{
+  "AuthHeader": {
+    "loginLabel": "Sign In",
+    "registerLabel": "Register",
+    "loginTooltip": "I have an account",
+    "registerTooltip": "Create account"
+  }
+}

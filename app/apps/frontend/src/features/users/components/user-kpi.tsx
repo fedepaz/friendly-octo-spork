@@ -1,12 +1,14 @@
 //src/features/users/components/user-kpi.tsx
 "use client";
 
+import { useTranslations } from "next-intl";
 import { KPICard } from "@/components/data-display/kpi-card";
 import { Users, UserCheck, UserX, Shield } from "lucide-react";
 
 import { useUsers } from "../hooks/usersHooks";
 
 function UserKPIs() {
+  const ukT = useTranslations("UserKPIs");
   const { data } = useUsers();
   const totalUsers = data?.length || 0;
   const activeUsers = data?.filter((u) => u.isActive).length || 0;
@@ -16,28 +18,28 @@ function UserKPIs() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 shrink-0 animate-premium-in">
       <KPICard
-        title="Operadores Totales"
+        title={ukT("totalOperators")}
         value={totalUsers}
-        description="IDENTIDADES REGISTRADAS"
+        description={ukT("registeredIdentities")}
         icon={Users}
-        trend={{ value: 5.0, label: "VS PERÍODO ANTERIOR", isPositive: true }}
+        trend={{ value: 5.0, label: ukT("vsPreviousPeriod"), isPositive: true }}
       />
       <KPICard 
-        title="Identidades Activas" 
+        title={ukT("activeIdentities")}
         value={activeUsers} 
-        description="EN LÍNEA / DISPONIBLES"
+        description={ukT("onlineAvailable")}
         icon={UserCheck} 
       />
       <KPICard
-        title="Accesos Suspendidos"
+        title={ukT("suspendedAccess")}
         value={inactiveUsers}
-        description="REQUIEREN REVISIÓN"
+        description={ukT("requireReview")}
         icon={UserX}
       />
       <KPICard
-        title="Enlaces de Red"
+        title={ukT("networkLinks")}
         value={emailUsers}
-        description="CORREOS VERIFICADOS"
+        description={ukT("verifiedEmails")}
         icon={Shield}
       />
     </div>

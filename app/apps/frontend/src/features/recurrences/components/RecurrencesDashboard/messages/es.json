@@ -1,0 +1,7 @@
+{
+  "RecurrencesDashboard": {
+    "title": "Cuentas Pendientes",
+    "description": "Lista de cuentas con pagos recurrentes",
+    "slideOverTitle": "Configuración de Recurrencia"
+  }
+}

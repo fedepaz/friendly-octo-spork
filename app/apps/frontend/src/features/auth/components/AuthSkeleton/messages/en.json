@@ -1,0 +1,6 @@
+{
+  "AuthSkeleton": {
+    "ariaLabel": "Loading auth form",
+    "loadingText": "Loading..."
+  }
+}

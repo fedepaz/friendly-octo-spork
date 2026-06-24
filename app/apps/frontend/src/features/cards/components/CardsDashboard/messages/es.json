@@ -1,0 +1,16 @@
+{
+  "CardsDashboard": {
+    "kpiProjectedInstallments": "Cuotas Proyectadas",
+    "kpiProjectedInstallmentsDesc": "PRÓXIMOS VENCIMIENTOS",
+    "kpiMonthlyConsumption": "Consumos del Mes",
+    "kpiMonthlyConsumptionDesc": "GASTOS A CARGO",
+    "kpiPaymentsMade": "Pagos Realizados",
+    "kpiPaymentsMadeDesc": "TRANSFERENCIAS A LA CUENTA",
+    "debtTotal": "Deuda Total",
+    "balanceToPay": "SALDO A PAGAR",
+    "noDebt": "SIN DEUDA PENDIENTE",
+    "tableTitle": "Extracto de Tarjeta",
+    "tableDescription": "Seguimiento de consumos y cuotas proyectadas",
+    "slideOverTitle": "Ficha de Movimiento"
+  }
+}

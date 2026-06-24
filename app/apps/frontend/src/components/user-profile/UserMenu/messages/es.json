@@ -1,0 +1,9 @@
+{
+  "UserMenu": {
+    "infoTab": "Información de Perfil",
+    "passwordTab": "Cambiar Contraseña",
+    "profileTitle": "Perfil de Usuario",
+    "passwordTitle": "Cambiar Contraseña",
+    "dialogDescription": "Gestión de información de perfil, edición y cambio de contraseña"
+  }
+}

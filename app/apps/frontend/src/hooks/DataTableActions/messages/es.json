@@ -1,0 +1,8 @@
+{
+  "DataTableActions": {
+    "confirmDelete": "¿Estás seguro de que quieres eliminar este {entityName} ({id})?",
+    "deleteSuccess": "{entityName} eliminado(a) con éxito.",
+    "deleteError": "Error al eliminar {entityName}.",
+    "exportSuccess": "{entityName} exportado(a) con éxito."
+  }
+}

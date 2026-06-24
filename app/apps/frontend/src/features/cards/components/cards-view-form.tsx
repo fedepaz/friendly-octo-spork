@@ -1,6 +1,7 @@
 // src/features/cards/components/cards-view-form.tsx
 "use client";
 
+import { useTranslations } from "next-intl";
 import { formatCurrency, cn } from "@/lib/utils";
 import { formatShortDate } from "@/lib/date-utils";
 import {
@@ -20,6 +21,8 @@ interface CardViewFormProps {
 }
 
 export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
+  const cvfT = useTranslations("CardsViewForm");
+
   const {
     amount,
     date,
@@ -39,9 +42,9 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
   const frequency = rawRecurrence?.frequency || "ONE_TIME";
 
   const labelMap: Record<string, string> = {
-    recurrence: "CUOTA PROYECTADA",
-    oneTimer: "CONSUMO ASENTADO",
-    payment: "PAGO REGISTRADO",
+    recurrence: cvfT("sourceRecurrence"),
+    oneTimer: cvfT("sourceOneTimer"),
+    payment: cvfT("sourcePayment"),
   };
 
   const iconMap: Record<string, typeof Clock> = {
@@ -54,13 +57,13 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
 
   // Calculate progress for installments
   let progress = 0;
-  let installmentLabel = "PAGO ÚNICO";
+  let installmentLabel = cvfT("singlePayment");
   let partsDetail = null;
 
   if (installmentInfo) {
     const [current, total] = installmentInfo.split("/").map(Number);
     progress = (current / total) * 100;
-    installmentLabel = `CUOTA ${current} DE ${total}`;
+    installmentLabel = cvfT("installmentOf", { current, total });
     const remaining = total - current;
 
     partsDetail = {
@@ -69,20 +72,20 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
       remaining,
       status:
         remaining === 0
-          ? "FINALIZADO"
+          ? cvfT("statusCompleted")
           : source === "recurrence"
-            ? "PENDIENTE"
-            : "PAGADO",
+            ? cvfT("statusPending")
+            : cvfT("statusPaid"),
     };
 
     if (remaining > 0) {
-      installmentLabel += ` (${remaining} RESTANTES)`;
+      installmentLabel += ` (${cvfT("remaining", { remaining })})`;
     } else {
-      installmentLabel = "FINALIZANDO PLAN";
+      installmentLabel = cvfT("completingPlan");
     }
   } else if (source === "recurrence") {
     installmentLabel =
-      frequency === "MONTHLY" ? "RECURRENCIA MENSUAL" : "PENDIENTE";
+      frequency === "MONTHLY" ? cvfT("monthlyRecurrence") : cvfT("pendingLabel");
   }
 
   return (
@@ -109,28 +112,28 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
           </div>
         </div>
         <div className="font-mono text-2.5 font-bold opacity-80">
-          ID: {id.slice(-8).toUpperCase()}
+          {cvfT("idPrefix")} {id.slice(-8).toUpperCase()}
         </div>
       </div>
 
       <div className="space-y-2">
         <p className="text-2.5 uppercase font-bold text-muted-foreground opacity-50 flex items-center gap-2">
           <Target className="h-3 w-3" />
-          Impacto Financiero
+          {cvfT("financialImpact")}
         </p>
         <div className="flex items-baseline gap-2">
           <p className="text-4xl font-mono font-black tracking-tighter text-foreground">
             {formatCurrency(Number(amount))}
           </p>
           <span className="text-xs font-bold text-muted-foreground opacity-50 mb-1">
-            ARS
+            {cvfT("currency")}
           </span>
         </div>
       </div>
 
       <div className="space-y-3">
         <h4 className="text-2.5 font-bold uppercase tracking-widest text-muted-foreground border-b border-border/40 pb-1 flex items-center justify-between">
-          <span>Estructura del Gasto</span>
+          <span>{cvfT("expenseStructure")}</span>
           <span className="bg-muted px-1.5 py-0.5 text-[10px] border border-border/60">
             {frequency}
           </span>
@@ -146,7 +149,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
               <div className="flex justify-between items-end">
                 <div className="flex flex-col">
                   <span className="text-[10px] font-bold text-muted-foreground uppercase opacity-60">
-                    Progreso de Cuotas
+                    {cvfT("installmentProgress")}
                   </span>
                   <span className="text-lg font-mono font-black text-foreground">
                     {partsDetail.current}{" "}
@@ -158,7 +161,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
                 </div>
                 <div className="text-right">
                   <span className="text-[10px] font-bold text-muted-foreground uppercase opacity-60">
-                    Status
+                    {cvfT("statusLabel")}
                   </span>
                   <p className="font-black text-[10px] text-primary tracking-widest">
                     {partsDetail.status}
@@ -174,19 +177,19 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
                   />
                 </div>
                 <div className="flex justify-between text-[9px] font-mono text-muted-foreground uppercase">
-                  <span>Inicio</span>
-                  <span>{Math.round(progress)}% Completo</span>
-                  <span>Fin</span>
+                  <span>{cvfT("progressStart")}</span>
+                  <span>{cvfT("progressComplete", { progress: Math.round(progress) })}</span>
+                  <span>{cvfT("progressEnd")}</span>
                 </div>
               </div>
             </div>
           ) : (
             <div className="flex justify-between items-center">
               <span className="text-2.5 font-bold text-foreground/70 uppercase">
-                Tipo de Cargo
+                {cvfT("chargeType")}
               </span>
               <span className="font-mono text-[10px] font-black tracking-widest text-primary">
-                PAGO ÚNICO / DIRECTO
+                {cvfT("singleDirectPayment")}
               </span>
             </div>
           )}
@@ -199,9 +202,9 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
       <div className="grid grid-cols-1 gap-2">
         <div className="flex items-center justify-between p-3 bg-background border-2 border-border/60 font-mono text-2.5">
           <div className="flex flex-col">
-            <span className="opacity-40 uppercase text-[10px]">Origen</span>
+            <span className="opacity-40 uppercase text-[10px]">{cvfT("origin")}</span>
             <span className="font-bold text-foreground">
-              {sourceAccount?.name || "SIN ASIGNAR"}
+              {sourceAccount?.name || cvfT("notAssigned")}
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -217,7 +220,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
         {targetAccount && (
           <div className="flex items-center justify-between p-3 bg-background border-2 border-border/60 font-mono text-2.5">
             <div className="flex flex-col">
-              <span className="opacity-40 uppercase text-[10px]">Destino</span>
+              <span className="opacity-40 uppercase text-[10px]">{cvfT("destination")}</span>
               <span className="font-bold text-foreground">
                 {targetAccount.name}
               </span>
@@ -232,7 +235,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
           <Calendar className="h-5 w-5 text-muted-foreground opacity-30" />
           <div>
             <p className="text-[10px] font-bold uppercase leading-none opacity-40 mb-1">
-              Fecha de Registro
+              {cvfT("registrationDate")}
             </p>
             <p className="font-mono text-xs font-black">
               {formatShortDate(new Date(date))}
@@ -251,7 +254,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
             />
             <div>
               <p className="text-[10px] font-bold uppercase leading-none opacity-40 mb-1">
-                Categoría
+                {cvfT("category")}
               </p>
               <p className="text-xs font-black truncate">{category.name}</p>
             </div>
@@ -263,7 +266,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
         <div className="pt-4 border-t border-dashed border-border/40">
           <p className="text-[10px] font-bold uppercase opacity-30 mb-2 flex items-center gap-1">
             <Database className="h-3 w-3" />
-            Metadatos del Sistema
+            {cvfT("systemMetadata")}
           </p>
           <pre className="text-[10px] font-mono bg-muted/40 p-2 border border-border/40 overflow-x-auto text-muted-foreground">
             {JSON.stringify(_raw.metadata, null, 2)}

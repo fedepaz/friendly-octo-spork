@@ -4,6 +4,7 @@
 import { Label } from "@/components/ui/label";
 import { BudgetCategory, CreateTransactionInput } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { InLineError } from "@/components/ui/in-line-error";
 
 const CATEGORIES = [
@@ -22,6 +23,7 @@ export function StepBudgetComponent() {
     formState: { errors },
   } = useFormContext<CreateTransactionInput>();
   const watched = watch();
+  const sbT = useTranslations("StepBudgetForm");
 
   const watchedTransactionType = watched.type !== "EXPENSE";
 
@@ -37,7 +39,7 @@ export function StepBudgetComponent() {
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        Is this a budgeted expense?
+        {sbT("title")}
       </h3>
 
       <div className="grid grid-cols-2 gap-3">
@@ -52,7 +54,7 @@ export function StepBudgetComponent() {
                 : "border-border text-muted-foreground hover:bg-muted"
             }`}
         >
-          Yes
+          {sbT("yes")}
         </button>
         <button
           type="button"
@@ -64,7 +66,7 @@ export function StepBudgetComponent() {
                 : "border-border text-muted-foreground hover:bg-muted"
             }`}
         >
-          No
+          {sbT("no")}
         </button>
       </div>
 
@@ -72,7 +74,7 @@ export function StepBudgetComponent() {
         <div className="flex flex-col gap-3 border-2 border-border p-3">
           {/* Budget Category Selection */}
           <div>
-            <Label>Budget Category</Label>
+            <Label>{sbT("budgetCategoryLabel")}</Label>
             <div className="grid grid-cols-2 gap-2">
               {CATEGORIES.map((c) => (
                 <button

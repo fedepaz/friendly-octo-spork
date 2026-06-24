@@ -1,0 +1,19 @@
+{
+  "TransactionsViewForm": {
+    "operationDate": "Operation Date",
+    "type": "Type",
+    "category": "Category",
+    "noCategory": "UNCATEGORIZED",
+    "amount": "Amount",
+    "fundFlow": "Fund Flow",
+    "origin": "ORIGIN:",
+    "destination": "DESTINATION:",
+    "na": "N/A",
+    "cardExpense": "CARD EXPENSE",
+    "confirmed": "CONFIRMED",
+    "no": "NO",
+    "recurrence": "RECURRENCE",
+    "budgeted": "BUDGETED",
+    "yes": "YES"
+  }
+}

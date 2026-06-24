@@ -1,0 +1,18 @@
+{
+  "StepRecurrenceForm": {
+    "cardTypeLabel": "Tipo de Tarjeta",
+    "title": "¿Esto se repite?",
+    "yes": "Sí",
+    "no": "No",
+    "recurrenceNameLabel": "Nombre de la Recurrencia",
+    "recurrenceNamePlaceholder": "ej. Alquiler Mensual, Suscripción Netflix...",
+    "frequencyLabel": "Frecuencia",
+    "totalInstallmentsLabel": "Total de Cuotas",
+    "totalInstallmentsPlaceholder": "ej. 9",
+    "firstPaymentLabel": "Primer Pago",
+    "now": "Ahora",
+    "nextMonth": "Próximo Mes",
+    "chargedToday": "Primer cuota cobrada hoy",
+    "chargedNextMonth": "Primer cuota cobrada el próximo mes"
+  }
+}

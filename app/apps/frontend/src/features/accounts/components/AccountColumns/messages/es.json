@@ -1,0 +1,13 @@
+{
+  "AccountColumns": {
+    "identification": "Identificación",
+    "operativeType": "Tipo Operativo",
+    "currency": "Divisa",
+    "consolidatedBalance": "Saldo Consolidado",
+    "bank": "Banco",
+    "wallet": "Billetera",
+    "cash": "Efectivo",
+    "card": "Tarjeta",
+    "investment": "Inversión"
+  }
+}

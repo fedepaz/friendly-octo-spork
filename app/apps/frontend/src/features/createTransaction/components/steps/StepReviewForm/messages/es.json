@@ -1,0 +1,20 @@
+{
+  "StepReviewForm": {
+    "title": "Confirmar transacción",
+    "type": "Tipo",
+    "amount": "Monto",
+    "date": "Fecha",
+    "description": "Descripción",
+    "from": "Origen",
+    "to": "Destino",
+    "category": "Categoría",
+    "none": "Ninguna",
+    "budget": "Presupuesto",
+    "budgetYes": "Sí — {category}",
+    "budgetNo": "No",
+    "cardType": "Tipo de Tarjeta",
+    "recurring": "Recurrente",
+    "recurringYes": "Sí — {frequency}{parts}",
+    "recurringNo": "No"
+  }
+}

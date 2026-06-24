@@ -1,0 +1,8 @@
+{
+  "UserSidebarMenu": {
+    "avatarLabel": "Perfil de usuario",
+    "terminalLabel": "Terminal de Acceso",
+    "viewIdentity": "Ver Identidad",
+    "disconnect": "Desconectar Nodo"
+  }
+}

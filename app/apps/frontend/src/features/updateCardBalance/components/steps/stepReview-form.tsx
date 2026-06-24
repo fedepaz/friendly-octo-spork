@@ -3,6 +3,7 @@
 
 import { CardCloseInputDTO, CardCloseResponseDTO } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { formatCurrency } from "@/lib/utils";
 
 export function StepReviewComponent({
@@ -12,13 +13,11 @@ export function StepReviewComponent({
 }) {
   const { watch } = useFormContext<CardCloseInputDTO>();
   const watched = watch();
+  const scrT = useTranslations("StepCardReviewForm");
 
   const recurrencesCount = watched.recurrencesTransactions?.length ?? 0;
 
-  const monthNames = [
-    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
-  ];
+  const monthNames = scrT.raw("months") as string[];
   const monthName = monthNames[watched.month - 1] ?? "";
 
   return (
@@ -28,13 +27,13 @@ export function StepReviewComponent({
       </div>
 
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        Cierre realizado
+        {scrT("title")}
       </h3>
 
       <div className="w-full border-2 border-border divide-y divide-border text-left">
         <div className="flex justify-between px-4 py-3">
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
-            Mes
+            {scrT("month")}
           </span>
           <span className="text-sm font-mono font-bold text-foreground">
             {monthName} {watched.year}
@@ -43,7 +42,7 @@ export function StepReviewComponent({
 
         <div className="flex justify-between px-4 py-3">
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
-            Transacciones
+            {scrT("transactions")}
           </span>
           <span className="text-sm font-mono font-bold text-foreground">
             {recurrencesCount}
@@ -53,7 +52,7 @@ export function StepReviewComponent({
         {closeResponse?.accountName && (
           <div className="flex justify-between px-4 py-3">
             <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
-              Cuenta
+              {scrT("account")}
             </span>
             <span className="text-sm font-mono font-bold text-foreground">
               {closeResponse.accountName}
@@ -64,7 +63,7 @@ export function StepReviewComponent({
         {closeResponse?.closeBalance && (
           <div className="flex justify-between px-4 py-3">
             <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
-              Saldo final
+              {scrT("finalBalance")}
             </span>
             <span className="text-sm font-mono font-bold text-foreground">
               {formatCurrency(parseFloat(closeResponse.closeBalance))}

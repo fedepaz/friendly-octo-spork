@@ -1,0 +1,10 @@
+{
+  "AuthLoginForm": {
+    "usernameLabel": "Identificación de Usuario",
+    "passwordLabel": "Clave de Acceso",
+    "submitText": "Iniciar Sesión",
+    "showPassword": "Mostrar",
+    "hidePassword": "Ocultar",
+    "errorMessage": "Error al iniciar sesión. Revisá tus credenciales."
+  }
+}

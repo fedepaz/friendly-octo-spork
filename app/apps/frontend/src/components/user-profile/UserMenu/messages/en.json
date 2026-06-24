@@ -1,0 +1,9 @@
+{
+  "UserMenu": {
+    "infoTab": "Profile Information",
+    "passwordTab": "Change Password",
+    "profileTitle": "User Profile",
+    "passwordTitle": "Change Password",
+    "dialogDescription": "Profile information management and password change"
+  }
+}

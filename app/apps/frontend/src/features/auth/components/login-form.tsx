@@ -1,4 +1,3 @@
-// src/features/auth/components/login-form.tsx
 "use client";
 import { Loader2, Lock, Eye, EyeOff, User } from "lucide-react";
 
@@ -17,12 +16,14 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
+import { useTranslations } from "next-intl";
 
 interface LoginFormProps {
   onDefaultPassword: () => void;
 }
 
 export function LoginForm({ onDefaultPassword }: LoginFormProps) {
+  const t = useTranslations("AuthLoginForm");
   const { loginAsync, isLoading } = useLogin();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -43,7 +44,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
         onDefaultPassword();
       }
     } catch {
-      toast.error("Error al iniciar sesión. Revisá tus credenciales.");
+      toast.error(t("errorMessage"));
     }
   }
 
@@ -53,14 +54,13 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-4 animate-premium-in"
       >
-        {/* Name Field */}
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem className="space-y-1.5">
               <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
-                Identificación de Usuario
+                {t("usernameLabel")}
               </FormLabel>
               <FormControl>
                 <div className="relative group">
@@ -81,14 +81,13 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
           )}
         />
 
-        {/* Password Field */}
         <FormField
           control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem className="space-y-1.5">
               <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
-                Clave de Acceso
+                {t("passwordLabel")}
               </FormLabel>
               <FormControl>
                 <div className="relative group">
@@ -109,7 +108,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-none bg-foreground/5 flex items-center justify-center text-muted-foreground/40 hover:text-foreground hover:bg-foreground/10 transition-premium border border-border/20 cursor-pointer"
                     tabIndex={-1}
-                    aria-label={showPassword ? "Ocultar" : "Mostrar"}
+                    aria-label={showPassword ? t("hidePassword") : t("showPassword")}
                   >
                     {showPassword ? (
                       <EyeOff className="h-3.5 w-3.5" />
@@ -123,7 +122,6 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
           )}
         />
 
-        {/* Submit Button */}
         <Button
           type="submit"
           className="w-full h-12 bg-primary text-primary-foreground rounded-none px-4 py-2 cursor-pointer mt-4 border-2 border-primary-foreground/20 font-black text-xs uppercase tracking-widest shadow-premium hover:opacity-90 transition-premium"
@@ -133,7 +131,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
           {isLoading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
-            "Iniciar Sesión"
+            t("submitText")
           )}
         </Button>
       </form>
