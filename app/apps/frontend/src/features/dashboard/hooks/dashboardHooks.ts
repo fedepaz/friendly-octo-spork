@@ -13,12 +13,10 @@ import {
   incomeExpenseDashboardService,
   recurrenceToPayDashboard,
 } from "../api/dashboardService";
-import { getCurrentMonthYear } from "@/lib/date-utils";
 
 export const dashboardQueryKeys = {
   all: () => ["dashboard"] as const,
-  budgetSummary: (month: number, year: number) =>
-    ["dashboard", "budget", month, year] as const,
+  budgetSummary: () => ["dashboard", "budget"] as const,
   recentAccounts: () => ["dashboard", "recentAccounts"] as const,
   incomeExpense: (months: number) =>
     ["dashboard", "incomeExpense", months] as const,
@@ -26,11 +24,9 @@ export const dashboardQueryKeys = {
 };
 
 export const useBudgetSummary = () => {
-  const { month, year } = getCurrentMonthYear();
-
   return useSuspenseQuery<BudgetDTO[]>({
-    queryKey: dashboardQueryKeys.budgetSummary(month, year),
-    queryFn: () => budgetDashboardService.fetchBudgetSummary(month, year),
+    queryKey: dashboardQueryKeys.budgetSummary(),
+    queryFn: () => budgetDashboardService.fetchBudgetSummary(),
   });
 };
 

@@ -17,8 +17,8 @@ export const recurrenceToPayDashboard = {
 };
 
 export const budgetDashboardService = {
-  fetchBudgetSummary: (month: number, year: number) => {
-    return clientFetch<BudgetDTO[]>(`dashboard/budget/${month}/${year}`, {
+  fetchBudgetSummary: () => {
+    return clientFetch<BudgetDTO[]>(`dashboard/budget`, {
       method: "GET",
     });
   },

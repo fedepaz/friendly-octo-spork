@@ -3,7 +3,7 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import {
   BudgetDashRepository,
-  BudgetInterface,
+  BudgetMetric,
 } from './repositories/budgetDash.repository';
 import {
   AccountDTO,
@@ -11,7 +11,7 @@ import {
   IncomeExpenseDTO,
   RecurrenceDTO,
 } from '@repo/shared';
-import { BudgetCategory } from '@prisma/client';
+
 import { AccountDashRepository } from './repositories/accountDash.repository';
 import {
   IncomeExpenseDashRepository,
@@ -31,12 +31,14 @@ export class DashboardService {
     private readonly recurrenceRepo: RecurrenceDashRepository,
   ) {}
 
-  private mapBudgetToDTO(budget: BudgetInterface): BudgetDTO {
+  private mapBudgetToDTO(budget: BudgetMetric): BudgetDTO {
     return {
-      category: budget.category as BudgetCategory,
+      category: budget.category,
       spent: budget.spent.toString(),
-      limit: budget.limit.toString(),
-      color: budget.color,
+      daysElapsed: budget.daysElapsed,
+      daysLeft: budget.daysLeft,
+      dailyAvg: budget.dailyAvg.toString(),
+      projectedEnd: budget.projectedEnd.toString(),
     };
   }
 
@@ -70,20 +72,10 @@ export class DashboardService {
     };
   }
 
-  async getBudgetSummary(
-    userId: string,
-    month?: number,
-    year?: number,
-  ): Promise<BudgetDTO[]> {
+  async getBudgetSummary(userId: string): Promise<BudgetDTO[]> {
     if (!userId) throw new BadRequestException('User ID is required');
     this.logger.debug(`Getting budget summary for user ${userId}`);
-    const thisMonth = month ?? new Date().getMonth() + 1;
-    const thisYear = year ?? new Date().getFullYear();
-    const response = await this.budgetRepo.getBudgetsWithSpent(
-      userId,
-      thisMonth,
-      thisYear,
-    );
+    const response = await this.budgetRepo.getBudgetMetrics(userId);
     return response.map((budget) => this.mapBudgetToDTO(budget));
   }
 

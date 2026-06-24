@@ -132,6 +132,8 @@ export class TransactionService {
       `Saving transaction ${transactionData.type} for user ${userId}`,
     );
 
+    this.logger.debug(transactionData);
+
     const {
       isRecurrence: _isRecurrence,
       frequency: _frequency,

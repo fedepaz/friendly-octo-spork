@@ -22,14 +22,10 @@ import { AuthUser } from '../auth/types/auth-user.type';
 export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) {}
 
-  @Get('budget/:month/:year')
+  @Get('budget')
   @HttpCode(HttpStatus.OK)
-  async getDashboard(
-    @CurrentUser() user: AuthUser,
-    @Param('month', ParseIntPipe) month: number,
-    @Param('year', ParseIntPipe) year: number,
-  ): Promise<BudgetDTO[]> {
-    return this.dashboardService.getBudgetSummary(user.id, month, year);
+  async getDashboard(@CurrentUser() user: AuthUser): Promise<BudgetDTO[]> {
+    return this.dashboardService.getBudgetSummary(user.id);
   }
 
   @Get('recentAccounts')

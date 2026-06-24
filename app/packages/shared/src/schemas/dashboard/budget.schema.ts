@@ -6,8 +6,10 @@ import { BudgetCategorySchema } from "../../enums";
 export const BudgetSchema = z.object({
   category: BudgetCategorySchema,
   spent: z.string(),
-  limit: z.string(),
-  color: z.string(),
+  daysElapsed: z.number(),
+  daysLeft: z.number(),
+  dailyAvg: z.string(),
+  projectedEnd: z.string(),
 });
 
 export type BudgetDTO = z.infer<typeof BudgetSchema>;
