@@ -54,7 +54,9 @@ docker compose exec db psql -U user -l
 
 ### Application
 - [ ] `docker-compose.yml` uses service names, not `localhost`.
-- [ ] Health checks pass for all services (`docker compose ps`).
+- [ ] All services show "healthy" in `docker compose ps`.
+- [ ] `curl http://localhost:${NGINX_HOST_PORT:-8081}/api/health` returns 200 OK.
+- [ ] `curl http://localhost:${NGINX_HOST_PORT:-8081}` loads the login page.
 - [ ] `.env` file populated with production secrets.
 - [ ] Dockerfiles exist for both frontend and backend.
 
