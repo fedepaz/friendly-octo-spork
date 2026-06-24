@@ -37,7 +37,6 @@ export class BudgetDashRepository {
           COALESCE(SUM(t.amount), 0) AS spent
         FROM "Transaction" t
         WHERE t."userId" = ${userId}
-          AND t."isBudgetedExpense" = true
           AND t."budgetCategory" IS NOT NULL
           AND t.date BETWEEN ${startDate} AND ${endDate}
         GROUP BY t."budgetCategory"
