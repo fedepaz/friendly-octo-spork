@@ -1,0 +1,9 @@
+{
+  "SlideOverForm": {
+    "createBadge": "Sistema // Registro",
+    "viewBadge": "Sistema // Vista",
+    "createAction": "Crear",
+    "closeAction": "Cerrar Terminal",
+    "cancelAction": "Anular"
+  }
+}

@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import { CreateAccountInput } from "@repo/shared";
 import { UseFormReturn } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 interface AccountCreateFormProps {
   onSubmit: (data: CreateAccountInput) => void;
@@ -31,6 +32,7 @@ export function AccountCreateForm({
   formId,
   form,
 }: AccountCreateFormProps) {
+  const acfT = useTranslations("AccountCreateForm");
   return (
     <Form {...form}>
       <form
@@ -44,12 +46,12 @@ export function AccountCreateForm({
           render={({ field }) => (
             <FormItem className="space-y-1.5">
               <FormLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
-                Identificación de Cuenta
+                {acfT("accountIdLabel")}
               </FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  placeholder="Ej: Banco Galicia"
+                  placeholder={acfT("namePlaceholder")}
                   className="h-12 w-full rounded-none border-0 border-b border-border/40 bg-background/20 px-3 font-oxanium text-sm text-foreground placeholder:text-[11px] placeholder:text-muted-foreground/40 focus-visible:ring-0 focus-visible:border-primary/60 transition-premium"
                 />
               </FormControl>
@@ -65,7 +67,7 @@ export function AccountCreateForm({
             render={({ field }) => (
               <FormItem className="space-y-1.5">
                 <FormLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
-                  Tipo
+                  {acfT("typeLabel")}
                 </FormLabel>
                 <Select
                   onValueChange={field.onChange}
@@ -73,7 +75,7 @@ export function AccountCreateForm({
                 >
                   <FormControl>
                     <SelectTrigger className="h-12 w-full rounded-none border-0 border-b border-border/40 bg-background/20 px-3 font-oxanium text-sm text-foreground focus:ring-0 focus:border-primary/60 transition-premium">
-                      <SelectValue placeholder="Seleccionar" />
+                      <SelectValue placeholder={acfT("selectPlaceholder")} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="rounded-none border-border/40 bg-background/90 backdrop-blur-md">
@@ -81,31 +83,31 @@ export function AccountCreateForm({
                       value="BANK"
                       className="rounded-none focus:bg-primary/10"
                     >
-                      Banco
+                      {acfT("typeBank")}
                     </SelectItem>
                     <SelectItem
                       value="WALLET"
                       className="rounded-none focus:bg-primary/10"
                     >
-                      Billetera
+                      {acfT("typeWallet")}
                     </SelectItem>
                     <SelectItem
                       value="CASH"
                       className="rounded-none focus:bg-primary/10"
                     >
-                      Efectivo
+                      {acfT("typeCash")}
                     </SelectItem>
                     <SelectItem
                       value="CARD"
                       className="rounded-none focus:bg-primary/10"
                     >
-                      Tarjeta
+                      {acfT("typeCard")}
                     </SelectItem>
                     <SelectItem
                       value="INVESTMENT"
                       className="rounded-none focus:bg-primary/10"
                     >
-                      Inversión
+                      {acfT("typeInvestment")}
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -120,7 +122,7 @@ export function AccountCreateForm({
             render={({ field }) => (
               <FormItem className="space-y-1.5">
                 <FormLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
-                  Divisa Base
+                  {acfT("currencyLabel")}
                 </FormLabel>
                 <Select
                   onValueChange={field.onChange}
@@ -128,7 +130,7 @@ export function AccountCreateForm({
                 >
                   <FormControl>
                     <SelectTrigger className="h-12 w-full rounded-none border-0 border-b border-border/40 bg-background/20 px-3 font-oxanium text-sm text-foreground focus:ring-0 focus:border-primary/60 transition-premium">
-                      <SelectValue placeholder="Seleccionar" />
+                      <SelectValue placeholder={acfT("selectPlaceholder")} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="rounded-none border-border/40 bg-background/90 backdrop-blur-md">
@@ -164,7 +166,7 @@ export function AccountCreateForm({
           render={({ field }) => (
             <FormItem className="space-y-1.5">
               <FormLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
-                Saldo de Apertura
+                {acfT("openingBalanceLabel")}
               </FormLabel>
               <FormControl>
                 <Input

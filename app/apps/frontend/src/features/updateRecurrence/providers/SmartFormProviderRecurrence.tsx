@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTransactionInput, createTransactionSchema } from "@repo/shared";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 
 import { mapServerErrorsToForm } from "@/lib/utils/form-error-mapper";
 import { ApiError } from "@/lib/api/client-fetch";
@@ -24,6 +25,7 @@ export function SmartFormProviderRecurrence({
 }: SmartFormProviderRecurrenceProps) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const sfprT = useTranslations("SmartFormProviderRecurrence");
 
   const { data: recurrenceToUpdate } = useRecurrenceById(recurrenceId);
 
@@ -110,7 +112,7 @@ export function SmartFormProviderRecurrence({
             <div className="text-[10px] font-bold uppercase tracking-tight text-destructive border border-destructive/20 bg-destructive/5 p-3 flex items-start gap-2 shadow-etched animate-premium-in">
               <div className="h-1.5 w-1.5 bg-destructive mt-1 shrink-0" />
               <div className="flex-1">
-                <p className="font-black mb-0.5">Error de Operación</p>
+                <p className="font-black mb-0.5">{sfprT("operationError")}</p>
                 <p className="opacity-70 leading-relaxed">{errorMessage}</p>
               </div>
             </div>

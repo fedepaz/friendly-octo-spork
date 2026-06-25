@@ -1,11 +1,17 @@
 // src/auth/user/userAuth.repository.ts
 
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { User } from '../../../generated/prisma/client';
 import { PrismaService } from '../../../infra/prisma/prisma.service';
 
 @Injectable()
 export class UserAuthRepository {
+  private readonly logger = new Logger(UserAuthRepository.name);
+
   constructor(private prisma: PrismaService) {}
 
   findByName(name: string): Promise<User | null> {
@@ -52,7 +58,7 @@ export class UserAuthRepository {
       });
       return user;
     } catch (error) {
-      console.error('Error creating user:', error);
+      this.logger.error(error, 'Error creating user');
       throw new InternalServerErrorException('Error creating user');
     }
   }
@@ -69,7 +75,7 @@ export class UserAuthRepository {
         },
       });
     } catch (error) {
-      console.error('Error updating password:', error);
+      this.logger.error(error, 'Error updating password');
       throw new InternalServerErrorException('Error updating password');
     }
   }

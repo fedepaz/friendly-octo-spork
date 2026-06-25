@@ -2,9 +2,10 @@
 "use client";
 
 import { Label } from "@/components/ui/label";
-import { InLineError } from "@/features/createTransaction/components/inLineError";
+import { InLineError } from "@/components/ui/in-line-error";
 import { BudgetCategory, CreateTransactionInput } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { useRecurrenceById } from "@/features/recurrences/hooks/recurrenceHooks";
 
 const CATEGORIES = [
@@ -24,6 +25,7 @@ export function StepBudgetComponent() {
   } = useFormContext<CreateTransactionInput>();
   const watched = watch();
   const { data: recurrence } = useRecurrenceById(watched.recurrenceId || "");
+  const srbT = useTranslations("StepRecBudgetForm");
 
   const watchedTransactionType = watched.type !== "EXPENSE";
 
@@ -46,18 +48,18 @@ export function StepBudgetComponent() {
       {recurrence && (
         <div className="p-3 border border-border/40 bg-background/40 space-y-2">
           <p className="text-[10px] font-black uppercase tracking-widest text-primary/60">
-            Referencia de Presupuesto
+            {srbT("budgetRef")}
           </p>
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <p className="text-[9px] font-bold text-muted-foreground/40 uppercase">Presupuestado</p>
+              <p className="text-[9px] font-bold text-muted-foreground/40 uppercase">{srbT("budgeted")}</p>
               <p className="text-xs font-mono font-bold">
-                {isBudgetedRef ? "SÍ" : "NO"}
+                {isBudgetedRef ? srbT("yes") : srbT("no")}
               </p>
             </div>
             {budgetCategoryRef && (
               <div>
-                <p className="text-[9px] font-bold text-muted-foreground/40 uppercase">Categoría</p>
+                <p className="text-[9px] font-bold text-muted-foreground/40 uppercase">{srbT("category")}</p>
                 <p className="text-xs font-mono font-bold">
                   {budgetCategoryRef}
                 </p>
@@ -68,7 +70,7 @@ export function StepBudgetComponent() {
       )}
 
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        Is this a budgeted expense?
+        {srbT("title")}
       </h3>
 
       <div className="grid grid-cols-2 gap-3">
@@ -76,26 +78,26 @@ export function StepBudgetComponent() {
           type="button"
           onClick={() => toggleBudgetedExpense(true)}
           disabled={watchedTransactionType}
-          className={`p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
             ${
               watched.isBudgetedExpense
                 ? "border-foreground bg-muted"
                 : "border-border text-muted-foreground hover:bg-muted"
             }`}
         >
-          Yes
+          {srbT("budgetYes")}
         </button>
         <button
           type="button"
           onClick={() => toggleBudgetedExpense(false)}
-          className={`p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
             ${
               !watched.isBudgetedExpense
                 ? "border-foreground bg-muted"
                 : "border-border text-muted-foreground hover:bg-muted"
             }`}
         >
-          No
+          {srbT("budgetNo")}
         </button>
       </div>
 
@@ -103,7 +105,7 @@ export function StepBudgetComponent() {
         <div className="flex flex-col gap-3 border-2 border-border p-3">
           {/* Budget Category Selection */}
           <div>
-            <Label>Budget Category</Label>
+            <Label>{srbT("budgetCategoryLabel")}</Label>
             <div className="grid grid-cols-2 gap-2">
               {CATEGORIES.map((c) => (
                 <button
@@ -112,7 +114,7 @@ export function StepBudgetComponent() {
                   onClick={() => {
                     setValue("budgetCategory", c as BudgetCategory);
                   }}
-                  className={`p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
                     ${
                       watched.budgetCategory === c
                         ? "border-foreground bg-muted font-bold"

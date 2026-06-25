@@ -1,4 +1,3 @@
-// src/features/auth/components/register-form.tsx
 "use client";
 import { Loader2, Lock, Eye, EyeOff, User } from "lucide-react";
 
@@ -16,13 +15,15 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import { InLineError } from "@/features/createTransaction/components/inLineError";
+import { InLineError } from "@/components/ui/in-line-error";
+import { useTranslations } from "next-intl";
 
 interface RegisterFormProps {
   onDefaultPassword: () => void;
 }
 
 export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
+  const t = useTranslations("AuthRegisterForm");
   const { registerAsync, isLoading } = useRegister();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -52,14 +53,13 @@ export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-4 animate-premium-in"
       >
-        {/* Name Field */}
         <FormField
           control={form.control}
           name="name"
           render={({ field, fieldState: { error } }) => (
             <FormItem className="space-y-1.5">
               <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
-                Nombre
+                {t("nameLabel")}
               </FormLabel>
               <FormControl>
                 <div className="relative group">
@@ -81,14 +81,13 @@ export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
           )}
         />
 
-        {/* Email Field */}
         <FormField
           control={form.control}
           name="email"
           render={({ field, fieldState: { error } }) => (
             <FormItem className="space-y-1.5">
               <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
-                Email
+                {t("emailLabel")}
               </FormLabel>
               <FormControl>
                 <div className="relative group">
@@ -109,14 +108,13 @@ export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
           )}
         />
 
-        {/* Password Field */}
         <FormField
           control={form.control}
           name="password"
           render={({ field, fieldState: { error } }) => (
             <FormItem className="space-y-1.5">
               <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
-                Contraseña
+                {t("passwordLabel")}
               </FormLabel>
               <FormControl>
                 <div className="relative group">
@@ -137,7 +135,7 @@ export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-none bg-foreground/5 flex items-center justify-center text-muted-foreground/40 hover:text-foreground hover:bg-foreground/10 transition-premium border border-border/20 cursor-pointer"
                     tabIndex={-1}
-                    aria-label={showPassword ? "Ocultar" : "Mostrar"}
+                    aria-label={showPassword ? t("hidePassword") : t("showPassword")}
                   >
                     {showPassword ? (
                       <EyeOff className="h-3.5 w-3.5" />
@@ -152,7 +150,6 @@ export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
           )}
         />
 
-        {/* Submit Button */}
         <Button
           type="submit"
           className="w-full h-12 bg-primary text-primary-foreground rounded-none px-4 py-2 cursor-pointer mt-4 border-2 border-primary-foreground/20 font-black text-xs uppercase tracking-widest shadow-premium hover:opacity-90 transition-premium"
@@ -162,7 +159,7 @@ export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
           {isLoading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
-            "Registrarse"
+            t("submitText")
           )}
         </Button>
       </form>

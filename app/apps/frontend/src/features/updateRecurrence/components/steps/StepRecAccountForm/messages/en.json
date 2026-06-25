@@ -1,0 +1,11 @@
+{
+  "StepRecAccountForm": {
+    "titleTransfer": "From where, to where?",
+    "titleDefault": "Which account?",
+    "fromAccount": "From account",
+    "toAccount": "To account",
+    "account": "Account",
+    "noCompatibleSource": "No compatible accounts available for {type} source",
+    "noCompatibleTarget": "No compatible accounts available for {type} target"
+  }
+}

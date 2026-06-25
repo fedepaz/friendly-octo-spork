@@ -13,7 +13,7 @@ export function CustomTooltip({
 }) {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-card border border-border p-3 shadow-lg">
+      <div role="tooltip" className="bg-card border border-border p-3 shadow-lg">
         <p className="font-mono text-xs text-muted-foreground">{label}</p>
         {payload.map((entry, index) => (
           <p key={index} className="font-mono text-sm text-foreground">

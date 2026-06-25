@@ -1,0 +1,12 @@
+{
+  "AccountDashboard": {
+    "title": "Account Terminal",
+    "description": "Asset and liability management system",
+    "createLabel": "Register new account unit",
+    "viewTitle": "Account Statement - {name}",
+    "viewDesc": "Flow analysis in {currency} // {type}",
+    "createTitle": "Create new account",
+    "createDesc": "Initialize new asset unit",
+    "saveLabel": "Create new account"
+  }
+}

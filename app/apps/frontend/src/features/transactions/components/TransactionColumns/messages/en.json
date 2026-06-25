@@ -1,0 +1,11 @@
+{
+  "TransactionColumns": {
+    "dateHeader": "Date",
+    "typeHeader": "Type",
+    "descriptionHeader": "Description",
+    "noCategory": "Uncategorized",
+    "amountHeader": "Amount",
+    "cardExpenseTooltip": "Card Expense",
+    "budgetedExpenseTooltip": "Budgeted Expense"
+  }
+}

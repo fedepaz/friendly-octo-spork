@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { DataTable, SlideOverForm } from "@/components/data-display/data-table";
 import { useRecurrencesByMonth } from "../hooks/recurrenceHooks";
 import { recurrenceColumns } from "./columns";
@@ -9,10 +10,12 @@ import { RecurrenceDTO, TransactionType } from "@repo/shared";
 import { RecurrenceViewForm } from "./recurrence-view-form";
 import { MonthSelector } from "@/components/data-display/data-table/month-selector";
 import { TransTypeSelector } from "@/components/data-display/data-table/transType-selector";
+import { getCurrentMonth, getCurrentYear } from "@/lib/date-utils";
 
 export function RecurrencesDataTable() {
-  const [month, setMonth] = useState(new Date().getMonth());
-  const year = new Date().getFullYear();
+  const rdT = useTranslations("RecurrencesDashboard");
+  const [month, setMonth] = useState(getCurrentMonth() - 1);
+  const year = getCurrentYear();
   const [transactionType, setTransactionType] =
     useState<TransactionType>("EXPENSE");
   const { data: recurrences = [] } = useRecurrencesByMonth(
@@ -35,8 +38,8 @@ export function RecurrencesDataTable() {
       <DataTable
         columns={recurrenceColumns}
         data={recurrences}
-        title="Cuentas Pendientes"
-        description="Lista de cuentas con pagos recurrentes"
+        title={rdT("title")}
+        description={rdT("description")}
         tableName="recurrences"
         totalCount={recurrences.length}
         toolbarContent={toolbarContent}
@@ -46,7 +49,7 @@ export function RecurrencesDataTable() {
       <SlideOverForm
         open={!!selectedRecurrence}
         onOpenChange={(open) => !open && setSelectedRecurrence(null)}
-        title="Configuración de Recurrencia"
+        title={rdT("slideOverTitle")}
         description={selectedRecurrence?.name}
       >
         {selectedRecurrence && (

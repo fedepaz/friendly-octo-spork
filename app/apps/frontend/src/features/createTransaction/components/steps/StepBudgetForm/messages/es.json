@@ -1,0 +1,8 @@
+{
+  "StepBudgetForm": {
+    "title": "¿Es un gasto presupuestado?",
+    "yes": "Sí",
+    "no": "No",
+    "budgetCategoryLabel": "Categoría de Presupuesto"
+  }
+}

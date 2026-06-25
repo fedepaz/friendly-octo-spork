@@ -1,0 +1,9 @@
+{
+  "AuthHooks": {
+    "defaultPassword": "Contraseña por defecto, se abrirá un formulario para cambiar la contraseña",
+    "loginSuccess": "Inicio de sesión exitoso como {name}",
+    "registerSuccess": "Registro exitoso como {name}",
+    "passwordUpdated": "Contraseña actualizada correctamente",
+    "logoutSuccess": "Sesión cerrada exitosamente"
+  }
+}

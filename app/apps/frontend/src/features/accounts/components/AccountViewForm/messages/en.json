@@ -1,0 +1,10 @@
+{
+  "AccountViewForm": {
+    "operativeType": "Operative Type",
+    "baseCurrency": "Base Currency",
+    "consolidatedBalance": "Consolidated Balance",
+    "terminalHistory": "Terminal History",
+    "lastRecords": "Last 5 records",
+    "noMovements": "No registered movements"
+  }
+}

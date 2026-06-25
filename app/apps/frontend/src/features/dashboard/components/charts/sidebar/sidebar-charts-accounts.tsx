@@ -7,7 +7,7 @@ import { useRecentAccounts } from "@/features/dashboard/hooks/dashboardHooks";
 export function SidebarChartsAccounts() {
   const { data: accounts = [] } = useRecentAccounts();
   return (
-    <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col max-h-[25%] overflow-hidden">
+    <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col flex-1 min-h-0 overflow-hidden">
       <CardHeader className="pb-2 px-5 pt-4 shrink-0">
         <CardTitle className="text-[10px] font-black uppercase tracking-widest text-primary">
           Instrumental de Cuentas
@@ -17,7 +17,7 @@ export function SidebarChartsAccounts() {
         {accounts.map((account) => (
           <div
             key={account.id}
-            className="flex items-center justify-between group cursor-pointer hover:translate-x-1 transition-premium border-l-2 border-transparent hover:border-primary pl-2"
+            className="flex items-center justify-between group hover:translate-x-1 transition-premium border-l-2 border-transparent hover:border-primary pl-2"
           >
             <div className="min-w-0">
               <p className="text-[11px] font-black text-foreground truncate uppercase tracking-tighter">

@@ -1,0 +1,15 @@
+{
+  "AccountCreateForm": {
+    "accountIdLabel": "Account Identification",
+    "namePlaceholder": "e.g.: Banco Galicia",
+    "typeLabel": "Type",
+    "selectPlaceholder": "Select",
+    "typeBank": "Bank",
+    "typeWallet": "Wallet",
+    "typeCash": "Cash",
+    "typeCard": "Card",
+    "typeInvestment": "Investment",
+    "currencyLabel": "Base Currency",
+    "openingBalanceLabel": "Opening Balance"
+  }
+}

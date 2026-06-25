@@ -4,6 +4,7 @@
 import { useAccountById } from "@/features/accounts/hooks/accountsHooks";
 import { CreateTransactionInput, Currency } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { useCategorieById } from "../../hooks/useCategoriesHook";
 import { formatCurrency } from "@/lib/utils";
 
@@ -13,6 +14,7 @@ export function StepReviewComponent() {
   const { data: sourceAccount } = useAccountById(watched.sourceAccountId ?? "");
   const { data: targetAccount } = useAccountById(watched.targetAccountId ?? "");
   const { data: category } = useCategorieById(watched.categoryId ?? "");
+  const rvT = useTranslations("StepReviewForm");
 
   const categoryName = category?.name;
   const sourceAccountName = sourceAccount?.name;
@@ -24,46 +26,46 @@ export function StepReviewComponent() {
   return (
     <div className="flex flex-col gap-3">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        Confirm transaction
+        {rvT("title")}
       </h3>
 
       <div className="border-2 border-border divide-y divide-border">
         {[
-          { label: "Type", value: watched.type },
+          { label: rvT("type"), value: watched.type },
           {
-            label: "Amount",
+            label: rvT("amount"),
             value: watched.amount
               ? formatCurrency(watched.amount, displayCurrency)
               : "—",
           },
           {
-            label: "Date",
+            label: rvT("date"),
             value: watched.date
               ? new Date(watched.date).toLocaleDateString()
               : "—",
           },
-          { label: "Description", value: watched.description ?? "—" },
-          { label: "From", value: sourceAccountName ?? "—" },
-          { label: "To", value: targetAccountName ?? "—" },
+          { label: rvT("description"), value: watched.description ?? "—" },
+          { label: rvT("from"), value: sourceAccountName ?? "—" },
+          { label: rvT("to"), value: targetAccountName ?? "—" },
           {
-            label: "Category",
-            value: categoryName ?? "None",
+            label: rvT("category"),
+            value: categoryName ?? rvT("none"),
           },
           {
-            label: "Budget",
+            label: rvT("budget"),
             value: watched.isBudgetedExpense
-              ? `Yes — ${watched.budgetCategory ?? ""}`
-              : "No",
+              ? rvT("budgetYes", { category: watched.budgetCategory ?? "" })
+              : rvT("budgetNo"),
           },
           {
-            label: "Card Type",
-            value: watched.isCardExpense ? watched.cardType ?? "Yes" : "No",
+            label: rvT("cardType"),
+            value: watched.isCardExpense ? watched.cardType ?? "Yes" : rvT("recurringNo"),
           },
           {
-            label: "Recurring",
+            label: rvT("recurring"),
             value: watched.isRecurrence
-              ? `Yes — ${watched.frequency ?? ""}${watched.totalParts ? ` x${watched.totalParts}` : ""}`
-              : "No",
+              ? rvT("recurringYes", { frequency: watched.frequency ?? "", parts: watched.totalParts ? ` x${watched.totalParts}` : "" })
+              : rvT("recurringNo"),
           },
         ]
           .filter(({ value }) => value !== "—")

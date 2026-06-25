@@ -1,0 +1,7 @@
+{
+  "StepCardAccountForm": {
+    "title": "Seleccionar tarjeta",
+    "cardLabel": "Tarjeta",
+    "noCards": "No hay tarjetas disponibles"
+  }
+}

@@ -12,13 +12,14 @@ export function formatCurrency(
   amount: number | string,
   currency: "ARS" | "USD" | "USDT" = "ARS",
   showSymbol = true,
+  locale = "es-AR",
 ) {
   const numericAmount =
     typeof amount === "string" ? parseFloat(amount) : amount;
 
-  const formatter = new Intl.NumberFormat("es-AR", {
+  const formatter = new Intl.NumberFormat(locale, {
     style: "currency",
-    currency: currency === "USDT" ? "USD" : currency, // USDT uses USD formatting
+    currency: currency === "USDT" ? "USD" : currency,
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });

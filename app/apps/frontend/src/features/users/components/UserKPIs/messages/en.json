@@ -1,0 +1,13 @@
+{
+  "UserKPIs": {
+    "totalOperators": "Total Operators",
+    "registeredIdentities": "REGISTERED IDENTITIES",
+    "vsPreviousPeriod": "VS PREVIOUS PERIOD",
+    "activeIdentities": "Active Identities",
+    "onlineAvailable": "ONLINE / AVAILABLE",
+    "suspendedAccess": "Suspended Access",
+    "requireReview": "REQUIRE REVIEW",
+    "networkLinks": "Network Links",
+    "verifiedEmails": "VERIFIED EMAILS"
+  }
+}

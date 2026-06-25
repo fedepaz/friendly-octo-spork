@@ -10,6 +10,7 @@ import {
   Currency,
 } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { formatCurrency } from "@/lib/utils";
 import { useEffect } from "react";
 
@@ -18,7 +19,7 @@ import {
   filterAccountsByCompatibility,
   getAccountDisabledReason,
 } from "@/lib/account-compability-utils";
-import { InLineError } from "@/features/createTransaction/components/inLineError";
+import { InLineError } from "@/components/ui/in-line-error";
 
 export function StepAccountsComponent() {
   const {
@@ -28,6 +29,7 @@ export function StepAccountsComponent() {
   } = useFormContext<CreateTransactionInput>();
   const watched = watch();
   const { data: accounts = [] } = useAccounts();
+  const sraT = useTranslations("StepRecAccountForm");
 
   const transactionType = watched.type;
   const sourceAccountId = watched.sourceAccountId;
@@ -83,7 +85,7 @@ export function StepAccountsComponent() {
         type="button"
         disabled={isDisabled}
         onClick={() => !isDisabled && onSelect(account.id)}
-        className={`flex justify-between items-center p-3 border-2 text-left transition-all
+        className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 flex justify-between items-center p-3 border-2 text-left transition-all
           ${isSelected && !isDisabled ? "border-foreground bg-muted" : ""}
           ${!isSelected && !isDisabled ? "border-border hover:bg-muted" : ""}
           ${isDisabled ? "border-border opacity-50 cursor-not-allowed" : ""}
@@ -115,21 +117,20 @@ export function StepAccountsComponent() {
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
         {transactionType === "TRANSFER"
-          ? "From where, to where?"
-          : "Which account?"}
+          ? sraT("titleTransfer")
+          : sraT("titleDefault")}
       </h3>
 
       {/* SOURCE ACCOUNT */}
       {canUseAccount(transactionType, "BANK", "source") && ( // Just check if ANY account can be source
         <div>
           <Label>
-            {transactionType === "TRANSFER" ? "From account" : "Account"}
+            {transactionType === "TRANSFER" ? sraT("fromAccount") : sraT("account")}
           </Label>
 
           {sourceAccounts.length === 0 ? (
             <p className="text-xs font-mono text-muted-foreground p-3 border-2 border-border">
-              No compatible accounts available for{" "}
-              {transactionType.toLowerCase()} source
+              {sraT("noCompatibleSource", { type: transactionType.toLowerCase() })}
             </p>
           ) : (
             <div className="flex flex-col gap-2">
@@ -149,13 +150,12 @@ export function StepAccountsComponent() {
       {canUseAccount(transactionType, "BANK", "target") && (
         <div>
           <Label>
-            {transactionType === "TRANSFER" ? "To account" : "Account"}
+            {transactionType === "TRANSFER" ? sraT("toAccount") : sraT("account")}
           </Label>
 
           {targetAccounts.length === 0 ? (
             <p className="text-xs font-mono text-muted-foreground p-3 border-2 border-border">
-              No compatible accounts available for{" "}
-              {transactionType.toLowerCase()} target
+              {sraT("noCompatibleTarget", { type: transactionType.toLowerCase() })}
             </p>
           ) : (
             <div className="flex flex-col gap-2">

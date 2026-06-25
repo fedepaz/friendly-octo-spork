@@ -28,7 +28,7 @@ export function FeatureCard({
   className,
 }: FeatureCardProps) {
   return (
-    <Link href={href} className="block group">
+    <Link href={href} className="block group cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2">
       <Card
         className={cn(
           "bg-card/20 border-border/40 shadow-premium rounded-none h-full transition-premium hover:bg-card/40 hover:border-primary/40 relative overflow-hidden",

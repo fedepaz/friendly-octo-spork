@@ -1,0 +1,19 @@
+{
+  "TransactionsViewForm": {
+    "operationDate": "Fecha de Operación",
+    "type": "Tipo",
+    "category": "Categoría",
+    "noCategory": "SIN CATEGORÍA",
+    "amount": "Monto",
+    "fundFlow": "Flujo de Fondos",
+    "origin": "ORIGEN:",
+    "destination": "DESTINO:",
+    "na": "N/A",
+    "cardExpense": "GASTO CON TARJETA",
+    "confirmed": "CONFIRMADO",
+    "no": "NO",
+    "recurrence": "RECURRENCIA",
+    "budgeted": "PRESUPUESTADO",
+    "yes": "SÍ"
+  }
+}

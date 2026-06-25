@@ -3,46 +3,8 @@
 
 import { CreateTransactionInput, TransactionType } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
-import { InLineError } from "../inLineError";
-
-const TRANSACTION_TYPES = [
-  {
-    value: "EXPENSE",
-    label: "Expense",
-    hint: "Money going out",
-    color: "border-destructive text-destructive",
-  },
-  {
-    value: "INCOME",
-    label: "Income",
-    hint: "Money coming in",
-    color: "border-secondary   text-secondary",
-  },
-  {
-    value: "TRANSFER",
-    label: "Transfer",
-    hint: "Move between accounts",
-    color: "border-accent      text-accent",
-  },
-  {
-    value: "INVESTMENT",
-    label: "Investment",
-    hint: "Put money to work",
-    color: "border-primary     text-primary",
-  },
-  {
-    value: "RETURN",
-    label: "Return",
-    hint: "Investment coming back",
-    color: "border-secondary/70 text-secondary/70",
-  },
-  {
-    value: "PAYMENT",
-    label: "Payment",
-    hint: "Card / loan payment",
-    color: "border-primary/70   text-primary/70",
-  },
-] as const;
+import { useTranslations } from "next-intl";
+import { InLineError } from "@/components/ui/in-line-error";
 
 export function StepTypeComponent() {
   const {
@@ -51,11 +13,51 @@ export function StepTypeComponent() {
     formState: { errors },
   } = useFormContext<CreateTransactionInput>();
   const watchedType = watch("type");
+  const stT = useTranslations("StepTypeForm");
+
+  const TRANSACTION_TYPES = [
+    {
+      value: "EXPENSE",
+      label: stT("expense"),
+      hint: stT("expenseHint"),
+      color: "border-destructive text-destructive",
+    },
+    {
+      value: "INCOME",
+      label: stT("income"),
+      hint: stT("incomeHint"),
+      color: "border-secondary   text-secondary",
+    },
+    {
+      value: "TRANSFER",
+      label: stT("transfer"),
+      hint: stT("transferHint"),
+      color: "border-accent      text-accent",
+    },
+    {
+      value: "INVESTMENT",
+      label: stT("investment"),
+      hint: stT("investmentHint"),
+      color: "border-primary     text-primary",
+    },
+    {
+      value: "RETURN",
+      label: stT("return"),
+      hint: stT("returnHint"),
+      color: "border-secondary/70 text-secondary/70",
+    },
+    {
+      value: "PAYMENT",
+      label: stT("payment"),
+      hint: stT("paymentHint"),
+      color: "border-primary/70   text-primary/70",
+    },
+  ] as const;
 
   return (
     <div className="flex flex-col gap-3">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        What type of transaction?
+        {stT("title")}
       </h3>
       <div className="grid grid-cols-2 gap-2">
         {TRANSACTION_TYPES.map(({ value, label, hint, color }) => (
@@ -68,7 +70,7 @@ export function StepTypeComponent() {
               setValue("sourceAccountId", null);
               setValue("targetAccountId", null);
             }}
-            className={`flex flex-col gap-1 p-4 border-2 text-left transition-all hover:bg-muted
+            className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 flex flex-col gap-1 p-4 border-2 text-left transition-all hover:bg-muted
               ${watchedType === value ? `${color} bg-muted` : "border-border text-muted-foreground"}
             `}
           >

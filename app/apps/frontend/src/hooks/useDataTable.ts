@@ -1,11 +1,10 @@
-//src/hooks/useDataTable.ts
-
 import { toast } from "sonner";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface UseDataTableActionsOptions<T> {
-  entityName: string; // For translations: "invoice", "plant", "purchaseOrder"
+  entityName: string;
   onDelete?: (id: string) => Promise<void>;
   onExport?: (data: T[]) => void;
 }
@@ -15,6 +14,7 @@ export function useDataTableActions<T extends { id: string }>({
   onDelete,
   onExport,
 }: UseDataTableActionsOptions<T>) {
+  const dtaT = useTranslations("DataTableActions");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedEntity, setSelectedEntity] = useState<T | null>(null);
@@ -33,16 +33,16 @@ export function useDataTableActions<T extends { id: string }>({
     if (!onDelete) return;
 
     const confirmed = window.confirm(
-      `¿Estás seguro de que quieres eliminar este ${entityName} (${entity.id})?`,
+      dtaT("confirmDelete", { entityName, id: entity.id }),
     );
 
     if (!confirmed) return;
 
     try {
       await onDelete(entity.id);
-      toast.success(`${entityName} eliminado(a) con éxito.`);
+      toast.success(dtaT("deleteSuccess", { entityName }));
     } catch (error) {
-      toast.error(`Error al eliminar ${entityName}.`);
+      toast.error(dtaT("deleteError", { entityName }));
       console.error(`Failed to delete ${entityName}:`, error);
     }
   };
@@ -51,7 +51,6 @@ export function useDataTableActions<T extends { id: string }>({
     if (onExport) {
       onExport(data);
     } else {
-      // Default CSV export
       const headers = Object.keys(data[0] || {}).join(",");
       const rows = data.map((item) => Object.values(item).join(",")).join("\n");
       const csvContent = `${headers}\n${rows}`;
@@ -64,7 +63,7 @@ export function useDataTableActions<T extends { id: string }>({
       a.click();
       window.URL.revokeObjectURL(url);
 
-      toast.success(`${entityName} exportado(a) con éxito.`);
+      toast.success(dtaT("exportSuccess", { entityName }));
     }
   };
 
@@ -75,16 +74,13 @@ export function useDataTableActions<T extends { id: string }>({
   };
 
   return {
-    // State
     isCreateModalOpen,
     isEditModalOpen,
     selectedEntity,
-    // Actions
     handleAdd,
     handleEdit,
     handleDelete,
     handleExport,
-    // Modal controls
     closeCreateModal,
     closeEditModal,
   };

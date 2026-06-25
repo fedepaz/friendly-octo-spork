@@ -1,0 +1,17 @@
+{
+  "SidebarChartsRecTrans": {
+    "title": "Pendientes",
+    "allCaughtUp": "✓ Todo al día ({type})",
+    "description": "Concepto",
+    "installment": "Cuota",
+    "amount": "Monto",
+    "card": "TARJETA",
+    "payButtonTitle": "Procesar pago",
+    "filter_INCOME": "INC",
+    "filter_EXPENSE": "EXP",
+    "filter_PAYMENT": "PAY",
+    "filter_RETURN": "RET",
+    "filter_TRANSFER": "TRANS",
+    "filter_INVESTMENT": "INV"
+  }
+}

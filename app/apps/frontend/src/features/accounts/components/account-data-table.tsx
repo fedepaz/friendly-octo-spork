@@ -16,8 +16,10 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 
 export function AccountDataTable() {
+  const adT = useTranslations("AccountDashboard");
   const { data: accounts = [] } = useAccounts();
   const [selectedAccount, setSelectedAccount] = useState<AccountDTO | null>(
     null,
@@ -65,8 +67,8 @@ export function AccountDataTable() {
       <DataTable
         columns={accountColumns}
         data={accounts}
-        title="Terminal de Cuentas"
-        description="Gestión de activos y pasivos del sistema"
+        title={adT("title")}
+        description={adT("description")}
         tableName="accounts"
         totalCount={accounts.length}
         onView={handleView}
@@ -75,7 +77,7 @@ export function AccountDataTable() {
             variant="outline"
             className="h-9 w-9 p-0 bg-primary/5 border-primary/20 hover:border-primary/60 hover:bg-primary/10 rounded-none transition-premium group"
             onClick={handleViewCreate}
-            aria-label="Registrar nueva unidad de cuenta"
+            aria-label={adT("createLabel")}
           >
             <Plus className="h-4 w-4 group-hover:scale-110 transition-transform" />
           </Button>
@@ -89,16 +91,16 @@ export function AccountDataTable() {
           onOpenChange={setSlideOverOpen}
           title={
             selectedAccount
-              ? `Estado de cuenta - ${selectedAccount.name}`
-              : "Crear nueva cuenta"
+              ? adT("viewTitle", { name: selectedAccount.name })
+              : adT("createTitle")
           }
           description={
             selectedAccount
-              ? `Análisis de flujo en ${selectedAccount.currency} // ${selectedAccount.type}`
-              : "Inicializar nueva unidad de activos"
+              ? adT("viewDesc", { currency: selectedAccount.currency, type: selectedAccount.type })
+              : adT("createDesc")
           }
           onCancel={handleCancel}
-          saveLabel="Crear nueva cuenta"
+          saveLabel={adT("saveLabel")}
           mode={selectedAccount ? "view" : "create"}
           form={formCreateAccount}
         >

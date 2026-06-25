@@ -12,11 +12,12 @@ export const transactionProfileQueryKeys = {
     [...transactionProfileQueryKeys.all(), "byMonth", month, year] as const,
 };
 
-export const useTransactions = () => {
-  return useSuspenseQuery<TransactionDTO[]>({
-    queryKey: transactionProfileQueryKeys.all(),
-    queryFn: transactionService.fetchAll,
-    retry: 1, // Retry once to account for transient network issues
+export const useTransactions = (page = 1, limit = 50) => {
+  return useSuspenseQuery({
+    queryKey: [...transactionProfileQueryKeys.all(), { page, limit }],
+    queryFn: () => transactionService.fetchAll(page, limit),
+    select: (response) => response.data,
+    retry: 1,
   });
 };
 

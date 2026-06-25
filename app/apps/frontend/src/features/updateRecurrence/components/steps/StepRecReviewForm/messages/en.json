@@ -1,0 +1,20 @@
+{
+  "StepRecReviewForm": {
+    "title": "Confirm transaction",
+    "type": "Type",
+    "amount": "Amount",
+    "date": "Date",
+    "description": "Description",
+    "from": "From",
+    "to": "To",
+    "category": "Category",
+    "none": "None",
+    "budget": "Budget",
+    "budgetYes": "Yes — {category}",
+    "budgetNo": "No",
+    "cardType": "Card Type",
+    "recurring": "Recurring",
+    "recurringYes": "Yes — {frequency}{parts}",
+    "recurringNo": "No"
+  }
+}

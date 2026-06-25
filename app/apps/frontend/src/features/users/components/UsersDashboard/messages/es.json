@@ -1,0 +1,8 @@
+{
+  "UsersDashboard": {
+    "title": "Directorio de Operadores",
+    "description": "Gestión de identidades y privilegios del sistema",
+    "slideOverTitle": "Terminal de Seguridad",
+    "identityPrefix": "IDENTIDAD: "
+  }
+}

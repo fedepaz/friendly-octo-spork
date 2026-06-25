@@ -2,6 +2,21 @@
 
 import { z } from "zod";
 
+// ─── Shared password validation rules ──────────────────────────────────
+const passwordRules = z
+  .string()
+  .min(6, { message: "La contraseña debe tener al menos 6 caracteres" })
+  .max(20, { message: "La contraseña debe tener máximo 20 caracteres" })
+  .regex(/[A-Z]/, {
+    message: "La contraseña debe contener al menos una letra mayúscula",
+  })
+  .regex(/[a-z]/, {
+    message: "La contraseña debe contener al menos una letra minúscula",
+  })
+  .regex(/[0-9]/, {
+    message: "La contraseña debe contener al menos un número",
+  });
+
 export const LoginAuthSchema = z.object({
   name: z.string().min(1, { message: "Nombre es obligatorio" }),
   password: z.string().min(1, { message: "Contraseña es obligatoria" }),
@@ -72,31 +87,15 @@ export const RegisterAuthSchema = z
       .regex(/[0-9]/, {
         message: "El nombre debe contener al menos un número",
       })
-      .regex(/[^a-zA-Z0-9]/, {
-        message: "El nombre no debe contener espacios",
+      .regex(/^[a-zA-Z0-9]+$/, {
+        message: "El nombre no debe contener caracteres especiales",
       }),
 
     email: z
       .string()
       .email({ message: "El email es inválido" })
       .min(1, { message: "El email es obligatorio y debe ser único" }),
-    password: z
-      .string()
-      .min(6, {
-        message: "La contraseña debe tener al menos 6 caracteres",
-      })
-      .max(20, {
-        message: "La contraseña debe tener máximo 20 caracteres",
-      })
-      .regex(/[A-Z]/, {
-        message: "La contraseña debe contener al menos una letra mayúscula",
-      })
-      .regex(/[a-z]/, {
-        message: "La contraseña debe contener al menos una letra minúscula",
-      })
-      .regex(/[0-9]/, {
-        message: "La contraseña debe contener al menos un número",
-      }),
+    password: passwordRules,
   })
   .refine((data) => data.name !== data.password, {
     message: "La contraseña no puede ser la misma que el nombre",
@@ -117,25 +116,7 @@ export const ChangePasswordSchema = z
     currentPassword: z
       .string()
       .min(1, { message: "Contraseña es obligatoria" }),
-    newPassword: z
-      .string()
-      .min(6, {
-        message: "La nueva contraseña debe tener al menos 6 caracteres",
-      })
-      .max(20, {
-        message: "La nueva contraseña debe tener máximo 20 caracteres",
-      })
-      .regex(/[A-Z]/, {
-        message:
-          "La nueva contraseña debe contener al menos una letra mayúscula",
-      })
-      .regex(/[a-z]/, {
-        message:
-          "La nueva contraseña debe contener al menos una letra minúscula",
-      })
-      .regex(/[0-9]/, {
-        message: "La nueva contraseña debe contener al menos un número",
-      }),
+    newPassword: passwordRules,
   })
   .refine((data) => data.newPassword !== data.currentPassword, {
     message: "La nueva contraseña no puede ser la misma que la actual",

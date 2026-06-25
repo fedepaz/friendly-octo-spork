@@ -1,0 +1,33 @@
+{
+  "CardsViewForm": {
+    "sourceRecurrence": "PROJECTED INSTALLMENT",
+    "sourceOneTimer": "POSTED CONSUMPTION",
+    "sourcePayment": "RECORDED PAYMENT",
+    "singlePayment": "SINGLE PAYMENT",
+    "installmentOf": "INSTALLMENT {current} OF {total}",
+    "statusCompleted": "COMPLETED",
+    "statusPending": "PENDING",
+    "statusPaid": "PAID",
+    "remaining": "{remaining} REMAINING",
+    "completingPlan": "COMPLETING PLAN",
+    "monthlyRecurrence": "MONTHLY RECURRENCE",
+    "pendingLabel": "PENDING",
+    "idPrefix": "ID:",
+    "financialImpact": "Financial Impact",
+    "currency": "ARS",
+    "expenseStructure": "Expense Structure",
+    "installmentProgress": "Installment Progress",
+    "statusLabel": "Status",
+    "progressStart": "Start",
+    "progressComplete": "{progress}% Complete",
+    "progressEnd": "End",
+    "chargeType": "Charge Type",
+    "singleDirectPayment": "SINGLE / DIRECT PAYMENT",
+    "origin": "Origin",
+    "notAssigned": "NOT ASSIGNED",
+    "destination": "Destination",
+    "registrationDate": "Registration Date",
+    "category": "Category",
+    "systemMetadata": "System Metadata"
+  }
+}

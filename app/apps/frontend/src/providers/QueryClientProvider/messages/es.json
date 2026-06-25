@@ -1,0 +1,6 @@
+{
+  "QueryClientProvider": {
+    "apiRequest": "Petición API",
+    "apiMutation": "Mutación API"
+  }
+}

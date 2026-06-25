@@ -1,0 +1,8 @@
+{
+  "AnalyticChartsMain": {
+    "title": "Evolución de Patrimonio",
+    "description": "Evolución histórica del patrimonio neto mensual",
+    "actualLabel": "Real",
+    "real": "Real"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "FormContainer": {
+    "fillRequiredFields": "Por favor complete todos los campos obligatorios",
+    "defaultTitle": "Terminal de Transacciones",
+    "confirmLabel": "Grabar ✓"
+  }
+}

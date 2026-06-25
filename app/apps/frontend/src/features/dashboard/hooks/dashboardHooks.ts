@@ -16,8 +16,7 @@ import {
 
 export const dashboardQueryKeys = {
   all: () => ["dashboard"] as const,
-  budgetSummary: (month: number, year: number) =>
-    ["dashboard", "budget", month, year] as const,
+  budgetSummary: () => ["dashboard", "budget"] as const,
   recentAccounts: () => ["dashboard", "recentAccounts"] as const,
   incomeExpense: (months: number) =>
     ["dashboard", "incomeExpense", months] as const,
@@ -26,15 +25,8 @@ export const dashboardQueryKeys = {
 
 export const useBudgetSummary = () => {
   return useSuspenseQuery<BudgetDTO[]>({
-    queryKey: dashboardQueryKeys.budgetSummary(
-      new Date().getMonth() + 1,
-      new Date().getFullYear(),
-    ),
-    queryFn: () =>
-      budgetDashboardService.fetchBudgetSummary(
-        new Date().getMonth() + 1,
-        new Date().getFullYear(),
-      ),
+    queryKey: dashboardQueryKeys.budgetSummary(),
+    queryFn: () => budgetDashboardService.fetchBudgetSummary(),
   });
 };
 

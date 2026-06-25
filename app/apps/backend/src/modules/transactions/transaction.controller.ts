@@ -3,16 +3,20 @@
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Get,
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Post,
+  Query,
 } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 import {
   CreateTransactionInput,
   createTransactionSchema,
+  PaginatedResponse,
   TransactionDTO,
 } from '@repo/shared';
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
@@ -26,8 +30,10 @@ export class TransactionController {
   @HttpCode(HttpStatus.OK)
   async getTransactions(
     @CurrentUser() user: AuthUser,
-  ): Promise<TransactionDTO[]> {
-    return this.transactionService.getTransactions(user.id);
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(50), ParseIntPipe) limit: number,
+  ): Promise<PaginatedResponse<TransactionDTO>> {
+    return this.transactionService.getTransactions(user.id, page, limit);
   }
 
   @Get(':id')
@@ -43,8 +49,8 @@ export class TransactionController {
   @HttpCode(HttpStatus.OK)
   async getTransactionsByMonth(
     @CurrentUser() user: AuthUser,
-    @Param('month') month: number,
-    @Param('year') year: number,
+    @Param('month', ParseIntPipe) month: number,
+    @Param('year', ParseIntPipe) year: number,
   ): Promise<TransactionDTO[]> {
     return this.transactionService.getTransactionsByMonth(user.id, month, year);
   }

@@ -1,4 +1,3 @@
-// src/components/layout/auth-header.tsx
 "use client";
 
 import { usePathname } from "next/navigation";
@@ -12,17 +11,18 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import { useTranslations } from "next-intl";
 
 export function AuthHeader() {
+  const t = useTranslations("AuthHeader");
   const pathname = usePathname();
   const isLoginPage = pathname === ROUTES.LOGIN;
   const targetRoute = isLoginPage ? ROUTES.REGISTER : ROUTES.LOGIN;
-  const targetLabel = isLoginPage ? "Registrarse" : "Iniciar Sesión";
+  const targetLabel = isLoginPage ? t("registerLabel") : t("loginLabel");
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/60 backdrop-blur-md supports-backdrop-filter:bg-background/40 shrink-0">
       <div className="container mx-auto px-2">
         <div className="flex h-12 items-center justify-between">
-          {/* Navigation Link */}
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -39,7 +39,7 @@ export function AuthHeader() {
                 side="bottom"
                 className="border border-border shadow-md"
               >
-                <p>{isLoginPage ? "Crear cuenta" : "Tengo una cuenta"}</p>
+                <p>{isLoginPage ? t("registerTooltip") : t("loginTooltip")}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

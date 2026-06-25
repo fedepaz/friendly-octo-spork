@@ -4,7 +4,7 @@
 import { useAccountById } from "@/features/accounts/hooks/accountsHooks";
 import { CreateTransactionInput, Currency } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
-
+import { useTranslations } from "next-intl";
 import { formatCurrency } from "@/lib/utils";
 import { useCategorieById } from "@/features/createTransaction/hooks/useCategoriesHook";
 
@@ -14,6 +14,7 @@ export function StepReviewComponent() {
   const { data: sourceAccount } = useAccountById(watched.sourceAccountId ?? "");
   const { data: targetAccount } = useAccountById(watched.targetAccountId ?? "");
   const { data: category } = useCategorieById(watched.categoryId ?? "");
+  const srrT = useTranslations("StepRecReviewForm");
 
   const categoryName = category?.name;
   const sourceAccountName = sourceAccount?.name;
@@ -25,46 +26,46 @@ export function StepReviewComponent() {
   return (
     <div className="flex flex-col gap-3">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        Confirm transaction
+        {srrT("title")}
       </h3>
 
       <div className="border-2 border-border divide-y divide-border">
         {[
-          { label: "Type", value: watched.type },
+          { label: srrT("type"), value: watched.type },
           {
-            label: "Amount",
+            label: srrT("amount"),
             value: watched.amount
               ? formatCurrency(watched.amount, displayCurrency)
               : "—",
           },
           {
-            label: "Date",
+            label: srrT("date"),
             value: watched.date
               ? new Date(watched.date).toLocaleDateString()
               : "—",
           },
-          { label: "Description", value: watched.description ?? "—" },
-          { label: "From", value: sourceAccountName ?? "—" },
-          { label: "To", value: targetAccountName ?? "—" },
+          { label: srrT("description"), value: watched.description ?? "—" },
+          { label: srrT("from"), value: sourceAccountName ?? "—" },
+          { label: srrT("to"), value: targetAccountName ?? "—" },
           {
-            label: "Category",
-            value: categoryName ?? "None",
+            label: srrT("category"),
+            value: categoryName ?? srrT("none"),
           },
           {
-            label: "Budget",
+            label: srrT("budget"),
             value: watched.isBudgetedExpense
-              ? `Yes — ${watched.budgetCategory ?? ""}`
-              : "No",
+              ? srrT("budgetYes", { category: watched.budgetCategory ?? "" })
+              : srrT("budgetNo"),
           },
           {
-            label: "Card Type",
-            value: watched.isCardExpense ? (watched.cardType ?? "Yes") : "No",
+            label: srrT("cardType"),
+            value: watched.isCardExpense ? (watched.cardType ?? "Yes") : srrT("recurringNo"),
           },
           {
-            label: "Recurring",
+            label: srrT("recurring"),
             value: watched.isRecurrence
-              ? `Yes — ${watched.frequency ?? ""}${watched.totalParts ? ` x${watched.totalParts}` : ""}`
-              : "No",
+              ? srrT("recurringYes", { frequency: watched.frequency ?? "", parts: watched.totalParts ? ` x${watched.totalParts}` : "" })
+              : srrT("recurringNo"),
           },
         ]
           .filter(({ value }) => value !== "—")

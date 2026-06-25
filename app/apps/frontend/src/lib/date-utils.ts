@@ -29,12 +29,13 @@ export const getTotalWeeks = (year: number) => {
 };
 
 /**
- * Format a date string in Spanish (Argentina) locale.
+ * Format a date string in the given locale.
  * @param date The date to format.
+ * @param locale The locale string (default "es-AR").
  * @returns Formatted date string.
  */
-export const formatSpanishDate = (date: Date) => {
-  return date.toLocaleDateString("es-AR", {
+export const formatSpanishDate = (date: Date, locale = "es-AR") => {
+  return date.toLocaleDateString(locale, {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -76,4 +77,31 @@ export function getLocalDateStr(date: Date): string {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
+}
+
+// ─── Current date helpers (1-indexed month) ────────────────────────────
+
+/**
+ * Get the current month (1-indexed, not 0-indexed like Date.getMonth()).
+ * Always call this once and reuse — don't create multiple `new Date()`.
+ */
+export function getCurrentMonth(): number {
+  return new Date().getMonth() + 1;
+}
+
+/**
+ * Get the current year as a number.
+ */
+export function getCurrentYear(): number {
+  return new Date().getFullYear();
+}
+
+/**
+ * Get current month and year in a single call.
+ * Use this instead of multiple `new Date().getMonth()` / `new Date().getFullYear()`.
+ * @returns `{ month: 1-12, year: number }`
+ */
+export function getCurrentMonthYear(): { month: number; year: number } {
+  const now = new Date();
+  return { month: now.getMonth() + 1, year: now.getFullYear() };
 }

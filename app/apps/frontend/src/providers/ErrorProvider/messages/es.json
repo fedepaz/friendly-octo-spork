@@ -1,0 +1,6 @@
+{
+  "ErrorProvider": {
+    "actionReverted": "Acción Revertida",
+    "actionRevertedDesc": "La acción que estabas realizando fue revertida."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "UsersViewForm": {
+    "unknownIdentity": "UNKNOWN IDENTITY",
+    "email": "Email",
+    "systemStatus": "System Status",
+    "authorizedAccess": "AUTHORIZED ACCESS",
+    "restrictedAccess": "RESTRICTED ACCESS",
+    "registrationDate": "Registration Date"
+  }
+}

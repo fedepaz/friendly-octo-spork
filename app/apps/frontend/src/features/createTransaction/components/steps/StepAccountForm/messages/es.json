@@ -1,0 +1,11 @@
+{
+  "StepAccountForm": {
+    "titleTransfer": "¿De dónde a dónde?",
+    "titleDefault": "¿Qué cuenta?",
+    "fromAccount": "Cuenta origen",
+    "toAccount": "Cuenta destino",
+    "account": "Cuenta",
+    "noCompatibleSource": "No hay cuentas compatibles disponibles para origen de {type}",
+    "noCompatibleTarget": "No hay cuentas compatibles disponibles para destino de {type}"
+  }
+}

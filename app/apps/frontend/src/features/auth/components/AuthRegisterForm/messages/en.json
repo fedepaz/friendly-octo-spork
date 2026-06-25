@@ -1,0 +1,10 @@
+{
+  "AuthRegisterForm": {
+    "nameLabel": "Name",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "submitText": "Sign Up",
+    "showPassword": "Show",
+    "hidePassword": "Hide"
+  }
+}

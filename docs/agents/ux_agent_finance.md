@@ -63,10 +63,11 @@ To provide the best possible perceived performance, we implement a two-tiered lo
 - **Typography**: 
   - **Sans**: `Oxanium` (Primary) - For a tech-futuristic, high-readability look.
   - **Mono**: `Source Code Pro` - For numerical data and financial statements.
-- **Color Palette**: Strict adherence to the semantic OKLCH token system. **Standard**: Use `emerald-600` for positive numbers and `rose-400` for negative/destructive numbers in financial contexts to ensure professional contrast and visual balance.
+- **Color Palette**: Strict adherence to the semantic OKLCH token system. **Standard**: Use `text-secondary` for positive numbers/income, `text-destructive` for negative/expenses/destructive actions, and `text-warning` for caution states (installments, pending items). Refined values: destructive dark `oklch(0.6 0.18 25)` (muted crimson), secondary dark `oklch(0.6 0.12 140)` (soft professional green), primary light `oklch(0.4 0.2 27.5)` (darker for WCAG AA).
 - **Shadow System**: Utilize the 7-level shadow system (`--shadow-2xs` to `--shadow-2xl`) to create depth without rounding.
 
 - **Interaction Patterns**
+    - **Keyboard Navigation**: Every wizard modal auto-focuses its close button on open. Escape key closes modals. All interactive elements have `focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2` for visible keyboard focus.
     - **Responsive Layouts**: Zero-scroll priority across all breakpoints.
     - **Structural Error Feedback**: For critical operation errors (e.g., server failures), use a high-visibility, industrial-styled error block at the bottom of forms with the `animate-premium-in` animation.
     - **Danger Zone**: For destructive or final actions (like stopping a recurrence), use a specialized container with a `bg-destructive/5` background, `destructive` borders, and a high-contrast button to signal risk.
@@ -75,9 +76,9 @@ To provide the best possible perceived performance, we implement a two-tiered lo
     - **Progress Signaling**: Always include a `Stepper` or visual indicator of the current progress.
     - **Review Step**: Every wizard must end with a read-only "Review" step before submission.
     - **Submission Guard**: Use `activeStep` checks to prevent accidental submissions before the final step.
-- **Component Consistency**: Use standardized React component patterns and Shadcn/UI primitives.
+- **Component Consistency**: Use standardized React component patterns and Shadcn/UI primitives. All interactive elements must include `cursor-pointer` in their className for explicit pointer indication.
 - **Tactical Icon Box**: Wrap navigation and action icons in square, bordered boxes (`h-8 w-8` min) with subtle inner shadows to provide consistent visual anchors and maintain industrial alignment.
-- **Feedback Systems**: Instant Optimistic UI updates and clear success/error toasts.
+- **Feedback Systems**: Instant Optimistic UI updates and clear success/error toasts. `prefers-reduced-motion` disables all `animate-premium-*` transitions for accessibility.
 
 ### 3. Smart Spreadsheet Experience
 - **Tabular Data**: Focus on density and clarity for transaction lists and account summaries.

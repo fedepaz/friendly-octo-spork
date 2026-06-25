@@ -4,7 +4,8 @@
 import { Label } from "@/components/ui/label";
 import { CardType, CreateTransactionInput } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
-import { InLineError } from "../inLineError";
+import { useTranslations } from "next-intl";
+import { InLineError } from "@/components/ui/in-line-error";
 
 const FREQUENCIES = ["MONTHLY", "WEEKLY", "YEARLY", "INSTALLMENT"] as const;
 
@@ -16,6 +17,7 @@ export function StepRecurrenceComponent() {
     formState: { errors },
   } = useFormContext<CreateTransactionInput>();
   const watched = watch();
+  const srT = useTranslations("StepRecurrenceForm");
 
   // Toggle handler for isRecurrence
   const toggleRecurrence = (value: boolean) => {
@@ -33,14 +35,14 @@ export function StepRecurrenceComponent() {
     <div className="flex flex-col gap-4">
       {watched.isCardExpense && (
         <div className="border-t border-border pt-3 mt-2">
-          <Label className="text-sm font-mono mb-2 block">Card Type</Label>
+          <Label className="text-sm font-mono mb-2 block">{srT("cardTypeLabel")}</Label>
           <div className="grid grid-cols-2 gap-2">
             {["VISA", "MASTERCARD", "AMEX", "MAESTRO"].map((card) => (
               <button
                 key={card}
                 type="button"
                 onClick={() => setValue("cardType", card as CardType)}
-                className={`p-2 border-2 font-mono text-xs uppercase transition-all
+                className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-2 border-2 font-mono text-xs uppercase transition-all
                   ${
                     watched.cardType === card
                       ? "border-foreground bg-muted font-bold"
@@ -55,33 +57,33 @@ export function StepRecurrenceComponent() {
         </div>
       )}
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        Does this repeat?
+        {srT("title")}
       </h3>
 
       <div className="grid grid-cols-2 gap-3">
         <button
           type="button"
           onClick={() => toggleRecurrence(true)}
-          className={`p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
             ${
               watched.isRecurrence
                 ? "border-foreground bg-muted"
                 : "border-border text-muted-foreground hover:bg-muted"
             }`}
         >
-          Yes
+          {srT("yes")}
         </button>
         <button
           type="button"
           onClick={() => toggleRecurrence(false)}
-          className={`p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
             ${
               !watched.isRecurrence
                 ? "border-foreground bg-muted"
                 : "border-border text-muted-foreground hover:bg-muted"
             }`}
         >
-          No
+          {srT("no")}
         </button>
       </div>
 
@@ -89,11 +91,11 @@ export function StepRecurrenceComponent() {
         <div className="flex flex-col gap-3 border-2 border-border p-3">
           {/* Recurrence Name (required) */}
           <div>
-            <Label>Recurrence Name</Label>
+            <Label>{srT("recurrenceNameLabel")}</Label>
             <input
               {...register("recurrenceName")}
               type="text"
-              placeholder="e.g. Monthly Rent, Netflix Subscription..."
+              placeholder={srT("recurrenceNamePlaceholder")}
               className="w-full bg-background border-2 border-border px-4 py-3 text-sm font-mono focus:outline-none focus:border-foreground"
             />
             {errors.recurrenceName && (
@@ -103,7 +105,7 @@ export function StepRecurrenceComponent() {
 
           {/* Frequency Selection */}
           <div>
-            <Label>Frequency</Label>
+            <Label>{srT("frequencyLabel")}</Label>
             <div className="grid grid-cols-2 gap-2">
               {FREQUENCIES.map((f) => (
                 <button
@@ -112,7 +114,7 @@ export function StepRecurrenceComponent() {
                   onClick={() => {
                     setValue("frequency", f);
                   }}
-                  className={`p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
                     ${
                       watched.frequency === f
                         ? "border-foreground bg-muted font-bold"
@@ -131,12 +133,12 @@ export function StepRecurrenceComponent() {
           {/* Total Parts (only for INSTALLMENT) */}
           {watched.frequency && watched.frequency === "INSTALLMENT" && (
             <div>
-              <Label>Total Installments</Label>
+              <Label>{srT("totalInstallmentsLabel")}</Label>
               <input
                 {...register("totalParts")}
                 type="number"
                 max="99"
-                placeholder="e.g. 9"
+                placeholder={srT("totalInstallmentsPlaceholder")}
                 className="w-full bg-background border-2 border-border px-4 py-3 text-sm font-mono focus:outline-none focus:border-foreground"
               />
               {errors.totalParts && (
@@ -148,37 +150,37 @@ export function StepRecurrenceComponent() {
           {/* First Payment Timing (only if totalParts is set) */}
           {watched.isRecurrence ? (
             <div className="border-t border-border pt-3 mt-2">
-              <Label>First Payment</Label>
+              <Label>{srT("firstPaymentLabel")}</Label>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
                   onClick={() => setValue("isFirstPayment", true)}
-                  className={`p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
                     ${
                       watched.isFirstPayment
                         ? "border-foreground bg-muted font-bold"
                         : "border-border text-muted-foreground hover:bg-muted"
                     }`}
                 >
-                  Now
+                  {srT("now")}
                 </button>
                 <button
                   type="button"
                   onClick={() => setValue("isFirstPayment", false)}
-                  className={`p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
                     ${
                       !watched.isFirstPayment
                         ? "border-foreground bg-muted font-bold"
                         : "border-border text-muted-foreground hover:bg-muted"
                     }`}
                 >
-                  Next Month
+                  {srT("nextMonth")}
                 </button>
               </div>
               <p className="text-xs font-mono text-muted-foreground mt-2">
                 {watched.isFirstPayment
-                  ? "First installment charged today"
-                  : `First installment charged on next month`}
+                  ? srT("chargedToday")
+                  : srT("chargedNextMonth")}
               </p>
             </div>
           ) : null}

@@ -1,9 +1,11 @@
 // src/features/createTransaction/providers/SmartFormProvider.tsx
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTransactionInput, createTransactionSchema } from "@repo/shared";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { FormContainer } from "../components/FormContainer";
 import { useCreateTransaction } from "../hooks/createMutationHooks";
 import { mapServerErrorsToForm } from "@/lib/utils/form-error-mapper";
@@ -14,6 +16,7 @@ import { toast } from "sonner";
 export function SmartFormProvider({ onClose }: { onClose: () => void }) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const sfpT = useTranslations("SmartFormProvider");
 
   const { mutateAsync: createTransaction, isPending: isSubmitting } =
     useCreateTransaction();
@@ -44,6 +47,10 @@ export function SmartFormProvider({ onClose }: { onClose: () => void }) {
 
     try {
       setErrorMessage(null);
+      console.log(
+        "🚀 ~ file: SmartFormProvider.tsx ~ line 50 ~ onSubmit ~ data",
+        data,
+      );
       await createTransaction(data);
       // Toast is handled in the mutation hook (useCreateTransaction)
       setActiveStep(0);
@@ -78,10 +85,13 @@ export function SmartFormProvider({ onClose }: { onClose: () => void }) {
         {/* STRUCTURAL FEEDBACK: Shown for server errors or global issues */}
         {errorMessage && (
           <div className="px-5 pb-5">
-            <div className="text-[10px] font-bold uppercase tracking-tight text-destructive border border-destructive/20 bg-destructive/5 p-3 flex items-start gap-2 shadow-etched animate-premium-in">
+            <div
+              role="alert"
+              className="text-[10px] font-bold uppercase tracking-tight text-destructive border border-destructive/20 bg-destructive/5 p-3 flex items-start gap-2 shadow-etched animate-premium-in"
+            >
               <div className="h-1.5 w-1.5 bg-destructive mt-1 shrink-0" />
               <div className="flex-1">
-                <p className="font-black mb-0.5">Error de Operación</p>
+                <p className="font-black mb-0.5">{sfpT("operationError")}</p>
                 <p className="opacity-70 leading-relaxed">{errorMessage}</p>
               </div>
             </div>

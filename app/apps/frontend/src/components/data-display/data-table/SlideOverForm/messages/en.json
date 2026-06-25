@@ -1,0 +1,9 @@
+{
+  "SlideOverForm": {
+    "createBadge": "System // Register",
+    "viewBadge": "System // View",
+    "createAction": "Create",
+    "closeAction": "Close Terminal",
+    "cancelAction": "Cancel"
+  }
+}

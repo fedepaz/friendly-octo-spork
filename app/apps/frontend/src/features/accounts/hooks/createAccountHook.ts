@@ -17,5 +17,9 @@ export function useCreateAccount() {
       const msg = `Cuenta ${data.name} creada exitosamente`;
       toast.success(msg, { duration: 3000 });
     },
+    onError: (err) => {
+      const msg = `Error al crear la cuenta: ${err.message}`;
+      toast.error(msg, { duration: 3000 });
+    },
   });
 }

@@ -2,7 +2,8 @@
 
 import { Suspense } from "react";
 import { useFormContext } from "react-hook-form";
-import { WizardStepSkeleton } from "@/features/createTransaction/components/transactions-wizard-skeleton";
+import { useTranslations } from "next-intl";
+import { WizardStepSkeleton } from "@/components/ui/wizard-step-skeleton";
 
 import { StepAccountsComponent } from "./steps/stepAccount-form";
 import { StepAmountComponent } from "./steps/stepAmount-form";
@@ -13,8 +14,8 @@ import { StepReviewComponent } from "./steps/stepReview-form";
 import {
   StepIndicator,
   WizardFooter,
-  WizardModalRecurrence,
-} from "./wizardModalRecurrence";
+  WizardModal,
+} from "@/components/ui/wizard-modal";
 import { CreateTransactionInput } from "@repo/shared";
 import {
   getNextStepId,
@@ -42,6 +43,7 @@ export function FormContainerRecurrence({
 }: FormContainerProps) {
   const { watch, setValue, trigger } = useFormContext<CreateTransactionInput>();
   const watched = watch();
+  const fcrT = useTranslations("FormContainerRecurrence");
 
   // Convert numeric index to StepId
   const currentStepId = indexToStepId(activeStep, STEP_CONFIGS_RECURRENCE);
@@ -65,7 +67,7 @@ export function FormContainerRecurrence({
     if (fieldsToValidate.length > 0) {
       const isValid = await trigger(fieldsToValidate); // Type cast ok for Path
       if (!isValid) {
-        setGlobalError("Please fill in all required fields");
+        setGlobalError(fcrT("fillRequiredFields"));
         return;
       }
     }
@@ -127,12 +129,12 @@ export function FormContainerRecurrence({
   };
 
   return (
-    <WizardModalRecurrence
+    <WizardModal
       isOpen={true}
       onClose={onClose}
       title={
         STEP_CONFIGS_RECURRENCE.find((s) => s.id === currentStepId)?.label ??
-        "Terminal de Transacciones"
+        fcrT("defaultTitle")
       }
       step={currentVisibleIndex + 1}
       totalSteps={totalVisibleSteps}
@@ -147,9 +149,9 @@ export function FormContainerRecurrence({
         onBack={currentVisibleIndex > 0 ? handleBack : undefined}
         onNext={!isLastStep ? handleNext : undefined}
         onConfirm={isLastStep ? () => {} : undefined}
-        confirmLabel={isLastStep ? "Actualizar ✓" : undefined}
+        confirmLabel={isLastStep ? fcrT("confirmLabel") : undefined}
         isSubmitting={isSubmitting}
       />
-    </WizardModalRecurrence>
+    </WizardModal>
   );
 }

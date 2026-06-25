@@ -1,4 +1,3 @@
-// src/components/layout/dashboard-header.tsx
 "use client";
 
 import { MobileNavigation } from "./mobile-navigation";
@@ -17,8 +16,11 @@ import {
 import { Logo } from "../common/logo";
 import { getISOWeek, getTotalWeeks, formatSpanishDate } from "@/lib/date-utils";
 import { ThemeToggle } from "../common/theme-toggle";
+import { useTranslations } from "next-intl";
+import { LanguageSwitcher } from "../common/language-switcher";
 
 export function DashboardHeader() {
+  const t = useTranslations("DashboardHeader");
   const { isLoading } = useLogout();
   const router = useRouter();
   const { userProfile } = useAuthContext();
@@ -42,7 +44,6 @@ export function DashboardHeader() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/60 backdrop-blur-md supports-backdrop-filter:bg-background/40 shrink-0">
       <div className="container mx-auto px-2">
         <div className="flex h-12 items-center justify-between">
-          {/* Logo and Mobile Navigation */}
           <div className="flex items-center space-x-3">
             <MobileNavigation />
             <div className="flex items-center space-x-2 md:hidden">
@@ -53,10 +54,7 @@ export function DashboardHeader() {
             </div>
           </div>
 
-          {/* Actions */}
           <div className="flex items-center space-x-4">
-            {/* Notifications */}
-            {/* Left: Week Display with Tooltip */}
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -66,7 +64,7 @@ export function DashboardHeader() {
                         S{weekNum}
                       </p>
                       <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest leading-none mt-1 opacity-60">
-                        Semana
+                        {t("weekLabel")}
                       </p>
                     </div>
                   </div>
@@ -81,18 +79,18 @@ export function DashboardHeader() {
                     </p>
                     <div className="space-y-1">
                       <p className="text-[10px] text-muted-foreground leading-tight uppercase tracking-tight">
-                        Semana{" "}
+                        {t("weekOf")}{" "}
                         <span className="text-foreground font-mono">
                           {weekNum}
                         </span>{" "}
-                        de{" "}
+                        {t("of")}{" "}
                         <span className="text-foreground font-mono">
                           {totalWeeks}
                         </span>
                       </p>
                       <div className="pt-2 border-t border-border/40">
                         <p className="text-[10px] text-muted-foreground/60 uppercase tracking-widest leading-tight">
-                          Mendoza, Argentina
+                          {t("location")}
                         </p>
                       </div>
                     </div>
@@ -100,6 +98,10 @@ export function DashboardHeader() {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+
+            {/* Theme Toggle */}
             <ThemeToggle />
           </div>
         </div>

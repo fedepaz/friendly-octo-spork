@@ -1,0 +1,13 @@
+{
+  "AccountColumns": {
+    "identification": "Identification",
+    "operativeType": "Operative Type",
+    "currency": "Currency",
+    "consolidatedBalance": "Consolidated Balance",
+    "bank": "Bank",
+    "wallet": "Wallet",
+    "cash": "Cash",
+    "card": "Card",
+    "investment": "Investment"
+  }
+}

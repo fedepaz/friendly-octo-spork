@@ -4,7 +4,8 @@
 import { Label } from "@/components/ui/label";
 import { BudgetCategory, CreateTransactionInput } from "@repo/shared";
 import { useFormContext } from "react-hook-form";
-import { InLineError } from "../inLineError";
+import { useTranslations } from "next-intl";
+import { InLineError } from "@/components/ui/in-line-error";
 
 const CATEGORIES = [
   "DAILY_EXPENSES",
@@ -22,6 +23,7 @@ export function StepBudgetComponent() {
     formState: { errors },
   } = useFormContext<CreateTransactionInput>();
   const watched = watch();
+  const sbT = useTranslations("StepBudgetForm");
 
   const watchedTransactionType = watched.type !== "EXPENSE";
 
@@ -37,7 +39,7 @@ export function StepBudgetComponent() {
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
-        Is this a budgeted expense?
+        {sbT("title")}
       </h3>
 
       <div className="grid grid-cols-2 gap-3">
@@ -45,26 +47,26 @@ export function StepBudgetComponent() {
           type="button"
           onClick={() => toggleBudgetedExpense(true)}
           disabled={watchedTransactionType}
-          className={`p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
             ${
               watched.isBudgetedExpense
                 ? "border-foreground bg-muted"
                 : "border-border text-muted-foreground hover:bg-muted"
             }`}
         >
-          Yes
+          {sbT("yes")}
         </button>
         <button
           type="button"
           onClick={() => toggleBudgetedExpense(false)}
-          className={`p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
             ${
               !watched.isBudgetedExpense
                 ? "border-foreground bg-muted"
                 : "border-border text-muted-foreground hover:bg-muted"
             }`}
         >
-          No
+          {sbT("no")}
         </button>
       </div>
 
@@ -72,7 +74,7 @@ export function StepBudgetComponent() {
         <div className="flex flex-col gap-3 border-2 border-border p-3">
           {/* Budget Category Selection */}
           <div>
-            <Label>Budget Category</Label>
+            <Label>{sbT("budgetCategoryLabel")}</Label>
             <div className="grid grid-cols-2 gap-2">
               {CATEGORIES.map((c) => (
                 <button
@@ -81,7 +83,7 @@ export function StepBudgetComponent() {
                   onClick={() => {
                     setValue("budgetCategory", c as BudgetCategory);
                   }}
-                  className={`p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
                     ${
                       watched.budgetCategory === c
                         ? "border-foreground bg-muted font-bold"

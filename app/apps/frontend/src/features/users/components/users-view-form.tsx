@@ -1,6 +1,7 @@
-// src/features/users/components/user-view-form.tsx
+// src/features/users/components/users-view-form.tsx
 "use client";
 
+import { useTranslations } from "next-intl";
 import { UserProfileDto } from "@repo/shared";
 
 import { formatShortDate } from "@/lib/date-utils";
@@ -12,6 +13,8 @@ interface UserViewFormProps {
 }
 
 export function UserViewForm({ selectedUser }: UserViewFormProps) {
+  const uvfT = useTranslations("UsersViewForm");
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col items-center p-6 bg-muted/20 border border-dashed border-border">
@@ -19,7 +22,7 @@ export function UserViewForm({ selectedUser }: UserViewFormProps) {
           <User className="h-8 w-8 text-primary" />
         </div>
         <p className="text-lg font-black tracking-tighter uppercase">
-          {selectedUser.name || "IDENTIDAD DESCONOCIDA"}
+          {selectedUser.name || uvfT("unknownIdentity")}
         </p>
       </div>
 
@@ -28,7 +31,7 @@ export function UserViewForm({ selectedUser }: UserViewFormProps) {
           <Mail className="h-4 w-4 text-muted-foreground opacity-50" />
           <div className="flex-1">
             <p className="text-[10px] font-bold text-muted-foreground uppercase leading-none">
-              Correo Electrónico
+              {uvfT("email")}
             </p>
             <p className="text-sm font-semibold">{selectedUser.email}</p>
           </div>
@@ -43,12 +46,12 @@ export function UserViewForm({ selectedUser }: UserViewFormProps) {
           />
           <div className="flex-1">
             <p className="text-[10px] font-bold text-muted-foreground uppercase leading-none">
-              Estado del Sistema
+              {uvfT("systemStatus")}
             </p>
             <p className="text-sm font-semibold">
               {selectedUser.isActive
-                ? "ACCESO AUTORIZADO"
-                : "ACCESO RESTRINGIDO"}
+                ? uvfT("authorizedAccess")
+                : uvfT("restrictedAccess")}
             </p>
           </div>
         </div>
@@ -57,7 +60,7 @@ export function UserViewForm({ selectedUser }: UserViewFormProps) {
           <Calendar className="h-4 w-4 text-muted-foreground opacity-50" />
           <div className="flex-1">
             <p className="text-[10px] font-bold text-muted-foreground uppercase leading-none">
-              Fecha de Registro
+              {uvfT("registrationDate")}
             </p>
             <p className="text-sm font-semibold">
               {formatShortDate(selectedUser.createdAt)}

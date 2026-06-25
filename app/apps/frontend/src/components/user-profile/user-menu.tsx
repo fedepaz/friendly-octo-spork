@@ -1,4 +1,3 @@
-// src/components/layout/user-menu.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -12,6 +11,7 @@ import { UserProfileInfo } from "./user-info";
 import { ChangePasswordForm } from "./user-password";
 import { useAuthContext } from "@/features/auth/providers/AuthProvider";
 import { Logo } from "../common/logo";
+import { useTranslations } from "next-intl";
 
 interface UserMenuProps {
   open: boolean;
@@ -19,6 +19,7 @@ interface UserMenuProps {
 }
 
 export function UserMenu({ open, onOpenChange }: UserMenuProps) {
+  const umT = useTranslations("UserMenu");
   const [tab, setTab] = useState<"info" | "password">("info");
   const { userProfile, isLoading } = useAuthContext();
 
@@ -32,7 +33,6 @@ export function UserMenu({ open, onOpenChange }: UserMenuProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="p-0 sm:max-w-xl md:max-w-2xl bg-background/80 backdrop-blur-md border border-border shadow-lg rounded-lg [&>button]:hidden max-h-[90dvh] overflow-auto">
         <div className="flex flex-col md:flex-row w-full font-sans">
-          {/* Sidebar */}
           <nav className="flex-shrink-0 w-full md:w-40 bg-background/60 border-b md:border-b-0 md:border-r border-border p-2 md:p-4 space-x-2 md:space-x-0 space-y-0 md:space-y-2 overflow-x-auto">
             <button
               onClick={() => setTab("info")}
@@ -44,7 +44,7 @@ export function UserMenu({ open, onOpenChange }: UserMenuProps) {
                 }
               `}
             >
-              Información de Perfil
+              {umT("infoTab")}
             </button>
 
             <button
@@ -57,11 +57,10 @@ export function UserMenu({ open, onOpenChange }: UserMenuProps) {
                 }
               `}
             >
-              Cambiar Contraseña
+              {umT("passwordTab")}
             </button>
           </nav>
 
-          {/* Content */}
           <div className="flex-1 p-4 md:p-6 overflow-auto">
             <div className="flex gap-2 items-center mb-4">
               <div className="bg-gradient-to-r from-primary to-primary/80 px-3 py-1.5 shrink-0 rounded">
@@ -70,12 +69,12 @@ export function UserMenu({ open, onOpenChange }: UserMenuProps) {
                 </div>
               </div>
               <DialogTitle className="text-xl font-semibold font-sans">
-                {tab === "info" && "Perfil de Usuario"}
+                {tab === "info" && umT("profileTitle")}
 
-                {tab === "password" && "Cambiar Contraseña"}
+                {tab === "password" && umT("passwordTitle")}
               </DialogTitle>
               <DialogDescription className="sr-only">
-                Gestión de información de perfil, edición y cambio de contraseña
+                {umT("dialogDescription")}
               </DialogDescription>
             </div>
 

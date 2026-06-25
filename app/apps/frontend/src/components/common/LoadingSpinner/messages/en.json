@@ -1,0 +1,19 @@
+{
+  "LoadingSpinner": {
+    "messages": {
+      "0": "Compiling with Internet Explorer 6...",
+      "1": "Waiting for Flash Player to update...",
+      "2": "Defragmenting server's hard drive...",
+      "3": "Rebooting Windows ME for the third time...",
+      "4": "Downloading 56k of pure nostalgia...",
+      "5": "Looking for drivers on DriverGuide.com...",
+      "6": "Waiting for RealPlayer to finish loading...",
+      "7": "Freeing memory with Task Manager...",
+      "8": "Praying it's not a Blue Screen...",
+      "9": "Connecting via dial-up at 3 AM...",
+      "10": "Installing 47 Ask Jeeves toolbars...",
+      "11": "Waiting for WinRAR to stop asking for license...",
+      "12": "Updating Winamp library..."
+    }
+  }
+}

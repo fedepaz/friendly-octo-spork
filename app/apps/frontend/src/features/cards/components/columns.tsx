@@ -1,32 +1,118 @@
-// src/features/cards/components/columns.tsx
-
-import { Row, type ColumnDef } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
+import { type ColumnDef, type Column, type Row } from "@tanstack/react-table";
 import {
   SortableHeader,
   TacticalTextCell,
   PremiumAmountCell,
   PremiumBadgeCell,
-  TacticalTypeCell,
 } from "@/components/data-display/data-table";
-import { cn, getTransactionTypeStyles } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import {
   Calendar,
   Clock,
-  ArrowDownLeft,
-  ArrowUpRight,
   RefreshCw,
   CreditCard,
-  Hash,
 } from "lucide-react";
 import { CardStatementRow, SOURCE_LABELS, SOURCE_COLORS } from "../types/card.type";
 
+interface HeaderProps {
+  column: Column<CardStatementRow>;
+}
+
+function DescriptionHeader({ column }: HeaderProps) {
+  const ccT = useTranslations("CardsColumns");
+  return <SortableHeader column={column}>{ccT("description")}</SortableHeader>;
+}
+
+function SourceHeader() {
+  const ccT = useTranslations("CardsColumns");
+  return ccT("type");
+}
+
+function PlanStatusHeader() {
+  const ccT = useTranslations("CardsColumns");
+  return ccT("planStatus");
+}
+
+function InstallmentInfoCell({ row }: { row: Row<CardStatementRow> }) {
+  const ccT = useTranslations("CardsColumns");
+  const { installmentInfo, source } = row.original;
+  if (installmentInfo) {
+    return (
+      <div className="flex items-center gap-1.5">
+        <RefreshCw className="h-3 w-3 text-muted-foreground opacity-50" />
+        <PremiumBadgeCell
+          label={installmentInfo}
+          variant="accent"
+          className="font-black"
+        />
+      </div>
+    );
+  }
+  if (source === "recurrence") {
+    return (
+      <div className="flex items-center gap-1.5">
+        <Clock className="h-3 w-3 text-accent animate-pulse" />
+        <PremiumBadgeCell
+          label={ccT("projected")}
+          variant="primary"
+          className="bg-accent/10 border-accent/40 text-accent font-black"
+        />
+      </div>
+    );
+  }
+  return (
+    <div className="flex items-center gap-1.5 opacity-30">
+      <CreditCard className="h-3 w-3" />
+      <span className="text-[10px] font-bold uppercase">{ccT("single")}</span>
+    </div>
+  );
+}
+
+function CardTypeHeader() {
+  const ccT = useTranslations("CardsColumns");
+  return ccT("card");
+}
+
+function CardTypeCell({ row }: { row: Row<CardStatementRow> }) {
+  const ccT = useTranslations("CardsColumns");
+  const cardType = row.original.cardType;
+  if (!cardType)
+    return (
+      <span className="text-muted-foreground text-[10px] font-mono opacity-20 italic">
+        {ccT("notAvailable")}
+      </span>
+    );
+  return (
+    <div className="flex items-center gap-1.5">
+      <div className="p-1 bg-muted/40 border border-border/40">
+        <CreditCard className="h-3 w-3 text-muted-foreground" />
+      </div>
+      <span className="text-[10px] font-black uppercase tracking-wider">
+        {cardType}
+      </span>
+    </div>
+  );
+}
+
+function DateHeader({ column }: HeaderProps) {
+  const ccT = useTranslations("CardsColumns");
+  return <SortableHeader column={column}>{ccT("date")}</SortableHeader>;
+}
+
+function AmountHeader({ column }: HeaderProps) {
+  const ccT = useTranslations("CardsColumns");
+  return (
+    <div className="text-right">
+      <SortableHeader column={column}>{ccT("amount")}</SortableHeader>
+    </div>
+  );
+}
+
 export const cardColumns: ColumnDef<CardStatementRow>[] = [
-  // ── Description ─────────────────────────────────────────────────────────
   {
     accessorKey: "description",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Descripción</SortableHeader>
-    ),
+    header: DescriptionHeader,
     cell: ({ row }) => {
       const { description, category } = row.original;
       return (
@@ -38,11 +124,9 @@ export const cardColumns: ColumnDef<CardStatementRow>[] = [
       );
     },
   },
-
-  // ── Source / Tipo ─────────────────────────────────────────────────────────
   {
     id: "source",
-    header: "Tipo",
+    header: SourceHeader,
     cell: ({ row }) => {
       const { source } = row.original;
       return (
@@ -57,77 +141,19 @@ export const cardColumns: ColumnDef<CardStatementRow>[] = [
       );
     },
   },
-
-  // ── Installment info ─────────────────────────────────────────────────────
   {
     id: "installmentInfo",
-    header: "Plan / Estado",
-    cell: ({ row }) => {
-      const { installmentInfo, source } = row.original;
-      if (installmentInfo) {
-        return (
-          <div className="flex items-center gap-1.5">
-            <RefreshCw className="h-3 w-3 text-muted-foreground opacity-50" />
-            <PremiumBadgeCell
-              label={installmentInfo}
-              variant="accent"
-              className="font-black"
-            />
-          </div>
-        );
-      }
-      if (source === "recurrence") {
-        return (
-          <div className="flex items-center gap-1.5">
-            <Clock className="h-3 w-3 text-accent animate-pulse" />
-            <PremiumBadgeCell
-              label="Proyectado"
-              variant="primary"
-              className="bg-accent/10 border-accent/40 text-accent font-black"
-            />
-          </div>
-        );
-      }
-      return (
-        <div className="flex items-center gap-1.5 opacity-30">
-          <CreditCard className="h-3 w-3" />
-          <span className="text-[10px] font-bold uppercase">Único</span>
-        </div>
-      );
-    },
+    header: PlanStatusHeader,
+    cell: InstallmentInfoCell,
   },
-
-  // ── Card type ────────────────────────────────────────────────────────────
   {
     accessorKey: "cardType",
-    header: "Tarjeta",
-    cell: ({ row }) => {
-      const cardType = row.original.cardType;
-      if (!cardType)
-        return (
-          <span className="text-muted-foreground text-[10px] font-mono opacity-20 italic">
-            n/a
-          </span>
-        );
-      return (
-        <div className="flex items-center gap-1.5">
-          <div className="p-1 bg-muted/40 border border-border/40">
-            <CreditCard className="h-3 w-3 text-muted-foreground" />
-          </div>
-          <span className="text-[10px] font-black uppercase tracking-wider">
-            {cardType}
-          </span>
-        </div>
-      );
-    },
+    header: CardTypeHeader,
+    cell: CardTypeCell,
   },
-
-  // ── Date ─────────────────────────────────────────────────────────────────
   {
     accessorKey: "date",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Fecha</SortableHeader>
-    ),
+    header: DateHeader,
     cell: ({ row }) => {
       const date = row.original.date;
       return (
@@ -143,15 +169,9 @@ export const cardColumns: ColumnDef<CardStatementRow>[] = [
       );
     },
   },
-
-  // ── Amount ───────────────────────────────────────────────────────────────
   {
     accessorKey: "amount",
-    header: ({ column }) => (
-      <div className="text-right">
-        <SortableHeader column={column}>Monto</SortableHeader>
-      </div>
-    ),
+    header: AmountHeader,
     cell: ({ row }) => {
       const { amount, type, source } = row.original;
       const isPending = source === "recurrence";

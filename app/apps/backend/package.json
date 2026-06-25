@@ -22,7 +22,6 @@
     "db:migrate": "pnpm prisma migrate deploy",
     "db:migrate:dev": "pnpm prisma migrate dev",
     "db:seed:admin": "pnpm ts-node prisma/seed.ts",
-    "db:seed:entity": "pnpm ts-node prisma/seed-entity.ts",
     "db:status": "pnpm prisma migrate status",
     "db:validate": "pnpm prisma validate"
   },
@@ -45,7 +44,8 @@
     "pino-http": "^11.0.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "zod": "^3.22.0"
+    "zod": "^3.22.0",
+    "@repo/shared": "workspace:^"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -75,8 +75,7 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.20.0",
-    "@repo/shared": "workspace:^"
+    "typescript-eslint": "^8.20.0"
   },
   "jest": {
     "moduleFileExtensions": [

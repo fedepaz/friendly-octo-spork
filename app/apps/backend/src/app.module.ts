@@ -1,6 +1,6 @@
 // backend/src/app.module.ts
 
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { configuration, validationSchema } from './config/configuration';
 import path from 'path';
@@ -19,6 +19,7 @@ import { TransactionModule } from './modules/transactions/transaction.module';
 import { UsersModule } from './modules/users/users.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { CardModule } from './modules/card/card.module';
+import { RequestIdMiddleware } from './shared/middleware/request-id.middleware';
 
 @Module({
   imports: [
@@ -40,12 +41,15 @@ import { CardModule } from './modules/card/card.module';
     }),
     LoggerModule.forRoot({
       pinoHttp: {
-        level: 'debug',
+        level: process.env.BACKEND_NODE_ENV === 'production' ? 'info' : 'debug',
         stream: pinoStream,
         redact: [
           'req.headers.authorization',
           'req.body.password',
+          'req.body.newPassword',
+          'req.body.currentPassword',
           'req.body.token',
+          'req.body.refreshToken',
         ],
         customProps: (req: IncomingMessage) => ({
           correlationId: req.headers?.['x-correlation-id'],
@@ -77,4 +81,8 @@ import { CardModule } from './modules/card/card.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestIdMiddleware).forRoutes('*');
+  }
+}

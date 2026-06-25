@@ -1,0 +1,100 @@
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "${NGINX_HOST_PORT:-8081}:80"
+    environment:
+      - SERVER_NAME=${SERVER_NAME:-finance.midomain.com}
+      - FRONTEND_UPSTREAM=${FRONTEND_UPSTREAM:-nextjs:3000}
+      - BACKEND_UPSTREAM=${BACKEND_UPSTREAM:-api:3001}
+    volumes:
+      - ./nginx.conf.template:/etc/nginx/nginx.conf.template:ro
+    restart: unless-stopped
+    depends_on:
+      nextjs:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+    networks:
+      - app-network
+    command: >
+      sh -c "envsubst '$${SERVER_NAME} $${FRONTEND_UPSTREAM} $${BACKEND_UPSTREAM}'
+      < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+      && nginx -g 'daemon off;'"
+
+  nextjs:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+      args:
+        # Must be passed at build time for client-side bundles
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://finance.midomain.com/api}
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('net').connect(3000, 'localhost', () => process.exit(0)).on('error', () => process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - app-network
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-user}:${POSTGRES_PASSWORD:-password}@db:5432/finance-app
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://localhost:3001/health', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    networks:
+      - app-network
+
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: finance-app
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge

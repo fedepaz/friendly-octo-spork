@@ -5,6 +5,7 @@ import { parseApiError, ParsedError } from "@/lib/api/error-handler";
 import { useRouter } from "next/navigation";
 import { createContext, ReactNode, useCallback, useContext } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface ErrorContextValue {
   handleError: (error: unknown, options?: ErrorHandlerOptions) => void;
@@ -27,6 +28,7 @@ const ErrorContext = createContext<ErrorContextValue | undefined>(undefined);
 
 export function ErrorProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
+  const epT = useTranslations("ErrorProvider");
 
   if (process.env.NODE_ENV === "development") {
     console.log("ErrorProvider initialized");
@@ -112,12 +114,12 @@ export function ErrorProvider({ children }: { children: ReactNode }) {
         shouldRedirect: false,
       });
 
-      toast.info("Acción Revertida", {
-        description: `La acción que estabas realizando fue revertida.`,
+      toast.info(epT("actionReverted"), {
+        description: epT("actionRevertedDesc"),
         duration: 3000,
       });
     },
-    [handleError],
+    [handleError, epT],
   );
 
   return (

@@ -1,0 +1,15 @@
+{
+  "RecurrenceViewForm": {
+    "frequency": "Frequency {frequency}",
+    "next": "NEXT:",
+    "financialImpact": "Financial Impact",
+    "perUnit": "/ {frequency}",
+    "planProgress": "Plan Progress",
+    "installmentStatus": "INSTALLMENT STATUS",
+    "installmentCount": "{current} of {total}",
+    "originFunds": "Fund Source",
+    "notDefined": "NOT DEFINED",
+    "destination": "Destination",
+    "startDate": "Start Date"
+  }
+}

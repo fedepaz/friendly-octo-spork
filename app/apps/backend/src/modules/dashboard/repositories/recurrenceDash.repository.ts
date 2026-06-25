@@ -69,7 +69,6 @@ export class RecurrenceDashRepository {
       AND NOT EXISTS (
         SELECT 1 FROM "Transaction" t
         WHERE t."recurrenceId" = r."id"
-          AND t."recurrencePartNumber" = r."currentPart" + 1
           AND t."date" BETWEEN ${startOfMonth} AND ${endOfMonth}
       )
     ORDER BY r."nextDate" ASC

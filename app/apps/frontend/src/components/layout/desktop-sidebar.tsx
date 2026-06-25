@@ -1,8 +1,8 @@
-// src/components/layout/desktop-sidebar.tsx
 "use client";
 
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronDown } from "lucide-react";
+import type { ComponentType } from "react";
 import { cn } from "@/lib/utils";
 import { useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -16,12 +16,12 @@ import {
 } from "@/components/ui/tooltip";
 import { Logo } from "@/components/common/logo";
 import { UserSidebarMenu } from "../user-profile/user-sidebar-menu";
+import { useTranslations } from "next-intl";
 
 interface NavigationItem {
   title: string;
   href: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: any;
+  icon: ComponentType<{ className?: string }>;
   description?: string;
   badge?: string;
   badgeVariant?: "default" | "secondary" | "destructive" | "outline";
@@ -30,12 +30,18 @@ interface NavigationItem {
 interface NavigationGroup {
   id: string;
   title: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: any;
+  icon: ComponentType<{ className?: string }>;
   items: NavigationItem[];
 }
 
+function getNavKey(href: string): string {
+  const key = href.replace(/^\//, "");
+  return key || "dashboard";
+}
+
 export function DesktopSidebar() {
+  const dsT = useTranslations("DesktopSidebar");
+  const navT = useTranslations("navigation");
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
 
@@ -57,7 +63,6 @@ export function DesktopSidebar() {
     return NAVIGATION_CONFIG.map((group) => {
       const filteredItems = group.items.filter((item) => {
         if (!item.requiredPermission) return true;
-        // In single-user mode, all items are visible
         return true;
       });
 
@@ -75,7 +80,6 @@ export function DesktopSidebar() {
         isCollapsed ? "w-14" : "w-56",
       )}
     >
-      {/* Tactical Edge Gradient */}
       <div className="absolute top-0 right-0 w-px h-full bg-linear-to-b from-transparent via-primary/20 to-transparent" />
 
       <div className="p-3 border-b border-border/40 bg-background/40">
@@ -88,7 +92,7 @@ export function DesktopSidebar() {
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="group relative flex items-center justify-center transition-premium hover:opacity-80 cursor-pointer"
-            aria-label={isCollapsed ? "Expandir" : "Contraer"}
+            aria-label={isCollapsed ? dsT("expandLabel") : dsT("collapseLabel")}
           >
             <Logo
               variant={isCollapsed ? "icon" : "sidebar"}
@@ -119,7 +123,7 @@ export function DesktopSidebar() {
                 className="bg-popover/90 backdrop-blur-md border border-border shadow-2xl rounded-none"
               >
                 <p className="text-[10px] uppercase font-black tracking-widest font-oxanium">
-                  Contraer Interfaz
+                  {dsT("collapseTooltip")}
                 </p>
               </TooltipContent>
             </Tooltip>
@@ -127,7 +131,6 @@ export function DesktopSidebar() {
         </div>
       </div>
 
-      {/* Navigation */}
       <nav className="flex-1 space-y-2 overflow-y-auto p-2 custom-scrollbar">
         {visibleNavigation.map((group) => {
           const GroupIcon = group.icon;
@@ -135,7 +138,6 @@ export function DesktopSidebar() {
 
           return (
             <div key={group.id} className="mb-4">
-              {/* Group Header */}
               {!isCollapsed && (
                 <Button
                   variant="ghost"
@@ -146,7 +148,7 @@ export function DesktopSidebar() {
                 >
                   <GroupIcon className="h-3.5 w-3.5 shrink-0 opacity-40" />
                   <>
-                    <span className="flex-1 text-left">{group.title}</span>
+                    <span className="flex-1 text-left">{navT(group.id)}</span>
                     <ChevronDown
                       className={cn(
                         "h-3 w-3 transition-transform duration-300 opacity-30",
@@ -157,13 +159,8 @@ export function DesktopSidebar() {
                 </Button>
               )}
 
-              {/* Group Items */}
               {(isExpanded || isCollapsed) && (
-                <div
-                  className={cn(
-                    "space-y-1 animate-premium-in",
-                  )}
-                >
+                <div className={cn("space-y-1 animate-premium-in")}>
                   {group.items.map((item) => {
                     const Icon = item.icon;
                     const isActive = pathname === item.href;
@@ -180,13 +177,12 @@ export function DesktopSidebar() {
                                   : "text-muted-foreground/60 hover:text-foreground hover:bg-foreground/5",
                                 isCollapsed && "justify-center px-0 h-10",
                               )}
-                              aria-label={item.title}
+                              aria-label={navT(getNavKey(item.href))}
                             >
                               {isActive && (
                                 <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary shadow-[0_0_12px_rgba(var(--primary),0.6)]" />
                               )}
                               
-                              {/* Tactical Icon Box */}
                               <div className={cn(
                                 "flex h-8 w-8 items-center justify-center border transition-premium shrink-0",
                                 isActive 
@@ -220,11 +216,11 @@ export function DesktopSidebar() {
                                           : "text-muted-foreground/80 group-hover:text-foreground",
                                       )}
                                     >
-                                      {item.title}
+                                      {navT(getNavKey(item.href))}
                                     </p>
                                     {item.description && (
                                       <p className="text-[8px] font-mono font-bold text-muted-foreground/30 uppercase tracking-widest truncate leading-tight mt-0.5">
-                                        {item.description}
+                                        {navT(getNavKey(item.href) + "Desc")}
                                       </p>
                                     )}
                                   </div>
@@ -246,11 +242,11 @@ export function DesktopSidebar() {
                           >
                             <div className="flex flex-col gap-1">
                               <p className="text-[10px] font-black uppercase tracking-widest font-oxanium text-primary">
-                                {item.title}
+                                {navT(getNavKey(item.href))}
                               </p>
                               {item.description && (
                                 <p className="text-[9px] font-mono font-bold text-muted-foreground uppercase tracking-tighter">
-                                  {item.description}
+                                  {navT(getNavKey(item.href) + "Desc")}
                                 </p>
                               )}
                             </div>
@@ -266,7 +262,6 @@ export function DesktopSidebar() {
         })}
       </nav>
 
-      {/* User Info */}
       <div className="p-3 border-t border-border/40 bg-background/20">
         <UserSidebarMenu isCollapsed={isCollapsed} />
       </div>

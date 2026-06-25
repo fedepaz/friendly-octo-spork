@@ -31,7 +31,10 @@ export class AccountController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  async getAccountById(@CurrentUser() user: AuthUser, @Param('id') id: string) {
+  async getAccountById(
+    @CurrentUser() user: AuthUser,
+    @Param('id') id: string,
+  ): Promise<AccountDTO | null> {
     return this.accountsService.getAccountById(user.id, id);
   }
 

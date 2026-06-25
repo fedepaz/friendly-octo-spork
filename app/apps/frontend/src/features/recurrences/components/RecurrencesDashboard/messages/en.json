@@ -1,0 +1,7 @@
+{
+  "RecurrencesDashboard": {
+    "title": "Pending Accounts",
+    "description": "List of accounts with recurring payments",
+    "slideOverTitle": "Recurrence Settings"
+  }
+}

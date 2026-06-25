@@ -18,9 +18,11 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
 
+  const logger = app.get(Logger);
+
   const env = configService.get<string>('config.environment');
 
-  const port = Number(process.env.PORT);
+  const port = configService.get<number>('config.port', 3001);
 
   const corsOrigins = configService
     .get<string>('config.cors.origins', '')
@@ -28,21 +30,11 @@ async function bootstrap() {
     .map((origin) => origin.trim())
     .filter(Boolean);
 
-  const DATABASE_URL = configService.get<string>(
-    'config.database_dev.databaseUrl',
-  );
-  const DATABASE_HOST = configService.get<string>('config.database_dev.host');
-  const DATABASE_PORT = configService.get<number>('config.database_dev.port');
-  const DATABASE_DATABASE_NAME = configService.get<string>(
-    'config.database_dev.databaseName',
-  );
-  const DATABASE_USER = configService.get<string>('config.database_dev.user');
-
   app.enableCors({
     origin: corsOrigins,
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    methods: ['GET', 'POST', 'OPTIONS'],
   });
 
   // Enable shutdown hooks for graceful database connection closing
@@ -50,22 +42,14 @@ async function bootstrap() {
 
   try {
     await app.listen(port, '0.0.0.0');
-    console.log('🚀 Backend started', {
+    logger.log({
+      msg: 'Backend started',
       port,
       environment: env,
       corsOrigins,
     });
-
-    console.log('🚀 Database connection', {
-      DATABASE_URL,
-      DATABASE_HOST,
-      DATABASE_PORT,
-      DATABASE_DATABASE_NAME,
-      DATABASE_USER,
-    });
-  } catch (error) {
-    console.error('❌ BACKEND STARTUP FAILED');
-    console.error(`   Error: ${error}`);
+  } catch (error: unknown) {
+    logger.error({ msg: 'BACKEND STARTUP FAILED', error: String(error) });
     process.exit(1); // Crash immediately - no point continuing
   }
 }

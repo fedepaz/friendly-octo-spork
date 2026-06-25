@@ -1,0 +1,15 @@
+{
+  "StepRecForm": {
+    "cardTypeLabel": "Card Type",
+    "name": "Nombre",
+    "frequency": "Frecuencia",
+    "progress": "Progreso",
+    "title": "Does this ends?",
+    "yes": "Yes",
+    "no": "No",
+    "dangerZone": "Zona de Peligro",
+    "dangerDesc": "Desactiva los pagos",
+    "stopLabel": "Detener después de este pago",
+    "stopLabelActive": "Detener Recurrencia ✓"
+  }
+}

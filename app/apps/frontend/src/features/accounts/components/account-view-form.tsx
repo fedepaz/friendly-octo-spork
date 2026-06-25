@@ -1,4 +1,3 @@
-// src/features/accounts/components/account-view-form.tsx
 "use client";
 
 import { AccountDTO, Currency } from "@repo/shared";
@@ -8,13 +7,14 @@ import {
   PremiumAmountCell,
   PremiumDateCell,
 } from "@/components/data-display/data-table";
+import { useTranslations } from "next-intl";
 
 interface AccountViewFormProps {
   selectedAccount: AccountDTO;
 }
 
 export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
-  // Combine and sort recent transactions (limited to 5 for high density)
+  const avfT = useTranslations("AccountViewForm");
   const allTransactions = [
     ...(selectedAccount.transactionsFrom || []).map((t) => ({
       ...t,
@@ -34,7 +34,7 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
       <div className="grid grid-cols-2 gap-px bg-border/40 border border-border/40 shadow-etched">
         <div className="bg-background/40 p-4 space-y-1">
           <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
-            Tipo Operativo
+            {avfT("operativeType")}
           </p>
           <p className="text-sm font-black font-oxanium uppercase tracking-tighter">
             {selectedAccount.type}
@@ -42,7 +42,7 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
         </div>
         <div className="bg-background/40 p-4 space-y-1">
           <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
-            Divisa Base
+            {avfT("baseCurrency")}
           </p>
           <p className="text-sm font-black font-oxanium uppercase tracking-tighter">
             {selectedAccount.currency}
@@ -55,7 +55,7 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
           <History className="h-16 w-16 -mr-4 -mt-4 rotate-12" />
         </div>
         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary mb-2">
-          Saldo Consolidado
+          {avfT("consolidatedBalance")}
         </p>
 
         <PremiumAmountCell
@@ -70,11 +70,11 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
           <div className="flex items-center gap-2 text-primary">
             <History className="h-3.5 w-3.5" />
             <h4 className="text-[11px] font-black uppercase tracking-[0.2em]">
-              Historial de Terminal
+              {avfT("terminalHistory")}
             </h4>
           </div>
           <span className="text-[9px] font-mono text-muted-foreground opacity-40 uppercase">
-            Últimos 5 registros
+            {avfT("lastRecords")}
           </span>
         </div>
 
@@ -90,8 +90,8 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
                     className={cn(
                       "flex h-7 w-7 items-center justify-center border border-border/40 shadow-inner transition-colors",
                       tx.displayType === "IN"
-                        ? "bg-emerald-400/5 text-emerald-400/60"
-                        : "bg-rose-400/5 text-rose-400/60",
+                        ? "bg-secondary/5 text-secondary/60"
+                        : "bg-destructive/5 text-destructive/60",
                     )}
                   >
                     {tx.displayType === "IN" ? (
@@ -121,7 +121,7 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
           ) : (
             <div className="p-8 text-center bg-background/10">
               <p className="text-[10px] font-black uppercase tracking-widest opacity-20">
-                Sin movimientos registrados
+                {avfT("noMovements")}
               </p>
             </div>
           )}

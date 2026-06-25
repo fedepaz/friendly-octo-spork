@@ -1,0 +1,15 @@
+{
+  "AccountCreateForm": {
+    "accountIdLabel": "Identificación de Cuenta",
+    "namePlaceholder": "Ej: Banco Galicia",
+    "typeLabel": "Tipo",
+    "selectPlaceholder": "Seleccionar",
+    "typeBank": "Banco",
+    "typeWallet": "Billetera",
+    "typeCash": "Efectivo",
+    "typeCard": "Tarjeta",
+    "typeInvestment": "Inversión",
+    "currencyLabel": "Divisa Base",
+    "openingBalanceLabel": "Saldo de Apertura"
+  }
+}

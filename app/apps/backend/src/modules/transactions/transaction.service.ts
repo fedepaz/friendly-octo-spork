@@ -12,6 +12,8 @@ import {
 } from '../../repositories/transaction.repository';
 import {
   CreateTransactionInput,
+  PaginatedResponse,
+  RecurrenceDTO,
   TransactionDTO,
   TransactionType,
 } from '@repo/shared';
@@ -82,11 +84,25 @@ export class TransactionService {
     };
   }
 
-  async getTransactions(userId: string): Promise<TransactionDTO[]> {
+  async getTransactions(
+    userId: string,
+    page = 1,
+    limit = 50,
+  ): Promise<PaginatedResponse<TransactionDTO>> {
     if (!userId) throw new BadRequestException('User id is required');
     this.logger.log(`Getting transactions for user ${userId}`);
-    const response = await this.transactionRepo.getTransactions(userId);
-    return response.map((transaction) => this.mapToDTO(transaction));
+    const { data, total } = await this.transactionRepo.getTransactions(
+      userId,
+      page,
+      limit,
+    );
+    return {
+      data: data.map((transaction) => this.mapToDTO(transaction)),
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 
   async getTransactionsByMonth(userId: string, month: number, year: number) {
@@ -148,31 +164,34 @@ export class TransactionService {
     );
 
     return this.prisma.$transaction(async (tx) => {
-      // ─── Only update if this is na catual payment now
-      const { isRecurrence, isFirstPayment, ..._data } = transactionData;
-      const shouldUpdateBalance = !isRecurrence || isFirstPayment;
-
       // ─── 1. Update Account Balances ─────────────────────────────────────────
-      if (shouldUpdateBalance) {
-        await this.updateBalancesForType(
-          transactionData,
-          amount,
-          tx,
-          sourceAccount,
-        );
-      }
+
+      await this.updateBalancesForType(
+        transactionData,
+        amount,
+        tx,
+        sourceAccount,
+      );
+
+      // ─── 2. Create/Update Recurrence ────────────────────────────────────────
+      const recurrenceData = await this.createOrUpdateRecurrence(
+        transactionData,
+        userId,
+        tx,
+      );
+
       // ─── 2. Save Transaction Record ─────────────────────────────────────────
 
       const response = await this.transactionRepo.saveTransaction(
         {
           ...prismaData,
           userId,
+          recurrenceId: recurrenceData?.id,
+          recurrencePartNumber: recurrenceData?.currentPart,
           metadata: prismaData.metadata ? prismaData.metadata : Prisma.JsonNull,
         },
         tx,
       );
-      // ─── 2. Create/Update Recurrence ────────────────────────────────────────
-      await this.createOrUpdateRecurrence(transactionData, userId, tx);
 
       return this.mapToDTO(response);
     });
@@ -318,26 +337,51 @@ export class TransactionService {
     data: CreateTransactionInput,
     userId: string,
     tx: Prisma.TransactionClient,
-  ): Promise<void> {
+  ): Promise<RecurrenceDTO | null> {
     // If it's not a recurrence and no ID is provided, do nothing
     if (!data.recurrenceId && !data.isRecurrence) {
-      return;
+      return null;
     }
+
+    let response: RecurrenceDTO | null = null;
 
     if (data.recurrenceId) {
       // Update existing recurrence
-      await this.recurrenceService.updateRecurrenceForTransaction(
+      response = await this.recurrenceService.updateRecurrenceForTransaction(
         data.recurrenceId,
         userId,
         data,
         tx,
       );
     } else if (data.isRecurrence) {
-      await this.recurrenceService.createRecurrenceForTransaction(
+      response = await this.recurrenceService.createRecurrenceForTransaction(
         data,
         userId,
         tx,
       );
     }
+    return response;
+  }
+
+  async updateTransactionSource(
+    userId: string,
+    transactionId: string,
+    source: string,
+  ): Promise<void> {
+    if (!userId) throw new BadRequestException('User id is required');
+    if (!transactionId)
+      throw new BadRequestException('Transaction id is required');
+    this.logger.log(
+      `Updating transaction ${transactionId} source for user ${userId}`,
+    );
+    await this.prisma.transaction.update({
+      where: {
+        id: transactionId,
+        userId,
+      },
+      data: {
+        source,
+      },
+    });
   }
 }

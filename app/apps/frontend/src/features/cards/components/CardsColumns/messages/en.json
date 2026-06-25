@@ -1,0 +1,13 @@
+{
+  "CardsColumns": {
+    "description": "Description",
+    "type": "Type",
+    "planStatus": "Plan / Status",
+    "projected": "Projected",
+    "single": "Single",
+    "card": "Card",
+    "notAvailable": "n/a",
+    "date": "Date",
+    "amount": "Amount"
+  }
+}

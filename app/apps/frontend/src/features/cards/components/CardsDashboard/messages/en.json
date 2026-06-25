@@ -1,0 +1,16 @@
+{
+  "CardsDashboard": {
+    "kpiProjectedInstallments": "Projected Installments",
+    "kpiProjectedInstallmentsDesc": "UPCOMING DUE DATES",
+    "kpiMonthlyConsumption": "Monthly Consumption",
+    "kpiMonthlyConsumptionDesc": "CHARGED EXPENSES",
+    "kpiPaymentsMade": "Payments Made",
+    "kpiPaymentsMadeDesc": "TRANSFERS TO ACCOUNT",
+    "debtTotal": "Total Debt",
+    "balanceToPay": "BALANCE TO PAY",
+    "noDebt": "NO OUTSTANDING DEBT",
+    "tableTitle": "Card Statement",
+    "tableDescription": "Tracking of expenses and projected installments",
+    "slideOverTitle": "Transaction Details"
+  }
+}

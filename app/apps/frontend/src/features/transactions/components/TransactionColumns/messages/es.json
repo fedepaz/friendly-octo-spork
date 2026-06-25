@@ -1,0 +1,11 @@
+{
+  "TransactionColumns": {
+    "dateHeader": "Fecha",
+    "typeHeader": "Tipo",
+    "descriptionHeader": "Descripción",
+    "noCategory": "Sin categoría",
+    "amountHeader": "Monto",
+    "cardExpenseTooltip": "Gasto con Tarjeta",
+    "budgetedExpenseTooltip": "Gasto Presupuestado"
+  }
+}

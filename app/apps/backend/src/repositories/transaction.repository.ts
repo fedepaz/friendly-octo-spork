@@ -17,23 +17,32 @@ export type TransactionWithRelations = Prisma.TransactionGetPayload<{
 export class TransactionRepository {
   constructor(private prisma: PrismaService) {}
 
-  async getTransactions(userId: string): Promise<TransactionWithRelations[]> {
+  async getTransactions(
+    userId: string,
+    page = 1,
+    limit = 50,
+  ): Promise<{ data: TransactionWithRelations[]; total: number }> {
     const where: Prisma.TransactionWhereInput = {
       userId,
     };
 
-    return this.prisma.transaction.findMany({
-      where,
-      include: {
-        category: true,
-        sourceAccount: true,
-        targetAccount: true,
-        recurrence: true,
-      },
-      orderBy: {
-        date: 'desc',
-      },
-    });
+    const [data, total] = await this.prisma.$transaction([
+      this.prisma.transaction.findMany({
+        where,
+        include: {
+          category: true,
+          sourceAccount: true,
+          targetAccount: true,
+          recurrence: true,
+        },
+        orderBy: { date: 'desc' },
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+      this.prisma.transaction.count({ where }),
+    ]);
+
+    return { data, total };
   }
 
   async getTransactionById(
