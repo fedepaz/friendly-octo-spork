@@ -17,6 +17,7 @@ import { Logo } from "../common/logo";
 import { getISOWeek, getTotalWeeks, formatSpanishDate } from "@/lib/date-utils";
 import { ThemeToggle } from "../common/theme-toggle";
 import { useTranslations } from "next-intl";
+import { LanguageSwitcher } from "../common/language-switcher";
 
 export function DashboardHeader() {
   const t = useTranslations("DashboardHeader");
@@ -97,6 +98,10 @@ export function DashboardHeader() {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+
+            {/* Theme Toggle */}
             <ThemeToggle />
           </div>
         </div>

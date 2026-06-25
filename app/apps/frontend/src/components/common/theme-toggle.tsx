@@ -42,7 +42,6 @@ export function ThemeToggle() {
           variant="ghost"
           size="icon"
           onClick={toggleTheme}
-          className="agricultural-touch-target"
           aria-label={label}
         >
           {theme === "dark" ? (

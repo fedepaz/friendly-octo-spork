@@ -63,6 +63,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
           `../components/common/PendingPermissions/messages/${locale}.json`
         )
       ).default,
+      ...(
+        await import(
+          `../components/common/LanguageSwitcher/messages/${locale}.json`
+        )
+      ).default,
 
       // Data Table
       ...(
@@ -152,21 +157,14 @@ export default getRequestConfig(async ({ requestLocale }) => {
         )
       ).default,
       ...(
-        await import(
-          `../components/error/RouteError/messages/${locale}.json`
-        )
+        await import(`../components/error/RouteError/messages/${locale}.json`)
       ).default,
 
       // Providers
+      ...(await import(`../providers/ErrorProvider/messages/${locale}.json`))
+        .default,
       ...(
-        await import(
-          `../providers/ErrorProvider/messages/${locale}.json`
-        )
-      ).default,
-      ...(
-        await import(
-          `../providers/QueryClientProvider/messages/${locale}.json`
-        )
+        await import(`../providers/QueryClientProvider/messages/${locale}.json`)
       ).default,
       ...(
         await import(
@@ -181,15 +179,10 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
       // Hooks
       ...(
-        await import(
-          `../features/auth/hooks/AuthHooks/messages/${locale}.json`
-        )
+        await import(`../features/auth/hooks/AuthHooks/messages/${locale}.json`)
       ).default,
-      ...(
-        await import(
-          `../hooks/DataTableActions/messages/${locale}.json`
-        )
-      ).default,
+      ...(await import(`../hooks/DataTableActions/messages/${locale}.json`))
+        .default,
 
       // Auth Feature
       ...(
