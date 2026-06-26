@@ -1,10 +1,8 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { ThemeToggle } from "../common/theme-toggle";
 import { ROUTES } from "@/constants/routes";
 import { Button } from "../ui/button";
-import Link from "next/link";
 import {
   Tooltip,
   TooltipContent,
@@ -12,6 +10,7 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
 
 export function AuthHeader() {
   const t = useTranslations("AuthHeader");

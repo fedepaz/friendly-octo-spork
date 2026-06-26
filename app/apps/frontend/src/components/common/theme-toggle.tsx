@@ -1,3 +1,4 @@
+//src/components/common/theme-toggle.tsx
 "use client";
 
 import { Moon, Sun } from "lucide-react";
@@ -23,14 +24,7 @@ export function ThemeToggle() {
   };
 
   if (!mounted) {
-    return (
-      <Button
-        variant="ghost"
-        size="icon"
-        className="agricultural-touch-target"
-        disabled
-      ></Button>
-    );
+    return <Button variant="ghost" size="icon" disabled></Button>;
   }
 
   const label = theme === "dark" ? ttT("lightMode") : ttT("darkMode");

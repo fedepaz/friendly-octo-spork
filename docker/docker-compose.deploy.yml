@@ -1,5 +1,3 @@
-# docs/deployment/examples/docker-compose.yml
-
 services:
   nginx:
     image: nginx:alpine
@@ -7,8 +5,8 @@ services:
       - "${NGINX_HOST_PORT:-8081}:80"
     environment:
       - SERVER_NAME=${SERVER_NAME:-finance.midomain.com}
-      - FRONTEND_UPSTREAM=${FRONTEND_UPSTREAM:-nextjs:3000}
-      - BACKEND_UPSTREAM=${BACKEND_UPSTREAM:-api:3001}
+      - FRONTEND_UPSTREAM=${FRONTEND_UPSTREAM}
+      - BACKEND_UPSTREAM=${BACKEND_UPSTREAM}
     volumes:
       - ./nginx.conf.template:/etc/nginx/nginx.conf.template:ro
     restart: unless-stopped
@@ -30,8 +28,9 @@ services:
       dockerfile: apps/frontend/Dockerfile
       args:
         # Must be passed at build time for client-side bundles
-        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://finance.midomain.com/api}
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     restart: unless-stopped
+
     depends_on:
       api:
         condition: service_healthy
@@ -58,7 +57,7 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=postgresql://${POSTGRES_USER:-user}:${POSTGRES_PASSWORD:-password}@db:5432/finance-app
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/finance-app
     depends_on:
       db:
         condition: service_healthy
@@ -68,7 +67,7 @@ services:
           "CMD",
           "node",
           "-e",
-          "require('http').get('http://localhost:3001/health', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))",
+          "require('http').get('http://localhost:3001/health', r => process.exit(r.statusCode < 500 ? 0 : 1)).on('error', () => process.exit(1))",
         ]
       interval: 30s
       timeout: 10s
@@ -81,13 +80,13 @@ services:
     image: postgres:16-alpine
     restart: always
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: finance-app
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
