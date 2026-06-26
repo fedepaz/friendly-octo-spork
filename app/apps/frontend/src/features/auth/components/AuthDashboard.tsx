@@ -33,9 +33,7 @@ export function AuthDashboard({ mode = "login" }: AuthDashboardProps) {
           {mode === "login" ? t("loginTitle") : t("registerTitle")}
         </h1>
         <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground/30">
-          {mode === "login"
-            ? t("loginDescription")
-            : t("registerDescription")}
+          {mode === "login" ? t("loginDescription") : t("registerDescription")}
         </p>
       </div>
       {!isChangePasswordOpen ? (
