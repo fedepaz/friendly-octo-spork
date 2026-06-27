@@ -260,7 +260,7 @@ export function DataTable<TData, TValue>({
                 {title}
               </CardTitle>
               {description && (
-                <CardDescription className="text-[10px] font-bold uppercase text-muted-foreground/40 tracking-tight">
+                <CardDescription className="text-[10px] font-bold uppercase text-muted-foreground/70 tracking-tight">
                   {description}
                 </CardDescription>
               )}
@@ -285,7 +285,7 @@ export function DataTable<TData, TValue>({
                   className="h-8 bg-background/40 border-border/40 hover:border-primary/40 rounded-none text-[10px] font-black uppercase tracking-widest transition-premium px-3"
                 >
                   <Filter className="mr-2 h-3 w-3 opacity-60" />
-                  {breakpoint === "sm" ? "" : "Columnas"}
+                  {breakpoint === "sm" ? "" : dtT("columnsLabel")}
                   <ChevronDown className="ml-2 h-2.5 w-2.5 opacity-40" />
                 </Button>
               </DropdownMenuTrigger>
@@ -314,11 +314,11 @@ export function DataTable<TData, TValue>({
             </DropdownMenu>
 
             <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/40" />
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground/70" />
               <Input
                 value={globalFilter}
                 onChange={(e) => setGlobalFilter(e.target.value)}
-                placeholder="Buscar..."
+                placeholder={dtT("searchPlaceholder")}
                 className="h-8 pl-7 text-[10px] font-mono font-bold bg-background/40 border-border/40 focus:border-primary/40 rounded-none"
               />
             </div>
@@ -394,7 +394,7 @@ export function DataTable<TData, TValue>({
                         colSpan={enhancedColumns.length}
                         className="h-32 text-center text-[11px] font-black uppercase tracking-widest opacity-40"
                       >
-                        No se encontraron resultados
+                        {dtT("noResults")}
                       </TableCell>
                     </TableRow>
                   )}
@@ -404,13 +404,13 @@ export function DataTable<TData, TValue>({
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-4 px-5 py-3 shrink-0 border-t border-border/40 bg-background/40">
-            <div className="flex-1 text-[10px] font-black uppercase tracking-widest text-muted-foreground/40">
-              {`${table.getFilteredSelectedRowModel().rows.length} / ${table.getFilteredRowModel().rows.length} SELECCIONADOS`}
+            <div className="flex-1 text-[10px] font-black uppercase tracking-widest text-muted-foreground/70">
+              {`${table.getFilteredSelectedRowModel().rows.length} / ${table.getFilteredRowModel().rows.length} ${dtT("selectedLabel")}`}
             </div>
             <div className="flex flex-wrap items-center gap-6">
               <div className="flex items-center space-x-1">
                 <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mr-1">
-                  Filas
+                  {dtT("rowsLabel")}
                 </p>
                 {[10, 20, 50, 100].map((size) => (
                   <button

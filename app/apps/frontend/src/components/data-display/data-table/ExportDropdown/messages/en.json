@@ -1,1 +1,7 @@
-{}
+{
+  "ExportDropdown": {
+    "exportLabel": "Export",
+    "exportSelected": "Export {count} selected",
+    "exportAll": "Export all ({count})"
+  }
+}

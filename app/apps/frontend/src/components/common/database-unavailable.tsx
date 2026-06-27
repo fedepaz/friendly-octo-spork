@@ -11,7 +11,7 @@ export function DatabaseUnavailablePage() {
     <div className="grid min-h-dvh place-items-center px-6 py-24 sm:py-32 lg:px-8 bg-background">
       <div className="text-center max-w-2xl">
         <div className="relative mx-auto w-20 h-20 mb-6">
-          <DatabaseZap className="w-20 h-20 text-muted-foreground/40" />
+          <DatabaseZap className="w-20 h-20 text-muted-foreground/70" />
         </div>
 
         <h1 className="mt-4 text-4xl font-black uppercase tracking-tighter text-foreground text-balance sm:text-6xl">

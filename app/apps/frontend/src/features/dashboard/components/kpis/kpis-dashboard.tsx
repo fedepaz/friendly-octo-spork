@@ -70,7 +70,7 @@ export function KPIsDashboard() {
               )}>
                 {netFlowDelta >= 0 ? "+" : ""}
                 {formatCurrency(Math.abs(netFlowDelta))}
-                <span className="text-muted-foreground/40 ml-1">{kpT("vsPrevMonth")}</span>
+                <span className="text-muted-foreground/70 ml-1">{kpT("vsPrevMonth")}</span>
               </span>
             </div>
           </CardContent>

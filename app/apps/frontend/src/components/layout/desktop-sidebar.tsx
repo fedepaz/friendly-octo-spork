@@ -113,7 +113,7 @@ export function DesktopSidebar() {
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsCollapsed(!isCollapsed)}
-                  className="h-7 w-7 text-muted-foreground/30 hover:text-foreground hover:bg-primary/5 rounded-none border border-transparent hover:border-primary/20 transition-premium"
+                  className="h-7 w-7 text-muted-foreground/60 hover:text-foreground hover:bg-primary/5 rounded-none border border-transparent hover:border-primary/20 transition-premium"
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
@@ -143,7 +143,7 @@ export function DesktopSidebar() {
                   variant="ghost"
                   onClick={() => !isCollapsed && toggleGroup(group.id)}
                   className={cn(
-                    "h-8 w-full justify-start gap-3 px-2 font-black text-[9px] uppercase tracking-[0.2em] text-muted-foreground/40 hover:text-primary hover:bg-transparent transition-premium mb-1",
+                    "h-8 w-full justify-start gap-3 px-2 font-black text-[9px] uppercase tracking-[0.2em] text-muted-foreground/70 hover:text-primary hover:bg-transparent transition-premium mb-1",
                   )}
                 >
                   <GroupIcon className="h-3.5 w-3.5 shrink-0 opacity-40" />
@@ -219,7 +219,7 @@ export function DesktopSidebar() {
                                       {navT(getNavKey(item.href))}
                                     </p>
                                     {item.description && (
-                                      <p className="text-[8px] font-mono font-bold text-muted-foreground/30 uppercase tracking-widest truncate leading-tight mt-0.5">
+                                      <p className="text-[8px] font-mono font-bold text-muted-foreground/60 uppercase tracking-widest truncate leading-tight mt-0.5">
                                         {navT(getNavKey(item.href) + "Desc")}
                                       </p>
                                     )}

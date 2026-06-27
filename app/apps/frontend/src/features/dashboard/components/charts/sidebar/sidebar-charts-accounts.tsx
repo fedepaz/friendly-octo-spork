@@ -23,7 +23,7 @@ export function SidebarChartsAccounts() {
               <p className="text-[11px] font-black text-foreground truncate uppercase tracking-tighter">
                 {account.name}
               </p>
-              <p className="font-mono text-[8px] uppercase text-muted-foreground/40 font-bold leading-none">
+              <p className="font-mono text-[8px] uppercase text-muted-foreground/70 font-bold leading-none">
                 {account.type}
               </p>
             </div>

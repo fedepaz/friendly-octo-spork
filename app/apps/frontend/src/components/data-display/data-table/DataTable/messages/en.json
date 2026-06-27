@@ -11,6 +11,11 @@
     "clearSortLabel": "Clear sort",
     "sortAscTooltip": "Click to sort ascending",
     "sortDescTooltip": "Click to sort descending",
-    "clearSortTooltip": "Click to clear sort"
+    "clearSortTooltip": "Click to clear sort",
+    "columnsLabel": "Columns",
+    "searchPlaceholder": "Search...",
+    "noResults": "No results found",
+    "selectedLabel": "SELECTED",
+    "rowsLabel": "Rows"
   }
 }

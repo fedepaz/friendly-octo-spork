@@ -83,7 +83,7 @@ export function SidebarChartsRecentTransactions() {
                 "px-2 py-0.5 m-0.5 text-[10px] font-black uppercase tracking-tighter transition-all cursor-pointer",
                 activeFilter === opt.value
                   ? "bg-primary/80 text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary"
-                  : "text-muted-foreground/40 ",
+                  : "text-muted-foreground/70 ",
               )}
             >
               {opt.label}
@@ -144,7 +144,7 @@ export function SidebarChartsRecentTransactions() {
                               <ArrowDownLeft className="h-2 w-2" />
                             )}
                           </div>
-                          <span className="font-mono text-[8px] text-muted-foreground/40 uppercase font-bold tracking-tighter">
+                          <span className="font-mono text-[8px] text-muted-foreground/70 uppercase font-bold tracking-tighter">
                             {recurrence.type}
                           </span>
                           {recurrence.isCardExpense && (
@@ -163,7 +163,7 @@ export function SidebarChartsRecentTransactions() {
                         <div className="flex flex-col items-center gap-1">
                           <span className="font-mono text-[10px] font-bold text-foreground/80 tabular-nums">
                             {recurrence.currentPart + 1}
-                            <span className="text-muted-foreground/30 px-0.5">
+                            <span className="text-muted-foreground/60 px-0.5">
                               /
                             </span>
                             {recurrence.totalParts}

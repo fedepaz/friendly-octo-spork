@@ -37,7 +37,7 @@ export function AnalyticChartsMain() {
           <CardTitle className="text-[11px] font-black uppercase tracking-widest text-foreground">
             {acmT("title")}
           </CardTitle>
-          <CardDescription className="text-[10px] uppercase font-bold text-muted-foreground/40 tracking-tight">
+          <CardDescription className="text-[10px] uppercase font-bold text-muted-foreground/70 tracking-tight">
             {acmT("description")}
           </CardDescription>
         </div>

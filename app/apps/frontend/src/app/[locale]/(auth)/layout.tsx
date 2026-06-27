@@ -33,7 +33,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
               <h1 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">
                 Terminal de Operaciones
               </h1>
-              <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/30">
+              <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/60">
                 Secure Financial Interface v1.0
               </p>
             </div>

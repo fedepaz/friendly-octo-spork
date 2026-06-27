@@ -2,6 +2,7 @@
 "use client";
 
 import { Download, FileSpreadsheet, FileText, FileJson } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -27,11 +28,12 @@ export function ExportDropdown({
   disabled = false,
 }: ExportDropdownProps) {
   const breakpoint = useBreakpoint();
+  const exT = useTranslations("ExportDropdown");
 
   const exportLabel =
     selectedCount > 0
-      ? `Exportar ${selectedCount} seleccionado(s)`
-      : `Exportar todo (${totalCount})`;
+      ? exT("exportSelected", { count: selectedCount })
+      : exT("exportAll", { count: totalCount });
 
   return (
     <DropdownMenu>
@@ -43,7 +45,7 @@ export function ExportDropdown({
           className="min-h-[40px] bg-transparent"
         >
           <Download className="mr-2 h-4 w-4" />
-          {breakpoint === "sm" ? "" : "Exportar"}
+          {breakpoint === "sm" ? "" : exT("exportLabel")}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">

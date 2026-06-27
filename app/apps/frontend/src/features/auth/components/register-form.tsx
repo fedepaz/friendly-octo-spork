@@ -133,7 +133,7 @@ export function RegisterForm({ onDefaultPassword }: RegisterFormProps) {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-none bg-foreground/5 flex items-center justify-center text-muted-foreground/40 hover:text-foreground hover:bg-foreground/10 transition-premium border border-border/20 cursor-pointer"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-none bg-foreground/5 flex items-center justify-center text-muted-foreground/70 hover:text-foreground hover:bg-foreground/10 transition-premium border border-border/20 cursor-pointer"
                     tabIndex={-1}
                     aria-label={showPassword ? t("hidePassword") : t("showPassword")}
                   >
