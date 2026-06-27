@@ -52,14 +52,14 @@ export function StepBudgetComponent() {
           </p>
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <p className="text-[9px] font-bold text-muted-foreground/40 uppercase">{srbT("budgeted")}</p>
+              <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">{srbT("budgeted")}</p>
               <p className="text-xs font-mono font-bold">
                 {isBudgetedRef ? srbT("yes") : srbT("no")}
               </p>
             </div>
             {budgetCategoryRef && (
               <div>
-                <p className="text-[9px] font-bold text-muted-foreground/40 uppercase">{srbT("category")}</p>
+                <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">{srbT("category")}</p>
                 <p className="text-xs font-mono font-bold">
                   {budgetCategoryRef}
                 </p>

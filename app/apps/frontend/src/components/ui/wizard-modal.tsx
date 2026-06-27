@@ -63,7 +63,7 @@ export function WizardModal({
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
               {title}
             </span>
-            <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/40">
+            <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/70">
               Terminal de Operación • Paso {step} de {totalSteps}
             </p>
           </div>
@@ -71,7 +71,7 @@ export function WizardModal({
             ref={closeRef}
             autoFocus
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center border border-border/20 text-muted-foreground/40 hover:text-foreground hover:bg-foreground/5 transition-premium rounded-none cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+            className="w-8 h-8 flex items-center justify-center border border-border/20 text-muted-foreground/70 hover:text-foreground hover:bg-foreground/5 transition-premium rounded-none cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
           >
             <span className="text-[10px] font-black uppercase">Esc</span>
           </button>

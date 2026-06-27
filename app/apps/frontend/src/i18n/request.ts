@@ -386,37 +386,37 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ).default,
       ...(
         await import(
-          `../features/createTransaction/components/StepTypeForm/messages/${locale}.json`
+          `../features/createTransaction/components/steps/StepTypeForm/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/createTransaction/components/StepAccountForm/messages/${locale}.json`
+          `../features/createTransaction/components/steps/StepAccountForm/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/createTransaction/components/StepAmountForm/messages/${locale}.json`
+          `../features/createTransaction/components/steps/StepAmountForm/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/createTransaction/components/StepCategoryForm/messages/${locale}.json`
+          `../features/createTransaction/components/steps/StepCategoryForm/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/createTransaction/components/StepBudgetForm/messages/${locale}.json`
+          `../features/createTransaction/components/steps/StepBudgetForm/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/createTransaction/components/StepRecurrenceForm/messages/${locale}.json`
+          `../features/createTransaction/components/steps/StepRecurrenceForm/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/createTransaction/components/StepReviewForm/messages/${locale}.json`
+          `../features/createTransaction/components/steps/StepReviewForm/messages/${locale}.json`
         )
       ).default,
 
@@ -428,22 +428,22 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ).default,
       ...(
         await import(
-          `../features/updateCardBalance/components/StepAccountForm/messages/${locale}.json`
+          `../features/updateCardBalance/components/steps/StepCardAccountForm/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/updateCardBalance/components/StepConfirmForm/messages/${locale}.json`
+          `../features/updateCardBalance/components/steps/StepConfirmForm/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/updateCardBalance/components/StepReviewForm/messages/${locale}.json`
+          `../features/updateCardBalance/components/steps/StepCardReviewForm/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/updateCardBalance/components/StepUpdateForm/messages/${locale}.json`
+          `../features/updateCardBalance/components/steps/StepUpdateForm/messages/${locale}.json`
         )
       ).default,
 
@@ -455,27 +455,27 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ).default,
       ...(
         await import(
-          `../features/updateRecurrence/components/StepAccountForm/messages/${locale}.json`
+          `../features/updateRecurrence/components/steps/StepRecAccountForm/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/updateRecurrence/components/StepAmountForm/messages/${locale}.json`
+          `../features/updateRecurrence/components/steps/StepRecAmountForm/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/updateRecurrence/components/StepBudgetForm/messages/${locale}.json`
+          `../features/updateRecurrence/components/steps/StepRecBudgetForm/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/updateRecurrence/components/StepRecurrenceForm/messages/${locale}.json`
+          `../features/updateRecurrence/components/steps/StepRecForm/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/updateRecurrence/components/StepReviewForm/messages/${locale}.json`
+          `../features/updateRecurrence/components/steps/StepRecReviewForm/messages/${locale}.json`
         )
       ).default,
     },

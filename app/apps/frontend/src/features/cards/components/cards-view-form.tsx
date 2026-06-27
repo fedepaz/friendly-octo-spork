@@ -142,7 +142,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
         <div className="bg-muted/30 p-3 border-2 border-border/60 relative overflow-hidden">
           <div className="flex items-center justify-between mb-2">
             <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">{installmentLabel}</span>
-            <Icon className="size-3 text-muted-foreground/30" />
+            <Icon className="size-3 text-muted-foreground/60" />
           </div>
           {partsDetail ? (
             <div className="space-y-3">
@@ -153,7 +153,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
                   </span>
                   <span className="text-lg font-mono font-black text-foreground">
                     {partsDetail.current}{" "}
-                    <span className="text-muted-foreground/40 font-normal">
+                    <span className="text-muted-foreground/70 font-normal">
                       /
                     </span>{" "}
                     {partsDetail.total}

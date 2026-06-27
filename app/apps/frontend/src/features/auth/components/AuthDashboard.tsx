@@ -32,7 +32,7 @@ export function AuthDashboard({ mode = "login" }: AuthDashboardProps) {
         <h1 className="text-[12px] font-black uppercase tracking-[0.3em] text-primary">
           {mode === "login" ? t("loginTitle") : t("registerTitle")}
         </h1>
-        <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground/30">
+        <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground/60">
           {mode === "login" ? t("loginDescription") : t("registerDescription")}
         </p>
       </div>

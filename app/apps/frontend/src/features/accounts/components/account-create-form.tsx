@@ -52,7 +52,7 @@ export function AccountCreateForm({
                 <Input
                   {...field}
                   placeholder={acfT("namePlaceholder")}
-                  className="h-12 w-full rounded-none border-0 border-b border-border/40 bg-background/20 px-3 font-oxanium text-sm text-foreground placeholder:text-[11px] placeholder:text-muted-foreground/40 focus-visible:ring-0 focus-visible:border-primary/60 transition-premium"
+                  className="h-12 w-full rounded-none border-0 border-b border-border/40 bg-background/20 px-3 font-oxanium text-sm text-foreground placeholder:text-[11px] placeholder:text-muted-foreground/70 focus-visible:ring-0 focus-visible:border-primary/60 transition-premium"
                 />
               </FormControl>
               <FormMessage className="text-[10px] font-bold uppercase" />
@@ -174,7 +174,7 @@ export function AccountCreateForm({
                   type="text"
                   inputMode="decimal"
                   placeholder="0.00"
-                  className="h-12 w-full rounded-none border-0 border-b border-border/40 bg-background/20 px-3 font-mono text-lg font-black text-foreground placeholder:text-muted-foreground/40 focus-visible:ring-0 focus-visible:border-primary/60 transition-premium"
+                  className="h-12 w-full rounded-none border-0 border-b border-border/40 bg-background/20 px-3 font-mono text-lg font-black text-foreground placeholder:text-muted-foreground/70 focus-visible:ring-0 focus-visible:border-primary/60 transition-premium"
                 />
               </FormControl>
               <FormMessage className="text-[10px] font-bold uppercase" />

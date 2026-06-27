@@ -11,6 +11,11 @@
     "clearSortLabel": "Quitar orden",
     "sortAscTooltip": "Click para orden ascendente",
     "sortDescTooltip": "Click para orden descendente",
-    "clearSortTooltip": "Click para quitar orden"
+    "clearSortTooltip": "Click para quitar orden",
+    "columnsLabel": "Columnas",
+    "searchPlaceholder": "Buscar...",
+    "noResults": "No se encontraron resultados",
+    "selectedLabel": "SELECCIONADOS",
+    "rowsLabel": "Filas"
   }
 }

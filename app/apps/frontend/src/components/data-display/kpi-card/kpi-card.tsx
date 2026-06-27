@@ -34,7 +34,7 @@ export function KPICard({
       <CardContent className="px-4 pb-4 pt-0">
         <div className="text-2xl font-mono font-black tracking-tighter text-foreground tabular-nums">{value}</div>
         {description && (
-          <p className="text-[10px] font-bold uppercase text-muted-foreground/40 leading-none mt-1 tracking-tight">{description}</p>
+          <p className="text-[10px] font-bold uppercase text-muted-foreground/70 leading-none mt-1 tracking-tight">{description}</p>
         )}
         {trend && (
           <div className="mt-2 flex items-center gap-1.5">
@@ -44,7 +44,7 @@ export function KPICard({
             )}>
               {trend.isPositive ? "+" : ""}{trend.value}%
             </div>
-            <span className="text-[9px] font-bold uppercase text-muted-foreground/30 tracking-widest">{trend.label}</span>
+            <span className="text-[9px] font-bold uppercase text-muted-foreground/60 tracking-widest">{trend.label}</span>
           </div>
         )}
       </CardContent>

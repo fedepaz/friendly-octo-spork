@@ -62,13 +62,13 @@ export function StepRecurrenceComponent() {
         <div className="p-3 border border-border/40 bg-background/40 space-y-2">
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <p className="text-[9px] font-bold text-muted-foreground/40 uppercase">
+              <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">
                 {sreT("name")}
               </p>
               <p className="text-xs font-mono font-bold">{recurrence.name}</p>
             </div>
             <div>
-              <p className="text-[9px] font-bold text-muted-foreground/40 uppercase">
+              <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">
                 {sreT("frequency")}
               </p>
               <p className="text-xs font-mono font-bold">
@@ -77,7 +77,7 @@ export function StepRecurrenceComponent() {
             </div>
             {recurrence.totalParts && (
               <div>
-                <p className="text-[9px] font-bold text-muted-foreground/40 uppercase">
+                <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">
                   {sreT("progress")}
                 </p>
                 <p className="text-xs font-mono font-bold">
