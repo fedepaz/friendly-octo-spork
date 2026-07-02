@@ -15,11 +15,12 @@ describe('Auth Register (e2e)', () => {
   });
 
   it('should register a new user', async () => {
+    const ts = Date.now().toString().slice(-6);
     const response = await request(app.getHttpServer())
       .post('/auth/register')
       .send({
-        name: 'NewUser1',
-        email: 'newuser@test.com',
+        name: `Nusr${ts}`,
+        email: `n_${ts}@test.com`,
         password: 'Password1',
       })
       .expect(200);
@@ -27,15 +28,18 @@ describe('Auth Register (e2e)', () => {
     expect(response.body).toHaveProperty('accessToken');
     expect(response.body).toHaveProperty('refreshToken');
     expect(response.body.user).toHaveProperty('id');
-    expect(response.body.user.name).toBe('NewUser1');
+    expect(response.body.user.name).toBe(`Nusr${ts}`);
   });
 
   it('should reject duplicate username', async () => {
+    const ts = Date.now().toString().slice(-6);
+    const name = `Dusr${ts}`;
+
     await request(app.getHttpServer())
       .post('/auth/register')
       .send({
-        name: 'DupUser1',
-        email: 'first@test.com',
+        name,
+        email: `d1_${ts}@test.com`,
         password: 'Password1',
       })
       .expect(200);
@@ -43,8 +47,8 @@ describe('Auth Register (e2e)', () => {
     await request(app.getHttpServer())
       .post('/auth/register')
       .send({
-        name: 'DupUser1',
-        email: 'second@test.com',
+        name,
+        email: `d2_${ts}@test.com`,
         password: 'Password1',
       })
       .expect(400);
