@@ -1,26 +1,28 @@
-import type { Config } from 'jest';
-import nextJest from 'next/jest';
+// apps/frontend/jest.config.ts
+
+import type { Config } from "jest";
+import nextJest from "next/jest";
 
 const createJestConfig = nextJest({
-  dir: './',
+  dir: "./",
 });
 
 const customJestConfig: Config = {
-  testEnvironment: 'jest-fixed-jsdom',
+  testEnvironment: "jest-fixed-jsdom",
   testEnvironmentOptions: {
     // MSW v2 uses conditional exports; this ensures the Node.js entry is resolved.
-    customExportConditions: ['node', 'node-addons'],
+    customExportConditions: ["node", "node-addons"],
   },
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
+    "^@/(.*)$": "<rootDir>/src/$1",
   },
   collectCoverageFrom: [
-    'src/**/*.{ts,tsx}',
-    '!src/**/*.d.ts',
-    '!src/**/*.stories.{ts,tsx}',
-    '!src/mocks/**',
+    "src/**/*.{ts,tsx}",
+    "!src/**/*.d.ts",
+    "!src/**/*.stories.{ts,tsx}",
+    "!src/mocks/**",
   ],
   coverageThreshold: {
     global: {
@@ -41,7 +43,7 @@ const customJestConfig: Config = {
 // This is the safest approach because MSW v2 has many ESM-only transitive
 // dependencies (rettime, until-async, @open-draft/deferred-promise, etc.)
 // that would be impossible to enumerate exhaustively.
-export default async (): Promise<Config> => {
+async function jestConfig(): Promise<Config> {
   const jestConfig = await createJestConfig(customJestConfig)();
 
   return {
@@ -50,8 +52,10 @@ export default async (): Promise<Config> => {
       // Only keep non-node_modules patterns from the default config
       ...(jestConfig.transformIgnorePatterns?.filter(
         (pattern: string | RegExp) =>
-          typeof pattern === 'string' && !pattern.includes('node_modules'),
+          typeof pattern === "string" && !pattern.includes("node_modules"),
       ) ?? []),
     ],
   };
-};
+}
+
+export default jestConfig;

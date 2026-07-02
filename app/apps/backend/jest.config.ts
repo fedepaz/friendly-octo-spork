@@ -1,3 +1,5 @@
+// apps/backend/jest.config.ts
+
 import type { Config } from 'jest';
 
 const config: Config = {
@@ -5,7 +7,7 @@ const config: Config = {
   rootDir: 'src',
   testRegex: '.*\\.spec\\.ts$',
   transform: {
-    '^.+\\.(t|j)s$': [
+    '^.+\\.ts$': [
       'ts-jest',
       {
         diagnostics: {
