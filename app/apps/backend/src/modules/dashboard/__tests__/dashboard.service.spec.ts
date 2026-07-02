@@ -97,9 +97,9 @@ describe('DashboardService', () => {
     });
 
     it('should throw BadRequestException for null userId', async () => {
-      await expect(service.getBudgetSummary(null as any)).rejects.toThrow(
-        BadRequestException,
-      );
+      await expect(
+        service.getBudgetSummary(null as unknown as string),
+      ).rejects.toThrow(BadRequestException);
     });
   });
 
@@ -227,7 +227,7 @@ describe('DashboardService', () => {
 
     it('should throw BadRequestException for null userId', async () => {
       await expect(
-        service.getRecurrencesToPayCurrentMonth(null as any),
+        service.getRecurrencesToPayCurrentMonth(null as unknown as string),
       ).rejects.toThrow(BadRequestException);
     });
   });

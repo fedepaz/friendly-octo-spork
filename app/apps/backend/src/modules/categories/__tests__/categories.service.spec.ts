@@ -63,9 +63,9 @@ describe('CategoriesService', () => {
     });
 
     it('should throw BadRequestException for null userId', async () => {
-      await expect(service.getCategories(null as any)).rejects.toThrow(
-        BadRequestException,
-      );
+      await expect(
+        service.getCategories(null as unknown as string),
+      ).rejects.toThrow(BadRequestException);
     });
   });
 
@@ -101,7 +101,7 @@ describe('CategoriesService', () => {
 
     it('should throw BadRequestException for null userId', async () => {
       await expect(
-        service.getCategoryById(null as any, 'cat-1'),
+        service.getCategoryById(null as unknown as string, 'cat-1'),
       ).rejects.toThrow(BadRequestException);
     });
   });
@@ -147,9 +147,9 @@ describe('CategoriesService', () => {
     });
 
     it('should throw BadRequestException for null userId', async () => {
-      await expect(service.getCategoriesWithUsage(null as any)).rejects.toThrow(
-        BadRequestException,
-      );
+      await expect(
+        service.getCategoriesWithUsage(null as unknown as string),
+      ).rejects.toThrow(BadRequestException);
     });
   });
 });

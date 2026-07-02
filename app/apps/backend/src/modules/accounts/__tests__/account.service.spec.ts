@@ -134,9 +134,9 @@ describe('AccountService', () => {
     });
 
     it('should throw BadRequestException for null userId', async () => {
-      await expect(service.getAccounts(null as any)).rejects.toThrow(
-        BadRequestException,
-      );
+      await expect(
+        service.getAccounts(null as unknown as string),
+      ).rejects.toThrow(BadRequestException);
     });
   });
 
@@ -173,7 +173,7 @@ describe('AccountService', () => {
 
     it('should throw BadRequestException for null userId', async () => {
       await expect(
-        service.getAccountById(null as any, 'account-123'),
+        service.getAccountById(null as unknown as string, 'account-123'),
       ).rejects.toThrow(BadRequestException);
     });
   });
@@ -248,7 +248,7 @@ describe('AccountService', () => {
         balance: '0',
       };
       await expect(
-        service.saveAccount(null as any, accountData),
+        service.saveAccount(null as unknown as string, accountData),
       ).rejects.toThrow(BadRequestException);
     });
   });

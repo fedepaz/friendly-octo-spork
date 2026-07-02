@@ -160,9 +160,9 @@ describe('TransactionService', () => {
     });
 
     it('should throw BadRequestException for null userId', async () => {
-      await expect(service.getTransactions(null as any)).rejects.toThrow(
-        BadRequestException,
-      );
+      await expect(
+        service.getTransactions(null as unknown as string),
+      ).rejects.toThrow(BadRequestException);
     });
   });
 

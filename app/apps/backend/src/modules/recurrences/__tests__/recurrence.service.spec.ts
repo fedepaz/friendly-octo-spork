@@ -102,9 +102,9 @@ describe('RecurrenceService', () => {
     });
 
     it('should throw BadRequestException for null userId', async () => {
-      await expect(service.getRecurrences(null as any)).rejects.toThrow(
-        BadRequestException,
-      );
+      await expect(
+        service.getRecurrences(null as unknown as string),
+      ).rejects.toThrow(BadRequestException);
     });
   });
 

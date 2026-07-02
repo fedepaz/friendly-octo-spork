@@ -60,7 +60,7 @@ app/
 
 ## Key Constraints
 
-- No test infrastructure active yet (user will enable after deploy).
+- Unit tests (Phase 1) and integration tests (Phase 2) active. E2E tests (Phase 3) planned.
 - Shared package (`@repo/shared`) must be built (`pnpm build` in packages/shared) before other packages can use it — Turbo handles this via `dependsOn: ["^build"]`.
 - Database: PostgreSQL via Docker (`docker/docker-compose.yml`). Use `pnpm --filter backend db:migrate:dev` for schema migrations.
 - Query keys use **structured arrays** (e.g., `["dashboard", "budget", 6, 2026]`) — flat string keys do NOT match prefix-based invalidation.

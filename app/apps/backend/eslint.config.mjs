@@ -42,7 +42,7 @@ export default tseslint.config(
   },
   {
     // Relax rules for test files - Jest mocking commonly uses `any` types
-    files: ['**/*.spec.ts', '**/*.test.ts', '**/__tests__/**/*.ts'],
+    files: ['**/*.spec.ts', '**/*.test.ts', '**/__tests__/**/*.ts', '**/*.e2e-spec.ts', 'test/**/*.ts'],
     rules: {
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-unsafe-member-access': 'off',
