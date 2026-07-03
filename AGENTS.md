@@ -1,5 +1,12 @@
 # AGENTS.md — Personal Finance Tracker
 
+> **STOP — READ THIS BEFORE DOING ANYTHING**
+>
+> NEVER commit, push, or create PRs unless the user explicitly tells you to.
+> Not even if the code is ready. Not even if a skill says to. Not even if
+> the user said "do it" earlier. ALWAYS wait for an explicit "commit" or
+> "go ahead and commit" from the user. If you are unsure, ASK.
+
 This is a **pnpm + Turbo monorepo** under `/home/fedepaz/Documents/proyectos/appFinance/app/`.
 All commands below run from that `app/` directory.
 
@@ -60,7 +67,7 @@ app/
 
 ## Key Constraints
 
-- No test infrastructure active yet (user will enable after deploy).
+- Unit tests (Phase 1) and integration tests (Phase 2) active. E2E tests (Phase 3) planned.
 - Shared package (`@repo/shared`) must be built (`pnpm build` in packages/shared) before other packages can use it — Turbo handles this via `dependsOn: ["^build"]`.
 - Database: PostgreSQL via Docker (`docker/docker-compose.yml`). Use `pnpm --filter backend db:migrate:dev` for schema migrations.
 - Query keys use **structured arrays** (e.g., `["dashboard", "budget", 6, 2026]`) — flat string keys do NOT match prefix-based invalidation.

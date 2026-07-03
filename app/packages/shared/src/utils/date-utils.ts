@@ -28,10 +28,9 @@ export function calculateNextDate(
   }
 
   const now = new Date();
-  now.setHours(12, 0, 0, 0);
   next.setHours(12, 0, 0, 0);
 
-    while (next < now) {
+  while (next < now) {
     switch (frequency) {
       case "MONTHLY":
         next.setMonth(next.getMonth() + 1);
