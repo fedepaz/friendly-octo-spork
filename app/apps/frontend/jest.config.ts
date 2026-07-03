@@ -1,8 +1,9 @@
-// apps/frontend/jest.config.ts
+// apps/frontend/jest.setup.ts
 
 import type { Config } from "jest";
 import nextJest from "next/jest";
 
+process.env.NEXT_PUBLIC_API_URL = "http://localhost:3001";
 const createJestConfig = nextJest({
   dir: "./",
 });

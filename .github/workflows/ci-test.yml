@@ -14,9 +14,13 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: "pnpm"
+          cache-dependency-path: app/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
         working-directory: app
+      - name: Generate Prisma Client
+        working-directory: app/apps/backend
+        run: npx prisma generate
       - run: pnpm build --filter=@repo/shared
         working-directory: app
       - run: pnpm lint
@@ -32,9 +36,13 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: "pnpm"
+          cache-dependency-path: app/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
         working-directory: app
+      - name: Generate Prisma Client
+        working-directory: app/apps/backend
+        run: npx prisma generate
       - run: pnpm build --filter=@repo/shared
         working-directory: app
       - run: pnpm test
@@ -66,10 +74,13 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 20
-          cache: 'pnpm'
-
+          cache: "pnpm"
+          cache-dependency-path: app/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
         working-directory: app
+      - name: Generate Prisma Client
+        working-directory: app/apps/backend
+        run: npx prisma generate
       - run: pnpm build --filter=@repo/shared
         working-directory: app
 
