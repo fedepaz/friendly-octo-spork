@@ -1,5 +1,12 @@
 # AGENTS.md — Personal Finance Tracker
 
+> **STOP — READ THIS BEFORE DOING ANYTHING**
+>
+> NEVER commit, push, or create PRs unless the user explicitly tells you to.
+> Not even if the code is ready. Not even if a skill says to. Not even if
+> the user said "do it" earlier. ALWAYS wait for an explicit "commit" or
+> "go ahead and commit" from the user. If you are unsure, ASK.
+
 This is a **pnpm + Turbo monorepo** under `/home/fedepaz/Documents/proyectos/appFinance/app/`.
 All commands below run from that `app/` directory.
 
