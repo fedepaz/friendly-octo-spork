@@ -24,6 +24,7 @@ COPY apps/backend ./apps/backend
 COPY packages/shared ./packages/shared
 
 RUN pnpm install --frozen-lockfile
+RUN pnpm --filter @repo/shared build
 RUN pnpm --filter backend build
 RUN pnpm deploy --filter backend --prod --legacy /deploy
 

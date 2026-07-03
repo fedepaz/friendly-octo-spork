@@ -8,19 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v6
-        with:
-          version: 10.33.2
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 20
-          cache: "pnpm"
-          cache-dependency-path: app/pnpm-lock.yaml
-      - run: pnpm install --frozen-lockfile
-        working-directory: app
-      - name: Generate Prisma Client
-        working-directory: app/apps/backend
-        run: npx prisma generate
+      - uses: ./.github/actions/setup
       - run: pnpm build --filter=@repo/shared
         working-directory: app
       - run: pnpm lint
@@ -30,19 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v6
-        with:
-          version: 10.33.2
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 20
-          cache: "pnpm"
-          cache-dependency-path: app/pnpm-lock.yaml
-      - run: pnpm install --frozen-lockfile
-        working-directory: app
-      - name: Generate Prisma Client
-        working-directory: app/apps/backend
-        run: npx prisma generate
+      - uses: ./.github/actions/setup
       - run: pnpm build --filter=@repo/shared
         working-directory: app
       - run: pnpm test
@@ -68,19 +44,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v6
-        with:
-          version: 10.33.2
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 20
-          cache: "pnpm"
-          cache-dependency-path: app/pnpm-lock.yaml
-      - run: pnpm install --frozen-lockfile
-        working-directory: app
-      - name: Generate Prisma Client
-        working-directory: app/apps/backend
-        run: npx prisma generate
+      - uses: ./.github/actions/setup
       - run: pnpm build --filter=@repo/shared
         working-directory: app
 

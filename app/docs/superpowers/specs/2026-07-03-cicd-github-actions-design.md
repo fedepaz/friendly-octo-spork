@@ -31,10 +31,14 @@ feature/* → dev → main
 
 ```
 appFinance/                  # repo root (where .git lives)
-├── .github/workflows/       # GitHub Actions reads from here
-│   ├── ci-test.yml          # Reusable workflow (workflow_call)
-│   ├── pr-checks.yml        # PR gate → dev or main
-│   └── deploy.yml           # Push to main → test + build + deploy placeholder
+├── .github/
+│   ├── actions/
+│   │   └── setup/
+│   │       └── action.yml   # Composite action: checkout + pnpm + node + install + prisma
+│   └── workflows/
+│       ├── ci-test.yml      # Reusable workflow (workflow_call)
+│       ├── pr-checks.yml    # PR gate → dev or main
+│       └── deploy.yml       # Push to main → test + build + deploy placeholder
 └── app/                     # pnpm monorepo root
     ├── apps/
     ├── packages/
@@ -43,7 +47,7 @@ appFinance/                  # repo root (where .git lives)
 
 **Key detail**: `.github/` lives at the repo root (`appFinance/`), NOT inside `app/`. GitHub Actions only reads workflows from the repository root.
 
-**All pnpm steps use `working-directory: app`** since `package.json` and the monorepo live inside `app/`, not at the repo root. pnpm version is pinned explicitly (`10.33.2`) because `pnpm/action-setup` can't auto-detect it from the repo root `package.json` (which doesn't exist).
+**Composite action** (`.github/actions/setup/action.yml`): Bundles the repeated setup steps (checkout, pnpm, node, install, prisma generate) into a single reusable action. All 3 jobs in `ci-test.yml` call this instead of duplicating 6 steps each. Change the setup once, apply everywhere.
 
 **Deleted**: `test.yml` (superseded by `pr-checks.yml`)
 
@@ -53,21 +57,25 @@ appFinance/                  # repo root (where .git lives)
 
 **Trigger**: `workflow_call`
 
+All 3 jobs use the composite action `./.github/actions/setup` for setup:
+
+```yaml
+- uses: ./.github/actions/setup
+```
+
+This single step does: checkout → pnpm (pinned to `10.33.2`) → Node 20 → `pnpm install` → `prisma generate`.
+
 ### Jobs
 
 #### 1. `lint`
 
-- Checkout
-- Setup pnpm (pinned to `10.33.2`) + Node 20
-- Install dependencies (`pnpm install --frozen-lockfile`) — `working-directory: app`
+- Setup (composite action)
 - Build shared package (`pnpm build --filter=@repo/shared`) — `working-directory: app`
 - Run linter (`pnpm lint`) — `working-directory: app`
 
 #### 2. `unit-tests`
 
-- Checkout
-- Setup pnpm (pinned) + Node 20
-- Install dependencies — `working-directory: app`
+- Setup (composite action)
 - Build shared package — `working-directory: app`
 - Run unit tests (`pnpm test`) — `working-directory: app`
 
@@ -78,9 +86,7 @@ appFinance/                  # repo root (where .git lives)
   - `POSTGRES_PASSWORD: test`
   - `POSTGRES_DB: appfinance_test`
   - Health check: `pg_isready`
-- Checkout
-- Setup pnpm (pinned) + Node 20
-- Install dependencies — `working-directory: app`
+- Setup (composite action)
 - Build shared package — `working-directory: app`
 - Run Prisma migrations (`npx prisma migrate deploy`) — `working-directory: app/apps/backend`
 - Run integration tests with env vars — `working-directory: app/apps/backend`:
