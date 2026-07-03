@@ -1,26 +1,48 @@
-name: Tests
+name: CI Tests
 
 on:
-  pull_request:
-    branches: [main]
+  workflow_call:
 
 jobs:
-  unit-tests:
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.33.2
+      - uses: actions/setup-node@v6
         with:
           node-version: 20
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
+        working-directory: app
       - run: pnpm build --filter=@repo/shared
+        working-directory: app
+      - run: pnpm lint
+        working-directory: app
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.33.2
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+        working-directory: app
+      - run: pnpm build --filter=@repo/shared
+        working-directory: app
       - run: pnpm test
+        working-directory: app
 
   integration-tests:
     runs-on: ubuntu-latest
-    
+
     services:
       postgres:
         image: postgres:16-alpine
@@ -37,24 +59,28 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.33.2
+      - uses: actions/setup-node@v6
         with:
           node-version: 20
           cache: 'pnpm'
-      
+
       - run: pnpm install --frozen-lockfile
+        working-directory: app
       - run: pnpm build --filter=@repo/shared
-      
+        working-directory: app
+
       - name: Setup test database
-        working-directory: apps/backend
+        working-directory: app/apps/backend
         env:
           DATABASE_URL: postgresql://test:test@localhost:5432/appfinance_test
         run: npx prisma migrate deploy
-      
+
       - name: Run integration tests
-        working-directory: apps/backend
+        working-directory: app/apps/backend
         env:
           DATABASE_URL: postgresql://test:test@localhost:5432/appfinance_test
           DATABASE_HOST: localhost
