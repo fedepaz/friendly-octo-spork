@@ -1,5 +1,5 @@
 name: "Setup Monorepo"
-description: "Checkout, install pnpm + Node, install deps, generate Prisma client"
+description: "Install pnpm + Node, install deps, generate Prisma client"
 
 inputs:
   node-version:
@@ -15,8 +15,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v6
-
     - uses: pnpm/action-setup@v6
       with:
         version: ${{ inputs.pnpm-version }}
