@@ -18,6 +18,9 @@ jobs:
           cache-dependency-path: app/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
         working-directory: app
+      - name: Generate Prisma Client
+        working-directory: app/apps/backend
+        run: npx prisma generate
       - run: pnpm build --filter=@repo/shared
         working-directory: app
       - run: pnpm lint
@@ -37,6 +40,9 @@ jobs:
           cache-dependency-path: app/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
         working-directory: app
+      - name: Generate Prisma Client
+        working-directory: app/apps/backend
+        run: npx prisma generate
       - run: pnpm build --filter=@repo/shared
         working-directory: app
       - run: pnpm test
@@ -72,6 +78,9 @@ jobs:
           cache-dependency-path: app/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
         working-directory: app
+      - name: Generate Prisma Client
+        working-directory: app/apps/backend
+        run: npx prisma generate
       - run: pnpm build --filter=@repo/shared
         working-directory: app
 
