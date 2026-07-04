@@ -23,12 +23,7 @@ services:
       && nginx -g 'daemon off;'"
 
   nextjs:
-    build:
-      context: ../app
-      dockerfile: apps/frontend/Dockerfile
-      args:
-        # Must be passed at build time for client-side bundles
-        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+    image: ghcr.io/fedepaz/appfinance-frontend:latest
     restart: unless-stopped
 
     depends_on:
@@ -50,9 +45,7 @@ services:
       - app-network
 
   api:
-    build:
-      context: ../app
-      dockerfile: apps/backend/Dockerfile
+    image: ghcr.io/fedepaz/appfinance-backend:latest
     restart: unless-stopped
     env_file:
       - .env
