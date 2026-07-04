@@ -46,6 +46,7 @@ jobs:
           context: app
           file: app/apps/frontend/Dockerfile
           push: true
+          no-cache: true
           tags: |
             ${{ env.FRONTEND_IMAGE }}:main-${{ github.sha }}
             ${{ env.FRONTEND_IMAGE }}:latest
