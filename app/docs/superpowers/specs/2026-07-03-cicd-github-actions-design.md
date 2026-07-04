@@ -133,6 +133,7 @@ jobs:
   - Tag: `ghcr.io/fedepaz/appfinance-frontend:main-<sha>`
   - Tag: `ghcr.io/fedepaz/appfinance-frontend:latest`
   - Build arg: `NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}` (from GitHub Actions variable)
+  - `no-cache: true` — forces fresh build every time to ensure `NEXT_PUBLIC_API_URL` is correctly baked into the image (Docker layer cache doesn't invalidate on build-arg value changes)
 
 #### 3. `deploy` (needs: build-and-push)
 - **Placeholder** — empty job with TODO comment
