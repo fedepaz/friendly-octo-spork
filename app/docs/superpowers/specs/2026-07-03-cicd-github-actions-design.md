@@ -8,7 +8,7 @@ Replace the existing single-purpose `test.yml` workflow with a three-file GitHub
 
 - PRs to `dev` or `main` must pass lint + unit + integration tests before merge
 - Pushes to `main` build and push Docker images to GitHub Container Registry
-- Deploy step is a placeholder — manual `git pull && docker compose up --build` for now
+- Deploy step is a placeholder — manual `docker compose pull && up -d` for now
 - DRY: test logic defined once in a reusable workflow
 
 ## Non-Goals
@@ -132,6 +132,7 @@ jobs:
 - Build and push frontend Docker image:
   - Tag: `ghcr.io/fedepaz/appfinance-frontend:main-<sha>`
   - Tag: `ghcr.io/fedepaz/appfinance-frontend:latest`
+  - Build arg: `NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}` (from GitHub Actions variable)
 
 #### 3. `deploy` (needs: build-and-push)
 - **Placeholder** — empty job with TODO comment
@@ -163,7 +164,125 @@ Pinned to current majors (verified against Context7 docs, July 2026):
 
 - `GITHUB_TOKEN` — automatically available in GitHub Actions, used for GHCR auth
 
+## Environment Variables
+
+### GitHub Actions Variables
+
+Set in repo Settings → Secrets and variables → Actions → Variables tab:
+
+| Variable | Value | Purpose |
+|----------|-------|---------|
+| `NEXT_PUBLIC_API_URL` | `https://finance.cabecitanegra.dpdns.org/api` | Frontend API base URL, baked into Next.js bundle at build time |
+
+**Important**: `NEXT_PUBLIC_*` variables are inlined at build time by Next.js. The value is string-replaced in the JavaScript bundle during `docker build`. Changing this variable requires rebuilding the frontend image.
+
+### Docker Compose Deploy Variables
+
+Set in `docker/.env` (not committed to git):
+
+| Variable | Purpose |
+|----------|---------|
+| `POSTGRES_USER` | PostgreSQL username |
+| `POSTGRES_PASSWORD` | PostgreSQL password |
+| `NGINX_HOST_PORT` | External port for nginx (default: 8081) |
+| `SERVER_NAME` | Domain name for nginx server_name directive |
+| `NEXT_PUBLIC_API_URL` | Must match GitHub Actions variable for local builds |
+
+---
+
+## Docker Compose Deploy Configuration
+
+The `docker/docker-compose.deploy.yml` file pulls pre-built images from GHCR instead of building from Dockerfiles. This follows the "build once, deploy anywhere" pattern.
+
+### Why `image:` instead of `build:`
+
+| Approach | Build location | Config flexibility | Image reuse |
+|----------|---------------|-------------------|-------------|
+| `build:` | Server builds from Dockerfile | Config baked at build time | Must rebuild per environment |
+| `image:` (GHCR) | CI builds once, pushes to registry | Same image, different `.env` | Single image works everywhere |
+
+**Current setup**: CI builds images with `NEXT_PUBLIC_API_URL` baked in. Server pulls images and configures other variables via `.env`.
+
+### Service Configuration
+
+```yaml
+services:
+  nginx:
+    image: nginx:alpine              # Public image from Docker Hub
+    # ... config from .env
+
+  nextjs:
+    image: ghcr.io/fedepaz/appfinance-frontend:latest  # From GHCR
+    # ... config from .env
+
+  api:
+    image: ghcr.io/fedepaz/appfinance-backend:latest   # From GHCR
+    # ... config from .env
+
+  db:
+    image: postgres:16-alpine        # Public image from Docker Hub
+    # ... config from .env
+```
+
+---
+
+## Server Deployment Workflow
+
+### Prerequisites
+
+- Docker and Docker Compose installed on server
+- `.env` file with production credentials
+- `nginx.conf.template` file
+- Access to GHCR (images are public, no auth needed)
+
+### Files needed on server
+
+```
+/deploy/
+├── docker-compose.deploy.yml
+├── nginx.conf.template
+└── .env                    # secrets (never commit this)
+```
+
+### Deployment commands
+
+After CI pushes new images to GHCR:
+
+```bash
+# Pull new images
+docker compose -f docker-compose.deploy.yml pull
+
+# Restart services with new images
+docker compose -f docker-compose.deploy.yml up -d
+
+# Check logs
+docker compose -f docker-compose.deploy.yml logs -f
+```
+
+### First-time setup
+
+If starting fresh (no existing database):
+
+```bash
+# Pull and start all services
+docker compose -f docker-compose.deploy.yml up -d
+
+# Check status
+docker compose -f docker-compose.deploy.yml ps
+```
+
+If migrating from local dev (existing volume with different credentials):
+
+```bash
+# Wipe volume and start fresh
+docker compose -f docker-compose.deploy.yml down -v
+docker compose -f docker-compose.deploy.yml up -d
+```
+
+---
+
 ## What's Still Open
 
-- **Deploy mechanism**: How to get images from GHCR onto the homelab server (SSH + docker compose pull? Watchtower? Self-hosted runner?) — to be decided later
+- **Automated deploy**: SSH + docker compose pull/restart (or Watchtower/self-hosted runner) — currently manual
 - **Branch protection rules**: Must be configured manually in GitHub Settings → Branches for `dev` and `main` (required PR, required status checks)
+- **NEXT_PUBLIC_API_URL runtime injection**: Consider using `next-public-env` package to avoid rebuilds when API URL changes (see research notes)
