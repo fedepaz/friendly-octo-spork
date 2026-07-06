@@ -6,6 +6,8 @@ import 'dotenv/config';
 import { AppModule } from './app.module';
 import { Logger } from 'nestjs-pino';
 import { AllExceptionsFilter } from './shared/filters/all-exceptions.filter';
+import { AuditCrudInterceptor } from './shared/interceptors/audit-crud.interceptor';
+import { PrismaService } from './infra/prisma/prisma.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
@@ -15,6 +17,7 @@ async function bootstrap() {
   app.useGlobalFilters(
     new AllExceptionsFilter(httpAdapterHost, app.get(Logger)),
   );
+  app.useGlobalInterceptors(new AuditCrudInterceptor(app.get(PrismaService)));
 
   const configService = app.get(ConfigService);
 
