@@ -3,13 +3,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { cardService } from "../api/cardService";
 import { CardStatementDTO } from "@repo/shared";
-
-export const cardProfileQueryKeys = {
-  all: () => ["cards"] as const,
-  byId: (id: string) => [...cardProfileQueryKeys.all(), id] as const,
-  byMonth: (year: number, month: number) =>
-    [...cardProfileQueryKeys.all(), year, month] as const,
-};
+import { cardProfileQueryKeys } from "@/lib/queryKeys";
 
 export const useCardTransactionsByMonth = (year: number, month: number) => {
   return useSuspenseQuery<CardStatementDTO, Error>({

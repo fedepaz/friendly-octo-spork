@@ -11,11 +11,6 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   },
-  experimental: {
-    outputFileTracingIncludes: {
-      "/": ["./messages/**"],
-    },
-  },
   // For local development, we need to proxy the API requests to the backend
   //allowedDevOrigins: ["http://localhost:3000"],
   // For local development, we need to proxy the API requests to the backend

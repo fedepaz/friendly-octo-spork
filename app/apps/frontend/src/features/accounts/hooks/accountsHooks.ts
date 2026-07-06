@@ -3,11 +3,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { accountService } from "../api/accountService";
 import { AccountDTO } from "@repo/shared";
-
-export const accountProfileQueryKeys = {
-  all: () => ["accounts"] as const,
-  byId: (id: string) => [...accountProfileQueryKeys.all(), "byId", id] as const,
-};
+import { accountProfileQueryKeys } from "@/lib/queryKeys";
 
 export const useAccounts = () => {
   return useSuspenseQuery<AccountDTO[]>({

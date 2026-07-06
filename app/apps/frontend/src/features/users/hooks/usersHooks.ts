@@ -3,15 +3,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { userService } from "../api/userService";
 import { UserProfileDto } from "@repo/shared";
-
-export const userProfileQueryKeys = {
-  all: () => ["users"] as const,
-  byUserName: (username: string) =>
-    [...userProfileQueryKeys.all(), "byUserName", username] as const,
-  byTenantId: (tenantId: string) =>
-    [...userProfileQueryKeys.all(), "byTenantId", tenantId] as const,
-  admin: () => ["users", "allAdmin"] as const,
-};
+import { userProfileQueryKeys } from "@/lib/queryKeys";
 
 export const useUsers = () => {
   return useSuspenseQuery<UserProfileDto[]>({
@@ -23,7 +15,7 @@ export const useUsers = () => {
 
 export const useUsersById = (id: string) => {
   return useSuspenseQuery<UserProfileDto | null>({
-    queryKey: ["users", "byId", id],
+    queryKey: userProfileQueryKeys.byId(id),
     queryFn: () => userService.fetchById(id),
     retry: 1, // Retry once to account for transient network issues
   });
