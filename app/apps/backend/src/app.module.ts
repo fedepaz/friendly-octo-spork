@@ -19,6 +19,8 @@ import { TransactionModule } from './modules/transactions/transaction.module';
 import { UsersModule } from './modules/users/users.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { CardModule } from './modules/card/card.module';
+import { PermissionsModule } from './modules/permissions/permissions.module';
+import { PermissionsGuard } from './modules/permissions/guards/permissions.guard';
 import { RequestIdMiddleware } from './shared/middleware/request-id.middleware';
 
 @Module({
@@ -77,11 +79,16 @@ import { RequestIdMiddleware } from './shared/middleware/request-id.middleware';
     TransactionModule,
     UsersModule,
     CardModule,
+    PermissionsModule,
   ],
   providers: [
     {
       provide: APP_GUARD,
       useClass: GlobalAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: PermissionsGuard,
     },
   ],
 })
