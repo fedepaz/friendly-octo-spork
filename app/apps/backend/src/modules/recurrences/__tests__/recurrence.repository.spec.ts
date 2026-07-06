@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RecurrenceRepository } from '../recurrence.repository';
-import { PrismaService } from '../../infra/prisma/prisma.service';
+import { RecurrenceRepository } from '../repositories/recurrence.repository';
+import { PrismaService } from '../../../infra/prisma/prisma.service';
 
 describe('RecurrenceRepository', () => {
   let repository: RecurrenceRepository;

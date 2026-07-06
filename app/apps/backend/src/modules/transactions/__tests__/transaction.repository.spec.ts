@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TransactionRepository } from '../transaction.repository';
-import { PrismaService } from '../../infra/prisma/prisma.service';
+import { TransactionRepository } from '../repositories/transaction.repository';
+import { PrismaService } from '../../../infra/prisma/prisma.service';
 
 describe('TransactionRepository', () => {
   let repository: TransactionRepository;

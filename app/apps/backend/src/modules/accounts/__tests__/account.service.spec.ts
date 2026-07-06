@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BadRequestException } from '@nestjs/common';
 import { AccountService } from '../account.service';
-import { AccountRepository } from '../../../repositories/account.repository';
-import type { AccountWithRelations } from '../../../repositories/account.repository';
+import { AccountRepository } from '../repositories/account.repository';
+import type { AccountWithRelations } from '../repositories/account.repository';
 
 // Helper to create a mock AccountWithRelations with Decimal-like balance
 function mockAccount(

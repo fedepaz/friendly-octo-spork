@@ -13,7 +13,7 @@ import {
 import { CardService } from './card.service';
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
 import { AuthUser } from '../auth/types/auth-user.type';
-import { CardTransactionsWithRelations } from '../../repositories/card.repository';
+import { CardTransactionsWithRelations } from './repositories/card.repository';
 import {
   CardCloseInputDTO,
   CardCloseResponseDTO,

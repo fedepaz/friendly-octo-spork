@@ -7,7 +7,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { UserRepository } from '../../repositories/user.repository';
+import { UserRepository } from './repositories/user.repository';
 import { UserProfileDto } from '@repo/shared';
 
 @Injectable()

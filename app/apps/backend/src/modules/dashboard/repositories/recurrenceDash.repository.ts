@@ -3,7 +3,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../infra/prisma/prisma.service';
 
-import { RecurrenceWithRelations } from '../../../repositories/recurrence.repository';
+import { RecurrenceWithRelations } from '../../recurrences/repositories/recurrence.repository';
 
 @Injectable()
 export class RecurrenceDashRepository {

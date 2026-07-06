@@ -3,7 +3,7 @@
 import { Module } from '@nestjs/common';
 import { AccountController } from './account.controller';
 import { AccountService } from './account.service';
-import { AccountRepository } from '../../repositories/account.repository';
+import { AccountRepository } from './repositories/account.repository';
 
 @Module({
   controllers: [AccountController],

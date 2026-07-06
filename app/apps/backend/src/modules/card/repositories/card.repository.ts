@@ -1,10 +1,10 @@
 // backend/src/repositories/card.repository.ts
 
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../infra/prisma/prisma.service';
-import { RecurrenceWithRelations } from './recurrence.repository';
+import { PrismaService } from '../../../infra/prisma/prisma.service';
+import { RecurrenceWithRelations } from '../../recurrences/repositories/recurrence.repository';
 import { Prisma } from '@prisma/client';
-import { TransactionWithRelations } from './transaction.repository';
+import { TransactionWithRelations } from '../../transactions/repositories/transaction.repository';
 
 export type CardTransactionsWithRelations = Prisma.TransactionGetPayload<{
   include: {

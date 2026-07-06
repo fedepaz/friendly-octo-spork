@@ -1,7 +1,7 @@
 // backend/src/repositories/recurrence.repository.ts
 
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../infra/prisma/prisma.service';
+import { PrismaService } from '../../../infra/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 import { TransactionType } from 'generated/prisma';
 

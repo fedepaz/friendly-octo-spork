@@ -2,7 +2,7 @@
 
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { PrismaService } from '../infra/prisma/prisma.service';
+import { PrismaService } from '../../../infra/prisma/prisma.service';
 
 export type TransactionWithRelations = Prisma.TransactionGetPayload<{
   include: {
