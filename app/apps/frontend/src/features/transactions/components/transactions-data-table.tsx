@@ -10,6 +10,7 @@ import { TransactionDTO } from "@repo/shared";
 import { TransactionViewForm } from "./transactions-view-form";
 import { MonthSelector } from "@/components/data-display/data-table/month-selector";
 import { getCurrentMonth, getCurrentYear } from "@/lib/date-utils";
+import { EmptyState } from "@/components/common/empty-state";
 
 export function TransactionsDataTable() {
   const tdT = useTranslations("TransactionsDashboard");
@@ -19,6 +20,10 @@ export function TransactionsDataTable() {
 
   const [selectedTransaction, setSelectedTransaction] =
     useState<TransactionDTO | null>(null);
+
+  if (!transactions || transactions.length === 0) {
+    return <EmptyState />;
+  }
 
   return (
     <>

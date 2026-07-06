@@ -11,6 +11,7 @@ import { RecurrenceViewForm } from "./recurrence-view-form";
 import { MonthSelector } from "@/components/data-display/data-table/month-selector";
 import { TransTypeSelector } from "@/components/data-display/data-table/transType-selector";
 import { getCurrentMonth, getCurrentYear } from "@/lib/date-utils";
+import { EmptyState } from "@/components/common/empty-state";
 
 export function RecurrencesDataTable() {
   const rdT = useTranslations("RecurrencesDashboard");
@@ -32,6 +33,10 @@ export function RecurrencesDataTable() {
       <MonthSelector onMonthChange={setMonth} />
     </div>
   );
+
+  if (!recurrences || recurrences.length === 0) {
+    return <EmptyState />;
+  }
 
   return (
     <>

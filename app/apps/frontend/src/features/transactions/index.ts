@@ -1,4 +1,11 @@
 // src/features/transactions/index.ts
 
-export * from "./components/TransactionsDashboard";
-export * from "./components/transactions-dashboard-skeleton";
+// Components
+export { TransactionsDashboard } from "./components/TransactionsDashboard";
+export { TransactionsDashboardSkeleton } from "./components/transactions-dashboard-skeleton";
+
+// Hooks
+export { useTransactions, useTransactionById } from "./hooks/transactionsHooks";
+
+// Services
+export { transactionService } from "./api/transactionsService";

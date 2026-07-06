@@ -1,4 +1,15 @@
 // src/features/recurrences/index.ts
 
-export * from "./components/RecurrencesDashboard";
-export * from "./components/recurrences-dashboard-skeleton";
+// Components
+export { RecurrencesDashboard } from "./components/RecurrencesDashboard";
+export { RecurrencesDashboardSkeleton } from "./components/recurrences-dashboard-skeleton";
+
+// Hooks
+export {
+  useRecurrences,
+  useRecurrenceById,
+  useRecurrencesByMonth,
+} from "./hooks/recurrenceHooks";
+
+// Services
+export { recurrenceService } from "./api/recurrenceService";

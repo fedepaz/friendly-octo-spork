@@ -2,6 +2,7 @@ import { toast } from "sonner";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { logger } from "@/lib/logger";
 
 interface UseDataTableActionsOptions<T> {
   entityName: string;
@@ -43,7 +44,7 @@ export function useDataTableActions<T extends { id: string }>({
       toast.success(dtaT("deleteSuccess", { entityName }));
     } catch (error) {
       toast.error(dtaT("deleteError", { entityName }));
-      console.error(`Failed to delete ${entityName}:`, error);
+      logger.error(`Failed to delete ${entityName}:`, error);
     }
   };
 

@@ -8,7 +8,7 @@ import {
   dashboardQueryKeys,
   updateCardProfileQueryKeys,
 } from "@/lib/queryKeys";
-import type { QueryFilters } from "@tanstack/react-query";
+import type { QueryClient, QueryFilters } from "@tanstack/react-query";
 
 type MutationName = "createTransaction" | "createAccount" | "updateCardBalance";
 
@@ -32,3 +32,16 @@ export const mutationInvalidations: Record<MutationName, QueryFilters[]> = {
     { queryKey: accountProfileQueryKeys.all() },
   ],
 };
+
+export type MutationNameType = keyof typeof mutationInvalidations;
+
+export function invalidateQueries(
+  queryClient: QueryClient,
+  mutation: MutationNameType,
+) {
+  const entry = mutationInvalidations[mutation];
+  if (!entry) return;
+  for (const filters of entry) {
+    queryClient.invalidateQueries(filters);
+  }
+}

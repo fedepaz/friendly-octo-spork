@@ -12,6 +12,7 @@ import { mapServerErrorsToForm } from "@/lib/utils/form-error-mapper";
 import { ApiError } from "@/lib/api/client-fetch";
 import { parseApiError } from "@/lib/api/error-handler";
 import { toast } from "sonner";
+import { logger } from "@/lib/logger";
 
 export function SmartFormProvider({ onClose }: { onClose: () => void }) {
   const [activeStep, setActiveStep] = useState(0);
@@ -47,7 +48,7 @@ export function SmartFormProvider({ onClose }: { onClose: () => void }) {
 
     try {
       setErrorMessage(null);
-      console.log(
+      logger.debug(
         "🚀 ~ file: SmartFormProvider.tsx ~ line 50 ~ onSubmit ~ data",
         data,
       );
