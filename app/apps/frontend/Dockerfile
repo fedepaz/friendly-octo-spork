@@ -35,6 +35,7 @@ RUN apk update && apk upgrade
 RUN corepack enable
 WORKDIR /app
 ENV NODE_ENV=production
+ENV HOSTNAME="0.0.0.0"
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN addgroup -S nodejs && adduser -S nodejs -G nodejs

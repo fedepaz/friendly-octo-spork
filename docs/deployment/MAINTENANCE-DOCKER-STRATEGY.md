@@ -28,6 +28,63 @@ docker image prune -f
 docker ps --filter "health=healthy"
 ```
 
+### Docker Cleanup & Disk Space
+
+#### Safe Cleanup Commands (Recommended)
+```bash
+# Remove only dangling (untagged) images — safe, no impact on running containers
+docker image prune
+
+# Remove stopped containers
+docker container prune
+
+# Free build cache (can reclaim 10-30GB)
+docker builder prune --all
+
+# Combined safe cleanup
+docker image prune && docker container prune && docker builder prune --all
+```
+
+#### Dangerous Commands (Avoid on Production)
+```bash
+# ⚠️ DELETES everything unused — images, networks, volumes
+docker system prune -a --volumes
+
+# Why it's dangerous:
+# - Removes ALL images not tied to running containers
+# - Removes anonymous volumes (could lose data)
+# - Removes unused networks (breaks inter-container communication)
+# - On server: removes stopped containers that should auto-restart
+```
+
+#### Named Volumes Protection
+PostgreSQL uses a **named volume** (`postgres_data`), which is safe from `prune --volumes`:
+
+```yaml
+# docker-compose.deploy.yml
+volumes:
+  postgres_data:/var/lib/postgresql/data  # ← Named volume (safe)
+
+volumes:
+  postgres_data:  # ← Declared at root level
+```
+
+| Volume Type | Removed by `prune -a` | Removed by `prune --volumes` |
+|------------|----------------------|------------------------------|
+| Named (`postgres_data:/...`) | No | No |
+| Anonymous (`/var/lib/...` only) | No | **Yes** |
+
+#### Server Cleanup Routine
+```bash
+# Weekly cleanup (safe)
+docker image prune -f
+docker container prune -f
+docker builder prune --all -f
+
+# Check disk usage
+docker system df
+```
+
 ### Database
 ```bash
 # Connect to PostgreSQL
