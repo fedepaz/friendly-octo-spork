@@ -1,11 +1,9 @@
-import path from "path";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   // This is required for Next.js 13 compatibility
   output: "standalone",
-  outputFileTracingRoot: path.join(__dirname, "../../"),
   reactStrictMode: true,
   transpilePackages: ["@repo/shared"],
   env: {

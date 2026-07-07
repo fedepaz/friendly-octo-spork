@@ -68,6 +68,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
           `../components/common/LanguageSwitcher/messages/${locale}.json`
         )
       ).default,
+      ...(
+        await import(
+          `../components/common/EmptyState/messages/${locale}.json`
+        )
+      ).default,
 
       // Data Table
       ...(
