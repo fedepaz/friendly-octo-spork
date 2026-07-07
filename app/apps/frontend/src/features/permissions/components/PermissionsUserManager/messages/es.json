@@ -1,0 +1,8 @@
+{
+  "PermissionsUserManager": {
+    "title": "Permisos del usuario",
+    "searchEntity": "Buscar entidad...",
+    "discard": "Descartar",
+    "save": "Guardar"
+  }
+}

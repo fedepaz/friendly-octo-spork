@@ -1,0 +1,7 @@
+{
+  "UserSelector": {
+    "selectUser": "Select user...",
+    "searchUser": "Search user...",
+    "noUsers": "No users found."
+  }
+}

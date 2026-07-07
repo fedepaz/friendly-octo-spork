@@ -1,0 +1,9 @@
+{
+  "PermissionTableMeta": {
+    "scopeNone": "No access",
+    "scopeOwn": "Own",
+    "scopeAll": "All",
+    "typeProcess": "Process",
+    "typeReadOnly": "Read only"
+  }
+}

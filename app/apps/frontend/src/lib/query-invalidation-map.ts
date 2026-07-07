@@ -7,6 +7,7 @@ import {
   cardProfileQueryKeys,
   dashboardQueryKeys,
   updateCardProfileQueryKeys,
+  adminPermissionsQueryKeys,
 } from "@/lib/queryKeys";
 import type { QueryClient, QueryFilters } from "@tanstack/react-query";
 
@@ -33,13 +34,38 @@ export const mutationInvalidations: Record<MutationName, QueryFilters[]> = {
   ],
 };
 
+type DataCallback = (
+  queryClient: QueryClient,
+  data: Record<string, unknown>,
+) => void;
+
+const dataCallbacks: Record<string, DataCallback> = {
+  setUserPermissions: (queryClient, data) => {
+    queryClient.invalidateQueries({
+      queryKey: adminPermissionsQueryKeys.byUserId(data.userId as string),
+    });
+    queryClient.invalidateQueries({
+      queryKey: adminPermissionsQueryKeys.tables(),
+    });
+  },
+};
+
 export type MutationNameType = keyof typeof mutationInvalidations;
 
 export function invalidateQueries(
   queryClient: QueryClient,
-  mutation: MutationNameType,
+  mutation: MutationNameType | string,
+  data?: Record<string, unknown>,
 ) {
-  const entry = mutationInvalidations[mutation];
+  if (mutation === "setUserPermissions" && data) {
+    const callback = dataCallbacks[mutation];
+    if (callback) {
+      callback(queryClient, data);
+    }
+    return;
+  }
+  const entry =
+    mutationInvalidations[mutation as MutationNameType];
   if (!entry) return;
   for (const filters of entry) {
     queryClient.invalidateQueries(filters);
