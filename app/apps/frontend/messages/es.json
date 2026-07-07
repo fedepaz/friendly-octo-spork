@@ -19,6 +19,21 @@
     "selectAll": "Seleccionar todo",
     "selectRow": "Seleccionar fila"
   },
+  "AuditLogColumns": {
+    "action": "Acción",
+    "user": "Usuario",
+    "changes": "Cambios",
+    "date": "Fecha",
+    "ip": "IP",
+    "device": "Dispositivo"
+  },
+  "AuditLogsDashboard": {
+    "title": "Auditoría",
+    "description": "Registro de actividades del sistema",
+    "slideOverTitle": "Detalles del Log",
+    "logPrefix": "Log",
+    "detailPlaceholder": "Vista detallada próximamente."
+  },
   "navigation": {
     "operations": "Operaciones",
     "admin": "Administración",
@@ -38,7 +53,19 @@
     "usersActive": "Usuarios activos",
     "accountsActive": "Cuentas activas",
     "recurrencesActive": "Recurrencias activas",
-    "creditCards": "Tarjetas de crédito"
+    "creditCards": "Tarjetas de crédito",
+    "auditLogs": "Auditoría",
+    "auditLogsDesc": "Registro de actividades del sistema",
+    "userPermissions": "Permisos",
+    "userPermissionsDesc": "Configuración de acceso de usuarios",
+    "audit-logs": "Auditoría",
+    "audit-logsDesc": "Registro de actividades del sistema",
+    "user-permissions": "Permisos",
+    "user-permissionsDesc": "Configuración de acceso de usuarios",
+    "operations": "Operaciones",
+    "admin": "Administración",
+    "dev": "Desarrollo",
+    "usuarios": "Usuarios"
   },
   "alerts": {
     "dismiss": "Descartar",
@@ -75,5 +102,9 @@
     "generalError": "Algo salió mal",
     "backToHome": "Volver a la página de inicio",
     "appSubtitle": "Sistema de gestión"
+  },
+  "Permissions": {
+    "title": "Permisos de usuario",
+    "description": "Configura los permisos de acceso para cada usuario"
   }
 }

@@ -19,6 +19,21 @@
     "selectAll": "Select all",
     "selectRow": "Select row"
   },
+  "AuditLogColumns": {
+    "action": "Action",
+    "user": "User",
+    "changes": "Changes",
+    "date": "Date",
+    "ip": "IP",
+    "device": "Device"
+  },
+  "AuditLogsDashboard": {
+    "title": "Audit Logs",
+    "description": "System activity records",
+    "slideOverTitle": "Log Details",
+    "logPrefix": "Log",
+    "detailPlaceholder": "Detailed view coming soon."
+  },
   "navigation": {
     "operations": "Operations",
     "admin": "Administration",
@@ -38,7 +53,19 @@
     "usersActive": "Active users",
     "accountsActive": "Active accounts",
     "recurrencesActive": "Active recurrences",
-    "creditCards": "Credit cards"
+    "creditCards": "Credit cards",
+    "auditLogs": "Audit Logs",
+    "auditLogsDesc": "System activity records",
+    "userPermissions": "Permissions",
+    "userPermissionsDesc": "User access configuration",
+    "audit-logs": "Audit Logs",
+    "audit-logsDesc": "System activity records",
+    "user-permissions": "Permissions",
+    "user-permissionsDesc": "User access configuration",
+    "operations": "Operations",
+    "admin": "Administration",
+    "dev": "Development",
+    "usuarios": "Users"
   },
   "alerts": {
     "dismiss": "Dismiss",
@@ -75,5 +102,9 @@
     "generalError": "Something went wrong",
     "backToHome": "Back to home page",
     "appSubtitle": "Management system"
+  },
+  "Permissions": {
+    "title": "User Permissions",
+    "description": "Configure access permissions for each user"
   }
 }

@@ -383,6 +383,45 @@ export default getRequestConfig(async ({ requestLocale }) => {
         )
       ).default,
 
+      // Audit Logs Feature
+      ...(
+        await import(
+          `../features/auditLogs/components/AuditLogForm/messages/${locale}.json`
+        )
+      ).default,
+
+      // Permissions Feature
+      ...(
+        await import(
+          `../features/permissions/components/UserSelector/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/permissions/components/PermissionSelector/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/permissions/components/PermissionsUserManager/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/permissions/components/PermissionsEmptyState/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/permissions/components/PermissionsDashboard/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/permissions/components/PermissionTableMeta/messages/${locale}.json`
+        )
+      ).default,
+
       // CreateTransaction Wizard
       ...(
         await import(
