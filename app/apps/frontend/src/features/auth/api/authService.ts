@@ -6,7 +6,7 @@ import {
   ChangePasswordDto,
   LoginAuthDto,
   RegisterAuthDto,
-  UserPermissions,
+  AuthUserPermissions,
   UserProfileDto,
 } from "@repo/shared";
 
@@ -45,7 +45,7 @@ export const authService = {
   },
 
   getPermissionsMe: () => {
-    const hardCodedPermissions: UserPermissions = {
+    const hardCodedPermissions: AuthUserPermissions = {
       isAdmin: true,
       permissions: [],
     };

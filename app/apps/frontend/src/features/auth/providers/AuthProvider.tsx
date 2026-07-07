@@ -8,7 +8,7 @@ import {
 import { useAuth } from "../hooks/useAuth";
 import {
   AuthResponseDto,
-  UserPermissions,
+  AuthUserPermissions,
   UserProfileDto,
 } from "@repo/shared";
 import { usePermissions } from "../hooks/use-permissions";
@@ -27,7 +27,7 @@ type AuthContextType = {
   loading: boolean;
   signIn: (accessToken: string, user: AuthResponseDto["user"]) => void;
   signOut: () => void;
-  permissions: UserPermissions;
+  permissions: AuthUserPermissions;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
