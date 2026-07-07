@@ -22,6 +22,7 @@ import { CardModule } from './modules/card/card.module';
 import { PermissionsModule } from './modules/permissions/permissions.module';
 import { PermissionsGuard } from './modules/permissions/guards/permissions.guard';
 import { RequestIdMiddleware } from './shared/middleware/request-id.middleware';
+import { AuditLogModule } from './modules/auditLog/auditLog.module';
 
 @Module({
   imports: [
@@ -80,6 +81,7 @@ import { RequestIdMiddleware } from './shared/middleware/request-id.middleware';
     UsersModule,
     CardModule,
     PermissionsModule,
+    AuditLogModule,
   ],
   providers: [
     {
