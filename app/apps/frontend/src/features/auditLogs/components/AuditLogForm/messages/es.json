@@ -1,0 +1,19 @@
+{
+  "AuditLogFormDetail": {
+    "responsible": "Responsable",
+    "fullName": "Nombre completo",
+    "username": "Nombre de Usuario",
+    "internalId": "ID Interno",
+    "affectedEntity": "Entidad Afectada",
+    "resourceType": "Tipo de recurso",
+    "identifier": "Identificador (UUID)",
+    "changeLog": "Registro de Cambios",
+    "technicalInfo": "Información Técnica",
+    "timestamp": "Timestamp",
+    "ipAddress": "Dirección IP",
+    "notRecorded": "No registrada",
+    "platform": "Plataforma",
+    "mobile": "Móvil",
+    "desktop": "Escritorio"
+  }
+}

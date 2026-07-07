@@ -1,0 +1,19 @@
+{
+  "AuditLogFormDetail": {
+    "responsible": "Responsible",
+    "fullName": "Full name",
+    "username": "Username",
+    "internalId": "Internal ID",
+    "affectedEntity": "Affected Entity",
+    "resourceType": "Resource type",
+    "identifier": "Identifier (UUID)",
+    "changeLog": "Change Log",
+    "technicalInfo": "Technical Information",
+    "timestamp": "Timestamp",
+    "ipAddress": "IP Address",
+    "notRecorded": "Not recorded",
+    "platform": "Platform",
+    "mobile": "Mobile",
+    "desktop": "Desktop"
+  }
+}

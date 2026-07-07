@@ -83,6 +83,23 @@ export const categoryProfileQueryKeys = {
     [...categoryProfileQueryKeys.all(), "byId", id] as const,
 };
 
+// ─── Admin Permissions ─────────────────────────────────────────────────────
+export const adminPermissionsQueryKeys = {
+  all: ["adminPermissions"] as const,
+  tables: () => [...adminPermissionsQueryKeys.all, "tables"] as const,
+  tableByName: (name: string) =>
+    [...adminPermissionsQueryKeys.tables(), name] as const,
+  byUserId: (userId: string) =>
+    [...adminPermissionsQueryKeys.all, "user", userId] as const,
+  byEntityId: (entityId: string) =>
+    [...adminPermissionsQueryKeys.all, "entity", entityId] as const,
+};
+
+// ─── Audit Log ─────────────────────────────────────────────────────────────
+export const auditLogQueryKeys = {
+  all: () => ["auditLog"] as const,
+};
+
 // ─── Update Card Balance ─────────────────────────────────────────────────────
 export const updateCardProfileQueryKeys = {
   all: () => ["updateCard"] as const,
