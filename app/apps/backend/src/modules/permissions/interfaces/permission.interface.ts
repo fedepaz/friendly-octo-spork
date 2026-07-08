@@ -14,7 +14,7 @@ export interface UserPermissionRecord {
 }
 
 export interface RequirePermissionMetadata {
-  table: string;
+  tableName: string;
   action: 'create' | 'read' | 'update' | 'delete';
   scope?: PermissionScope;
 }

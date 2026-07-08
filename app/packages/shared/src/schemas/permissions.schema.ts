@@ -39,6 +39,13 @@ export const EntitySchema = z.object({
 });
 export type Entity = z.infer<typeof EntitySchema>;
 
+export const CreateEntitySchema = z.object({
+  name: z.string().min(1).max(50),
+  label: z.string().min(1).max(50),
+  permissionType: PermissionTypeSchema,
+});
+export type CreateEntityDto = z.infer<typeof CreateEntitySchema>;
+
 export const UserEntityPermissionSchema = z.object({
   userId: z.string(),
   username: z.string(),

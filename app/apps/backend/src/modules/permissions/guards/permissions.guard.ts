@@ -31,7 +31,12 @@ export class PermissionsGuard implements CanActivate {
         [context.getHandler(), context.getClass()],
       );
 
-    if (!permissionMeta) return true;
+    // Deny-by-default: routes without @RequirePermission() are denied
+    if (!permissionMeta) {
+      throw new ForbiddenException(
+        'Access denied: no permission configured for this route',
+      );
+    }
 
     const request = context.switchToHttp().getRequest<AuthRequest>();
     const { user } = request;
@@ -47,7 +52,7 @@ export class PermissionsGuard implements CanActivate {
 
     if (!allowed) {
       throw new ForbiddenException(
-        `Insufficient permissions: ${permissionMeta.action} on ${permissionMeta.table}`,
+        `Insufficient permissions: ${permissionMeta.action} on ${permissionMeta.tableName}`,
       );
     }
 

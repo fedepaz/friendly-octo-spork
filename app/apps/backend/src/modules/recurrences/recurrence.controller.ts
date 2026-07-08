@@ -1,5 +1,3 @@
-// backend/src/modules/recurrences/recurrence.controller.ts
-
 import {
   Controller,
   Get,
@@ -12,6 +10,7 @@ import { RecurrenceService } from './recurrence.service';
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
 import { AuthUser } from '../auth/types/auth-user.type';
 import { RecurrenceDTO, TransactionType } from '@repo/shared';
+import { RequirePermission } from '../permissions/decorators/require-permission.decorator';
 
 @Controller('recurrences')
 export class RecurrenceController {
@@ -19,6 +18,7 @@ export class RecurrenceController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'recurrences', action: 'read' })
   async getRecurrences(
     @CurrentUser() user: AuthUser,
   ): Promise<RecurrenceDTO[]> {
@@ -27,6 +27,7 @@ export class RecurrenceController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'recurrences', action: 'read' })
   async getRecurrenceById(
     @CurrentUser() user: AuthUser,
     @Param('id') id: string,
@@ -36,6 +37,7 @@ export class RecurrenceController {
 
   @Get('month/:month/:year/:type')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'recurrences', action: 'read' })
   async getRecurrencesByMonth(
     @CurrentUser() user: AuthUser,
     @Param('month', ParseIntPipe) month: number,

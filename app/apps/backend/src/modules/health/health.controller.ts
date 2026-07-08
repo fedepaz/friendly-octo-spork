@@ -1,8 +1,7 @@
-// src/modules/health/health.controller.ts
-
 import { Controller, Get, HttpCode, HttpStatus, Logger } from '@nestjs/common';
 import { HealthService } from './health.service';
 import { Public } from '../../shared/decorators/public.decorator';
+import { RequirePermission } from '../permissions/decorators/require-permission.decorator';
 
 @Controller('health')
 export class HealthController {
@@ -17,6 +16,7 @@ export class HealthController {
 
   @Get('auth')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'user_profile', action: 'read' })
   authCheck() {
     return {
       status: 'ok',

@@ -1,6 +1,7 @@
 // src/hooks/usePermission.ts
 
 import { usePermissions } from "@/features/auth/hooks/use-permissions";
+import type { UserPermissions } from "@repo/shared";
 import type {
   NavigationConfig,
   NavigationItem,
@@ -10,23 +11,12 @@ import type {
 export function usePermission(tableName?: string) {
   const { data: userPermissions } = usePermissions();
 
-  if (!userPermissions) {
+  if (!userPermissions || Object.keys(userPermissions).length === 0) {
     return {
-      canCreate: true,
-      canRead: true,
-      canUpdate: true,
-      canDelete: true,
-      canExecute: true,
-    };
-  }
-
-  if (userPermissions.isAdmin) {
-    return {
-      canCreate: true,
-      canRead: true,
-      canUpdate: true,
-      canDelete: true,
-      canExecute: true,
+      canCreate: false,
+      canRead: false,
+      canUpdate: false,
+      canDelete: false,
     };
   }
 
@@ -36,33 +26,40 @@ export function usePermission(tableName?: string) {
       canRead: false,
       canUpdate: false,
       canDelete: false,
-      canExecute: false,
     };
   }
 
-  const perms = userPermissions.permissions;
+  const perm = userPermissions[tableName];
+  if (!perm) {
+    return {
+      canCreate: false,
+      canRead: false,
+      canUpdate: false,
+      canDelete: false,
+    };
+  }
+
   return {
-    canCreate: perms.includes(`${tableName}:create`),
-    canRead: perms.includes(`${tableName}:read`),
-    canUpdate: perms.includes(`${tableName}:update`),
-    canDelete: perms.includes(`${tableName}:delete`),
-    canExecute: perms.includes(`${tableName}:execute`),
+    canCreate: perm.canCreate,
+    canRead: perm.canRead,
+    canUpdate: perm.canUpdate,
+    canDelete: perm.canDelete,
   };
 }
 
 function hasReadPermission(
   item: NavigationItem,
-  userPermissions: { isAdmin: boolean; permissions: string[] },
+  userPermissions: UserPermissions,
 ): boolean {
   if (!item.requiredPermission) return true;
-  if (userPermissions.isAdmin) return true;
-  const key = `${item.requiredPermission.table}:${item.requiredPermission.action}`;
-  return userPermissions.permissions.includes(key);
+  const perm = userPermissions[item.requiredPermission.tableName];
+  if (!perm) return false;
+  return perm.canRead;
 }
 
 function filterItems(
   items: NavigationItem[],
-  userPermissions: { isAdmin: boolean; permissions: string[] },
+  userPermissions: UserPermissions,
 ): NavigationItem[] {
   return items.filter((item) => hasReadPermission(item, userPermissions));
 }
@@ -76,7 +73,7 @@ function isSubGroup(
 export function useFilteredNavigation(config: NavigationConfig): NavigationConfig {
   const { data: userPermissions } = usePermissions();
 
-  if (!userPermissions) return config;
+  if (!userPermissions || Object.keys(userPermissions).length === 0) return config;
 
   return config
     .map((entry) => {

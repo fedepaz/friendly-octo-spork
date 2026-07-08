@@ -8,7 +8,7 @@ import {
 import { useAuth } from "../hooks/useAuth";
 import {
   AuthResponseDto,
-  AuthUserPermissions,
+  UserPermissions,
   UserProfileDto,
 } from "@repo/shared";
 import { usePermissions } from "../hooks/use-permissions";
@@ -27,7 +27,7 @@ type AuthContextType = {
   loading: boolean;
   signIn: (accessToken: string, user: AuthResponseDto["user"]) => void;
   signOut: () => void;
-  permissions: AuthUserPermissions;
+  permissions: UserPermissions;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -48,7 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const profile = useAuthUserProfile();
   const permissions = usePermissions();
-  // Detect pending permissions
+  // Detect pending permissions (user has no permissions assigned)
   const isPendingPermissions =
     auth.isSignedIn &&
     permissions.isSuccess &&
@@ -67,7 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isError: profile.isError,
     isDatabaseUnavailable: profile.isDatabaseUnavailable,
     isPendingPermissions,
-    permissions: permissions.data || { isAdmin: true, permissions: [] },
+    permissions: permissions.data || {},
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

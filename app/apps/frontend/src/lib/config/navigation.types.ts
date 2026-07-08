@@ -13,7 +13,7 @@ export interface NavigationItem {
     statsLabel: string;
   };
   requiredPermission?: {
-    table: string;
+    tableName: string;
     action: "read";
   };
 }
@@ -38,7 +38,7 @@ export interface NavigationStandalone {
     statsLabel: string;
   };
   requiredPermission?: {
-    table: string;
+    tableName: string;
     action: "read";
   };
 }

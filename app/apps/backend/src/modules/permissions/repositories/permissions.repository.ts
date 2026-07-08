@@ -1,79 +1,88 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../infra/prisma/prisma.service';
-import {
-  UserPermissionRecord,
-  PermissionScope,
-  PermissionType,
-} from '../interfaces/permission.interface';
+import { UserPermissionRecord } from '../interfaces/permission.interface';
 
 @Injectable()
 export class PermissionsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findByUserId(userId: string): Promise<UserPermissionRecord[]> {
-    return this.prisma.permission.findMany({
+    const records = await this.prisma.userPermission.findMany({
       where: { userId },
-    }) as Promise<UserPermissionRecord[]>;
+      include: { entity: true },
+    });
+    return records.map((r) => ({
+      userId: r.userId,
+      entityId: r.entityId,
+      entityName: r.entity.name,
+      canCreate: r.canCreate,
+      canRead: r.canRead,
+      canUpdate: r.canUpdate,
+      canDelete: r.canDelete,
+      scope: r.scope,
+      permissionType: r.permissionType,
+    }));
   }
 
-  async findByEntityId(entityId: string): Promise<UserPermissionRecord[]> {
-    return this.prisma.permission.findMany({
+  async findByUserIdWithEntity(userId: string) {
+    return this.prisma.userPermission.findMany({
+      where: { userId },
+      include: { entity: true },
+    });
+  }
+
+  async findByEntityId(entityId: string) {
+    return this.prisma.userPermission.findMany({
       where: { entityId },
-    }) as Promise<UserPermissionRecord[]>;
+      include: { entity: true, user: true },
+    });
+  }
+
+  async findEntityByName(name: string) {
+    return this.prisma.entity.findUnique({ where: { name } });
   }
 
   async upsert(data: UserPermissionRecord): Promise<void> {
-    await this.prisma.permission.upsert({
+    await this.prisma.userPermission.upsert({
       where: {
         userId_entityId: { userId: data.userId, entityId: data.entityId },
       },
-      update: data,
-      create: data,
+      update: {
+        canCreate: data.canCreate,
+        canRead: data.canRead,
+        canUpdate: data.canUpdate,
+        canDelete: data.canDelete,
+        scope: data.scope,
+        permissionType: data.permissionType,
+      },
+      create: {
+        userId: data.userId,
+        entityId: data.entityId,
+        canCreate: data.canCreate,
+        canRead: data.canRead,
+        canUpdate: data.canUpdate,
+        canDelete: data.canDelete,
+        scope: data.scope,
+        permissionType: data.permissionType,
+      },
     });
-  }
-
-  async deleteByUserId(userId: string): Promise<void> {
-    await this.prisma.permission.deleteMany({ where: { userId } });
-  }
-
-  async findManyByUserId(userId: string): Promise<UserPermissionRecord[]> {
-    const records = await this.prisma.permission.findMany({
-      where: { userId },
-    });
-    return records.map((r) => ({
-      userId: r.userId,
-      entityId: r.entityId,
-      entityName: r.entityName,
-      canCreate: r.canCreate,
-      canRead: r.canRead,
-      canUpdate: r.canUpdate,
-      canDelete: r.canDelete,
-      scope: r.scope as PermissionScope,
-      permissionType: r.permissionType as PermissionType,
-    }));
-  }
-
-  async findManyByEntityId(entityId: string) {
-    const records = await this.prisma.permission.findMany({
-      where: { entityId },
-      include: { user: { select: { name: true } } },
-    });
-    return records.map((r) => ({
-      userId: r.userId,
-      entityId: r.entityId,
-      entityName: r.entityName,
-      canCreate: r.canCreate,
-      canRead: r.canRead,
-      canUpdate: r.canUpdate,
-      canDelete: r.canDelete,
-      scope: r.scope as PermissionScope,
-      permissionType: r.permissionType as PermissionType,
-      username: r.user?.name || 'Unknown',
-      createdAt: r.createdAt,
-    }));
   }
 
   async deleteAllForUser(userId: string): Promise<void> {
-    await this.prisma.permission.deleteMany({ where: { userId } });
+    await this.prisma.userPermission.deleteMany({ where: { userId } });
+  }
+
+  async findManyByEntityId(entityId: string) {
+    return this.prisma.userPermission.findMany({
+      where: { entityId },
+      include: { user: { select: { name: true } }, entity: true },
+    });
+  }
+
+  async findAllEntities() {
+    return this.prisma.entity.findMany({
+      where: { isActive: true },
+      orderBy: { label: 'asc' },
+    });
   }
 }

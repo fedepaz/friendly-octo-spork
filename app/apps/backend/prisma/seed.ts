@@ -6,11 +6,10 @@ import * as bcrypt from 'bcrypt';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
+
 async function main() {
   console.log('🌱 Starting database seeding...');
 
-  // 2. Create the default primary User
-  //const passwordHash = await bcrypt.hash('admin123', 10);
   const passwordHash = await bcrypt.hash('admin123', 10);
   const user = await prisma.user.upsert({
     where: { email: 'user@admin.com' },
@@ -18,68 +17,31 @@ async function main() {
     create: {
       name: 'Finance Manager',
       email: 'user@admin.com',
-      passwordHash: passwordHash,
+      passwordHash,
     },
   });
 
   console.log(`👤 Created user: ${user.name} (${user.email})`);
 
-  // 3. Create initial Accounts for the user
-  const bankAccount = await prisma.account.create({
-    data: {
-      userId: user.id,
-      name: 'Banco Nación',
-      type: AccountType.BANK,
-      currency: Currency.ARS,
-      balance: 150000.0,
-    },
-  });
+  // Accounts (upsert by unique [name, userId])
+  const accountsData = [
+    { name: 'Banco Nación', type: AccountType.BANK, currency: Currency.ARS, balance: 150000.0 },
+    { name: 'Efectivo', type: AccountType.CASH, currency: Currency.ARS, balance: 12500.0 },
+    { name: 'Mercado Libre', type: AccountType.WALLET, currency: Currency.ARS, balance: 500.0 },
+    { name: 'Visa Credit Card', type: AccountType.CARD, currency: Currency.ARS, balance: 0.0 },
+  ];
 
-  const cashWallet = await prisma.account.create({
-    data: {
-      userId: user.id,
-      name: 'Efectivo',
-      type: AccountType.CASH,
-      currency: Currency.ARS,
-      balance: 12500.0,
-    },
-  });
+  for (const a of accountsData) {
+    await prisma.account.upsert({
+      where: { name_userId: { name: a.name, userId: user.id } },
+      update: {},
+      create: { userId: user.id, ...a },
+    });
+  }
 
-  const mercadoLibreWallet = await prisma.account.create({
-    data: {
-      userId: user.id,
-      name: 'Mercado Libre',
-      type: AccountType.WALLET,
-      currency: Currency.ARS,
-      balance: 500.0,
-    },
-  });
+  console.log(`💳 Seeded ${accountsData.length} accounts.`);
 
-  const creditCard = await prisma.account.create({
-    data: {
-      userId: user.id,
-      name: 'Visa Credit Card',
-      type: AccountType.CARD,
-      currency: Currency.ARS,
-      balance: 0.0,
-    },
-  });
-
-  console.log('💳 Seeded accounts.');
-  console.log(
-    `💰 Seeded ${bankAccount.name} with ${bankAccount.balance.toNumber()} ARS.`,
-  );
-  console.log(
-    `💰 Seeded ${cashWallet.name} with ${cashWallet.balance.toNumber()} ARS.`,
-  );
-  console.log(
-    `💰 Seeded ${mercadoLibreWallet.name} with ${mercadoLibreWallet.balance.toNumber()} ARS.`,
-  );
-  console.log(
-    `💰 Seeded ${creditCard.name} with ${creditCard.balance.toNumber()} ARS.`,
-  );
-
-  // 4. Create your exact 25 consolidated master categories with their colors
+  // Categories (upsert by unique [userId, name])
   const categoriesData = [
     { name: 'Groceries & Food Shopping', color: '#4CAF50' },
     { name: 'Restaurants & Takeout', color: '#FF9800' },
@@ -109,16 +71,77 @@ async function main() {
   ];
 
   for (const cat of categoriesData) {
-    await prisma.category.create({
-      data: {
+    await prisma.category.upsert({
+      where: { userId_name: { userId: user.id, name: cat.name } },
+      update: { color: cat.color },
+      create: { userId: user.id, ...cat },
+    });
+  }
+
+  console.log(`🏷️  Seeded ${categoriesData.length} categories.`);
+
+  // Entities
+  const entitiesData = [
+    { name: 'users', label: 'Usuarios', permissionType: 'CRUD' as const },
+    { name: 'user_permissions', label: 'Permisos', permissionType: 'CRUD' as const },
+    { name: 'accounts', label: 'Cuentas', permissionType: 'CRUD' as const },
+    { name: 'transactions', label: 'Transacciones', permissionType: 'CRUD' as const },
+    { name: 'recurrences', label: 'Recurrencias', permissionType: 'CRUD' as const },
+    { name: 'cards', label: 'Tarjetas', permissionType: 'CRUD' as const },
+    { name: 'categories', label: 'Categorías', permissionType: 'READ_ONLY' as const },
+    { name: 'dashboard', label: 'Dashboard', permissionType: 'READ_ONLY' as const },
+    { name: 'audit_logs', label: 'Auditoría', permissionType: 'READ_ONLY' as const },
+    { name: 'user_profile', label: 'Perfil', permissionType: 'READ_ONLY' as const },
+  ];
+
+  const createdEntities = await Promise.all(
+    entitiesData.map((e) =>
+      prisma.entity.upsert({
+        where: { name: e.name },
+        update: {},
+        create: {
+          name: e.name,
+          label: e.label,
+          permissionType: e.permissionType,
+        },
+      })
+    )
+  );
+
+  console.log(`🔐 Seeded ${createdEntities.length} entities`);
+
+  // Grant admin user full permissions on all entities
+  for (const entity of createdEntities) {
+    await prisma.userPermission.upsert({
+      where: {
+        userId_entityId: { userId: user.id, entityId: entity.id },
+      },
+      update: {},
+      create: {
         userId: user.id,
-        name: cat.name,
-        color: cat.color,
+        entityId: entity.id,
+        canCreate: true,
+        canRead: true,
+        canUpdate: true,
+        canDelete: true,
+        scope: 'ALL',
+        permissionType: entity.permissionType,
       },
     });
   }
 
-  console.log('🏷️  Seeded consolidated categories successfully.');
+  console.log(`✅ Seeded admin permissions on ${createdEntities.length} entities`);
+
+  // Dev account for admin
+  await prisma.devAccount.upsert({
+    where: { userId: user.id },
+    update: {},
+    create: {
+      userId: user.id,
+    },
+  });
+
+  console.log('🛠️  Seeded dev account for admin user');
   console.log('🏁 Database seeding complete!');
 }
 

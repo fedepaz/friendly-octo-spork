@@ -1,5 +1,3 @@
-// src/modules/dashboard/dashboard.controller.ts
-
 import {
   Controller,
   Get,
@@ -17,6 +15,7 @@ import {
 } from '@repo/shared';
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
 import { AuthUser } from '../auth/types/auth-user.type';
+import { RequirePermission } from '../permissions/decorators/require-permission.decorator';
 
 @Controller('dashboard')
 export class DashboardController {
@@ -24,12 +23,14 @@ export class DashboardController {
 
   @Get('budget')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'dashboard', action: 'read' })
   async getDashboard(@CurrentUser() user: AuthUser): Promise<BudgetDTO[]> {
     return this.dashboardService.getBudgetSummary(user.id);
   }
 
   @Get('recentAccounts')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'dashboard', action: 'read' })
   async getRecentAccounts(
     @CurrentUser() user: AuthUser,
   ): Promise<AccountDTO[]> {
@@ -37,6 +38,7 @@ export class DashboardController {
   }
   @Get('income-expense/:months')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'dashboard', action: 'read' })
   async getMonthlyIncomeExpense(
     @CurrentUser() user: AuthUser,
     @Param('months', ParseIntPipe) months: number,
@@ -46,6 +48,7 @@ export class DashboardController {
 
   @Get('toPay')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'dashboard', action: 'read' })
   async getRecurrencesToPayCurrentMonth(
     @CurrentUser() user: AuthUser,
   ): Promise<RecurrenceDTO[]> {

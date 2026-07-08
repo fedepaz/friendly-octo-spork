@@ -4,8 +4,11 @@ import {
   UserPermissionRecord,
   RequirePermissionMetadata,
 } from './interfaces/permission.interface';
-import { MANAGED_ENTITY_ARRAY } from '@repo/shared';
-import type { UserPermissions, UserEntityPermission } from '@repo/shared';
+import type {
+  UserPermissions,
+  UserEntityPermission,
+  Entity,
+} from '@repo/shared';
 
 @Injectable()
 export class PermissionsService {
@@ -19,8 +22,8 @@ export class PermissionsService {
     userId: string,
     meta: RequirePermissionMetadata,
   ): Promise<boolean> {
-    const permissions = await this.permissionsRepo.findByUserId(userId);
-    const record = permissions.find((p) => p.entityName === meta.table);
+    const records = await this.permissionsRepo.findByUserIdWithEntity(userId);
+    const record = records.find((r) => r.entity.name === meta.tableName);
 
     if (!record) return false;
 
@@ -44,20 +47,27 @@ export class PermissionsService {
     }
   }
 
-  async setPermissions(
-    userId: string,
-    permissions: UserPermissionRecord[],
-  ): Promise<void> {
-    for (const perm of permissions) {
-      await this.permissionsRepo.upsert({ ...perm, userId });
+  async getPermissionsMe(userId: string): Promise<UserPermissions> {
+    const records = await this.permissionsRepo.findByUserIdWithEntity(userId);
+    const map: UserPermissions = {};
+    for (const r of records) {
+      map[r.entity.name] = {
+        canCreate: r.canCreate,
+        canRead: r.canRead,
+        canUpdate: r.canUpdate,
+        canDelete: r.canDelete,
+        scope: r.scope,
+        permissionType: r.permissionType,
+      };
     }
+    return map;
   }
 
   async getUserPermissionsByUserId(userId: string): Promise<UserPermissions> {
-    const records = await this.permissionsRepo.findManyByUserId(userId);
+    const records = await this.permissionsRepo.findByUserIdWithEntity(userId);
     const map: UserPermissions = {};
     for (const r of records) {
-      map[r.entityName] = {
+      map[r.entity.name] = {
         canCreate: r.canCreate,
         canRead: r.canRead,
         canUpdate: r.canUpdate,
@@ -75,7 +85,9 @@ export class PermissionsService {
     const records = await this.permissionsRepo.findManyByEntityId(entityId);
     return records.map((r) => ({
       userId: r.userId,
-      username: r.username || 'Unknown',
+      username: r.user?.name || 'Unknown',
+      firstName: undefined,
+      lastName: undefined,
       permissions: {
         canCreate: r.canCreate,
         canRead: r.canRead,
@@ -84,8 +96,12 @@ export class PermissionsService {
         scope: r.scope,
         permissionType: r.permissionType,
       },
-      createdAt: r.createdAt || new Date(),
+      createdAt: r.createdAt,
     }));
+  }
+
+  async findAllEntities(): Promise<Entity[]> {
+    return this.permissionsRepo.findAllEntities();
   }
 
   async setPermissionsForUser(
@@ -102,14 +118,12 @@ export class PermissionsService {
   ): Promise<void> {
     await this.permissionsRepo.deleteAllForUser(userId);
     for (const p of permissions) {
-      const entity = MANAGED_ENTITY_ARRAY.find(
-        (e) => e.tableName === p.tableName,
-      );
+      const entity = await this.permissionsRepo.findEntityByName(p.tableName);
       if (!entity) continue;
       await this.permissionsRepo.upsert({
         userId,
-        entityId: p.tableName,
-        entityName: p.tableName,
+        entityId: entity.id,
+        entityName: entity.name,
         canCreate: p.canCreate,
         canRead: p.canRead,
         canUpdate: p.canUpdate,

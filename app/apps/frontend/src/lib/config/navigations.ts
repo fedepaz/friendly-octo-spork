@@ -79,7 +79,7 @@ export const NAVIGATION_CONFIG: NavigationConfig = [
             icon: Users,
             description: "Gestión de usuarios del sistema",
             dashboard: { statsLabel: "Usuarios activos" },
-            requiredPermission: { table: "users", action: "read" },
+            requiredPermission: { tableName: "users", action: "read" },
           },
           {
             title: "Permisos",
@@ -88,7 +88,7 @@ export const NAVIGATION_CONFIG: NavigationConfig = [
             description: "Configuración de permisos por usuario",
             dashboard: { statsLabel: "Permisos configurados" },
             requiredPermission: {
-              table: "user_permissions",
+              tableName: "user_permissions",
               action: "read",
             },
           },
@@ -109,7 +109,7 @@ export const NAVIGATION_CONFIG: NavigationConfig = [
         icon: ClipboardList,
         description: "Registro de actividades del sistema",
         dashboard: { statsLabel: "Registros de auditoría" },
-        requiredPermission: { table: "audit_logs", action: "read" },
+        requiredPermission: { tableName: "audit_logs", action: "read" },
       },
     ],
   },
