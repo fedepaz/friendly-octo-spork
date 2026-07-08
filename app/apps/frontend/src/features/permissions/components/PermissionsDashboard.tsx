@@ -14,7 +14,7 @@ export function PermissionsDashboard() {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
   return (
-    <div className="space-y-6">
+    <div className="flex-1 flex flex-col gap-6 min-h-0">
       <div>
         <h1 className="text-2xl font-black tracking-tighter">{t("title")}</h1>
         <p className="text-sm text-muted-foreground">{t("description")}</p>

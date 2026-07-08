@@ -22,6 +22,7 @@ import {
   RegisterAuthDto,
   TokensDto,
 } from '@repo/shared';
+import { PermissionsService } from '../permissions/permissions.service';
 
 @Injectable()
 export class AuthService {
@@ -32,6 +33,7 @@ export class AuthService {
     private readonly userAuthRepo: UserAuthRepository,
     private readonly jwtService: JwtService,
     private readonly config: ConfigService,
+    private readonly permissionsService: PermissionsService,
   ) {}
   async validateUser(id: string) {
     return this.userAuthRepo.findById(id);
@@ -225,6 +227,30 @@ export class AuthService {
       dto.name,
       dto.email,
       passwordHash,
+    );
+
+    // Auto-assign default permissions for the new user
+    const entities = await this.permissionsService.findAllEntities();
+    const readOnlyEntities = [
+      'categories',
+      'dashboard',
+      'audit_logs',
+      'user_profile',
+      'users',
+      'user_permissions',
+    ];
+    const defaultPermissions = entities.map((entity) => ({
+      tableName: entity.name,
+      canCreate: !readOnlyEntities.includes(entity.name),
+      canRead: true,
+      canUpdate: !readOnlyEntities.includes(entity.name),
+      canDelete: false,
+      scope: 'OWN' as const,
+      permissionType: entity.permissionType,
+    }));
+    await this.permissionsService.setPermissionsForUser(
+      user.id,
+      defaultPermissions,
     );
 
     // generate tokens

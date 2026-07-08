@@ -120,7 +120,8 @@ export function PermissionsUserManager({
           className="mt-2"
         />
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-1 flex flex-col min-h-0 overflow-hidden">
+        <div className="flex-1 overflow-auto custom-scrollbar">
         {Object.entries(grouped).map(([permissionType, entityTables]) => (
           <div key={permissionType} className="mb-6">
             <h4 className="text-xs font-black uppercase tracking-widest text-muted-foreground mb-3 flex items-center gap-2">
@@ -151,6 +152,7 @@ export function PermissionsUserManager({
             </div>
           </div>
         ))}
+        </div>
 
         {isDirty && (
           <div className="flex justify-end gap-2 mt-4 pt-4 border-t">
