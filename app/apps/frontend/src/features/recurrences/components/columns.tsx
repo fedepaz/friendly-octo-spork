@@ -28,6 +28,7 @@ interface HeaderProps {
 }
 
 function TransactionTypeCell({ row }: CellProps) {
+  const rcT = useTranslations("RecurrenceColumns");
   const type = row.original.type;
   const styles = getTransactionTypeStyles(type);
 
@@ -38,7 +39,7 @@ function TransactionTypeCell({ row }: CellProps) {
         ? ArrowUpRight
         : RefreshCw;
 
-  return <TacticalTypeCell icon={Icon} label={styles.label} iconClassName={styles.color} />;
+  return <TacticalTypeCell icon={Icon} label={rcT(styles.translationKey)} iconClassName={styles.color} />;
 }
 
 function NameHeader({ column }: HeaderProps) {

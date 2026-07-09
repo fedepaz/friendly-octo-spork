@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { type ColumnDef, type Column, type Row } from "@tanstack/react-table";
 import {
   SortableHeader,
@@ -27,6 +27,21 @@ function DescriptionHeader({ column }: HeaderProps) {
 function SourceHeader() {
   const ccT = useTranslations("CardsColumns");
   return ccT("type");
+}
+
+function SourceCell({ row }: { row: Row<CardStatementRow> }) {
+  const ccT = useTranslations("CardsColumns");
+  const { source } = row.original;
+  return (
+    <span
+      className={cn(
+        "inline-block px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider border",
+        SOURCE_COLORS[source],
+      )}
+    >
+      {ccT(SOURCE_LABELS[source])}
+    </span>
+  );
 }
 
 function PlanStatusHeader() {
@@ -100,6 +115,22 @@ function DateHeader({ column }: HeaderProps) {
   return <SortableHeader column={column}>{ccT("date")}</SortableHeader>;
 }
 
+function DateCell({ row }: { row: Row<CardStatementRow> }) {
+  const locale = useLocale();
+  const date = row.original.date;
+  return (
+    <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground tabular-nums opacity-80">
+      <Calendar className="h-3 w-3 opacity-40" />
+      <span>
+        {new Date(date).toLocaleDateString(locale, {
+          day: "2-digit",
+          month: "short",
+        })}
+      </span>
+    </div>
+  );
+}
+
 function AmountHeader({ column }: HeaderProps) {
   const ccT = useTranslations("CardsColumns");
   return (
@@ -127,19 +158,7 @@ export const cardColumns: ColumnDef<CardStatementRow>[] = [
   {
     id: "source",
     header: SourceHeader,
-    cell: ({ row }) => {
-      const { source } = row.original;
-      return (
-        <span
-          className={cn(
-            "inline-block px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider border",
-            SOURCE_COLORS[source],
-          )}
-        >
-          {SOURCE_LABELS[source]}
-        </span>
-      );
-    },
+    cell: SourceCell,
   },
   {
     id: "installmentInfo",
@@ -154,20 +173,7 @@ export const cardColumns: ColumnDef<CardStatementRow>[] = [
   {
     accessorKey: "date",
     header: DateHeader,
-    cell: ({ row }) => {
-      const date = row.original.date;
-      return (
-        <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground tabular-nums opacity-80">
-          <Calendar className="h-3 w-3 opacity-40" />
-          <span>
-            {new Date(date).toLocaleDateString("es-AR", {
-              day: "2-digit",
-              month: "short",
-            })}
-          </span>
-        </div>
-      );
-    },
+    cell: DateCell,
   },
   {
     accessorKey: "amount",

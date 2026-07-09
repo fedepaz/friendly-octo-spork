@@ -69,7 +69,7 @@ export const NAVIGATION_CONFIG: NavigationConfig = [
     items: [
       {
         kind: "subGroup",
-        id: "usuarios",
+        id: "users-sub",
         title: "Usuarios",
         icon: Users,
         items: [

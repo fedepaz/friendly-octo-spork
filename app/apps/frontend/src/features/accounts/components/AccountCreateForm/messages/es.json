@@ -10,6 +10,8 @@
     "typeCard": "Tarjeta",
     "typeInvestment": "Inversión",
     "currencyLabel": "Divisa Base",
-    "openingBalanceLabel": "Saldo de Apertura"
+    "openingBalanceLabel": "Saldo de Apertura",
+    "toastSuccess": "Cuenta {name} creada exitosamente",
+    "toastError": "Error al crear la cuenta: {error}"
   }
 }

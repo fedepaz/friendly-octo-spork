@@ -9,6 +9,12 @@
     "weekly": "Weekly",
     "yearly": "Yearly",
     "installments": "Installments",
-    "cyclesHeader": "Cycles"
+    "cyclesHeader": "Cycles",
+    "expense": "Expense",
+    "income": "Income",
+    "transfer": "Transfer",
+    "investment": "Investment",
+    "return": "Return",
+    "payment": "Payment"
   }
 }

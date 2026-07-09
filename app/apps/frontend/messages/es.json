@@ -62,10 +62,8 @@
     "audit-logsDesc": "Registro de actividades del sistema",
     "user-permissions": "Permisos",
     "user-permissionsDesc": "Configuración de acceso de usuarios",
-    "operations": "Operaciones",
-    "admin": "Administración",
     "dev": "Desarrollo",
-    "usuarios": "Usuarios"
+    "users-sub": "Usuarios"
   },
   "alerts": {
     "dismiss": "Descartar",
@@ -105,6 +103,7 @@
   },
   "Permissions": {
     "title": "Permisos de usuario",
-    "description": "Configura los permisos de acceso para cada usuario"
+    "description": "Configura los permisos de acceso para cada usuario",
+    "loading": "Cargando permisos..."
   }
 }

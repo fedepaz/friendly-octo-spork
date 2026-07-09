@@ -62,10 +62,8 @@
     "audit-logsDesc": "System activity records",
     "user-permissions": "Permissions",
     "user-permissionsDesc": "User access configuration",
-    "operations": "Operations",
-    "admin": "Administration",
     "dev": "Development",
-    "usuarios": "Users"
+    "users-sub": "Users"
   },
   "alerts": {
     "dismiss": "Dismiss",
@@ -105,6 +103,7 @@
   },
   "Permissions": {
     "title": "User Permissions",
-    "description": "Configure access permissions for each user"
+    "description": "Configure access permissions for each user",
+    "loading": "Loading permissions..."
   }
 }

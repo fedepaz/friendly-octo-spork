@@ -19,7 +19,7 @@ export default async function DashboardLayout({
         <DesktopSidebar />
         <div className="flex flex-1 flex-col min-w-0 overflow-hidden">
           <DashboardHeader />
-          <main className="flex-1 overflow-y-auto md:overflow-hidden pb-safe-area-inset-bottom md:pb-0 px-1 sm:px-2 lg:px-4 py-1.5 flex flex-col">
+          <main className="flex-1 overflow-y-auto pb-safe-area-inset-bottom px-1 sm:px-2 lg:px-4 py-1.5 flex flex-col">
             <div className="mx-auto w-full max-w-400 flex-1 flex flex-col min-h-0 space-y-4">
               {children}
             </div>

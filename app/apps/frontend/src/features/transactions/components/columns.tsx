@@ -35,6 +35,7 @@ interface HeaderProps {
 }
 
 function TransactionTypeCell({ row }: CellProps) {
+  const tcT = useTranslations("TransactionColumns");
   const type = row.original.type;
   const styles = getTransactionTypeStyles(type);
 
@@ -55,7 +56,7 @@ function TransactionTypeCell({ row }: CellProps) {
         />
       </div>
       <PremiumBadgeCell
-        label={styles.label}
+        label={tcT(styles.translationKey)}
         variant={
           type === "INCOME"
             ? "secondary"
