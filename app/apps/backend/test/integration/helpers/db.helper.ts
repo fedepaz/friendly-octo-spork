@@ -3,6 +3,8 @@ import { PrismaClient } from '@prisma/client';
 
 export async function cleanDatabase(prisma: PrismaClient): Promise<void> {
   // Order matters due to foreign keys
+  await prisma.$executeRaw`TRUNCATE TABLE "AuditLog" CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE "UserPermission" CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "Transaction" CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "Recurrence" CASCADE`;
   await prisma.$executeRaw`TRUNCATE TABLE "Account" CASCADE`;

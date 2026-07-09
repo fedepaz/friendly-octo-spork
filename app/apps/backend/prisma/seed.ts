@@ -91,7 +91,7 @@ async function main() {
     { name: 'categories', label: 'Categorías', permissionType: 'READ_ONLY' as const },
     { name: 'dashboard', label: 'Dashboard', permissionType: 'READ_ONLY' as const },
     { name: 'audit_logs', label: 'Auditoría', permissionType: 'READ_ONLY' as const },
-    { name: 'user_profile', label: 'Perfil', permissionType: 'READ_ONLY' as const },
+    { name: 'user_profile', label: 'Perfil', permissionType: 'CRUD' as const },
   ];
 
   const createdEntities = await Promise.all(

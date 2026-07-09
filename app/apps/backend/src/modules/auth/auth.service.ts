@@ -235,7 +235,6 @@ export class AuthService {
       'categories',
       'dashboard',
       'audit_logs',
-      'user_profile',
       'users',
       'user_permissions',
     ];
