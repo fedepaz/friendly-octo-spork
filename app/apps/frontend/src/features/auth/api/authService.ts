@@ -6,8 +6,8 @@ import {
   ChangePasswordDto,
   LoginAuthDto,
   RegisterAuthDto,
-  UserPermissions,
   UserProfileDto,
+  UserPermissions,
 } from "@repo/shared";
 
 export const authService = {
@@ -45,10 +45,8 @@ export const authService = {
   },
 
   getPermissionsMe: () => {
-    const hardCodedPermissions: UserPermissions = {
-      isAdmin: true,
-      permissions: [],
-    };
-    return Promise.resolve(hardCodedPermissions);
+    return clientFetch<UserPermissions>("permissions/me", {
+      method: "GET",
+    });
   },
 };

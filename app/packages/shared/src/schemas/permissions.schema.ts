@@ -1,0 +1,57 @@
+// packages/shared/src/schemas/permissions.schema.ts
+import { z } from "zod";
+
+export const PermissionScopeSchema = z.enum(["NONE", "OWN", "ALL"]);
+export type PermissionScope = z.infer<typeof PermissionScopeSchema>;
+
+export const PermissionTypeSchema = z.enum(["CRUD", "PROCESS", "READ_ONLY"]);
+export type PermissionType = z.infer<typeof PermissionTypeSchema>;
+
+export const CrudActionSchema = z.enum(["create", "read", "update", "delete"]);
+export type CrudAction = z.infer<typeof CrudActionSchema>;
+
+export const TablePermissionSchema = z.object({
+  canCreate: z.boolean(),
+  canRead: z.boolean(),
+  canUpdate: z.boolean(),
+  canDelete: z.boolean(),
+  scope: PermissionScopeSchema.default("ALL"),
+  permissionType: PermissionTypeSchema,
+});
+export type TablePermission = z.infer<typeof TablePermissionSchema>;
+
+export const UserPermissionsSchema = z.record(z.string(), TablePermissionSchema);
+export type UserPermissions = z.infer<typeof UserPermissionsSchema>;
+
+export const PermissionCheckSchema = z.object({
+  tableName: z.string(),
+  action: CrudActionSchema,
+  scope: PermissionScopeSchema.optional(),
+});
+export type PermissionCheck = z.infer<typeof PermissionCheckSchema>;
+
+export const EntitySchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  label: z.string(),
+  isActive: z.boolean().optional(),
+  permissionType: PermissionTypeSchema,
+});
+export type Entity = z.infer<typeof EntitySchema>;
+
+export const CreateEntitySchema = z.object({
+  name: z.string().min(1).max(50),
+  label: z.string().min(1).max(50),
+  permissionType: PermissionTypeSchema,
+});
+export type CreateEntityDto = z.infer<typeof CreateEntitySchema>;
+
+export const UserEntityPermissionSchema = z.object({
+  userId: z.string(),
+  username: z.string(),
+  firstName: z.string().optional().nullable(),
+  lastName: z.string().optional().nullable(),
+  permissions: TablePermissionSchema,
+  createdAt: z.date(),
+});
+export type UserEntityPermission = z.infer<typeof UserEntityPermissionSchema>;

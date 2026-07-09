@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
 import { PremiumAmountCell } from "@/components/data-display/data-table";
 import { useBudgetSummary } from "@/features/dashboard/hooks/dashboardHooks";
+import { logger } from "@/lib/logger";
 
 const CATEGORY_KEYS: Record<string, string> = {
   DAILY_EXPENSES: "category_dailyExpenses",
@@ -26,7 +27,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 export function SidebarChartsBudget() {
   const scbT = useTranslations("SidebarChartsBudget");
   const { data: budgets } = useBudgetSummary();
-  console.log(budgets);
+  logger.debug("budgets", budgets);
 
   return (
     <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col flex-1 min-h-0 overflow-hidden">

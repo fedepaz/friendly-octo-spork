@@ -3,12 +3,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { categoryService } from "../api/categoriesService";
 import { CategoryDTO } from "@repo/shared";
-
-export const categoryProfileQueryKeys = {
-  all: () => ["categories"] as const,
-  byId: (id: string) =>
-    [...categoryProfileQueryKeys.all(), "byId", id] as const,
-};
+import { categoryProfileQueryKeys } from "@/lib/queryKeys";
 
 export const useCategorie = () => {
   return useSuspenseQuery<CategoryDTO[]>({

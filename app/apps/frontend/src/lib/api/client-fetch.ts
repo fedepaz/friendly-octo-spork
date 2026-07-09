@@ -1,10 +1,12 @@
 // src/lib/api/client-fetch.ts
 "use client";
 
+import { logger } from "@/lib/logger";
+
 const backendUrl = process.env.NEXT_PUBLIC_API_URL; // instead of BACKEND_URL
 
 if (!backendUrl) {
-  console.warn("NEXT_PUBLIC_API_URL is not set");
+  logger.warn("NEXT_PUBLIC_API_URL is not set");
 }
 
 let isRefreshing = false;
@@ -143,7 +145,7 @@ export async function clientFetch<T>(
           });
         } catch (refreshError) {
           processQueue(new Error("Token refresh failed"), null);
-          console.warn(refreshError, "Token refresh failed");
+          logger.warn("Token refresh failed", refreshError);
           logout();
           // Redirect to login on token refresh failure
           if (typeof window !== "undefined") {
@@ -157,9 +159,9 @@ export async function clientFetch<T>(
       const errorData = await res.json().catch(() => ({}));
       const errorInfo = errorData.error || errorData;
       if (process.env.NODE_ENV === "development") {
-        console.log("message:", errorInfo.message);
-        console.log("status:", res.status);
-        console.log("errorInfo:", errorInfo);
+        logger.debug("message:", errorInfo.message);
+        logger.debug("status:", res.status);
+        logger.debug("errorInfo:", errorInfo);
       }
       throw new ApiError(
         errorInfo.message || res.statusText,

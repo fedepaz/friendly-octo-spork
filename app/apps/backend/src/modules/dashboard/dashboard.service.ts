@@ -18,7 +18,7 @@ import {
   IncomeExpenseInterface,
 } from './repositories/income-expenseDash.repository';
 import { RecurrenceDashRepository } from './repositories/recurrenceDash.repository';
-import { RecurrenceWithRelations } from '../../repositories/recurrence.repository';
+import { RecurrenceWithRelations } from '../recurrences/repositories/recurrence.repository';
 
 // backend/src/modules/dashboard/dashboard.service.ts
 @Injectable()

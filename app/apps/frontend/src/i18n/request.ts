@@ -68,6 +68,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
           `../components/common/LanguageSwitcher/messages/${locale}.json`
         )
       ).default,
+      ...(
+        await import(
+          `../components/common/EmptyState/messages/${locale}.json`
+        )
+      ).default,
 
       // Data Table
       ...(
@@ -214,6 +219,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ).default,
       ...(
         await import(
+          `../features/accounts/components/AccountDashboardSkeleton/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
           `../features/accounts/components/AccountDataTable/messages/${locale}.json`
         )
       ).default,
@@ -241,6 +251,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ).default,
       ...(
         await import(
+          `../features/cards/components/CardsDashboardSkeleton/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
           `../features/cards/components/CardsDataTable/messages/${locale}.json`
         )
       ).default,
@@ -263,27 +278,22 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ).default,
       ...(
         await import(
+          `../features/dashboard/components/RootDashboardSkeleton/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
           `../features/dashboard/components/DashboardKPIs/messages/${locale}.json`
         )
       ).default,
       ...(
         await import(
-          `../features/dashboard/components/DashboardAlerts/messages/${locale}.json`
-        )
-      ).default,
-      ...(
-        await import(
-          `../features/dashboard/components/FeatureNavigation/messages/${locale}.json`
-        )
-      ).default,
-      ...(
-        await import(
-          `../features/dashboard/components/RecentActivity/messages/${locale}.json`
-        )
-      ).default,
-      ...(
-        await import(
           `../features/dashboard/components/MainChartsDashboard/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/dashboard/components/DashboardChartsSkeleton/messages/${locale}.json`
         )
       ).default,
       ...(
@@ -298,6 +308,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ).default,
       ...(
         await import(
+          `../features/dashboard/components/AnalyticChartsDashboard/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
           `../features/dashboard/components/SidebarChartsBudget/messages/${locale}.json`
         )
       ).default,
@@ -306,11 +321,26 @@ export default getRequestConfig(async ({ requestLocale }) => {
           `../features/dashboard/components/SidebarChartsRecTrans/messages/${locale}.json`
         )
       ).default,
+      ...(
+        await import(
+          `../features/dashboard/components/SidebarChartsAccounts/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/dashboard/components/SidebarChartsDashboard/messages/${locale}.json`
+        )
+      ).default,
 
       // Recurrences Feature
       ...(
         await import(
           `../features/recurrences/components/RecurrencesDashboard/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/recurrences/components/RecurrencesDashboardSkeleton/messages/${locale}.json`
         )
       ).default,
       ...(
@@ -337,6 +367,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ).default,
       ...(
         await import(
+          `../features/transactions/components/TransactionsDashboardSkeleton/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
           `../features/transactions/components/TransactionsDataTable/messages/${locale}.json`
         )
       ).default,
@@ -359,6 +394,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ).default,
       ...(
         await import(
+          `../features/users/components/UserDashboardSkeleton/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
           `../features/users/components/UsersDataTable/messages/${locale}.json`
         )
       ).default,
@@ -375,6 +415,45 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ...(
         await import(
           `../features/users/components/UserKPIs/messages/${locale}.json`
+        )
+      ).default,
+
+      // Audit Logs Feature
+      ...(
+        await import(
+          `../features/auditLogs/components/AuditLogForm/messages/${locale}.json`
+        )
+      ).default,
+
+      // Permissions Feature
+      ...(
+        await import(
+          `../features/permissions/components/UserSelector/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/permissions/components/PermissionSelector/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/permissions/components/PermissionsUserManager/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/permissions/components/PermissionsEmptyState/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/permissions/components/PermissionsDashboard/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/permissions/components/PermissionTableMeta/messages/${locale}.json`
         )
       ).default,
 

@@ -6,6 +6,12 @@
     "noCategory": "Sin categoría",
     "amountHeader": "Monto",
     "cardExpenseTooltip": "Gasto con Tarjeta",
-    "budgetedExpenseTooltip": "Gasto Presupuestado"
+    "budgetedExpenseTooltip": "Gasto Presupuestado",
+    "expense": "Gasto",
+    "income": "Ingreso",
+    "transfer": "Transferencia",
+    "investment": "Inversión",
+    "return": "Rendimiento",
+    "payment": "Pago"
   }
 }

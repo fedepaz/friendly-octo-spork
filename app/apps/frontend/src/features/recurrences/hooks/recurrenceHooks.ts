@@ -3,20 +3,7 @@
 import { RecurrenceDTO, TransactionType } from "@repo/shared";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { recurrenceService } from "../api/recurrenceService";
-
-export const recurrenceProfileQueryKeys = {
-  all: () => ["recurrences"] as const,
-  byId: (id: string) =>
-    [...recurrenceProfileQueryKeys.all(), "byId", id] as const,
-  byMonth: (month: number, year: number, type: TransactionType) =>
-    [
-      ...recurrenceProfileQueryKeys.all(),
-      "byMonth",
-      month,
-      year,
-      type,
-    ] as const,
-};
+import { recurrenceProfileQueryKeys } from "@/lib/queryKeys";
 
 export const useRecurrences = () => {
   return useSuspenseQuery<RecurrenceDTO[]>({

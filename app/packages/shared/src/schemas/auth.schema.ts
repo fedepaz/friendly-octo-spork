@@ -104,12 +104,12 @@ export const RegisterAuthSchema = z
 
 export type RegisterAuthDto = z.infer<typeof RegisterAuthSchema>;
 
-export const UserPermissionsSchema = z.object({
+export const AuthUserPermissionsSchema = z.object({
   isAdmin: z.boolean().default(false),
   permissions: z.array(z.string()).default([]),
 });
 
-export type UserPermissions = z.infer<typeof UserPermissionsSchema>;
+export type AuthUserPermissions = z.infer<typeof AuthUserPermissionsSchema>;
 
 export const ChangePasswordSchema = z
   .object({

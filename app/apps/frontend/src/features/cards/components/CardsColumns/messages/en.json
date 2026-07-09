@@ -8,6 +8,9 @@
     "card": "Card",
     "notAvailable": "n/a",
     "date": "Date",
-    "amount": "Amount"
+    "amount": "Amount",
+    "sourceRecurrence": "Installment",
+    "sourceOneTimer": "Purchase",
+    "sourcePayment": "Payment"
   }
 }

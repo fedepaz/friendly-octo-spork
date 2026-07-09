@@ -1,4 +1,4 @@
-// src/shared/filters/http-exception.filter.ts
+// src/shared/filters/all-exceptions.filter.ts
 
 import {
   ArgumentsHost,
@@ -18,6 +18,27 @@ interface ExceptionResponse {
   details?: unknown;
 }
 
+const DB_ERROR_PATTERNS = [
+  'pool_timeout',
+  'econnrefused',
+  'etimedout',
+  'connection timeout',
+  'P1001',
+  'P1008',
+  'P1017',
+  'ECONNRESET',
+];
+
+const SENSITIVE_MESSAGE_PATTERNS = [
+  /password/gi,
+  /secret/gi,
+  /token/gi,
+  /key/gi,
+  /authorization/gi,
+  /bearer/gi,
+  /credential/gi,
+];
+
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   constructor(
@@ -32,7 +53,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const response = ctx.getResponse<Record<string, unknown>>();
     const path = httpAdapter.getRequestUrl(request) as string;
 
-    const httpStatus =
+    let httpStatus =
       exception instanceof HttpException
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
@@ -42,20 +63,44 @@ export class AllExceptionsFilter implements ExceptionFilter {
         ? this.parseExceptionResponse(exception.getResponse())
         : null;
 
-    const message =
+    let message =
       exception instanceof HttpException
         ? exception.message
         : 'Internal server error';
 
+    // Database error detection → 503
+    const rawMessage = this.getErrorMessage(exceptionResponse) || message;
+    const isDbError = DB_ERROR_PATTERNS.some((p) =>
+      rawMessage.toLowerCase().includes(p.toLowerCase()),
+    );
+    if (isDbError) {
+      httpStatus = HttpStatus.SERVICE_UNAVAILABLE;
+      message = 'Service temporarily unavailable';
+    }
+
+    // Sanitize sensitive messages
+    const sanitizedMessage = this.sanitizeMessage(rawMessage);
+
     // Build standard error DTO
-    const responseBody = {
+    const responseBody: Record<string, unknown> = {
       statusCode: httpStatus,
       code: this.getErrorCode(httpStatus, exceptionResponse),
-      message: this.getErrorMessage(exceptionResponse) || message,
+      message: isDbError ? message : sanitizedMessage,
       details: this.getErrorDetails(exceptionResponse),
       timestamp: new Date().toISOString(),
       path,
     };
+
+    // Dev stack trace exposure
+    if (process.env.NODE_ENV !== 'production' && exception instanceof Error) {
+      responseBody.debug = exception.stack;
+    }
+
+    // Production error hiding for 500+
+    if (process.env.NODE_ENV === 'production' && httpStatus >= 500) {
+      responseBody.message = 'Internal Server Error';
+      delete responseBody.debug;
+    }
 
     // Pino Logging Logic
     if (httpStatus >= 500) {
@@ -79,6 +124,16 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     httpAdapter.reply(response, responseBody, httpStatus);
   }
+
+  private sanitizeMessage(message: string): string {
+    for (const pattern of SENSITIVE_MESSAGE_PATTERNS) {
+      if (pattern.test(message)) {
+        return 'Invalid Request';
+      }
+    }
+    return message;
+  }
+
   private parseExceptionResponse(
     response: string | object,
   ): ExceptionResponse | string {
@@ -106,6 +161,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
         return 'CONFLICT';
       case 408:
         return 'TIMEOUT_ERROR';
+      case 503:
+        return 'SERVICE_UNAVAILABLE';
       default:
         return 'INTERNAL_ERROR';
     }
@@ -125,7 +182,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
     response: ExceptionResponse | string | null,
   ): unknown {
     if (typeof response === 'object' && response !== null) {
-      // NestJS class-validator or our custom Zod pipe details
       return response.error ?? response.details ?? null;
     }
     return null;

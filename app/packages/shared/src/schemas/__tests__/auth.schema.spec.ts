@@ -6,7 +6,7 @@ import {
   Tokens,
   AuthResponseSchema,
   UserProfileSchema,
-  UserPermissionsSchema,
+  AuthUserPermissionsSchema,
   ChangePasswordSchema,
   LoginAuthDto,
   RegisterAuthDto,
@@ -466,9 +466,9 @@ describe('Auth schemas', () => {
     });
   });
 
-  describe('UserPermissionsSchema', () => {
+  describe('AuthUserPermissionsSchema', () => {
     it('should accept default values', () => {
-      const result = UserPermissionsSchema.safeParse({});
+      const result = AuthUserPermissionsSchema.safeParse({});
       expect(result.success).toBe(true);
       if (result.success) {
         expect(result.data.isAdmin).toBe(false);
@@ -477,7 +477,7 @@ describe('Auth schemas', () => {
     });
 
     it('should accept valid permissions object', () => {
-      const result = UserPermissionsSchema.safeParse({
+      const result = AuthUserPermissionsSchema.safeParse({
         isAdmin: true,
         permissions: ['read', 'write'],
       });
@@ -485,7 +485,7 @@ describe('Auth schemas', () => {
     });
 
     it('should accept empty permissions array', () => {
-      const result = UserPermissionsSchema.safeParse({
+      const result = AuthUserPermissionsSchema.safeParse({
         isAdmin: false,
         permissions: [],
       });

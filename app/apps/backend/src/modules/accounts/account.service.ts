@@ -4,7 +4,7 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import {
   AccountRepository,
   AccountWithRelations,
-} from '../../repositories/account.repository';
+} from './repositories/account.repository';
 import { AccountDTO, CreateAccountInput } from '@repo/shared';
 
 @Injectable()

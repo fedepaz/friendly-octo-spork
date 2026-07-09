@@ -24,6 +24,8 @@ model User {
   categories   Category[]
   recurrences  Recurrence[]
   transactions Transaction[]
+  permissions  UserPermission[]
+  devAccount   DevAccount?
 }
 
 model Account {
@@ -184,4 +186,82 @@ enum CardType {
   MASTERCARD
   AMEX
   MAESTRO
+}
+
+
+enum PermissionScope {
+  NONE
+  OWN
+  ALL
+}
+
+enum PermissionType {
+  CRUD
+  PROCESS
+  READ_ONLY
+}
+
+model AuditLog {
+  id        String  @id @default(cuid()) @db.VarChar(36)
+  userId    String? @db.VarChar(36)
+  action    String  @db.VarChar(20) // CREATE, UPDATE, DELETE, LOGIN, ACCESS
+  entityType String @db.VarChar(50) // USER, ACCOUNT, TRANSACTION, etc.
+  entityId  String? @db.VarChar(36)
+  changes   Json?
+  endpoint  String? @db.VarChar(255)
+  method    String? @db.VarChar(10)
+  ipAddress String? @db.VarChar(45)
+  userAgent String? @db.VarChar(500)
+  durationMs Int?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([entityType])
+  @@index([createdAt])
+}
+
+model UserPermission {
+  id             String         @id @default(cuid()) @db.VarChar(36)
+  userId         String         @db.VarChar(36)
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  entityId       String         @db.VarChar(36)
+  entity         Entity         @relation(fields: [entityId], references: [id])
+  canCreate      Boolean        @default(false)
+  canRead        Boolean        @default(false)
+  canUpdate      Boolean        @default(false)
+  canDelete      Boolean        @default(false)
+  scope          PermissionScope @default(ALL)
+  permissionType PermissionType @default(CRUD)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@unique([userId, entityId])
+  @@index([userId])
+  @@index([entityId])
+  @@map("user_permissions")
+}
+
+
+model Entity {
+  id             String         @id @default(cuid()) @db.VarChar(36)
+  name           String         @unique @db.VarChar(50)
+  label          String         @db.VarChar(50)
+  permissionType PermissionType @default(CRUD)
+  isActive       Boolean        @default(true)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  permissions UserPermission[]
+
+  @@map("entities")
+}
+
+model DevAccount {
+  id        String   @id @default(cuid()) @db.VarChar(36)
+  userId    String   @unique @db.VarChar(36)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("dev_account")
 }

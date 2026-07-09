@@ -140,7 +140,7 @@ describe('Frontend utilities', () => {
       expect(result.color).toBe('text-destructive/80');
       expect(result.bg).toBe('bg-destructive/10');
       expect(result.border).toBe('border-destructive/30');
-      expect(result.label).toBe('Gasto');
+      expect(result.translationKey).toBe('expense');
     });
 
     it('should return INCOME styles', () => {
@@ -148,7 +148,7 @@ describe('Frontend utilities', () => {
       expect(result.color).toBe('text-secondary');
       expect(result.bg).toBe('bg-secondary/10');
       expect(result.border).toBe('border-secondary/30');
-      expect(result.label).toBe('Ingreso');
+      expect(result.translationKey).toBe('income');
     });
 
     it('should return TRANSFER styles', () => {
@@ -156,7 +156,7 @@ describe('Frontend utilities', () => {
       expect(result.color).toBe('text-accent');
       expect(result.bg).toBe('bg-accent/10');
       expect(result.border).toBe('border-accent/30');
-      expect(result.label).toBe('Transferencia');
+      expect(result.translationKey).toBe('transfer');
     });
 
     it('should return INVESTMENT styles', () => {
@@ -164,7 +164,7 @@ describe('Frontend utilities', () => {
       expect(result.color).toBe('text-primary');
       expect(result.bg).toBe('bg-primary/10');
       expect(result.border).toBe('border-primary/30');
-      expect(result.label).toBe('Inversión');
+      expect(result.translationKey).toBe('investment');
     });
 
     it('should return RETURN styles', () => {
@@ -172,7 +172,7 @@ describe('Frontend utilities', () => {
       expect(result.color).toBe('text-secondary');
       expect(result.bg).toBe('bg-secondary/10');
       expect(result.border).toBe('border-secondary/30');
-      expect(result.label).toBe('Rendimiento');
+      expect(result.translationKey).toBe('return');
     });
 
     it('should return PAYMENT styles', () => {
@@ -180,7 +180,7 @@ describe('Frontend utilities', () => {
       expect(result.color).toBe('text-primary');
       expect(result.bg).toBe('bg-primary/10');
       expect(result.border).toBe('border-primary/30');
-      expect(result.label).toBe('Pago');
+      expect(result.translationKey).toBe('payment');
     });
 
     it('should return default styles for unknown type', () => {
@@ -188,13 +188,13 @@ describe('Frontend utilities', () => {
       expect(result.color).toBe('text-muted-foreground');
       expect(result.bg).toBe('bg-muted/10');
       expect(result.border).toBe('border-muted/30');
-      expect(result.label).toBe('UNKNOWN');
+      expect(result.translationKey).toBe('UNKNOWN');
     });
 
     it('should return default styles for empty string', () => {
       const result = getTransactionTypeStyles('');
       expect(result.color).toBe('text-muted-foreground');
-      expect(result.label).toBe('');
+      expect(result.translationKey).toBe('');
     });
   });
 });

@@ -6,6 +6,12 @@
     "noCategory": "Uncategorized",
     "amountHeader": "Amount",
     "cardExpenseTooltip": "Card Expense",
-    "budgetedExpenseTooltip": "Budgeted Expense"
+    "budgetedExpenseTooltip": "Budgeted Expense",
+    "expense": "Expense",
+    "income": "Income",
+    "transfer": "Transfer",
+    "investment": "Investment",
+    "return": "Return",
+    "payment": "Payment"
   }
 }

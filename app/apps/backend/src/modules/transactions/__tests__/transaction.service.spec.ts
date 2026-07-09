@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { TransactionService } from '../transaction.service';
-import { TransactionRepository } from '../../../repositories/transaction.repository';
-import { AccountRepository } from '../../../repositories/account.repository';
+import { TransactionRepository } from '../repositories/transaction.repository';
+import { AccountRepository } from '../../accounts/repositories/account.repository';
 import { RecurrenceService } from '../../recurrences/recurrence.service';
 import { PrismaService } from '../../../infra/prisma/prisma.service';
-import type { TransactionWithRelations } from '../../../repositories/transaction.repository';
+import type { TransactionWithRelations } from '../repositories/transaction.repository';
 
 // Helper to create a mock TransactionWithRelations
 function mockTransaction(

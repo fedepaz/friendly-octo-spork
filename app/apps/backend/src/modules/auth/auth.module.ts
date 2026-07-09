@@ -9,6 +9,7 @@ import { ConfigService, ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt-auth.strategy';
 import { AuthController } from './auth.controller';
+import { PermissionsModule } from '../permissions/permissions.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { AuthController } from './auth.controller';
         };
       },
     }),
+    PermissionsModule,
   ],
   providers: [GlobalAuthGuard, AuthService, UserAuthRepository, JwtStrategy],
   controllers: [AuthController],

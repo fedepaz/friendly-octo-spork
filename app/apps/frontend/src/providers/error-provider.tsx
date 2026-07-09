@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { createContext, ReactNode, useCallback, useContext } from "react";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { logger } from "@/lib/logger";
 
 interface ErrorContextValue {
   handleError: (error: unknown, options?: ErrorHandlerOptions) => void;
@@ -30,14 +31,12 @@ export function ErrorProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const epT = useTranslations("ErrorProvider");
 
-  if (process.env.NODE_ENV === "development") {
-    console.log("ErrorProvider initialized");
-  }
+  logger.debug("ErrorProvider initialized");
 
   const handleError = useCallback(
     (error: unknown, options: ErrorHandlerOptions = {}) => {
-      console.log("handleError called: ");
-      console.log(error);
+      logger.debug("handleError called: ");
+      logger.debug("error", error);
 
       const {
         context,
@@ -46,15 +45,10 @@ export function ErrorProvider({ children }: { children: ReactNode }) {
         shouldThrow = false,
       } = options;
 
-      if (process.env.NODE_ENV === "development") {
-        console.error(`DEBUG: ${context || ""}`, error);
-      }
+      logger.error(`DEBUG: ${context || ""}`, error);
 
       const parsed = parseApiError(error);
-      if (process.env.NODE_ENV === "development") {
-        console.log("parsed: ");
-        console.log(parsed);
-      }
+      logger.debug("parsed: ", parsed);
 
       if (silent) {
         if (shouldThrow) throw error;

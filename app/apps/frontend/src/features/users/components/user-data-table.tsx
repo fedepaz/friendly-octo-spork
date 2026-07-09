@@ -8,11 +8,16 @@ import { DataTable, SlideOverForm } from "@/components/data-display/data-table";
 import { userColumns } from "./columns";
 import { UserProfileDto } from "@repo/shared";
 import { UserViewForm } from "./users-view-form";
+import { EmptyState } from "@/components/common/empty-state";
 
 export function UsersDataTable() {
   const udT = useTranslations("UsersDashboard");
   const { data: users = [] } = useUsers();
   const [selectedUser, setSelectedUser] = useState<UserProfileDto | null>(null);
+
+  if (!users || users.length === 0) {
+    return <EmptyState />;
+  }
 
   return (
     <div className="flex-1 flex flex-col min-h-0 animate-premium-in">

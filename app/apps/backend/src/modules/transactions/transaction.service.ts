@@ -9,7 +9,7 @@ import {
 import {
   TransactionRepository,
   TransactionWithRelations,
-} from '../../repositories/transaction.repository';
+} from './repositories/transaction.repository';
 import {
   CreateTransactionInput,
   PaginatedResponse,
@@ -22,7 +22,7 @@ import { PrismaService } from '../../infra/prisma/prisma.service';
 import {
   AccountRepository,
   AccountWithRelations,
-} from '../../repositories/account.repository';
+} from '../accounts/repositories/account.repository';
 
 import { RecurrenceService } from '../recurrences/recurrence.service';
 

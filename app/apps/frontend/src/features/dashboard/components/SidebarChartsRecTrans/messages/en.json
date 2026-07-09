@@ -1,12 +1,12 @@
 {
   "SidebarChartsRecTrans": {
-    "title": "Pendientes",
-    "allCaughtUp": "✓ Todo al día ({type})",
-    "description": "Concepto",
-    "installment": "Cuota",
-    "amount": "Monto",
+    "title": "Pending",
+    "allCaughtUp": "✓ All caught up ({type})",
+    "description": "Description",
+    "installment": "Installment",
+    "amount": "Amount",
     "card": "CARD",
-    "payButtonTitle": "Procesar pago",
+    "payButtonTitle": "Process payment",
     "filter_INCOME": "INC",
     "filter_EXPENSE": "EXP",
     "filter_PAYMENT": "PAY",

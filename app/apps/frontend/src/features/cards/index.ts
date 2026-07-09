@@ -1,4 +1,11 @@
 // src/features/cards/index.ts
 
-export * from "./components/CardsDashboard";
-export * from "./components/cards-dashboard-skeleton";
+// Components
+export { CardsDashboard } from "./components/CardsDashboard";
+export { CardsDashboardSkeleton } from "./components/cards-dashboard-skeleton";
+
+// Hooks
+export { useCardTransactionsByMonth } from "./hooks/cardHooks";
+
+// Services
+export { cardService } from "./api/cardService";

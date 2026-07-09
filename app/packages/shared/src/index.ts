@@ -12,4 +12,7 @@ export * from "./schemas/pagination.schema";
 export * from "./schemas/dashboard/budget.schema";
 export * from "./schemas/dashboard/income-expense.schema";
 export * from "./schemas/dashboard/netWorth.schema";
+export * from "./schemas/auditLog.schema";
+export * from "./schemas/permissions.schema";
+export * from "./constants/managed-entities";
 export * from "./utils/date-utils";

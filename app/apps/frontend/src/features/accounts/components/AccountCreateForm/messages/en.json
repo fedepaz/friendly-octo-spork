@@ -10,6 +10,8 @@
     "typeCard": "Card",
     "typeInvestment": "Investment",
     "currencyLabel": "Base Currency",
-    "openingBalanceLabel": "Opening Balance"
+    "openingBalanceLabel": "Opening Balance",
+    "toastSuccess": "Account {name} created successfully",
+    "toastError": "Error creating account: {error}"
   }
 }

@@ -17,6 +17,7 @@ import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
+import { EmptyState } from "@/components/common/empty-state";
 
 export function AccountDataTable() {
   const adT = useTranslations("AccountDashboard");
@@ -61,6 +62,10 @@ export function AccountDataTable() {
     setSelectedAccount(null);
     setSlideOverOpen(false);
   };
+
+  if (!accounts || accounts.length === 0) {
+    return <EmptyState />;
+  }
 
   return (
     <>
