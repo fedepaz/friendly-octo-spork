@@ -13,15 +13,7 @@ import {
   incomeExpenseDashboardService,
   recurrenceToPayDashboard,
 } from "../api/dashboardService";
-
-export const dashboardQueryKeys = {
-  all: () => ["dashboard"] as const,
-  budgetSummary: () => ["dashboard", "budget"] as const,
-  recentAccounts: () => ["dashboard", "recentAccounts"] as const,
-  incomeExpense: (months: number) =>
-    ["dashboard", "incomeExpense", months] as const,
-  recurrencesToPay: () => ["dashboard", "toPay"] as const,
-};
+import { dashboardQueryKeys } from "@/lib/queryKeys";
 
 export const useBudgetSummary = () => {
   return useSuspenseQuery<BudgetDTO[]>({

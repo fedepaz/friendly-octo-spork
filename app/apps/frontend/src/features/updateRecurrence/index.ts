@@ -1,5 +1,7 @@
 // src/features/updateRecurrence/index.ts
 
-export * from "./components/FormContainerRecurrence";
-export * from "@/components/ui/wizard-modal";
-export * from "./providers/SmartFormProviderRecurrence";
+// Components
+export { FormContainerRecurrence } from "./components/FormContainerRecurrence";
+
+// Providers
+export { SmartFormProviderRecurrence } from "./providers/SmartFormProviderRecurrence";

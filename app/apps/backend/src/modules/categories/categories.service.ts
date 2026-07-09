@@ -1,7 +1,7 @@
 // backend/src/modules/categories/categories.service.ts
 
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import { CategoriesRepository } from '../../repositories/categories.repository';
+import { CategoriesRepository } from './repositories/categories.repository';
 import { CategoryDTO } from '@repo/shared';
 
 @Injectable()

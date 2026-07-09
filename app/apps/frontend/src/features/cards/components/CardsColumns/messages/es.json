@@ -8,6 +8,9 @@
     "card": "Tarjeta",
     "notAvailable": "n/a",
     "date": "Fecha",
-    "amount": "Monto"
+    "amount": "Monto",
+    "sourceRecurrence": "Cuota",
+    "sourceOneTimer": "Consumo",
+    "sourcePayment": "Pago"
   }
 }

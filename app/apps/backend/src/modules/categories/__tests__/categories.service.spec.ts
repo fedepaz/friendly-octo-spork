@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BadRequestException } from '@nestjs/common';
 import { CategoriesService } from '../categories.service';
-import { CategoriesRepository } from '../../../repositories/categories.repository';
+import { CategoriesRepository } from '../repositories/categories.repository';
 
 describe('CategoriesService', () => {
   let service: CategoriesService;

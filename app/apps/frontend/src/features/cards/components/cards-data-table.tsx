@@ -20,6 +20,7 @@ import {
 import { cn, formatCurrency } from "@/lib/utils";
 import { Repeat, ShoppingCart, ArrowLeftRight, Banknote } from "lucide-react";
 import { getCurrentMonth, getCurrentYear } from "@/lib/date-utils";
+import { EmptyState } from "@/components/common/empty-state";
 
 export function CardsDataTable() {
   const cdT = useTranslations("CardsDashboard");
@@ -45,6 +46,10 @@ export function CardsDataTable() {
   const summary = data?.summary;
   const balance = Number(summary?.balance ?? 0);
   const isPositiveBalance = balance >= 0;
+
+  if (!cards || cards.length === 0) {
+    return <EmptyState />;
+  }
 
   return (
     <>

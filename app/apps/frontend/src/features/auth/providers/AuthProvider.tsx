@@ -4,7 +4,6 @@
 import { createContext, useContext, useEffect } from "react";
 import {
   useAuthUserProfile,
-  authQueryKeys,
 } from "../hooks/use-authUser";
 import { useAuth } from "../hooks/useAuth";
 import {
@@ -12,8 +11,9 @@ import {
   UserPermissions,
   UserProfileDto,
 } from "@repo/shared";
-import { permissionsQueryKeys, usePermissions } from "../hooks/use-permissions";
+import { usePermissions } from "../hooks/use-permissions";
 import { useQueryClient } from "@tanstack/react-query";
+import { authQueryKeys, permissionsQueryKeys } from "@/lib/queryKeys";
 
 type AuthContextType = {
   userProfile: UserProfileDto | undefined;
@@ -48,7 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const profile = useAuthUserProfile();
   const permissions = usePermissions();
-  // Detect pending permissions
+  // Detect pending permissions (user has no permissions assigned)
   const isPendingPermissions =
     auth.isSignedIn &&
     permissions.isSuccess &&
@@ -67,7 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isError: profile.isError,
     isDatabaseUnavailable: profile.isDatabaseUnavailable,
     isPendingPermissions,
-    permissions: permissions.data || { isAdmin: true, permissions: [] },
+    permissions: permissions.data || {},
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

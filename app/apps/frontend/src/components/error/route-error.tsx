@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, RefreshCw } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { logger } from "@/lib/logger";
 
 interface RouteErrorProps {
   error: Error & { digest?: string };
@@ -13,7 +14,7 @@ interface RouteErrorProps {
 export function RouteError({ error, reset }: RouteErrorProps) {
   const reT = useTranslations("RouteError");
   useEffect(() => {
-    console.error("Route error:", error);
+    logger.error("Route error:", error);
   }, [error]);
 
   return (

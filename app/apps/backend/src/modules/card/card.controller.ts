@@ -1,5 +1,3 @@
-// backend/src/modules/card/card.controller.ts
-
 import {
   Body,
   Controller,
@@ -13,7 +11,7 @@ import {
 import { CardService } from './card.service';
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
 import { AuthUser } from '../auth/types/auth-user.type';
-import { CardTransactionsWithRelations } from '../../repositories/card.repository';
+import { CardTransactionsWithRelations } from './repositories/card.repository';
 import {
   CardCloseInputDTO,
   CardCloseResponseDTO,
@@ -21,6 +19,7 @@ import {
   CardStatementDTO,
 } from '@repo/shared';
 import { ZodValidationPipe } from '../../shared/pipes/zod-validation-pipe';
+import { RequirePermission } from '../permissions/decorators/require-permission.decorator';
 
 @Controller('cards')
 export class CardController {
@@ -28,6 +27,7 @@ export class CardController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'cards', action: 'read' })
   async getCardTransactions(
     @CurrentUser() user: AuthUser,
   ): Promise<CardTransactionsWithRelations[]> {
@@ -36,6 +36,7 @@ export class CardController {
 
   @Get('account/:accountId')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'cards', action: 'read' })
   async getCardTransactionByAccountId(
     @CurrentUser() user: AuthUser,
     @Param('accountId') accountId: string,
@@ -45,6 +46,7 @@ export class CardController {
 
   @Get('month/:year/:month')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'cards', action: 'read' })
   async getCardTransactionsByMonth(
     @CurrentUser() user: AuthUser,
     @Param('year', ParseIntPipe) year: number,
@@ -54,6 +56,7 @@ export class CardController {
   }
   @Get('close/:year/:month')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'cards', action: 'read' })
   async getCardTransactionsForPayStatement(
     @CurrentUser() user: AuthUser,
     @Param('year', ParseIntPipe) year: number,
@@ -68,6 +71,7 @@ export class CardController {
 
   @Post('close')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'cards', action: 'create' })
   async closeCard(
     @CurrentUser() user: AuthUser,
     @Body(new ZodValidationPipe(cardCloseSchema)) data: CardCloseInputDTO,

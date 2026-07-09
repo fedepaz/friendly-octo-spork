@@ -4,7 +4,7 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import {
   RecurrenceRepository,
   RecurrenceWithRelations,
-} from '../../repositories/recurrence.repository';
+} from './repositories/recurrence.repository';
 import {
   CreateTransactionInput,
   RecurrenceDTO,

@@ -6,11 +6,7 @@ import { UserProfileDto } from "@repo/shared";
 import { useAuth } from "./useAuth";
 import { ApiError } from "@/lib/api/client-fetch";
 import { authService } from "../api/authService";
-
-export const authQueryKeys = {
-  all: ["auth"] as const,
-  profile: () => [...authQueryKeys.all, "profile"] as const,
-};
+import { authQueryKeys } from "@/lib/queryKeys";
 
 export const useAuthUserProfile = () => {
   const { isSignedIn, loading: authLoading } = useAuth();

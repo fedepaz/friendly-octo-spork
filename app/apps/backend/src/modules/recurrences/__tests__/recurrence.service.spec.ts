@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BadRequestException } from '@nestjs/common';
 import { RecurrenceService } from '../recurrence.service';
-import { RecurrenceRepository } from '../../../repositories/recurrence.repository';
-import type { RecurrenceWithRelations } from '../../../repositories/recurrence.repository';
+import { RecurrenceRepository } from '../repositories/recurrence.repository';
+import type { RecurrenceWithRelations } from '../repositories/recurrence.repository';
 
 // Helper to create a mock RecurrenceWithRelations
 function mockRecurrence(

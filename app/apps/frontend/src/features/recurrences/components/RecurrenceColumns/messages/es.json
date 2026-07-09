@@ -9,6 +9,12 @@
     "weekly": "Semanal",
     "yearly": "Anual",
     "installments": "Cuotas",
-    "cyclesHeader": "Ciclos"
+    "cyclesHeader": "Ciclos",
+    "expense": "Gasto",
+    "income": "Ingreso",
+    "transfer": "Transferencia",
+    "investment": "Inversión",
+    "return": "Rendimiento",
+    "payment": "Pago"
   }
 }

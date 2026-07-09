@@ -1,5 +1,3 @@
-// src/modules/auth/auth.controller.ts
-
 import {
   Controller,
   Post,
@@ -26,15 +24,12 @@ import { AuthUser } from './types/auth-user.type';
 import { Public } from '../../shared/decorators/public.decorator';
 import { CurrentUser } from './decorators/current-user.decorators';
 import { ZodValidationPipe } from '../../shared/pipes/zod-validation-pipe';
+import { RequirePermission } from '../permissions/decorators/require-permission.decorator';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  /**
-   * POST /auth/login
-   * Public endpoint - login with email and password
-   */
   @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
@@ -53,10 +48,6 @@ export class AuthController {
     return this.authService.register(dto);
   }
 
-  /**
-   * POST /auth/refresh
-   * Protected endpoint - refresh access token
-   */
   @Public()
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
@@ -65,22 +56,17 @@ export class AuthController {
   ): Promise<TokensDto> {
     return this.authService.refreshTokens(dto.refreshToken);
   }
-  /**
-   * POST /auth/logout
-   * Protected endpoint - logout (client-side token deletion)
-   */
+
   @Post('logout')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'user_profile', action: 'read' })
   logout() {
     return { message: 'Logged out successfully' };
   }
-  /**
-   * PATCH /auth/password
-   * Protected endpoint - change password
-   */
 
   @Patch('password')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'user_profile', action: 'update' })
   async changePassword(
     @Body(new ZodValidationPipe(ChangePasswordSchema)) dto: ChangePasswordDto,
     @CurrentUser() user: AuthUser,

@@ -43,49 +43,49 @@ export function getTransactionTypeStyles(type: string) {
         color: "text-destructive/80",
         bg: "bg-destructive/10",
         border: "border-destructive/30",
-        label: "Gasto",
+        translationKey: "expense",
       };
     case "INCOME":
       return {
         color: "text-secondary",
         bg: "bg-secondary/10",
         border: "border-secondary/30",
-        label: "Ingreso",
+        translationKey: "income",
       };
     case "TRANSFER":
       return {
         color: "text-accent",
         bg: "bg-accent/10",
         border: "border-accent/30",
-        label: "Transferencia",
+        translationKey: "transfer",
       };
     case "INVESTMENT":
       return {
         color: "text-primary",
         bg: "bg-primary/10",
         border: "border-primary/30",
-        label: "Inversión",
+        translationKey: "investment",
       };
     case "RETURN":
       return {
         color: "text-secondary",
         bg: "bg-secondary/10",
         border: "border-secondary/30",
-        label: "Rendimiento",
+        translationKey: "return",
       };
     case "PAYMENT":
       return {
         color: "text-primary",
         bg: "bg-primary/10",
         border: "border-primary/30",
-        label: "Pago",
+        translationKey: "payment",
       };
     default:
       return {
         color: "text-muted-foreground",
         bg: "bg-muted/10",
         border: "border-muted/30",
-        label: type,
+        translationKey: type,
       };
   }
 }

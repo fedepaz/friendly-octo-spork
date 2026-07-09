@@ -5,9 +5,9 @@ import { RecurrenceDTO, TransactionDTO } from "@repo/shared";
 export type CardRowSource = "recurrence" | "oneTimer" | "payment";
 
 export const SOURCE_LABELS: Record<CardRowSource, string> = {
-  recurrence: "CUOTA",
-  oneTimer: "CONSUMO",
-  payment: "PAGO",
+  recurrence: "sourceRecurrence",
+  oneTimer: "sourceOneTimer",
+  payment: "sourcePayment",
 };
 
 export const SOURCE_COLORS: Record<CardRowSource, string> = {

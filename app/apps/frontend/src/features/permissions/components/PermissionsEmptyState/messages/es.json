@@ -1,0 +1,6 @@
+{
+  "PermissionsEmptyState": {
+    "title": "Sin permisos configurados",
+    "description": "Selecciona un usuario para configurar sus permisos de acceso."
+  }
+}

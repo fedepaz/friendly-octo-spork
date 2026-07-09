@@ -19,6 +19,21 @@
     "selectAll": "Select all",
     "selectRow": "Select row"
   },
+  "AuditLogColumns": {
+    "action": "Action",
+    "user": "User",
+    "changes": "Changes",
+    "date": "Date",
+    "ip": "IP",
+    "device": "Device"
+  },
+  "AuditLogsDashboard": {
+    "title": "Audit Logs",
+    "description": "System activity records",
+    "slideOverTitle": "Log Details",
+    "logPrefix": "Log",
+    "detailPlaceholder": "Detailed view coming soon."
+  },
   "navigation": {
     "operations": "Operations",
     "admin": "Administration",
@@ -38,7 +53,17 @@
     "usersActive": "Active users",
     "accountsActive": "Active accounts",
     "recurrencesActive": "Active recurrences",
-    "creditCards": "Credit cards"
+    "creditCards": "Credit cards",
+    "auditLogs": "Audit Logs",
+    "auditLogsDesc": "System activity records",
+    "userPermissions": "Permissions",
+    "userPermissionsDesc": "User access configuration",
+    "audit-logs": "Audit Logs",
+    "audit-logsDesc": "System activity records",
+    "user-permissions": "Permissions",
+    "user-permissionsDesc": "User access configuration",
+    "dev": "Development",
+    "users-sub": "Users"
   },
   "alerts": {
     "dismiss": "Dismiss",
@@ -72,8 +97,13 @@
     "notFound404": "Error 404",
     "notFoundDesc": "Sorry, we couldn't find the page you're looking for.",
     "workingHard": "We are working hard to provide you with an innovative and efficient management solution.",
-    "generalError": "Algo salió mal",
+    "generalError": "Something went wrong",
     "backToHome": "Back to home page",
     "appSubtitle": "Management system"
+  },
+  "Permissions": {
+    "title": "User Permissions",
+    "description": "Configure access permissions for each user",
+    "loading": "Loading permissions..."
   }
 }

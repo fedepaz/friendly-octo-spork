@@ -8,6 +8,7 @@ import { AuthService } from '../auth.service';
 import { UserAuthRepository } from '../repositories/userAuth.repository';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { PermissionsService } from '../../permissions/permissions.service';
 
 // Mock bcrypt at module level
 jest.mock('bcrypt');
@@ -65,6 +66,13 @@ describe('AuthService', () => {
         { provide: UserAuthRepository, useValue: userAuthRepo },
         { provide: JwtService, useValue: jwtService },
         { provide: ConfigService, useValue: configService },
+        {
+          provide: PermissionsService,
+          useValue: {
+            findAllEntities: jest.fn().mockResolvedValue([]),
+            setPermissionsForUser: jest.fn().mockResolvedValue(undefined),
+          },
+        },
       ],
     }).compile();
 

@@ -4,8 +4,8 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import {
   CardRepository,
   CardTransactionsWithRelations,
-} from '../../repositories/card.repository';
-import { TransactionWithRelations } from '../../repositories/transaction.repository';
+} from './repositories/card.repository';
+import { TransactionWithRelations } from '../transactions/repositories/transaction.repository';
 import {
   CardCloseInputDTO,
   CardCloseResponseDTO,
@@ -13,10 +13,10 @@ import {
   RecurrenceDTO,
   TransactionDTO,
 } from '@repo/shared';
-import { RecurrenceWithRelations } from '../../repositories/recurrence.repository';
+import { RecurrenceWithRelations } from '../recurrences/repositories/recurrence.repository';
 import { PrismaService } from '../../infra/prisma/prisma.service';
 import { TransactionService } from '../transactions/transaction.service';
-import { AccountRepository } from '../../repositories/account.repository';
+import { AccountRepository } from '../accounts/repositories/account.repository';
 
 @Injectable()
 export class CardService {

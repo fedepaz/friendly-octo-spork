@@ -3,14 +3,7 @@
 import { TransactionDTO } from "@repo/shared";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { transactionService } from "../api/transactionsService";
-
-export const transactionProfileQueryKeys = {
-  all: () => ["transactions"] as const,
-  byId: (id: string) =>
-    [...transactionProfileQueryKeys.all(), "byId", id] as const,
-  byMonth: (month: number, year: number) =>
-    [...transactionProfileQueryKeys.all(), "byMonth", month, year] as const,
-};
+import { transactionProfileQueryKeys } from "@/lib/queryKeys";
 
 export const useTransactions = (page = 1, limit = 50) => {
   return useSuspenseQuery({

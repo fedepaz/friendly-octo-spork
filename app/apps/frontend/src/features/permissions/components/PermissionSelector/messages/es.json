@@ -1,0 +1,7 @@
+{
+  "PermissionSelector": {
+    "selectEntity": "Seleccionar entidad...",
+    "searchEntity": "Buscar entidad...",
+    "noEntities": "No se encontraron entidades."
+  }
+}

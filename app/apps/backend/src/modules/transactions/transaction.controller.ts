@@ -1,5 +1,3 @@
-// backend/src/modules/transactions/transaction.controller.ts
-
 import {
   Body,
   Controller,
@@ -22,12 +20,14 @@ import {
 import { CurrentUser } from '../auth/decorators/current-user.decorators';
 import { AuthUser } from '../auth/types/auth-user.type';
 import { ZodValidationPipe } from '../../shared/pipes/zod-validation-pipe';
+import { RequirePermission } from '../permissions/decorators/require-permission.decorator';
 
 @Controller('transactions')
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
   @Get()
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'transactions', action: 'read' })
   async getTransactions(
     @CurrentUser() user: AuthUser,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
@@ -38,6 +38,7 @@ export class TransactionController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'transactions', action: 'read' })
   async getTransactionById(
     @CurrentUser() user: AuthUser,
     @Param('id') id: string,
@@ -47,6 +48,7 @@ export class TransactionController {
 
   @Get('month/:month/:year')
   @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'transactions', action: 'read' })
   async getTransactionsByMonth(
     @CurrentUser() user: AuthUser,
     @Param('month', ParseIntPipe) month: number,
@@ -57,6 +59,7 @@ export class TransactionController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @RequirePermission({ tableName: 'transactions', action: 'create' })
   async saveTransaction(
     @CurrentUser() user: AuthUser,
     @Body(new ZodValidationPipe(createTransactionSchema))
