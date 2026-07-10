@@ -89,3 +89,37 @@ When building unified views (like the Card Statement) that combine different bac
 3.  **Data Integration**: Connect components to backend APIs or Server Actions.
 4.  **Styling**: Apply Tailwind CSS classes according to the design system.
 5.  **Validation**: Use shared Zod schemas to ensure data consistency with the backend.
+
+## Permissions Feature (`src/features/permissions/`)
+
+**Files:**
+- `api/permissions.api.ts` — usePermissions(), useTables(), useUserPermissions(), useEntityPermissions(), useUpdateUserPermissions()
+- `components/permissions-dashboard.tsx` — Main dashboard with user selector and permission matrix
+- `components/permissions-user-manager.tsx` — CRUD toggle switches per entity per user
+- `hooks/use-permissions.ts` — React Query hooks wrapping API calls
+- `types/permission.types.ts` — UserPermissions, PermissionTable, PermissionEntity types
+
+## Audit Logs Feature (`src/features/auditLogs/`)
+
+**Files:**
+- `api/auditLog.api.ts` — useAuditLogs(), useAuditLog()
+- `components/auditLog-dashboard.tsx` — Main dashboard with data table
+- `components/auditLog-form.tsx` — Detail view for individual audit log entries
+- `hooks/use-auditLog.ts` — React Query hooks wrapping API calls
+- `types/auditLog.types.ts` — AuditLog, AuditLogListResponse types
+
+## Sidebar Navigation Restructuring
+
+**Types (`src/lib/config/navigation.types.ts`):**
+- `NavigationItem` — standalone nav item (e.g., Home)
+- `NavigationNestedGroup` — group with subGroups (e.g., Operaciones, Administración)
+- `NavigationSubGroup` — sub-group within a nestedGroup (e.g., Usuarios under Administración)
+- `requiredPermission` — `{ tableName: string, action: string }` on each nav item
+
+**Structure:**
+- Home — standalone at top
+- Operaciones — nestedGroup (Transacciones, Cuentas, Recurrencias, Tarjeta)
+- Administración — nestedGroup with subGroup "Usuarios" (Lista, Permisos)
+- Desarrollo — nestedGroup (Auditoría)
+
+**Key pattern:** `requiredPermission.tableName` on nav items controls visibility based on user permissions.

@@ -91,3 +91,27 @@ Focus on replacing spreadsheet functionality:
 - API integrations for external tracking.
 - AI-powered spending insights.
 - Investment recommendations.
+
+## Permissions System (RBAC) — P0
+
+**User story:** As an admin, I want to control what each user can see and do in the app.
+
+**Acceptance criteria:**
+- Each user has per-entity CRUD permissions (create, read, update, delete)
+- Permissions are scoped to OWN (own data only) or NONE (no access)
+- New users get default permissions on registration
+- Admin can manage permissions via /user-permissions page
+- Deny-by-default: routes without explicit permission are blocked
+
+**Entities:** accounts, transactions, recurrences, cards, categories, currencies, payment-methods, recurrence-types, card-issuers, user-profile
+
+## Audit Logging — P1
+
+**User story:** As an admin, I want to see who changed what and when.
+
+**Acceptance criteria:**
+- All CRUD operations on protected entities are logged
+- Log includes: user, entity, record, action, old/new data, timestamp
+- Sensitive fields (password, token) are redacted
+- Admin can view audit logs via /audit-logs page
+- Logs are searchable and filterable

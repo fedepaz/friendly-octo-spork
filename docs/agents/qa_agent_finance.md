@@ -37,6 +37,28 @@ You are a meticulous QA & Test Engineer specializing in testing modern TypeScrip
 ### 4. Validation Testing
 - **Zod Schemas**: Ensure shared schemas correctly validate data across the frontend and backend.
 
+## Integration Test Patterns
+
+**Structure:**
+- `test/integration/` — all integration tests
+- `test/integration/setup.ts` — global beforeAll/afterAll (seeds entities, cleans DB)
+- `test/integration/helpers/db.helper.ts` — cleanDatabase() truncates all tables in order
+- `test/integration/helpers/auth.helper.ts` — registerAndLogin() helper
+
+**Entity seeding:** `test/integration/setup.ts` seeds all 10 entities in `beforeAll` so tests can create permissions.
+
+**Database cleanup:** `cleanDatabase()` truncates tables in dependency order: AuditLog → UserPermission → Transaction → Recurrence → Account → Category → User.
+
+## Permissions Test Patterns
+
+**Key scenarios:**
+- User with no permissions gets 403 on protected routes
+- User with READ_ONLY permissions can read but not create/update/delete
+- User with CRUD permissions can perform all actions
+- Scope OWN allows access to own data only
+- Scope NONE denies all access
+- Default permissions assigned on registration
+
 ## Frontend Component Review Standards
 
 Every React component must meet the following enterprise standards before final approval:
