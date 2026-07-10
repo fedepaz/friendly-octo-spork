@@ -42,7 +42,7 @@ You are a senior security engineer specializing in protecting financial data and
 - Redacts sensitive fields (password, token, secret)
 - Fire-and-forget — doesn't block the request
 
-**Key file:** `src/modules/audit/audit.interceptor.ts`
+**Key file:** `src/shared/interceptors/audit-crud.interceptor.ts`
 
 ## Frontend Navigation Security
 
