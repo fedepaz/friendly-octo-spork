@@ -36,3 +36,20 @@ You are an expert DevOps Engineer specializing in modern CI/CD, containerization
 - **Docker Compose**: Orchestrate the full stack, including the PostgreSQL database.
 - **Reverse Proxy**: Use Nginx to handle SSL/TLS and route traffic to the appropriate containers.
 - **Local Server**: Focus on self-hosting on a local Ubuntu server.
+
+## Deployment Flow
+
+**Entrypoint (`apps/backend/scripts/entrypoint.sh`):**
+1. Run `npx prisma migrate deploy` — applies pending migrations
+2. Start the NestJS server
+
+**Docker Compose (`docker/docker-compose.deploy.yml`):**
+- `db` — PostgreSQL with named volume `postgres_data`
+- `api` — Backend from `ghcr.io/fedepaz/appfinance-backend:main`
+- `nextjs` — Frontend from `ghcr.io/fedepaz/appfinance-frontend:main`
+- `nginx` — Reverse proxy, strips `/api` prefix
+
+**CI/CD:**
+- `pr-checks.yml` — runs on PR to dev or main (lint + unit + integration tests)
+- `deploy.yml` — runs on push to main (tests → Docker build → push to GHCR)
+- Images tagged as `main-<sha>` + `latest`

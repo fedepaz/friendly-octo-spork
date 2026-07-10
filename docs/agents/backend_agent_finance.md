@@ -53,6 +53,12 @@ You are an expert Backend Engineer specializing in NestJS and Prisma ORM. You im
 - **Foreign Key Integrity**: Rely on native database foreign keys (avoid `relationMode = "prisma"` in the schema).
 - **UserId Scoping**: **CRITICAL**: Ensure every query in the repository layer is scoped to the authenticated `userId`.
 
+### Required Reference Data vs Seed Data
+
+- **Required data** (entities, enums, config the app can't function without) MUST go in Prisma migrations (`prisma/migrations/YYYYMMDDHHMMSS_name/migration.sql`), NOT in `seed.ts`.
+- **Seed data** (dev accounts, sample transactions, test users) goes in `prisma/seed.ts`.
+- **Production flow**: `entrypoint.sh` runs `prisma migrate deploy` → applies migrations. It does NOT run `seed.ts`.
+- **Test**: If the app breaks without the data → migration. If it's convenience → seed.
 
 ## API Development
 
@@ -70,7 +76,50 @@ You are an expert Backend Engineer specializing in NestJS and Prisma ORM. You im
 - **Error Handling**: Use built-in NestJS exceptions (e.g., `BadRequestException`, `NotFoundException`, `UnauthorizedException`) instead of generic `Error` objects to ensure consistent API responses.
 - **Standardized Responses**: Ensure consistent error and success response structures.
 - **Authentication**: Implement JWT-based authentication using NestJS Guards and Decorators. **Standard**: Use `name` (username) as the primary identifier for login and registration.
-- **Registration Flow**: Use Bcrypt for password hashing (rounds: 10). Validate complex password requirements via Zod shared schemas.
+- **Registration Flow**: Use Bcrypt for password hashing (rounds: 12). Validate complex password requirements via Zod shared schemas.
+
+## Permissions Module (`src/modules/permissions/`)
+
+**Files:**
+- `permissions.module.ts` — imports PrismaModule, exports PermissionsService
+- `permissions.controller.ts` — GET /permissions/me, GET /permissions/tables, GET /permissions/user/:userId, GET /permissions/entity/:entityId, PATCH /permissions/user/:userId
+- `permissions.service.ts` — business logic for CRUD operations on UserPermission
+- `permissions.repository.ts` — Prisma queries for UserPermission and Entity
+- `guards/permissions.guard.ts` — deny-by-default global guard
+- `decorators/require-permission.decorator.ts` — @RequirePermission({ tableName, action })
+- `decorators/current-user.decorator.ts` — @CurrentUser() parameter decorator
+- `interfaces/permission.interface.ts` — PermissionRequirement, UserPermissions types
+
+**Key patterns:**
+- Global guard via `APP_GUARD` in AppModule — controllers don't need explicit `@UseGuards`
+- `@RequirePermission({ tableName: 'accounts', action: 'read' })` on every non-public route
+- `scope: 'OWN'` is metadata only — stored in DB and UI labels, NOT enforced in guard
+- Only `scope: 'NONE'` actually denies access
+
+## Auto-Permissions on Registration
+
+When a user registers via `POST /auth/register`, the auth service automatically:
+1. Creates the user with hashed password
+2. Finds all Entity records in the database
+3. Creates UserPermission records for each entity with default permissions:
+   - Financial entities (accounts, transactions, recurrences, cards): CRUD, scope OWN
+   - Reference entities (categories, currencies, payment-methods, recurrence-types, card-issuers, user-profile): READ_ONLY, scope OWN
+
+## AuditCrudInterceptor
+
+**Interceptor:** `src/shared/interceptors/audit-crud.interceptor.ts` — NestJS interceptor on all non-health/auth routes
+
+**Module (`src/modules/auditLog/`):**
+- `auditLog.module.ts` — imports PrismaModule, exports AuditLogService
+- `auditLog.service.ts` — creates AuditLog records
+- `auditLog.controller.ts` — GET /audit-logs, GET /audit-logs/:id
+- `repositories/auditLog.repository.ts` — Prisma queries for AuditLog
+
+**Key patterns:**
+- Applied globally via `APP_INTERCEPTOR` in AppModule
+- Captures old/new data for UPDATE actions
+- Sensitive fields redacted (password, token, secret)
+- Fire-and-forget — doesn't block the request
 
 ## Business Logic Enforcement
 
