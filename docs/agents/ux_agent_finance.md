@@ -84,3 +84,37 @@ To provide the best possible perceived performance, we implement a two-tiered lo
 - **Tabular Data**: Focus on density and clarity for transaction lists and account summaries.
 - **Input Efficiency**: Design keyboard-friendly forms and quick-action shortcuts.
 - **Dashboard Hub**: Create a centralized dashboard that provides a comprehensive overview of financial health.
+
+## Permissions UI (`/user-permissions`)
+
+**Components:**
+- `PermissionsDashboard` — main layout with user selector dropdown
+- `PermissionsUserManager` — CRUD toggle switches per entity per user
+- `PendingPermissionsPage` — loading state while permissions are being fetched
+
+**Key patterns:**
+- User selector at top to switch between users
+- Permission matrix: entities as rows, CRUD actions as columns
+- Toggle switches for each permission
+- Save button to persist changes
+
+## Audit Logs UI (`/audit-logs`)
+
+**Components:**
+- `AuditLogDashboard` — main layout with data table
+- `AuditLogForm` — detail view for individual entries
+
+**Key patterns:**
+- Data table with columns: timestamp, user, entity, action, record
+- Click row to see full details (old/new data)
+- Filterable by entity, action, user, date range
+
+## Sidebar Navigation
+
+**Structure:**
+- Home — standalone at top (not nested)
+- Operaciones — nestedGroup with 4 items (Transacciones, Cuentas, Recurrencias, Tarjeta)
+- Administración — nestedGroup with subGroup "Usuarios" (Lista, Permisos)
+- Desarrollo — nestedGroup with 1 item (Auditoría)
+
+**Key pattern:** SubGroups allow grouping items within a nestedGroup (e.g., Usuarios under Administración).
