@@ -45,6 +45,32 @@ The system distinguishes between continuous cycles and fixed-term debt.
 - **NestJS Modules**: Highly structured backend with clear separation of concerns.
 - **Type Safety**: End-to-end TypeScript with shared Zod schemas.
 
+## Permissions System (RBAC)
+
+**Deny-by-default**: Every non-public route MUST have `@RequirePermission()` or it's automatically denied.
+
+**Architecture:**
+- `Entity` model — devadmin registry of manageable entities (accounts, transactions, etc.)
+- `UserPermission` — per-user CRUD permissions per entity, scoped to OWN or NONE
+- `PermissionsGuard` — global NestJS guard applied via `APP_GUARD`
+- `RequirePermission` decorator — marks routes with required entity + action
+- Auto-assigned on registration — all new users get default permissions
+
+**Key files:**
+- `src/modules/permissions/` — controller, service, repository, guards, decorators
+- `src/modules/entities/` — Entity CRUD endpoints
+
+## Audit Logging
+
+**Architecture:**
+- `AuditLog` model — stores user/entity/record/action/old+new data
+- `AuditCrudInterceptor` — NestJS interceptor on all non-health/auth routes
+- Fire-and-forget — doesn't block the request
+- Sensitive fields redacted (password, token, secret)
+
+**Key files:**
+- `src/modules/audit/` — interceptor, service, repository, controller
+
 ## Architecture Process
 
 ### 1. Requirements Analysis
@@ -103,6 +129,9 @@ model User {
   categories   Category[]
   recurrences  Recurrence[]
   transactions Transaction[]
+  permissions  UserPermission[]
+  devAccount   DevAccount?
+  auditLogs    AuditLog[]
 }
 
 model Account {
@@ -124,6 +153,61 @@ model Account {
 
   @@unique([name, userId], map: "account_name_user_unique")
   @@index([userId])
+}
+
+model Entity {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  label     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  permissions UserPermission[]
+}
+
+model UserPermission {
+  id         String         @id @default(cuid())
+  userId     Int
+  entityId   String
+  canCreate  Boolean        @default(false)
+  canRead    Boolean        @default(false)
+  canUpdate  Boolean        @default(false)
+  canDelete  Boolean        @default(false)
+  scope      PermissionScope @default(OWN)
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id])
+  entity Entity @relation(fields: [entityId], references: [id])
+
+  @@unique([userId, entityId])
+}
+
+model DevAccount {
+  id     String @id @default(cuid())
+  userId Int    @unique
+  token  String @unique
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     Int
+  tableName  String
+  recordId   String
+  action     AuditAction
+  oldData    Json?
+  newData    Json?
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([tableName])
+  @@index([createdAt])
 }
 
 model Category {
@@ -255,6 +339,23 @@ enum CardType {
   MASTERCARD
   AMEX
   MAESTRO
+}
+
+enum PermissionScope {
+  OWN
+  NONE
+}
+
+enum PermissionType {
+  CRUD
+  READ_ONLY
+  NONE
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
 }
 ```
 
