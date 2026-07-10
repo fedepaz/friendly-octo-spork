@@ -105,14 +105,15 @@ When a user registers via `POST /auth/register`, the auth service automatically:
    - Financial entities (accounts, transactions, recurrences, cards): CRUD, scope OWN
    - Reference entities (categories, currencies, payment-methods, recurrence-types, card-issuers, user-profile): READ_ONLY, scope OWN
 
-## AuditCrudInterceptor (`src/modules/audit/`)
+## AuditCrudInterceptor
 
-**Files:**
-- `audit.module.ts` — imports PrismaModule, exports AuditService
-- `audit.interceptor.ts` — NestJS interceptor on all non-health/auth routes
-- `audit.service.ts` — creates AuditLog records
-- `audit.repository.ts` — Prisma queries for AuditLog
-- `audit.controller.ts` — GET /audit-logs, GET /audit-logs/:id
+**Interceptor:** `src/shared/interceptors/audit-crud.interceptor.ts` — NestJS interceptor on all non-health/auth routes
+
+**Module (`src/modules/auditLog/`):**
+- `auditLog.module.ts` — imports PrismaModule, exports AuditLogService
+- `auditLog.service.ts` — creates AuditLog records
+- `auditLog.controller.ts` — GET /audit-logs, GET /audit-logs/:id
+- `repositories/auditLog.repository.ts` — Prisma queries for AuditLog
 
 **Key patterns:**
 - Applied globally via `APP_INTERCEPTOR` in AppModule
