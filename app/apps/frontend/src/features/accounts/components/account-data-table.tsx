@@ -63,10 +63,6 @@ export function AccountDataTable() {
     setSlideOverOpen(false);
   };
 
-  if (!accounts || accounts.length === 0) {
-    return <EmptyState />;
-  }
-
   return (
     <>
       <DataTable
@@ -101,7 +97,10 @@ export function AccountDataTable() {
           }
           description={
             selectedAccount
-              ? adT("viewDesc", { currency: selectedAccount.currency, type: selectedAccount.type })
+              ? adT("viewDesc", {
+                  currency: selectedAccount.currency,
+                  type: selectedAccount.type,
+                })
               : adT("createDesc")
           }
           onCancel={handleCancel}
