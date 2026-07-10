@@ -15,7 +15,7 @@ async function main() {
     where: { email: 'user@admin.com' },
     update: {},
     create: {
-      name: 'Finance Manager',
+      name: 'masterofmoney',
       email: 'user@admin.com',
       passwordHash,
     },
@@ -25,10 +25,30 @@ async function main() {
 
   // Accounts (upsert by unique [name, userId])
   const accountsData = [
-    { name: 'Banco Nación', type: AccountType.BANK, currency: Currency.ARS, balance: 150000.0 },
-    { name: 'Efectivo', type: AccountType.CASH, currency: Currency.ARS, balance: 12500.0 },
-    { name: 'Mercado Libre', type: AccountType.WALLET, currency: Currency.ARS, balance: 500.0 },
-    { name: 'Visa Credit Card', type: AccountType.CARD, currency: Currency.ARS, balance: 0.0 },
+    {
+      name: 'Banco Nación',
+      type: AccountType.BANK,
+      currency: Currency.ARS,
+      balance: 150000.0,
+    },
+    {
+      name: 'Efectivo',
+      type: AccountType.CASH,
+      currency: Currency.ARS,
+      balance: 12500.0,
+    },
+    {
+      name: 'Mercado Libre',
+      type: AccountType.WALLET,
+      currency: Currency.ARS,
+      balance: 500.0,
+    },
+    {
+      name: 'Visa Credit Card',
+      type: AccountType.CARD,
+      currency: Currency.ARS,
+      balance: 0.0,
+    },
   ];
 
   for (const a of accountsData) {
@@ -83,14 +103,38 @@ async function main() {
   // Entities
   const entitiesData = [
     { name: 'users', label: 'Usuarios', permissionType: 'CRUD' as const },
-    { name: 'user_permissions', label: 'Permisos', permissionType: 'CRUD' as const },
+    {
+      name: 'user_permissions',
+      label: 'Permisos',
+      permissionType: 'CRUD' as const,
+    },
     { name: 'accounts', label: 'Cuentas', permissionType: 'CRUD' as const },
-    { name: 'transactions', label: 'Transacciones', permissionType: 'CRUD' as const },
-    { name: 'recurrences', label: 'Recurrencias', permissionType: 'CRUD' as const },
+    {
+      name: 'transactions',
+      label: 'Transacciones',
+      permissionType: 'CRUD' as const,
+    },
+    {
+      name: 'recurrences',
+      label: 'Recurrencias',
+      permissionType: 'CRUD' as const,
+    },
     { name: 'cards', label: 'Tarjetas', permissionType: 'CRUD' as const },
-    { name: 'categories', label: 'Categorías', permissionType: 'READ_ONLY' as const },
-    { name: 'dashboard', label: 'Dashboard', permissionType: 'READ_ONLY' as const },
-    { name: 'audit_logs', label: 'Auditoría', permissionType: 'READ_ONLY' as const },
+    {
+      name: 'categories',
+      label: 'Categorías',
+      permissionType: 'READ_ONLY' as const,
+    },
+    {
+      name: 'dashboard',
+      label: 'Dashboard',
+      permissionType: 'READ_ONLY' as const,
+    },
+    {
+      name: 'audit_logs',
+      label: 'Auditoría',
+      permissionType: 'READ_ONLY' as const,
+    },
     { name: 'user_profile', label: 'Perfil', permissionType: 'CRUD' as const },
   ];
 
@@ -104,8 +148,8 @@ async function main() {
           label: e.label,
           permissionType: e.permissionType,
         },
-      })
-    )
+      }),
+    ),
   );
 
   console.log(`🔐 Seeded ${createdEntities.length} entities`);
@@ -130,7 +174,9 @@ async function main() {
     });
   }
 
-  console.log(`✅ Seeded admin permissions on ${createdEntities.length} entities`);
+  console.log(
+    `✅ Seeded admin permissions on ${createdEntities.length} entities`,
+  );
 
   // Dev account for admin
   await prisma.devAccount.upsert({
