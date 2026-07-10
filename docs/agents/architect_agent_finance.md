@@ -69,7 +69,8 @@ The system distinguishes between continuous cycles and fixed-term debt.
 - Sensitive fields redacted (password, token, secret)
 
 **Key files:**
-- `src/modules/audit/` — interceptor, service, repository, controller
+- `src/shared/interceptors/audit-crud.interceptor.ts` — interceptor
+- `src/modules/auditLog/` — service, repository, controller
 
 ## Architecture Process
 
