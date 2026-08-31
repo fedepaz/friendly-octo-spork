@@ -107,3 +107,8 @@ export const updateCardProfileQueryKeys = {
   closeByMonth: (year: number, month: number) =>
     [...updateCardProfileQueryKeys.all(), "close", year, month] as const,
 };
+
+// ─── Investments ──────────────────────────────────────────────────────────
+export const investmentQueryKeys = {
+  all: () => ["investments"] as const,
+};

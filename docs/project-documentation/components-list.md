@@ -24,46 +24,48 @@ Every new feature component must pass all 9 criteria before shipping.
 
 ## Registry & Audit Log
 
-**Key**: `x` = passes, `-` = fails/missing, `2026-06-22` = today's audit.
+**Key**: `x` = passes, `-` = fails/missing, `2026-08-30` = today's audit.
 
 | Component | Feature | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | Status |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| `Button` | UI Primitives | x | x | x | - | x | x | - | x | 2026-06-22 | Approved |
-| `DataTable` | Shared | - | x | x | - | x | - | - | x | 2026-06-22 | Approved |
-| `SlideOverForm` | Shared | x | x | x | - | x | - | - | x | 2026-06-22 | Premium |
-| `LoginForm` | Auth | x | x | x | - | x | x | - | x | 2026-06-22 | Approved |
-| `AuthDashboard` | Auth | x | x | x | - | - | - | - | x | 2026-06-22 | Approved |
-| `UserTable` | Users | x | x | x | - | x | x | - | x | 2026-06-22 | Approved |
-| `AccountDashboard` | Accounts | x | x | x | x | x | x | - | x | 2026-06-22 | Approved |
-| `AccountCreateForm` | Accounts | x | x | x | - | x | - | - | x | 2026-06-22 | Premium |
-| `RecurrencesDashboard` | Recurrences | x | x | x | x | x | x | - | x | 2026-06-22 | Approved |
-| `SmartFormProvider` | Transactions | x | x | x | - | x | - | - | x | 2026-06-22 | Approved |
-| `MonthSelector` | Shared | x | x | - | - | x | x | - | x | 2026-06-22 | Approved |
-| `RootDashboard` | Dashboard | x | x | x | x | x | x | - | x | 2026-06-22 | Approved |
-| `DesktopSidebar` | Layout | x | x | x | - | x | - | - | x | 2026-06-22 | Premium |
-| `DashboardHeader` | Layout | x | x | x | - | x | - | - | x | 2026-06-22 | Approved |
-| `AuthHeader` | Layout | x | x | x | - | x | - | - | x | 2026-06-22 | Approved |
-| `MobileNavigation` | Layout | x | x | x | - | x | x | - | x | 2026-06-22 | Premium |
-| `KPICard` | Shared | x | x | x | - | - | - | - | x | 2026-06-22 | Approved |
-| `FeatureCard` | Shared | x | x | x | - | x | x | - | x | 2026-06-22 | Approved |
-| `WizardModal` | Shared (UI) | x | x | - | - | x | x | - | x | 2026-06-22 | Approved |
-| `WizardFooter` | Shared (UI) | x | x | - | - | x | x | - | x | 2026-06-22 | Approved |
-| `StepIndicator` | Shared (UI) | x | x | x | - | - | x | - | x | 2026-06-22 | Approved |
-| `InLineError` | Shared (UI) | x | x | x | - | - | - | - | x | 2026-06-22 | Approved |
-| `WizardStepSkeleton` | Shared (UI) | x | x | - | x | - | - | - | x | 2026-06-22 | Approved |
-| `TacticalDataTableCells` | Shared | x | x | - | - | - | - | - | x | 2026-06-22 | Premium |
-| `KPIsDashboard` | Dashboard | x | x | - | - | x | - | - | x | 2026-06-22 | Approved |
-| `TransTypeSelector` | Shared | x | x | - | - | x | x | - | x | 2026-06-22 | Approved |
-| `MainChartsDashboard` | Dashboard | x | x | x | x | x | x | - | x | 2026-06-22 | Approved |
-| `AnalyticChartsBottom` | Dashboard | x | x | - | - | - | - | - | x | 2026-06-22 | Approved |
-| `SidebarChartsBudget` | Dashboard | x | x | - | - | - | - | - | x | 2026-06-22 | Approved |
-| `SidebarChartsAccounts` | Dashboard | x | x | - | - | x | - | - | x | 2026-06-22 | Premium |
-| `SidebarChartsRecentTransactions` | Dashboard | x | x | - | - | x | x | - | x | 2026-06-22 | Premium |
-| `WizardFormProvider` | Providers | - | - | x | - | - | - | - | - | 2026-06-22 | Smart Controller |
-| `SmartFormProviderRecurrence` | Recurrences | x | x | - | - | x | - | - | x | 2026-06-22 | Approved |
-| `CardsDashboard` | Cards | x | x | x | x | x | x | - | x | 2026-06-22 | Approved |
-| `CardsDataTable` | Cards | x | x | x | - | x | x | - | x | 2026-06-22 | Premium (Unified) |
-| `CardViewForm` | Cards | x | x | - | - | - | - | - | x | 2026-06-22 | Premium (Tactical) |
+| `Button` | UI Primitives | x | x | x | - | x | x | - | x | 2026-08-30 | Approved |
+| `DataTable` | Shared | - | x | x | - | x | - | - | x | 2026-08-30 | Approved |
+| `SlideOverForm` | Shared | x | x | x | - | x | - | - | x | 2026-08-30 | Premium |
+| `LoginForm` | Auth | x | x | x | - | x | x | - | x | 2026-08-30 | Approved |
+| `AuthDashboard` | Auth | x | x | x | - | - | - | - | x | 2026-08-30 | Approved |
+| `UsersDashboard` | Users | x | x | x | x | x | x | - | x | 2026-08-30 | Approved |
+| `AccountDashboard` | Accounts | x | x | x | x | x | x | - | x | 2026-08-30 | Approved |
+| `AccountCreateForm` | Accounts | x | x | x | - | x | - | - | x | 2026-08-30 | Premium |
+| `RecurrencesDashboard` | Recurrences | x | x | x | x | x | x | - | x | 2026-08-30 | Approved |
+| `SmartFormProvider` | Transactions | x | x | x | - | x | - | - | x | 2026-08-30 | Approved |
+| `MonthSelector` | Shared | x | x | - | - | x | x | - | x | 2026-08-30 | Approved |
+| `RootDashboard` | Dashboard | x | x | x | x | x | x | - | x | 2026-08-30 | Approved |
+| `DesktopSidebar` | Layout | x | x | x | - | x | - | - | x | 2026-08-30 | Premium |
+| `DashboardHeader` | Layout | x | x | x | - | x | - | - | x | 2026-08-30 | Approved |
+| `AuthHeader` | Layout | x | x | x | - | x | - | - | x | 2026-08-30 | Approved |
+| `MobileNavigation` | Layout | x | x | x | - | x | x | - | x | 2026-08-30 | Premium |
+| `KPICard` | Shared | x | x | x | - | - | - | - | x | 2026-08-30 | Approved |
+| `FeatureCard` | Shared | x | x | x | - | x | x | - | x | 2026-08-30 | Approved |
+| `WizardModal` | Shared (UI) | x | x | - | - | x | x | - | x | 2026-08-30 | Approved |
+| `WizardFooter` | Shared (UI) | x | x | - | - | x | x | - | x | 2026-08-30 | Approved |
+| `StepIndicator` | Shared (UI) | x | x | x | - | - | x | - | x | 2026-08-30 | Approved |
+| `InLineError` | Shared (UI) | x | x | x | - | - | - | - | x | 2026-08-30 | Approved |
+| `WizardStepSkeleton` | Shared (UI) | x | x | - | x | - | - | - | x | 2026-08-30 | Approved |
+| `TacticalDataTableCells` | Shared | x | x | - | - | - | - | - | x | 2026-08-30 | Premium |
+| `KPIsDashboard` | Dashboard | x | x | - | - | x | - | - | x | 2026-08-30 | Approved |
+| `TransTypeSelector` | Shared | x | x | - | - | x | x | - | x | 2026-08-30 | Approved |
+| `MainChartsDashboard` | Dashboard | x | x | x | x | x | x | - | x | 2026-08-30 | Approved |
+| `AnalyticChartsBottom` | Dashboard | x | x | - | - | - | - | - | x | 2026-08-30 | Approved |
+| `SidebarChartsBudget` | Dashboard | x | x | - | - | - | - | - | x | 2026-08-30 | Approved |
+| `SidebarChartsAccounts` | Dashboard | x | x | - | - | x | - | - | x | 2026-08-30 | Premium |
+| `SidebarChartsRecentTransactions` | Dashboard | x | x | - | - | x | x | - | x | 2026-08-30 | Premium |
+| `WizardFormProvider` | Providers | - | - | x | - | - | - | - | - | 2026-08-30 | Smart Controller |
+| `SmartFormProviderRecurrence` | Recurrences | x | x | - | - | x | - | - | x | 2026-08-30 | Approved |
+| `AuditLogDashboard` | AuditLogs | x | x | x | x | x | x | - | x | 2026-08-30 | Approved |
+| `PermissionsDashboard` | Permissions | x | x | x | x | x | x | - | x | 2026-08-30 | Approved |
+| `CardsDashboard` | Cards | x | x | x | x | x | x | - | x | 2026-08-30 | Approved |
+| `CardsDataTable` | Cards | x | x | x | - | x | x | - | x | 2026-08-30 | Premium (Unified) |
+| `CardViewForm` | Cards | x | x | - | - | - | - | - | x | 2026-08-30 | Premium (Tactical) |
 
 ---
 
@@ -80,7 +82,7 @@ Components like `Button`, `InLineError`, `StepIndicator` etc. are UI primitives 
 - `CardSummaryKPIs` — component did not exist (KPIs are inline in `cards-data-table.tsx`)
 - Duplicate `MonthSelector` row (was listed twice)
 
-### Recent fixes (commit `bcf99eb` + this session)
+### Recent fixes (commit `bcf99eb` + previous sessions)
 - **`cursor-pointer`** added to button base (cva) and all native `<button>`/`<Link>` elements
 - **`focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2`** added to all interactive elements
 - **Auto-focus + Escape** in `WizardModal`
@@ -89,3 +91,9 @@ Components like `Button`, `InLineError`, `StepIndicator` etc. are UI primitives 
 - **`aria-label="Cerrar"`** on `SlideOverForm` close button
 - **Removed false affordance** in `SidebarChartsAccounts` (div had `cursor-pointer` but no `onClick`)
 - **Fixed invalid Tailwind widths** in `DataTableSkeleton` (`w-37.5` → `w-[150px]`, etc.)
+
+### Recent fixes (2026-08-30 — UX/UI review)
+- **`UsersDashboard`**: Added `flex-1 min-h-0 animate-premium-in` to wrapper div for Zero-Scroll compliance
+- **`AuditLogDashboard`**: Added `flex-1 min-h-0 animate-premium-in` to wrapper div for Zero-Scroll compliance
+- **`PermissionsDashboard`**: Added `animate-premium-in` to wrapper div for consistency
+- **Renamed** `UserTable` to `UsersDashboard` in registry (component name mismatch)

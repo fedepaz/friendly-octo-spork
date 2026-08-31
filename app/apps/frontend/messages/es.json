@@ -62,6 +62,8 @@
     "audit-logsDesc": "Registro de actividades del sistema",
     "user-permissions": "Permisos",
     "user-permissionsDesc": "Configuración de acceso de usuarios",
+    "investments": "Inversiones",
+    "investmentsDesc": "Reserva de capital e inversiones",
     "dev": "Desarrollo",
     "users-sub": "Usuarios"
   },

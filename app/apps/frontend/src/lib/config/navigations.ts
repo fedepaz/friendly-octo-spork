@@ -58,6 +58,13 @@ export const NAVIGATION_CONFIG: NavigationConfig = [
         description: "Gestión de tarjetas de crédito",
         dashboard: { statsLabel: "Tarjetas de crédito" },
       },
+      {
+        title: "Inversiones",
+        href: ROUTES.INVESTMENTS,
+        icon: Landmark,
+        description: "Reservas e inversiones del sistema",
+        dashboard: { statsLabel: "Inversiones activas" },
+      },
     ],
   },
 
