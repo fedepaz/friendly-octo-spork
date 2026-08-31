@@ -29,19 +29,19 @@ async function main() {
       name: 'Banco Nación',
       type: AccountType.BANK,
       currency: Currency.ARS,
-      balance: 150000.0,
+      balance: 0.0,
     },
     {
       name: 'Efectivo',
       type: AccountType.CASH,
       currency: Currency.ARS,
-      balance: 12500.0,
+      balance: 0.0,
     },
     {
       name: 'Mercado Libre',
       type: AccountType.WALLET,
       currency: Currency.ARS,
-      balance: 500.0,
+      balance: 0.0,
     },
     {
       name: 'Visa Credit Card',
