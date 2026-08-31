@@ -1,4 +1,4 @@
-import { type ColumnDef } from "@tanstack/react-table";
+import { type Column, type ColumnDef } from "@tanstack/react-table";
 import {
   TacticalTextCell,
   PremiumAmountCell,
@@ -7,13 +7,57 @@ import {
 } from "@/components/data-display/data-table";
 import type { InvestmentDTO } from "../api/investmentsService";
 import type { Currency } from "@repo/shared";
+import { useTranslations } from "next-intl";
+
+interface HeaderCellProps {
+  column: Column<InvestmentDTO>;
+}
+
+function NameHeader({ column }: HeaderCellProps) {
+  const icT = useTranslations("InvestmentColumns");
+  return <SortableHeader column={column}>{icT("name")}</SortableHeader>;
+}
+
+function CurrencyHeader({ column }: HeaderCellProps) {
+  const icT = useTranslations("InvestmentColumns");
+  return (
+    <div className="flex justify-center">
+      <SortableHeader column={column}>{icT("currency")}</SortableHeader>
+    </div>
+  );
+}
+
+function PrincipalHeader({ column }: HeaderCellProps) {
+  const icT = useTranslations("InvestmentColumns");
+  return (
+    <div className="text-right">
+      <SortableHeader column={column}>{icT("principal")}</SortableHeader>
+    </div>
+  );
+}
+
+function EarnedHeader({ column }: HeaderCellProps) {
+  const icT = useTranslations("InvestmentColumns");
+  return (
+    <div className="text-right">
+      <SortableHeader column={column}>{icT("totalEarned")}</SortableHeader>
+    </div>
+  );
+}
+
+function TotalHeader({ column }: HeaderCellProps) {
+  const icT = useTranslations("InvestmentColumns");
+  return (
+    <div className="text-right">
+      <SortableHeader column={column}>{icT("totalValue")}</SortableHeader>
+    </div>
+  );
+}
 
 export const investmentColumns: ColumnDef<InvestmentDTO>[] = [
   {
     accessorKey: "name",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Nombre</SortableHeader>
-    ),
+    header: NameHeader,
     cell: ({ row }) => (
       <TacticalTextCell
         title={row.original.name}
@@ -23,7 +67,7 @@ export const investmentColumns: ColumnDef<InvestmentDTO>[] = [
   },
   {
     accessorKey: "currency",
-    header: "Moneda",
+    header: CurrencyHeader,
     cell: ({ row }) => (
       <div className="flex justify-center">
         <PremiumBadgeCell
@@ -35,11 +79,7 @@ export const investmentColumns: ColumnDef<InvestmentDTO>[] = [
   },
   {
     accessorKey: "principal",
-    header: ({ column }) => (
-      <div className="text-right">
-        <SortableHeader column={column}>Capital</SortableHeader>
-      </div>
-    ),
+    header: PrincipalHeader,
     cell: ({ row }) => (
       <PremiumAmountCell
         amount={row.original.principal}
@@ -49,11 +89,7 @@ export const investmentColumns: ColumnDef<InvestmentDTO>[] = [
   },
   {
     accessorKey: "totalEarned",
-    header: ({ column }) => (
-      <div className="text-right">
-        <SortableHeader column={column}>Ganado</SortableHeader>
-      </div>
-    ),
+    header: EarnedHeader,
     cell: ({ row }) => (
       <PremiumAmountCell
         amount={row.original.totalEarned}
@@ -63,11 +99,7 @@ export const investmentColumns: ColumnDef<InvestmentDTO>[] = [
   },
   {
     accessorKey: "totalValue",
-    header: ({ column }) => (
-      <div className="text-right">
-        <SortableHeader column={column}>Total</SortableHeader>
-      </div>
-    ),
+    header: TotalHeader,
     cell: ({ row }) => (
       <PremiumAmountCell
         amount={row.original.totalValue}

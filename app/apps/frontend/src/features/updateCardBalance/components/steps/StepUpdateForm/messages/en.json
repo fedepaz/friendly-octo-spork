@@ -1,7 +1,7 @@
 {
   "StepUpdateForm": {
-    "title": "Cuotas abiertas",
-    "description": "Solo cuotas mensuales/semanales/anuales. Las cuotas fijas ya tienen monto asignado.",
-    "noOpenEnded": "No hay cuotas abiertas para este mes"
+    "title": "Open installments",
+    "description": "Only monthly/weekly/yearly installments. Fixed installments already have an assigned amount.",
+    "noOpenEnded": "No open installments for this month"
   }
 }

@@ -9,6 +9,7 @@ import {
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface FeatureCardProps {
   title: string;
@@ -27,6 +28,8 @@ export function FeatureCard({
   href,
   className,
 }: FeatureCardProps) {
+  const fcT = useTranslations("FeatureCard");
+
   return (
     <Link href={href} className="block group cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2">
       <Card
@@ -42,7 +45,7 @@ export function FeatureCard({
               <Icon className="size-5 opacity-80 group-hover:opacity-100" />
             </div>
             <div className="flex items-center gap-2 opacity-0 group-hover:opacity-40 transition-premium">
-              <span className="text-[9px] font-black uppercase tracking-widest">Acceder</span>
+              <span className="text-[9px] font-black uppercase tracking-widest">{fcT("access")}</span>
               <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
             </div>
           </div>

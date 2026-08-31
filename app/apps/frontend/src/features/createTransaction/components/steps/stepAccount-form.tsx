@@ -72,11 +72,16 @@ export function StepAccountsComponent() {
       account.type as AccountType,
       role,
     );
-    const disabledReason = getAccountDisabledReason(
+    const disabledReasonKey = getAccountDisabledReason(
       transactionType,
       account.type as AccountType,
       role,
     );
+    const disabledReason = disabledReasonKey
+      ? saT.has(disabledReasonKey)
+        ? saT(disabledReasonKey)
+        : disabledReasonKey
+      : undefined;
 
     return (
       <button

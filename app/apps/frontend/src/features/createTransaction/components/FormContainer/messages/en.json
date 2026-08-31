@@ -1,7 +1,14 @@
 {
   "FormContainer": {
     "fillRequiredFields": "Please fill in all required fields",
-    "defaultTitle": "Terminal de Transacciones",
-    "confirmLabel": "Grabar ✓"
+    "defaultTitle": "Transaction Terminal",
+    "confirmLabel": "Save ✓",
+    "stepType": "Transaction Type",
+    "stepAmount": "Amount & Date",
+    "stepAccounts": "Accounts",
+    "stepCategory": "Category",
+    "stepRecurrence": "Recurrence",
+    "stepBudget": "Budget",
+    "stepReview": "Review"
   }
 }

@@ -418,6 +418,18 @@ export default getRequestConfig(async ({ requestLocale }) => {
         )
       ).default,
 
+      // Investments Feature
+      ...(
+        await import(
+          `../features/investments/components/InvestmentColumns/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/investments/components/InvestmentsDashboard/messages/${locale}.json`
+        )
+      ).default,
+
       // Audit Logs Feature
       ...(
         await import(

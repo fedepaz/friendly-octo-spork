@@ -7,7 +7,8 @@ export type AccountRole = "source" | "target";
 export interface AccountCompatibility {
   canBeSource: boolean;
   canBeTarget: boolean;
-  note?: string; // Optional hint for UX
+  /** Translation key for the tooltip note */
+  noteKey?: string;
 }
 
 // ─── COMPATIBILITY MATRIX ──────────────────────────────────────────────────
@@ -24,12 +25,12 @@ export const ACCOUNT_COMPATIBILITY: Record<
     CARD: {
       canBeSource: true,
       canBeTarget: false,
-      note: "Credit/debit card expense",
+      noteKey: "cardExpense",
     },
     INVESTMENT: {
       canBeSource: true,
       canBeTarget: false,
-      note: "Withdraw from investment",
+      noteKey: "withdrawFromInvestment",
     },
   },
 
@@ -41,12 +42,12 @@ export const ACCOUNT_COMPATIBILITY: Record<
     CARD: {
       canBeSource: false,
       canBeTarget: false,
-      note: "Cards can't receive income directly",
+      noteKey: "cardsNoIncome",
     },
     INVESTMENT: {
       canBeSource: false,
       canBeTarget: true,
-      note: "Dividends, returns",
+      noteKey: "dividendsReturns",
     },
   },
 
@@ -58,7 +59,7 @@ export const ACCOUNT_COMPATIBILITY: Record<
     CARD: {
       canBeSource: false,
       canBeTarget: true,
-      note: "Can receive transfers (pay down card)",
+      noteKey: "receiveTransfers",
     },
     INVESTMENT: { canBeSource: true, canBeTarget: true },
   },
@@ -70,17 +71,17 @@ export const ACCOUNT_COMPATIBILITY: Record<
     CASH: {
       canBeSource: true,
       canBeTarget: false,
-      note: "Invest cash directly",
+      noteKey: "investCash",
     },
     CARD: {
       canBeSource: false,
       canBeTarget: false,
-      note: "Can't invest from credit card",
+      noteKey: "noInvestFromCard",
     },
     INVESTMENT: {
       canBeSource: false,
       canBeTarget: true,
-      note: "Target investment account",
+      noteKey: "targetInvestment",
     },
   },
 
@@ -88,16 +89,16 @@ export const ACCOUNT_COMPATIBILITY: Record<
   RETURN: {
     BANK: { canBeSource: false, canBeTarget: true },
     WALLET: { canBeSource: false, canBeTarget: true },
-    CASH: { canBeSource: false, canBeTarget: true, note: "Cash out returns" },
+    CASH: { canBeSource: false, canBeTarget: true, noteKey: "cashOutReturns" },
     CARD: {
       canBeSource: false,
       canBeTarget: false,
-      note: "Returns don't go to cards",
+      noteKey: "returnsNoCards",
     },
     INVESTMENT: {
       canBeSource: true,
       canBeTarget: false,
-      note: "Source investment account",
+      noteKey: "sourceInvestment",
     },
   },
 
@@ -109,12 +110,12 @@ export const ACCOUNT_COMPATIBILITY: Record<
     CARD: {
       canBeSource: true,
       canBeTarget: true,
-      note: "Pay card debt (target) or use card to pay (source)",
+      noteKey: "payCardDebt",
     },
     INVESTMENT: {
       canBeSource: true,
       canBeTarget: false,
-      note: "Sell investment to pay debt",
+      noteKey: "sellInvestment",
     },
   },
 };
@@ -153,7 +154,7 @@ export function filterAccountsByCompatibility(
 }
 
 /**
- * Get UX hint for why an account is disabled (optional)
+ * Get UX hint translation key for why an account is disabled
  */
 export function getAccountDisabledReason(
   transactionType: TransactionType,
@@ -161,12 +162,10 @@ export function getAccountDisabledReason(
   role: AccountRole,
 ): string | undefined {
   const config = ACCOUNT_COMPATIBILITY[transactionType]?.[accountType];
-  if (!config) return "Not compatible with this transaction type";
+  if (!config) return "notCompatible";
 
   const canUse = role === "source" ? config.canBeSource : config.canBeTarget;
   if (canUse) return undefined;
 
-  return (
-    config.note || `Cannot be ${role} for ${transactionType.toLowerCase()}`
-  );
+  return config.noteKey || "notCompatible";
 }

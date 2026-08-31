@@ -1,7 +1,12 @@
 {
   "FormContainerRecurrence": {
     "fillRequiredFields": "Please fill in all required fields",
-    "defaultTitle": "Terminal de Transacciones",
-    "confirmLabel": "Actualizar ✓"
+    "defaultTitle": "Transaction Terminal",
+    "confirmLabel": "Update ✓",
+    "stepAmount": "Amount & Date",
+    "stepAccounts": "Accounts",
+    "stepRecurrence": "Recurrence",
+    "stepBudget": "Budget",
+    "stepReview": "Review"
   }
 }

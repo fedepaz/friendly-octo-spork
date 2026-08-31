@@ -6,6 +6,20 @@
     "toAccount": "Cuenta destino",
     "account": "Cuenta",
     "noCompatibleSource": "No hay cuentas compatibles disponibles para origen de {type}",
-    "noCompatibleTarget": "No hay cuentas compatibles disponibles para destino de {type}"
+    "noCompatibleTarget": "No hay cuentas compatibles disponibles para destino de {type}",
+    "cardExpense": "Gasto con tarjeta de crédito/débito",
+    "withdrawFromInvestment": "Retirar de inversión",
+    "cardsNoIncome": "Las tarjetas no pueden recibir ingresos directamente",
+    "dividendsReturns": "Dividendos, rendimientos",
+    "receiveTransfers": "Puede recibir transferencias (pago de tarjeta)",
+    "investCash": "Invertir efectivo directamente",
+    "noInvestFromCard": "No se puede invertir desde tarjeta de crédito",
+    "targetInvestment": "Cuenta de inversión destino",
+    "cashOutReturns": "Cobrar rendimientos en efectivo",
+    "returnsNoCards": "Los rendimientos no van a tarjetas",
+    "sourceInvestment": "Cuenta de inversión origen",
+    "payCardDebt": "Pagar deuda de tarjeta (destino) o usar tarjeta para pagar (origen)",
+    "sellInvestment": "Vender inversión para pagar deuda",
+    "notCompatible": "No compatible con este tipo de transacción"
   }
 }

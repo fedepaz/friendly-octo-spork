@@ -13,7 +13,8 @@ export type StepId =
 
 export interface StepConfig {
   id: StepId;
-  label: string;
+  /** Translation key for the step label */
+  labelKey: string;
   /** Fields to validate when this step is active */
   fields: Array<keyof CreateTransactionInput>;
   /**
@@ -27,27 +28,27 @@ export interface StepConfig {
 export const STEP_CONFIGS: StepConfig[] = [
   {
     id: "type",
-    label: "Transaction Type",
+    labelKey: "stepType",
     fields: ["type"],
   },
   {
     id: "amount",
-    label: "Amount & Date",
+    labelKey: "stepAmount",
     fields: ["amount", "date"],
   },
   {
     id: "accounts",
-    label: "Accounts",
+    labelKey: "stepAccounts",
     fields: ["sourceAccountId", "targetAccountId"],
   },
   {
     id: "category",
-    label: "Category",
+    labelKey: "stepCategory",
     fields: ["description", "categoryId"],
   },
   {
     id: "recurrence",
-    label: "Recurrence",
+    labelKey: "stepRecurrence",
     fields: [
       "isRecurrence",
       "recurrenceName",
@@ -62,14 +63,14 @@ export const STEP_CONFIGS: StepConfig[] = [
   },
   {
     id: "budget",
-    label: "Budget",
+    labelKey: "stepBudget",
     fields: ["isBudgetedExpense", "budgetCategory"],
     // ✅ Only show for EXPENSE transactions
     shouldShow: (values) => values.type === "EXPENSE",
   },
   {
     id: "review",
-    label: "Review",
+    labelKey: "stepReview",
     fields: [], // Review doesn't need validation — just display
   },
 ];
@@ -77,18 +78,18 @@ export const STEP_CONFIGS: StepConfig[] = [
 export const STEP_CONFIGS_RECURRENCE: StepConfig[] = [
   {
     id: "amount",
-    label: "Amount & Date",
+    labelKey: "stepAmount",
     fields: ["amount", "date"],
   },
   {
     id: "accounts",
-    label: "Accounts",
+    labelKey: "stepAccounts",
     fields: ["sourceAccountId", "targetAccountId"],
   },
 
   {
     id: "recurrence",
-    label: "Recurrence",
+    labelKey: "stepRecurrence",
     fields: [
       "isRecurrence",
       "recurrenceName",
@@ -102,14 +103,14 @@ export const STEP_CONFIGS_RECURRENCE: StepConfig[] = [
   },
   {
     id: "budget",
-    label: "Budget",
+    labelKey: "stepBudget",
     fields: ["isBudgetedExpense", "budgetCategory"],
     // ✅ Only show for EXPENSE transactions
     shouldShow: (values) => values.type === "EXPENSE",
   },
   {
     id: "review",
-    label: "Review",
+    labelKey: "stepReview",
     fields: [], // Review doesn't need validation — just display
   },
 ];
@@ -118,23 +119,23 @@ export const STEP_CONFIGS_RECURRENCE: StepConfig[] = [
 export const STEP_CONFIGS_CARD_CLOSE: CardStepConfig[] = [
   {
     id: "accounts",
-    label: "Tarjeta",
+    labelKey: "stepCard",
     fields: ["cardAccountId"],
   },
   {
     id: "update",
-    label: "Cuotas abiertas",
+    labelKey: "stepOpenInstallments",
     fields: [],
     shouldShow: () => true,
   },
   {
     id: "confirm",
-    label: "Confirmar cierre",
+    labelKey: "stepConfirmClose",
     fields: [],
   },
   {
     id: "review",
-    label: "Resumen",
+    labelKey: "stepSummary",
     fields: [],
   },
 ];
@@ -238,7 +239,8 @@ export type CardStepId = "accounts" | "update" | "confirm" | "review";
 
 export interface CardStepConfig {
   id: CardStepId;
-  label: string;
+  /** Translation key for the step label */
+  labelKey: string;
   /** Fields to validate when this step is active */
   fields: Array<keyof CardCloseInputDTO>;
   /**

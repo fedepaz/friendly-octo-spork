@@ -18,6 +18,7 @@ export function SmartFormProvider({ onClose }: { onClose: () => void }) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const sfpT = useTranslations("SmartFormProvider");
+  const epT = useTranslations("ErrorProvider");
 
   const { mutateAsync: createTransaction, isPending: isSubmitting } =
     useCreateTransaction();
@@ -65,8 +66,11 @@ export function SmartFormProvider({ onClose }: { onClose: () => void }) {
         mapServerErrorsToForm(error.details, methods.setError);
       } else {
         // ✅ GLOBAL: Show system/auth errors in the snackbar
-        setErrorMessage(parsed.message);
-        toast.error(parsed.message, {
+        const errorMsg = epT.has(parsed.messageKey)
+          ? epT(parsed.messageKey, parsed.messageParams ?? {})
+          : parsed.messageKey;
+        setErrorMessage(errorMsg);
+        toast.error(errorMsg, {
           duration: 5000,
         });
       }

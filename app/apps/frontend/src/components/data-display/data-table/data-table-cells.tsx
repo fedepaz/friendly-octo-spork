@@ -4,6 +4,7 @@ import { cn, formatCurrency } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Currency } from "@repo/shared";
 import { LucideIcon } from "lucide-react";
+import { useLocale } from "next-intl";
 
 /**
  * TacticalTextCell
@@ -161,8 +162,9 @@ export function PremiumDateCell({
   date: string | Date;
   className?: string;
 }) {
+  const locale = useLocale();
   const dateObj = new Date(date);
-  const formattedDate = dateObj.toLocaleDateString("es-AR", {
+  const formattedDate = dateObj.toLocaleDateString(locale, {
     day: "2-digit",
     month: "2-digit",
     year: "2-digit",

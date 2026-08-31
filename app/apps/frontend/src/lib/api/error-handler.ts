@@ -7,11 +7,18 @@ import { ApiError } from "./client-fetch";
  *
  * Centralized error parsing and categorization
  * Returns structured error information for UI consumption
+ * Titles/messages are translation keys — ErrorProvider resolves them.
  */
 export interface ParsedError {
   type: ErrorType;
-  title: string;
-  message: string;
+  /** Translation key for the error title (e.g. "authInvalidCredentials") */
+  titleKey: string;
+  /** Translation key for the error message (e.g. "authInvalidCredentialsDesc") */
+  messageKey: string;
+  /** Optional interpolation params for the message translation */
+  messageParams?: Record<string, string>;
+  /** Optional interpolation params for the title translation */
+  titleParams?: Record<string, string>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   details?: Record<string, any>;
   shouldRetry?: boolean;
@@ -31,45 +38,44 @@ export type ErrorType =
 
 /**
  * Registry of known semantic errors
- * Used to provide specific UI feedback for business logic failures
+ * Uses translation keys — ErrorProvider resolves the actual strings.
  */
 const ERROR_REGISTRY: Partial<Record<ErrorCode, Partial<ParsedError>>> = {
   AUTH_INVALID_CREDENTIALS: {
     type: "FORBIDDEN",
-    title: "Credenciales incorrectas",
-    message: "El nombre de usuario o contraseña son incorrectos.",
+    titleKey: "authInvalidCredentials",
+    messageKey: "authInvalidCredentialsDesc",
   },
   AUTH_EXPIRED: {
     type: "AUTH",
-    title: "Sesión expirada",
-    message: "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
+    titleKey: "authExpired",
+    messageKey: "authExpiredDesc",
     isFatal: true,
   },
   HIERARCHY_RESTRICTION: {
     type: "FORBIDDEN",
-    title: "Restricción de jerarquía",
-    message:
-      "No puedes gestionar los permisos de un usuario con antigüedad igual o superior a la tuya.",
+    titleKey: "hierarchyRestriction",
+    messageKey: "hierarchyRestrictionDesc",
   },
   NETWORK_ERROR: {
     type: "NETWORK",
-    title: "Sin conexión",
-    message: "No se puede conectar al servidor. Verifica tu conexión.",
+    titleKey: "networkError",
+    messageKey: "networkErrorDesc",
   },
   INSUFFICIENT_FUNDS: {
     type: "VALIDATION",
-    title: "Fondos insuficientes",
-    message: "La cuenta seleccionada no tiene fondos suficientes.",
+    titleKey: "insufficientFunds",
+    messageKey: "insufficientFundsDesc",
   },
   ACCOUNT_TYPE_RESTRICTION: {
     type: "FORBIDDEN",
-    title: "Operación no permitida",
-    message: "Este tipo de cuenta no permite este tipo de transacción.",
+    titleKey: "accountTypeRestriction",
+    messageKey: "accountTypeRestrictionDesc",
   },
   DUPLICATE_RECORD: {
     type: "CONFLICT",
-    title: "Registro duplicado",
-    message: "Ya existe un registro con estos datos.",
+    titleKey: "duplicateRecord",
+    messageKey: "duplicateRecordDesc",
   },
 };
 
@@ -78,8 +84,8 @@ export function parseApiError(error: unknown): ParsedError {
   if (error instanceof TypeError) {
     return {
       type: "NETWORK",
-      title: "Error de red",
-      message: "No se pudo establecer conexión con el servidor.",
+      titleKey: "networkError",
+      messageKey: "networkErrorDesc",
       shouldRetry: true,
     };
   }
@@ -93,8 +99,8 @@ export function parseApiError(error: unknown): ParsedError {
       const entry = ERROR_REGISTRY[code]!;
       return {
         type: entry.type || "UNKNOWN",
-        title: entry.title || "Error",
-        message: entry.message || error.message || "Error desconocido",
+        titleKey: entry.titleKey || "error",
+        messageKey: entry.messageKey || "errorDesc",
         details: error.details,
         isFatal: entry.isFatal,
         shouldRetry: entry.shouldRetry,
@@ -106,34 +112,34 @@ export function parseApiError(error: unknown): ParsedError {
       case 400:
         return {
           type: "VALIDATION",
-          title: "Datos inválidos",
-          message: "Por favor, verifica la información ingresada.",
+          titleKey: "validationError",
+          messageKey: "validationErrorDesc",
           details: error.details,
         };
       case 401:
         return {
           type: "AUTH",
-          title: "No autorizado",
-          message: "No tienes permiso para acceder a este recurso.",
+          titleKey: "unauthorized",
+          messageKey: "unauthorizedDesc",
           isFatal: true,
         };
       case 403:
         return {
           type: "FORBIDDEN",
-          title: "Acceso denegado",
-          message: "No tienes los permisos necesarios.",
+          titleKey: "accessDenied",
+          messageKey: "accessDeniedDesc",
         };
       case 404:
         return {
           type: "NOT_FOUND",
-          title: "No encontrado",
-          message: "El recurso solicitado no existe.",
+          titleKey: "notFound",
+          messageKey: "notFoundDesc",
         };
       case 409:
         return {
           type: "CONFLICT",
-          title: "Conflicto",
-          message: "Ya existe un registro similar.",
+          titleKey: "conflict",
+          messageKey: "conflictDesc",
         };
       case 500:
       case 502:
@@ -141,15 +147,15 @@ export function parseApiError(error: unknown): ParsedError {
       case 504:
         return {
           type: "SERVER_ERROR",
-          title: "Error del servidor",
-          message: "El servidor tuvo un problema. Reintenta en unos momentos.",
+          titleKey: "serverError",
+          messageKey: "serverErrorDesc",
           shouldRetry: true,
         };
       default:
         return {
           type: "UNKNOWN",
-          title: "Error inesperado",
-          message: error.message || "Ha ocurrido un error inesperado.",
+          titleKey: "unexpectedError",
+          messageKey: "unexpectedErrorDesc",
         };
     }
   }
@@ -158,15 +164,15 @@ export function parseApiError(error: unknown): ParsedError {
   if (error instanceof Error) {
     return {
       type: "UNKNOWN",
-      title: "Error interno",
-      message: error.message,
+      titleKey: "internalError",
+      messageKey: error.message,
     };
   }
 
   return {
     type: "UNKNOWN",
-    title: "Error desconocido",
-    message: "Ha ocurrido un error totalmente inesperado.",
+    titleKey: "unknownError",
+    messageKey: "unknownErrorDesc",
   };
 }
 

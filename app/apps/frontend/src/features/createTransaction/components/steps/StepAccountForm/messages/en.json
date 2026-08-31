@@ -6,6 +6,20 @@
     "toAccount": "To account",
     "account": "Account",
     "noCompatibleSource": "No compatible accounts available for {type} source",
-    "noCompatibleTarget": "No compatible accounts available for {type} target"
+    "noCompatibleTarget": "No compatible accounts available for {type} target",
+    "cardExpense": "Credit/debit card expense",
+    "withdrawFromInvestment": "Withdraw from investment",
+    "cardsNoIncome": "Cards can't receive income directly",
+    "dividendsReturns": "Dividends, returns",
+    "receiveTransfers": "Can receive transfers (pay down card)",
+    "investCash": "Invest cash directly",
+    "noInvestFromCard": "Can't invest from credit card",
+    "targetInvestment": "Target investment account",
+    "cashOutReturns": "Cash out returns",
+    "returnsNoCards": "Returns don't go to cards",
+    "sourceInvestment": "Source investment account",
+    "payCardDebt": "Pay card debt (target) or use card to pay (source)",
+    "sellInvestment": "Sell investment to pay debt",
+    "notCompatible": "Not compatible with this transaction type"
   }
 }

@@ -26,6 +26,7 @@ export function SmartFormProviderRecurrence({
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const sfprT = useTranslations("SmartFormProviderRecurrence");
+  const epT = useTranslations("ErrorProvider");
 
   const { data: recurrenceToUpdate } = useRecurrenceById(recurrenceId);
 
@@ -88,8 +89,11 @@ export function SmartFormProviderRecurrence({
         mapServerErrorsToForm(error.details, methods.setError);
       } else {
         // ✅ GLOBAL: Show system/auth errors in the snackbar
-        setErrorMessage(parsed.message);
-        toast.error(parsed.message, {
+        const errorMsg = epT.has(parsed.messageKey)
+          ? epT(parsed.messageKey, parsed.messageParams ?? {})
+          : parsed.messageKey;
+        setErrorMessage(errorMsg);
+        toast.error(errorMsg, {
           duration: 5000,
         });
       }
