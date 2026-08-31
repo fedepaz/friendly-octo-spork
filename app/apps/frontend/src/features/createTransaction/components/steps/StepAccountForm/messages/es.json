@@ -19,6 +19,7 @@
     "returnsNoCards": "Los rendimientos no van a tarjetas",
     "sourceInvestment": "Cuenta de inversión origen",
     "payCardDebt": "Pagar deuda de tarjeta (destino) o usar tarjeta para pagar (origen)",
+    "reinvestReturn": "Reinvertir rendimiento en cuenta de inversión",
     "sellInvestment": "Vender inversión para pagar deuda",
     "notCompatible": "No compatible con este tipo de transacción"
   }

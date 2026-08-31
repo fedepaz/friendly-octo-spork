@@ -323,12 +323,6 @@ export class TransactionService {
             message: 'RETURN source must be an investment account',
           });
         }
-        if (targetAccount.type === 'INVESTMENT') {
-          throw new BadRequestException({
-            code: 'ACCOUNT_TYPE_RESTRICTION',
-            message: 'RETURN target cannot be an investment account',
-          });
-        }
         break;
       }
     }

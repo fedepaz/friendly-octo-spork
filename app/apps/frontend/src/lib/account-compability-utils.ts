@@ -97,8 +97,8 @@ export const ACCOUNT_COMPATIBILITY: Record<
     },
     INVESTMENT: {
       canBeSource: true,
-      canBeTarget: false,
-      noteKey: "sourceInvestment",
+      canBeTarget: true,
+      noteKey: "reinvestReturn",
     },
   },
 

@@ -19,6 +19,7 @@
     "returnsNoCards": "Returns don't go to cards",
     "sourceInvestment": "Source investment account",
     "payCardDebt": "Pay card debt (target) or use card to pay (source)",
+    "reinvestReturn": "Reinvest return into investment account",
     "sellInvestment": "Sell investment to pay debt",
     "notCompatible": "Not compatible with this transaction type"
   }

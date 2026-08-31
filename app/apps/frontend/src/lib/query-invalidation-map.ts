@@ -26,6 +26,7 @@ export const mutationInvalidations: Record<MutationName, QueryFilters[]> = {
   createAccount: [
     { queryKey: accountProfileQueryKeys.all() },
     { queryKey: dashboardQueryKeys.all() },
+    { queryKey: investmentQueryKeys.all() },
   ],
   updateCardBalance: [
     { queryKey: updateCardProfileQueryKeys.all() },
