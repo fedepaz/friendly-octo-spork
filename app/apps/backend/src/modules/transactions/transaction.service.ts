@@ -227,9 +227,8 @@ export class TransactionService {
         );
         break;
       }
-      case 'TRANSFER':
       case 'INVESTMENT':
-      case 'RETURN': {
+      case 'TRANSFER': {
         await Promise.all([
           this.accountRepo.updateBalance(
             sourceAccountId!,
@@ -237,6 +236,17 @@ export class TransactionService {
             'decrement',
             tx,
           ),
+          this.accountRepo.updateBalance(
+            targetAccountId!,
+            amount,
+            'increment',
+            tx,
+          ),
+        ]);
+        break;
+      }
+      case 'RETURN': {
+        await Promise.all([
           this.accountRepo.updateBalance(
             targetAccountId!,
             amount,
@@ -312,17 +322,10 @@ export class TransactionService {
         break;
       }
       case 'RETURN': {
-        if (!sourceAccount || !targetAccount) {
-          throw new BadRequestException(
-            'RETURN requires both source and target accounts',
-          );
+        if (!targetAccount) {
+          throw new BadRequestException('RETURN requires a target account');
         }
-        if (sourceAccount.type !== 'INVESTMENT') {
-          throw new BadRequestException({
-            code: 'ACCOUNT_TYPE_RESTRICTION',
-            message: 'RETURN source must be an investment account',
-          });
-        }
+
         break;
       }
     }
