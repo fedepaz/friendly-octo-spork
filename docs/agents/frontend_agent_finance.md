@@ -93,20 +93,20 @@ When building unified views (like the Card Statement) that combine different bac
 ## Permissions Feature (`src/features/permissions/`)
 
 **Files:**
-- `api/permissions.api.ts` — usePermissions(), useTables(), useUserPermissions(), useEntityPermissions(), useUpdateUserPermissions()
-- `components/permissions-dashboard.tsx` — Main dashboard with user selector and permission matrix
+- `api/permissionService.ts` — permissionService (CRUD for user/entity permissions)
+- `hooks/permsHooks.ts` — useTables(), useUserPermissions(), useEntityPermissions(), useSetUserPermissions()
+- `components/PermissionsDashboard.tsx` — Main dashboard with user selector and permission matrix
 - `components/permissions-user-manager.tsx` — CRUD toggle switches per entity per user
-- `hooks/use-permissions.ts` — React Query hooks wrapping API calls
-- `types/permission.types.ts` — UserPermissions, PermissionTable, PermissionEntity types
+- `constants/table-meta.ts` — table metadata (CrudColumn definitions, entity icons)
+- `types.ts` — feature-level types (e.g., `CrudColumn`)
 
 ## Audit Logs Feature (`src/features/auditLogs/`)
 
 **Files:**
-- `api/auditLog.api.ts` — useAuditLogs(), useAuditLog()
-- `components/auditLog-dashboard.tsx` — Main dashboard with data table
+- `api/auditLogService.ts` — auditLogService (fetch audit log entries)
+- `hooks/auditLogHooks.ts` — useAuditLogs() and related React Query hooks
+- `components/AuditLogDashboard.tsx` — Main dashboard with data table
 - `components/auditLog-form.tsx` — Detail view for individual audit log entries
-- `hooks/use-auditLog.ts` — React Query hooks wrapping API calls
-- `types/auditLog.types.ts` — AuditLog, AuditLogListResponse types
 
 ## Sidebar Navigation Restructuring
 

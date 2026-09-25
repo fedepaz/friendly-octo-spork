@@ -48,12 +48,17 @@ app/
 - **Read `node_modules/next/dist/docs/`** before writing any Next.js code — this version has breaking changes from your training data.
 - **Categories are seeded/read-only** — no endpoint to create/modify them.
 - **Wizard pattern**: Multi-step forms use `SmartFormProvider` + `FormContainer` + step components. Step navigation uses `*-routing.ts` helpers with `StepConfig` arrays.
+- **Permissions (RBAC)**: Backend `src/modules/permissions/` — PermissionsModule/Service/Guard/`@RequirePermission` decorator/Repository/Controller, registered globally in `main.ts`. Single-user app: no `tenantId` scoping. Frontend UI lives in `src/features/permissions/`.
+- **Audit trail**: `src/shared/interceptors/audit-crud.interceptor.ts`, registered globally in `main.ts` — audits POST/PATCH/DELETE only (GET skipped), fire-and-forget (never blocks the response), sanitizes request bodies (password/token/secret), tracks duration + client IP.
+- **i18n**: next-intl. Shared strings live in `messages/en.json` + `messages/es.json`; components with their own namespace keep colocated `messages/` folders (e.g., `InvestmentsDashboard/messages/`). Never hardcode user-facing strings.
 
 ## Frontend Data Patterns
 
 - **Invariants on `useSuspenseQuery`**: Never destructure `isLoading` (it's `undefined`). Never guard with `if(isLoading)`. Data is guaranteed available when the component renders.
 - **Suspense boundaries**: One `<Suspense>` boundary per independent data section. Place them as granular as possible. For modals/wizards, wrap only the content area (not the modal shell) to avoid flash.
 - **Invalidation map**: `src/lib/query-invalidation-map.ts` — single source of truth mapping mutation names to query keys. Mutation hooks never call `invalidateQueries` inline.
+- **Query key factory**: `src/lib/queryKeys.ts` — all query key factories in one file. Hooks import keys from there; never define query keys inline.
+- **LoadingBoundary**: `src/components/common/loading-boundary.tsx` — accessible Suspense wrapper with aria attributes; prefer it over a raw `<Suspense>` for section-level fallbacks.
 - **Colocated skeletons**: Every `<Suspense>` fallback is a dedicated `{Name}Skeleton.tsx` matching the real component's layout exactly.
 
 ## Commit Workflow
