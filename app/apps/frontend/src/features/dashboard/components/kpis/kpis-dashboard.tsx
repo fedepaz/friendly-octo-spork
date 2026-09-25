@@ -55,7 +55,7 @@ export function KPIsDashboard() {
       <div className="lg:col-span-8 grid md:grid-cols-3 gap-3">
         <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
           <CardHeader className="pb-1 px-4 pt-4">
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">
               {kpT("netWorth")}
             </CardTitle>
           </CardHeader>
@@ -65,7 +65,7 @@ export function KPIsDashboard() {
             </p>
             <div className="flex items-center gap-1.5 mt-1">
               <span className={cn(
-                "text-[10px] font-bold uppercase tracking-tighter",
+                "text-xs font-bold uppercase tracking-tighter",
                 netFlowDelta >= 0 ? "text-secondary" : "text-destructive",
               )}>
                 {netFlowDelta >= 0 ? "+" : ""}
@@ -78,7 +78,7 @@ export function KPIsDashboard() {
 
         <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
           <CardHeader className="pb-1 px-4 pt-4">
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">
               {kpT("incomeTitle", { month: currentMonth })}
             </CardTitle>
           </CardHeader>
@@ -91,7 +91,7 @@ export function KPIsDashboard() {
 
         <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
           <CardHeader className="pb-1 px-4 pt-4">
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">
               {kpT("expensesTitle", { month: currentMonth })}
             </CardTitle>
           </CardHeader>

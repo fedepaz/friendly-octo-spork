@@ -135,7 +135,7 @@ export function StepUpdateComponent() {
                   <span className="font-mono font-bold text-sm truncate block">
                     {r.name}
                   </span>
-                  <span className="text-[10px] font-mono text-muted-foreground uppercase">
+                  <span className="text-xs font-mono text-muted-foreground uppercase">
                     {r.frequency}
                   </span>
                 </div>

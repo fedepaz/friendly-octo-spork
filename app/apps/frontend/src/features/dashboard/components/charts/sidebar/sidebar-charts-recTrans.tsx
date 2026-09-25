@@ -70,7 +70,7 @@ export function SidebarChartsRecentTransactions() {
   return (
     <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col flex-1 min-h-0 overflow-hidden">
       <CardHeader className="pb-3 px-5 pt-4 shrink-0 flex flex-row items-center justify-between">
-        <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 font-sans">
+        <CardTitle className="text-xs font-black uppercase tracking-widest text-muted-foreground/60 font-sans">
           {srtT("title")}
         </CardTitle>
         <div className="flex items-center gap-1 bg-background/40 p-0.5 border border-border/20">
@@ -80,7 +80,7 @@ export function SidebarChartsRecentTransactions() {
               onClick={() => setSelectedFilter(opt.value)}
               variant="ghost"
               className={cn(
-                "px-2 py-0.5 m-0.5 text-[10px] font-black uppercase tracking-tighter transition-all cursor-pointer",
+                "px-2 py-0.5 m-0.5 text-xs font-black uppercase tracking-tighter transition-all cursor-pointer",
                 activeFilter === opt.value
                   ? "bg-primary/80 text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary"
                   : "text-muted-foreground/70 ",
@@ -96,7 +96,7 @@ export function SidebarChartsRecentTransactions() {
         <div className="h-full overflow-y-auto pr-1 custom-scrollbar">
           {filteredRecurrences.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-32 text-center border border-dashed border-border/20">
-              <p className="text-[9px] text-secondary mt-1 uppercase font-black tracking-widest">
+              <p className="text-xs text-secondary mt-1 uppercase font-black tracking-widest">
                 ✓ {srtT("allCaughtUp", { type: activeFilter })}
               </p>
             </div>
@@ -104,13 +104,13 @@ export function SidebarChartsRecentTransactions() {
             <Table>
               <TableHeader className="sticky top-0 bg-card/90 backdrop-blur-md z-10">
                 <TableRow className="hover:bg-transparent border-b border-border/40">
-                  <TableHead className="font-black text-[9px] h-8 px-0 uppercase tracking-widest opacity-40 w-1/2 font-sans">
+                  <TableHead className="font-black text-xs h-8 px-0 uppercase tracking-widest opacity-40 w-1/2 font-sans">
                     {srtT("description")}
                   </TableHead>
-                  <TableHead className="font-black text-[9px] text-center h-8 px-0 uppercase tracking-widest opacity-40 w-1/4 font-sans">
+                  <TableHead className="font-black text-xs text-center h-8 px-0 uppercase tracking-widest opacity-40 w-1/4 font-sans">
                     {srtT("installment")}
                   </TableHead>
-                  <TableHead className="font-black text-[9px] text-right h-8 px-0 uppercase tracking-widest opacity-40 w-1/4 font-sans">
+                  <TableHead className="font-black text-xs text-right h-8 px-0 uppercase tracking-widest opacity-40 w-1/4 font-sans">
                     {srtT("amount")}
                   </TableHead>
                   <TableHead className="w-10" />
@@ -126,7 +126,7 @@ export function SidebarChartsRecentTransactions() {
                     {/* Name + Type */}
                     <TableCell className="py-2 px-0">
                       <div className="flex flex-col gap-0">
-                        <p className="text-[11px] font-black uppercase tracking-tight text-foreground/90 group-hover:text-primary transition-premium line-clamp-1 font-sans">
+                        <p className="text-xs font-black uppercase tracking-tight text-foreground/90 group-hover:text-primary transition-premium line-clamp-1 font-sans">
                           {recurrence.name}
                         </p>
                         <div className="flex items-center gap-1.5">
@@ -144,11 +144,11 @@ export function SidebarChartsRecentTransactions() {
                               <ArrowDownLeft className="h-2 w-2" />
                             )}
                           </div>
-                          <span className="font-mono text-[8px] text-muted-foreground/70 uppercase font-bold tracking-tighter">
+                          <span className="font-mono text-xs text-muted-foreground/70 uppercase font-bold tracking-tighter">
                             {recurrence.type}
                           </span>
                           {recurrence.isCardExpense && (
-                            <div className="flex items-center gap-0.5 text-[7px] text-primary/60 bg-primary/5 px-1 border border-primary/20 font-sans font-black">
+                            <div className="flex items-center gap-0.5 text-xs text-primary/60 bg-primary/5 px-1 border border-primary/20 font-sans font-black">
                               <Wallet className="h-2 w-2" />
                               {srtT("card")}
                             </div>
@@ -161,7 +161,7 @@ export function SidebarChartsRecentTransactions() {
                     <TableCell className="py-2 px-0 text-center">
                       {recurrence.totalParts && recurrence.currentPart ? (
                         <div className="flex flex-col items-center gap-1">
-                          <span className="font-mono text-[10px] font-bold text-foreground/80 tabular-nums">
+                          <span className="font-mono text-xs font-bold text-foreground/80 tabular-nums">
                             {recurrence.currentPart + 1}
                             <span className="text-muted-foreground/60 px-0.5">
                               /
@@ -189,14 +189,14 @@ export function SidebarChartsRecentTransactions() {
                           </div>
                         </div>
                       ) : (
-                        <span className="font-mono text-[9px] text-muted-foreground/50 uppercase tracking-tighter">
+                        <span className="font-mono text-xs text-muted-foreground/50 uppercase tracking-tighter">
                           {recurrence.frequency}
                         </span>
                       )}
                     </TableCell>
 
                     {/* Amount */}
-                    <TableCell className="font-mono text-[11px] font-black text-right tabular-nums py-2 px-0">
+                    <TableCell className="font-mono text-xs font-black text-right tabular-nums py-2 px-0">
                       <PremiumAmountCell
                         amount={recurrence.amount}
                         currency="ARS"

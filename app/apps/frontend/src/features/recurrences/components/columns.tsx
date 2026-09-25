@@ -108,7 +108,7 @@ function CyclesCell({ row }: CellProps) {
   return (
     <div className="flex items-center gap-1.5">
       <Calendar className="h-3 w-3 text-muted-foreground opacity-50" />
-      <span className="font-mono text-[10px] font-black tracking-tighter">
+      <span className="font-mono text-xs font-black tracking-tighter">
         {currentPart.toString().padStart(2, "0")}
         <span className="text-muted-foreground opacity-30 mx-0.5">/</span>
         {totalParts.toString().padStart(2, "0")}

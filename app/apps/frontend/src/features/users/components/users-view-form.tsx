@@ -30,7 +30,7 @@ export function UserViewForm({ selectedUser }: UserViewFormProps) {
         <div className="flex items-center gap-3 p-3 bg-background border border-border">
           <Mail className="h-4 w-4 text-muted-foreground opacity-50" />
           <div className="flex-1">
-            <p className="text-[10px] font-bold text-muted-foreground uppercase leading-none">
+            <p className="text-xs font-bold text-muted-foreground uppercase leading-none">
               {uvfT("email")}
             </p>
             <p className="text-sm font-semibold">{selectedUser.email}</p>
@@ -45,7 +45,7 @@ export function UserViewForm({ selectedUser }: UserViewFormProps) {
             )}
           />
           <div className="flex-1">
-            <p className="text-[10px] font-bold text-muted-foreground uppercase leading-none">
+            <p className="text-xs font-bold text-muted-foreground uppercase leading-none">
               {uvfT("systemStatus")}
             </p>
             <p className="text-sm font-semibold">
@@ -59,7 +59,7 @@ export function UserViewForm({ selectedUser }: UserViewFormProps) {
         <div className="flex items-center gap-3 p-3 bg-background border border-border">
           <Calendar className="h-4 w-4 text-muted-foreground opacity-50" />
           <div className="flex-1">
-            <p className="text-[10px] font-bold text-muted-foreground uppercase leading-none">
+            <p className="text-xs font-bold text-muted-foreground uppercase leading-none">
               {uvfT("registrationDate")}
             </p>
             <p className="text-sm font-semibold">

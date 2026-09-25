@@ -47,19 +47,19 @@ export function StepBudgetComponent() {
     <div className="flex flex-col gap-4">
       {recurrence && (
         <div className="p-3 border border-border/40 bg-background/40 space-y-2">
-          <p className="text-[10px] font-black uppercase tracking-widest text-primary/60">
+          <p className="text-xs font-black uppercase tracking-widest text-primary/60">
             {srbT("budgetRef")}
           </p>
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">{srbT("budgeted")}</p>
+              <p className="text-xs font-bold text-muted-foreground/70 uppercase">{srbT("budgeted")}</p>
               <p className="text-xs font-mono font-bold">
                 {isBudgetedRef ? srbT("yes") : srbT("no")}
               </p>
             </div>
             {budgetCategoryRef && (
               <div>
-                <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">{srbT("category")}</p>
+                <p className="text-xs font-bold text-muted-foreground/70 uppercase">{srbT("category")}</p>
                 <p className="text-xs font-mono font-bold">
                   {budgetCategoryRef}
                 </p>

@@ -11,7 +11,7 @@ export function SidebarChartsAccounts() {
   return (
     <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col flex-1 min-h-0 overflow-hidden">
       <CardHeader className="pb-2 px-5 pt-4 shrink-0">
-        <CardTitle className="text-[10px] font-black uppercase tracking-widest text-primary">
+        <CardTitle className="text-xs font-black uppercase tracking-widest text-primary">
           {scaT("title")}
         </CardTitle>
       </CardHeader>
@@ -22,10 +22,10 @@ export function SidebarChartsAccounts() {
             className="flex items-center justify-between group hover:translate-x-1 transition-premium border-l-2 border-transparent hover:border-primary pl-2"
           >
             <div className="min-w-0">
-              <p className="text-[11px] font-black text-foreground truncate uppercase tracking-tighter">
+              <p className="text-xs font-black text-foreground truncate uppercase tracking-tighter">
                 {account.name}
               </p>
-              <p className="font-mono text-[8px] uppercase text-muted-foreground/70 font-bold leading-none">
+              <p className="font-mono text-xs uppercase text-muted-foreground/70 font-bold leading-none">
                 {account.type}
               </p>
             </div>

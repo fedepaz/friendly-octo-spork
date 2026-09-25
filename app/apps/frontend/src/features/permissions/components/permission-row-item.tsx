@@ -45,7 +45,7 @@ export function PermissionRowItem({
               disabled={readOnly}
               aria-label={`${label} ${col.label}`}
             />
-            <span className="text-[10px] font-mono text-muted-foreground">
+            <span className="text-xs font-mono text-muted-foreground">
               {col.label}
             </span>
           </div>

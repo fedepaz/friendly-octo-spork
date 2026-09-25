@@ -62,13 +62,13 @@ export function StepRecurrenceComponent() {
         <div className="p-3 border border-border/40 bg-background/40 space-y-2">
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">
+              <p className="text-xs font-bold text-muted-foreground/70 uppercase">
                 {sreT("name")}
               </p>
               <p className="text-xs font-mono font-bold">{recurrence.name}</p>
             </div>
             <div>
-              <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">
+              <p className="text-xs font-bold text-muted-foreground/70 uppercase">
                 {sreT("frequency")}
               </p>
               <p className="text-xs font-mono font-bold">
@@ -77,7 +77,7 @@ export function StepRecurrenceComponent() {
             </div>
             {recurrence.totalParts && (
               <div>
-                <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">
+                <p className="text-xs font-bold text-muted-foreground/70 uppercase">
                   {sreT("progress")}
                 </p>
                 <p className="text-xs font-mono font-bold">
@@ -125,13 +125,13 @@ export function StepRecurrenceComponent() {
         <p className="text-xs font-black uppercase tracking-widest text-destructive">
           {sreT("dangerZone")}
         </p>
-        <p className="text-[12px] text-muted-foreground/60 leading-relaxed font-sans">
+        <p className="text-sm text-muted-foreground/60 leading-relaxed font-sans">
           {sreT("dangerDesc")}
         </p>
         <button
           type="button"
           onClick={() => toggleStopRecurrence(!watched.shouldStopRecurrence)}
-          className={`w-full p-3 border-2 font-mono font-black text-[14px] uppercase tracking-tighter transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2
+          className={`w-full p-3 border-2 font-mono font-black text-base uppercase tracking-tighter transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2
             ${
               watched.shouldStopRecurrence
                 ? "bg-destructive text-destructive-foreground border-destructive"

@@ -79,7 +79,7 @@ export function RecurrenceViewForm({
           <span className="opacity-50 uppercase">{rvfT("originFunds")}</span>
           <div className="flex items-center gap-2">
             {selectedRecurrence.cardType && (
-              <span className="bg-accent/10 text-accent px-1.5 py-0.5 border border-accent/20 text-[10px] font-bold">
+              <span className="bg-accent/10 text-accent px-1.5 py-0.5 border border-accent/20 text-xs font-bold">
                 {selectedRecurrence.cardType}
               </span>
             )}

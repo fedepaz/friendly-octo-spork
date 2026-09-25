@@ -81,7 +81,7 @@ export function CardsDataTable() {
           )}
         >
           <CardHeader className="flex flex-row items-center justify-between space-y-0 px-4 pt-4 pb-1">
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">
               {cdT("debtTotal")}
             </CardTitle>
             <Banknote
@@ -102,7 +102,7 @@ export function CardsDataTable() {
             >
               {formatCurrency(balance)}
             </p>
-            <p className="text-[10px] font-bold uppercase text-muted-foreground/70 leading-none mt-1 tracking-tight">
+            <p className="text-xs font-bold uppercase text-muted-foreground/70 leading-none mt-1 tracking-tight">
               {isPositiveBalance
                 ? cdT("balanceToPay")
                 : cdT("noDebt")}

@@ -73,7 +73,7 @@ export function StepConfirmComponent() {
             <span className="text-sm font-mono font-bold text-foreground">
               {formatCurrency(recurrencesTotal)}
             </span>
-            <span className="text-[10px] font-mono text-muted-foreground">
+            <span className="text-xs font-mono text-muted-foreground">
               {showRecurrences ? "▲" : "▼"}
             </span>
           </div>
@@ -83,7 +83,7 @@ export function StepConfirmComponent() {
           <div className="divide-y divide-border/50">
             {installments.length > 0 && (
               <div className="px-4 py-2">
-                <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-1">
+                <p className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground mb-1">
                   {scfT("installments")}
                 </p>
                 {installments.map((t, i) => (
@@ -103,7 +103,7 @@ export function StepConfirmComponent() {
             )}
             {openEnded.length > 0 && (
               <div className="px-4 py-2">
-                <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-muted-foreground mb-1">
+                <p className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground mb-1">
                   {scfT("openEnded")}
                 </p>
                 {openEnded.map((t, i) => (
@@ -137,7 +137,7 @@ export function StepConfirmComponent() {
             <span className="text-sm font-mono font-bold text-foreground">
               {formatCurrency(oneTimersTotal)}
             </span>
-            <span className="text-[10px] font-mono text-muted-foreground">
+            <span className="text-xs font-mono text-muted-foreground">
               {showOneTimers ? "▲" : "▼"}
             </span>
           </div>
