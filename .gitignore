@@ -21,6 +21,7 @@ pids
 **/.next/
 **/.turbo/
 **/out/
+**/src/generated/
 *.tsbuildinfo
 next-env.d.ts
 
@@ -50,7 +51,10 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 .env.local
 .env.development.local
 .env.test.local
+.env.production
 .env.production.local
+.env.staging
+.env.staging.local
 
 # =========================
 # Testing & Coverage
@@ -89,12 +93,19 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 .bun
 
 # =========================
-# Skills & Agent Config
+# Agents & Skills
 # =========================
-app/.agents/
-app/skills-lock.json
+.agents/
+.skills/
+.commits/
+.superpowers/
+.gemini/
+.opencode/
+.playwright-mcp/
+skills-lock.json
 
 # =========================
-# Playwright MCP
+# Backups & Session Dumps
 # =========================
-.playwright-mcp/
+**/backups/
+raw_session.txt

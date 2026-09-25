@@ -66,7 +66,7 @@ app/
 1. Changes must follow **Conventional Commits** (enforced by commit-msg hook). See `app/COMMIT_CONVENTIONS.md`.
 2. Pre-commit hook runs `pnpm lint` — fix all errors before committing.
 3. Before committing, consult `docs/agents/` for architecture/pattern alignment.
-4. Save commit message to `app/.commits/YYYY-MM-DD-type-description.md`, then `git add . && git commit -F .commits/<file>`.
+4. Save commit message to `app/.commits/YYYY-MM-DD-type-description.md`, then `git add . && git commit -F .commits/<file>`. These message files are gitignored local inputs — never committed.
 5. `main` branch is protected — always work on feature branches.
 6. Do NOT commit unless explicitly asked.
 
