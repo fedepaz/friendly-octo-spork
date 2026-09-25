@@ -55,7 +55,7 @@ export function DatabaseUnavailablePage() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-none bg-destructive opacity-75"></span>
               <span className="relative inline-flex rounded-none h-3 w-3 bg-destructive"></span>
             </span>
-            <span className="text-[10px] font-black uppercase tracking-widest">{t("maintenanceInProgress")}</span>
+            <span className="text-xs font-black uppercase tracking-widest">{t("maintenanceInProgress")}</span>
           </div>
         </div>
       </div>

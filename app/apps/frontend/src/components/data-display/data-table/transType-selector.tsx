@@ -35,7 +35,7 @@ export function TransTypeSelector({
           size="sm"
           className="h-10 bg-background/40 hover:bg-background/80 border-border/60 hover:border-primary/40 rounded-none transition-premium gap-3 px-4 shadow-etched"
         >
-          <span className="text-[10px] font-black uppercase tracking-widest">
+          <span className="text-xs font-black uppercase tracking-widest">
             {transType}
           </span>
         </Button>
@@ -44,7 +44,7 @@ export function TransTypeSelector({
         align="end"
         className="w-48 bg-popover/90 backdrop-blur-xl border-border shadow-2xl rounded-none p-1"
       >
-        <DropdownMenuLabel className="text-[10px] uppercase tracking-widest opacity-60 px-2 py-1.5">
+        <DropdownMenuLabel className="text-xs uppercase tracking-widest opacity-60 px-2 py-1.5">
           {ttsT("label")}
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-border/40" />
@@ -54,7 +54,7 @@ export function TransTypeSelector({
               key={type}
               onClick={() => setTransType(type)}
               className={cn(
-                "text-[11px] font-bold uppercase tracking-tight py-2 px-3 rounded-none cursor-pointer transition-premium",
+                "text-xs font-bold uppercase tracking-tight py-2 px-3 rounded-none cursor-pointer transition-premium",
                 transType === type
                   ? "bg-primary/10 text-primary"
                   : "hover:bg-foreground/5",

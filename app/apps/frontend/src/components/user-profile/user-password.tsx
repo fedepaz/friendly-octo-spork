@@ -58,7 +58,7 @@ export function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
           name="currentPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-sans text-[10px] uppercase tracking-widest opacity-60">{pwT("currentPasswordLabel")}</FormLabel>
+              <FormLabel className="font-sans text-xs uppercase tracking-widest opacity-60">{pwT("currentPasswordLabel")}</FormLabel>
               <FormControl>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -101,7 +101,7 @@ export function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
           name="newPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-sans text-[10px] uppercase tracking-widest opacity-60">{pwT("newPasswordLabel")}</FormLabel>
+              <FormLabel className="font-sans text-xs uppercase tracking-widest opacity-60">{pwT("newPasswordLabel")}</FormLabel>
               <FormControl>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">

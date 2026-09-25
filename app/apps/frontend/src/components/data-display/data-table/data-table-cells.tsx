@@ -30,7 +30,7 @@ export function TacticalTextCell({
         {title}
       </span>
       {(subtext || id) && (
-        <span className="text-[9px] font-mono text-muted-foreground/50 uppercase tracking-widest truncate max-w-50">
+        <span className="text-xs font-mono text-muted-foreground/50 uppercase tracking-widest truncate max-w-50">
           {subtext}
           {subtext && id && " // "}
           {id && `ID: ${id.slice(-8)}`}
@@ -64,7 +64,7 @@ export function TacticalTypeCell({
           className={cn("h-3.5 w-3.5 text-muted-foreground", iconClassName)}
         />
       </div>
-      <span className="text-[11px] font-bold uppercase tracking-tight text-foreground/80">
+      <span className="text-xs font-bold uppercase tracking-tight text-foreground/80">
         {label}
       </span>
     </div>
@@ -141,7 +141,7 @@ export function PremiumBadgeCell({
     <Badge
       variant="outline"
       className={cn(
-        "px-2 py-0.5 text-[9px] font-black uppercase tracking-widest rounded-none border-2 transition-premium",
+        "px-2 py-0.5 text-xs font-black uppercase tracking-widest rounded-none border-2 transition-premium",
         variants[variant] || variants.primary,
         className,
       )}
@@ -173,7 +173,7 @@ export function PremiumDateCell({
   return (
     <span
       className={cn(
-        "text-[11px] font-mono font-bold text-muted-foreground/60 tracking-tighter whitespace-nowrap",
+        "text-xs font-mono font-bold text-muted-foreground/60 tracking-tighter whitespace-nowrap",
         className,
       )}
     >

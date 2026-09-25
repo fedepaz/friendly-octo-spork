@@ -16,7 +16,7 @@ export default function ComingSoonPage() {
             </div>
             <div>
               <h1 className="font-bold uppercase tracking-tighter">Finance Manager</h1>
-              <h2 className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest opacity-60">{t("appSubtitle")}</h2>
+              <h2 className="text-xs uppercase font-bold text-muted-foreground tracking-widest opacity-60">{t("appSubtitle")}</h2>
             </div>
           </div>
         </div>

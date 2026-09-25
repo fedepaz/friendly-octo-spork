@@ -78,7 +78,7 @@ export function LoadingSpinner() {
         </div>
 
         {/* Message container */}
-        <div className="flex flex-col items-center gap-3 max-w-sm px-6">
+        <div className="flex flex-col items-center gap-(--space-3) max-w-sm px-(--space-6)">
           <p
             className={cn(
               "text-base font-medium text-muted-foreground text-center transition-all duration-300",
@@ -89,7 +89,7 @@ export function LoadingSpinner() {
           </p>
 
           {/* Minimal progress indicator */}
-          <div className="flex gap-1.5">
+          <div className="flex gap-(--space-1-5)">
             {[0, 1, 2].map((i) => (
               <div
                 key={i}

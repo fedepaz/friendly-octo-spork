@@ -59,7 +59,7 @@ export function MonthSelector({ onMonthChange }: MonthSelectorProps) {
           className="h-10 bg-background/40 hover:bg-background/80 border-border/60 hover:border-primary/40 rounded-none transition-premium gap-3 px-4 shadow-etched"
         >
           <Calendar className="h-3.5 w-3.5 text-primary opacity-70" />
-          <span className="text-[10px] font-black uppercase tracking-widest">
+          <span className="text-xs font-black uppercase tracking-widest">
             {breakpoint === "sm"
               ? MONTHS[month].substring(0, 3)
               : MONTHS[month]}
@@ -70,7 +70,7 @@ export function MonthSelector({ onMonthChange }: MonthSelectorProps) {
         align="end"
         className="w-48 bg-popover/90 backdrop-blur-xl border-border shadow-2xl rounded-none p-1"
       >
-        <DropdownMenuLabel className="text-[10px] uppercase tracking-widest opacity-60 px-2 py-1.5">
+        <DropdownMenuLabel className="text-xs uppercase tracking-widest opacity-60 px-2 py-1.5">
           {msT("monthlyPeriod")}
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-border/40" />
@@ -80,7 +80,7 @@ export function MonthSelector({ onMonthChange }: MonthSelectorProps) {
               key={name}
               onClick={() => setMonth(index)}
               className={cn(
-                "text-[11px] font-bold uppercase tracking-tight py-2 px-3 rounded-none cursor-pointer transition-premium",
+                "text-xs font-bold uppercase tracking-tight py-2 px-3 rounded-none cursor-pointer transition-premium",
                 month === index
                   ? "bg-primary/10 text-primary"
                   : "hover:bg-foreground/5",
