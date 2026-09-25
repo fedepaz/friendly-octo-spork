@@ -1,5 +1,5 @@
 import { Layers, Users, Shield, Settings, Briefcase } from "lucide-react";
-import type { CrudColumn } from "../types/types";
+import type { CrudColumn } from "../types";
 
 export const ENTITY_ICONS: Record<
   string,

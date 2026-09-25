@@ -5,7 +5,7 @@ import {
   PremiumBadgeCell,
   SortableHeader,
 } from "@/components/data-display/data-table";
-import type { InvestmentDTO } from "../api/investmentsService";
+import type { InvestmentDTO } from "../types";
 import type { Currency } from "@repo/shared";
 import { useTranslations } from "next-intl";
 

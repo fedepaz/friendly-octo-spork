@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { investmentsService, InvestmentDTO } from "../api/investmentsService";
+import { investmentsService } from "../api/investmentsService";
+import type { InvestmentDTO } from "../types";
 import { investmentQueryKeys } from "@/lib/queryKeys";
 
 export const useInvestments = () => {
