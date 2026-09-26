@@ -68,8 +68,7 @@ export function UserSidebarMenu({ isCollapsed = false }: UserSidebarMenuProps) {
                     isCollapsed ? "h-8 w-8" : "h-9 w-9"
                   )}>
                     <span className={cn(
-                      "text-primary font-black tracking-tighter font-oxanium",
-                      isCollapsed ? "text-xs" : "text-xs"
+                      "text-primary font-black tracking-tighter font-oxanium text-xs"
                     )}>
                       {initials || <User className="h-4 w-4" />}
                     </span>
