@@ -41,7 +41,7 @@ export function UserViewForm({ selectedUser }: UserViewFormProps) {
           <Shield
             className={cn(
               "h-4 w-4",
-              selectedUser.isActive ? "text-secondary" : "text-destructive",
+              selectedUser.isActive ? "text-success" : "text-destructive",
             )}
           />
           <div className="flex-1">

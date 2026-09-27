@@ -57,7 +57,7 @@ export function TransactionViewForm({
             "text-3xl font-mono font-black tabular-nums",
             selectedTransaction.type === "EXPENSE"
               ? "text-destructive"
-              : "text-secondary",
+              : "text-success",
           )}
         >
           {formatCurrency(selectedTransaction.amount)}

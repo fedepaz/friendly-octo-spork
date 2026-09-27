@@ -66,7 +66,7 @@ export function KPIsDashboard() {
             <div className="flex items-center gap-1.5 mt-1">
               <span className={cn(
                 "text-xs font-bold uppercase tracking-tighter",
-                netFlowDelta >= 0 ? "text-secondary" : "text-destructive",
+                netFlowDelta >= 0 ? "text-success" : "text-destructive",
               )}>
                 {netFlowDelta >= 0 ? "+" : ""}
                 {formatCurrency(Math.abs(netFlowDelta))}
@@ -83,7 +83,7 @@ export function KPIsDashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 pb-4">
-            <p className="text-2xl font-mono font-black text-secondary tracking-tighter tabular-nums">
+            <p className="text-2xl font-mono font-black text-success tracking-tighter tabular-nums">
               {formatCurrency(monthlyIncome)}
             </p>
           </CardContent>

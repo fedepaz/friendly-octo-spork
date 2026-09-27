@@ -26,7 +26,7 @@ export function StepTypeComponent() {
       value: "INCOME",
       label: stT("income"),
       hint: stT("incomeHint"),
-      color: "border-secondary   text-secondary",
+      color: "border-success   text-success",
     },
     {
       value: "TRANSFER",

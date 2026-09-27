@@ -40,7 +40,7 @@ export function KPICard({
           <div className="mt-(--space-2) flex items-center gap-(--space-1-5)">
             <div className={cn(
               "flex items-center px-(--space-1-5) py-(--space-0-5) text-xs font-black uppercase tracking-tighter rounded-none",
-              trend.isPositive ? "bg-secondary/10 text-secondary" : "bg-destructive/10 text-destructive"
+              trend.isPositive ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive"
             )}>
               {trend.isPositive ? "+" : ""}{trend.value}%
             </div>

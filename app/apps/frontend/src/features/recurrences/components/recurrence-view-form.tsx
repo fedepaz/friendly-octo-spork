@@ -39,9 +39,9 @@ export function RecurrenceViewForm({
           <p
             className={cn(
               "text-3xl font-mono font-black tracking-tighter",
-              selectedRecurrence.type === "EXPENSE"
-                ? "text-destructive"
-                : "text-secondary",
+            selectedRecurrence.type === "EXPENSE"
+              ? "text-destructive"
+              : "text-success",
             )}
           >
             {formatCurrency(selectedRecurrence.amount)}

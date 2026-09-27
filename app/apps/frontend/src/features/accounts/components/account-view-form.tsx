@@ -90,7 +90,7 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
                     className={cn(
                       "flex h-7 w-7 items-center justify-center border border-border/40 shadow-inner transition-colors",
                       tx.displayType === "IN"
-                        ? "bg-secondary/5 text-secondary/60"
+                        ? "bg-success/5 text-success/60"
                         : "bg-destructive/5 text-destructive/60",
                     )}
                   >
