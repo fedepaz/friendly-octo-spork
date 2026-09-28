@@ -29,10 +29,10 @@ export function AuthDashboard({ mode = "login" }: AuthDashboardProps) {
   return (
     <>
       <div className="text-center space-y-1">
-        <h1 className="text-sm font-black uppercase tracking-[0.3em] text-primary">
+        <h1 className="text-sm font-black uppercase tracking-widest text-primary">
           {mode === "login" ? t("loginTitle") : t("registerTitle")}
         </h1>
-        <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">
+        <p className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">
           {mode === "login" ? t("loginDescription") : t("registerDescription")}
         </p>
       </div>

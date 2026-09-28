@@ -102,7 +102,7 @@ export function CardsDataTable() {
             >
               {formatCurrency(balance)}
             </p>
-            <p className="text-xs font-bold uppercase text-muted-foreground/70 leading-none mt-1 tracking-tight">
+            <p className="text-xs font-black uppercase text-muted-foreground/70 leading-none mt-1 tracking-widest">
               {isPositiveBalance
                 ? cdT("balanceToPay")
                 : cdT("noDebt")}

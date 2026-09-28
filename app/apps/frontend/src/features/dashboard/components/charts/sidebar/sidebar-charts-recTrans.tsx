@@ -80,7 +80,7 @@ export function SidebarChartsRecentTransactions() {
               onClick={() => setSelectedFilter(opt.value)}
               variant="ghost"
               className={cn(
-                "px-2 py-0.5 m-0.5 text-xs font-black uppercase tracking-tighter transition-all cursor-pointer",
+                "px-2 py-0.5 m-0.5 text-xs font-black uppercase tracking-widest transition-all cursor-pointer",
                 activeFilter === opt.value
                   ? "bg-primary/80 text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary"
                   : "text-muted-foreground/70 ",
@@ -126,7 +126,7 @@ export function SidebarChartsRecentTransactions() {
                     {/* Name + Type */}
                     <TableCell className="py-2 px-0">
                       <div className="flex flex-col gap-0">
-                        <p className="text-xs font-black uppercase tracking-tight text-foreground/90 group-hover:text-primary transition-premium line-clamp-1 font-sans">
+                        <p className="text-xs font-black uppercase tracking-widest text-foreground/90 group-hover:text-primary transition-premium line-clamp-1 font-sans">
                           {recurrence.name}
                         </p>
                         <div className="flex items-center gap-1.5">
@@ -144,7 +144,7 @@ export function SidebarChartsRecentTransactions() {
                               <ArrowDownLeft className="h-2 w-2" />
                             )}
                           </div>
-                          <span className="font-mono text-xs text-muted-foreground/70 uppercase font-bold tracking-tighter">
+                          <span className="font-mono text-xs text-muted-foreground/70 uppercase font-black tracking-widest">
                             {recurrence.type}
                           </span>
                           {recurrence.isCardExpense && (
@@ -189,7 +189,7 @@ export function SidebarChartsRecentTransactions() {
                           </div>
                         </div>
                       ) : (
-                        <span className="font-mono text-xs text-muted-foreground/50 uppercase tracking-tighter">
+                        <span className="font-mono text-xs font-black text-muted-foreground/50 uppercase tracking-widest">
                           {recurrence.frequency}
                         </span>
                       )}

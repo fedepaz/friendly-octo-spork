@@ -44,7 +44,7 @@ export function TransTypeSelector({
         align="end"
         className="w-48 bg-popover/90 backdrop-blur-xl border-border shadow-2xl rounded-none p-1"
       >
-        <DropdownMenuLabel className="text-xs uppercase tracking-widest opacity-60 px-2 py-1.5">
+        <DropdownMenuLabel className="text-xs font-black uppercase tracking-widest opacity-60 px-2 py-1.5">
           {ttsT("label")}
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-border/40" />
@@ -54,7 +54,7 @@ export function TransTypeSelector({
               key={type}
               onClick={() => setTransType(type)}
               className={cn(
-                "text-xs font-bold uppercase tracking-tight py-2 px-3 rounded-none cursor-pointer transition-premium",
+                "text-xs font-black uppercase tracking-widest py-2 px-3 rounded-none cursor-pointer transition-premium",
                 transType === type
                   ? "bg-primary/10 text-primary"
                   : "hover:bg-foreground/5",

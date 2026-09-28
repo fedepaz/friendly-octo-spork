@@ -35,7 +35,7 @@ function SourceCell({ row }: { row: Row<CardStatementRow> }) {
   return (
     <span
       className={cn(
-        "inline-block px-1.5 py-0.5 text-xs font-black uppercase tracking-wider border",
+        "inline-block px-1.5 py-0.5 text-xs font-black uppercase tracking-widest border",
         SOURCE_COLORS[source],
       )}
     >
@@ -79,7 +79,7 @@ function InstallmentInfoCell({ row }: { row: Row<CardStatementRow> }) {
   return (
     <div className="flex items-center gap-1.5 opacity-30">
       <CreditCard className="h-3 w-3" />
-      <span className="text-xs font-bold uppercase">{ccT("single")}</span>
+      <span className="text-xs font-black uppercase tracking-widest">{ccT("single")}</span>
     </div>
   );
 }
@@ -103,7 +103,7 @@ function CardTypeCell({ row }: { row: Row<CardStatementRow> }) {
       <div className="p-1 bg-muted/40 border border-border/40">
         <CreditCard className="h-3 w-3 text-muted-foreground" />
       </div>
-      <span className="text-xs font-black uppercase tracking-wider">
+      <span className="text-xs font-black uppercase tracking-widest">
         {cardType}
       </span>
     </div>

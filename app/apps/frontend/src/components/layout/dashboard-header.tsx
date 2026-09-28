@@ -63,7 +63,7 @@ export function DashboardHeader() {
                       <p className="text-xl font-black text-foreground tracking-tighter leading-none">
                         S{weekNum}
                       </p>
-                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest leading-none mt-1 opacity-60">
+                      <p className="text-xs font-black text-muted-foreground uppercase tracking-widest leading-none mt-1 opacity-60">
                         {t("weekLabel")}
                       </p>
                     </div>
@@ -74,11 +74,11 @@ export function DashboardHeader() {
                   className="bg-popover/90 backdrop-blur-lg border-border shadow-2xl rounded-none p-3"
                 >
                   <div className="space-y-2">
-                    <p className="text-xs font-bold text-foreground uppercase tracking-wider">
+                    <p className="text-xs font-black text-foreground uppercase tracking-widest">
                       {formattedDate}
                     </p>
                     <div className="space-y-1">
-                      <p className="text-xs text-muted-foreground leading-tight uppercase tracking-tight">
+                      <p className="text-xs font-black text-muted-foreground leading-tight uppercase tracking-widest">
                         {t("weekOf")}{" "}
                         <span className="text-foreground font-mono">
                           {weekNum}
@@ -89,7 +89,7 @@ export function DashboardHeader() {
                         </span>
                       </p>
                       <div className="pt-2 border-t border-border/40">
-                        <p className="text-xs text-muted-foreground/60 uppercase tracking-widest leading-tight">
+                        <p className="text-xs font-black text-muted-foreground/60 uppercase tracking-widest leading-tight">
                           {t("location")}
                         </p>
                       </div>

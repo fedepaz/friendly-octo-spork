@@ -98,7 +98,7 @@ function NavItemLink({
                 <div className="flex-1 min-w-0">
                   <p
                     className={cn(
-                      "text-xs font-black tracking-tighter uppercase font-oxanium truncate transition-premium",
+                      "text-xs font-black tracking-widest uppercase font-oxanium truncate transition-premium",
                       isActive
                         ? "text-foreground"
                         : "text-muted-foreground/80 group-hover:text-foreground",
@@ -107,7 +107,7 @@ function NavItemLink({
                     {navT(getNavKey(item.href))}
                   </p>
                   {item.description && (
-                    <p className="text-xs font-mono font-bold text-muted-foreground/60 uppercase tracking-widest truncate leading-tight mt-0.5">
+                    <p className="text-xs font-mono font-black text-muted-foreground/60 uppercase tracking-widest truncate leading-tight mt-0.5">
                       {navT(getNavKey(item.href) + "Desc")}
                     </p>
                   )}
@@ -133,7 +133,7 @@ function NavItemLink({
               {navT(getNavKey(item.href))}
             </p>
             {item.description && (
-              <p className="text-xs font-mono font-bold text-muted-foreground uppercase tracking-tighter">
+              <p className="text-xs font-mono font-black text-muted-foreground uppercase tracking-widest">
                 {navT(getNavKey(item.href) + "Desc")}
               </p>
             )}
@@ -167,7 +167,7 @@ function NavGroupSection({
           variant="ghost"
           onClick={() => toggleGroup(group.id)}
           className={cn(
-            "h-8 w-full justify-start gap-3 px-2 font-black text-xs uppercase tracking-[0.2em] text-muted-foreground/70 hover:text-primary hover:bg-transparent transition-premium mb-1",
+            "h-8 w-full justify-start gap-3 px-2 font-black text-xs uppercase tracking-widest text-muted-foreground/70 hover:text-primary hover:bg-transparent transition-premium mb-1",
           )}
         >
           <GroupIcon className="h-3.5 w-3.5 shrink-0 opacity-40" />
@@ -223,7 +223,7 @@ function NavNestedGroupSection({
           variant="ghost"
           onClick={() => toggleGroup(group.id)}
           className={cn(
-            "h-8 w-full justify-start gap-3 px-2 font-black text-xs uppercase tracking-[0.2em] text-muted-foreground/70 hover:text-primary hover:bg-transparent transition-premium mb-1",
+            "h-8 w-full justify-start gap-3 px-2 font-black text-xs uppercase tracking-widest text-muted-foreground/70 hover:text-primary hover:bg-transparent transition-premium mb-1",
           )}
         >
           <GroupIcon className="h-3.5 w-3.5 shrink-0 opacity-40" />
@@ -263,7 +263,7 @@ function NavNestedGroupSection({
                   <Button
                     variant="ghost"
                     onClick={() => toggleSubGroup(item.id)}
-                    className="h-7 w-full justify-start gap-2 px-2 font-medium text-xs uppercase tracking-[0.15em] text-muted-foreground/50 hover:text-foreground transition-premium"
+                    className="h-7 w-full justify-start gap-2 px-2 font-black text-xs uppercase tracking-widest text-muted-foreground/50 hover:text-foreground transition-premium"
                   >
                     <SubGroupIcon className="h-3 w-3 shrink-0 opacity-40" />
                     <span className="flex-1 text-left pl-3">{navT(item.id)}</span>

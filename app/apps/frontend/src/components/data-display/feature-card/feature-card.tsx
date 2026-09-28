@@ -53,7 +53,7 @@ export function FeatureCard({
             <CardTitle className="text-xs font-black uppercase tracking-widest text-foreground group-hover:text-primary transition-premium">
               {title}
             </CardTitle>
-            <CardDescription className="text-xs font-bold uppercase text-muted-foreground/70 leading-relaxed tracking-tight line-clamp-2">
+            <CardDescription className="text-xs font-black uppercase text-muted-foreground/70 leading-relaxed tracking-widest line-clamp-2">
               {description}
             </CardDescription>
           </div>

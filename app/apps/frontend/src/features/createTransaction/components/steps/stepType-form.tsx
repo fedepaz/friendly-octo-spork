@@ -56,7 +56,7 @@ export function StepTypeComponent() {
 
   return (
     <div className="flex flex-col gap-3">
-      <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
+      <h3 className="text-lg font-mono font-black uppercase tracking-widest text-foreground">
         {stT("title")}
       </h3>
       <div className="grid grid-cols-2 gap-2">
@@ -74,7 +74,7 @@ export function StepTypeComponent() {
               ${watchedType === value ? `${color} bg-muted` : "border-border text-muted-foreground"}
             `}
           >
-            <span className="font-mono font-bold text-sm uppercase tracking-wider">
+            <span className="font-mono font-black text-sm uppercase tracking-widest">
               {label}
             </span>
             <span className="font-mono text-xs opacity-70">{hint}</span>

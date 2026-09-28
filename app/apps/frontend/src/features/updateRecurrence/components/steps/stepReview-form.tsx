@@ -25,7 +25,7 @@ export function StepReviewComponent() {
 
   return (
     <div className="flex flex-col gap-3">
-      <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
+      <h3 className="text-lg font-mono font-black uppercase tracking-widest text-foreground">
         {srrT("title")}
       </h3>
 
@@ -71,7 +71,7 @@ export function StepReviewComponent() {
           .filter(({ value }) => value !== "—")
           .map(({ label, value }) => (
             <div key={label} className="flex justify-between px-4 py-3">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
+              <span className="text-xs font-mono font-black uppercase tracking-widest text-muted-foreground">
                 {label}
               </span>
               <span className="text-sm font-mono font-bold text-foreground">

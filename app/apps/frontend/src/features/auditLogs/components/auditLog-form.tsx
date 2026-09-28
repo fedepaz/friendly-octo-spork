@@ -28,19 +28,19 @@ export function AuditLogForm({ selectedAuditLog }: AuditLogFormProps) {
   const isMobile = selectedAuditLog.userAgent?.includes("Mobile");
 
   return (
-    <div className="flex flex-col gap-3 md:gap-6 pb-6 md:pb-8">
+    <div className="flex flex-col gap-3 pb-6">
       {/* Información del Usuario */}
       {selectedAuditLog.user ? (
         <Card className="border-border/60 shadow-sm overflow-hidden">
-          <CardHeader className="bg-muted/30 border-b py-2 md:py-4">
+          <CardHeader className="bg-muted/30 border-b py-2">
             <CardTitle className="flex items-center gap-2 text-sm md:text-base font-semibold">
               <User className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
               {t("responsible")}
             </CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4 pt-3 md:pt-4">
-            <div className="space-y-0.5 md:space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70">
+          <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-3">
+            <div className="space-y-0.5">
+              <span className="text-xs font-black uppercase tracking-widest text-muted-foreground/70">
                 {t("fullName")}
               </span>
               <p className="text-xs md:text-sm font-medium">
@@ -48,20 +48,20 @@ export function AuditLogForm({ selectedAuditLog }: AuditLogFormProps) {
                 {selectedAuditLog.user.lastName}
               </p>
             </div>
-            <div className="space-y-0.5 md:space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70">
+            <div className="space-y-0.5">
+              <span className="text-xs font-black uppercase tracking-widest text-muted-foreground/70">
                 {t("username")}
               </span>
               <p className="text-xs md:text-sm font-medium truncate">
                 {selectedAuditLog.user.username}
               </p>
             </div>
-            <div className="sm:col-span-2 space-y-0.5 md:space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70">
+            <div className="sm:col-span-2 space-y-0.5">
+              <span className="text-xs font-black uppercase tracking-widest text-muted-foreground/70">
                 {t("internalId")}
               </span>
               <div className="flex items-center gap-2 mt-0.5">
-                <code className="text-xs font-mono bg-muted/50 border border-border/50 px-2 py-0.5 md:py-1 rounded select-all">
+                <code className="text-xs font-mono bg-muted/50 border border-border/50 px-2 py-0.5 rounded select-all">
                   {selectedAuditLog.userId}
                 </code>
               </div>
@@ -72,33 +72,33 @@ export function AuditLogForm({ selectedAuditLog }: AuditLogFormProps) {
 
       {/* Entidad Afectada */}
       <Card className="border-border/60 shadow-sm overflow-hidden">
-        <CardHeader className="bg-muted/30 border-b py-2 md:py-4">
+        <CardHeader className="bg-muted/30 border-b py-2">
           <CardTitle className="flex items-center gap-2 text-sm md:text-base font-semibold">
             <Database className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
             {t("affectedEntity")}
           </CardTitle>
         </CardHeader>
-        <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4 pt-3 md:pt-4">
-          <div className="space-y-0.5 md:space-y-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70">
+        <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-3">
+          <div className="space-y-0.5">
+            <span className="text-xs font-black uppercase tracking-widest text-muted-foreground/70">
               {t("resourceType")}
             </span>
             <div className="pt-0.5">
               <Badge
                 variant="outline"
-                className="bg-primary/5 text-primary border-primary/20 font-bold uppercase tracking-widest text-xs h-4 md:h-5 px-1.5"
+                className="bg-primary/5 text-primary border-primary/20 font-black uppercase tracking-widest text-xs h-4 md:h-5 px-1.5"
               >
                 {selectedAuditLog.entityType}
               </Badge>
             </div>
           </div>
-          <div className="space-y-0.5 md:space-y-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70">
+          <div className="space-y-0.5">
+            <span className="text-xs font-black uppercase tracking-widest text-muted-foreground/70">
               {t("identifier")}
             </span>
             <div className="flex items-center gap-2 pt-0.5">
               <Hash className="h-2.5 w-2.5 md:h-3 md:w-3 text-muted-foreground" />
-              <code className="text-xs font-mono bg-muted/50 border border-border/50 px-2 py-0.5 md:py-1 rounded select-all truncate">
+              <code className="text-xs font-mono bg-muted/50 border border-border/50 px-2 py-0.5 rounded select-all truncate">
                 {selectedAuditLog.entityId}
               </code>
             </div>
@@ -108,14 +108,14 @@ export function AuditLogForm({ selectedAuditLog }: AuditLogFormProps) {
 
       {/* Registro de Cambios */}
       <Card className="border-border/60 shadow-sm overflow-hidden">
-        <CardHeader className="bg-muted/30 border-b py-2 md:py-4">
+        <CardHeader className="bg-muted/30 border-b py-2">
           <CardTitle className="flex items-center gap-2 text-sm md:text-base font-semibold">
             <History className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
             {t("changeLog")}
           </CardTitle>
         </CardHeader>
-        <CardContent className="pt-3 md:pt-4">
-          <div className="relative rounded-lg border bg-card p-3 md:p-4 font-mono text-xs overflow-hidden">
+        <CardContent className="pt-3">
+          <div className="relative rounded-lg border bg-card p-3 font-mono text-xs overflow-hidden">
             <div className="absolute right-2 top-2">
               <Settings className="h-3 w-3 md:h-3.5 md:w-3.5 text-muted-foreground animate-spin-slow" />
             </div>
@@ -128,24 +128,24 @@ export function AuditLogForm({ selectedAuditLog }: AuditLogFormProps) {
 
       {/* Metadatos Técnicos */}
       <Card className="border-border/60 shadow-sm overflow-hidden">
-        <CardHeader className="bg-muted/30 border-b py-2 md:py-4">
+        <CardHeader className="bg-muted/30 border-b py-2">
           <CardTitle className="flex items-center gap-2 text-sm md:text-base font-semibold">
             <Clock className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
             {t("technicalInfo")}
           </CardTitle>
         </CardHeader>
-        <CardContent className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-6 pt-3 md:pt-4">
-          <div className="space-y-0.5 md:space-y-1.5">
+        <CardContent className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
+          <div className="space-y-0.5">
             <div className="flex items-center gap-1.5">
               <Clock className="h-3 w-3 md:h-3.5 md:w-3.5 text-muted-foreground" />
-              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70">
+              <span className="text-xs font-black uppercase tracking-widest text-muted-foreground/70">
                 {t("timestamp")}
               </span>
             </div>
             <p className="text-xs md:text-sm font-medium leading-none md:leading-normal">
               {new Date(selectedAuditLog.createdAt).toLocaleDateString(locale)}
               <br className="hidden md:block" />
-              <span className="text-muted-foreground text-xs md:ml-0 ml-2">
+              <span className="text-muted-foreground text-xs ml-2">
                 {new Date(selectedAuditLog.createdAt).toLocaleTimeString(
                   locale,
                 )}
@@ -153,10 +153,10 @@ export function AuditLogForm({ selectedAuditLog }: AuditLogFormProps) {
             </p>
           </div>
 
-          <div className="space-y-0.5 md:space-y-1.5">
+          <div className="space-y-0.5">
             <div className="flex items-center gap-1.5">
               <Globe className="h-3 w-3 md:h-3.5 md:w-3.5 text-muted-foreground" />
-              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70">
+              <span className="text-xs font-black uppercase tracking-widest text-muted-foreground/70">
                 {t("ipAddress")}
               </span>
             </div>
@@ -165,14 +165,14 @@ export function AuditLogForm({ selectedAuditLog }: AuditLogFormProps) {
             </p>
           </div>
 
-          <div className="space-y-0.5 md:space-y-1.5">
+          <div className="space-y-0.5">
             <div className="flex items-center gap-1.5">
               {isMobile ? (
                 <Smartphone className="h-3 w-3 md:h-3.5 md:w-3.5 text-muted-foreground" />
               ) : (
                 <Monitor className="h-3 w-3 md:h-3.5 md:w-3.5 text-muted-foreground" />
               )}
-              <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground/70">
+              <span className="text-xs font-black uppercase tracking-widest text-muted-foreground/70">
                 {t("platform")}
               </span>
             </div>

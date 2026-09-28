@@ -22,10 +22,10 @@ export function SidebarChartsAccounts() {
             className="flex items-center justify-between group hover:translate-x-1 transition-premium border-l-2 border-transparent hover:border-primary pl-2"
           >
             <div className="min-w-0">
-              <p className="text-xs font-black text-foreground truncate uppercase tracking-tighter">
+              <p className="text-xs font-black text-foreground truncate uppercase tracking-widest">
                 {account.name}
               </p>
-              <p className="font-mono text-xs uppercase text-muted-foreground/70 font-bold leading-none">
+              <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground/70 font-black leading-none">
                 {account.type}
               </p>
             </div>

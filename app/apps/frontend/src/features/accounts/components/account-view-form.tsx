@@ -33,28 +33,28 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
       {/* Tactical KPI Area */}
       <div className="grid grid-cols-2 gap-px bg-border/40 border border-border/40 shadow-etched">
         <div className="bg-background/40 p-4 space-y-1">
-          <p className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
+          <p className="text-xs font-black uppercase tracking-widest text-muted-foreground opacity-50">
             {avfT("operativeType")}
           </p>
-          <p className="text-sm font-black font-oxanium uppercase tracking-tighter">
+          <p className="text-sm font-black font-oxanium uppercase tracking-widest">
             {selectedAccount.type}
           </p>
         </div>
         <div className="bg-background/40 p-4 space-y-1">
-          <p className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
+          <p className="text-xs font-black uppercase tracking-widest text-muted-foreground opacity-50">
             {avfT("baseCurrency")}
           </p>
-          <p className="text-sm font-black font-oxanium uppercase tracking-tighter">
+          <p className="text-sm font-black font-oxanium uppercase tracking-widest">
             {selectedAccount.currency}
           </p>
         </div>
       </div>
 
-      <div className="p-6 bg-primary/5 border-2 border-primary/20 shadow-premium relative overflow-hidden group">
+      <div className="p-4 bg-primary/5 border-2 border-primary/20 shadow-premium relative overflow-hidden group">
         <div className="absolute top-0 right-0 p-2 opacity-5 group-hover:opacity-10 transition-opacity">
           <History className="h-16 w-16 -mr-4 -mt-4 rotate-12" />
         </div>
-        <p className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-2">
+        <p className="text-xs font-black uppercase tracking-widest text-primary mb-2">
           {avfT("consolidatedBalance")}
         </p>
 
@@ -69,11 +69,11 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
         <div className="flex items-center justify-between border-b border-border/40 pb-2">
           <div className="flex items-center gap-2 text-primary">
             <History className="h-3.5 w-3.5" />
-            <h4 className="text-xs font-black uppercase tracking-[0.2em]">
+            <h4 className="text-xs font-black uppercase tracking-widest">
               {avfT("terminalHistory")}
             </h4>
           </div>
-          <span className="text-xs font-mono text-muted-foreground opacity-40 uppercase">
+          <span className="text-xs font-black font-mono text-muted-foreground opacity-40 uppercase tracking-widest">
             {avfT("lastRecords")}
           </span>
         </div>
@@ -101,7 +101,7 @@ export function AccountViewForm({ selectedAccount }: AccountViewFormProps) {
                     )}
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-xs font-black text-foreground/80 tracking-tighter uppercase font-oxanium truncate max-w-37.5">
+                    <span className="text-xs font-black text-foreground/80 tracking-widest uppercase font-oxanium truncate max-w-37.5">
                       {tx.description}
                     </span>
                     <PremiumDateCell date={tx.date} className="text-xs" />

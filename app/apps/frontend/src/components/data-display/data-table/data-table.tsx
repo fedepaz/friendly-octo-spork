@@ -2,7 +2,15 @@
 // src/components/data-display/data-table/data-table.tsx
 "use client";
 
-import { Fragment, ReactNode, useEffect, useMemo, useState } from "react";
+import {
+  Fragment,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -103,6 +111,7 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [globalFilter, setGlobalFilter] = useState("");
+  const userToggledColumnsRef = useRef(new Set<string>());
   const breakpoint = useBreakpoint();
 
   const dataTablePermissions = usePermission(tableName);
@@ -207,36 +216,52 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  /* eslint-disable react-hooks/exhaustive-deps */
+  const [containerWidth, setContainerWidth] = useState(0);
+  const tableContainerRef = useCallback((node: HTMLDivElement | null) => {
+    if (!node || typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(([entry]) => {
+      setContainerWidth(entry.contentRect.width);
+    });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const allColumns = table.getAllColumns();
     const columnsId = allColumns.map((column) => column.id);
 
-    const visibility: VisibilityState = {};
+    const fixedWidth = 140;
+    const minColumnWidth = 100;
+    const cellPadding = 24;
 
-    // 768px (md) target: Squeeze the data to fit
-    // We prioritize keeping core data and the actions column
-    let visibleCount = columnsId.length;
+    const availableForData = Math.max(containerWidth - fixedWidth, 0);
+    const maxDataColumns =
+      containerWidth > 0
+        ? Math.floor(availableForData / (minColumnWidth + cellPadding))
+        : 5;
 
-    if (breakpoint === "sm") {
-      visibleCount = 2; // Mobile: Minimal data
-    } else if (breakpoint === "md") {
-      visibleCount = 3; // Cheap Screen (768px): Focus on the essentials
-    } else if (breakpoint === "lg") {
-      visibleCount = 5; // Standard Laptop
-    }
+    const dataColumnCount = columnsId.filter(
+      (id) => id !== "actions" && id !== "select",
+    ).length;
+    const visibleCount = Math.min(Math.max(maxDataColumns, 2), dataColumnCount);
 
-    columnsId.forEach((id, index) => {
-      if (id === "actions" || id === "select") {
-        visibility[id] = true; // Never hide actions or selection
-      } else {
-        visibility[id] = index < visibleCount;
-      }
+    setColumnVisibility((prev) => {
+      const visibility: VisibilityState = {};
+      let dataIndex = 0;
+      columnsId.forEach((id) => {
+        if (id === "actions" || id === "select") {
+          visibility[id] = true;
+          return;
+        }
+        const autoVisible = dataIndex < visibleCount;
+        dataIndex += 1;
+        visibility[id] = userToggledColumnsRef.current.has(id)
+          ? (prev[id] ?? autoVisible)
+          : autoVisible;
+      });
+      return visibility;
     });
-
-    setColumnVisibility(visibility);
-  }, [breakpoint]);
-  /* eslint-enable react-hooks/exhaustive-deps */
+  }, [containerWidth, table]);
 
   const handleExport = (format: "csv" | "excel" | "json" | "pdf") => {
     if (onExport) {
@@ -253,14 +278,14 @@ export function DataTable<TData, TValue>({
   return (
     <>
       <Card className="w-full flex flex-col overflow-hidden bg-card/40 border-border/40 shadow-premium rounded-none my-2 ">
-        <CardHeader className="px-5 pt-5 pb-3">
+        <CardHeader className="px-4 md:px-5 pt-4 md:pt-5 pb-2 md:pb-3">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
               <CardTitle className="text-sm font-black uppercase tracking-widest text-foreground">
                 {title}
               </CardTitle>
               {description && (
-                <CardDescription className="text-xs font-bold uppercase text-muted-foreground/70 tracking-tight">
+                <CardDescription className="text-xs font-black uppercase text-muted-foreground/70 tracking-widest">
                   {description}
                 </CardDescription>
               )}
@@ -268,7 +293,7 @@ export function DataTable<TData, TValue>({
 
             {totalCount > 0 ? (
               <div className="flex items-center px-2 py-0.5 bg-primary/10 border border-primary/20">
-                <span className="text-xs font-black text-primary uppercase tracking-tighter">
+                <span className="text-xs font-black text-primary uppercase tracking-widest">
                   {totalCount} REGISTROS
                 </span>
               </div>
@@ -276,7 +301,7 @@ export function DataTable<TData, TValue>({
           </div>
         </CardHeader>
         <CardContent className="p-0 flex-1 flex flex-col min-h-0 overflow-hidden">
-          <div className="flex items-center px-5 py-2 space-x-3 shrink-0 border-y border-border/20 bg-background/40">
+          <div className="flex items-center px-4 py-2 space-x-3 shrink-0 border-y border-border/20 bg-background/40">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -302,9 +327,10 @@ export function DataTable<TData, TValue>({
                         key={column.id}
                         className="capitalize text-xs font-bold py-2 px-3 rounded-none focus:bg-primary/10 focus:text-primary transition-premium cursor-pointer"
                         checked={column.getIsVisible()}
-                        onCheckedChange={(value) =>
-                          column.toggleVisibility(!!value)
-                        }
+                        onCheckedChange={(value) => {
+                          userToggledColumnsRef.current.add(column.id);
+                          column.toggleVisibility(!!value);
+                        }}
                       >
                         {column.id}
                       </DropdownMenuCheckboxItem>
@@ -340,7 +366,10 @@ export function DataTable<TData, TValue>({
           </div>
 
           <div className="flex-1 overflow-hidden flex flex-col">
-            <div className="flex-1 overflow-auto custom-scrollbar">
+            <div
+              ref={tableContainerRef}
+              className="flex-1 overflow-auto custom-scrollbar"
+            >
               <Table className="min-w-full">
                 <TableHeader className="sticky top-0 bg-card/80 backdrop-blur-md z-10 shadow-sm">
                   {table.getHeaderGroups().map((headerGroup) => (
@@ -403,7 +432,7 @@ export function DataTable<TData, TValue>({
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-4 px-5 py-3 shrink-0 border-t border-border/40 bg-background/40">
+          <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-3 shrink-0 border-t border-border/40 bg-background/40">
             <div className="flex-1 text-xs font-black uppercase tracking-widest text-muted-foreground/70">
               {`${table.getFilteredSelectedRowModel().rows.length} / ${table.getFilteredRowModel().rows.length} ${dtT("selectedLabel")}`}
             </div>

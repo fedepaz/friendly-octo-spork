@@ -92,7 +92,7 @@ export function SmartFormProvider({ onClose }: { onClose: () => void }) {
           <div className="px-5 pb-5">
             <div
               role="alert"
-              className="text-xs font-bold uppercase tracking-tight text-destructive border border-destructive/20 bg-destructive/5 p-3 flex items-start gap-2 shadow-etched animate-premium-in"
+              className="text-xs font-black uppercase tracking-widest text-destructive border border-destructive/20 bg-destructive/5 p-3 flex items-start gap-2 shadow-etched animate-premium-in"
             >
               <div className="h-1.5 w-1.5 bg-destructive mt-1 shrink-0" />
               <div className="flex-1">

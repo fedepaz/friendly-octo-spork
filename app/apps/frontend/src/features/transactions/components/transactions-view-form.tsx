@@ -18,7 +18,7 @@ export function TransactionViewForm({
   return (
     <div className="space-y-6">
       <div className="p-4 bg-background border-l-4 border-primary">
-        <p className="text-2.5 uppercase font-bold text-muted-foreground mb-1">
+        <p className="text-2.5 uppercase tracking-widest font-black text-muted-foreground mb-1">
           {tvfT("operationDate")}
         </p>
         <p className="text-sm font-semibold">
@@ -28,12 +28,12 @@ export function TransactionViewForm({
 
       <div className="grid grid-cols-2 gap-4">
         <div className="p-3 bg-muted/30 border border-border">
-          <p className="text-2.5 uppercase font-bold text-muted-foreground opacity-50">
+          <p className="text-2.5 uppercase tracking-widest font-black text-muted-foreground opacity-50">
             {tvfT("type")}
           </p>
           <p
             className={cn(
-              "text-xs font-black uppercase tracking-tighter",
+              "text-xs font-black uppercase tracking-widest",
               getTransactionTypeStyles(selectedTransaction.type).color,
             )}
           >
@@ -41,7 +41,7 @@ export function TransactionViewForm({
           </p>
         </div>
         <div className="p-3 bg-muted/30 border border-border text-right">
-          <p className="text-2.5 uppercase font-bold text-muted-foreground opacity-50">
+          <p className="text-2.5 uppercase tracking-widest font-black text-muted-foreground opacity-50">
             {tvfT("category")}
           </p>
           <p className="text-xs font-semibold">
@@ -51,7 +51,7 @@ export function TransactionViewForm({
       </div>
 
       <div className="p-4 bg-primary/5 border border-primary/20 text-center">
-        <p className="text-2.5 uppercase font-bold text-primary mb-1">{tvfT("amount")}</p>
+        <p className="text-2.5 uppercase tracking-widest font-black text-primary mb-1">{tvfT("amount")}</p>
         <p
           className={cn(
             "text-3xl font-mono font-black tabular-nums",
@@ -64,8 +64,8 @@ export function TransactionViewForm({
         </p>
       </div>
 
-      <div className="space-y-3">
-        <h4 className="text-2.5 font-bold uppercase tracking-widest text-muted-foreground border-b border-border pb-1">
+      <div className="space-y-2">
+        <h4 className="text-2.5 font-black uppercase tracking-widest text-muted-foreground border-b border-border pb-1">
           {tvfT("fundFlow")}
         </h4>
         <div className="grid grid-cols-2 gap-2 text-2.75 font-mono">

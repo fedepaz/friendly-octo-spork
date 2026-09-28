@@ -34,17 +34,17 @@ export function KPICard({
       <CardContent className="px-(--space-4) pb-(--space-4) pt-(--space-0)">
         <div className="text-2xl font-mono font-black tracking-tighter text-foreground tabular-nums">{value}</div>
         {description && (
-          <p className="text-xs font-bold uppercase text-muted-foreground/70 leading-none mt-(--space-1) tracking-tight">{description}</p>
+          <p className="text-xs font-black uppercase text-muted-foreground/70 leading-none mt-(--space-1) tracking-widest">{description}</p>
         )}
         {trend && (
           <div className="mt-(--space-2) flex items-center gap-(--space-1-5)">
             <div className={cn(
-              "flex items-center px-(--space-1-5) py-(--space-0-5) text-xs font-black uppercase tracking-tighter rounded-none",
+              "flex items-center px-(--space-1-5) py-(--space-0-5) text-xs font-black uppercase tracking-widest rounded-none",
               trend.isPositive ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive"
             )}>
               {trend.isPositive ? "+" : ""}{trend.value}%
             </div>
-            <span className="text-xs font-bold uppercase text-muted-foreground/60 tracking-widest">{trend.label}</span>
+            <span className="text-xs font-black uppercase text-muted-foreground/60 tracking-widest">{trend.label}</span>
           </div>
         )}
       </CardContent>

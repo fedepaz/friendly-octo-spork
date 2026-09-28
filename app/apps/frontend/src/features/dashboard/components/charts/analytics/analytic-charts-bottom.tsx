@@ -31,7 +31,7 @@ export function AnalyticChartsBottom() {
           <CardTitle className="text-xs font-black uppercase tracking-widest text-foreground">
             {acbT("title")}
           </CardTitle>
-          <CardDescription className="text-xs uppercase font-bold text-muted-foreground/70 tracking-tight">
+          <CardDescription className="text-xs uppercase font-black text-muted-foreground/70 tracking-widest">
             {acbT("description")}
           </CardDescription>
         </div>

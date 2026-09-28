@@ -37,13 +37,13 @@ export function AnalyticChartsMain() {
           <CardTitle className="text-xs font-black uppercase tracking-widest text-foreground">
             {acmT("title")}
           </CardTitle>
-          <CardDescription className="text-xs uppercase font-bold text-muted-foreground/70 tracking-tight">
+          <CardDescription className="text-xs uppercase font-black text-muted-foreground/70 tracking-widest">
             {acmT("description")}
           </CardDescription>
         </div>
         <div className="flex gap-2">
           <div className="h-2 w-2 bg-primary" />
-          <span className="text-xs font-bold uppercase tracking-tighter opacity-60">
+          <span className="text-xs font-black uppercase tracking-widest opacity-60">
             {acmT("real")}
           </span>
         </div>

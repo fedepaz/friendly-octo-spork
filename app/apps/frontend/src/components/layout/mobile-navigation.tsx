@@ -82,11 +82,11 @@ function NavItemLink({
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-black tracking-tighter uppercase font-oxanium truncate">
+          <p className="text-xs font-black tracking-widest uppercase font-oxanium truncate">
             {navT(getNavKey(item.href))}
           </p>
           {item.description && (
-            <p className="text-xs font-mono font-bold text-muted-foreground/60 uppercase tracking-widest truncate leading-tight">
+            <p className="text-xs font-mono font-black text-muted-foreground/60 uppercase tracking-widest truncate leading-tight">
               {navT(getNavKey(item.href) + "Desc")}
             </p>
           )}
@@ -189,7 +189,7 @@ export function MobileNavigation() {
                       <Button
                         variant="ghost"
                         onClick={() => toggleGroup(entry.id)}
-                        className="w-full justify-start gap-3 px-3 font-black text-xs uppercase tracking-[0.2em] text-muted-foreground/70 hover:text-primary hover:bg-transparent transition-premium h-8"
+                        className="w-full justify-start gap-3 px-3 font-black text-xs uppercase tracking-widest text-muted-foreground/70 hover:text-primary hover:bg-transparent transition-premium h-8"
                       >
                         <GroupIcon className="h-3.5 w-3.5 shrink-0 opacity-40" />
                         <span className="flex-1 text-left">{navT(entry.id)}</span>
@@ -225,7 +225,7 @@ export function MobileNavigation() {
                       <Button
                         variant="ghost"
                         onClick={() => toggleGroup(entry.id)}
-                        className="w-full justify-start gap-3 px-3 font-black text-xs uppercase tracking-[0.2em] text-muted-foreground/70 hover:text-primary hover:bg-transparent transition-premium h-8"
+                        className="w-full justify-start gap-3 px-3 font-black text-xs uppercase tracking-widest text-muted-foreground/70 hover:text-primary hover:bg-transparent transition-premium h-8"
                       >
                         <GroupIcon className="h-3.5 w-3.5 shrink-0 opacity-40" />
                         <span className="flex-1 text-left">{navT(entry.id)}</span>
@@ -251,7 +251,7 @@ export function MobileNavigation() {
                                   <Button
                                     variant="ghost"
                                     onClick={() => toggleSubGroup(item.id)}
-                                    className="w-full justify-start gap-2 px-3 font-medium text-xs uppercase tracking-[0.15em] text-muted-foreground/50 hover:text-foreground transition-premium h-7"
+                                    className="w-full justify-start gap-2 px-3 font-black text-xs uppercase tracking-widest text-muted-foreground/50 hover:text-foreground transition-premium h-7"
                                   >
                                     <SubGroupIcon className="h-3 w-3 shrink-0 opacity-40" />
                                     <span className="flex-1 text-left pl-3">

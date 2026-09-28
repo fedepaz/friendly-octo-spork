@@ -65,7 +65,7 @@ export function KPIsDashboard() {
             </p>
             <div className="flex items-center gap-1.5 mt-1">
               <span className={cn(
-                "text-xs font-bold uppercase tracking-tighter",
+                "text-xs font-black uppercase tracking-widest",
                 netFlowDelta >= 0 ? "text-success" : "text-destructive",
               )}>
                 {netFlowDelta >= 0 ? "+" : ""}
@@ -105,7 +105,7 @@ export function KPIsDashboard() {
       <div className="lg:col-span-4 grid grid-cols-1 gap-3">
         <Button
           onClick={handleNewTransaction}
-          className="font-black text-xs uppercase tracking-widest rounded-none shadow-premium bg-primary text-primary-foreground hover:opacity-90 transition-premium group h-11"
+          className="font-black text-xs uppercase tracking-widest rounded-none shadow-premium bg-primary text-primary-foreground hover:opacity-90 transition-premium group h-(--control-height-md)"
         >
           <PlusIcon className="mr-2 h-4 w-4 group-hover:rotate-90 transition-premium" />
           {kpT("newTransaction")}
@@ -113,7 +113,7 @@ export function KPIsDashboard() {
         <Button
           onClick={handleCloseCard}
           variant="outline"
-          className="font-black text-xs uppercase tracking-widest rounded-none border-border/40 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-premium group h-11"
+          className="font-black text-xs uppercase tracking-widest rounded-none border-border/40 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-premium group h-(--control-height-md)"
         >
           <PlusIcon className="mr-2 h-4 w-4 group-hover:rotate-90 transition-premium" />
           {kpT("cardClosing")}

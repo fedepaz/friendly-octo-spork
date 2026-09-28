@@ -27,8 +27,8 @@ export function DataTableSkeleton({
           </div>
           <div className="flex items-center space-x-2">
             <Skeleton className="h-6 w-[60px] sm:w-[80px]" />
-            <Skeleton className="h-8 w-[80px] sm:w-[90px]" />
-            <Skeleton className="h-8 w-[80px] sm:w-[90px]" />
+            <Skeleton className="h-(--control-height-sm) xl:h-(--control-height) w-[80px] sm:w-[90px]" />
+            <Skeleton className="h-(--control-height-sm) xl:h-(--control-height) w-[80px] sm:w-[90px]" />
           </div>
         </div>
       </CardHeader>
@@ -36,9 +36,9 @@ export function DataTableSkeleton({
         {/* Search and filter controls */}
         <div className="flex items-center py-4 space-x-2">
           <div className="relative flex-1 max-w-sm">
-            <Skeleton className="h-8 w-full" />
+            <Skeleton className="h-(--control-height-sm) xl:h-(--control-height) w-full" />
           </div>
-          <Skeleton className="h-10 w-[80px] sm:w-[100px]" />
+          <Skeleton className="h-(--control-height-sm) xl:h-(--control-height) w-[80px] sm:w-[100px]" />
         </div>
 
         {/* Table */}
@@ -79,7 +79,7 @@ export function DataTableSkeleton({
                   ))}
                   {/* Actions cell */}
                   <TableCell>
-                    <Skeleton className="h-8 w-8" />
+                    <Skeleton className="h-(--control-height-xs) xl:h-(--control-height-sm) w-8" />
                   </TableCell>
                 </TableRow>
               ))}
@@ -90,21 +90,21 @@ export function DataTableSkeleton({
         {/* Pagination */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 py-4">
           <div className="flex-1 text-center md:text-left">
-            <Skeleton className="h-4 w-[150px] sm:w-[200px] mx-auto md:mx-0" />
+            <Skeleton className="h-4 w-[150px] sm:w-[200px] mx-auto" />
           </div>
-          <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-8">
+          <div className="flex flex-col sm:flex-row items-center gap-4">
             <div className="flex items-center space-x-2">
               <Skeleton className="h-4 w-20" />
-              <Skeleton className="h-7 w-[70px]" />
+              <Skeleton className="h-(--control-height-xs) xl:h-(--control-height-sm) w-[70px]" />
             </div>
             <div className="flex items-center justify-center">
               <Skeleton className="h-4 w-[100px]" />
             </div>
             <div className="flex items-center space-x-2">
-              <Skeleton className="hidden lg:block h-8 w-8" />
-              <Skeleton className="h-8 w-8" />
-              <Skeleton className="h-8 w-8" />
-              <Skeleton className="hidden lg:block h-8 w-8" />
+              <Skeleton className="hidden lg:block h-(--control-height-xs) xl:h-(--control-height-sm) w-8" />
+              <Skeleton className="h-(--control-height-xs) xl:h-(--control-height-sm) w-8" />
+              <Skeleton className="h-(--control-height-xs) xl:h-(--control-height-sm) w-8" />
+              <Skeleton className="hidden lg:block h-(--control-height-xs) xl:h-(--control-height-sm) w-8" />
             </div>
           </div>
         </div>

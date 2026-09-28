@@ -26,11 +26,11 @@ export function TacticalTextCell({
 }: TacticalTextCellProps) {
   return (
     <div className={cn("flex flex-col gap-0.5", className)}>
-      <span className="text-sm font-black text-foreground tracking-tighter uppercase font-oxanium truncate max-w-50">
+      <span className="text-sm font-black text-foreground tracking-widest uppercase font-oxanium truncate max-w-50">
         {title}
       </span>
       {(subtext || id) && (
-        <span className="text-xs font-mono text-muted-foreground/50 uppercase tracking-widest truncate max-w-50">
+        <span className="text-xs font-black font-mono text-muted-foreground/50 uppercase tracking-widest truncate max-w-50">
           {subtext}
           {subtext && id && " // "}
           {id && `ID: ${id.slice(-8)}`}
@@ -64,7 +64,7 @@ export function TacticalTypeCell({
           className={cn("h-3.5 w-3.5 text-muted-foreground", iconClassName)}
         />
       </div>
-      <span className="text-xs font-bold uppercase tracking-tight text-foreground/80">
+      <span className="text-xs font-black uppercase tracking-widest text-foreground/80">
         {label}
       </span>
     </div>

@@ -20,7 +20,7 @@ export function DashboardChartsSkeleton() {
           <CardHeader className="pb-2 px-5 pt-4">
             <Skeleton className="h-2.5 w-36" />
           </CardHeader>
-          <CardContent className="space-y-3 px-5 pb-4">
+          <CardContent className="space-y-2 px-5 pb-4">
             {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="flex items-center justify-between">
                 <div className="space-y-1">
@@ -56,7 +56,7 @@ export function DashboardChartsSkeleton() {
           <CardHeader className="pb-2 px-5 pt-4">
             <Skeleton className="h-2.5 w-36" />
           </CardHeader>
-          <CardContent className="space-y-3 px-5 pb-4">
+          <CardContent className="space-y-2 px-5 pb-4">
             {Array.from({ length: 2 }).map((_, i) => (
               <div key={i} className="flex items-center justify-between">
                 <Skeleton className="h-3 w-32" />

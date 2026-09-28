@@ -80,14 +80,14 @@ export function SlideOverForm<T extends FieldValues>({
 
         <SheetHeader className="px-3 py-2 border-b border-border/40 bg-background/40 shrink-0 relative">
           <div className="space-y-1">
-            <span className="text-xs font-black uppercase tracking-[0.2em] text-primary">
+            <span className="text-xs font-black uppercase tracking-widest text-primary">
               {isCreateMode ? sofT("createBadge") : sofT("viewBadge")}
             </span>
-            <SheetTitle className="text-xl font-oxanium font-black tracking-tighter uppercase leading-none">
+            <SheetTitle className="text-xl font-oxanium font-black tracking-widest uppercase leading-none">
               {title}
             </SheetTitle>
             {description && (
-              <p className="text-xs font-mono uppercase text-muted-foreground opacity-50 tracking-tight">
+              <p className="text-xs font-black font-mono uppercase text-muted-foreground opacity-50 tracking-widest">
                 {description}
               </p>
             )}
@@ -109,7 +109,7 @@ export function SlideOverForm<T extends FieldValues>({
           {isViewMode ? (
             <Button
               onClick={handleCancel}
-              className="w-full h-(--control-height-md) text-xs font-oxanium font-black uppercase tracking-[0.2em] rounded-none border-2 border-border/20 hover:border-primary/40 bg-background/40 transition-premium shadow-etched"
+              className="w-full h-(--control-height-md) text-xs font-oxanium font-black uppercase tracking-widest rounded-none border-2 border-border/20 hover:border-primary/40 bg-background/40 transition-premium shadow-etched"
               variant="outline"
             >
               {getActionLabel()}
@@ -118,7 +118,7 @@ export function SlideOverForm<T extends FieldValues>({
             <div className="flex w-full gap-4">
               <Button
                 onClick={handleCancel}
-                className="flex-1 h-(--control-height-md) text-xs font-oxanium font-black uppercase tracking-[0.2em] rounded-none border-2 border-border/20 hover:border-primary/40 bg-background/40 transition-premium shadow-etched"
+                className="flex-1 h-(--control-height-md) text-xs font-oxanium font-black uppercase tracking-widest rounded-none border-2 border-border/20 hover:border-primary/40 bg-background/40 transition-premium shadow-etched"
                 variant="outline"
               >
                 {sofT("cancelAction")}
@@ -127,7 +127,7 @@ export function SlideOverForm<T extends FieldValues>({
                 type={formId ? "submit" : "button"}
                 form={formId}
                 onClick={!formId ? () => onSave?.() : undefined}
-                className="flex-1 h-(--control-height-md) text-xs font-oxanium font-black uppercase tracking-[0.2em] rounded-none border-2 border-primary/20 hover:border-primary/60 bg-primary/10 text-primary transition-premium shadow-etched shadow-primary/10"
+                className="flex-1 h-(--control-height-md) text-xs font-oxanium font-black uppercase tracking-widest rounded-none border-2 border-primary/20 hover:border-primary/60 bg-primary/10 text-primary transition-premium shadow-etched shadow-primary/10"
                 disabled={
                   form
                     ? !form.formState.isValid || form.formState.isSubmitting

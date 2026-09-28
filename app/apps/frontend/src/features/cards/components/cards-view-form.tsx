@@ -103,10 +103,10 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
             <Database className="h-4 w-4" />
           )}
           <div className="flex items-center gap-2">
-            <span className="text-2.5 font-black uppercase tracking-tighter">
+            <span className="text-2.5 font-black uppercase tracking-widest">
               {labelMap[source]}
             </span>
-            <span className={cn("inline-block px-1 py-0.5 text-xs font-black uppercase tracking-wider border", SOURCE_COLORS[source])}>
+            <span className={cn("inline-block px-1 py-0.5 text-xs font-black uppercase tracking-widest border", SOURCE_COLORS[source])}>
               {SOURCE_LABELS[source]}
             </span>
           </div>
@@ -117,7 +117,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
       </div>
 
       <div className="space-y-2">
-        <p className="text-2.5 uppercase font-bold text-muted-foreground opacity-50 flex items-center gap-2">
+        <p className="text-2.5 uppercase tracking-widest font-black text-muted-foreground opacity-50 flex items-center gap-2">
           <Target className="h-3 w-3" />
           {cvfT("financialImpact")}
         </p>
@@ -131,8 +131,8 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
         </div>
       </div>
 
-      <div className="space-y-3">
-        <h4 className="text-2.5 font-bold uppercase tracking-widest text-muted-foreground border-b border-border/40 pb-1 flex items-center justify-between">
+      <div className="space-y-2">
+        <h4 className="text-2.5 font-black uppercase tracking-widest text-muted-foreground border-b border-border/40 pb-1 flex items-center justify-between">
           <span>{cvfT("expenseStructure")}</span>
           <span className="bg-muted px-1.5 py-0.5 text-xs border border-border/60">
             {frequency}
@@ -145,10 +145,10 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
             <Icon className="size-3 text-muted-foreground/60" />
           </div>
           {partsDetail ? (
-            <div className="space-y-3">
+            <div className="space-y-2">
               <div className="flex justify-between items-end">
                 <div className="flex flex-col">
-                  <span className="text-xs font-bold text-muted-foreground uppercase opacity-60">
+                  <span className="text-xs font-black text-muted-foreground uppercase tracking-widest opacity-60">
                     {cvfT("installmentProgress")}
                   </span>
                   <span className="text-lg font-mono font-black text-foreground">
@@ -160,7 +160,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
                   </span>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs font-bold text-muted-foreground uppercase opacity-60">
+                  <span className="text-xs font-black text-muted-foreground uppercase tracking-widest opacity-60">
                     {cvfT("statusLabel")}
                   </span>
                   <p className="font-black text-xs text-primary tracking-widest">
@@ -176,7 +176,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
                     style={{ width: `${progress}%` }}
                   />
                 </div>
-                <div className="flex justify-between text-xs font-mono text-muted-foreground uppercase">
+                <div className="flex justify-between text-xs font-black font-mono text-muted-foreground uppercase tracking-widest">
                   <span>{cvfT("progressStart")}</span>
                   <span>{cvfT("progressComplete", { progress: Math.round(progress) })}</span>
                   <span>{cvfT("progressEnd")}</span>
@@ -185,7 +185,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
             </div>
           ) : (
             <div className="flex justify-between items-center">
-              <span className="text-2.5 font-bold text-foreground/70 uppercase">
+              <span className="text-2.5 font-black text-foreground/70 uppercase tracking-widest">
                 {cvfT("chargeType")}
               </span>
               <span className="font-mono text-xs font-black tracking-widest text-primary">
@@ -202,7 +202,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
       <div className="grid grid-cols-1 gap-2">
         <div className="flex items-center justify-between p-3 bg-background border-2 border-border/60 font-mono text-2.5">
           <div className="flex flex-col">
-            <span className="opacity-40 uppercase text-xs">{cvfT("origin")}</span>
+            <span className="opacity-40 uppercase tracking-widest text-xs font-black">{cvfT("origin")}</span>
             <span className="font-bold text-foreground">
               {sourceAccount?.name || cvfT("notAssigned")}
             </span>
@@ -220,7 +220,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
         {targetAccount && (
           <div className="flex items-center justify-between p-3 bg-background border-2 border-border/60 font-mono text-2.5">
             <div className="flex flex-col">
-              <span className="opacity-40 uppercase text-xs">{cvfT("destination")}</span>
+              <span className="opacity-40 uppercase tracking-widest text-xs font-black">{cvfT("destination")}</span>
               <span className="font-bold text-foreground">
                 {targetAccount.name}
               </span>
@@ -234,7 +234,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
         <div className="flex-1 flex items-center gap-3 p-3 border-2 border-border/60 bg-muted/20">
           <Calendar className="h-5 w-5 text-muted-foreground opacity-30" />
           <div>
-            <p className="text-xs font-bold uppercase leading-none opacity-40 mb-1">
+            <p className="text-xs font-black uppercase tracking-widest leading-none opacity-40 mb-1">
               {cvfT("registrationDate")}
             </p>
             <p className="font-mono text-xs font-black">
@@ -253,7 +253,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
               style={{ color: category.color || undefined }}
             />
             <div>
-              <p className="text-xs font-bold uppercase leading-none opacity-40 mb-1">
+              <p className="text-xs font-black uppercase tracking-widest leading-none opacity-40 mb-1">
                 {cvfT("category")}
               </p>
               <p className="text-xs font-black truncate">{category.name}</p>
@@ -264,7 +264,7 @@ export function CardViewForm({ selectedCardStatementItem }: CardViewFormProps) {
 
       {(_raw.metadata as JSON) ? (
         <div className="pt-4 border-t border-dashed border-border/40">
-          <p className="text-xs font-bold uppercase opacity-30 mb-2 flex items-center gap-1">
+          <p className="text-xs font-black uppercase tracking-widest opacity-30 mb-2 flex items-center gap-1">
             <Database className="h-3 w-3" />
             {cvfT("systemMetadata")}
           </p>

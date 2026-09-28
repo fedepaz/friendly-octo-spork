@@ -52,7 +52,7 @@ export function LanguageSwitcher() {
               onClick={() => switchLocale("en")}
               className={`cursor-pointer ${locale === "en" ? "bg-accent" : ""}`}
             >
-              <span className="inline-flex items-center justify-center w-8 h-6 text-xs font-black uppercase tracking-wider border border-primary/40 bg-primary/10 text-primary">
+              <span className="inline-flex items-center justify-center w-8 h-6 text-xs font-black uppercase tracking-widest border border-primary/40 bg-primary/10 text-primary">
                 EN
               </span>
               <span className="ml-2">{t("english")}</span>
@@ -62,7 +62,7 @@ export function LanguageSwitcher() {
               onClick={() => switchLocale("es")}
               className={`cursor-pointer ${locale === "es" ? "bg-accent" : ""}`}
             >
-              <span className="inline-flex items-center justify-center w-8 h-6 text-xs font-black uppercase tracking-wider border border-accent/40 bg-accent/10 text-accent">
+              <span className="inline-flex items-center justify-center w-8 h-6 text-xs font-black uppercase tracking-widest border border-accent/40 bg-accent/10 text-accent">
                 ES
               </span>
               <span className="ml-2">{t("spanish")}</span>

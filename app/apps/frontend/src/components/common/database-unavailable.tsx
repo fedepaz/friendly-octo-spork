@@ -8,13 +8,13 @@ export function DatabaseUnavailablePage() {
   const t = useTranslations("errors");
 
   return (
-    <div className="grid min-h-dvh place-items-center px-6 py-24 sm:py-32 lg:px-8 bg-background">
+    <div className="grid min-h-dvh place-items-center px-6 py-24 bg-background">
       <div className="text-center max-w-2xl">
         <div className="relative mx-auto w-20 h-20 mb-6">
           <DatabaseZap className="w-20 h-20 text-muted-foreground/70" />
         </div>
 
-        <h1 className="mt-4 text-4xl font-black uppercase tracking-tighter text-foreground text-balance sm:text-6xl">
+        <h1 className="mt-4 text-4xl font-black uppercase tracking-widest text-foreground text-balance sm:text-6xl">
           {t("serviceUnavailable")}
         </h1>
 
@@ -22,8 +22,8 @@ export function DatabaseUnavailablePage() {
           {t("maintenanceDesc")}
         </p>
 
-        <div className="mt-8 p-6 rounded-none bg-muted/50 border-2 border-border">
-          <p className="text-base text-foreground font-bold uppercase tracking-widest mb-2">
+        <div className="mt-8 p-4 rounded-none bg-muted/50 border-2 border-border">
+          <p className="text-base text-foreground font-black uppercase tracking-widest mb-2">
             {t("systemMaintenance")}
           </p>
           <p className="text-sm text-muted-foreground text-balance font-mono">
@@ -34,7 +34,7 @@ export function DatabaseUnavailablePage() {
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button
             variant="outline"
-            className="gap-2 bg-transparent rounded-none border-2 font-bold uppercase tracking-wider"
+            className="gap-2 bg-transparent rounded-none border-2 font-black uppercase tracking-widest"
             onClick={() => window.location.reload()}
           >
             <RefreshCw className="w-4 h-4" />
@@ -42,7 +42,7 @@ export function DatabaseUnavailablePage() {
           </Button>
           <Button
             variant="secondary"
-            className="rounded-none border-2 border-secondary-foreground/20 font-bold uppercase tracking-wider"
+            className="rounded-none border-2 border-secondary-foreground/20 font-black uppercase tracking-widest"
             onClick={() => (window.location.href = "/")}
           >
             {t("goToHome")}
