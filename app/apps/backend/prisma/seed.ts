@@ -1,6 +1,6 @@
 // backend/prisma/seed.ts
 import { PrismaClient } from '@prisma/client';
-import { AccountType, Currency } from '../src/generated/prisma';
+import { AccountType, Currency } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import * as bcrypt from 'bcrypt';
 

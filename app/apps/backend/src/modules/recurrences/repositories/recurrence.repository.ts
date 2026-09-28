@@ -3,7 +3,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../infra/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
-import { TransactionType } from 'generated/prisma';
+import { TransactionType } from '@prisma/client';
 
 export type RecurrenceWithRelations = Prisma.RecurrenceGetPayload<{
   include: {
