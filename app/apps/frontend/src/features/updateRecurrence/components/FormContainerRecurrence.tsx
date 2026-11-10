@@ -133,8 +133,10 @@ export function FormContainerRecurrence({
       isOpen={true}
       onClose={onClose}
       title={
-        STEP_CONFIGS_RECURRENCE.find((s) => s.id === currentStepId)?.label ??
-        fcrT("defaultTitle")
+        (() => {
+          const step = STEP_CONFIGS_RECURRENCE.find((s) => s.id === currentStepId);
+          return step ? fcrT(step.labelKey) : fcrT("defaultTitle");
+        })()
       }
       step={currentVisibleIndex + 1}
       totalSteps={totalVisibleSteps}

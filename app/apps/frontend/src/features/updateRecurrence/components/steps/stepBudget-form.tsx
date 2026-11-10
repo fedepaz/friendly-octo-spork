@@ -47,19 +47,19 @@ export function StepBudgetComponent() {
     <div className="flex flex-col gap-4">
       {recurrence && (
         <div className="p-3 border border-border/40 bg-background/40 space-y-2">
-          <p className="text-[10px] font-black uppercase tracking-widest text-primary/60">
+          <p className="text-xs font-black uppercase tracking-widest text-primary/60">
             {srbT("budgetRef")}
           </p>
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">{srbT("budgeted")}</p>
+              <p className="text-xs font-black text-muted-foreground/70 uppercase tracking-widest">{srbT("budgeted")}</p>
               <p className="text-xs font-mono font-bold">
                 {isBudgetedRef ? srbT("yes") : srbT("no")}
               </p>
             </div>
             {budgetCategoryRef && (
               <div>
-                <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">{srbT("category")}</p>
+                <p className="text-xs font-black text-muted-foreground/70 uppercase tracking-widest">{srbT("category")}</p>
                 <p className="text-xs font-mono font-bold">
                   {budgetCategoryRef}
                 </p>
@@ -69,7 +69,7 @@ export function StepBudgetComponent() {
         </div>
       )}
 
-      <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
+      <h3 className="text-lg font-mono font-black uppercase tracking-widest text-foreground">
         {srbT("title")}
       </h3>
 
@@ -78,7 +78,7 @@ export function StepBudgetComponent() {
           type="button"
           onClick={() => toggleBudgetedExpense(true)}
           disabled={watchedTransactionType}
-          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-black text-sm uppercase tracking-widest transition-all
             ${
               watched.isBudgetedExpense
                 ? "border-foreground bg-muted"
@@ -90,7 +90,7 @@ export function StepBudgetComponent() {
         <button
           type="button"
           onClick={() => toggleBudgetedExpense(false)}
-          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-black text-sm uppercase tracking-widest transition-all
             ${
               !watched.isBudgetedExpense
                 ? "border-foreground bg-muted"
@@ -114,10 +114,10 @@ export function StepBudgetComponent() {
                   onClick={() => {
                     setValue("budgetCategory", c as BudgetCategory);
                   }}
-                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs font-black uppercase tracking-widest transition-all
                     ${
                       watched.budgetCategory === c
-                        ? "border-foreground bg-muted font-bold"
+                        ? "border-foreground bg-muted font-black"
                         : "border-border text-muted-foreground hover:bg-muted"
                     }`}
                 >

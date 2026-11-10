@@ -18,11 +18,11 @@ export function UserProfileInfo() {
         </CardHeader>
         <CardContent className="grid gap-4 pt-4">
           <div className="space-y-1">
-            <Label className="text-[10px] uppercase font-bold text-muted-foreground opacity-60">{uiT("fullNameLabel")}</Label>
+            <Label className="text-xs uppercase tracking-widest font-black text-muted-foreground opacity-60">{uiT("fullNameLabel")}</Label>
             <p className="text-sm font-bold tracking-tight">{userProfile.name}</p>
           </div>
           <div className="space-y-1">
-            <Label className="text-[10px] uppercase font-bold text-muted-foreground opacity-60">{uiT("emailLabel")}</Label>
+            <Label className="text-xs uppercase tracking-widest font-black text-muted-foreground opacity-60">{uiT("emailLabel")}</Label>
             <p className="text-sm font-mono font-medium">{userProfile.email}</p>
           </div>
         </CardContent>

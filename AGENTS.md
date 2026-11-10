@@ -47,21 +47,28 @@ app/
 - **No Update/Delete**: The API only exposes POST and GET endpoints. No PATCH/DELETE/PUT. Only soft delete exists on User and Account.
 - **Read `node_modules/next/dist/docs/`** before writing any Next.js code — this version has breaking changes from your training data.
 - **Categories are seeded/read-only** — no endpoint to create/modify them.
+- **Design tokens (enforced)**: `className` values consume CSS tokens from `[locale]/globals.css` — control heights `h-(--control-height)` (xs/sm/default/md/lg = 24/28/32/36/40px), table density `h-(--table-compact-row-height) xl:h-(--table-row-height)` + `--table-cell-*`, spacing `px-(--space-4)` (scale 0…40px), layout `--sidebar-width-*` / `--header-height-*`, typography via the remap (`text-xs`=11px … `text-3xl`=24px). Never introduce arbitrary px (`text-[13px]`, `h-[24px]`) — use the nearest token; if no token fits (widths > 40px, content shapes), keep the existing scale class. Never add tokens outside the approved set. `--radius: 0px` (sharp corners) and the Oxanium/Source Code Pro fonts are deliberate theme decisions — do not "fix" them.
 - **Wizard pattern**: Multi-step forms use `SmartFormProvider` + `FormContainer` + step components. Step navigation uses `*-routing.ts` helpers with `StepConfig` arrays.
+- **AlertModal pattern**: Global notification modal — `AlertModalProvider` wraps the app in `app-providers.tsx`; any component calls `useAlertModal()` → `openAlert(type, data?)`. `AlertModalDialog` is mounted in `DashboardHeader` behind `usePermission("alerts")` (entity seeded READ_ONLY). Content lives in `src/components/modals/`.
+- **Permissions (RBAC)**: Backend `src/modules/permissions/` — PermissionsModule/Service/Guard/`@RequirePermission` decorator/Repository/Controller, registered globally in `main.ts`. Single-user app: no `tenantId` scoping. Frontend UI lives in `src/features/permissions/`.
+- **Audit trail**: `src/shared/interceptors/audit-crud.interceptor.ts`, registered globally in `main.ts` — audits POST/PATCH/DELETE only (GET skipped), fire-and-forget (never blocks the response), sanitizes request bodies (password/token/secret), tracks duration + client IP.
+- **i18n**: next-intl. Shared strings live in `messages/en.json` + `messages/es.json`; components with their own namespace keep colocated `messages/` folders (e.g., `InvestmentsDashboard/messages/`). Never hardcode user-facing strings.
 
 ## Frontend Data Patterns
 
 - **Invariants on `useSuspenseQuery`**: Never destructure `isLoading` (it's `undefined`). Never guard with `if(isLoading)`. Data is guaranteed available when the component renders.
 - **Suspense boundaries**: One `<Suspense>` boundary per independent data section. Place them as granular as possible. For modals/wizards, wrap only the content area (not the modal shell) to avoid flash.
 - **Invalidation map**: `src/lib/query-invalidation-map.ts` — single source of truth mapping mutation names to query keys. Mutation hooks never call `invalidateQueries` inline.
+- **Query key factory**: `src/lib/queryKeys.ts` — all query key factories in one file. Hooks import keys from there; never define query keys inline.
+- **LoadingBoundary**: `src/components/common/loading-boundary.tsx` — accessible Suspense wrapper with aria attributes; prefer it over a raw `<Suspense>` for section-level fallbacks.
 - **Colocated skeletons**: Every `<Suspense>` fallback is a dedicated `{Name}Skeleton.tsx` matching the real component's layout exactly.
 
 ## Commit Workflow
 
-1. Changes must follow **Conventional Commits** (enforced by commit-msg hook). See `app/COMMIT_CONVENTIONS.md`.
+1. Changes must follow **Conventional Commits** (enforced by commit-msg hook). See `app/COMMIT_CONVENTIONS.md`. PR titles must also follow Conventional Commits (enforced by `.github/workflows/pr-title.yml`).
 2. Pre-commit hook runs `pnpm lint` — fix all errors before committing.
 3. Before committing, consult `docs/agents/` for architecture/pattern alignment.
-4. Save commit message to `app/.commits/YYYY-MM-DD-type-description.md`, then `git add . && git commit -F .commits/<file>`.
+4. Save commit message to `app/.commits/YYYY-MM-DD-type-description.md`, then `git add . && git commit -F .commits/<file>`. These message files are gitignored local inputs — never committed.
 5. `main` branch is protected — always work on feature branches.
 6. Do NOT commit unless explicitly asked.
 

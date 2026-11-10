@@ -1,0 +1,9 @@
+{
+  "InvestmentColumns": {
+    "name": "Nombre",
+    "currency": "Moneda",
+    "principal": "Capital",
+    "totalEarned": "Ganado",
+    "totalValue": "Total"
+  }
+}

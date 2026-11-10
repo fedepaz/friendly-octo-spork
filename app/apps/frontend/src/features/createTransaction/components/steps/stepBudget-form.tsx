@@ -38,7 +38,7 @@ export function StepBudgetComponent() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
+      <h3 className="text-lg font-mono font-black uppercase tracking-widest text-foreground">
         {sbT("title")}
       </h3>
 
@@ -47,7 +47,7 @@ export function StepBudgetComponent() {
           type="button"
           onClick={() => toggleBudgetedExpense(true)}
           disabled={watchedTransactionType}
-          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-black text-sm uppercase tracking-widest transition-all
             ${
               watched.isBudgetedExpense
                 ? "border-foreground bg-muted"
@@ -59,7 +59,7 @@ export function StepBudgetComponent() {
         <button
           type="button"
           onClick={() => toggleBudgetedExpense(false)}
-          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-black text-sm uppercase tracking-widest transition-all
             ${
               !watched.isBudgetedExpense
                 ? "border-foreground bg-muted"
@@ -83,10 +83,10 @@ export function StepBudgetComponent() {
                   onClick={() => {
                     setValue("budgetCategory", c as BudgetCategory);
                   }}
-                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs font-black uppercase tracking-widest transition-all
                     ${
                       watched.budgetCategory === c
-                        ? "border-foreground bg-muted font-bold"
+                        ? "border-foreground bg-muted font-black"
                         : "border-border text-muted-foreground hover:bg-muted"
                     }`}
                 >

@@ -55,7 +55,7 @@ export function KPIsDashboard() {
       <div className="lg:col-span-8 grid md:grid-cols-3 gap-3">
         <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
           <CardHeader className="pb-1 px-4 pt-4">
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">
               {kpT("netWorth")}
             </CardTitle>
           </CardHeader>
@@ -65,8 +65,8 @@ export function KPIsDashboard() {
             </p>
             <div className="flex items-center gap-1.5 mt-1">
               <span className={cn(
-                "text-[10px] font-bold uppercase tracking-tighter",
-                netFlowDelta >= 0 ? "text-secondary" : "text-destructive",
+                "text-xs font-black uppercase tracking-widest",
+                netFlowDelta >= 0 ? "text-success" : "text-destructive",
               )}>
                 {netFlowDelta >= 0 ? "+" : ""}
                 {formatCurrency(Math.abs(netFlowDelta))}
@@ -78,12 +78,12 @@ export function KPIsDashboard() {
 
         <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
           <CardHeader className="pb-1 px-4 pt-4">
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">
               {kpT("incomeTitle", { month: currentMonth })}
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 pb-4">
-            <p className="text-2xl font-mono font-black text-secondary tracking-tighter tabular-nums">
+            <p className="text-2xl font-mono font-black text-success tracking-tighter tabular-nums">
               {formatCurrency(monthlyIncome)}
             </p>
           </CardContent>
@@ -91,7 +91,7 @@ export function KPIsDashboard() {
 
         <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
           <CardHeader className="pb-1 px-4 pt-4">
-            <CardTitle className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+            <CardTitle className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">
               {kpT("expensesTitle", { month: currentMonth })}
             </CardTitle>
           </CardHeader>
@@ -105,7 +105,7 @@ export function KPIsDashboard() {
       <div className="lg:col-span-4 grid grid-cols-1 gap-3">
         <Button
           onClick={handleNewTransaction}
-          className="font-black text-xs uppercase tracking-widest rounded-none shadow-premium bg-primary text-primary-foreground hover:opacity-90 transition-premium group h-11"
+          className="font-black text-xs uppercase tracking-widest rounded-none shadow-premium bg-primary text-primary-foreground hover:opacity-90 transition-premium group h-(--control-height-md)"
         >
           <PlusIcon className="mr-2 h-4 w-4 group-hover:rotate-90 transition-premium" />
           {kpT("newTransaction")}
@@ -113,7 +113,7 @@ export function KPIsDashboard() {
         <Button
           onClick={handleCloseCard}
           variant="outline"
-          className="font-black text-xs uppercase tracking-widest rounded-none border-border/40 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-premium group h-11"
+          className="font-black text-xs uppercase tracking-widest rounded-none border-border/40 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-premium group h-(--control-height-md)"
         >
           <PlusIcon className="mr-2 h-4 w-4 group-hover:rotate-90 transition-premium" />
           {kpT("cardClosing")}

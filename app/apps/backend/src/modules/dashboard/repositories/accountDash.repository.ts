@@ -2,7 +2,8 @@
 
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../infra/prisma/prisma.service';
-import { Account } from 'generated/prisma';
+import { Account } from '@prisma/client';
+import { AccountDTO } from '@repo/shared';
 
 @Injectable()
 export class AccountDashRepository {
@@ -12,7 +13,7 @@ export class AccountDashRepository {
    * Returns the last `limit` accounts used by the user,
    * ordered by the most recent transaction date (source or target).
    */
-  async getRecentAccounts(userId: string): Promise<Account[]> {
+  async getRecentAccounts(userId: string): Promise<AccountDTO[]> {
     const limit = 3;
     // Raw SQL to get accounts with their latest transaction date
     const result = await this.prisma.$queryRaw<Account[]>`
@@ -40,6 +41,9 @@ export class AccountDashRepository {
     ORDER BY COALESCE(t.last_date, '1970-01-01'::timestamp) DESC
     LIMIT ${limit}
   `;
-    return result;
+    return result.map((account) => ({
+      ...account,
+      balance: account.balance.toString(),
+    }));
   }
 }

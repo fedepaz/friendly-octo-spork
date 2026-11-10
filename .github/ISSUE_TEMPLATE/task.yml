@@ -1,0 +1,29 @@
+name: Task
+description: Small piece of work — one branch, one PR
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What should be done?
+      description: The what and why, with enough detail to start without a follow-up question.
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      description: >-
+        Goes into the issue body; apply the matching label (enhancement /
+        documentation / chore) manually after creation.
+      options:
+        - enhancement
+        - documentation
+        - chore
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Extra context
+      description: Links, screenshots, edge cases. Delete if none.

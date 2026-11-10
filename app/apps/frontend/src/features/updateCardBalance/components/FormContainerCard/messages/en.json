@@ -1,8 +1,12 @@
 {
   "FormContainerCard": {
     "fillRequiredFields": "Please fill in all required fields",
-    "defaultTitle": "Terminal de Transacciones",
-    "confirmLabel": "Confirmar cierre",
-    "closeLabel": "Cerrar"
+    "defaultTitle": "Transaction Terminal",
+    "confirmLabel": "Confirm closing",
+    "closeLabel": "Close",
+    "stepCard": "Card",
+    "stepOpenInstallments": "Open installments",
+    "stepConfirmClose": "Confirm closing",
+    "stepSummary": "Summary"
   }
 }

@@ -4,6 +4,7 @@ import { cn, formatCurrency } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Currency } from "@repo/shared";
 import { LucideIcon } from "lucide-react";
+import { useLocale } from "next-intl";
 
 /**
  * TacticalTextCell
@@ -25,11 +26,11 @@ export function TacticalTextCell({
 }: TacticalTextCellProps) {
   return (
     <div className={cn("flex flex-col gap-0.5", className)}>
-      <span className="text-sm font-black text-foreground tracking-tighter uppercase font-oxanium truncate max-w-50">
+      <span className="text-sm font-black text-foreground tracking-widest uppercase font-oxanium truncate max-w-50">
         {title}
       </span>
       {(subtext || id) && (
-        <span className="text-[9px] font-mono text-muted-foreground/50 uppercase tracking-widest truncate max-w-50">
+        <span className="text-xs font-black font-mono text-muted-foreground/50 uppercase tracking-widest truncate max-w-50">
           {subtext}
           {subtext && id && " // "}
           {id && `ID: ${id.slice(-8)}`}
@@ -63,7 +64,7 @@ export function TacticalTypeCell({
           className={cn("h-3.5 w-3.5 text-muted-foreground", iconClassName)}
         />
       </div>
-      <span className="text-[11px] font-bold uppercase tracking-tight text-foreground/80">
+      <span className="text-xs font-black uppercase tracking-widest text-foreground/80">
         {label}
       </span>
     </div>
@@ -98,7 +99,7 @@ export function PremiumAmountCell({
       className={cn(
         "font-mono text-sm font-black tabular-nums text-right transition-premium",
         isPositive
-          ? "text-secondary"
+          ? "text-success"
           : isNegative
             ? "text-destructive"
             : "text-foreground",
@@ -130,7 +131,7 @@ export function PremiumBadgeCell({
 }: PremiumBadgeCellProps) {
   const variants = {
     primary: "bg-primary/10 text-primary border-primary/20",
-    secondary: "bg-secondary/10 text-secondary border-secondary/20",
+    secondary: "bg-success/10 text-success border-success/20",
     accent: "bg-accent/10 text-accent border-accent/20",
     muted: "bg-muted/10 text-muted-foreground border-border/40",
     destructive: "bg-destructive/10 text-destructive border-destructive/20",
@@ -140,7 +141,7 @@ export function PremiumBadgeCell({
     <Badge
       variant="outline"
       className={cn(
-        "px-2 py-0.5 text-[9px] font-black uppercase tracking-widest rounded-none border-2 transition-premium",
+        "px-2 py-0.5 text-xs font-black uppercase tracking-widest rounded-none border-2 transition-premium",
         variants[variant] || variants.primary,
         className,
       )}
@@ -161,8 +162,9 @@ export function PremiumDateCell({
   date: string | Date;
   className?: string;
 }) {
+  const locale = useLocale();
   const dateObj = new Date(date);
-  const formattedDate = dateObj.toLocaleDateString("es-AR", {
+  const formattedDate = dateObj.toLocaleDateString(locale, {
     day: "2-digit",
     month: "2-digit",
     year: "2-digit",
@@ -171,7 +173,7 @@ export function PremiumDateCell({
   return (
     <span
       className={cn(
-        "text-[11px] font-mono font-bold text-muted-foreground/60 tracking-tighter whitespace-nowrap",
+        "text-xs font-mono font-bold text-muted-foreground/60 tracking-tighter whitespace-nowrap",
         className,
       )}
     >

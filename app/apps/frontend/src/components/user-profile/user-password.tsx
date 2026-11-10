@@ -58,7 +58,7 @@ export function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
           name="currentPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-sans text-[10px] uppercase tracking-widest opacity-60">{pwT("currentPasswordLabel")}</FormLabel>
+              <FormLabel className="font-sans text-xs font-black uppercase tracking-widest opacity-60">{pwT("currentPasswordLabel")}</FormLabel>
               <FormControl>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -101,7 +101,7 @@ export function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
           name="newPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-sans text-[10px] uppercase tracking-widest opacity-60">{pwT("newPasswordLabel")}</FormLabel>
+              <FormLabel className="font-sans text-xs font-black uppercase tracking-widest opacity-60">{pwT("newPasswordLabel")}</FormLabel>
               <FormControl>
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -140,7 +140,7 @@ export function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
         />
         <Button
           type="submit"
-          className="w-full bg-primary rounded-none p-2 cursor-pointer border-2 border-primary-foreground/20 font-sans font-bold uppercase tracking-wider"
+          className="w-full bg-primary rounded-none p-2 cursor-pointer border-2 border-primary-foreground/20 font-sans font-black uppercase tracking-widest"
           disabled={isLoading || !form.formState.isDirty}
         >
           {pwT("submitButton")}

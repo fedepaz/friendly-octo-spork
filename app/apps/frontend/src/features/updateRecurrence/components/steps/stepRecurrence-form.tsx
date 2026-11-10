@@ -42,10 +42,10 @@ export function StepRecurrenceComponent() {
                 key={card}
                 type="button"
                 onClick={() => setValue("cardType", card as CardType)}
-                className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-2 border-2 font-mono text-xs uppercase transition-all
+                className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-2 border-2 font-mono text-xs font-black uppercase tracking-widest transition-all
                   ${
                     watched.cardType === card
-                      ? "border-foreground bg-muted font-bold"
+                      ? "border-foreground bg-muted font-black"
                       : "border-border text-muted-foreground hover:bg-muted"
                   }`}
               >
@@ -62,13 +62,13 @@ export function StepRecurrenceComponent() {
         <div className="p-3 border border-border/40 bg-background/40 space-y-2">
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">
+              <p className="text-xs font-black text-muted-foreground/70 uppercase tracking-widest">
                 {sreT("name")}
               </p>
               <p className="text-xs font-mono font-bold">{recurrence.name}</p>
             </div>
             <div>
-              <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">
+              <p className="text-xs font-black text-muted-foreground/70 uppercase tracking-widest">
                 {sreT("frequency")}
               </p>
               <p className="text-xs font-mono font-bold">
@@ -77,7 +77,7 @@ export function StepRecurrenceComponent() {
             </div>
             {recurrence.totalParts && (
               <div>
-                <p className="text-[9px] font-bold text-muted-foreground/70 uppercase">
+                <p className="text-xs font-black text-muted-foreground/70 uppercase tracking-widest">
                   {sreT("progress")}
                 </p>
                 <p className="text-xs font-mono font-bold">
@@ -89,7 +89,7 @@ export function StepRecurrenceComponent() {
         </div>
       )}
 
-      <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
+      <h3 className="text-lg font-mono font-black uppercase tracking-widest text-foreground">
         {sreT("title")}
       </h3>
 
@@ -97,7 +97,7 @@ export function StepRecurrenceComponent() {
         <button
           type="button"
           onClick={() => toggleRecurrence(true)}
-          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-black text-sm uppercase tracking-widest transition-all
             ${
               !watched.isRecurrence
                 ? "border-foreground bg-muted"
@@ -109,7 +109,7 @@ export function StepRecurrenceComponent() {
         <button
           type="button"
           onClick={() => toggleRecurrence(false)}
-          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-black text-sm uppercase tracking-widest transition-all
             ${
               watched.isRecurrence
                 ? "border-foreground bg-muted"
@@ -121,17 +121,17 @@ export function StepRecurrenceComponent() {
       </div>
 
       {/* STOP RECURRENCE SECTION */}
-      <div className="mt-4 p-4 border-2 border-destructive/20 bg-destructive/5 space-y-3">
+      <div className="mt-4 p-4 border-2 border-destructive/20 bg-destructive/5 space-y-2">
         <p className="text-xs font-black uppercase tracking-widest text-destructive">
           {sreT("dangerZone")}
         </p>
-        <p className="text-[12px] text-muted-foreground/60 leading-relaxed font-sans">
+        <p className="text-sm text-muted-foreground/60 leading-relaxed font-sans">
           {sreT("dangerDesc")}
         </p>
         <button
           type="button"
           onClick={() => toggleStopRecurrence(!watched.shouldStopRecurrence)}
-          className={`w-full p-3 border-2 font-mono font-black text-[14px] uppercase tracking-tighter transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2
+          className={`w-full p-3 border-2 font-mono font-black text-base uppercase tracking-widest transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2
             ${
               watched.shouldStopRecurrence
                 ? "bg-destructive text-destructive-foreground border-destructive"

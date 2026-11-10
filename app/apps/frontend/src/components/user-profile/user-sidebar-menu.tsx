@@ -68,8 +68,7 @@ export function UserSidebarMenu({ isCollapsed = false }: UserSidebarMenuProps) {
                     isCollapsed ? "h-8 w-8" : "h-9 w-9"
                   )}>
                     <span className={cn(
-                      "text-primary font-black tracking-tighter font-oxanium",
-                      isCollapsed ? "text-[10px]" : "text-xs"
+                      "text-primary font-black tracking-tighter font-oxanium text-xs"
                     )}>
                       {initials || <User className="h-4 w-4" />}
                     </span>
@@ -77,10 +76,10 @@ export function UserSidebarMenu({ isCollapsed = false }: UserSidebarMenuProps) {
                   
                   {!isCollapsed && (
                     <div className="flex flex-col items-start min-w-0 flex-1 overflow-hidden">
-                      <p className="text-[11px] font-black text-foreground truncate leading-tight tracking-tighter uppercase font-oxanium w-full text-left">
+                      <p className="text-xs font-black text-foreground truncate leading-tight tracking-widest uppercase font-oxanium w-full text-left">
                         {userProfile?.name}
                       </p>
-                      <p className="text-[8px] font-bold text-muted-foreground truncate leading-tight tracking-widest uppercase opacity-40 font-mono w-full text-left mt-0.5">
+                      <p className="text-xs font-black text-muted-foreground truncate leading-tight tracking-widest uppercase opacity-40 font-mono w-full text-left mt-0.5">
                         {userProfile?.email}
                       </p>
                     </div>
@@ -94,8 +93,8 @@ export function UserSidebarMenu({ isCollapsed = false }: UserSidebarMenuProps) {
                 className="border border-border shadow-2xl bg-popover/90 backdrop-blur-xl rounded-none p-2"
               >
                 <div className="flex flex-col gap-0.5">
-                  <p className="font-black text-[10px] text-primary uppercase font-oxanium tracking-widest">{userProfile?.name}</p>
-                  <p className="text-[8px] text-muted-foreground font-bold font-mono tracking-tighter uppercase opacity-60">{userProfile?.email}</p>
+                  <p className="font-black text-xs text-primary uppercase font-oxanium tracking-widest">{userProfile?.name}</p>
+                  <p className="text-xs text-muted-foreground font-black font-mono tracking-widest uppercase opacity-60">{userProfile?.email}</p>
                 </div>
               </TooltipContent>
             )}
@@ -104,13 +103,13 @@ export function UserSidebarMenu({ isCollapsed = false }: UserSidebarMenuProps) {
         
         <DropdownMenuContent align={isCollapsed ? "start" : "end"} side={isCollapsed ? "right" : "top"} className="w-56 p-1 bg-popover/90 backdrop-blur-xl border border-border shadow-2xl rounded-none">
           <DropdownMenuLabel className="px-3 py-2 flex flex-col gap-0.5">
-            <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] opacity-60">{usmT("terminalLabel")}</span>
-            <span className="text-xs font-black truncate uppercase font-oxanium tracking-tight">{userProfile?.name}</span>
+            <span className="text-xs font-black text-primary uppercase tracking-widest opacity-60">{usmT("terminalLabel")}</span>
+            <span className="text-xs font-black truncate uppercase font-oxanium tracking-widest">{userProfile?.name}</span>
           </DropdownMenuLabel>
           <DropdownMenuSeparator className="mx-1 my-1 bg-border/40" />
           <DropdownMenuItem 
             onClick={() => setOpenProfile(true)}
-            className="cursor-pointer rounded-none focus:bg-primary/10 focus:text-primary transition-premium py-2 px-3 text-[11px] font-bold uppercase tracking-tight"
+            className="cursor-pointer rounded-none focus:bg-primary/10 focus:text-primary transition-premium py-2 px-3 text-xs font-black uppercase tracking-widest"
           >
             <div className="flex items-center gap-2">
               <div className="h-1.5 w-1.5 bg-primary/40 rotate-45" />
@@ -119,7 +118,7 @@ export function UserSidebarMenu({ isCollapsed = false }: UserSidebarMenuProps) {
           </DropdownMenuItem>
           <DropdownMenuSeparator className="mx-1 my-1 bg-border/40" />
           <DropdownMenuItem 
-            className="cursor-pointer rounded-none focus:bg-destructive/10 focus:text-destructive transition-premium py-2 px-3 text-[11px] font-bold uppercase tracking-tight"
+            className="cursor-pointer rounded-none focus:bg-destructive/10 focus:text-destructive transition-premium py-2 px-3 text-xs font-black uppercase tracking-widest"
           >
             <button className="w-full text-left font-black cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2" onClick={handleLogout}>
               {usmT("disconnect")}

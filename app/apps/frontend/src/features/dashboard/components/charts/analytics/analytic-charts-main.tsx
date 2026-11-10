@@ -34,16 +34,16 @@ export function AnalyticChartsMain() {
     <Card className="flex-1 bg-card/20 border-border/40 shadow-premium rounded-none min-h-75 flex flex-col overflow-hidden">
       <CardHeader className="pb-4 px-5 pt-5 flex flex-row items-center justify-between shrink-0">
         <div className="space-y-1">
-          <CardTitle className="text-[11px] font-black uppercase tracking-widest text-foreground">
+          <CardTitle className="text-xs font-black uppercase tracking-widest text-foreground">
             {acmT("title")}
           </CardTitle>
-          <CardDescription className="text-[10px] uppercase font-bold text-muted-foreground/70 tracking-tight">
+          <CardDescription className="text-xs uppercase font-black text-muted-foreground/70 tracking-widest">
             {acmT("description")}
           </CardDescription>
         </div>
         <div className="flex gap-2">
           <div className="h-2 w-2 bg-primary" />
-          <span className="text-[9px] font-bold uppercase tracking-tighter opacity-60">
+          <span className="text-xs font-black uppercase tracking-widest opacity-60">
             {acmT("real")}
           </span>
         </div>

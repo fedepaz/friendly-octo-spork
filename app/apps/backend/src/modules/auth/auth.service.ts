@@ -85,7 +85,7 @@ export class AuthService {
       user: {
         id: user.id,
         name: user.name,
-        email: user.email as string,
+        email: user.email,
       },
       ...tokens,
       isDefaultPassword,
@@ -267,7 +267,7 @@ export class AuthService {
       user: {
         id: user.id,
         name: user.name,
-        email: user.email as string,
+        email: user.email,
       },
       ...tokens,
       isDefaultPassword,

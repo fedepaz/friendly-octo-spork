@@ -42,7 +42,7 @@ export function ExportDropdown({
           variant="outline"
           size="sm"
           disabled={disabled}
-          className="min-h-[40px] bg-transparent"
+          className="min-h-(--space-10) bg-transparent"
         >
           <Download className="mr-2 h-4 w-4" />
           {breakpoint === "sm" ? "" : exT("exportLabel")}

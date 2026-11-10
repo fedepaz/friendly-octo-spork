@@ -32,7 +32,7 @@ export function SidebarChartsBudget() {
   return (
     <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col flex-1 min-h-0 overflow-hidden">
       <CardHeader className="pb-2 px-5 pt-4 shrink-0">
-        <CardTitle className="text-[10px] font-black uppercase tracking-widest text-secondary">
+        <CardTitle className="text-xs font-black uppercase tracking-widest text-secondary">
           {scbT("title")}
         </CardTitle>
       </CardHeader>
@@ -50,7 +50,7 @@ export function SidebarChartsBudget() {
                   <div
                     className={`h-2 w-2 shrink-0 ${CATEGORY_COLORS[budget.category] ?? "bg-foreground/20"}`}
                   />
-                  <span className="text-[9px] font-black uppercase tracking-widest text-foreground/80 truncate">
+                  <span className="text-xs font-black uppercase tracking-widest text-foreground/80 truncate">
                     {scbT(CATEGORY_KEYS[budget.category] ?? budget.category)}
                   </span>
                 </div>
@@ -61,14 +61,14 @@ export function SidebarChartsBudget() {
                 />
               </div>
               <div className="flex items-center justify-between pl-4">
-                <div className="flex items-center gap-2 text-[8px] font-mono tabular-nums text-foreground/40">
+                <div className="flex items-center gap-2 text-xs font-mono tabular-nums text-foreground/40">
                   <span>${dailyAvg.toFixed(2)}{scbT("perDay")}</span>
                   <span className="text-foreground/20">|</span>
                   <span>
                     {budget.daysElapsed}/{totalDays}{scbT("dayAbbrev")}
                   </span>
                 </div>
-                <span className="text-[8px] font-mono tabular-nums text-foreground/40">
+                <span className="text-xs font-mono tabular-nums text-foreground/40">
                   → ${projectedEnd.toFixed(2)}
                 </span>
               </div>

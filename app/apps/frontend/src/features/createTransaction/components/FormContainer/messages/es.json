@@ -2,6 +2,13 @@
   "FormContainer": {
     "fillRequiredFields": "Por favor complete todos los campos obligatorios",
     "defaultTitle": "Terminal de Transacciones",
-    "confirmLabel": "Grabar ✓"
+    "confirmLabel": "Grabar ✓",
+    "stepType": "Tipo de Transacción",
+    "stepAmount": "Monto y Fecha",
+    "stepAccounts": "Cuentas",
+    "stepCategory": "Categoría",
+    "stepRecurrence": "Recurrencia",
+    "stepBudget": "Presupuesto",
+    "stepReview": "Revisión"
   }
 }

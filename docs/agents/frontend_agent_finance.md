@@ -37,6 +37,21 @@ When building unified views (like the Card Statement) that combine different bac
 - Use CSS variables for consistent theming.
 - Use **cursor-pointer** on all interactive cards and elements to signal interactability.
 
+## Design Token System
+
+All sizing in components comes from CSS custom properties defined in `apps/frontend/src/app/[locale]/globals.css`.
+
+| Group | Tokens (values) |
+|---|---|
+| Spacing | `--space-0/0-5/1/1-5/2/3/4/5/6/8/10` (0/2/4/6/8/12/16/20/24/32/40px) |
+| Control heights | `--control-height-xs/sm/(default)/md/lg` (24/28/32/36/40px) |
+| Table density | `--table-header-height` 36, `--table-row-height` 40, `--table-cell-px` 12, `--table-cell-py` 4; compact: 32/32/8/2 |
+| Typography | `--text-caption/body-sm/body/body-lg/subtitle/title/heading` (11/12/14/16/18/20/24px), remapped onto `text-xs`…`text-3xl` |
+| Layout | `--sidebar-width-compact/-/collapsed` (160/224/56px), `--header-height-compact/-` (40/48px) |
+| Status | `--color-success`, `--color-info`, `--color-warning` (+ `-foreground` variants) |
+
+Consumption examples: `h-(--control-height)`, `px-(--space-4)`, `h-(--table-compact-row-height) xl:h-(--table-row-height)`, `w-40 xl:w-48 2xl:w-56` (sidebar), `text-xs` (11px after remap). Radius stays `0px` by design; fonts are Oxanium / Source Code Pro.
+
 ## Tech Stack Mastery
 
 ### Framework & Library Context
@@ -93,20 +108,20 @@ When building unified views (like the Card Statement) that combine different bac
 ## Permissions Feature (`src/features/permissions/`)
 
 **Files:**
-- `api/permissions.api.ts` — usePermissions(), useTables(), useUserPermissions(), useEntityPermissions(), useUpdateUserPermissions()
-- `components/permissions-dashboard.tsx` — Main dashboard with user selector and permission matrix
+- `api/permissionService.ts` — permissionService (CRUD for user/entity permissions)
+- `hooks/permsHooks.ts` — useTables(), useUserPermissions(), useEntityPermissions(), useSetUserPermissions()
+- `components/PermissionsDashboard.tsx` — Main dashboard with user selector and permission matrix
 - `components/permissions-user-manager.tsx` — CRUD toggle switches per entity per user
-- `hooks/use-permissions.ts` — React Query hooks wrapping API calls
-- `types/permission.types.ts` — UserPermissions, PermissionTable, PermissionEntity types
+- `constants/table-meta.ts` — table metadata (CrudColumn definitions, entity icons)
+- `types.ts` — feature-level types (e.g., `CrudColumn`)
 
 ## Audit Logs Feature (`src/features/auditLogs/`)
 
 **Files:**
-- `api/auditLog.api.ts` — useAuditLogs(), useAuditLog()
-- `components/auditLog-dashboard.tsx` — Main dashboard with data table
+- `api/auditLogService.ts` — auditLogService (fetch audit log entries)
+- `hooks/auditLogHooks.ts` — useAuditLogs() and related React Query hooks
+- `components/AuditLogDashboard.tsx` — Main dashboard with data table
 - `components/auditLog-form.tsx` — Detail view for individual audit log entries
-- `hooks/use-auditLog.ts` — React Query hooks wrapping API calls
-- `types/auditLog.types.ts` — AuditLog, AuditLogListResponse types
 
 ## Sidebar Navigation Restructuring
 

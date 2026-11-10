@@ -42,10 +42,10 @@ export function StepRecurrenceComponent() {
                 key={card}
                 type="button"
                 onClick={() => setValue("cardType", card as CardType)}
-                className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-2 border-2 font-mono text-xs uppercase transition-all
+                className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-2 border-2 font-mono text-xs font-black uppercase tracking-widest transition-all
                   ${
                     watched.cardType === card
-                      ? "border-foreground bg-muted font-bold"
+                      ? "border-foreground bg-muted font-black"
                       : "border-border text-muted-foreground hover:bg-muted"
                   }`}
               >
@@ -56,7 +56,7 @@ export function StepRecurrenceComponent() {
           {errors.cardType && <InLineError message={errors.cardType.message} />}
         </div>
       )}
-      <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
+      <h3 className="text-lg font-mono font-black uppercase tracking-widest text-foreground">
         {srT("title")}
       </h3>
 
@@ -64,7 +64,7 @@ export function StepRecurrenceComponent() {
         <button
           type="button"
           onClick={() => toggleRecurrence(true)}
-          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-black text-sm uppercase tracking-widest transition-all
             ${
               watched.isRecurrence
                 ? "border-foreground bg-muted"
@@ -76,7 +76,7 @@ export function StepRecurrenceComponent() {
         <button
           type="button"
           onClick={() => toggleRecurrence(false)}
-          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-bold text-sm uppercase tracking-wider transition-all
+          className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-4 border-2 font-mono font-black text-sm uppercase tracking-widest transition-all
             ${
               !watched.isRecurrence
                 ? "border-foreground bg-muted"
@@ -114,10 +114,10 @@ export function StepRecurrenceComponent() {
                   onClick={() => {
                     setValue("frequency", f);
                   }}
-                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs font-black uppercase tracking-widest transition-all
                     ${
                       watched.frequency === f
-                        ? "border-foreground bg-muted font-bold"
+                        ? "border-foreground bg-muted font-black"
                         : "border-border text-muted-foreground hover:bg-muted"
                     }`}
                 >
@@ -155,10 +155,10 @@ export function StepRecurrenceComponent() {
                 <button
                   type="button"
                   onClick={() => setValue("isFirstPayment", true)}
-                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs font-black uppercase tracking-widest transition-all
                     ${
                       watched.isFirstPayment
-                        ? "border-foreground bg-muted font-bold"
+                        ? "border-foreground bg-muted font-black"
                         : "border-border text-muted-foreground hover:bg-muted"
                     }`}
                 >
@@ -167,10 +167,10 @@ export function StepRecurrenceComponent() {
                 <button
                   type="button"
                   onClick={() => setValue("isFirstPayment", false)}
-                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs uppercase tracking-wider transition-all
+                  className={`cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2 p-3 border-2 font-mono text-xs font-black uppercase tracking-widest transition-all
                     ${
                       !watched.isFirstPayment
-                        ? "border-foreground bg-muted font-bold"
+                        ? "border-foreground bg-muted font-black"
                         : "border-border text-muted-foreground hover:bg-muted"
                     }`}
                 >

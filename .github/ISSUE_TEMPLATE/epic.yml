@@ -1,0 +1,20 @@
+name: Epic
+description: Large feature split into tasks — planning and design live here
+labels: ["epic"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What and why. The settled plan lives here.
+    validations:
+      required: true
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Tasks
+      description: One line per task issue. Create the task issues first, then paste their links here.
+      value: |
+        - [ ] #
+    validations:
+      required: true

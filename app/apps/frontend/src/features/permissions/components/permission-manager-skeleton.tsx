@@ -7,7 +7,7 @@ export function PermissionManagerSkeleton() {
       <CardHeader>
         <Skeleton className="h-6 w-48" />
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-2">
         {Array.from({ length: 5 }).map((_, i) => (
           <div key={i} className="flex items-center gap-4">
             <Skeleton className="h-8 w-32" />

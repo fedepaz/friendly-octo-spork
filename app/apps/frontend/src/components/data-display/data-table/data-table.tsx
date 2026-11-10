@@ -2,7 +2,15 @@
 // src/components/data-display/data-table/data-table.tsx
 "use client";
 
-import { Fragment, ReactNode, useEffect, useMemo, useState } from "react";
+import {
+  Fragment,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -103,6 +111,7 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [globalFilter, setGlobalFilter] = useState("");
+  const userToggledColumnsRef = useRef(new Set<string>());
   const breakpoint = useBreakpoint();
 
   const dataTablePermissions = usePermission(tableName);
@@ -146,13 +155,13 @@ export function DataTable<TData, TValue>({
       if (!allowedActions.canView) return null;
 
       return (
-        <div className="flex items-center justify-center gap-2 min-h-10">
+        <div className="flex items-center justify-center gap-2 min-h-(--table-compact-row-height) xl:min-h-(--table-row-height)">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
                 variant="ghost"
                 size="sm"
-                className="min-h-10 text-muted-foreground"
+                className="min-h-(--table-compact-row-height) xl:min-h-(--table-row-height) text-muted-foreground"
                 onClick={() => onView?.(row.original)}
                 aria-label={dtT("viewDetailsLabel")}
               >
@@ -207,36 +216,52 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  /* eslint-disable react-hooks/exhaustive-deps */
+  const [containerWidth, setContainerWidth] = useState(0);
+  const tableContainerRef = useCallback((node: HTMLDivElement | null) => {
+    if (!node || typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(([entry]) => {
+      setContainerWidth(entry.contentRect.width);
+    });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const allColumns = table.getAllColumns();
     const columnsId = allColumns.map((column) => column.id);
 
-    const visibility: VisibilityState = {};
+    const fixedWidth = 140;
+    const minColumnWidth = 100;
+    const cellPadding = 24;
 
-    // 768px (md) target: Squeeze the data to fit
-    // We prioritize keeping core data and the actions column
-    let visibleCount = columnsId.length;
+    const availableForData = Math.max(containerWidth - fixedWidth, 0);
+    const maxDataColumns =
+      containerWidth > 0
+        ? Math.floor(availableForData / (minColumnWidth + cellPadding))
+        : 5;
 
-    if (breakpoint === "sm") {
-      visibleCount = 2; // Mobile: Minimal data
-    } else if (breakpoint === "md") {
-      visibleCount = 3; // Cheap Screen (768px): Focus on the essentials
-    } else if (breakpoint === "lg") {
-      visibleCount = 5; // Standard Laptop
-    }
+    const dataColumnCount = columnsId.filter(
+      (id) => id !== "actions" && id !== "select",
+    ).length;
+    const visibleCount = Math.min(Math.max(maxDataColumns, 2), dataColumnCount);
 
-    columnsId.forEach((id, index) => {
-      if (id === "actions" || id === "select") {
-        visibility[id] = true; // Never hide actions or selection
-      } else {
-        visibility[id] = index < visibleCount;
-      }
+    setColumnVisibility((prev) => {
+      const visibility: VisibilityState = {};
+      let dataIndex = 0;
+      columnsId.forEach((id) => {
+        if (id === "actions" || id === "select") {
+          visibility[id] = true;
+          return;
+        }
+        const autoVisible = dataIndex < visibleCount;
+        dataIndex += 1;
+        visibility[id] = userToggledColumnsRef.current.has(id)
+          ? (prev[id] ?? autoVisible)
+          : autoVisible;
+      });
+      return visibility;
     });
-
-    setColumnVisibility(visibility);
-  }, [breakpoint]);
-  /* eslint-enable react-hooks/exhaustive-deps */
+  }, [containerWidth, table]);
 
   const handleExport = (format: "csv" | "excel" | "json" | "pdf") => {
     if (onExport) {
@@ -253,14 +278,14 @@ export function DataTable<TData, TValue>({
   return (
     <>
       <Card className="w-full flex flex-col overflow-hidden bg-card/40 border-border/40 shadow-premium rounded-none my-2 ">
-        <CardHeader className="px-5 pt-5 pb-3">
+        <CardHeader className="px-4 md:px-5 pt-4 md:pt-5 pb-2 md:pb-3">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
               <CardTitle className="text-sm font-black uppercase tracking-widest text-foreground">
                 {title}
               </CardTitle>
               {description && (
-                <CardDescription className="text-[10px] font-bold uppercase text-muted-foreground/70 tracking-tight">
+                <CardDescription className="text-xs font-black uppercase text-muted-foreground/70 tracking-widest">
                   {description}
                 </CardDescription>
               )}
@@ -268,7 +293,7 @@ export function DataTable<TData, TValue>({
 
             {totalCount > 0 ? (
               <div className="flex items-center px-2 py-0.5 bg-primary/10 border border-primary/20">
-                <span className="text-[10px] font-black text-primary uppercase tracking-tighter">
+                <span className="text-xs font-black text-primary uppercase tracking-widest">
                   {totalCount} REGISTROS
                 </span>
               </div>
@@ -276,13 +301,13 @@ export function DataTable<TData, TValue>({
           </div>
         </CardHeader>
         <CardContent className="p-0 flex-1 flex flex-col min-h-0 overflow-hidden">
-          <div className="flex items-center px-5 py-2 space-x-3 shrink-0 border-y border-border/20 bg-background/40">
+          <div className="flex items-center px-4 py-2 space-x-3 shrink-0 border-y border-border/20 bg-background/40">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-8 bg-background/40 border-border/40 hover:border-primary/40 rounded-none text-[10px] font-black uppercase tracking-widest transition-premium px-3"
+                  className="h-(--control-height-sm) xl:h-(--control-height) bg-background/40 border-border/40 hover:border-primary/40 rounded-none text-xs font-black uppercase tracking-widest transition-premium px-3"
                 >
                   <Filter className="mr-2 h-3 w-3 opacity-60" />
                   {breakpoint === "sm" ? "" : dtT("columnsLabel")}
@@ -300,11 +325,12 @@ export function DataTable<TData, TValue>({
                     return (
                       <DropdownMenuCheckboxItem
                         key={column.id}
-                        className="capitalize text-[11px] font-bold py-2 px-3 rounded-none focus:bg-primary/10 focus:text-primary transition-premium cursor-pointer"
+                        className="capitalize text-xs font-bold py-2 px-3 rounded-none focus:bg-primary/10 focus:text-primary transition-premium cursor-pointer"
                         checked={column.getIsVisible()}
-                        onCheckedChange={(value) =>
-                          column.toggleVisibility(!!value)
-                        }
+                        onCheckedChange={(value) => {
+                          userToggledColumnsRef.current.add(column.id);
+                          column.toggleVisibility(!!value);
+                        }}
                       >
                         {column.id}
                       </DropdownMenuCheckboxItem>
@@ -319,7 +345,7 @@ export function DataTable<TData, TValue>({
                 value={globalFilter}
                 onChange={(e) => setGlobalFilter(e.target.value)}
                 placeholder={dtT("searchPlaceholder")}
-                className="h-8 pl-7 text-[10px] font-mono font-bold bg-background/40 border-border/40 focus:border-primary/40 rounded-none"
+                className="h-(--control-height-sm) xl:h-(--control-height) pl-7 text-xs font-mono font-bold bg-background/40 border-border/40 focus:border-primary/40 rounded-none"
               />
             </div>
 
@@ -340,7 +366,10 @@ export function DataTable<TData, TValue>({
           </div>
 
           <div className="flex-1 overflow-hidden flex flex-col">
-            <div className="flex-1 overflow-auto custom-scrollbar">
+            <div
+              ref={tableContainerRef}
+              className="flex-1 overflow-auto custom-scrollbar"
+            >
               <Table className="min-w-full">
                 <TableHeader className="sticky top-0 bg-card/80 backdrop-blur-md z-10 shadow-sm">
                   {table.getHeaderGroups().map((headerGroup) => (
@@ -352,7 +381,7 @@ export function DataTable<TData, TValue>({
                         return (
                           <TableHead
                             key={header.id}
-                            className="h-10 py-0 text-[10px] font-black uppercase tracking-widest text-muted-foreground/50"
+                            className="h-(--table-compact-header-height) xl:h-(--table-header-height) py-1 text-xs font-black uppercase tracking-widest text-muted-foreground/50"
                           >
                             {header.isPlaceholder
                               ? null
@@ -377,7 +406,7 @@ export function DataTable<TData, TValue>({
                           {row.getVisibleCells().map((cell) => (
                             <TableCell
                               key={cell.id}
-                              className="py-2.5 px-3 text-[11px] font-bold h-12"
+                              className="py-(--table-compact-cell-py) xl:py-(--table-cell-py) px-(--table-compact-cell-px) xl:px-(--table-cell-px) text-xs xl:text-sm font-bold h-(--table-compact-row-height) xl:h-(--table-row-height)"
                             >
                               {flexRender(
                                 cell.column.columnDef.cell,
@@ -392,7 +421,7 @@ export function DataTable<TData, TValue>({
                     <TableRow>
                       <TableCell
                         colSpan={enhancedColumns.length}
-                        className="h-32 text-center text-[11px] font-black uppercase tracking-widest opacity-40"
+                        className="h-32 text-center text-xs font-black uppercase tracking-widest opacity-40"
                       >
                         {dtT("noResults")}
                       </TableCell>
@@ -403,13 +432,13 @@ export function DataTable<TData, TValue>({
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-4 px-5 py-3 shrink-0 border-t border-border/40 bg-background/40">
-            <div className="flex-1 text-[10px] font-black uppercase tracking-widest text-muted-foreground/70">
+          <div className="flex flex-wrap items-center justify-between gap-4 px-4 py-3 shrink-0 border-t border-border/40 bg-background/40">
+            <div className="flex-1 text-xs font-black uppercase tracking-widest text-muted-foreground/70">
               {`${table.getFilteredSelectedRowModel().rows.length} / ${table.getFilteredRowModel().rows.length} ${dtT("selectedLabel")}`}
             </div>
             <div className="flex flex-wrap items-center gap-6">
               <div className="flex items-center space-x-1">
-                <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 mr-1">
+                <p className="text-xs font-black uppercase tracking-widest text-muted-foreground/60 mr-1">
                   {dtT("rowsLabel")}
                 </p>
                 {[10, 20, 50, 100].map((size) => (
@@ -418,7 +447,7 @@ export function DataTable<TData, TValue>({
                     type="button"
                     onClick={() => table.setPageSize(size)}
                     className={cn(
-                      "h-7 w-8 text-[10px] font-mono font-black border transition-premium cursor-pointer",
+                      "h-(--control-height-xs) xl:h-(--control-height-sm) w-8 text-xs font-mono font-black border transition-premium cursor-pointer",
                       table.getState().pagination.pageSize === size
                         ? "bg-primary border-primary text-primary-foreground"
                         : "bg-background/40 border-border/40 text-muted-foreground hover:border-primary/40",
@@ -428,7 +457,7 @@ export function DataTable<TData, TValue>({
                   </button>
                 ))}
               </div>
-              <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+              <div className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">
                 {dtT("pageLabel")}{" "}
                 <span className="text-foreground font-mono">
                   {table.getState().pagination.pageIndex + 1}
@@ -441,7 +470,7 @@ export function DataTable<TData, TValue>({
               <div className="flex items-center gap-1">
                 <Button
                   variant="outline"
-                  className="h-8 w-8 p-0 bg-background/40 border-border/40 hover:border-primary/40 rounded-none transition-premium"
+                  className="h-(--control-height-xs) xl:h-(--control-height-sm) w-7 p-0 bg-background/40 border-border/40 hover:border-primary/40 rounded-none transition-premium"
                   onClick={() => table.previousPage()}
                   disabled={!table.getCanPreviousPage()}
                 >
@@ -449,7 +478,7 @@ export function DataTable<TData, TValue>({
                 </Button>
                 <Button
                   variant="outline"
-                  className="h-8 w-8 p-0 bg-background/40 border-border/40 hover:border-primary/40 rounded-none transition-premium"
+                  className="h-(--control-height-xs) xl:h-(--control-height-sm) w-7 p-0 bg-background/40 border-border/40 hover:border-primary/40 rounded-none transition-premium"
                   onClick={() => table.nextPage()}
                   disabled={!table.getCanNextPage()}
                 >

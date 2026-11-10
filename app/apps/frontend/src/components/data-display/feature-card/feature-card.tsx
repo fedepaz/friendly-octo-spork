@@ -9,6 +9,7 @@ import {
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface FeatureCardProps {
   title: string;
@@ -27,6 +28,8 @@ export function FeatureCard({
   href,
   className,
 }: FeatureCardProps) {
+  const fcT = useTranslations("FeatureCard");
+
   return (
     <Link href={href} className="block group cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2">
       <Card
@@ -36,21 +39,21 @@ export function FeatureCard({
         )}
       >
         <div className="absolute top-0 right-0 w-12 h-12 bg-primary/5 -rotate-45 translate-x-6 -translate-y-6 group-hover:bg-primary/10 transition-premium" />
-        <CardHeader className="p-5 relative">
+        <CardHeader className="p-(--space-5) relative">
           <div className="flex items-start justify-between">
             <div className="flex size-10 items-center justify-center rounded-none bg-primary/10 border border-primary/20 text-primary shadow-etched group-hover:bg-primary/20 transition-premium">
               <Icon className="size-5 opacity-80 group-hover:opacity-100" />
             </div>
-            <div className="flex items-center gap-2 opacity-0 group-hover:opacity-40 transition-premium">
-              <span className="text-[9px] font-black uppercase tracking-widest">Acceder</span>
+            <div className="flex items-center gap-(--space-2) opacity-0 group-hover:opacity-40 transition-premium">
+              <span className="text-xs font-black uppercase tracking-widest">{fcT("access")}</span>
               <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
             </div>
           </div>
-          <div className="mt-5 space-y-2">
+          <div className="mt-(--space-5) space-y-(--space-2)">
             <CardTitle className="text-xs font-black uppercase tracking-widest text-foreground group-hover:text-primary transition-premium">
               {title}
             </CardTitle>
-            <CardDescription className="text-[10px] font-bold uppercase text-muted-foreground/70 leading-relaxed tracking-tight line-clamp-2">
+            <CardDescription className="text-xs font-black uppercase text-muted-foreground/70 leading-relaxed tracking-widest line-clamp-2">
               {description}
             </CardDescription>
           </div>
