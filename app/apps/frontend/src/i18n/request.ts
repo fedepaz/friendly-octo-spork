@@ -165,6 +165,10 @@ export default getRequestConfig(async ({ requestLocale }) => {
         await import(`../components/error/RouteError/messages/${locale}.json`)
       ).default,
 
+      // Modals
+      ...(await import(`../components/modals/messages/${locale}.json`))
+        .default,
+
       // Providers
       ...(await import(`../providers/ErrorProvider/messages/${locale}.json`))
         .default,

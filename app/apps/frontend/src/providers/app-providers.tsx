@@ -9,6 +9,7 @@ import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 import { WizardFormProvider } from "./wizard-form-provider";
+import { AlertModalProvider } from "./alert-modal-provider";
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
@@ -17,10 +18,12 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
         <TooltipProvider delayDuration={200}>
           <ReactClientProvider>
             <ThemeProvider>
-              <WizardFormProvider>
-                {children}
-                <Toaster richColors position="top-center" closeButton />
-              </WizardFormProvider>
+              <AlertModalProvider>
+                <WizardFormProvider>
+                  {children}
+                  <Toaster richColors position="top-center" closeButton />
+                </WizardFormProvider>
+              </AlertModalProvider>
             </ThemeProvider>
           </ReactClientProvider>
         </TooltipProvider>

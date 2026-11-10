@@ -1,0 +1,8 @@
+{
+  "AlertModal": {
+    "title": "Alerts",
+    "description": "System alerts panel",
+    "emptyTitle": "No alerts",
+    "emptyDescription": "There are no alerts to review right now"
+  }
+}

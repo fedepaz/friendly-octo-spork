@@ -13,17 +13,24 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Button } from "../ui/button";
 import { Logo } from "../common/logo";
 import { getISOWeek, getTotalWeeks, formatSpanishDate } from "@/lib/date-utils";
 import { ThemeToggle } from "../common/theme-toggle";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "../common/language-switcher";
+import { Bell } from "lucide-react";
+import { useAlertModal } from "@/providers/alert-modal-provider";
+import { AlertModalDialog } from "@/components/modals/alert-modal-dialog";
+import { usePermission } from "@/hooks/usePermission";
 
 export function DashboardHeader() {
   const t = useTranslations("DashboardHeader");
   const { isLoading } = useLogout();
   const router = useRouter();
   const { userProfile } = useAuthContext();
+  const { openAlert } = useAlertModal();
+  const { canRead } = usePermission("alerts");
 
   const currentDate = new Date();
   const weekNum = getISOWeek(currentDate);
@@ -55,6 +62,28 @@ export function DashboardHeader() {
           </div>
 
           <div className="flex items-center space-x-4">
+            {canRead && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => openAlert("info")}
+                    aria-label={t("alertsButton")}
+                  >
+                    <Bell className="h-5 w-5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="bottom"
+                  className="bg-popover/90 backdrop-blur-lg border-border shadow-2xl rounded-none p-3"
+                >
+                  <p className="text-xs font-black text-foreground uppercase tracking-widest">
+                    {t("alertsButton")}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            )}
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -106,6 +135,7 @@ export function DashboardHeader() {
           </div>
         </div>
       </div>
+      {canRead && <AlertModalDialog />}
     </header>
   );
 }

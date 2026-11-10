@@ -135,6 +135,11 @@ async function main() {
       label: 'Auditoría',
       permissionType: 'READ_ONLY' as const,
     },
+    {
+      name: 'alerts',
+      label: 'Alertas',
+      permissionType: 'READ_ONLY' as const,
+    },
     { name: 'user_profile', label: 'Perfil', permissionType: 'CRUD' as const },
   ];
 
