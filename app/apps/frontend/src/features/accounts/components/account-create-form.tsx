@@ -45,17 +45,17 @@ export function AccountCreateForm({
           name="name"
           render={({ field }) => (
             <FormItem className="space-y-1.5">
-              <FormLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
+              <FormLabel className="text-xs font-black uppercase tracking-widest text-muted-foreground opacity-50">
                 {acfT("accountIdLabel")}
               </FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   placeholder={acfT("namePlaceholder")}
-                  className="h-12 w-full rounded-none border-0 border-b border-border/40 bg-background/20 px-3 font-oxanium text-sm text-foreground placeholder:text-[11px] placeholder:text-muted-foreground/70 focus-visible:ring-0 focus-visible:border-primary/60 transition-premium"
+                  className="h-12 w-full rounded-none border-0 border-b border-border/40 bg-background/20 px-3 font-oxanium text-sm text-foreground placeholder:text-xs placeholder:text-muted-foreground/70 focus-visible:ring-0 focus-visible:border-primary/60 transition-premium"
                 />
               </FormControl>
-              <FormMessage className="text-[10px] font-bold uppercase" />
+              <FormMessage className="text-xs font-black uppercase tracking-widest" />
             </FormItem>
           )}
         />
@@ -66,7 +66,7 @@ export function AccountCreateForm({
             name="type"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
+                <FormLabel className="text-xs font-black uppercase tracking-widest text-muted-foreground opacity-50">
                   {acfT("typeLabel")}
                 </FormLabel>
                 <Select
@@ -111,7 +111,7 @@ export function AccountCreateForm({
                     </SelectItem>
                   </SelectContent>
                 </Select>
-                <FormMessage className="text-[10px] font-bold uppercase" />
+                <FormMessage className="text-xs font-black uppercase tracking-widest" />
               </FormItem>
             )}
           />
@@ -121,7 +121,7 @@ export function AccountCreateForm({
             name="currency"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
+                <FormLabel className="text-xs font-black uppercase tracking-widest text-muted-foreground opacity-50">
                   {acfT("currencyLabel")}
                 </FormLabel>
                 <Select
@@ -154,7 +154,7 @@ export function AccountCreateForm({
                     </SelectItem>
                   </SelectContent>
                 </Select>
-                <FormMessage className="text-[10px] font-bold uppercase" />
+                <FormMessage className="text-xs font-black uppercase tracking-widest" />
               </FormItem>
             )}
           />
@@ -165,7 +165,7 @@ export function AccountCreateForm({
           name="balance"
           render={({ field }) => (
             <FormItem className="space-y-1.5">
-              <FormLabel className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
+              <FormLabel className="text-xs font-black uppercase tracking-widest text-muted-foreground opacity-50">
                 {acfT("openingBalanceLabel")}
               </FormLabel>
               <FormControl>
@@ -177,7 +177,7 @@ export function AccountCreateForm({
                   className="h-12 w-full rounded-none border-0 border-b border-border/40 bg-background/20 px-3 font-mono text-lg font-black text-foreground placeholder:text-muted-foreground/70 focus-visible:ring-0 focus-visible:border-primary/60 transition-premium"
                 />
               </FormControl>
-              <FormMessage className="text-[10px] font-bold uppercase" />
+              <FormMessage className="text-xs font-black uppercase tracking-widest" />
             </FormItem>
           )}
         />

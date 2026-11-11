@@ -47,7 +47,7 @@ export function WizardModal({
       role="dialog"
       aria-modal="true"
       aria-label={title}
-      className="fixed inset-0 z-100 flex items-center justify-center p-4 animate-premium-in"
+      className="fixed inset-0 z-100 flex items-center justify-center p-(--space-4) animate-premium-in"
     >
       <div
         className="absolute inset-0 bg-background/40 backdrop-blur-md"
@@ -58,12 +58,12 @@ export function WizardModal({
         className="relative w-full max-w-md bg-card/60 backdrop-blur-2xl border border-border/40 shadow-2xl flex flex-col max-h-[90dvh] rounded-none overflow-hidden"
       >
         <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary/40 to-transparent" />
-        <div className="flex items-center justify-between px-5 py-4 border-b border-border/40 bg-background/40">
-          <div className="space-y-0.5">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
+        <div className="flex items-center justify-between px-(--space-5) py-(--space-4) border-b border-border/40 bg-background/40">
+          <div className="space-y-(--space-0-5)">
+            <span className="text-xs font-black uppercase tracking-widest text-primary">
               {title}
             </span>
-            <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/70">
+            <p className="text-xs font-black uppercase tracking-widest text-muted-foreground/70">
               Terminal de Operación • Paso {step} de {totalSteps}
             </p>
           </div>
@@ -71,9 +71,9 @@ export function WizardModal({
             ref={closeRef}
             autoFocus
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center border border-border/20 text-muted-foreground/70 hover:text-foreground hover:bg-foreground/5 transition-premium rounded-none cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+            className="w-(--control-height) h-(--control-height) flex items-center justify-center border border-border/20 text-muted-foreground/70 hover:text-foreground hover:bg-foreground/5 transition-premium rounded-none cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
           >
-            <span className="text-[10px] font-black uppercase">Esc</span>
+            <span className="text-xs font-black uppercase tracking-widest">Esc</span>
           </button>
         </div>
         {children}
@@ -96,7 +96,7 @@ export function StepIndicator({
       aria-valuemin={0}
       aria-valuemax={total}
       aria-label={`Paso ${current + 1} de ${total}`}
-      className="flex items-center gap-1 px-5 pt-4 bg-background/20">
+      className="flex items-center gap-(--space-1) px-(--space-5) pt-(--space-4) bg-background/20">
       {Array.from({ length: total }).map((_, i) => (
         <div
           key={i}
@@ -129,14 +129,14 @@ export function WizardFooter({
   confirmLabel?: string;
 }) {
   return (
-    <div className="px-5 py-5 border-t border-border/40 bg-background/60 backdrop-blur-md grid grid-cols-2 gap-4">
+    <div className="px-(--space-5) py-(--space-5) border-t border-border/40 bg-background/60 backdrop-blur-md grid grid-cols-2 gap-(--space-4)">
       {showBackButton && (
         <button
           key="back-button"
           type="button"
           onClick={onBack}
           disabled={!onBack}
-          className="h-11 px-4 text-[10px] font-black uppercase tracking-widest border border-border/20 bg-background/40 text-muted-foreground/60 hover:text-foreground hover:border-primary/40 transition-premium disabled:opacity-20 rounded-none shadow-etched cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+          className="h-(--control-height-md) px-(--space-4) text-xs font-black uppercase tracking-widest border border-border/20 bg-background/40 text-muted-foreground/60 hover:text-foreground hover:border-primary/40 transition-premium disabled:opacity-20 rounded-none shadow-etched cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
           >
           ← Retroceder
         </button>
@@ -147,7 +147,7 @@ export function WizardFooter({
           type="submit"
           onClick={onConfirm}
           disabled={isSubmitting}
-          className="h-11 px-4 text-[10px] font-black uppercase tracking-widest bg-primary text-primary-foreground hover:opacity-90 transition-premium disabled:opacity-50 rounded-none shadow-premium cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+          className="h-(--control-height-md) px-(--space-4) text-xs font-black uppercase tracking-widest bg-primary text-primary-foreground hover:opacity-90 transition-premium disabled:opacity-50 rounded-none shadow-premium cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
         >
           {isSubmitting ? "Procesando..." : confirmLabel}
         </button>
@@ -157,7 +157,7 @@ export function WizardFooter({
           type="button"
           onClick={onNext}
           disabled={!onNext}
-          className="h-11 px-4 text-[10px] font-black uppercase tracking-widest bg-foreground text-background hover:bg-foreground/90 transition-premium disabled:opacity-50 rounded-none shadow-premium cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+          className="h-(--control-height-md) px-(--space-4) text-xs font-black uppercase tracking-widest bg-foreground text-background hover:bg-foreground/90 transition-premium disabled:opacity-50 rounded-none shadow-premium cursor-pointer focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
         >
           Siguiente →
         </button>

@@ -8,6 +8,7 @@ import {
   dashboardQueryKeys,
   updateCardProfileQueryKeys,
   adminPermissionsQueryKeys,
+  investmentQueryKeys,
 } from "@/lib/queryKeys";
 import type { QueryClient, QueryFilters } from "@tanstack/react-query";
 
@@ -20,10 +21,12 @@ export const mutationInvalidations: Record<MutationName, QueryFilters[]> = {
     { queryKey: recurrenceProfileQueryKeys.all() },
     { queryKey: cardProfileQueryKeys.all() },
     { queryKey: dashboardQueryKeys.all() },
+    { queryKey: investmentQueryKeys.all() },
   ],
   createAccount: [
     { queryKey: accountProfileQueryKeys.all() },
     { queryKey: dashboardQueryKeys.all() },
+    { queryKey: investmentQueryKeys.all() },
   ],
   updateCardBalance: [
     { queryKey: updateCardProfileQueryKeys.all() },

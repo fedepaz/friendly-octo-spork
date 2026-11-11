@@ -8,7 +8,7 @@ export function NotFoundPage() {
   const t = useTranslations("errors");
 
   return (
-    <div className="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
+    <div className="grid min-h-full place-items-center px-6 py-24">
       <div className="text-center">
         <FlagIcon className="w-20 h-20 mx-auto mt-4 text-muted-foreground text-5xl font-semibold tracking-tight text-balance sm:text-7xl" />
         <h1 className="mt-4 text-5xl font-semibold tracking-tight text-muted-foreground text-balance sm:text-7xl">

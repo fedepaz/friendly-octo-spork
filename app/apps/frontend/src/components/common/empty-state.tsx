@@ -23,11 +23,11 @@ export function EmptyState({
   const t = useTranslations("EmptyState");
 
   return (
-    <div className="flex flex-col items-center justify-center gap-3 py-16">
+    <div className="flex flex-col items-center justify-center gap-(--space-3) py-16">
       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-muted">
         {icon || <Inbox className="h-7 w-7 text-muted-foreground" />}
       </div>
-      <div className="flex flex-col items-center gap-1">
+      <div className="flex flex-col items-center gap-(--space-1)">
         <p className="text-sm font-medium text-foreground">
           {title || t("noData")}
         </p>
@@ -36,7 +36,7 @@ export function EmptyState({
         </p>
       </div>
       {action && (
-        <Button onClick={action.onClick} variant="outline" size="sm" className="mt-2">
+        <Button onClick={action.onClick} variant="outline" size="sm" className="mt-(--space-2)">
           {action.label}
         </Button>
       )}

@@ -26,13 +26,13 @@ export function StepReviewComponent({
         <span className="text-lg text-secondary">✓</span>
       </div>
 
-      <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
+      <h3 className="text-lg font-mono font-black uppercase tracking-widest text-foreground">
         {scrT("title")}
       </h3>
 
       <div className="w-full border-2 border-border divide-y divide-border text-left">
         <div className="flex justify-between px-4 py-3">
-          <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
+          <span className="text-xs font-mono font-black uppercase tracking-widest text-muted-foreground">
             {scrT("month")}
           </span>
           <span className="text-sm font-mono font-bold text-foreground">
@@ -41,7 +41,7 @@ export function StepReviewComponent({
         </div>
 
         <div className="flex justify-between px-4 py-3">
-          <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
+          <span className="text-xs font-mono font-black uppercase tracking-widest text-muted-foreground">
             {scrT("transactions")}
           </span>
           <span className="text-sm font-mono font-bold text-foreground">
@@ -51,7 +51,7 @@ export function StepReviewComponent({
 
         {closeResponse?.accountName && (
           <div className="flex justify-between px-4 py-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
+            <span className="text-xs font-mono font-black uppercase tracking-widest text-muted-foreground">
               {scrT("account")}
             </span>
             <span className="text-sm font-mono font-bold text-foreground">
@@ -62,7 +62,7 @@ export function StepReviewComponent({
 
         {closeResponse?.closeBalance && (
           <div className="flex justify-between px-4 py-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground">
+            <span className="text-xs font-mono font-black uppercase tracking-widest text-muted-foreground">
               {scrT("finalBalance")}
             </span>
             <span className="text-sm font-mono font-bold text-foreground">

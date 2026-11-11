@@ -121,8 +121,10 @@ export function FormContainerCard({
       isOpen={true}
       onClose={onClose}
       title={
-        STEP_CONFIGS_CARD_CLOSE.find((s) => s.id === currentStepId)?.label ??
-        fccT("defaultTitle")
+        (() => {
+          const step = STEP_CONFIGS_CARD_CLOSE.find((s) => s.id === currentStepId);
+          return step ? fccT(step.labelKey) : fccT("defaultTitle");
+        })()
       }
       step={currentVisibleIndex + 1}
       totalSteps={totalVisibleSteps}

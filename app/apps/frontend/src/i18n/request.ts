@@ -165,6 +165,10 @@ export default getRequestConfig(async ({ requestLocale }) => {
         await import(`../components/error/RouteError/messages/${locale}.json`)
       ).default,
 
+      // Modals
+      ...(await import(`../components/modals/messages/${locale}.json`))
+        .default,
+
       // Providers
       ...(await import(`../providers/ErrorProvider/messages/${locale}.json`))
         .default,
@@ -415,6 +419,18 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ...(
         await import(
           `../features/users/components/UserKPIs/messages/${locale}.json`
+        )
+      ).default,
+
+      // Investments Feature
+      ...(
+        await import(
+          `../features/investments/components/InvestmentColumns/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/investments/components/InvestmentsDashboard/messages/${locale}.json`
         )
       ).default,
 

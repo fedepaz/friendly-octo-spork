@@ -9,6 +9,7 @@ import { mapServerErrorsToForm } from "@/lib/utils/form-error-mapper";
 import { ApiError } from "@/lib/api/client-fetch";
 import { parseApiError } from "@/lib/api/error-handler";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 import { FormContainerCard } from "../components/FormContainerCard";
 import { useUpdateCardBalance } from "../hooks/updateCardMutationHooks";
@@ -19,6 +20,7 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [closeResponse, setCloseResponse] = useState<CardCloseResponseDTO | null>(null);
   const { month, year } = getCurrentMonthYear();
+  const epT = useTranslations("ErrorProvider");
 
   const { mutateAsync: closeCard, isPending: isSubmitting } =
     useUpdateCardBalance();
@@ -60,8 +62,11 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
       if (parsed.type === "VALIDATION" && error instanceof ApiError) {
         mapServerErrorsToForm(error.details, methods.setError);
       } else {
-        setErrorMessage(parsed.message);
-        toast.error(parsed.message, {
+        const errorMsg = epT.has(parsed.messageKey)
+          ? epT(parsed.messageKey, parsed.messageParams ?? {})
+          : parsed.messageKey;
+        setErrorMessage(errorMsg);
+        toast.error(errorMsg, {
           duration: 5000,
         });
       }
@@ -81,7 +86,7 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
         />
         {errorMessage && (
           <div className="px-5 pb-5">
-            <div className="text-[10px] font-bold uppercase tracking-tight text-destructive border border-destructive/20 bg-destructive/5 p-3 flex items-start gap-2 shadow-etched animate-premium-in">
+            <div className="text-xs font-black uppercase tracking-widest text-destructive border border-destructive/20 bg-destructive/5 p-3 flex items-start gap-2 shadow-etched animate-premium-in">
               <div className="h-1.5 w-1.5 bg-destructive mt-1 shrink-0" />
               <div className="flex-1">
                 <p className="font-black mb-0.5">Error de Operacion</p>

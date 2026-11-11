@@ -1,7 +1,7 @@
 // apps/frontend/src/features/auditLogs/__tests__/auditLog-data-table.spec.tsx
 
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AuditLogDataTable } from "../components/auditLog-data-table";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -284,7 +284,8 @@ describe("AuditLogDataTable", () => {
     await user.click(viewButtons[0]);
 
     await waitFor(() => {
-      expect(screen.getByText("192.168.1.100")).toBeInTheDocument();
+      const dialog = screen.getByRole("dialog");
+      expect(within(dialog).getByText("192.168.1.100")).toBeInTheDocument();
     });
   });
 

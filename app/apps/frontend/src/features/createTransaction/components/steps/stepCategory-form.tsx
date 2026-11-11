@@ -21,7 +21,7 @@ export function StepCategoryComponent() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
+      <h3 className="text-lg font-mono font-black uppercase tracking-widest text-foreground">
         {scT("title")}
       </h3>
 

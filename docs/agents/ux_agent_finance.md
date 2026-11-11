@@ -41,6 +41,15 @@ You are a senior UX/UI Designer specializing in clean, efficient, and modern fin
 - [ ] Ensure `DataTable` and `Dashboard` grids fit within 100dvh.
 - [ ] Minimize vertical margins and headers to prioritize content.
 
+**4. Spacing Lock (mandatory)**:
+- Spacing classes (`p-*`, `px-*`, `py-*`, `pt-*`, `pb-*`, `pl-*`, `pr-*`, `mt-*`, `mb-*`, `ml-*`, `mr-*`, `mx-*`, `my-*`, `gap-*`, `space-x-*`, `space-y-*`, `rounded-*`, `min-h-*`) are NOT responsive. Use one value at all breakpoints — wider viewports gain breathing room through width, not padding.
+- Responsive by design: typography (`text-*`), icon sizes (`h-*`/`w-*`), layout (`grid-cols-*`, `flex*`, `hidden`, `col-span-*`), constraints (`max-w-*`, `max-h-*`), and top-level layout containers (main padding tiers `px-3 xl:px-5 2xl:px-8`).
+- Data tables are exempt (density is managed by table tokens).
+
+**5. Token Mandate**:
+- Never hardcode pixel sizes. Typography → `text-*` utilities (remapped to `--text-caption`…`--text-heading`, i.e. 11/12/14/16/18/20/24px). Control heights → `h-(--control-height-xs|sm||md|lg)` (24/28/32/36/40px). Table density → `--table-*` tokens. Layout → `--sidebar-width*` / `--header-height*`.
+- No arbitrary `text-[Npx]` classes — use `text-xs`/`text-sm`/`text-base`.
+
 ## Skeleton Loading: The "Golden Path" Strategy
 
 To provide the best possible perceived performance, we implement a two-tiered loading strategy:

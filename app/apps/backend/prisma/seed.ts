@@ -1,6 +1,6 @@
 // backend/prisma/seed.ts
 import { PrismaClient } from '@prisma/client';
-import { AccountType, Currency } from '../src/generated/prisma';
+import { AccountType, Currency } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import * as bcrypt from 'bcrypt';
 
@@ -133,6 +133,11 @@ async function main() {
     {
       name: 'audit_logs',
       label: 'Auditoría',
+      permissionType: 'READ_ONLY' as const,
+    },
+    {
+      name: 'alerts',
+      label: 'Alertas',
       permissionType: 'READ_ONLY' as const,
     },
     { name: 'user_profile', label: 'Perfil', permissionType: 'CRUD' as const },

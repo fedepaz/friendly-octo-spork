@@ -113,7 +113,7 @@ function ChangesHeader({ column }: HeaderProps) {
 function ChangesCell({ row }: CellProps) {
   const changes = row.original.changes as Record<string, unknown> | null;
   return (
-    <div className="text-[11px] font-mono text-muted-foreground truncate max-w-[200px]">
+    <div className="text-xs font-mono text-muted-foreground truncate max-w-[200px]">
       {formatChanges(changes)}
     </div>
   );
@@ -128,7 +128,7 @@ function DateCell({ row }: CellProps) {
   const date = new Date(row.original.createdAt);
   const locale = useLocale();
   return (
-    <div className="flex flex-col text-[11px] min-w-[140px]">
+    <div className="flex flex-col text-xs min-w-[140px]">
       <span className="font-mono font-bold">
         {date.toLocaleDateString(locale, {
           day: "2-digit",
@@ -136,7 +136,7 @@ function DateCell({ row }: CellProps) {
           year: "2-digit",
         })}
       </span>
-      <span className="text-[9px] font-mono text-muted-foreground/60">
+      <span className="text-xs font-mono text-muted-foreground/60">
         {date.toLocaleTimeString(locale, {
           hour: "2-digit",
           minute: "2-digit",
@@ -154,7 +154,7 @@ function IpHeader({ column }: HeaderProps) {
 function IpCell({ row }: CellProps) {
   const ip = row.original.ipAddress;
   return (
-    <div className="flex items-center space-x-1 text-[11px] font-mono text-muted-foreground min-w-[120px]">
+    <div className="flex items-center space-x-1 text-xs font-mono text-muted-foreground min-w-[120px]">
       <Globe className="h-3 w-3 flex-shrink-0" />
       <span className="truncate max-w-[100px]">{ip || "—"}</span>
     </div>
@@ -172,7 +172,7 @@ function DeviceCell({ row }: CellProps) {
   const t = useTranslations("AuditLogFormDetail");
 
   return (
-    <div className="flex items-center space-x-1 text-[11px] text-muted-foreground min-w-[140px]">
+    <div className="flex items-center space-x-1 text-xs text-muted-foreground min-w-[140px]">
       {isMobile ? (
         <Smartphone className="h-3 w-3 text-info" />
       ) : (

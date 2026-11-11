@@ -10,6 +10,7 @@ export const ROUTES = {
   TRANSACTIONS: "/transactions",
   CARDS: "/cards",
   AUDIT_LOGS: "/audit-logs",
+  INVESTMENTS: "/investments",
 } as const;
 
 export type AppRoute = (typeof ROUTES)[keyof typeof ROUTES];

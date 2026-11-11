@@ -164,13 +164,7 @@ export const createTransactionSchema = createTransactionSchemaBase.superRefine(
     }
 
     // ─── Type-dependent account validation ───────────────────────────────
-    const requiresSource = [
-      "EXPENSE",
-      "TRANSFER",
-      "INVESTMENT",
-      "RETURN",
-      "PAYMENT",
-    ];
+    const requiresSource = ["EXPENSE", "TRANSFER", "INVESTMENT", "PAYMENT"];
     const requiresTarget = ["INCOME", "TRANSFER", "INVESTMENT", "RETURN"];
 
     if (requiresSource.includes(data.type) && !data.sourceAccountId) {

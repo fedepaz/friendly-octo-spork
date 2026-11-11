@@ -26,6 +26,7 @@ export function SmartFormProviderRecurrence({
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const sfprT = useTranslations("SmartFormProviderRecurrence");
+  const epT = useTranslations("ErrorProvider");
 
   const { data: recurrenceToUpdate } = useRecurrenceById(recurrenceId);
 
@@ -88,8 +89,11 @@ export function SmartFormProviderRecurrence({
         mapServerErrorsToForm(error.details, methods.setError);
       } else {
         // ✅ GLOBAL: Show system/auth errors in the snackbar
-        setErrorMessage(parsed.message);
-        toast.error(parsed.message, {
+        const errorMsg = epT.has(parsed.messageKey)
+          ? epT(parsed.messageKey, parsed.messageParams ?? {})
+          : parsed.messageKey;
+        setErrorMessage(errorMsg);
+        toast.error(errorMsg, {
           duration: 5000,
         });
       }
@@ -109,7 +113,7 @@ export function SmartFormProviderRecurrence({
         {/* STRUCTURAL FEEDBACK: Shown for server errors or global issues */}
         {errorMessage && (
           <div className="px-5 pb-5">
-            <div className="text-[10px] font-bold uppercase tracking-tight text-destructive border border-destructive/20 bg-destructive/5 p-3 flex items-start gap-2 shadow-etched animate-premium-in">
+            <div className="text-xs font-black uppercase tracking-widest text-destructive border border-destructive/20 bg-destructive/5 p-3 flex items-start gap-2 shadow-etched animate-premium-in">
               <div className="h-1.5 w-1.5 bg-destructive mt-1 shrink-0" />
               <div className="flex-1">
                 <p className="font-black mb-0.5">{sfprT("operationError")}</p>

@@ -88,7 +88,7 @@ function NavItemLink({
             </div>
 
             {item.badge && isCollapsed && (
-              <div className="absolute -top-1 -right-1 h-3.5 w-3.5 flex items-center justify-center bg-primary text-[8px] font-black text-primary-foreground font-mono shadow-premium">
+              <div className="absolute -top-1 -right-1 h-3.5 w-3.5 flex items-center justify-center bg-primary text-xs font-black text-primary-foreground font-mono shadow-premium">
                 {item.badge.length > 2 ? "!" : item.badge}
               </div>
             )}
@@ -98,7 +98,7 @@ function NavItemLink({
                 <div className="flex-1 min-w-0">
                   <p
                     className={cn(
-                      "text-[11px] font-black tracking-tighter uppercase font-oxanium truncate transition-premium",
+                      "text-xs font-black tracking-widest uppercase font-oxanium truncate transition-premium",
                       isActive
                         ? "text-foreground"
                         : "text-muted-foreground/80 group-hover:text-foreground",
@@ -107,13 +107,13 @@ function NavItemLink({
                     {navT(getNavKey(item.href))}
                   </p>
                   {item.description && (
-                    <p className="text-[8px] font-mono font-bold text-muted-foreground/60 uppercase tracking-widest truncate leading-tight mt-0.5">
+                    <p className="text-xs font-mono font-black text-muted-foreground/60 uppercase tracking-widest truncate leading-tight mt-0.5">
                       {navT(getNavKey(item.href) + "Desc")}
                     </p>
                   )}
                 </div>
                 {item.badge && (
-                  <span className="text-[9px] font-mono font-black opacity-40 px-1 border border-border/40 bg-background/40">
+                  <span className="text-xs font-mono font-black opacity-40 px-1 border border-border/40 bg-background/40">
                     {item.badge}
                   </span>
                 )}
@@ -129,11 +129,11 @@ function NavItemLink({
           )}
         >
           <div className="flex flex-col gap-1">
-            <p className="text-[10px] font-black uppercase tracking-widest font-oxanium text-primary">
+            <p className="text-xs font-black uppercase tracking-widest font-oxanium text-primary">
               {navT(getNavKey(item.href))}
             </p>
             {item.description && (
-              <p className="text-[9px] font-mono font-bold text-muted-foreground uppercase tracking-tighter">
+              <p className="text-xs font-mono font-black text-muted-foreground uppercase tracking-widest">
                 {navT(getNavKey(item.href) + "Desc")}
               </p>
             )}
@@ -167,7 +167,7 @@ function NavGroupSection({
           variant="ghost"
           onClick={() => toggleGroup(group.id)}
           className={cn(
-            "h-8 w-full justify-start gap-3 px-2 font-black text-[9px] uppercase tracking-[0.2em] text-muted-foreground/70 hover:text-primary hover:bg-transparent transition-premium mb-1",
+            "h-8 w-full justify-start gap-3 px-2 font-black text-xs uppercase tracking-widest text-muted-foreground/70 hover:text-primary hover:bg-transparent transition-premium mb-1",
           )}
         >
           <GroupIcon className="h-3.5 w-3.5 shrink-0 opacity-40" />
@@ -223,7 +223,7 @@ function NavNestedGroupSection({
           variant="ghost"
           onClick={() => toggleGroup(group.id)}
           className={cn(
-            "h-8 w-full justify-start gap-3 px-2 font-black text-[9px] uppercase tracking-[0.2em] text-muted-foreground/70 hover:text-primary hover:bg-transparent transition-premium mb-1",
+            "h-8 w-full justify-start gap-3 px-2 font-black text-xs uppercase tracking-widest text-muted-foreground/70 hover:text-primary hover:bg-transparent transition-premium mb-1",
           )}
         >
           <GroupIcon className="h-3.5 w-3.5 shrink-0 opacity-40" />
@@ -263,7 +263,7 @@ function NavNestedGroupSection({
                   <Button
                     variant="ghost"
                     onClick={() => toggleSubGroup(item.id)}
-                    className="h-7 w-full justify-start gap-2 px-2 font-medium text-[9px] uppercase tracking-[0.15em] text-muted-foreground/50 hover:text-foreground transition-premium"
+                    className="h-7 w-full justify-start gap-2 px-2 font-black text-xs uppercase tracking-widest text-muted-foreground/50 hover:text-foreground transition-premium"
                   >
                     <SubGroupIcon className="h-3 w-3 shrink-0 opacity-40" />
                     <span className="flex-1 text-left pl-3">{navT(item.id)}</span>
@@ -345,7 +345,7 @@ export function DesktopSidebar() {
     <aside
       className={cn(
         "hidden md:flex flex-col bg-card/40 backdrop-blur-xl border-r border-border/40 transition-all duration-300 ease-in-out relative overflow-hidden",
-        isCollapsed ? "w-14" : "w-56",
+        isCollapsed ? "w-14" : "w-40 xl:w-48 2xl:w-56",
       )}
     >
       <div className="absolute top-0 right-0 w-px h-full bg-linear-to-b from-transparent via-primary/20 to-transparent" />
@@ -390,7 +390,7 @@ export function DesktopSidebar() {
                 side="right"
                 className="bg-popover/90 backdrop-blur-md border border-border shadow-2xl rounded-none"
               >
-                <p className="text-[10px] uppercase font-black tracking-widest font-oxanium">
+                <p className="text-xs uppercase font-black tracking-widest font-oxanium">
                   {dsT("collapseTooltip")}
                 </p>
               </TooltipContent>

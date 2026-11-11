@@ -25,7 +25,7 @@ export function StepAccountsComponent() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
+      <h3 className="text-lg font-mono font-black uppercase tracking-widest text-foreground">
         {scaT("title")}
       </h3>
 
@@ -53,7 +53,7 @@ export function StepAccountsComponent() {
                     <span className="font-mono font-bold text-sm">
                       {account.name}
                     </span>
-                    <span className="text-xs font-mono text-muted-foreground uppercase">
+                    <span className="text-xs font-black font-mono text-muted-foreground uppercase tracking-widest">
                       {account.type}
                     </span>
                   </div>

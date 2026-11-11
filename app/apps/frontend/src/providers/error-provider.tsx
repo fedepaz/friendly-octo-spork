@@ -33,6 +33,19 @@ export function ErrorProvider({ children }: { children: ReactNode }) {
 
   logger.debug("ErrorProvider initialized");
 
+  const resolveError = useCallback(
+    (parsed: ParsedError) => {
+      const title = epT.has(parsed.titleKey)
+        ? epT(parsed.titleKey, parsed.titleParams ?? {})
+        : parsed.titleKey;
+      const message = epT.has(parsed.messageKey)
+        ? epT(parsed.messageKey, parsed.messageParams ?? {})
+        : parsed.messageKey;
+      return { title, message };
+    },
+    [epT],
+  );
+
   const handleError = useCallback(
     (error: unknown, options: ErrorHandlerOptions = {}) => {
       logger.debug("handleError called: ");
@@ -55,12 +68,15 @@ export function ErrorProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      if (parsed.title === "Sesión expirada") {
+      // Auth expiration — redirect to login
+      if (parsed.type === "AUTH" && parsed.isFatal) {
         localStorage.clear();
         router.push("/login");
         return;
       }
-      const toastConfig = getToastConfig(parsed);
+
+      const { title, message } = resolveError(parsed);
+      const toastConfig = getToastConfig(parsed, title, message);
 
       if (parsed.type === "AUTH" && parsed.isFatal && shouldRedirect) {
         setTimeout(() => {
@@ -79,7 +95,7 @@ export function ErrorProvider({ children }: { children: ReactNode }) {
 
       if (shouldThrow) throw error;
     },
-    [router],
+    [router, resolveError],
   );
 
   const handleFormError = useCallback(
@@ -135,10 +151,14 @@ export function useError() {
   return context;
 }
 
-function getToastConfig(parsed: ParsedError) {
+function getToastConfig(
+  parsed: ParsedError,
+  title: string,
+  description: string,
+) {
   const base = {
-    title: parsed.title,
-    description: parsed.message,
+    title,
+    description,
     duration: parsed.shouldRetry ? 8000 : 5000,
   };
 

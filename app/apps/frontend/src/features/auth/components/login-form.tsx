@@ -59,7 +59,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
           name="name"
           render={({ field }) => (
             <FormItem className="space-y-1.5">
-              <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
+              <FormLabel className="font-black text-xs uppercase tracking-widest text-muted-foreground/60">
                 {t("usernameLabel")}
               </FormLabel>
               <FormControl>
@@ -71,7 +71,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
                     {...field}
                     placeholder="lionelmessi87"
                     disabled={isLoading}
-                    className="pl-14 h-12 text-[11px] font-bold  tracking-wider rounded-none border-border/40 bg-background/40 hover:border-primary/20 focus:border-primary/60 transition-premium shadow-etched"
+                    className="pl-14 h-12 text-xs font-bold  tracking-wider rounded-none border-border/40 bg-background/40 hover:border-primary/20 focus:border-primary/60 transition-premium shadow-etched"
                     autoFocus
                     tabIndex={0}
                   />
@@ -86,7 +86,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
           name="password"
           render={({ field }) => (
             <FormItem className="space-y-1.5">
-              <FormLabel className="font-black text-[10px] uppercase tracking-widest text-muted-foreground/60">
+              <FormLabel className="font-black text-xs uppercase tracking-widest text-muted-foreground/60">
                 {t("passwordLabel")}
               </FormLabel>
               <FormControl>
@@ -99,7 +99,7 @@ export function LoginForm({ onDefaultPassword }: LoginFormProps) {
                     type={showPassword ? "text" : "password"}
                     placeholder="********"
                     disabled={isLoading}
-                    className="pl-14 h-12 text-[11px] font-bold  tracking-wider rounded-none border-border/40 bg-background/40 hover:border-primary/20 focus:border-primary/60 transition-premium shadow-etched"
+                    className="pl-14 h-12 text-xs font-bold  tracking-wider rounded-none border-border/40 bg-background/40 hover:border-primary/20 focus:border-primary/60 transition-premium shadow-etched"
                     {...field}
                     tabIndex={0}
                   />

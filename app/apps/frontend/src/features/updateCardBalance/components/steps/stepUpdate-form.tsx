@@ -89,7 +89,7 @@ export function StepUpdateComponent() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h3 className="text-lg font-mono font-bold uppercase tracking-wider text-foreground">
+      <h3 className="text-lg font-mono font-black uppercase tracking-widest text-foreground">
         {suT("title")}
       </h3>
       <p className="text-xs font-mono text-muted-foreground">
@@ -135,7 +135,7 @@ export function StepUpdateComponent() {
                   <span className="font-mono font-bold text-sm truncate block">
                     {r.name}
                   </span>
-                  <span className="text-[10px] font-mono text-muted-foreground uppercase">
+                  <span className="text-xs font-black font-mono text-muted-foreground uppercase tracking-widest">
                     {r.frequency}
                   </span>
                 </div>

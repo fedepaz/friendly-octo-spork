@@ -16,7 +16,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
       <AuthHeader />
       <div
         className={cn(
-          "min-h-dvh flex items-center justify-center bg-background p-4 sm:p-6 overflow-hidden",
+          "min-h-dvh flex items-center justify-center bg-background p-4 overflow-hidden",
         )}
       >
         <div className="max-w-md w-full space-y-8 animate-premium-in">
@@ -30,17 +30,17 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
               />
             </div>
             <div className="text-center space-y-1">
-              <h1 className="text-[10px] font-black uppercase tracking-[0.3em] text-primary">
+              <h1 className="text-xs font-black uppercase tracking-widest text-primary">
                 Terminal de Operaciones
               </h1>
-              <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/60">
+              <p className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">
                 Secure Financial Interface v1.0
               </p>
             </div>
           </div>
 
           {/* Form Card */}
-          <div className="bg-card/40 backdrop-blur-xl border border-border/40 p-6 sm:p-10 shadow-2xl rounded-none relative overflow-hidden group">
+          <div className="bg-card/40 backdrop-blur-xl border border-border/40 p-4 shadow-2xl rounded-none relative overflow-hidden group">
             {children}
           </div>
         </div>

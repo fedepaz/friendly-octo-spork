@@ -8,7 +8,7 @@ export function PendingPermissionsPage() {
   const t = useTranslations("errors");
 
   return (
-    <div className="grid min-h-dvh place-items-center px-6 py-24 sm:py-32 lg:px-8 bg-background">
+    <div className="grid min-h-dvh place-items-center px-6 py-24 bg-background">
       <div className="text-center max-w-2xl">
         <div className="relative mx-auto w-20 h-20 mb-6">
           <UserX className="w-20 h-20 text-muted-foreground/70" />
@@ -22,7 +22,7 @@ export function PendingPermissionsPage() {
           {t("pendingPermissionsDesc")}
         </p>
 
-        <div className="mt-8 p-6 rounded-lg bg-muted/50 border border-border">
+        <div className="mt-8 p-4 rounded-lg bg-muted/50 border border-border">
           <p className="text-base text-foreground font-medium mb-2">
             {t("whatNext")}
           </p>

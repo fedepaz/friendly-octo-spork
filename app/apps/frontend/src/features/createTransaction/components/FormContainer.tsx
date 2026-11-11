@@ -135,8 +135,10 @@ export function FormContainer({
       isOpen={true}
       onClose={onClose}
       title={
-        STEP_CONFIGS.find((s) => s.id === currentStepId)?.label ??
-        fcT("defaultTitle")
+        (() => {
+          const step = STEP_CONFIGS.find((s) => s.id === currentStepId);
+          return step ? fcT(step.labelKey) : fcT("defaultTitle");
+        })()
       }
       step={currentVisibleIndex + 1}
       totalSteps={totalVisibleSteps}
