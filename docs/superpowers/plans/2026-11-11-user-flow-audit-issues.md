@@ -10,15 +10,15 @@
 
 ## Global Constraints
 
-- Source of truth: `docs/superpowers/specs/2026-11-11-user-flow-audit-design.md` — checklists are reproduced **verbatim** in this plan; if they ever diverge, the spec wins.
+- Source of truth: `docs/superpowers/specs/2026-11-11-user-flow-audit-design.md` — checklists reproduced verbatim with three documented adaptations: (a) the #3 matrix meta-text is operationalized as instruction + the actual table; (b) spec references like "same matrix as #3" become descriptive text in issue bodies (avoids GitHub mislinking to unrelated issue #3); (c) two parentheticals relocated to sub-headings. On divergence in these areas, the plan's operational form wins. Elsewhere, the spec wins.
 - Titles: English, format `audit(scope): short description` (epic uses `epic: ...`).
-- Every task-issue body follows the `task.yml` structure: `## What should be done?` (with the RULE paragraph), `## Type` = `audit`, `## Checks` (grouped `- [ ]` outcome checks), `## Extra context`.
+- Every task-issue body follows the `task.yml` structure (What should be done / Type / Extra context) **plus a `## Checks` section this issue type adds**: `## What should be done?` (with the RULE paragraph), `## Type` = `audit`, `## Checks` (grouped `- [ ]` outcome checks), `## Extra context`.
 - RULE paragraph (verbatim in every task body): `RULE: every ✗ → open a follow-up issue (bug/enhancement), link it in "Extra context". NEVER fix inside this audit.`
 - Labels: `audit` on all 13 tasks; `epic` on the epic. Both labels must exist before issues are created (Task 1).
 - Creation order: **13 tasks first, epic last**, then paste task links into the epic's Tasks checklist.
 - Follow-up issues (found later during audits) reference `Found in #<audit-issue>` — not part of this plan.
 - No application code, no migrations, no `app/` changes in this plan — deliverable is GitHub state + two docs committed on branch `docs/user-flow-audit-spec`.
-- Every `gh issue create` must be verified with `gh issue view` before the next task starts.
+- Every `gh issue create` must be verified with `gh issue view` or `gh issue list --search` before the next task starts.
 
 ---
 

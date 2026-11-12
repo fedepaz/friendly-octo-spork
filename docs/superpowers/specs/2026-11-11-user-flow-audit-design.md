@@ -1,7 +1,7 @@
 # Design Spec — Full User-Flow Audit (Issue-Task Set)
 
 **Date:** 2026-11-11
-**Status:** Approved (design sections 1–4 signed off in brainstorming session)
+**Status:** Approved (all sections signed off in the brainstorming session; §5 checklists approved verbatim)
 **Output of this spec:** 1 epic + 13 checklist task issues on GitHub. This spec is the single source of truth for their content; fixes discovered during audits are explicitly out of scope here.
 
 ---
@@ -56,84 +56,84 @@ Plus the audit rule (§6) and a Tasks checklist linking the 13 task issues.
 | 12 | `audit(ui): pagination & month-query consistency across screens` | cross-cutting pattern consistency |
 | 13 | `audit(ui): i18n coverage and responsive behavior` | en/es parity, breakpoints, tokens |
 
-**Folded** (no separate issue): categories → #4 (+ checks in #3), profile/password → #9, `updateCardBalance` → #6, `updateRecurrence` → #5.
+**Folded** (no separate issue): categories → `#4` (+ checks in `#3`), profile/password → `#9`, `updateCardBalance` → `#6`, `updateRecurrence` → `#5`.
 
 ## 5. Checklists (approved verbatim)
 
-Every check is an observable outcome. Evidence = one line (screenshot, API response, or code path). Core issues #1–#6:
+Every check is an observable outcome. Evidence = one line (screenshot, API response, or code path). Core issues `#1`–`#6`:
 
-### #1 audit(auth)
+### `#1` audit(auth)
 - [ ] Register creates the account and lands on the dashboard; invalid/duplicate input shows errors
 - [ ] Login works with valid creds; wrong creds show a friendly error (no crash)
 - [ ] Session survives page refresh; expired/invalid session redirects to login
 - [ ] Logout clears everything — back button never shows authenticated content
 
-### #2 audit(accounts)
+### `#2` audit(accounts)
 - [ ] Create account: all types selectable, fields validated
 - [ ] Initial amount is editable and lands in the balance correctly
 - [ ] Balance = initial amount ± transactions, and updates immediately after a new transaction
 - [ ] Soft-delete: account vanishes from lists/selectors but data remains (no hard delete)
 
-### #3 audit(transactions) — the magic
+### `#3` audit(transactions) — the magic
 - [ ] All wizard steps navigate + validate (type → account → amount → category → budget → recurrence → review); review shows a correct summary
 - [ ] Debit/credit matrix: for each account type × transaction type, the balance moves the right direction — the issue body ships a pre-created empty matrix table for the auditor to fill: **rows** = `INCOME, EXPENSE, TRANSFER, INVESTMENT, RETURN, PAYMENT` (shared enums), **columns** = `BANK, WALLET, CASH, CARD, INVESTMENT`, **cells** = expected effect (debit / credit / no-op)
 - [ ] Submitted transaction appears in the list at once and moves balance + dashboard KPIs
 - [ ] Choosing recurrence in the wizard actually creates the linked recurrence
 
-### #4 audit(transactions): list
+### `#4` audit(transactions): list
 - [ ] Filters (account/category/type) work; month navigation scopes correctly — "this month empty, last month full" must be provable
 - [ ] Quantity pagination: page size, next/prev, counts correct; empty-month state sane
 - [ ] Category names display correctly everywhere; detail view complete
 
-### #5 audit(recurrences): loans
+### `#5` audit(recurrences): loans
 - [ ] Create/update (`updateRecurrence`) works; edits affect future occurrences
 - [ ] Loans-as-recurrences (`INSTALLMENT` recurrence type): scheduled occurrences appear on the right dates across month navigation
-- [ ] Executed occurrences create transactions that hit balances via the same matrix as #3
+- [ ] Executed occurrences create transactions that hit balances via the same matrix as `#3`
 - [ ] Pause/active (if present) respected; no double-execution on month boundary
 
-### #6 audit(cards)
+### `#6` audit(cards)
 - [ ] Create card validated; card spend ties to the card and updates its balance
 - [ ] `updateCardBalance` payment flow reduces what's owed; pending/paid states correct
 - [ ] Next month shows the correct `toPay` (sum of pending, excluding paid)
 - [ ] >10 pending payments paginate correctly (page size, nav, totals)
 
-Remaining screens #7–#11:
+Remaining screens `#7`–`#11`:
 
-### #7 audit(dashboard)
+### `#7` audit(dashboard)
 - [ ] KPIs and charts reconcile with underlying data (spot-check sums against transactions/accounts)
 - [ ] Month navigation updates every widget consistently; empty/new-month states render sanely
 - [ ] Skeletons appear while loading; no layout jump after data arrives
 
-### #8 audit(investments)
+### `#8` audit(investments)
 - [ ] Portfolio lists investment accounts with correct totals/columns
-- [ ] Reinvest-returns flow creates the right transactions and moves balances (same matrix as #3)
+- [ ] Reinvest-returns flow creates the right transactions and moves balances (same matrix as `#3`)
 - [ ] Filters/search work; empty state correct
 
-### #9 audit(users)
+### `#9` audit(users)
 - [ ] User list/create works (admin flow); soft-delete hides without destroying data
 - [ ] Profile displays correctly; password change works (old password required, errors on mismatch)
 - [ ] Deleted user can no longer log in
 
-### #10 audit(permissions)
+### `#10` audit(permissions)
 - [ ] Matrix renders entities × C/R/U/D accurately for the selected user
 - [ ] Toggling a permission takes effect (e.g., revoking `cards` read hides the nav item/endpoint)
 - [ ] The `alerts` entity appears and gates the header bell (seeded in PR #29)
 - [ ] Reset/re-grant returns to expected state
 
-### #11 audit(audit-logs)
+### `#11` audit(audit-logs)
 - [ ] POST/PATCH/DELETE are logged, GET is not (per design)
 - [ ] Entry shows user, action, entity, changes diff, IP, duration
 - [ ] Secrets sanitized — no password/token ever appears in a log entry
 - [ ] Filters + month query + quantity pagination work
 
-Cross-cutting #12–#13:
+Cross-cutting `#12`–`#13`:
 
-### #12 audit(ui): pagination & month-query consistency
+### `#12` audit(ui): pagination & month-query consistency
 - [ ] Every list screen (transactions, cards, recurrences, investments, users, audit-logs) uses the same pagination component/pattern
 - [ ] Month query and quantity pagination are decoupled identically everywhere (month = filter, quantity = page size)
 - [ ] Same empty-month messaging; any intentional deviation gets documented in the issue body
 
-### #13 audit(ui): i18n & responsive
+### `#13` audit(ui): i18n & responsive
 - [ ] No hardcoded user-facing strings (spot-check every screen; en/es parity)
 - [ ] Mobile breakpoints behave (`visual-pass/` screenshots at 390/768/1024/1366 are the reference)
 - [ ] Design tokens respected — no rogue arbitrary px, correct control heights
@@ -142,7 +142,7 @@ Cross-cutting #12–#13:
 
 **Titles:** English, `audit(scope): short description` (family of issue #32's `docs:` style).
 
-**Body** (mirrors `task.yml`):
+**Body** (mirrors `task.yml` + a `## Checks` section this issue type adds):
 
 ```markdown
 ## What should be done?
