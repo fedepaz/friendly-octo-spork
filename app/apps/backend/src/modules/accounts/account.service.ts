@@ -1,6 +1,12 @@
 // backend/src/modules/accounts/account.service.ts
 
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import {
   AccountRepository,
   AccountWithRelations,
@@ -48,10 +54,23 @@ export class AccountService {
   ): Promise<AccountDTO> {
     if (!userId) throw new BadRequestException('User id is required');
     this.logger.log(`Saving account ${accountData.name} for user ${userId}`);
-    const account = await this.accountsRepo.saveAccount({
-      userId,
-      ...accountData,
-    });
-    return this.mapToDTO(account);
+    try {
+      const account = await this.accountsRepo.saveAccount({
+        userId,
+        ...accountData,
+      });
+      return this.mapToDTO(account);
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2002'
+      ) {
+        throw new ConflictException({
+          code: 'DUPLICATE_RECORD',
+          message: 'Account name already in use',
+        });
+      }
+      throw error;
+    }
   }
 }

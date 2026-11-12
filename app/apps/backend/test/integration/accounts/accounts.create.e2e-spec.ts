@@ -53,7 +53,12 @@ describe('Accounts Create (e2e)', () => {
         currency: 'ARS',
       });
 
-    expect([400, 500]).toContain(response.status);
+    expect(response.status).toBe(409);
+    expect(response.body.code).toBe('DUPLICATE_RECORD');
+    expect(response.body.message).toBe('Account name already in use');
+    expect(response.body.debug ?? '').not.toContain(
+      'PrismaClientKnownRequestError',
+    );
   });
 
   it('should reject unauthenticated request', async () => {
