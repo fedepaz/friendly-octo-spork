@@ -116,7 +116,9 @@ export class PermissionsService {
       permissionType: 'CRUD' | 'PROCESS' | 'READ_ONLY';
     }>,
   ): Promise<void> {
-    await this.permissionsRepo.deleteAllForUser(userId);
+    // Merge semantics: upsert only the submitted rows. Deleting everything
+    // first would wipe permissions the caller never sent (the UI saves only
+    // the toggled entities), locking the user out of everything else.
     for (const p of permissions) {
       const entity = await this.permissionsRepo.findEntityByName(p.tableName);
       if (!entity) continue;
