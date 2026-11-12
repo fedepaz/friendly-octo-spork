@@ -127,9 +127,25 @@ export class AuditCrudInterceptor implements NestInterceptor {
     for (const key of Object.keys(sanitized)) {
       if (SENSITIVE_FIELDS.some((f) => key.toLowerCase().includes(f))) {
         sanitized[key] = '[REDACTED]';
+      } else {
+        sanitized[key] = this.sanitizeValue(sanitized[key]);
       }
     }
     return sanitized;
+  }
+
+  private sanitizeValue(value: unknown): unknown {
+    if (Array.isArray(value)) {
+      return value.map((item) => this.sanitizeValue(item));
+    }
+    if (
+      value !== null &&
+      typeof value === 'object' &&
+      Object.getPrototypeOf(value) === Object.prototype
+    ) {
+      return this.sanitizeBody(value as Record<string, unknown>);
+    }
+    return value;
   }
 
   private getClientIp(request: Request): string | null {
