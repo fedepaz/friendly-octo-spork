@@ -116,10 +116,9 @@ describe('AuditCrudInterceptor', () => {
   it('redacts sensitive fields nested inside query objects', async () => {
     // Express qs parses ?credentials[password]=x into a nested object —
     // top-level-only query redaction would miss it.
-    const changes = await captureAuditChanges(
-      undefined,
-      { credentials: { password: 'x', user: 'u' } },
-    );
+    const changes = await captureAuditChanges(undefined, {
+      credentials: { password: 'x', user: 'u' },
+    });
     const query = changes.query as Record<string, unknown>;
     const credentials = query.credentials as Record<string, unknown>;
 

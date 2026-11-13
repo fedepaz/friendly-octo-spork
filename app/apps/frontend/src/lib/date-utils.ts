@@ -105,3 +105,15 @@ export function getCurrentMonthYear(): { month: number; year: number } {
   const now = new Date();
   return { month: now.getMonth() + 1, year: now.getFullYear() };
 }
+
+/**
+ * Get the month after the given 1-indexed month, with year rollover
+ * (December → January of the next year). Always returns month ∈ [1, 12].
+ */
+export function getNextMonthYear(
+  month: number,
+  year: number,
+): { month: number; year: number } {
+  if (month === 12) return { month: 1, year: year + 1 };
+  return { month: month + 1, year };
+}

@@ -49,7 +49,7 @@ export interface CardCloseInputDTO {
 export const cardCloseSchema: z.ZodType<CardCloseInputDTO> = z.object({
   cardAccountId: z.string(),
   year: z.number(),
-  month: z.number(),
+  month: z.number().int().min(1).max(12),
   recurrencesTransactions: z.array(z.any()) as z.ZodType<
     CreateTransactionInput[]
   >,
