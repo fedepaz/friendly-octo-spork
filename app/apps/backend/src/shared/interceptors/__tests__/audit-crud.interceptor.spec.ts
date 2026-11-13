@@ -112,4 +112,18 @@ describe('AuditCrudInterceptor', () => {
     expect(params.secret).toBe('[REDACTED]');
     expect(params.id).toBe('42');
   });
+
+  it('redacts sensitive fields nested inside query objects', async () => {
+    // Express qs parses ?credentials[password]=x into a nested object —
+    // top-level-only query redaction would miss it.
+    const changes = await captureAuditChanges(
+      undefined,
+      { credentials: { password: 'x', user: 'u' } },
+    );
+    const query = changes.query as Record<string, unknown>;
+    const credentials = query.credentials as Record<string, unknown>;
+
+    expect(credentials.password).toBe('[REDACTED]');
+    expect(credentials.user).toBe('u');
+  });
 });
