@@ -13,13 +13,14 @@ import { useTranslations } from "next-intl";
 
 import { FormContainerCard } from "../components/FormContainerCard";
 import { useUpdateCardBalance } from "../hooks/updateCardMutationHooks";
-import { getCurrentMonthYear } from "@/lib/date-utils";
+import { getCurrentMonthYear, getNextMonthYear } from "@/lib/date-utils";
 
 export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [closeResponse, setCloseResponse] = useState<CardCloseResponseDTO | null>(null);
   const { month, year } = getCurrentMonthYear();
+  const next = getNextMonthYear(month, year);
   const epT = useTranslations("ErrorProvider");
 
   const { mutateAsync: closeCard, isPending: isSubmitting } =
@@ -29,8 +30,8 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
     mode: "onChange",
     resolver: zodResolver(cardCloseSchema),
     defaultValues: {
-      year: year,
-      month: month + 1,
+      year: next.year,
+      month: next.month,
       recurrencesTransactions: [],
     },
   });
