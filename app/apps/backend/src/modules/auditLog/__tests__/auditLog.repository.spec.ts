@@ -59,7 +59,7 @@ describe('AuditLogRepository', () => {
 
       expect(result).toEqual(mockLogs);
       expect(prisma.auditLog.findMany).toHaveBeenCalledWith({
-        where: { userId: 'user-1' },
+        where: { OR: [{ userId: 'user-1' }, { userId: null }] },
         orderBy: { createdAt: 'desc' },
       });
     });
@@ -71,7 +71,7 @@ describe('AuditLogRepository', () => {
 
       expect(result).toEqual([]);
       expect(prisma.auditLog.findMany).toHaveBeenCalledWith({
-        where: { userId: 'user-999' },
+        where: { OR: [{ userId: 'user-999' }, { userId: null }] },
         orderBy: { createdAt: 'desc' },
       });
     });

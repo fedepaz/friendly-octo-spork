@@ -3,6 +3,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { AppModule } from '../../../src/app.module';
+import { AuditCrudInterceptor } from '../../../src/shared/interceptors/audit-crud.interceptor';
+import { PrismaService } from '../../../src/infra/prisma/prisma.service';
 
 export async function createTestApp(): Promise<INestApplication> {
   const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -10,6 +12,10 @@ export async function createTestApp(): Promise<INestApplication> {
   }).compile();
 
   const app = moduleFixture.createNestApplication();
+
+  // Mirror main.ts: the audit interceptor is registered globally there but
+  // lives outside AppModule, so tests must register it themselves.
+  app.useGlobalInterceptors(new AuditCrudInterceptor(app.get(PrismaService)));
 
   await app.init();
 
