@@ -99,6 +99,26 @@ export class CardRepository {
     const lastMonthStartDate = new Date(year, month - 2, 1);
     const lastMonthEndDate = new Date(year, month - 1, 0, 23, 59, 59);
 
+    // One-timers already filter recurrenceId: null, so CARD-CLOSE marks on
+    // recurrence payments can never match — include them all safely.
+    const closedTransactions = await this.prisma.transaction.findMany({
+      where: {
+        userId,
+        source: {
+          contains: 'CARD-CLOSE',
+        },
+        date: {
+          gte: lastMonthStartDate,
+          lte: lastMonthEndDate,
+        },
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    const closedTransactionsIds = closedTransactions.map((t) => t.id);
+
     // ── All 3 queries are independent — run in parallel ──────────────────────
     const [oneTimers, payments, recurrences] = await Promise.all([
       // 1. Last month's card one-timers
@@ -110,6 +130,9 @@ export class CardRepository {
             lte: lastMonthEndDate,
           },
           OR: [{ isCardExpense: true, recurrenceId: null }],
+          id: {
+            notIn: closedTransactionsIds.length ? closedTransactionsIds : [''],
+          },
         },
         include: {
           category: true,
