@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CardCloseInputDTO, CardCloseResponseDTO, cardCloseSchema } from "@repo/shared";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import type { FieldErrors } from "react-hook-form";
 
 import { mapServerErrorsToForm } from "@/lib/utils/form-error-mapper";
 import { ApiError } from "@/lib/api/client-fetch";
@@ -36,13 +37,15 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
     },
   });
 
-  const errorMessageEnd = Object.values(methods.formState.errors)
-    .map((err) => err?.message)
-    .filter(Boolean)
-    .join(", ");
-
-  const onInvalid = () => {
-    toast.error(errorMessageEnd, {
+  // Same fix as the create-transaction wizard: toast the errors PASSED to
+  // onInvalid — the old code read a stale string from the last render, so a
+  // failed Save looked like a silent no-op.
+  const onInvalid = (errors: FieldErrors<CardCloseInputDTO>) => {
+    const message = Object.values(errors)
+      .map((err) => err?.message)
+      .filter(Boolean)
+      .join(", ");
+    toast.error(message || epT("validationError"), {
       id: "wizard-validation-error",
     });
   };

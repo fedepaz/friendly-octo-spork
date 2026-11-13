@@ -14,7 +14,7 @@ import { StepRecurrenceComponent } from "./steps/stepRecurrence-form";
 import { StepReviewComponent } from "./steps/stepReview-form";
 import { StepTypeComponent } from "./steps/stepType-form";
 import { StepIndicator, WizardFooter, WizardModal } from "@/components/ui/wizard-modal";
-import { CreateTransactionInput } from "@repo/shared";
+import { CreateTransactionInput, getAccountRequirementError } from "@repo/shared";
 import {
   getNextStepId,
   getPrevStepId,
@@ -70,6 +70,18 @@ export function FormContainer({
       }
     }
 
+    // #54: enforce account requirements for the accounts step here — the
+    // schema's superRefine only runs once the base schema parses, which is
+    // not true mid-wizard (description is filled in a LATER step), so
+    // trigger() alone advanced without a required target.
+    if (currentStepId === "accounts") {
+      const requirementError = getAccountRequirementError(watched);
+      if (requirementError) {
+        setGlobalError(requirementError);
+        return;
+      }
+    }
+
     // Clear values when skipping optional steps (optional but clean)
     if (currentStepId === "category") {
       const nextStep = getNextStepId("category", watched, STEP_CONFIGS);
@@ -83,12 +95,10 @@ export function FormContainer({
       }
     }
 
-    if (currentStepId === "budget") {
-      const nextStep = getNextStepId("budget", watched, STEP_CONFIGS);
-      if (nextStep === "review") {
-        setValue("isBudgetedExpense", false);
-      }
-    }
+    // Budget: never clear on budget→review — the step was VISITED, and the
+    // budget form itself owns isBudgetedExpense/budgetCategory (Yes/No
+    // toggle). Clearing here wiped the user's choice before review (#53).
+    // Genuine skips are handled by the category branch above.
 
     // Navigate to next visible step
     const nextStepId = getNextStepId(currentStepId!, watched, STEP_CONFIGS);

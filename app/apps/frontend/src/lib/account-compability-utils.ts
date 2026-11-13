@@ -136,6 +136,23 @@ export function canUseAccount(
 }
 
 /**
+ * Check whether ANY account type can fill the given role for a transaction
+ * type. Used to decide whether a picker block should render at all — probing
+ * a single hardcoded type (e.g. BANK) hid the target picker for INVESTMENT,
+ * the source picker for RETURN and the target picker for PAYMENT.
+ */
+export function canUseAnyAccount(
+  transactionType: TransactionType,
+  role: AccountRole,
+): boolean {
+  const matrix = ACCOUNT_COMPATIBILITY[transactionType];
+  if (!matrix) return false;
+  return Object.values(matrix).some((config) =>
+    role === "source" ? config.canBeSource : config.canBeTarget,
+  );
+}
+
+/**
  * Filter accounts array based on transaction type and role
  */
 export function filterAccountsByCompatibility(

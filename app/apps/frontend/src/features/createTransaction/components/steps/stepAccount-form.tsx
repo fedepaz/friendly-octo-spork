@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { InLineError } from "@/components/ui/in-line-error";
 import {
   canUseAccount,
+  canUseAnyAccount,
   filterAccountsByCompatibility,
   getAccountDisabledReason,
 } from "@/lib/account-compability-utils";
@@ -32,6 +33,7 @@ export function StepAccountsComponent() {
 
   const transactionType = watched.type;
   const sourceAccountId = watched.sourceAccountId;
+
 
   // Auto-detect card expense
   useEffect(() => {
@@ -126,7 +128,7 @@ export function StepAccountsComponent() {
       </h3>
 
       {/* SOURCE ACCOUNT */}
-      {canUseAccount(transactionType, "BANK", "source") && ( // Just check if ANY account can be source
+      {canUseAnyAccount(transactionType, "source") && (
         <div>
           <Label>
             {transactionType === "TRANSFER" ? saT("fromAccount") : saT("account")}
@@ -151,7 +153,7 @@ export function StepAccountsComponent() {
       )}
 
       {/* TARGET ACCOUNT */}
-      {canUseAccount(transactionType, "BANK", "target") && (
+      {canUseAnyAccount(transactionType, "target") && (
         <div>
           <Label>
             {transactionType === "TRANSFER" ? saT("toAccount") : saT("account")}
