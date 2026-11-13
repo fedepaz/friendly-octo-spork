@@ -2,7 +2,7 @@
   "AuditLogFormDetail": {
     "responsible": "Responsible",
     "fullName": "Full name",
-    "username": "Username",
+    "email": "Email",
     "internalId": "Internal ID",
     "affectedEntity": "Affected Entity",
     "resourceType": "Resource type",
@@ -14,6 +14,7 @@
     "notRecorded": "Not recorded",
     "platform": "Platform",
     "mobile": "Mobile",
-    "desktop": "Desktop"
+    "desktop": "Desktop",
+    "duration": "Duration"
   }
 }
