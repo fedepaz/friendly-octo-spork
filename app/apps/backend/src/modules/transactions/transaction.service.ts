@@ -16,6 +16,7 @@ import {
   RecurrenceDTO,
   TransactionDTO,
   TransactionType,
+  canUseAccount,
 } from '@repo/shared';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../infra/prisma/prisma.service';
@@ -25,10 +26,6 @@ import {
 } from '../accounts/repositories/account.repository';
 
 import { RecurrenceService } from '../recurrences/recurrence.service';
-
-// ─── Account type rules ──────────────────────────────────────────────────────
-const EXPENSE_SOURCES = ['BANK', 'WALLET', 'CASH', 'CARD'] as const;
-const INCOME_TARGETS = ['BANK', 'WALLET', 'CASH'] as const;
 
 @Injectable()
 export class TransactionService {
@@ -264,60 +261,25 @@ export class TransactionService {
     sourceAccount: AccountWithRelations | null,
     targetAccount: AccountWithRelations | null,
   ): void {
+    // Presence rules (which roles a transaction type needs at all)
     switch (type) {
       case 'EXPENSE':
       case 'PAYMENT': {
         if (!sourceAccount)
           throw new BadRequestException(`${type} requires a source account`);
-        if (
-          !(EXPENSE_SOURCES as readonly string[]).includes(sourceAccount.type)
-        ) {
-          throw new BadRequestException({
-            code: 'ACCOUNT_TYPE_RESTRICTION',
-            message: `${type} source account must be one of: ${EXPENSE_SOURCES.join(', ')}`,
-          });
-        }
         break;
       }
       case 'INCOME': {
         if (!targetAccount)
           throw new BadRequestException('INCOME requires a target account');
-        if (
-          !(INCOME_TARGETS as readonly string[]).includes(targetAccount.type)
-        ) {
-          throw new BadRequestException({
-            code: 'ACCOUNT_TYPE_RESTRICTION',
-            message: `INCOME target account must be one of: ${INCOME_TARGETS.join(', ')}`,
-          });
-        }
         break;
       }
-      case 'TRANSFER': {
-        if (!sourceAccount || !targetAccount) {
-          throw new BadRequestException(
-            'TRANSFER requires both source and target accounts',
-          );
-        }
-        // any account type can participate in a transfer
-        break;
-      }
+      case 'TRANSFER':
       case 'INVESTMENT': {
         if (!sourceAccount || !targetAccount) {
           throw new BadRequestException(
-            'INVESTMENT requires both source and target accounts',
+            `${type} requires both source and target accounts`,
           );
-        }
-        if (sourceAccount.type === 'INVESTMENT') {
-          throw new BadRequestException({
-            code: 'ACCOUNT_TYPE_RESTRICTION',
-            message: 'INVESTMENT source cannot be an investment account',
-          });
-        }
-        if (targetAccount.type !== 'INVESTMENT') {
-          throw new BadRequestException({
-            code: 'ACCOUNT_TYPE_RESTRICTION',
-            message: 'INVESTMENT target must be an investment account',
-          });
         }
         break;
       }
@@ -325,9 +287,24 @@ export class TransactionService {
         if (!targetAccount) {
           throw new BadRequestException('RETURN requires a target account');
         }
-
         break;
       }
+    }
+
+    // Type rules come from the shared compatibility matrix — the single
+    // source of truth the frontend wizard also uses (#55). The old
+    // hardcoded lists disagreed with the matrix in six directions.
+    if (sourceAccount && !canUseAccount(type, sourceAccount.type, 'source')) {
+      throw new BadRequestException({
+        code: 'ACCOUNT_TYPE_RESTRICTION',
+        message: `${type} transactions cannot use a ${sourceAccount.type} account as source`,
+      });
+    }
+    if (targetAccount && !canUseAccount(type, targetAccount.type, 'target')) {
+      throw new BadRequestException({
+        code: 'ACCOUNT_TYPE_RESTRICTION',
+        message: `${type} transactions cannot use a ${targetAccount.type} account as target`,
+      });
     }
   }
   private async createOrUpdateRecurrence(

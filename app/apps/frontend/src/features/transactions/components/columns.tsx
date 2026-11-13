@@ -140,6 +140,7 @@ export const transactionsColumns: ColumnDef<TransactionDTO>[] = [
     accessorKey: "type",
     header: TypeHeader,
     cell: ({ row }) => <TransactionTypeCell row={row} />,
+    filterFn: "arrIncludesSome",
   },
   {
     accessorKey: "description",
@@ -159,5 +160,32 @@ export const transactionsColumns: ColumnDef<TransactionDTO>[] = [
     id: "flags",
     header: "",
     cell: FlagsCell,
+  },
+  // ── Facet-only columns (#57): back the account/category filters but
+  // are never displayed (meta.facetOnly + enableHiding: false).
+  {
+    id: "account",
+    accessorFn: (tx) => tx.sourceAccount?.name ?? "",
+    enableHiding: false,
+    meta: { facetOnly: true },
+    // a transaction matches if EITHER side of the flow is selected
+    filterFn: (row, _id, values: string[]) => {
+      const names = [
+        row.original.sourceAccount?.name,
+        row.original.targetAccount?.name,
+      ].filter((name): name is string => Boolean(name));
+      return values.some((value) => names.includes(value));
+    },
+    header: () => null,
+    cell: () => null,
+  },
+  {
+    id: "category",
+    accessorFn: (tx) => tx.category?.name ?? "",
+    enableHiding: false,
+    meta: { facetOnly: true },
+    filterFn: "arrIncludesSome",
+    header: () => null,
+    cell: () => null,
   },
 ];

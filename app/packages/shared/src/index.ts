@@ -16,3 +16,4 @@ export * from "./schemas/auditLog.schema";
 export * from "./schemas/permissions.schema";
 export * from "./constants/managed-entities";
 export * from "./utils/date-utils";
+export * from "./utils/account-compatibility";

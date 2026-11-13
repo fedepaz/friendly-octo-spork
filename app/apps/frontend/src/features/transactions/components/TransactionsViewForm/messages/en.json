@@ -14,6 +14,7 @@
     "no": "NO",
     "recurrence": "RECURRENCE",
     "budgeted": "BUDGETED",
-    "yes": "YES"
+    "yes": "YES",
+    "description": "Description"
   }
 }
