@@ -16,6 +16,8 @@
     "searchPlaceholder": "Buscar...",
     "noResults": "No se encontraron resultados",
     "selectedLabel": "SELECCIONADOS",
-    "rowsLabel": "Filas"
+    "rowsLabel": "Filas",
+    "prevPage": "Página anterior",
+    "nextPage": "Página siguiente"
   }
 }

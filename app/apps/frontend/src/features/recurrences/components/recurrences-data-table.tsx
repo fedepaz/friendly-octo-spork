@@ -11,12 +11,11 @@ import { RecurrenceViewForm } from "./recurrence-view-form";
 import { MonthSelector } from "@/components/data-display/data-table/month-selector";
 import { TransTypeSelector } from "@/components/data-display/data-table/transType-selector";
 import { getCurrentMonth, getCurrentYear } from "@/lib/date-utils";
-import { EmptyState } from "@/components/common/empty-state";
 
 export function RecurrencesDataTable() {
   const rdT = useTranslations("RecurrencesDashboard");
   const [month, setMonth] = useState(getCurrentMonth() - 1);
-  const year = getCurrentYear();
+  const [year, setYear] = useState(getCurrentYear());
   const [transactionType, setTransactionType] =
     useState<TransactionType>("EXPENSE");
   const { data: recurrences = [] } = useRecurrencesByMonth(
@@ -30,13 +29,14 @@ export function RecurrencesDataTable() {
   const toolbarContent = (
     <div className="flex gap-2">
       <TransTypeSelector onTransTypeChange={setTransactionType} />
-      <MonthSelector onMonthChange={setMonth} />
+      <MonthSelector
+        month={month}
+        year={year}
+        onMonthChange={setMonth}
+        onYearChange={setYear}
+      />
     </div>
   );
-
-  if (!recurrences || recurrences.length === 0) {
-    return <EmptyState />;
-  }
 
   return (
     <>

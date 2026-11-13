@@ -16,6 +16,8 @@
     "searchPlaceholder": "Search...",
     "noResults": "No results found",
     "selectedLabel": "SELECTED",
-    "rowsLabel": "Rows"
+    "rowsLabel": "Rows",
+    "prevPage": "Previous page",
+    "nextPage": "Next page"
   }
 }
