@@ -440,6 +440,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
           `../features/auditLogs/components/AuditLogForm/messages/${locale}.json`
         )
       ).default,
+      ...(
+        await import(
+          `../features/auditLogs/components/AuditActionSelector/messages/${locale}.json`
+        )
+      ).default,
 
       // Permissions Feature
       ...(

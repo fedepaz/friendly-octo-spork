@@ -8,12 +8,25 @@ import { useAuditLogs } from "../hooks/auditLogHooks";
 import { DataTable, SlideOverForm } from "@/components/data-display/data-table";
 import { auditLogColumns } from "./columns";
 import { AuditLogForm } from "./auditLog-form";
-import type { AuditLogDto } from "@repo/shared";
+import { AuditActionSelector } from "./audit-action-selector";
+import { MonthSelector } from "@/components/data-display/data-table/month-selector";
+import { getCurrentMonth, getCurrentYear } from "@/lib/date-utils";
+import type { AuditActionType, AuditLogDto } from "@repo/shared";
 
 export function AuditLogDataTable() {
   const adt = useTranslations("AuditLogsDashboard");
-  const { data: auditLogs = [] } = useAuditLogs();
+  const [month, setMonth] = useState(getCurrentMonth() - 1);
+  const [action, setAction] = useState<AuditActionType | undefined>(undefined);
+  const year = getCurrentYear();
+  const { data: auditLogs = [] } = useAuditLogs(month + 1, year, action);
   const [selectedLog, setSelectedLog] = useState<AuditLogDto | null>(null);
+
+  const toolbarContent = (
+    <div className="flex gap-2">
+      <AuditActionSelector onActionChange={setAction} />
+      <MonthSelector onMonthChange={setMonth} />
+    </div>
+  );
 
   return (
     <div className="flex-1 flex flex-col min-h-0 animate-premium-in">
@@ -24,6 +37,7 @@ export function AuditLogDataTable() {
         description={adt("description")}
         tableName="audit_logs"
         totalCount={auditLogs.length}
+        toolbarContent={toolbarContent}
         onView={(row) => setSelectedLog(row)}
       />
 

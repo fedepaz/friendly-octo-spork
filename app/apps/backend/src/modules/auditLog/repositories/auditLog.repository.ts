@@ -2,16 +2,36 @@
 
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../infra/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
+import { AuditLogQuery } from '../dto/audit-log.query';
 
 @Injectable()
 export class AuditLogRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAllByUserId(userId: string) {
-    const logs = await this.prisma.auditLog.findMany({
+  async findAllByUserId(userId: string, query?: AuditLogQuery) {
+    const where: Prisma.AuditLogWhereInput = {
       // userId: null rows are system entries (public auth POSTs have no
       // session user yet) — include them alongside the caller's own entries
-      where: { OR: [{ userId }, { userId: null }] },
+      OR: [{ userId }, { userId: null }],
+    };
+
+    if (query?.action) {
+      where.action = query.action;
+    }
+    if (query?.entityType) {
+      where.entityType = query.entityType;
+    }
+    if (query?.month) {
+      const year = query.year ?? new Date().getFullYear();
+      where.createdAt = {
+        gte: new Date(year, query.month - 1, 1),
+        lte: new Date(year, query.month, 0, 23, 59, 59, 999),
+      };
+    }
+
+    const logs = await this.prisma.auditLog.findMany({
+      where,
       orderBy: { createdAt: 'desc' },
     });
 
