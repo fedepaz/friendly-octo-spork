@@ -98,6 +98,8 @@ export const adminPermissionsQueryKeys = {
 // ─── Audit Log ─────────────────────────────────────────────────────────────
 export const auditLogQueryKeys = {
   all: () => ["auditLog"] as const,
+  byMonth: (month: number, year: number, action?: string) =>
+    ["auditLog", month, year, action ?? "all"] as const,
 };
 
 // ─── Update Card Balance ─────────────────────────────────────────────────────

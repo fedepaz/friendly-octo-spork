@@ -33,7 +33,19 @@ describe('AuditLogService', () => {
       const result = await service.findAllByUserId('user-1');
 
       expect(result).toEqual(mockLogs);
-      expect(repository.findAllByUserId).toHaveBeenCalledWith('user-1');
+      expect(repository.findAllByUserId).toHaveBeenCalledWith(
+        'user-1',
+        undefined,
+      );
+    });
+
+    it('should forward the query to the repository', async () => {
+      repository.findAllByUserId.mockResolvedValue([]);
+
+      const query = { month: 11, year: 2026, action: 'DELETE' as const };
+      await service.findAllByUserId('user-1', query);
+
+      expect(repository.findAllByUserId).toHaveBeenCalledWith('user-1', query);
     });
 
     it('should return empty array when no logs exist', async () => {
