@@ -93,6 +93,8 @@ jest.mock("next-intl", () => ({
       columnsLabel: "columns",
       searchPlaceholder: "search",
       noResults: "noResults",
+      noData: "No data available",
+      noDataDescription: "No information available to display",
       selectedLabel: "selected",
       rowsLabel: "rows",
       pageLabel: "Page",
@@ -290,6 +292,6 @@ describe("AuditLogDataTable", () => {
   it("should render empty state when no audit logs exist", async () => {
     renderDataTable([]);
 
-    expect(screen.getByText("noResults")).toBeInTheDocument();
+    expect(screen.getByText("No data available")).toBeInTheDocument();
   });
 });

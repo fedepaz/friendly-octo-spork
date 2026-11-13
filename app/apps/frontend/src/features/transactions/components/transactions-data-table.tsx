@@ -10,20 +10,15 @@ import { TransactionDTO } from "@repo/shared";
 import { TransactionViewForm } from "./transactions-view-form";
 import { MonthSelector } from "@/components/data-display/data-table/month-selector";
 import { getCurrentMonth, getCurrentYear } from "@/lib/date-utils";
-import { EmptyState } from "@/components/common/empty-state";
 
 export function TransactionsDataTable() {
   const tdT = useTranslations("TransactionsDashboard");
   const [month, setMonth] = useState(getCurrentMonth() - 1);
-  const year = getCurrentYear();
+  const [year, setYear] = useState(getCurrentYear());
   const { data: transactions = [] } = useTransactionsByMonth(month + 1, year);
 
   const [selectedTransaction, setSelectedTransaction] =
     useState<TransactionDTO | null>(null);
-
-  if (!transactions || transactions.length === 0) {
-    return <EmptyState />;
-  }
 
   return (
     <>
@@ -34,7 +29,14 @@ export function TransactionsDataTable() {
         description={tdT("description")}
         tableName="transactions"
         totalCount={transactions.length}
-        toolbarContent={<MonthSelector onMonthChange={setMonth} />}
+        toolbarContent={
+          <MonthSelector
+            month={month}
+            year={year}
+            onMonthChange={setMonth}
+            onYearChange={setYear}
+          />
+        }
         onView={(row) => setSelectedTransaction(row)}
       />
 

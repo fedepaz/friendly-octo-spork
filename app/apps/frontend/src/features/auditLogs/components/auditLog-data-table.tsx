@@ -16,15 +16,20 @@ import type { AuditActionType, AuditLogDto } from "@repo/shared";
 export function AuditLogDataTable() {
   const adt = useTranslations("AuditLogsDashboard");
   const [month, setMonth] = useState(getCurrentMonth() - 1);
+  const [year, setYear] = useState(getCurrentYear());
   const [action, setAction] = useState<AuditActionType | undefined>(undefined);
-  const year = getCurrentYear();
   const { data: auditLogs = [] } = useAuditLogs(month + 1, year, action);
   const [selectedLog, setSelectedLog] = useState<AuditLogDto | null>(null);
 
   const toolbarContent = (
     <div className="flex gap-2">
       <AuditActionSelector onActionChange={setAction} />
-      <MonthSelector onMonthChange={setMonth} />
+      <MonthSelector
+        month={month}
+        year={year}
+        onMonthChange={setMonth}
+        onYearChange={setYear}
+      />
     </div>
   );
 

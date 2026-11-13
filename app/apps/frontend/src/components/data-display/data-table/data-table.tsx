@@ -60,6 +60,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { ExportDropdown } from "@/components/data-display/data-table/export-dropdown";
+import { EmptyState } from "@/components/common/empty-state";
 import { usePermission } from "@/hooks/usePermission";
 import { useBreakpoint } from "@/hooks/useMediaQuery";
 import {
@@ -215,6 +216,12 @@ export function DataTable<TData, TValue>({
       globalFilter,
     },
   });
+
+  // #76: clamp pagination when the dataset shrinks (e.g. switching to a
+  // month with fewer rows) — otherwise the footer reads "PAGE 3 OF 1"
+  useEffect(() => {
+    table.setPageIndex(0);
+  }, [data, table]);
 
   const [containerWidth, setContainerWidth] = useState(0);
   const tableContainerRef = useCallback((node: HTMLDivElement | null) => {
@@ -421,9 +428,10 @@ export function DataTable<TData, TValue>({
                     <TableRow>
                       <TableCell
                         colSpan={enhancedColumns.length}
-                        className="h-32 text-center text-xs font-black uppercase tracking-widest opacity-40"
+                        className="p-0"
                       >
-                        {dtT("noResults")}
+                        {/* #75: one shared empty treatment across list screens */}
+                        <EmptyState />
                       </TableCell>
                     </TableRow>
                   )}
@@ -471,6 +479,7 @@ export function DataTable<TData, TValue>({
                 <Button
                   variant="outline"
                   className="h-(--control-height-xs) xl:h-(--control-height-sm) w-7 p-0 bg-background/40 border-border/40 hover:border-primary/40 rounded-none transition-premium"
+                  aria-label={dtT("prevPage")}
                   onClick={() => table.previousPage()}
                   disabled={!table.getCanPreviousPage()}
                 >
@@ -479,6 +488,7 @@ export function DataTable<TData, TValue>({
                 <Button
                   variant="outline"
                   className="h-(--control-height-xs) xl:h-(--control-height-sm) w-7 p-0 bg-background/40 border-border/40 hover:border-primary/40 rounded-none transition-premium"
+                  aria-label={dtT("nextPage")}
                   onClick={() => table.nextPage()}
                   disabled={!table.getCanNextPage()}
                 >

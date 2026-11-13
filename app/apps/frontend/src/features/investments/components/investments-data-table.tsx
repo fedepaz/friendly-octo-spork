@@ -16,6 +16,7 @@ export function InvestmentsDataTable() {
       title={idT("title")}
       tableName="investments"
       description={idT("description")}
+      totalCount={investments.length}
       enableSelection={false}
     />
   );

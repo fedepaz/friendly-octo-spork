@@ -9,7 +9,9 @@ global.TextDecoder = TextDecoder as typeof TextDecoder;
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: (query: string) => ({
-    matches: false,
+    // min-width queries: report a large viewport so useBreakpoint = 2xl
+    // (full month names in MonthSelector instead of the sm 3-letter form)
+    matches: true,
     media: query,
     onchange: null,
     addListener: jest.fn(),
