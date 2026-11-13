@@ -9,7 +9,9 @@ export class AuditLogRepository {
 
   async findAllByUserId(userId: string) {
     return this.prisma.auditLog.findMany({
-      where: { userId },
+      // userId: null rows are system entries (public auth POSTs have no
+      // session user yet) — include them alongside the caller's own entries
+      where: { OR: [{ userId }, { userId: null }] },
       orderBy: { createdAt: 'desc' },
     });
   }
