@@ -6,6 +6,8 @@ import { AuditCrudInterceptor } from '../audit-crud.interceptor';
 describe('AuditCrudInterceptor', () => {
   async function captureAuditChanges(
     body: Record<string, unknown> | undefined,
+    query: Record<string, unknown> = {},
+    params: Record<string, unknown> = {},
   ): Promise<Record<string, unknown>> {
     const captured: { changes?: Record<string, unknown> } = {};
     const prismaStub = {
@@ -22,8 +24,8 @@ describe('AuditCrudInterceptor', () => {
     const request = {
       method: 'POST',
       url: '/api/profiles',
-      params: {},
-      query: {},
+      params,
+      query,
       headers: {},
       body,
     };
@@ -84,5 +86,30 @@ describe('AuditCrudInterceptor', () => {
     expect(body.note).toBe('contains the word token in prose');
     expect(meta.attempts).toBe(2);
     expect(meta.apiKey).toBe('[REDACTED]');
+  });
+
+  it('redacts sensitive keys in the query payload', async () => {
+    // Regression test for issue #82: query was persisted verbatim, so
+    // secrets like ?token=... landed in the audit trail in plaintext.
+    const changes = await captureAuditChanges(undefined, {
+      token: 'abc',
+      q: 'search',
+    });
+    const query = changes.query as Record<string, unknown>;
+
+    expect(query.token).toBe('[REDACTED]');
+    expect(query.q).toBe('search');
+  });
+
+  it('redacts sensitive keys in route params', async () => {
+    const changes = await captureAuditChanges(
+      undefined,
+      {},
+      { secret: 's', id: '42' },
+    );
+    const params = changes.params as Record<string, unknown>;
+
+    expect(params.secret).toBe('[REDACTED]');
+    expect(params.id).toBe('42');
   });
 });

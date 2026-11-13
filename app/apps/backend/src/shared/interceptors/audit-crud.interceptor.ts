@@ -76,8 +76,8 @@ export class AuditCrudInterceptor implements NestInterceptor {
             changes: {
               endpoint: url,
               method,
-              params,
-              query: request.query,
+              params: this.sanitizeBody(params ?? {}),
+              query: this.sanitizeBody(request.query ?? {}),
               body: this.sanitizeBody(body ?? {}),
             },
           });
