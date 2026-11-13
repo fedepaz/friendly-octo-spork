@@ -8,11 +8,17 @@ describe('AuditLogRepository', () => {
     auditLog: {
       findMany: jest.Mock;
     };
+    user: {
+      findMany: jest.Mock;
+    };
   };
 
   beforeEach(async () => {
     prisma = {
       auditLog: {
+        findMany: jest.fn(),
+      },
+      user: {
         findMany: jest.fn(),
       },
     };
@@ -36,7 +42,7 @@ describe('AuditLogRepository', () => {
   });
 
   describe('findAllByUserId', () => {
-    it('should return audit logs for a user', async () => {
+    it('should attach the user relation to owned entries', async () => {
       const mockLogs = [
         {
           id: '1',
@@ -54,14 +60,40 @@ describe('AuditLogRepository', () => {
         },
       ];
       prisma.auditLog.findMany.mockResolvedValue(mockLogs);
+      prisma.user.findMany.mockResolvedValue([
+        { id: 'user-1', name: 'masterofmoney', email: 'a@b.com' },
+      ]);
 
       const result = await repository.findAllByUserId('user-1');
 
-      expect(result).toEqual(mockLogs);
+      expect(result).toEqual([
+        {
+          ...mockLogs[0],
+          user: { id: 'user-1', name: 'masterofmoney', email: 'a@b.com' },
+        },
+      ]);
       expect(prisma.auditLog.findMany).toHaveBeenCalledWith({
         where: { OR: [{ userId: 'user-1' }, { userId: null }] },
         orderBy: { createdAt: 'desc' },
       });
+      // select-only: passwordHash must never be selected
+      expect(prisma.user.findMany).toHaveBeenCalledWith({
+        where: { id: { in: ['user-1'] } },
+        select: { id: true, name: true, email: true },
+      });
+    });
+
+    it('should leave user undefined for system entries (userId null)', async () => {
+      prisma.auditLog.findMany.mockResolvedValue([
+        { id: '2', userId: null, endpoint: '/auth/login' },
+      ]);
+
+      const result = await repository.findAllByUserId('user-1');
+
+      expect(result).toEqual([
+        { id: '2', userId: null, endpoint: '/auth/login', user: undefined },
+      ]);
+      expect(prisma.user.findMany).not.toHaveBeenCalled();
     });
 
     it('should return empty array when no logs exist', async () => {
@@ -70,10 +102,7 @@ describe('AuditLogRepository', () => {
       const result = await repository.findAllByUserId('user-999');
 
       expect(result).toEqual([]);
-      expect(prisma.auditLog.findMany).toHaveBeenCalledWith({
-        where: { OR: [{ userId: 'user-999' }, { userId: null }] },
-        orderBy: { createdAt: 'desc' },
-      });
+      expect(prisma.user.findMany).not.toHaveBeenCalled();
     });
   });
 });
