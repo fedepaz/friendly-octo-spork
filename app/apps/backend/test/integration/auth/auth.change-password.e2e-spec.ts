@@ -17,7 +17,7 @@ describe('Auth Change Password (e2e)', () => {
   it('should change password with valid current password', async () => {
     const user = await registerAndLogin(app);
 
-    await request(app.getHttpServer())
+    const res = await request(app.getHttpServer())
       .patch('/auth/password')
       .set('Authorization', `Bearer ${user.accessToken}`)
       .send({
@@ -25,6 +25,9 @@ describe('Auth Change Password (e2e)', () => {
         newPassword: 'Newpass123',
       })
       .expect(200);
+
+    // #77: backend messages are English (the frontend localizes separately)
+    expect(res.body.message).toBe('Password updated successfully');
 
     // Verify can login with new password
     await request(app.getHttpServer())

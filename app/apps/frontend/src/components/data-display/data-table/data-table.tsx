@@ -389,7 +389,7 @@ export function DataTable<TData, TValue>({
             {totalCount > 0 ? (
               <div className="flex items-center px-2 py-0.5 bg-primary/10 border border-primary/20">
                 <span className="text-xs font-black text-primary uppercase tracking-widest">
-                  {totalCount} REGISTROS
+                  {totalCount} {dtT("recordsLabel")}
                 </span>
               </div>
             ) : null}

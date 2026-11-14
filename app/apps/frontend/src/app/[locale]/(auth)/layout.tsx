@@ -5,12 +5,14 @@ import { AuthHeader } from "@/components/layout/auth-header";
 import { AuthSkeleton } from "@/features/auth";
 import { cn } from "@/lib/utils";
 import { Suspense } from "react";
+import { getTranslations } from "next-intl/server";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
 }
 
-export default function AuthLayout({ children }: AuthLayoutProps) {
+export default async function AuthLayout({ children }: AuthLayoutProps) {
+  const authT = await getTranslations("AuthLayout");
   return (
     <Suspense fallback={<AuthSkeleton />}>
       <AuthHeader />
@@ -31,10 +33,10 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
             </div>
             <div className="text-center space-y-1">
               <h1 className="text-xs font-black uppercase tracking-widest text-primary">
-                Terminal de Operaciones
+                {authT("title")}
               </h1>
               <p className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">
-                Secure Financial Interface v1.0
+                {authT("subtitle")}
               </p>
             </div>
           </div>

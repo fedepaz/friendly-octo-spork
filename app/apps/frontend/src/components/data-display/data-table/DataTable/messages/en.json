@@ -23,6 +23,7 @@
     "deleteConfirmTitle": "Delete this entry?",
     "deleteConfirmDescription": "The row will be hidden but its data is kept (soft delete).",
     "deleteAction": "Delete",
-    "deleteCancel": "Cancel"
+    "deleteCancel": "Cancel",
+    "recordsLabel": "RECORDS"
   }
 }
