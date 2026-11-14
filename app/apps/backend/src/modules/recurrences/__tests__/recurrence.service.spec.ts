@@ -48,6 +48,7 @@ describe('RecurrenceService', () => {
     saveRecurrence: jest.Mock;
     updateRecurrence: jest.Mock;
     getByMonthByTransactionType: jest.Mock;
+    hasTransactionForPart: jest.Mock;
   };
 
   beforeEach(async () => {
@@ -57,6 +58,7 @@ describe('RecurrenceService', () => {
       saveRecurrence: jest.fn(),
       updateRecurrence: jest.fn(),
       getByMonthByTransactionType: jest.fn(),
+      hasTransactionForPart: jest.fn().mockResolvedValue(false),
     };
 
     const module: TestingModule = await Test.createTestingModule({
