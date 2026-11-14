@@ -19,6 +19,7 @@ jest.mock("next-intl", () => ({
       nextPage: "Next page",
       prevPage: "Previous page",
       exportLabel: "Export",
+      recordsLabel: "RECORDS",
       deleteLabel: "Delete",
       deleteConfirmTitle: "Delete this entry?",
       deleteConfirmDescription: "This action can be undone in the database only.",
@@ -102,6 +103,23 @@ describe("DataTable", () => {
 
     expect(onDelete).toHaveBeenCalledTimes(1);
     expect(onDelete).toHaveBeenCalledWith(makeRows(3)[0]);
+  });
+
+  it("renders the records badge through i18n, not a hardcoded REGISTROS", () => {
+    // #77: the badge was hardcoded Spanish on every list screen
+    render(
+      <TooltipProvider>
+        <DataTable
+          columns={columns}
+          data={makeRows(3)}
+          title="Things"
+          tableName="things"
+          totalCount={3}
+        />
+      </TooltipProvider>,
+    );
+    expect(screen.getByText("3 RECORDS")).toBeInTheDocument();
+    expect(screen.queryByText(/REGISTROS/)).toBeNull();
   });
 
   it("hides the delete action when onDelete is not provided", () => {

@@ -112,7 +112,7 @@ describe('AuthController', () => {
 
       expect(result).toEqual({
         success: true,
-        message: 'Contraseña actualizada correctamente',
+        message: 'Password updated successfully',
       });
       expect(service.changePassword).toHaveBeenCalledWith(
         'user-1',

@@ -97,6 +97,7 @@ jest.mock("next-intl", () => ({
       noDataDescription: "No information available to display",
       selectedLabel: "selected",
       rowsLabel: "rows",
+      recordsLabel: "RECORDS",
       pageLabel: "Page",
       ofLabel: "of",
       sortAscLabel: "sortAsc",
@@ -230,7 +231,7 @@ describe("AuditLogDataTable", () => {
   it("should display record count", async () => {
     renderDataTable();
 
-    expect(screen.getByText("3 REGISTROS")).toBeInTheDocument();
+    expect(screen.getByText("3 RECORDS")).toBeInTheDocument();
   });
 
   it("should render view buttons for each row", async () => {
