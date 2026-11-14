@@ -150,6 +150,8 @@ describe('DashboardService', () => {
       expect(incomeExpenseRepo.getMonthlyIncomeExpense).toHaveBeenCalledWith(
         'user-1',
         6,
+        undefined,
+        undefined,
       );
     });
 
@@ -161,6 +163,21 @@ describe('DashboardService', () => {
       expect(incomeExpenseRepo.getMonthlyIncomeExpense).toHaveBeenCalledWith(
         'user-1',
         12,
+        undefined,
+        undefined,
+      );
+    });
+
+    it('should pass endMonth/endYear through to the repository', async () => {
+      incomeExpenseRepo.getMonthlyIncomeExpense.mockResolvedValue([]);
+
+      await service.getMonthlyIncomeExpense('user-1', 6, 10, 2026);
+
+      expect(incomeExpenseRepo.getMonthlyIncomeExpense).toHaveBeenCalledWith(
+        'user-1',
+        6,
+        10,
+        2026,
       );
     });
 
