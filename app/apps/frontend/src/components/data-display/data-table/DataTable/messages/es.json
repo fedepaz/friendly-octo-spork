@@ -18,6 +18,11 @@
     "selectedLabel": "SELECCIONADOS",
     "rowsLabel": "Filas",
     "prevPage": "Página anterior",
-    "nextPage": "Página siguiente"
+    "nextPage": "Página siguiente",
+    "deleteLabel": "Eliminar",
+    "deleteConfirmTitle": "¿Eliminar este registro?",
+    "deleteConfirmDescription": "La fila se ocultará pero se conservarán los datos (borrado suave).",
+    "deleteAction": "Eliminar",
+    "deleteCancel": "Cancelar"
   }
 }

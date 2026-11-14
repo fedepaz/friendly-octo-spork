@@ -33,7 +33,19 @@ import {
   Eye,
   Filter,
   Search,
+  Trash2,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -89,6 +101,8 @@ interface DataTableProps<TData, TValue> {
   tableName: string;
   description?: string;
   onView?: (row: TData) => void;
+  /** Renders a confirmable trash action in the actions column. */
+  onDelete?: (row: TData) => void;
   onExport?: (
     format: "csv" | "excel" | "json" | "pdf",
     selectedRows: TData[],
@@ -115,6 +129,7 @@ export function DataTable<TData, TValue>({
   description,
   tableName,
   onView,
+  onDelete,
   onExport,
   totalCount = 0,
   enableSelection,
@@ -133,6 +148,7 @@ export function DataTable<TData, TValue>({
 
   const allowedActions = {
     canView: !!onView && dataTablePermissions.canRead,
+    canDelete: !!onDelete && dataTablePermissions.canDelete,
   };
 
   const selectColumn: ColumnDef<TData, TValue> = {
@@ -163,33 +179,80 @@ export function DataTable<TData, TValue>({
     enableHiding: false,
     accessorKey: "actions",
     header: ({}) => {
-      if (!allowedActions.canView) return null;
+      if (!allowedActions.canView && !allowedActions.canDelete) return null;
       return <HeaderComponent titulo={dtT("actionsHeader")} />;
     },
     cell: ({ row }) => {
-      if (!allowedActions.canView) return null;
+      if (!allowedActions.canView && !allowedActions.canDelete) return null;
 
       return (
         <div className="flex items-center justify-center gap-2 min-h-(--table-compact-row-height) xl:min-h-(--table-row-height)">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="min-h-(--table-compact-row-height) xl:min-h-(--table-row-height) text-muted-foreground"
-                onClick={() => onView?.(row.original)}
-                aria-label={dtT("viewDetailsLabel")}
+          {allowedActions.canView && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="min-h-(--table-compact-row-height) xl:min-h-(--table-row-height) text-muted-foreground"
+                  onClick={() => onView?.(row.original)}
+                  aria-label={dtT("viewDetailsLabel")}
+                >
+                  <Eye className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent
+                side="top"
+                className="border border-border shadow-md bg-popover"
               >
-                <Eye className="h-4 w-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent
-              side="top"
-              className="border border-border shadow-md bg-popover"
-            >
-              <p>{dtT("viewDetailsLabel")}</p>
-            </TooltipContent>
-          </Tooltip>
+                <p>{dtT("viewDetailsLabel")}</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
+          {allowedActions.canDelete && (
+            <AlertDialog>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="min-h-(--table-compact-row-height) xl:min-h-(--table-row-height) text-muted-foreground hover:text-destructive"
+                      aria-label={dtT("deleteLabel")}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </AlertDialogTrigger>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="top"
+                  className="border border-border shadow-md bg-popover"
+                >
+                  <p>{dtT("deleteLabel")}</p>
+                </TooltipContent>
+              </Tooltip>
+              <AlertDialogContent className="rounded-none border-border/40 shadow-premium">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-sm font-black uppercase tracking-widest">
+                    {dtT("deleteConfirmTitle")}
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="text-xs">
+                    {dtT("deleteConfirmDescription")}
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="gap-2">
+                  <AlertDialogCancel className="rounded-none">
+                    {dtT("deleteCancel")}
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    className="rounded-none bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    onClick={() => onDelete?.(row.original)}
+                  >
+                    {dtT("deleteAction")}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
         </div>
       );
     },

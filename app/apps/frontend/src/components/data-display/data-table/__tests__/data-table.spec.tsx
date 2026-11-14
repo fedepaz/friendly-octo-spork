@@ -1,6 +1,7 @@
 // src/components/data-display/data-table/__tests__/data-table.spec.tsx
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { DataTable } from "../data-table";
 
 jest.mock("next-intl", () => ({
@@ -18,6 +19,11 @@ jest.mock("next-intl", () => ({
       nextPage: "Next page",
       prevPage: "Previous page",
       exportLabel: "Export",
+      deleteLabel: "Delete",
+      deleteConfirmTitle: "Delete this entry?",
+      deleteConfirmDescription: "This action can be undone in the database only.",
+      deleteAction: "Delete",
+      deleteCancel: "Cancel",
     };
     return translations[key] ?? key;
   },
@@ -29,7 +35,7 @@ jest.mock("@/hooks/usePermission", () => ({
     canRead: true,
     canCreate: false,
     canUpdate: false,
-    canDelete: false,
+    canDelete: true,
   }),
 }));
 
@@ -63,6 +69,53 @@ describe("DataTable", () => {
     // #56: the toolbar (search) stays reachable around the empty state
     expect(screen.getByPlaceholderText("Search...")).toBeInTheDocument();
     expect(container).toBeTruthy();
+  });
+
+  it("offers a confirmable delete action when onDelete is provided", async () => {
+    // #52/#66: the actions column only ever had a View button — soft
+    // delete needs a trash action with a confirmation step.
+    const user = userEvent.setup();
+    const onDelete = jest.fn();
+    render(
+      <TooltipProvider>
+        <DataTable
+          columns={columns}
+          data={makeRows(3)}
+          title="Things"
+          tableName="things"
+          onDelete={onDelete}
+        />
+      </TooltipProvider>,
+    );
+
+    const deleteButtons = screen.getAllByLabelText("Delete");
+    expect(deleteButtons).toHaveLength(3);
+
+    await user.click(deleteButtons[0]);
+    expect(
+      await screen.findByText("Delete this entry?"),
+    ).toBeInTheDocument();
+
+    const dialog = screen.getByRole("alertdialog");
+    const confirm = within(dialog).getByRole("button", { name: "Delete" });
+    await user.click(confirm);
+
+    expect(onDelete).toHaveBeenCalledTimes(1);
+    expect(onDelete).toHaveBeenCalledWith(makeRows(3)[0]);
+  });
+
+  it("hides the delete action when onDelete is not provided", () => {
+    render(
+      <TooltipProvider>
+        <DataTable
+          columns={columns}
+          data={makeRows(2)}
+          title="Things"
+          tableName="things"
+        />
+      </TooltipProvider>,
+    );
+    expect(screen.queryByLabelText("Delete")).toBeNull();
   });
 
   it("resets to page 1 when the data shrinks below the current page", async () => {

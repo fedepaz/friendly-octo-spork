@@ -93,6 +93,7 @@ describe('UserRepository', () => {
       expect(result).toEqual(expected);
       expect(prisma.user.findMany).toHaveBeenCalledWith({
         where: { deletedAt: null },
+        orderBy: { createdAt: 'asc' },
       });
     });
 

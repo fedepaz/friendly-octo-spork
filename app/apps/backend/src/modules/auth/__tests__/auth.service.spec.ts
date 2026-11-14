@@ -71,6 +71,7 @@ describe('AuthService', () => {
           useValue: {
             findAllEntities: jest.fn().mockResolvedValue([]),
             setPermissionsForUser: jest.fn().mockResolvedValue(undefined),
+            grantDefaultPermissions: jest.fn().mockResolvedValue(undefined),
           },
         },
       ],

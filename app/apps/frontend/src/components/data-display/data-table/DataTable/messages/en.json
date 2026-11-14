@@ -18,6 +18,11 @@
     "selectedLabel": "SELECTED",
     "rowsLabel": "Rows",
     "prevPage": "Previous page",
-    "nextPage": "Next page"
+    "nextPage": "Next page",
+    "deleteLabel": "Delete",
+    "deleteConfirmTitle": "Delete this entry?",
+    "deleteConfirmDescription": "The row will be hidden but its data is kept (soft delete).",
+    "deleteAction": "Delete",
+    "deleteCancel": "Cancel"
   }
 }

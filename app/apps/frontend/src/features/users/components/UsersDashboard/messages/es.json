@@ -3,6 +3,14 @@
     "title": "Directorio de Operadores",
     "description": "Gestión de identidades y privilegios del sistema",
     "slideOverTitle": "Terminal de Seguridad",
-    "identityPrefix": "IDENTIDAD: "
+    "identityPrefix": "IDENTIDAD: ",
+    "createLabel": "Registrar nuevo operador",
+    "createTitle": "Crear nuevo operador",
+    "createDesc": "Inicializar una nueva identidad del sistema",
+    "saveLabel": "Crear operador",
+    "toastCreateSuccess": "Operador {name} creado correctamente",
+    "toastCreateError": "Error al crear operador: {error}",
+    "toastDeleteSuccess": "Operador {name} eliminado",
+    "toastDeleteError": "Error al eliminar operador: {error}"
   }
 }

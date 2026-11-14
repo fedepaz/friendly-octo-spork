@@ -20,4 +20,10 @@ export const accountService = {
       body: JSON.stringify(data),
     });
   },
+
+  softDelete: (id: string) => {
+    return clientFetch<AccountDTO>(`accounts/${id}/delete`, {
+      method: "POST",
+    });
+  },
 };

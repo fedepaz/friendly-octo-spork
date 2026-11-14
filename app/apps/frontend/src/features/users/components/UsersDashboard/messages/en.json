@@ -3,6 +3,14 @@
     "title": "Operator Directory",
     "description": "Management of system identities and privileges",
     "slideOverTitle": "Security Terminal",
-    "identityPrefix": "IDENTITY: "
+    "identityPrefix": "IDENTITY: ",
+    "createLabel": "Register new operator",
+    "createTitle": "Create new operator",
+    "createDesc": "Initialize a new system identity",
+    "saveLabel": "Create operator",
+    "toastCreateSuccess": "Operator {name} created successfully",
+    "toastCreateError": "Error creating operator: {error}",
+    "toastDeleteSuccess": "Operator {name} deleted",
+    "toastDeleteError": "Error deleting operator: {error}"
   }
 }

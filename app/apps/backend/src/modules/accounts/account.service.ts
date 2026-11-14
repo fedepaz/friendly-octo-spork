@@ -5,6 +5,7 @@ import {
   ConflictException,
   Injectable,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import {
@@ -39,6 +40,14 @@ export class AccountService {
     this.logger.log(`Getting accounts for user ${userId}`);
     const accounts = await this.accountsRepo.getAccounts(userId);
     return accounts.map((account) => this.mapToDTO(account));
+  }
+
+  async softDeleteAccount(userId: string, id: string): Promise<AccountDTO> {
+    if (!userId) throw new BadRequestException('User id is required');
+    this.logger.log(`Soft-deleting account ${id} for user ${userId}`);
+    const deleted = await this.accountsRepo.softDelete(id, userId);
+    if (!deleted) throw new NotFoundException('Account not found');
+    return this.mapToDTO(deleted);
   }
 
   async getAccountById(userId: string, id: string): Promise<AccountDTO | null> {

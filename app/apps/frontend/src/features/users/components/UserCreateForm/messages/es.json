@@ -1,0 +1,10 @@
+{
+  "UserCreateForm": {
+    "nameLabel": "ID de operador",
+    "namePlaceholder": "Ej.: AuditUser1",
+    "emailLabel": "Correo",
+    "emailPlaceholder": "usuario@example.com",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "Mínimo 6 caracteres"
+  }
+}
