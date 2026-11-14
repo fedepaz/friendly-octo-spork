@@ -114,3 +114,6 @@ raw_session.txt
 # Personal financial data — never commit
 docs/*.ods
 docs/*.sql
+
+history-import-report.md
+history-import.json
