@@ -1,6 +1,11 @@
 // backend/src/modules/recurrences/recurrence.service.ts
 
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 import {
   RecurrenceRepository,
   RecurrenceWithRelations,
@@ -180,6 +185,20 @@ export class RecurrenceService {
       recurrence.currentPart != null &&
       recurrence.currentPart + 1 >= recurrence.totalParts;
 
+    // #60: per-part due check — the expected next part must not already
+    // have a transaction (the dashboard to-pay list uses the same rule)
+    const expectedPart = (recurrence.currentPart ?? 0) + 1;
+    const partAlreadyPaid = await this.recurrenceRepo.hasTransactionForPart(
+      recurrenceId,
+      expectedPart,
+    );
+    if (partAlreadyPaid) {
+      throw new ConflictException({
+        code: 'DUPLICATE_RECORD',
+        message: 'This occurrence has already been paid',
+      });
+    }
+
     const updateRecurrenceData = {
       userId,
       nextDate,
@@ -188,6 +207,20 @@ export class RecurrenceService {
       metadata: data.metadata
         ? (data.metadata as Prisma.InputJsonValue)
         : Prisma.JsonNull,
+      // #59: persist the update wizard's edits so future occurrences use
+      // them — previously only nextDate/currentPart/active/metadata were
+      // written and amount/frequency/name/totalParts were silently dropped
+      ...(data.amount != null ? { amount: data.amount } : {}),
+      ...(data.frequency ? { frequency: data.frequency } : {}),
+      ...(data.recurrenceName ? { name: data.recurrenceName } : {}),
+      ...(data.totalParts != null ? { totalParts: data.totalParts } : {}),
+      ...(data.categoryId !== undefined ? { categoryId: data.categoryId } : {}),
+      ...(data.sourceAccountId !== undefined
+        ? { sourceAccountId: data.sourceAccountId }
+        : {}),
+      ...(data.targetAccountId !== undefined
+        ? { targetAccountId: data.targetAccountId }
+        : {}),
     };
 
     this.logger.log(`Updating recurrence ${recurrenceId} for user ${userId}`);

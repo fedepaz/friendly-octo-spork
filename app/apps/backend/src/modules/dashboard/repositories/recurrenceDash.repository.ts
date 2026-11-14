@@ -69,7 +69,18 @@ export class RecurrenceDashRepository {
       AND NOT EXISTS (
         SELECT 1 FROM "Transaction" t
         WHERE t."recurrenceId" = r."id"
-          AND t."date" BETWEEN ${startOfMonth} AND ${endOfMonth}
+          AND (
+            -- #60: part-keyed guard — hide only the occurrence whose
+            -- expected part (currentPart + 1) has been paid, so a weekly
+            -- recurrence reappears for its next part later this month.
+            -- Legacy rows without a part number fall back to the old
+            -- month-window check.
+            t."recurrencePartNumber" = COALESCE(r."currentPart", 0) + 1
+            OR (
+              t."recurrencePartNumber" IS NULL
+              AND t."date" BETWEEN ${startOfMonth} AND ${endOfMonth}
+            )
+          )
       )
     ORDER BY r."nextDate" ASC
   `;
