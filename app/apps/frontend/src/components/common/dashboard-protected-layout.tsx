@@ -5,6 +5,7 @@ import { useAuthContext } from "@/features/auth/providers/AuthProvider";
 import { LoadingSpinner } from "./loading-spinner";
 import { DatabaseUnavailablePage } from "./database-unavailable";
 import { PendingPermissionsPage } from "./pending-permissions";
+import { hardRedirect } from "@/lib/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -27,9 +28,17 @@ export function DashboardProtectedLayout({
   } = useAuthContext();
 
   useEffect(() => {
-    if (!authLoading && !isSignedIn) {
-      router.replace("/login");
-    }
+    if (authLoading || isSignedIn) return;
+    router.replace("/login");
+    // #50: after a back/forward document load, router.replace can silently
+    // issue no request and the page hangs on the spinner forever — force a
+    // hard redirect if the soft navigation hasn't reached login in time.
+    const fallback = window.setTimeout(() => {
+      if (!window.location.pathname.includes("/login")) {
+        hardRedirect("/login");
+      }
+    }, 800);
+    return () => window.clearTimeout(fallback);
   }, [authLoading, isSignedIn, router]);
 
   useEffect(() => {

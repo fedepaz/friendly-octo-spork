@@ -2,6 +2,25 @@
 
 Essential commands and checklists for keeping the platform running smoothly.
 
+> **TODO — Updating the App (Production)**: document the full update flow
+> (push to `main` → Deploy workflow builds/pushes to GHCR → server
+> `docker compose pull && up -d` → verify). The auto-deploy step in
+> `.github/workflows/deploy.yml` is still a placeholder; updates are manual
+> until then.
+
+## Compose Files
+
+| File | Purpose |
+|---|---|
+| `docker/docker-compose.dev.yml` | Local dev DB only (PostgreSQL + Adminer) |
+| `docker/docker-compose.deploy.yml` | Production stack — pulls images from GHCR (`:latest`) |
+| `docs/deployment/examples/docker-compose.yml` | Example full stack with **local builds** (reference only) |
+
+> **Compose context:** commands below target the **deploy stack**
+> (`docker-compose.deploy.yml` + `.env`). Run them from the `docker/`
+> directory (or your server's deploy directory). If the file keeps its
+> original name on the server, add `-f docker-compose.deploy.yml`.
+
 ## Common Commands
 
 ### Logs & Monitoring
@@ -18,8 +37,9 @@ docker compose logs -f db
 # Restart a specific service
 docker compose restart nextjs
 
-# Rebuild and update one service (no downtime for others)
-docker compose up -d --build nextjs
+# Update one service to the latest published image (no downtime for others)
+docker compose pull nextjs
+docker compose up -d nextjs
 
 # Remove unused images to save disk space
 docker image prune -f

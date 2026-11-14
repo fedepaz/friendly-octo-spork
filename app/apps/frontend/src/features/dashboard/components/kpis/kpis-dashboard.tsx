@@ -5,39 +5,51 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";
 
-import {
-  useMonthlyIncomeExpense,
-  useRecentAccounts,
-} from "../../hooks/dashboardHooks";
+import { useMonthlyIncomeExpense } from "../../hooks/dashboardHooks";
+import { useAccounts } from "@/features/accounts/hooks/accountsHooks";
 import { cn, formatCurrency } from "@/lib/utils";
 import { useWizard } from "@/providers/wizard-form-provider";
 import { useTranslations, useLocale } from "next-intl";
 
-export function KPIsDashboard() {
+interface KPIsDashboardProps {
+  /** 0-based month + year of the selected dashboard period */
+  month: number;
+  year: number;
+}
+
+export function KPIsDashboard({ month, year }: KPIsDashboardProps) {
   const kpT = useTranslations("DashboardKPIs");
   const locale = useLocale();
-  const { data: accounts = [] } = useRecentAccounts();
-  const { data: incomeExpenseData = [] } = useMonthlyIncomeExpense();
+  // #63.1: Net Worth must sum ALL accounts — the recent endpoint is
+  // LIMIT 3 and silently dropped the rest from the total.
+  const { data: accounts = [] } = useAccounts();
+  // #64: income/expense KPIs follow the selected period (6 months ending there)
+  const { data: incomeExpenseData = [] } = useMonthlyIncomeExpense(
+    6,
+    month + 1,
+    year,
+  );
   const { openTransaction, openCard } = useWizard();
 
   const totalNetWorth = accounts.reduce(
     (sum, acc) => sum + parseFloat(acc.balance),
     0,
   );
-  const monthlyIncome = incomeExpenseData[incomeExpenseData.length - 1].income;
-  const monthlyExpenses =
-    incomeExpenseData[incomeExpenseData.length - 1].expenses;
 
-  const lastIdx = incomeExpenseData.length - 1;
+  const last = incomeExpenseData[incomeExpenseData.length - 1];
+  const prev = incomeExpenseData[incomeExpenseData.length - 2];
+  const monthlyIncome = last?.income ?? "0";
+  const monthlyExpenses = last?.expenses ?? "0";
+
   const currentNetFlow =
-    parseFloat(incomeExpenseData[lastIdx]?.income ?? "0") -
-    parseFloat(incomeExpenseData[lastIdx]?.expenses ?? "0");
+    parseFloat(last?.income ?? "0") - parseFloat(last?.expenses ?? "0");
   const prevNetFlow =
-    parseFloat(incomeExpenseData[lastIdx - 1]?.income ?? "0") -
-    parseFloat(incomeExpenseData[lastIdx - 1]?.expenses ?? "0");
+    parseFloat(prev?.income ?? "0") - parseFloat(prev?.expenses ?? "0");
+  // #63.2: this delta IS net flow — labeled as such instead of implying
+  // it is a change in net worth
   const netFlowDelta = currentNetFlow - prevNetFlow;
 
-  const currentMonth = new Date().toLocaleDateString(locale, {
+  const currentMonth = new Date(year, month, 1).toLocaleDateString(locale, {
     month: "long",
   });
 
@@ -70,7 +82,9 @@ export function KPIsDashboard() {
               )}>
                 {netFlowDelta >= 0 ? "+" : ""}
                 {formatCurrency(Math.abs(netFlowDelta))}
-                <span className="text-muted-foreground/70 ml-1">{kpT("vsPrevMonth")}</span>
+                <span className="text-muted-foreground/70 ml-1">
+                  {kpT("netFlowVsPrev")}
+                </span>
               </span>
             </div>
           </CardContent>

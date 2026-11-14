@@ -1,7 +1,7 @@
 {
   "AnalyticChartsMain": {
-    "title": "Evolución de Patrimonio",
-    "description": "Evolución histórica del patrimonio neto mensual",
+    "title": "Evolución del Flujo Neto",
+    "description": "Ingresos mensuales menos egresos",
     "real": "Real"
   }
 }

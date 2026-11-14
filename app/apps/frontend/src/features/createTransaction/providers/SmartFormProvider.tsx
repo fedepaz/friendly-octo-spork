@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTransactionInput, createTransactionSchema } from "@repo/shared";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import type { FieldErrors } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { FormContainer } from "../components/FormContainer";
 import { useCreateTransaction } from "../hooks/createMutationHooks";
@@ -31,14 +32,16 @@ export function SmartFormProvider({ onClose }: { onClose: () => void }) {
       isRecurrence: false,
     },
   });
-  // Filter errors from form field state
-  const errorMessageEnd = Object.values(methods.formState.errors)
-    .map((err) => err?.message)
-    .filter(Boolean)
-    .join(", ");
 
-  const onInvalid = () => {
-    toast.error(errorMessageEnd, {
+  // #54: toast the errors PASSED to onInvalid — the old code read
+  // errorMessageEnd from the last render, which is empty when no prior
+  // error existed, so a failed Save looked like a silent no-op.
+  const onInvalid = (errors: FieldErrors<CreateTransactionInput>) => {
+    const message = Object.values(errors)
+      .map((err) => err?.message)
+      .filter(Boolean)
+      .join(", ");
+    toast.error(message || sfpT("operationError"), {
       id: "wizard-validation-error",
     });
   };

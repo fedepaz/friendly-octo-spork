@@ -1,7 +1,7 @@
 {
   "DashboardKPIs": {
     "netWorth": "Net Worth",
-    "vsPrevMonth": "vs prev. month",
+    "netFlowVsPrev": "net flow vs prev. month",
     "incomeTitle": "Income {month}",
     "expensesTitle": "Expenses {month}",
     "newTransaction": "New Transaction",

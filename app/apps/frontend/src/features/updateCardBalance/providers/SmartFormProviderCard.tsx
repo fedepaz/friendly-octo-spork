@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CardCloseInputDTO, CardCloseResponseDTO, cardCloseSchema } from "@repo/shared";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import type { FieldErrors } from "react-hook-form";
 
 import { mapServerErrorsToForm } from "@/lib/utils/form-error-mapper";
 import { ApiError } from "@/lib/api/client-fetch";
@@ -13,14 +14,16 @@ import { useTranslations } from "next-intl";
 
 import { FormContainerCard } from "../components/FormContainerCard";
 import { useUpdateCardBalance } from "../hooks/updateCardMutationHooks";
-import { getCurrentMonthYear } from "@/lib/date-utils";
+import { getCurrentMonthYear, getNextMonthYear } from "@/lib/date-utils";
 
 export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
   const [activeStep, setActiveStep] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [closeResponse, setCloseResponse] = useState<CardCloseResponseDTO | null>(null);
   const { month, year } = getCurrentMonthYear();
+  const next = getNextMonthYear(month, year);
   const epT = useTranslations("ErrorProvider");
+  const sfpT = useTranslations("SmartFormProvider");
 
   const { mutateAsync: closeCard, isPending: isSubmitting } =
     useUpdateCardBalance();
@@ -29,19 +32,21 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
     mode: "onChange",
     resolver: zodResolver(cardCloseSchema),
     defaultValues: {
-      year: year,
-      month: month + 1,
+      year: next.year,
+      month: next.month,
       recurrencesTransactions: [],
     },
   });
 
-  const errorMessageEnd = Object.values(methods.formState.errors)
-    .map((err) => err?.message)
-    .filter(Boolean)
-    .join(", ");
-
-  const onInvalid = () => {
-    toast.error(errorMessageEnd, {
+  // Same fix as the create-transaction wizard: toast the errors PASSED to
+  // onInvalid — the old code read a stale string from the last render, so a
+  // failed Save looked like a silent no-op.
+  const onInvalid = (errors: FieldErrors<CardCloseInputDTO>) => {
+    const message = Object.values(errors)
+      .map((err) => err?.message)
+      .filter(Boolean)
+      .join(", ");
+    toast.error(message || epT("validationError"), {
       id: "wizard-validation-error",
     });
   };
@@ -89,7 +94,7 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
             <div className="text-xs font-black uppercase tracking-widest text-destructive border border-destructive/20 bg-destructive/5 p-3 flex items-start gap-2 shadow-etched animate-premium-in">
               <div className="h-1.5 w-1.5 bg-destructive mt-1 shrink-0" />
               <div className="flex-1">
-                <p className="font-black mb-0.5">Error de Operacion</p>
+                <p className="font-black mb-0.5">{sfpT("operationError")}</p>
                 <p className="opacity-70 leading-relaxed">{errorMessage}</p>
               </div>
             </div>

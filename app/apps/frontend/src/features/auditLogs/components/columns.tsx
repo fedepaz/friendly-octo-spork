@@ -8,6 +8,7 @@ import {
   TacticalTextCell,
 } from "@/components/data-display/data-table";
 import { AuditLogDto } from "@repo/shared";
+import { formatChanges } from "../lib/format-changes";
 import {
   Plus,
   Pencil,
@@ -28,23 +29,10 @@ interface HeaderProps {
   column: Column<any>;
 }
 
-const formatChanges = (changes: Record<string, unknown> | null): string => {
-  if (!changes || Object.keys(changes).length === 0) return "—";
-
-  const keys = Object.keys(changes).slice(0, 2);
-  const summary = keys
-    .map((key) => {
-      const value = changes[key];
-      if (typeof value === "object" && value !== null && "after" in value) {
-        const v = value as { before: unknown; after: unknown };
-        return `${key}: ${String(v.before)} → ${String(v.after)}`;
-      }
-      return `${key}: ${String(value)}`;
-    })
-    .join(", ");
-
-  return keys.length < Object.keys(changes).length ? `${summary}...` : summary;
-};
+function ActionHeader({ column }: HeaderProps) {
+  const t = useTranslations("AuditLogColumns");
+  return <SortableHeader column={column}>{t("action")}</SortableHeader>;
+}
 
 const getActionIcon = (action: string) => {
   switch (action) {
@@ -58,11 +46,6 @@ const getActionIcon = (action: string) => {
       return <FileText className="h-4 w-4 text-muted-foreground" />;
   }
 };
-
-function ActionHeader({ column }: HeaderProps) {
-  const t = useTranslations("AuditLogColumns");
-  return <SortableHeader column={column}>{t("action")}</SortableHeader>;
-}
 
 function ActionCell({ row }: CellProps) {
   const action = row.original.action as string;
@@ -93,7 +76,7 @@ function UserHeader({ column }: HeaderProps) {
 
 function UserCell({ row }: CellProps) {
   const user = row.original.user;
-  const username = user?.username || "—";
+  const username = user?.name || "—";
 
   return (
     <div className="flex items-center gap-2.5 min-w-[160px]">
@@ -192,8 +175,8 @@ export const auditLogColumns: ColumnDef<AuditLogDto>[] = [
     cell: ActionCell,
   },
   {
-    id: "user.username",
-    accessorFn: (row) => row.user?.username ?? "",
+    id: "user.name",
+    accessorFn: (row) => row.user?.name ?? "",
     header: UserHeader,
     cell: UserCell,
   },

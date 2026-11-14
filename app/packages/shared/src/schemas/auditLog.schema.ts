@@ -25,13 +25,12 @@ export type EntityType = z.infer<typeof EntityTypeSchema>;
 
 export const AuditLogSchema = z.object({
   id: z.string(),
-  userId: z.string(),
+  userId: z.string().nullable(),
   user: z
     .object({
       id: z.string(),
-      username: z.string(),
-      firstName: z.string().optional(),
-      lastName: z.string().optional(),
+      name: z.string(),
+      email: z.string(),
     })
     .optional(),
   action: AuditActionTypeSchema,

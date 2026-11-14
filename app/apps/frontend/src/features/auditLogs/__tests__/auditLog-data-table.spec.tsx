@@ -17,9 +17,8 @@ const mockAuditLogs: AuditLogDto[] = [
     userId: "user-001",
     user: {
       id: "user-001",
-      username: "jdoe",
-      firstName: "John",
-      lastName: "Doe",
+      name: "jdoe",
+      email: "jdoe@example.com",
     },
     action: "CREATE",
     entityType: "ACCOUNT",
@@ -37,9 +36,8 @@ const mockAuditLogs: AuditLogDto[] = [
     userId: "user-001",
     user: {
       id: "user-001",
-      username: "jdoe",
-      firstName: "John",
-      lastName: "Doe",
+      name: "jdoe",
+      email: "jdoe@example.com",
     },
     action: "UPDATE",
     entityType: "TRANSACTION",
@@ -59,9 +57,8 @@ const mockAuditLogs: AuditLogDto[] = [
     userId: "user-002",
     user: {
       id: "user-002",
-      username: "admin",
-      firstName: "Admin",
-      lastName: "User",
+      name: "admin",
+      email: "admin@example.com",
     },
     action: "DELETE",
     entityType: "CARD",
@@ -96,8 +93,11 @@ jest.mock("next-intl", () => ({
       columnsLabel: "columns",
       searchPlaceholder: "search",
       noResults: "noResults",
+      noData: "No data available",
+      noDataDescription: "No information available to display",
       selectedLabel: "selected",
       rowsLabel: "rows",
+      recordsLabel: "RECORDS",
       pageLabel: "Page",
       ofLabel: "of",
       sortAscLabel: "sortAsc",
@@ -113,7 +113,8 @@ jest.mock("next-intl", () => ({
       cancelAction: "Cancel",
       responsible: "Responsible",
       fullName: "Full name",
-      username: "Username",
+      email: "Email",
+      duration: "Duration",
       internalId: "Internal ID",
       affectedEntity: "Affected Entity",
       resourceType: "Resource type",
@@ -230,7 +231,7 @@ describe("AuditLogDataTable", () => {
   it("should display record count", async () => {
     renderDataTable();
 
-    expect(screen.getByText("3 REGISTROS")).toBeInTheDocument();
+    expect(screen.getByText("3 RECORDS")).toBeInTheDocument();
   });
 
   it("should render view buttons for each row", async () => {
@@ -292,6 +293,6 @@ describe("AuditLogDataTable", () => {
   it("should render empty state when no audit logs exist", async () => {
     renderDataTable([]);
 
-    expect(screen.getByText("noResults")).toBeInTheDocument();
+    expect(screen.getByText("No data available")).toBeInTheDocument();
   });
 });

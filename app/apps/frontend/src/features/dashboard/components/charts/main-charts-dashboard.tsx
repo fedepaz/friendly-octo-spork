@@ -3,11 +3,16 @@
 import { AnalyticChartsDashboard } from "./analytics/analytic-charts-dashboard";
 import { SidebarChartsDashboard } from "./sidebar/sidebar-charts-dashboard";
 
-export function MainChartsDashboard() {
+interface MainChartsDashboardProps {
+  month: number; // 0-based
+  year: number;
+}
+
+export function MainChartsDashboard({ month, year }: MainChartsDashboardProps) {
   return (
     <div className="grid flex-1 grid-cols-1 lg:grid-cols-12 gap-3 min-h-0 overflow-y-auto lg:overflow-hidden pr-1 custom-scrollbar">
       {/* Analytics Section (Span 8) */}
-      <AnalyticChartsDashboard />
+      <AnalyticChartsDashboard month={month} year={year} />
 
       {/* Sidebar Section (Span 4) */}
       <SidebarChartsDashboard />

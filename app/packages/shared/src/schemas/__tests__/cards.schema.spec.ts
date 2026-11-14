@@ -179,6 +179,41 @@ describe('Card schemas', () => {
       });
       expect(result.success).toBe(false);
     });
+
+    it('should reject month above 12 (December rollover guard)', () => {
+      // Regression test for issue #62: month 13 leaked through unvalidated.
+      const result = cardCloseSchema.safeParse({
+        ...validClose,
+        month: 13,
+      });
+      expect(result.success).toBe(false);
+    });
+
+    it('should reject month below 1', () => {
+      expect(
+        cardCloseSchema.safeParse({ ...validClose, month: 0 }).success,
+      ).toBe(false);
+      expect(
+        cardCloseSchema.safeParse({ ...validClose, month: -1 }).success,
+      ).toBe(false);
+    });
+
+    it('should reject non-integer month', () => {
+      const result = cardCloseSchema.safeParse({
+        ...validClose,
+        month: 1.5,
+      });
+      expect(result.success).toBe(false);
+    });
+
+    it('should accept boundary months 1 and 12', () => {
+      expect(
+        cardCloseSchema.safeParse({ ...validClose, month: 1 }).success,
+      ).toBe(true);
+      expect(
+        cardCloseSchema.safeParse({ ...validClose, month: 12 }).success,
+      ).toBe(true);
+    });
   });
 
   describe('cardCloseResponseSchema', () => {

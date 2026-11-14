@@ -229,28 +229,9 @@ export class AuthService {
       passwordHash,
     );
 
-    // Auto-assign default permissions for the new user
-    const entities = await this.permissionsService.findAllEntities();
-    const readOnlyEntities = [
-      'categories',
-      'dashboard',
-      'audit_logs',
-      'users',
-      'user_permissions',
-    ];
-    const defaultPermissions = entities.map((entity) => ({
-      tableName: entity.name,
-      canCreate: !readOnlyEntities.includes(entity.name),
-      canRead: true,
-      canUpdate: !readOnlyEntities.includes(entity.name),
-      canDelete: false,
-      scope: 'OWN' as const,
-      permissionType: entity.permissionType,
-    }));
-    await this.permissionsService.setPermissionsForUser(
-      user.id,
-      defaultPermissions,
-    );
+    // Auto-assign default permissions for the new user (shared with
+    // admin user creation in UsersService)
+    await this.permissionsService.grantDefaultPermissions(user.id);
 
     // generate tokens
     const tokens = await this.generateTokens({

@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import 'dotenv/config';
 import { AppModule } from './app.module';
+import { buildCorsOptions } from './config/cors';
 import { Logger } from 'nestjs-pino';
 import { AllExceptionsFilter } from './shared/filters/all-exceptions.filter';
 import { AuditCrudInterceptor } from './shared/interceptors/audit-crud.interceptor';
@@ -33,12 +34,7 @@ async function bootstrap() {
     .map((origin) => origin.trim())
     .filter(Boolean);
 
-  app.enableCors({
-    origin: corsOrigins,
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    methods: ['GET', 'POST', 'OPTIONS'],
-  });
+  app.enableCors(buildCorsOptions(corsOrigins));
 
   // Enable shutdown hooks for graceful database connection closing
   app.enableShutdownHooks();

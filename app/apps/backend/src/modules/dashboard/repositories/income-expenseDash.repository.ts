@@ -21,11 +21,24 @@ export class IncomeExpenseDashRepository {
   async getMonthlyIncomeExpense(
     userId: string,
     months: number = 6,
+    endMonth?: number,
+    endYear?: number,
   ): Promise<IncomeExpenseInterface[]> {
-    // Get current date
-    const now = new Date();
+    // #64: anchor the window at the requested end month so month
+    // navigation can show past periods; default = current month
+    const anchor =
+      endMonth && endYear
+        ? new Date(Date.UTC(endYear, endMonth - 1, 1))
+        : new Date();
     const startDate = new Date(
-      Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - months, 1, 0, 0, 0),
+      Date.UTC(
+        anchor.getUTCFullYear(),
+        anchor.getUTCMonth() - months,
+        1,
+        0,
+        0,
+        0,
+      ),
     );
 
     // Raw SQL to get income and expenses for each month
@@ -68,9 +81,10 @@ export class IncomeExpenseDashRepository {
     const timeline: IncomeExpenseInterface[] = [];
 
     for (let i = months - 1; i >= 0; i--) {
-      // oldest to newest
-      const d = new Date();
-      d.setUTCMonth(d.getUTCMonth() - i);
+      // oldest to newest, ending at the anchor month
+      const d = new Date(
+        Date.UTC(anchor.getUTCFullYear(), anchor.getUTCMonth() - i, 1),
+      );
       const year = d.getUTCFullYear();
       const month = d.getUTCMonth() + 1;
       const found = results.find((r) => r.year === year && r.month === month);

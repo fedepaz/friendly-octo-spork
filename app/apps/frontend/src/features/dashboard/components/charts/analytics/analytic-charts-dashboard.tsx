@@ -20,14 +20,22 @@ function AnalyticChartSkeleton() {
   );
 }
 
-export function AnalyticChartsDashboard() {
+interface AnalyticChartsDashboardProps {
+  month: number; // 0-based
+  year: number;
+}
+
+export function AnalyticChartsDashboard({
+  month,
+  year,
+}: AnalyticChartsDashboardProps) {
   return (
     <div className="lg:col-span-8 flex flex-col gap-3 min-h-0">
       <Suspense fallback={<AnalyticChartSkeleton />}>
-        <AnalyticChartsMain />
+        <AnalyticChartsMain month={month} year={year} />
       </Suspense>
       <Suspense fallback={<AnalyticChartSkeleton />}>
-        <AnalyticChartsBottom />
+        <AnalyticChartsBottom month={month} year={year} />
       </Suspense>
     </div>
   );

@@ -5,7 +5,13 @@ import {
   HttpStatus,
   Param,
   ParseIntPipe,
+  Query,
 } from '@nestjs/common';
+import { ZodValidationPipe } from '../../shared/pipes/zod-validation-pipe';
+import {
+  dashboardIncomeExpenseQuerySchema,
+  DashboardIncomeExpenseQuery,
+} from './dto/dashboard.query';
 import { DashboardService } from './dashboard.service';
 import {
   AccountDTO,
@@ -42,8 +48,15 @@ export class DashboardController {
   async getMonthlyIncomeExpense(
     @CurrentUser() user: AuthUser,
     @Param('months', ParseIntPipe) months: number,
+    @Query(new ZodValidationPipe(dashboardIncomeExpenseQuerySchema))
+    query: DashboardIncomeExpenseQuery,
   ): Promise<IncomeExpenseDTO[]> {
-    return this.dashboardService.getMonthlyIncomeExpense(user.id, months);
+    return this.dashboardService.getMonthlyIncomeExpense(
+      user.id,
+      months,
+      query.endMonth,
+      query.endYear,
+    );
   }
 
   @Get('toPay')

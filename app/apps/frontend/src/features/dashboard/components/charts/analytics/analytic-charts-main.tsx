@@ -21,9 +21,18 @@ import { useTranslations } from "next-intl";
 import { useMonthlyIncomeExpense } from "../../../hooks/dashboardHooks";
 import { CustomTooltip } from "@/features/dashboard/utils/utils";
 
-export function AnalyticChartsMain() {
+interface AnalyticChartsMainProps {
+  month: number; // 0-based
+  year: number;
+}
+
+export function AnalyticChartsMain({ month, year }: AnalyticChartsMainProps) {
   const acmT = useTranslations("AnalyticChartsMain");
-  const { data: incomeExpenseData = [] } = useMonthlyIncomeExpense();
+  const { data: incomeExpenseData = [] } = useMonthlyIncomeExpense(
+    6,
+    month + 1,
+    year,
+  );
 
   const netWorthData = incomeExpenseData.map((item) => ({
     month: item.month,

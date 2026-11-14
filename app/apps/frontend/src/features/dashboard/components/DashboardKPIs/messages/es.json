@@ -1,7 +1,7 @@
 {
   "DashboardKPIs": {
     "netWorth": "Patrimonio Neto",
-    "vsPrevMonth": "vs mes ant.",
+    "netFlowVsPrev": "flujo neto vs mes ant.",
     "incomeTitle": "Ingresos {month}",
     "expensesTitle": "Gastos {month}",
     "newTransaction": "Nueva Transacción",

@@ -11,13 +11,12 @@ import {
 } from "@repo/shared";
 import { AccountViewForm } from "./account-view-form";
 import { AccountCreateForm } from "./account-create-form";
-import { useCreateAccount } from "../hooks/createAccountHook";
+import { useCreateAccount, useDeleteAccount } from "../hooks/createAccountHook";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { EmptyState } from "@/components/common/empty-state";
 
 export function AccountDataTable() {
   const adT = useTranslations("AccountDashboard");
@@ -28,6 +27,14 @@ export function AccountDataTable() {
   const [slideOverOpen, setSlideOverOpen] = useState(false);
 
   const { mutateAsync: createAccount } = useCreateAccount();
+  const { mutateAsync: deleteAccount } = useDeleteAccount();
+
+  const handleDelete = async (row: AccountDTO) => {
+    try {
+      await deleteAccount(row.id);
+      if (selectedAccount?.id === row.id) handleCancel();
+    } catch {}
+  };
 
   const formCreateAccount = useForm<CreateAccountInput>({
     resolver: zodResolver(createAccountSchema),
@@ -73,6 +80,7 @@ export function AccountDataTable() {
         tableName="accounts"
         totalCount={accounts.length}
         onView={handleView}
+        onDelete={handleDelete}
         toolbarContent={
           <Button
             variant="outline"

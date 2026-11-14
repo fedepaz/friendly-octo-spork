@@ -1,4 +1,5 @@
 // backend/prisma/seed.ts
+import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
 import { AccountType, Currency } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
@@ -147,7 +148,7 @@ async function main() {
     entitiesData.map((e) =>
       prisma.entity.upsert({
         where: { name: e.name },
-        update: {},
+        update: { label: e.label, permissionType: e.permissionType },
         create: {
           name: e.name,
           label: e.label,
@@ -165,7 +166,7 @@ async function main() {
       where: {
         userId_entityId: { userId: user.id, entityId: entity.id },
       },
-      update: {},
+      update: { permissionType: entity.permissionType },
       create: {
         userId: user.id,
         entityId: entity.id,

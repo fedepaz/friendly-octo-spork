@@ -1,0 +1,5 @@
+{
+  "UpdateCardBalanceHooks": {
+    "toastSuccess": "Card balance for {account} updated to {balance}"
+  }
+}

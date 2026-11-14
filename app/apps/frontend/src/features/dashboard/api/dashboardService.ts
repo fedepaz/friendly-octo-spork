@@ -33,9 +33,17 @@ export const accountDashboardService = {
 };
 
 export const incomeExpenseDashboardService = {
-  fetchMonthlyIncomeExpense: (months: number) => {
+  fetchMonthlyIncomeExpense: (
+    months: number,
+    endMonth?: number,
+    endYear?: number,
+  ) => {
+    const params = new URLSearchParams();
+    if (endMonth) params.set("endMonth", String(endMonth));
+    if (endYear) params.set("endYear", String(endYear));
+    const qs = params.toString();
     return clientFetch<IncomeExpenseDTO[]>(
-      `dashboard/income-expense/${months}`,
+      `dashboard/income-expense/${months}${qs ? `?${qs}` : ""}`,
       {
         method: "GET",
       },

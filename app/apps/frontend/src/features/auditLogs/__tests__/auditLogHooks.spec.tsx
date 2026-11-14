@@ -7,6 +7,7 @@ import { useAuditLogs } from "../hooks/auditLogHooks";
 import { server } from "@/mocks/server";
 import { http, HttpResponse } from "msw";
 import { AuditLogDto } from "@repo/shared";
+import { auditLogQueryKeys } from "@/lib/queryKeys";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -102,9 +103,8 @@ const mockAuditLogs: AuditLogDto[] = [
     userId: "user-001",
     user: {
       id: "user-001",
-      username: "jdoe",
-      firstName: "John",
-      lastName: "Doe",
+      name: "jdoe",
+      email: "jdoe@example.com",
     },
     action: "CREATE",
     entityType: "ACCOUNT",
@@ -122,9 +122,8 @@ const mockAuditLogs: AuditLogDto[] = [
     userId: "user-001",
     user: {
       id: "user-001",
-      username: "jdoe",
-      firstName: "John",
-      lastName: "Doe",
+      name: "jdoe",
+      email: "jdoe@example.com",
     },
     action: "UPDATE",
     entityType: "TRANSACTION",
@@ -158,7 +157,7 @@ describe("useAuditLogs", () => {
       }),
     );
 
-    const { result } = renderHook(() => useAuditLogs(), {
+    const { result } = renderHook(() => useAuditLogs(11, 2026), {
       wrapper: createWrapper(),
     });
 
@@ -179,7 +178,7 @@ describe("useAuditLogs", () => {
       }),
     );
 
-    const { result } = renderHook(() => useAuditLogs(), {
+    const { result } = renderHook(() => useAuditLogs(11, 2026), {
       wrapper: createWrapper(),
     });
 
@@ -197,7 +196,7 @@ describe("useAuditLogs", () => {
       }),
     );
 
-    const { result } = renderHook(() => useAuditLogs(), {
+    const { result } = renderHook(() => useAuditLogs(11, 2026), {
       wrapper: createWrapper(),
     });
 
@@ -205,8 +204,8 @@ describe("useAuditLogs", () => {
       expect(result.current.data).toHaveLength(2);
     });
 
-    expect(result.current.data[0].user?.username).toBe("jdoe");
-    expect(result.current.data[0].user?.firstName).toBe("John");
+    expect(result.current.data[0].user?.name).toBe("jdoe");
+    expect(result.current.data[0].user?.email).toBe("jdoe@example.com");
   });
 
   it("should handle error state by throwing to Error Boundary", async () => {
@@ -221,7 +220,7 @@ describe("useAuditLogs", () => {
       }),
     );
 
-    renderHook(() => useAuditLogs(), {
+    renderHook(() => useAuditLogs(11, 2026), {
       wrapper: createErrorWrapper(onError),
     });
 
@@ -236,7 +235,39 @@ describe("useAuditLogs", () => {
     expect(caughtError).toBeDefined();
   });
 
-  it("should return valid query keys", () => {
-    expect(["auditLog"]).toEqual(["auditLog"]);
+  it("should build structured query keys per month and action", () => {
+    expect(auditLogQueryKeys.byMonth(11, 2026)).toEqual([
+      "auditLog",
+      11,
+      2026,
+      "all",
+    ]);
+    expect(auditLogQueryKeys.byMonth(12, 2026, "DELETE")).toEqual([
+      "auditLog",
+      12,
+      2026,
+      "DELETE",
+    ]);
+  });
+
+  it("requests the server with month, year and action params", async () => {
+    const urls: string[] = [];
+    server.use(
+      http.get(`${BACKEND_URL}/audit-logs`, ({ request }) => {
+        urls.push(request.url);
+        return HttpResponse.json([]);
+      }),
+    );
+
+    renderHook(() => useAuditLogs(11, 2026, "DELETE"), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => {
+      expect(urls.length).toBeGreaterThan(0);
+    });
+    expect(urls[0]).toContain("month=11");
+    expect(urls[0]).toContain("year=2026");
+    expect(urls[0]).toContain("action=DELETE");
   });
 });

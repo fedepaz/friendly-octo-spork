@@ -190,6 +190,16 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ...(
         await import(`../features/auth/hooks/AuthHooks/messages/${locale}.json`)
       ).default,
+      ...(
+        await import(
+          `../features/createTransaction/hooks/CreateTransactionHooks/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/updateCardBalance/hooks/UpdateCardBalanceHooks/messages/${locale}.json`
+        )
+      ).default,
       ...(await import(`../hooks/DataTableActions/messages/${locale}.json`))
         .default,
 
@@ -198,6 +208,9 @@ export default getRequestConfig(async ({ requestLocale }) => {
         await import(
           `../features/auth/components/AuthDashboard/messages/${locale}.json`
         )
+      ).default,
+      ...(
+        await import(`../app/[locale]/(auth)/messages/${locale}.json`)
       ).default,
       ...(
         await import(
@@ -398,6 +411,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ).default,
       ...(
         await import(
+          `../features/users/components/UserCreateForm/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
           `../features/users/components/UserDashboardSkeleton/messages/${locale}.json`
         )
       ).default,
@@ -438,6 +456,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ...(
         await import(
           `../features/auditLogs/components/AuditLogForm/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
+          `../features/auditLogs/components/AuditActionSelector/messages/${locale}.json`
         )
       ).default,
 

@@ -1,0 +1,5 @@
+{
+  "CreateTransactionHooks": {
+    "toastSuccess": "Transaction created: {description}"
+  }
+}

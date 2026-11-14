@@ -15,7 +15,9 @@ import {
   type ColumnDef,
   type ColumnFiltersState,
   type SortingState,
+  type Table,
   type VisibilityState,
+  filterFns,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -31,7 +33,19 @@ import {
   Eye,
   Filter,
   Search,
+  Trash2,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -60,6 +74,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { ExportDropdown } from "@/components/data-display/data-table/export-dropdown";
+import { EmptyState } from "@/components/common/empty-state";
 import { usePermission } from "@/hooks/usePermission";
 import { useBreakpoint } from "@/hooks/useMediaQuery";
 import {
@@ -69,6 +84,16 @@ import {
 } from "@/components/ui/tooltip";
 import { useTranslations } from "next-intl";
 
+declare module "@tanstack/table-core" {
+  interface ColumnMeta<TData, TValue> {
+    /**
+     * Hidden column that exists only to back a faceted filter — never
+     * displayed by the auto-visibility pass or the columns dropdown.
+     */
+    facetOnly?: boolean;
+  }
+}
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -76,6 +101,8 @@ interface DataTableProps<TData, TValue> {
   tableName: string;
   description?: string;
   onView?: (row: TData) => void;
+  /** Renders a confirmable trash action in the actions column. */
+  onDelete?: (row: TData) => void;
   onExport?: (
     format: "csv" | "excel" | "json" | "pdf",
     selectedRows: TData[],
@@ -83,7 +110,9 @@ interface DataTableProps<TData, TValue> {
   loading?: boolean;
   totalCount?: number;
   enableSelection?: boolean;
-  toolbarContent?: ReactNode;
+  /** Static node, or a render function that receives the table instance
+   *  (needed by faceted filters, which bind to column instances). */
+  toolbarContent?: ReactNode | ((table: Table<TData, TValue>) => ReactNode);
 }
 
 function HeaderComponent({ titulo }: { titulo: string }) {
@@ -100,6 +129,7 @@ export function DataTable<TData, TValue>({
   description,
   tableName,
   onView,
+  onDelete,
   onExport,
   totalCount = 0,
   enableSelection,
@@ -118,6 +148,7 @@ export function DataTable<TData, TValue>({
 
   const allowedActions = {
     canView: !!onView && dataTablePermissions.canRead,
+    canDelete: !!onDelete && dataTablePermissions.canDelete,
   };
 
   const selectColumn: ColumnDef<TData, TValue> = {
@@ -148,33 +179,80 @@ export function DataTable<TData, TValue>({
     enableHiding: false,
     accessorKey: "actions",
     header: ({}) => {
-      if (!allowedActions.canView) return null;
+      if (!allowedActions.canView && !allowedActions.canDelete) return null;
       return <HeaderComponent titulo={dtT("actionsHeader")} />;
     },
     cell: ({ row }) => {
-      if (!allowedActions.canView) return null;
+      if (!allowedActions.canView && !allowedActions.canDelete) return null;
 
       return (
         <div className="flex items-center justify-center gap-2 min-h-(--table-compact-row-height) xl:min-h-(--table-row-height)">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="min-h-(--table-compact-row-height) xl:min-h-(--table-row-height) text-muted-foreground"
-                onClick={() => onView?.(row.original)}
-                aria-label={dtT("viewDetailsLabel")}
+          {allowedActions.canView && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="min-h-(--table-compact-row-height) xl:min-h-(--table-row-height) text-muted-foreground"
+                  onClick={() => onView?.(row.original)}
+                  aria-label={dtT("viewDetailsLabel")}
+                >
+                  <Eye className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent
+                side="top"
+                className="border border-border shadow-md bg-popover"
               >
-                <Eye className="h-4 w-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent
-              side="top"
-              className="border border-border shadow-md bg-popover"
-            >
-              <p>{dtT("viewDetailsLabel")}</p>
-            </TooltipContent>
-          </Tooltip>
+                <p>{dtT("viewDetailsLabel")}</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
+          {allowedActions.canDelete && (
+            <AlertDialog>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="min-h-(--table-compact-row-height) xl:min-h-(--table-row-height) text-muted-foreground hover:text-destructive"
+                      aria-label={dtT("deleteLabel")}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </AlertDialogTrigger>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="top"
+                  className="border border-border shadow-md bg-popover"
+                >
+                  <p>{dtT("deleteLabel")}</p>
+                </TooltipContent>
+              </Tooltip>
+              <AlertDialogContent className="rounded-none border-border/40 shadow-premium">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="text-sm font-black uppercase tracking-widest">
+                    {dtT("deleteConfirmTitle")}
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="text-xs">
+                    {dtT("deleteConfirmDescription")}
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="gap-2">
+                  <AlertDialogCancel className="rounded-none">
+                    {dtT("deleteCancel")}
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    className="rounded-none bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    onClick={() => onDelete?.(row.original)}
+                  >
+                    {dtT("deleteAction")}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          )}
         </div>
       );
     },
@@ -203,6 +281,7 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    filterFns,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     onGlobalFilterChange: setGlobalFilter,
@@ -215,6 +294,12 @@ export function DataTable<TData, TValue>({
       globalFilter,
     },
   });
+
+  // #76: clamp pagination when the dataset shrinks (e.g. switching to a
+  // month with fewer rows) — otherwise the footer reads "PAGE 3 OF 1"
+  useEffect(() => {
+    table.setPageIndex(0);
+  }, [data, table]);
 
   const [containerWidth, setContainerWidth] = useState(0);
   const tableContainerRef = useCallback((node: HTMLDivElement | null) => {
@@ -240,8 +325,14 @@ export function DataTable<TData, TValue>({
         ? Math.floor(availableForData / (minColumnWidth + cellPadding))
         : 5;
 
+    const facetOnlyIds = new Set(
+      allColumns
+        .filter((column) => column.columnDef.meta?.facetOnly)
+        .map((column) => column.id),
+    );
     const dataColumnCount = columnsId.filter(
-      (id) => id !== "actions" && id !== "select",
+      (id) =>
+        id !== "actions" && id !== "select" && !facetOnlyIds.has(id),
     ).length;
     const visibleCount = Math.min(Math.max(maxDataColumns, 2), dataColumnCount);
 
@@ -251,6 +342,10 @@ export function DataTable<TData, TValue>({
       columnsId.forEach((id) => {
         if (id === "actions" || id === "select") {
           visibility[id] = true;
+          return;
+        }
+        if (facetOnlyIds.has(id)) {
+          visibility[id] = false;
           return;
         }
         const autoVisible = dataIndex < visibleCount;
@@ -294,7 +389,7 @@ export function DataTable<TData, TValue>({
             {totalCount > 0 ? (
               <div className="flex items-center px-2 py-0.5 bg-primary/10 border border-primary/20">
                 <span className="text-xs font-black text-primary uppercase tracking-widest">
-                  {totalCount} REGISTROS
+                  {totalCount} {dtT("recordsLabel")}
                 </span>
               </div>
             ) : null}
@@ -320,7 +415,10 @@ export function DataTable<TData, TValue>({
               >
                 {table
                   .getAllColumns()
-                  .filter((column) => column.getCanHide())
+                  .filter(
+                    (column) =>
+                      column.getCanHide() && !column.columnDef.meta?.facetOnly,
+                  )
                   .map((column) => {
                     return (
                       <DropdownMenuCheckboxItem
@@ -360,7 +458,9 @@ export function DataTable<TData, TValue>({
 
             {toolbarContent && (
               <div className="flex items-center gap-2">
-                {toolbarContent}
+                {typeof toolbarContent === "function"
+                  ? toolbarContent(table)
+                  : toolbarContent}
               </div>
             )}
           </div>
@@ -421,9 +521,10 @@ export function DataTable<TData, TValue>({
                     <TableRow>
                       <TableCell
                         colSpan={enhancedColumns.length}
-                        className="h-32 text-center text-xs font-black uppercase tracking-widest opacity-40"
+                        className="p-0"
                       >
-                        {dtT("noResults")}
+                        {/* #75: one shared empty treatment across list screens */}
+                        <EmptyState />
                       </TableCell>
                     </TableRow>
                   )}
@@ -471,6 +572,7 @@ export function DataTable<TData, TValue>({
                 <Button
                   variant="outline"
                   className="h-(--control-height-xs) xl:h-(--control-height-sm) w-7 p-0 bg-background/40 border-border/40 hover:border-primary/40 rounded-none transition-premium"
+                  aria-label={dtT("prevPage")}
                   onClick={() => table.previousPage()}
                   disabled={!table.getCanPreviousPage()}
                 >
@@ -479,6 +581,7 @@ export function DataTable<TData, TValue>({
                 <Button
                   variant="outline"
                   className="h-(--control-height-xs) xl:h-(--control-height-sm) w-7 p-0 bg-background/40 border-border/40 hover:border-primary/40 rounded-none transition-premium"
+                  aria-label={dtT("nextPage")}
                   onClick={() => table.nextPage()}
                   disabled={!table.getCanNextPage()}
                 >

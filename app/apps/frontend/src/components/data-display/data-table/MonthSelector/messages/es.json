@@ -12,6 +12,8 @@
     "september": "Septiembre",
     "october": "Octubre",
     "november": "Noviembre",
-    "december": "Diciembre"
+    "december": "Diciembre",
+    "prevYear": "Año anterior",
+    "nextYear": "Año siguiente"
   }
 }

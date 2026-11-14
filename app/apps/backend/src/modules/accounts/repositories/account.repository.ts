@@ -59,6 +59,29 @@ export class AccountRepository {
     });
   }
 
+  /** Soft-delete: hides the account from lists while keeping all data. */
+  async softDelete(
+    id: string,
+    userId: string,
+  ): Promise<AccountWithRelations | null> {
+    const account = await this.prisma.account.findFirst({
+      where: { id, userId, deletedAt: null },
+      include: {
+        transactionsFrom: true,
+        transactionsTo: true,
+      },
+    });
+    if (!account) return null;
+    return this.prisma.account.update({
+      where: { id },
+      data: { deletedAt: new Date(), deletedByUserId: userId },
+      include: {
+        transactionsFrom: true,
+        transactionsTo: true,
+      },
+    });
+  }
+
   async updateBalance(
     id: string,
     amount: Prisma.DecimalJsLike | number | string,

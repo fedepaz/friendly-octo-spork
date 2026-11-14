@@ -126,6 +126,53 @@ const createTransactionSchemaBase = z.object({
 });
 
 // ─── 2. CREATE SCHEMA (with cross-field validation) ─────────────────────
+
+// Single source of truth for which transaction types need which account
+// roles. Used by the superRefine below AND by the wizard's accounts step
+// (the superRefine only runs once the base schema parses, which is not
+// true mid-wizard — e.g. `description` is filled in a later step).
+export const SOURCE_REQUIRED_TRANSACTION_TYPES = [
+  "EXPENSE",
+  "TRANSFER",
+  "INVESTMENT",
+  "PAYMENT",
+] as const;
+
+export const TARGET_REQUIRED_TRANSACTION_TYPES = [
+  "INCOME",
+  "TRANSFER",
+  "INVESTMENT",
+  "RETURN",
+] as const;
+
+/** Returns an error message when a transaction type is missing a
+ *  required account, or null when the requirements are satisfied. */
+export function getAccountRequirementError(data: {
+  type?: string | null;
+  sourceAccountId?: string | null;
+  targetAccountId?: string | null;
+}): string | null {
+  if (
+    data.type &&
+    (SOURCE_REQUIRED_TRANSACTION_TYPES as readonly string[]).includes(
+      data.type,
+    ) &&
+    !data.sourceAccountId
+  ) {
+    return `${data.type} requires a source account`;
+  }
+  if (
+    data.type &&
+    (TARGET_REQUIRED_TRANSACTION_TYPES as readonly string[]).includes(
+      data.type,
+    ) &&
+    !data.targetAccountId
+  ) {
+    return `${data.type} requires a target account`;
+  }
+  return null;
+}
+
 export const createTransactionSchema = createTransactionSchemaBase.superRefine(
   (data, ctx) => {
     // ─── Recurrence validation ───────────────────────────────────────────
@@ -164,8 +211,8 @@ export const createTransactionSchema = createTransactionSchemaBase.superRefine(
     }
 
     // ─── Type-dependent account validation ───────────────────────────────
-    const requiresSource = ["EXPENSE", "TRANSFER", "INVESTMENT", "PAYMENT"];
-    const requiresTarget = ["INCOME", "TRANSFER", "INVESTMENT", "RETURN"];
+    const requiresSource: string[] = [...SOURCE_REQUIRED_TRANSACTION_TYPES];
+    const requiresTarget: string[] = [...TARGET_REQUIRED_TRANSACTION_TYPES];
 
     if (requiresSource.includes(data.type) && !data.sourceAccountId) {
       ctx.addIssue({

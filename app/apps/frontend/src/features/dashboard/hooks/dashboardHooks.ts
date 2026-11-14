@@ -29,10 +29,19 @@ export const useRecentAccounts = () => {
   });
 };
 
-export const useMonthlyIncomeExpense = () => {
+export const useMonthlyIncomeExpense = (
+  months = 6,
+  endMonth?: number,
+  endYear?: number,
+) => {
   return useSuspenseQuery<IncomeExpenseDTO[]>({
-    queryKey: dashboardQueryKeys.incomeExpense(6),
-    queryFn: () => incomeExpenseDashboardService.fetchMonthlyIncomeExpense(6),
+    queryKey: dashboardQueryKeys.incomeExpense(months, endMonth, endYear),
+    queryFn: () =>
+      incomeExpenseDashboardService.fetchMonthlyIncomeExpense(
+        months,
+        endMonth,
+        endYear,
+      ),
   });
 };
 

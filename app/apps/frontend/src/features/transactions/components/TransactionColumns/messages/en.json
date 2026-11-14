@@ -12,6 +12,8 @@
     "transfer": "Transfer",
     "investment": "Investment",
     "return": "Return",
-    "payment": "Payment"
+    "payment": "Payment",
+    "account": "Account",
+    "category": "Category"
   }
 }

@@ -1,7 +1,7 @@
 {
   "AnalyticChartsMain": {
-    "title": "Net Worth Evolution",
-    "description": "Historical evolution of monthly net worth",
+    "title": "Net Flow Evolution",
+    "description": "Monthly income minus expenses",
     "real": "Real"
   }
 }

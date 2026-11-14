@@ -21,6 +21,36 @@ export class UserRepository {
   async getAllUsers(): Promise<User[]> {
     return this.prisma.user.findMany({
       where: { deletedAt: null },
+      orderBy: { createdAt: 'asc' },
+    });
+  }
+
+  async findByName(name: string): Promise<User | null> {
+    return this.prisma.user.findFirst({
+      where: { name, deletedAt: null },
+    });
+  }
+
+  async createUser(
+    name: string,
+    email: string,
+    passwordHash: string,
+  ): Promise<User> {
+    return this.prisma.user.create({
+      data: {
+        name,
+        email,
+        passwordHash,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    });
+  }
+
+  async softDelete(id: string, deletedByUserId: string): Promise<User> {
+    return this.prisma.user.update({
+      where: { id },
+      data: { deletedAt: new Date(), deletedByUserId },
     });
   }
 }

@@ -104,6 +104,21 @@ export async function clientFetch<T>(
     // Handle non 2xx responses
     if (!res.ok) {
       if (res.status === 401) {
+        // #49: only enter the refresh flow when there is a session to
+        // restore. A failed login (no refresh token) or a request to the
+        // login endpoint itself must fall through to normal error handling
+        // — the old refresh-failure path forced a hard reload that wiped
+        // the error toast, and retrying a login could loop forever.
+        const isLoginRequest = endpoint
+          .replace(/^\/+/, "")
+          .startsWith("auth/login");
+        const hasRefreshSession =
+          typeof window !== "undefined" &&
+          !!localStorage.getItem("refreshToken");
+
+        // When this is false (failed login, or no session to restore) we
+        // fall through to the generic error handling below.
+        if (!isLoginRequest && hasRefreshSession) {
         // Try to refresh the token
         if (isRefreshing) {
           // If already refreshing, queue this request
@@ -153,6 +168,7 @@ export async function clientFetch<T>(
           }
         } finally {
           isRefreshing = false;
+        }
         }
       }
 

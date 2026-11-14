@@ -99,6 +99,8 @@ export class RecurrenceRepository {
     return this.prisma.recurrence.findMany({
       where: {
         userId,
+        // #60: paused recurrences must not list (consistent with dashboard/cards)
+        active: true,
         // Recurrence must have started on or before the end of this month
         startDate: { lte: endOfMonth },
         // AND either:
@@ -119,5 +121,17 @@ export class RecurrenceRepository {
         { nextDate: { sort: 'asc', nulls: 'last' } },
       ],
     });
+  }
+
+  /** #60: does a transaction already exist for the expected part? */
+  async hasTransactionForPart(
+    recurrenceId: string,
+    partNumber: number,
+  ): Promise<boolean> {
+    const existing = await this.prisma.transaction.findFirst({
+      where: { recurrenceId, recurrencePartNumber: partNumber },
+      select: { id: true },
+    });
+    return existing !== null;
   }
 }

@@ -20,12 +20,11 @@ import {
 import { cn, formatCurrency } from "@/lib/utils";
 import { Repeat, ShoppingCart, ArrowLeftRight, Banknote } from "lucide-react";
 import { getCurrentMonth, getCurrentYear } from "@/lib/date-utils";
-import { EmptyState } from "@/components/common/empty-state";
 
 export function CardsDataTable() {
   const cdT = useTranslations("CardsDashboard");
   const [month, setMonth] = useState(getCurrentMonth() - 1);
-  const year = getCurrentYear();
+  const [year, setYear] = useState(getCurrentYear());
   const { data } = useCardTransactionsByMonth(year, month + 1);
 
   const [selectedCardTransaction, setSelectedCardTransaction] =
@@ -46,10 +45,6 @@ export function CardsDataTable() {
   const summary = data?.summary;
   const balance = Number(summary?.balance ?? 0);
   const isPositiveBalance = balance >= 0;
-
-  if (!cards || cards.length === 0) {
-    return <EmptyState />;
-  }
 
   return (
     <>
@@ -118,7 +113,14 @@ export function CardsDataTable() {
         description={cdT("tableDescription")}
         tableName="cards"
         totalCount={cards.length}
-        toolbarContent={<MonthSelector onMonthChange={setMonth} />}
+        toolbarContent={
+          <MonthSelector
+            month={month}
+            year={year}
+            onMonthChange={setMonth}
+            onYearChange={setYear}
+          />
+        }
         onView={(row) => setSelectedCardTransaction(row)}
       />
 

@@ -7,6 +7,7 @@ import {
   getCurrentMonth,
   getCurrentYear,
   getCurrentMonthYear,
+  getNextMonthYear,
 } from '../date-utils';
 
 describe('Frontend date utilities', () => {
@@ -242,6 +243,28 @@ describe('Frontend date utilities', () => {
       const { month, year } = getCurrentMonthYear();
       expect(month).toBe(getCurrentMonth());
       expect(year).toBe(getCurrentYear());
+    });
+  });
+
+  describe('getNextMonthYear', () => {
+    it('should roll December over to January of the next year', () => {
+      // Regression test for issue #62: month + 1 without rollover produced
+      // month 13 in December.
+      expect(getNextMonthYear(12, 2026)).toEqual({ month: 1, year: 2027 });
+    });
+
+    it('should increment within the same year for other months', () => {
+      expect(getNextMonthYear(5, 2026)).toEqual({ month: 6, year: 2026 });
+      expect(getNextMonthYear(11, 2026)).toEqual({ month: 12, year: 2026 });
+      expect(getNextMonthYear(1, 2026)).toEqual({ month: 2, year: 2026 });
+    });
+
+    it('should never return a month outside 1-12', () => {
+      for (let m = 1; m <= 12; m++) {
+        const next = getNextMonthYear(m, 2026);
+        expect(next.month).toBeGreaterThanOrEqual(1);
+        expect(next.month).toBeLessThanOrEqual(12);
+      }
     });
   });
 });

@@ -23,3 +23,23 @@ export function useCreateAccount() {
     },
   });
 }
+
+export function useDeleteAccount() {
+  const queryClient = useQueryClient();
+  const adT = useTranslations("AccountDashboard");
+
+  return useMutation<AccountDTO, Error, string>({
+    mutationFn: accountService.softDelete,
+    onSuccess: (data) => {
+      invalidateQueries(queryClient, "deleteAccount");
+      toast.success(adT("toastDeleteSuccess", { name: data.name }), {
+        duration: 3000,
+      });
+    },
+    onError: (err) => {
+      toast.error(adT("toastDeleteError", { error: err.message }), {
+        duration: 3000,
+      });
+    },
+  });
+}

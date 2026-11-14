@@ -9,3 +9,4 @@ export { useUsers, useUsersById } from "./hooks/usersHooks";
 
 // Services
 export { userService } from "./api/userService";
+export { useCreateUser, useDeleteUser } from "./hooks/usersHooks";

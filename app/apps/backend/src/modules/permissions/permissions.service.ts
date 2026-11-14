@@ -104,6 +104,32 @@ export class PermissionsService {
     return this.permissionsRepo.findAllEntities();
   }
 
+  /**
+   * Grant the default self-registration permission set to a user.
+   * Shared by public registration and admin user creation so the two
+   * can never drift apart.
+   */
+  async grantDefaultPermissions(userId: string): Promise<void> {
+    const entities = await this.findAllEntities();
+    const readOnlyEntities = [
+      'categories',
+      'dashboard',
+      'audit_logs',
+      'users',
+      'user_permissions',
+    ];
+    const defaultPermissions = entities.map((entity) => ({
+      tableName: entity.name,
+      canCreate: !readOnlyEntities.includes(entity.name),
+      canRead: true,
+      canUpdate: !readOnlyEntities.includes(entity.name),
+      canDelete: false,
+      scope: 'OWN' as const,
+      permissionType: entity.permissionType,
+    }));
+    await this.setPermissionsForUser(userId, defaultPermissions);
+  }
+
   async setPermissionsForUser(
     userId: string,
     permissions: Array<{
@@ -116,7 +142,9 @@ export class PermissionsService {
       permissionType: 'CRUD' | 'PROCESS' | 'READ_ONLY';
     }>,
   ): Promise<void> {
-    await this.permissionsRepo.deleteAllForUser(userId);
+    // Merge semantics: upsert only the submitted rows. Deleting everything
+    // first would wipe permissions the caller never sent (the UI saves only
+    // the toggled entities), locking the user out of everything else.
     for (const p of permissions) {
       const entity = await this.permissionsRepo.findEntityByName(p.tableName);
       if (!entity) continue;

@@ -15,6 +15,7 @@ import {
   Hash,
   Globe,
   Settings,
+  Timer,
 } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 
@@ -44,16 +45,15 @@ export function AuditLogForm({ selectedAuditLog }: AuditLogFormProps) {
                 {t("fullName")}
               </span>
               <p className="text-xs md:text-sm font-medium">
-                {selectedAuditLog.user.firstName}{" "}
-                {selectedAuditLog.user.lastName}
+                {selectedAuditLog.user.name}
               </p>
             </div>
             <div className="space-y-0.5">
               <span className="text-xs font-black uppercase tracking-widest text-muted-foreground/70">
-                {t("username")}
+                {t("email")}
               </span>
               <p className="text-xs md:text-sm font-medium truncate">
-                {selectedAuditLog.user.username}
+                {selectedAuditLog.user.email}
               </p>
             </div>
             <div className="sm:col-span-2 space-y-0.5">
@@ -61,8 +61,8 @@ export function AuditLogForm({ selectedAuditLog }: AuditLogFormProps) {
                 {t("internalId")}
               </span>
               <div className="flex items-center gap-2 mt-0.5">
-                <code className="text-xs font-mono bg-muted/50 border border-border/50 px-2 py-0.5 rounded select-all">
-                  {selectedAuditLog.userId}
+                <code className="text-xs font-mono bg-muted/50 border border-border/50 px-1.5 py-0.5 rounded select-all">
+                  {selectedAuditLog.userId ?? "—"}
                 </code>
               </div>
             </div>
@@ -134,7 +134,7 @@ export function AuditLogForm({ selectedAuditLog }: AuditLogFormProps) {
             {t("technicalInfo")}
           </CardTitle>
         </CardHeader>
-        <CardContent className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
+        <CardContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-3">
           <div className="space-y-0.5">
             <div className="flex items-center gap-1.5">
               <Clock className="h-3 w-3 md:h-3.5 md:w-3.5 text-muted-foreground" />
@@ -184,6 +184,20 @@ export function AuditLogForm({ selectedAuditLog }: AuditLogFormProps) {
                 {isMobile ? t("mobile") : t("desktop")}
               </Badge>
             </div>
+          </div>
+
+          <div className="space-y-0.5">
+            <div className="flex items-center gap-1.5">
+              <Timer className="h-3 w-3 md:h-3.5 md:w-3.5 text-muted-foreground" />
+              <span className="text-xs font-black uppercase tracking-widest text-muted-foreground/70">
+                {t("duration")}
+              </span>
+            </div>
+            <p className="text-xs md:text-sm font-mono font-medium">
+              {typeof selectedAuditLog.durationMs === "number"
+                ? `${selectedAuditLog.durationMs} ms`
+                : t("notRecorded")}
+            </p>
           </div>
         </CardContent>
       </Card>
