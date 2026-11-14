@@ -49,4 +49,14 @@ export class AccountController {
   ): Promise<AccountDTO> {
     return this.accountsService.saveAccount(user.id, accountData);
   }
+
+  @Post(':id/delete')
+  @HttpCode(HttpStatus.OK)
+  @RequirePermission({ tableName: 'accounts', action: 'delete' })
+  async deleteAccount(
+    @CurrentUser() user: AuthUser,
+    @Param('id') id: string,
+  ): Promise<AccountDTO> {
+    return this.accountsService.softDeleteAccount(user.id, id);
+  }
 }

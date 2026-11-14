@@ -7,6 +7,8 @@
     "viewDesc": "Flow analysis in {currency} // {type}",
     "createTitle": "Create new account",
     "createDesc": "Initialize new asset unit",
-    "saveLabel": "Create new account"
+    "saveLabel": "Create new account",
+    "toastDeleteSuccess": "Account {name} deleted",
+    "toastDeleteError": "Error deleting account: {error}"
   }
 }

@@ -9,10 +9,17 @@ import {
   updateCardProfileQueryKeys,
   adminPermissionsQueryKeys,
   investmentQueryKeys,
+  userProfileQueryKeys,
 } from "@/lib/queryKeys";
 import type { QueryClient, QueryFilters } from "@tanstack/react-query";
 
-type MutationName = "createTransaction" | "createAccount" | "updateCardBalance";
+type MutationName =
+  | "createTransaction"
+  | "createAccount"
+  | "updateCardBalance"
+  | "createUser"
+  | "deleteUser"
+  | "deleteAccount";
 
 export const mutationInvalidations: Record<MutationName, QueryFilters[]> = {
   createTransaction: [
@@ -34,6 +41,15 @@ export const mutationInvalidations: Record<MutationName, QueryFilters[]> = {
     { queryKey: dashboardQueryKeys.all() },
     { queryKey: transactionProfileQueryKeys.all() },
     { queryKey: accountProfileQueryKeys.all() },
+  ],
+  // #66: the permissions user selector shares the ["users"] query
+  createUser: [{ queryKey: userProfileQueryKeys.all() }],
+  deleteUser: [{ queryKey: userProfileQueryKeys.all() }],
+  // #52: accounts feed lists, dashboard widgets and the investments view
+  deleteAccount: [
+    { queryKey: accountProfileQueryKeys.all() },
+    { queryKey: dashboardQueryKeys.all() },
+    { queryKey: investmentQueryKeys.all() },
   ],
 };
 

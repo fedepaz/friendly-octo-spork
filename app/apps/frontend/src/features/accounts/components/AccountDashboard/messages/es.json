@@ -7,6 +7,8 @@
     "viewDesc": "Análisis de flujo en {currency} // {type}",
     "createTitle": "Crear nueva cuenta",
     "createDesc": "Inicializar nueva unidad de activos",
-    "saveLabel": "Crear nueva cuenta"
+    "saveLabel": "Crear nueva cuenta",
+    "toastDeleteSuccess": "Cuenta {name} eliminada",
+    "toastDeleteError": "Error al eliminar cuenta: {error}"
   }
 }

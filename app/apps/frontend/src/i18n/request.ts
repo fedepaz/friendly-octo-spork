@@ -398,6 +398,11 @@ export default getRequestConfig(async ({ requestLocale }) => {
       ).default,
       ...(
         await import(
+          `../features/users/components/UserCreateForm/messages/${locale}.json`
+        )
+      ).default,
+      ...(
+        await import(
           `../features/users/components/UserDashboardSkeleton/messages/${locale}.json`
         )
       ).default,
