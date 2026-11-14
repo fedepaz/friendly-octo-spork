@@ -89,12 +89,16 @@ export class DashboardService {
   async getMonthlyIncomeExpense(
     userId: string,
     months: number = 6,
+    endMonth?: number,
+    endYear?: number,
   ): Promise<IncomeExpenseDTO[]> {
     if (!userId) throw new BadRequestException('User ID is required');
     this.logger.debug(`Getting monthly income and expense for user ${userId}`);
     const response = await this.incomeExpenseRepo.getMonthlyIncomeExpense(
       userId,
       months,
+      endMonth,
+      endYear,
     );
     return response.map((incomeExpense) =>
       this.mapIncomeExpenseToDTO(incomeExpense),

@@ -71,8 +71,14 @@ export const dashboardQueryKeys = {
   budgetSummary: () => [...dashboardQueryKeys.all(), "budget"] as const,
   recentAccounts: () =>
     [...dashboardQueryKeys.all(), "recentAccounts"] as const,
-  incomeExpense: (months: number) =>
-    [...dashboardQueryKeys.all(), "incomeExpense", months] as const,
+  incomeExpense: (months: number, endMonth?: number, endYear?: number) =>
+    [
+      ...dashboardQueryKeys.all(),
+      "incomeExpense",
+      months,
+      endMonth ?? null,
+      endYear ?? null,
+    ] as const,
   recurrencesToPay: () => [...dashboardQueryKeys.all(), "toPay"] as const,
 };
 
