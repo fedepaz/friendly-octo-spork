@@ -110,3 +110,7 @@ skills-lock.json
 # =========================
 **/backups/
 raw_session.txt
+
+# Personal financial data — never commit
+docs/*.ods
+docs/*.sql
