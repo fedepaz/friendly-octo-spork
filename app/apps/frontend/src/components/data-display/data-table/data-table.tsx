@@ -15,7 +15,9 @@ import {
   type ColumnDef,
   type ColumnFiltersState,
   type SortingState,
+  type Table,
   type VisibilityState,
+  filterFns,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -70,6 +72,16 @@ import {
 } from "@/components/ui/tooltip";
 import { useTranslations } from "next-intl";
 
+declare module "@tanstack/table-core" {
+  interface ColumnMeta<TData, TValue> {
+    /**
+     * Hidden column that exists only to back a faceted filter — never
+     * displayed by the auto-visibility pass or the columns dropdown.
+     */
+    facetOnly?: boolean;
+  }
+}
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -84,7 +96,9 @@ interface DataTableProps<TData, TValue> {
   loading?: boolean;
   totalCount?: number;
   enableSelection?: boolean;
-  toolbarContent?: ReactNode;
+  /** Static node, or a render function that receives the table instance
+   *  (needed by faceted filters, which bind to column instances). */
+  toolbarContent?: ReactNode | ((table: Table<TData, TValue>) => ReactNode);
 }
 
 function HeaderComponent({ titulo }: { titulo: string }) {
@@ -204,6 +218,7 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    filterFns,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     onGlobalFilterChange: setGlobalFilter,
@@ -247,8 +262,14 @@ export function DataTable<TData, TValue>({
         ? Math.floor(availableForData / (minColumnWidth + cellPadding))
         : 5;
 
+    const facetOnlyIds = new Set(
+      allColumns
+        .filter((column) => column.columnDef.meta?.facetOnly)
+        .map((column) => column.id),
+    );
     const dataColumnCount = columnsId.filter(
-      (id) => id !== "actions" && id !== "select",
+      (id) =>
+        id !== "actions" && id !== "select" && !facetOnlyIds.has(id),
     ).length;
     const visibleCount = Math.min(Math.max(maxDataColumns, 2), dataColumnCount);
 
@@ -258,6 +279,10 @@ export function DataTable<TData, TValue>({
       columnsId.forEach((id) => {
         if (id === "actions" || id === "select") {
           visibility[id] = true;
+          return;
+        }
+        if (facetOnlyIds.has(id)) {
+          visibility[id] = false;
           return;
         }
         const autoVisible = dataIndex < visibleCount;
@@ -327,7 +352,10 @@ export function DataTable<TData, TValue>({
               >
                 {table
                   .getAllColumns()
-                  .filter((column) => column.getCanHide())
+                  .filter(
+                    (column) =>
+                      column.getCanHide() && !column.columnDef.meta?.facetOnly,
+                  )
                   .map((column) => {
                     return (
                       <DropdownMenuCheckboxItem
@@ -367,7 +395,9 @@ export function DataTable<TData, TValue>({
 
             {toolbarContent && (
               <div className="flex items-center gap-2">
-                {toolbarContent}
+                {typeof toolbarContent === "function"
+                  ? toolbarContent(table)
+                  : toolbarContent}
               </div>
             )}
           </div>

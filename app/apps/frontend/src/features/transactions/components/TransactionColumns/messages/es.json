@@ -12,6 +12,8 @@
     "transfer": "Transferencia",
     "investment": "Inversión",
     "return": "Rendimiento",
-    "payment": "Pago"
+    "payment": "Pago",
+    "account": "Cuenta",
+    "category": "Categoría"
   }
 }

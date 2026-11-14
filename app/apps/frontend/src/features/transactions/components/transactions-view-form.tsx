@@ -26,6 +26,16 @@ export function TransactionViewForm({
         </p>
       </div>
 
+      {/* #58: description is required on create and shown in the list */}
+      <div className="p-4 bg-background border-l-4 border-primary">
+        <p className="text-2.5 uppercase tracking-widest font-black text-muted-foreground mb-1">
+          {tvfT("description")}
+        </p>
+        <p className="text-sm font-semibold">
+          {selectedTransaction.description || tvfT("na")}
+        </p>
+      </div>
+
       <div className="grid grid-cols-2 gap-4">
         <div className="p-3 bg-muted/30 border border-border">
           <p className="text-2.5 uppercase tracking-widest font-black text-muted-foreground opacity-50">
