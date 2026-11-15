@@ -36,7 +36,7 @@ export const AuditLogSchema = z.object({
   action: AuditActionTypeSchema,
   entityType: z.string(),
   entityId: z.string().optional(),
-  changes: z.record(z.unknown()).optional(),
+  changes: z.record(z.string(), z.unknown()).optional(),
   endpoint: z.string().optional(),
   method: z.string().optional(),
   ipAddress: z.string().optional(),

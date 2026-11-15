@@ -15,6 +15,7 @@ import { useCreateAccount, useDeleteAccount } from "../hooks/createAccountHook";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
+import type { Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 
@@ -37,7 +38,7 @@ export function AccountDataTable() {
   };
 
   const formCreateAccount = useForm<CreateAccountInput>({
-    resolver: zodResolver(createAccountSchema),
+    resolver: zodResolver(createAccountSchema) as Resolver<CreateAccountInput>,
     defaultValues: {
       name: "",
       type: "BANK",
