@@ -42,6 +42,10 @@
   ],
   "exclude": [
     "node_modules",
-    "jest.setup.ts"
+    "jest.setup.ts",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.test.ts",
+    "**/*.test.tsx"
   ]
 }

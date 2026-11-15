@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTransactionInput, createTransactionSchema } from "@repo/shared";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import type { FieldErrors } from "react-hook-form";
+import type { FieldErrors, Resolver } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { FormContainer } from "../components/FormContainer";
 import { useCreateTransaction } from "../hooks/createMutationHooks";
@@ -26,7 +26,9 @@ export function SmartFormProvider({ onClose }: { onClose: () => void }) {
 
   const methods = useForm<CreateTransactionInput>({
     mode: "onChange",
-    resolver: zodResolver(createTransactionSchema),
+    resolver: zodResolver(createTransactionSchema) as Resolver<
+      CreateTransactionInput
+    >,
     defaultValues: {
       date: new Date(),
       isRecurrence: false,
