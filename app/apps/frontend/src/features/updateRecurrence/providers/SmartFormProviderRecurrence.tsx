@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTransactionInput, createTransactionSchema } from "@repo/shared";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import type { FieldErrors } from "react-hook-form";
+import type { FieldErrors, Resolver } from "react-hook-form";
 import { useTranslations } from "next-intl";
 
 import { mapServerErrorsToForm } from "@/lib/utils/form-error-mapper";
@@ -36,7 +36,9 @@ export function SmartFormProviderRecurrence({
 
   const methods = useForm<CreateTransactionInput>({
     mode: "onChange",
-    resolver: zodResolver(createTransactionSchema),
+    resolver: zodResolver(createTransactionSchema) as Resolver<
+      CreateTransactionInput
+    >,
   });
 
   useEffect(() => {

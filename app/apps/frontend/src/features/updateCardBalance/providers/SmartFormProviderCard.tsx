@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CardCloseInputDTO, CardCloseResponseDTO, cardCloseSchema } from "@repo/shared";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import type { FieldErrors } from "react-hook-form";
+import type { FieldErrors, Resolver } from "react-hook-form";
 
 import { mapServerErrorsToForm } from "@/lib/utils/form-error-mapper";
 import { ApiError } from "@/lib/api/client-fetch";
@@ -30,7 +30,9 @@ export function SmartFormProviderCard({ onClose }: { onClose: () => void }) {
 
   const methods = useForm<CardCloseInputDTO>({
     mode: "onChange",
-    resolver: zodResolver(cardCloseSchema),
+    resolver: zodResolver(
+      cardCloseSchema as never,
+    ) as unknown as Resolver<CardCloseInputDTO>,
     defaultValues: {
       year: next.year,
       month: next.month,

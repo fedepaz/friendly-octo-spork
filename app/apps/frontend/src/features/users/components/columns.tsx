@@ -2,22 +2,21 @@
 
 import { Row, type ColumnDef, type Column } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
-import { 
-  SortableHeader, 
-  TacticalTextCell, 
-  TacticalTypeCell, 
-  PremiumBadgeCell 
+import {
+  SortableHeader,
+  TacticalTextCell,
+  TacticalTypeCell,
+  PremiumBadgeCell
 } from "@/components/data-display/data-table";
 import { User, Shield, UserCircle } from "lucide-react";
+import type { UserProfileDto } from "@repo/shared";
 
 interface CellProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  row: Row<any>;
+  row: Row<UserProfileDto>;
 }
 
 interface HeaderProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  column: Column<any>;
+  column: Column<UserProfileDto>;
 }
 
 function RoleCell({ row }: CellProps) {
@@ -63,8 +62,7 @@ function StatusHeader() {
   return ucT("statusHeader");
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const userColumns: ColumnDef<any>[] = [
+export const userColumns: ColumnDef<UserProfileDto>[] = [
   {
     accessorKey: "name",
     header: NameHeader,
