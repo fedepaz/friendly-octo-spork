@@ -64,6 +64,8 @@ export const UserProfileSchema = z.object({
   email: z.string().email(),
   isActive: z.boolean().optional(),
   createdAt: z.date().or(z.string()).optional(),
+  role: z.string().optional(),
+  status: z.string().optional(),
 });
 
 export type UserProfileDto = z.infer<typeof UserProfileSchema>;

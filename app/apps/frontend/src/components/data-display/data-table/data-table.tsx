@@ -15,7 +15,7 @@ import {
   type ColumnDef,
   type ColumnFiltersState,
   type SortingState,
-  type Table,
+  type Table as TableInstance,
   type VisibilityState,
   filterFns,
   flexRender,
@@ -112,7 +112,7 @@ interface DataTableProps<TData, TValue> {
   enableSelection?: boolean;
   /** Static node, or a render function that receives the table instance
    *  (needed by faceted filters, which bind to column instances). */
-  toolbarContent?: ReactNode | ((table: Table<TData, TValue>) => ReactNode);
+  toolbarContent?: ReactNode | ((table: TableInstance<TData>) => ReactNode);
 }
 
 function HeaderComponent({ titulo }: { titulo: string }) {
