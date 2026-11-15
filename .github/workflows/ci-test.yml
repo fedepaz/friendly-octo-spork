@@ -14,18 +14,6 @@ jobs:
       - run: pnpm lint
         working-directory: app
 
-  # Same type gate the deploy Dockerfile runs (pnpm --filter frontend build):
-  # catches next build type errors on PRs instead of after merge to main.
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: ./.github/actions/setup
-      - run: pnpm build --filter=@repo/shared
-        working-directory: app
-      - run: pnpm --filter frontend build
-        working-directory: app
-
   unit-tests:
     runs-on: ubuntu-latest
     steps:

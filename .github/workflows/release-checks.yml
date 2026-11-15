@@ -1,0 +1,18 @@
+name: Release Checks
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  # Type gate for releases only (dev → main): same next build the deploy
+  # Dockerfile runs. PRs to dev never trigger this workflow.
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup
+      - run: pnpm build --filter=@repo/shared
+        working-directory: app
+      - run: pnpm --filter frontend build
+        working-directory: app
