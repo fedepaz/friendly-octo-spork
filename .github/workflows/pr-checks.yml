@@ -7,3 +7,16 @@ on:
 jobs:
   test:
     uses: ./.github/workflows/ci-test.yml
+
+  # Type gate for releases only (dev → main). PRs to dev run lint + tests;
+  # the deploy Docker build re-runs this same gate on push to main.
+  build:
+    if: github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup
+      - run: pnpm build --filter=@repo/shared
+        working-directory: app
+      - run: pnpm --filter frontend build
+        working-directory: app
