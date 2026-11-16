@@ -153,4 +153,16 @@ describe("RootDashboard mobile single-scroll layout", () => {
     expect(chartsRoot?.className).toContain("lg:order-none");
     expect(kpisRoot?.className).toContain("lg:order-none");
   });
+
+  it("carries device-chrome bottom clearance inside the scrollable content", () => {
+    // the scroll container's own padding is unreachable at scroll end
+    // (empirically excluded from scrollable overflow) — clearance must
+    // live on the content root; lg:pb-0 keeps desktop pixel-identical
+    const { container } = render(<RootDashboard />);
+    const root = container.firstElementChild as HTMLElement;
+    expect(root.className).toContain(
+      "pb-[calc(env(safe-area-inset-bottom)_+_0.75rem)]",
+    );
+    expect(root.className).toContain("lg:pb-0");
+  });
 });

@@ -27,7 +27,7 @@ export function RootDashboard() {
   }, [openTransaction]);
 
   return (
-    <div className="flex flex-col gap-3 lg:flex-1 lg:min-h-0 lg:overflow-hidden animate-premium-in mb-3">
+    <div className="flex flex-col gap-3 lg:flex-1 lg:min-h-0 lg:overflow-hidden animate-premium-in mb-3 pb-[calc(env(safe-area-inset-bottom)_+_0.75rem)] lg:pb-0">
       {/* #64: month navigation — same control as the list screens */}
       <div className="flex items-center justify-end shrink-0">
         <MonthSelector

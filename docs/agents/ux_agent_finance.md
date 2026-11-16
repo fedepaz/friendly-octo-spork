@@ -46,13 +46,13 @@ Internal scroll inside `DataTable` is correct and exempt (density is managed by 
 
 **3. Implementation Checklist**:
 - [ ] Use `dvh` for full-height layouts.
-- [ ] Apply `pb-safe-area-inset-bottom` for mobile navigation clearance.
+- [ ] Apply device-chrome clearance inside the scrollable content (`pb-[calc(env(safe-area-inset-bottom)_+_0.75rem)] lg:pb-0` on the page content root) — padding on the scroll container itself is unreachable at scroll end.
 - [ ] Below `lg`: NO nested scroll windows — content flows, the route `main` is the only scroller; charts/cards render at natural (min-constrained) height.
 - [ ] At `lg`+: dashboard/table grids fit within 100dvh with internal region scrolling only where necessary.
 - [ ] Minimize vertical margins and headers to prioritize content.
 
 **4. Spacing Lock (mandatory)**:
-- Spacing classes (`p-*`, `px-*`, `py-*`, `pt-*`, `pb-*`, `pl-*`, `pr-*`, `mt-*`, `mb-*`, `ml-*`, `mr-*`, `mx-*`, `my-*`, `gap-*`, `space-x-*`, `space-y-*`, `rounded-*`, `min-h-*`) are NOT responsive. Use one value at all breakpoints — wider viewports gain breathing room through width, not padding. Exception: bare `min-h-0` flexbox collapse constraints may be breakpoint-gated (`lg:min-h-0`) — they disable automatic minimum sizing rather than adding spacing; content `min-h-*` values (e.g. `min-h-75`) stay non-responsive.
+- Spacing classes (`p-*`, `px-*`, `py-*`, `pt-*`, `pb-*`, `pl-*`, `pr-*`, `mt-*`, `mb-*`, `ml-*`, `mr-*`, `mx-*`, `my-*`, `gap-*`, `space-x-*`, `space-y-*`, `rounded-*`, `min-h-*`) are NOT responsive. Use one value at all breakpoints — wider viewports gain breathing room through width, not padding. Exception: bare `min-h-0` flexbox collapse constraints may be breakpoint-gated (`lg:min-h-0`) — they disable automatic minimum sizing rather than adding spacing; content `min-h-*` values (e.g. `min-h-75`) stay non-responsive. Device-chrome clearance padding (`pb-[calc(env(safe-area-inset-bottom)+…)]`) may also be gated to `lg:pb-0` — it is OS-overlay clearance, not decorative spacing.
 - Responsive by design: typography (`text-*`), icon sizes (`h-*`/`w-*`), layout (`grid-cols-*`, `flex*`, `hidden`, `col-span-*`), constraints (`max-w-*`, `max-h-*`), and top-level layout containers (main padding tiers `px-3 xl:px-5 2xl:px-8`).
 - Data tables are exempt (density is managed by table tokens).
 
