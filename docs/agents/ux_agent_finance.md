@@ -52,7 +52,7 @@ Internal scroll inside `DataTable` is correct and exempt (density is managed by 
 - [ ] Minimize vertical margins and headers to prioritize content.
 
 **4. Spacing Lock (mandatory)**:
-- Spacing classes (`p-*`, `px-*`, `py-*`, `pt-*`, `pb-*`, `pl-*`, `pr-*`, `mt-*`, `mb-*`, `ml-*`, `mr-*`, `mx-*`, `my-*`, `gap-*`, `space-x-*`, `space-y-*`, `rounded-*`, `min-h-*`) are NOT responsive. Use one value at all breakpoints — wider viewports gain breathing room through width, not padding.
+- Spacing classes (`p-*`, `px-*`, `py-*`, `pt-*`, `pb-*`, `pl-*`, `pr-*`, `mt-*`, `mb-*`, `ml-*`, `mr-*`, `mx-*`, `my-*`, `gap-*`, `space-x-*`, `space-y-*`, `rounded-*`, `min-h-*`) are NOT responsive. Use one value at all breakpoints — wider viewports gain breathing room through width, not padding. Exception: bare `min-h-0` flexbox collapse constraints may be breakpoint-gated (`lg:min-h-0`) — they disable automatic minimum sizing rather than adding spacing; content `min-h-*` values (e.g. `min-h-75`) stay non-responsive.
 - Responsive by design: typography (`text-*`), icon sizes (`h-*`/`w-*`), layout (`grid-cols-*`, `flex*`, `hidden`, `col-span-*`), constraints (`max-w-*`, `max-h-*`), and top-level layout containers (main padding tiers `px-3 xl:px-5 2xl:px-8`).
 - Data tables are exempt (density is managed by table tokens).
 

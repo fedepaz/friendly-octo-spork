@@ -10,7 +10,7 @@ Every new feature component must pass all 9 criteria before shipping.
 
 | # | Name | What to check (for my future self) |
 |---|---|---|
-| **1** | **Responsive (Zero-Scroll)** | `dvh` layouts, dense `gap-2`/`p-3`, no horizontal scroll, adapts without extra whitespace |
+| **1** | **Responsive (Two-Tier Scrolling)** | `dvh` layouts, dense `gap-2`/`p-3`, no horizontal scroll, adapts without extra whitespace |
 | **2** | **OKLCH Tokens** | No hardcoded colors (`#fff`, `red-500`, `emerald`, `rose`, `rgb()`). Uses `bg-primary`, `text-foreground`, `border-border/60`. No `text-amber-*` — use `text-warning` |
 | **3** | **UX Helpers & A11y** | `aria-label` on icon-only buttons, tooltips, `FormDescription`/`FormMessage`, semantic HTML, `role="alert"` on error messages |
 | **4** | **Golden Path Loading** | `loading.tsx` for the route, `<Suspense>` boundary per independent data section, colocated `{Name}Skeleton.tsx` matching real layout |
@@ -39,7 +39,7 @@ Every new feature component must pass all 9 criteria before shipping.
 | `RecurrencesDashboard` | Recurrences | x | x | x | x | x | x | - | x | 2026-08-30 | Approved |
 | `SmartFormProvider` | Transactions | x | x | x | - | x | - | - | x | 2026-08-30 | Approved |
 | `MonthSelector` | Shared | x | x | - | - | x | x | - | x | 2026-08-30 | Approved |
-| `RootDashboard` | Dashboard | - | x | x | x | x | x | - | x | 2026-11-16 | Needs fixes (mobile scroll) |
+| `RootDashboard` | Dashboard | x | x | x | x | x | x | - | x | 2026-11-16 | Approved |
 | `DesktopSidebar` | Layout | x | x | x | - | x | - | - | x | 2026-08-30 | Premium |
 | `DashboardHeader` | Layout | x | x | x | - | x | - | - | x | 2026-08-30 | Approved |
 | `AuthHeader` | Layout | x | x | x | - | x | - | - | x | 2026-08-30 | Approved |
@@ -52,9 +52,9 @@ Every new feature component must pass all 9 criteria before shipping.
 | `InLineError` | Shared (UI) | x | x | x | - | - | - | - | x | 2026-08-30 | Approved |
 | `WizardStepSkeleton` | Shared (UI) | x | x | - | x | - | - | - | x | 2026-08-30 | Approved |
 | `TacticalDataTableCells` | Shared | x | x | - | - | - | - | - | x | 2026-08-30 | Premium |
-| `KPIsDashboard` | Dashboard | - | x | - | - | x | - | - | x | 2026-11-16 | Needs fixes (mobile scroll) |
+| `KPIsDashboard` | Dashboard | x | x | - | - | x | - | - | x | 2026-11-16 | Approved |
 | `TransTypeSelector` | Shared | x | x | - | - | x | x | - | x | 2026-08-30 | Approved |
-| `MainChartsDashboard` | Dashboard | - | x | x | x | x | x | - | x | 2026-11-16 | Needs fixes (mobile scroll) |
+| `MainChartsDashboard` | Dashboard | x | x | x | x | x | x | - | x | 2026-11-16 | Approved |
 | `AnalyticChartsBottom` | Dashboard | x | x | - | - | - | - | - | x | 2026-08-30 | Approved |
 | `SidebarChartsBudget` | Dashboard | x | x | - | - | - | - | - | x | 2026-08-30 | Approved |
 | `SidebarChartsAccounts` | Dashboard | x | x | - | - | x | - | - | x | 2026-08-30 | Premium |
@@ -121,3 +121,5 @@ Full audit with `file:line` evidence. Priority groups:
 - **P2:** false `cursor-pointer` on non-clickable rows (`data-table.tsx:504`); `dropdown-menu.tsx:84`/`command.tsx:118`/`select.tsx` missing cursor; focus styles use ring/none instead of the mandated outline; `AlertModalDialog` has no close button; review-step `grid-cols-2` single-child half-width button; `SlideOverForm` capped by `sm:max-w-sm` from `sheet.tsx:43`.
 
 **Mobile dashboard redesign** (single page scroll, buttons last, Zero-Scroll docs revision) specified separately: `docs/superpowers/specs/2026-11-16-mobile-dashboard-single-scroll-design.md`.
+
+- **Resolved on this branch:** dashboard mobile scroll (single page scroll + ordering, see spec) — registry rows re-approved 2026-11-16; Zero-Scroll standard revised to the two-tier rule (`ux_agent_finance.md`, `qa_agent_finance.md`).
