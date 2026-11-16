@@ -87,7 +87,7 @@ To provide the best possible perceived performance, we implement a two-tiered lo
 
 - **Interaction Patterns**
     - **Keyboard Navigation**: Every wizard modal auto-focuses its close button on open. Escape key closes modals. All interactive elements have `focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2` for visible keyboard focus.
-    - **Responsive Layouts**: Zero-scroll priority across all breakpoints.
+    - **Responsive Layouts**: Two-tier scrolling — Zero-Scroll at `lg`+ / large displays; one page scroll below `lg` with no nested scroll windows (see *Two-Tier Scrolling Standard* above).
     - **Structural Error Feedback**: For critical operation errors (e.g., server failures), use a high-visibility, industrial-styled error block at the bottom of forms with the `animate-premium-in` animation.
     - **Danger Zone**: For destructive or final actions (like stopping a recurrence), use a specialized container with a `bg-destructive/5` background, `destructive` borders, and a high-contrast button to signal risk.
     - **Wizard & Multi-step UI**:
