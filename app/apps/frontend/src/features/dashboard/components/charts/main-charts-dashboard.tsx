@@ -10,7 +10,7 @@ interface MainChartsDashboardProps {
 
 export function MainChartsDashboard({ month, year }: MainChartsDashboardProps) {
   return (
-    <div className="grid flex-1 grid-cols-1 lg:grid-cols-12 gap-3 min-h-0 overflow-y-auto lg:overflow-hidden pr-1 custom-scrollbar">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:flex-1 lg:min-h-0 lg:overflow-hidden pr-1 custom-scrollbar order-2 lg:order-none">
       {/* Analytics Section (Span 8) */}
       <AnalyticChartsDashboard month={month} year={year} />
 
