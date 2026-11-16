@@ -24,7 +24,7 @@ Every new feature component must pass all 9 criteria before shipping.
 
 ## Registry & Audit Log
 
-**Key**: `x` = passes, `-` = fails/missing, `2026-08-30` = today's audit.
+**Key**: `x` = passes, `-` = fails/missing, `2026-11-16` = date of last audit.
 
 | Component | Feature | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | Status |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -39,7 +39,7 @@ Every new feature component must pass all 9 criteria before shipping.
 | `RecurrencesDashboard` | Recurrences | x | x | x | x | x | x | - | x | 2026-08-30 | Approved |
 | `SmartFormProvider` | Transactions | x | x | x | - | x | - | - | x | 2026-08-30 | Approved |
 | `MonthSelector` | Shared | x | x | - | - | x | x | - | x | 2026-08-30 | Approved |
-| `RootDashboard` | Dashboard | x | x | x | x | x | x | - | x | 2026-08-30 | Approved |
+| `RootDashboard` | Dashboard | - | x | x | x | x | x | - | x | 2026-11-16 | Needs fixes (mobile scroll) |
 | `DesktopSidebar` | Layout | x | x | x | - | x | - | - | x | 2026-08-30 | Premium |
 | `DashboardHeader` | Layout | x | x | x | - | x | - | - | x | 2026-08-30 | Approved |
 | `AuthHeader` | Layout | x | x | x | - | x | - | - | x | 2026-08-30 | Approved |
@@ -52,9 +52,9 @@ Every new feature component must pass all 9 criteria before shipping.
 | `InLineError` | Shared (UI) | x | x | x | - | - | - | - | x | 2026-08-30 | Approved |
 | `WizardStepSkeleton` | Shared (UI) | x | x | - | x | - | - | - | x | 2026-08-30 | Approved |
 | `TacticalDataTableCells` | Shared | x | x | - | - | - | - | - | x | 2026-08-30 | Premium |
-| `KPIsDashboard` | Dashboard | x | x | - | - | x | - | - | x | 2026-08-30 | Approved |
+| `KPIsDashboard` | Dashboard | - | x | - | - | x | - | - | x | 2026-11-16 | Needs fixes (mobile scroll) |
 | `TransTypeSelector` | Shared | x | x | - | - | x | x | - | x | 2026-08-30 | Approved |
-| `MainChartsDashboard` | Dashboard | x | x | x | x | x | x | - | x | 2026-08-30 | Approved |
+| `MainChartsDashboard` | Dashboard | - | x | x | x | x | x | - | x | 2026-11-16 | Needs fixes (mobile scroll) |
 | `AnalyticChartsBottom` | Dashboard | x | x | - | - | - | - | - | x | 2026-08-30 | Approved |
 | `SidebarChartsBudget` | Dashboard | x | x | - | - | - | - | - | x | 2026-08-30 | Approved |
 | `SidebarChartsAccounts` | Dashboard | x | x | - | - | x | - | - | x | 2026-08-30 | Premium |
@@ -66,6 +66,21 @@ Every new feature component must pass all 9 criteria before shipping.
 | `CardsDashboard` | Cards | x | x | x | x | x | x | - | x | 2026-08-30 | Approved |
 | `CardsDataTable` | Cards | x | x | x | - | x | x | - | x | 2026-08-30 | Premium (Unified) |
 | `CardViewForm` | Cards | x | x | - | - | - | - | - | x | 2026-08-30 | Premium (Tactical) |
+| `AnalyticChartsMain` | Dashboard | x | x | - | - | - | - | - | x | 2026-11-16 | Approved |
+| `TransactionsDataTable` | Transactions | - | x | x | - | x | - | - | x | 2026-11-16 | Needs fixes |
+| `AccountDataTable` | Accounts | - | x | x | - | x | - | - | x | 2026-11-16 | Needs fixes |
+| `UsersDataTable` | Users | - | x | x | - | x | - | - | x | 2026-11-16 | Needs fixes |
+| `RecurrencesDataTable` | Recurrences | - | x | x | - | x | - | - | x | 2026-11-16 | Needs fixes |
+| `InvestmentsDataTable` | Investments | - | x | x | - | x | - | - | x | 2026-11-16 | Needs fixes |
+| `AuditLogDataTable` | AuditLogs | - | x | x | - | x | - | - | x | 2026-11-16 | Needs fixes |
+| `ExportDropdown` | Shared | x | x | x | - | - | x | - | x | 2026-11-16 | Needs fixes |
+| `DataTableFacetedFilter` | Shared | x | x | x | - | - | x | - | x | 2026-11-16 | Needs fixes |
+| `AuditActionSelector` | AuditLogs | x | x | - | - | x | x | - | x | 2026-11-16 | Approved |
+| `PermissionsUserManager` | Permissions | - | x | x | - | x | x | - | x | 2026-11-16 | Needs fixes |
+| `PermissionRowItem` | Permissions | - | x | - | - | x | x | - | x | 2026-11-16 | Needs fixes |
+| `LoadingBoundary` | Shared | x | x | x | x | x | x | - | x | 2026-11-16 | Premium |
+| `EmptyState` | Shared | - | x | x | - | x | x | - | x | 2026-11-16 | Needs fixes |
+| `AlertModalDialog` | Modals | - | x | - | - | x | - | - | x | 2026-11-16 | Needs fixes |
 
 ---
 
@@ -97,3 +112,12 @@ Components like `Button`, `InLineError`, `StepIndicator` etc. are UI primitives 
 - **`AuditLogDashboard`**: Added `flex-1 min-h-0 animate-premium-in` to wrapper div for Zero-Scroll compliance
 - **`PermissionsDashboard`**: Added `animate-premium-in` to wrapper div for consistency
 - **Renamed** `UserTable` to `UsersDashboard` in registry (component name mismatch)
+
+### Known issues (2026-11-16 — whole-app baseline review)
+Full audit with `file:line` evidence. Priority groups:
+
+- **P0 (mobile-breaking):** DataTable toolbar clips at 375px (`data-table.tsx:399,460`); table card not height-bounded (`data-table.tsx:375`); wizard structural error block renders outside the fixed modal, invisible (`SmartFormProvider*.tsx`); mobile nav skips permission filtering (`mobile-navigation.tsx:172`); card-close wizard double-submit (`SmartFormProviderCard.tsx:58`); touch targets <32px (pagination, checkboxes, Switch, card toggle).
+- **P1:** off-token `h-12` inputs; `text-2.5` classes generate nothing (cards/recurrences/transactions view forms); Spacing Lock violations (`data-table.tsx:376`, `data-table-skeleton.tsx:73`, `alert-dialog.tsx:39`); SM density caps exceeded (wizard `px-5 py-6`, `space-y-6/8`, icons `h-5+`); hardcoded `bg-black/*` backdrops (`dialog.tsx:41`, `sheet.tsx:24`, `alert-dialog.tsx:21`); LoadingBoundary used in 1/15 sections; `PermissionsDashboard` text fallback while its skeleton is dead code.
+- **P2:** false `cursor-pointer` on non-clickable rows (`data-table.tsx:504`); `dropdown-menu.tsx:84`/`command.tsx:118`/`select.tsx` missing cursor; focus styles use ring/none instead of the mandated outline; `AlertModalDialog` has no close button; review-step `grid-cols-2` single-child half-width button; `SlideOverForm` capped by `sm:max-w-sm` from `sheet.tsx:43`.
+
+**Mobile dashboard redesign** (single page scroll, buttons last, Zero-Scroll docs revision) specified separately: `docs/superpowers/specs/2026-11-16-mobile-dashboard-single-scroll-design.md`.
