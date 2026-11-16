@@ -130,3 +130,39 @@ describe("RootDashboard", () => {
     fireEvent.click(screen.getByLabelText(label));
   }
 });
+
+describe("RootDashboard mobile single-scroll layout", () => {
+  it("does not clip the dashboard shell below lg (page main is the scroller)", () => {
+    const { container } = render(<RootDashboard />);
+    const root = container.firstElementChild as HTMLElement;
+    // no bare overflow-hidden/flex-1/min-h-0 — those exist only at lg:
+    expect(root.className).not.toMatch(/(?:^| )overflow-hidden(?: |$)/);
+    expect(root.className).not.toMatch(/(?:^| )flex-1(?: |$)/);
+    expect(root.className).toContain("lg:overflow-hidden");
+    expect(root.className).toContain("lg:flex-1");
+    expect(root.className).toContain("lg:min-h-0");
+  });
+
+  it("orders charts before KPIs on mobile so the action buttons end the page", () => {
+    render(<RootDashboard />);
+    const chartsRoot = document.querySelector(".order-2");
+    const kpisRoot = document.querySelector(".order-3");
+    expect(chartsRoot).not.toBeNull();
+    expect(kpisRoot).not.toBeNull();
+    // reset at lg so desktop keeps DOM order (KPIs before charts)
+    expect(chartsRoot?.className).toContain("lg:order-none");
+    expect(kpisRoot?.className).toContain("lg:order-none");
+  });
+
+  it("carries device-chrome bottom clearance inside the scrollable content", () => {
+    // the scroll container's own padding is unreachable at scroll end
+    // (empirically excluded from scrollable overflow) — clearance must
+    // live on the content root; lg:pb-0 keeps desktop pixel-identical
+    const { container } = render(<RootDashboard />);
+    const root = container.firstElementChild as HTMLElement;
+    expect(root.className).toContain(
+      "pb-[calc(env(safe-area-inset-bottom)_+_0.75rem)]",
+    );
+    expect(root.className).toContain("lg:pb-0");
+  });
+});

@@ -20,9 +20,18 @@ You are a senior UX/UI Designer specializing in clean, efficient, and modern fin
 - **Information Density**: Prioritize structured, density-optimized layouts for financial data.
 - **Dark Mode First**: Optimized for high-contrast dark environments.
 
-## Responsive Design: The "Zero-Scroll" Foundation
+## Responsive Design: Two-Tier Scrolling Standard
 
-**CRITICAL MANDATE**: The entire application (not just forms) must adhere to the **Zero-Scroll / Shrink-to-Fit** standard. The goal is to present information so that the user rarely needs to scroll vertically to see core content, regardless of the device size.
+**STANDARD (revised 2026-11-16)** — supersedes the old single "Zero-Scroll" mandate. Rationale and approved design: `docs/superpowers/specs/2026-11-16-mobile-dashboard-single-scroll-design.md`.
+
+**1. `lg`+ / large horizontal displays — Zero-Scroll goal:**
+The desktop app should present core content without vertical scrolling, regardless of display size. Shrink-to-fit layouts, `dvh` constraints, and internal scrolling for data regions (tables) keep everything visible on a big display.
+
+**2. Mobile / tablet (`< lg`) — one honest page scroll:**
+A single page-level scroller (the route's `main`) is acceptable and expected. The hard invariant is **no nested scroll windows** — never scroll-within-scroll-within-scroll (the 2026-11-16 dashboard bug: page → charts region → individual cards). Minimize scroll height where cheap via the density rules below.
+
+**3. Tables at any size:**
+Internal scroll inside `DataTable` is correct and exempt (density is managed by table tokens): 10 default rows → internal scroll; 2 rows → fits without scrolling.
 
 **1. High-Density Mobile Strategy (SM)**:
 - **Viewport Fit**: Always use `dvh` (dynamic viewport height) and `max-h` constraints.
@@ -37,12 +46,13 @@ You are a senior UX/UI Designer specializing in clean, efficient, and modern fin
 
 **3. Implementation Checklist**:
 - [ ] Use `dvh` for full-height layouts.
-- [ ] Apply `pb-safe-area-inset-bottom` for mobile navigation clearance.
-- [ ] Ensure `DataTable` and `Dashboard` grids fit within 100dvh.
+- [ ] Apply device-chrome clearance inside the scrollable content (`pb-[calc(env(safe-area-inset-bottom)_+_0.75rem)] lg:pb-0` on the page content root) — padding on the scroll container itself is unreachable at scroll end.
+- [ ] Below `lg`: NO nested scroll windows — content flows, the route `main` is the only scroller; charts/cards render at natural (min-constrained) height.
+- [ ] At `lg`+: dashboard/table grids fit within 100dvh with internal region scrolling only where necessary.
 - [ ] Minimize vertical margins and headers to prioritize content.
 
 **4. Spacing Lock (mandatory)**:
-- Spacing classes (`p-*`, `px-*`, `py-*`, `pt-*`, `pb-*`, `pl-*`, `pr-*`, `mt-*`, `mb-*`, `ml-*`, `mr-*`, `mx-*`, `my-*`, `gap-*`, `space-x-*`, `space-y-*`, `rounded-*`, `min-h-*`) are NOT responsive. Use one value at all breakpoints — wider viewports gain breathing room through width, not padding.
+- Spacing classes (`p-*`, `px-*`, `py-*`, `pt-*`, `pb-*`, `pl-*`, `pr-*`, `mt-*`, `mb-*`, `ml-*`, `mr-*`, `mx-*`, `my-*`, `gap-*`, `space-x-*`, `space-y-*`, `rounded-*`, `min-h-*`) are NOT responsive. Use one value at all breakpoints — wider viewports gain breathing room through width, not padding. Exception: bare `min-h-0` flexbox collapse constraints may be breakpoint-gated (`lg:min-h-0`) — they disable automatic minimum sizing rather than adding spacing; content `min-h-*` values (e.g. `min-h-75`) stay non-responsive. Device-chrome clearance padding (`pb-[calc(env(safe-area-inset-bottom)+…)]`) may also be gated to `lg:pb-0` — it is OS-overlay clearance, not decorative spacing.
 - Responsive by design: typography (`text-*`), icon sizes (`h-*`/`w-*`), layout (`grid-cols-*`, `flex*`, `hidden`, `col-span-*`), constraints (`max-w-*`, `max-h-*`), and top-level layout containers (main padding tiers `px-3 xl:px-5 2xl:px-8`).
 - Data tables are exempt (density is managed by table tokens).
 
@@ -77,7 +87,7 @@ To provide the best possible perceived performance, we implement a two-tiered lo
 
 - **Interaction Patterns**
     - **Keyboard Navigation**: Every wizard modal auto-focuses its close button on open. Escape key closes modals. All interactive elements have `focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2` for visible keyboard focus.
-    - **Responsive Layouts**: Zero-scroll priority across all breakpoints.
+    - **Responsive Layouts**: Two-tier scrolling — Zero-Scroll at `lg`+ / large displays; one page scroll below `lg` with no nested scroll windows (see *Two-Tier Scrolling Standard* above).
     - **Structural Error Feedback**: For critical operation errors (e.g., server failures), use a high-visibility, industrial-styled error block at the bottom of forms with the `animate-premium-in` animation.
     - **Danger Zone**: For destructive or final actions (like stopping a recurrence), use a specialized container with a `bg-destructive/5` background, `destructive` borders, and a high-contrast button to signal risk.
     - **Wizard & Multi-step UI**:
