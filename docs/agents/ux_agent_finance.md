@@ -20,9 +20,18 @@ You are a senior UX/UI Designer specializing in clean, efficient, and modern fin
 - **Information Density**: Prioritize structured, density-optimized layouts for financial data.
 - **Dark Mode First**: Optimized for high-contrast dark environments.
 
-## Responsive Design: The "Zero-Scroll" Foundation
+## Responsive Design: Two-Tier Scrolling Standard
 
-**CRITICAL MANDATE**: The entire application (not just forms) must adhere to the **Zero-Scroll / Shrink-to-Fit** standard. The goal is to present information so that the user rarely needs to scroll vertically to see core content, regardless of the device size.
+**STANDARD (revised 2026-11-16)** — supersedes the old single "Zero-Scroll" mandate. Rationale and approved design: `docs/superpowers/specs/2026-11-16-mobile-dashboard-single-scroll-design.md`.
+
+**1. `lg`+ / large horizontal displays — Zero-Scroll goal:**
+The desktop app should present core content without vertical scrolling, regardless of display size. Shrink-to-fit layouts, `dvh` constraints, and internal scrolling for data regions (tables) keep everything visible on a big display.
+
+**2. Mobile / tablet (`< lg`) — one honest page scroll:**
+A single page-level scroller (the route's `main`) is acceptable and expected. The hard invariant is **no nested scroll windows** — never scroll-within-scroll-within-scroll (the 2026-11-16 dashboard bug: page → charts region → individual cards). Minimize scroll height where cheap via the density rules below.
+
+**3. Tables at any size:**
+Internal scroll inside `DataTable` is correct and exempt (density is managed by table tokens): 10 default rows → internal scroll; 2 rows → fits without scrolling.
 
 **1. High-Density Mobile Strategy (SM)**:
 - **Viewport Fit**: Always use `dvh` (dynamic viewport height) and `max-h` constraints.
@@ -38,7 +47,8 @@ You are a senior UX/UI Designer specializing in clean, efficient, and modern fin
 **3. Implementation Checklist**:
 - [ ] Use `dvh` for full-height layouts.
 - [ ] Apply `pb-safe-area-inset-bottom` for mobile navigation clearance.
-- [ ] Ensure `DataTable` and `Dashboard` grids fit within 100dvh.
+- [ ] Below `lg`: NO nested scroll windows — content flows, the route `main` is the only scroller; charts/cards render at natural (min-constrained) height.
+- [ ] At `lg`+: dashboard/table grids fit within 100dvh with internal region scrolling only where necessary.
 - [ ] Minimize vertical margins and headers to prioritize content.
 
 **4. Spacing Lock (mandatory)**:
