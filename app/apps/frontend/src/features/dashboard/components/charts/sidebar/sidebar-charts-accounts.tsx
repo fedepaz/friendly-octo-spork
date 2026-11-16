@@ -9,13 +9,13 @@ export function SidebarChartsAccounts() {
   const scaT = useTranslations("SidebarChartsAccounts");
   const { data: accounts = [] } = useRecentAccounts();
   return (
-    <Card className="bg-card/40 border-border/40 shadow-premium rounded-none shrink-0 flex flex-col flex-1 min-h-0 overflow-hidden">
+    <Card className="bg-card/40 border-border/40 shadow-premium rounded-none flex flex-col lg:shrink-0 lg:flex-1 lg:min-h-0 lg:overflow-hidden">
       <CardHeader className="pb-2 px-5 pt-4 shrink-0">
         <CardTitle className="text-xs font-black uppercase tracking-widest text-primary">
           {scaT("title")}
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-2 px-5 pb-4 overflow-y-auto custom-scrollbar">
+      <CardContent className="space-y-2 px-5 pb-4 lg:overflow-y-auto custom-scrollbar">
         {accounts.map((account) => (
           <div
             key={account.id}

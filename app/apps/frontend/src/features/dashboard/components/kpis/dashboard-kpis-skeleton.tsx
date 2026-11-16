@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function DashboardKPIsSkeleton() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 min-h-0 overflow-hidden">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:min-h-0 lg:overflow-hidden order-3 lg:order-none">
       <div className="lg:col-span-8 grid md:grid-cols-3 gap-3">
         {Array.from({ length: 3 }).map((_, i) => (
           <Card key={i} className="bg-card/40 border-border/40 rounded-none">

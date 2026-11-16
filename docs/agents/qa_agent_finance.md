@@ -65,7 +65,7 @@ Every React component must meet the following enterprise standards before final 
 
 | Criterion | Description |
 | :--- | :--- |
-| **Responsive** | Component follows a high-density mobile-first approach (**Zero-Scroll standard**). Shrinks gaps, padding, and icons on smartphones while using adaptive scaling for Tablet/Desktop. |
+| **Responsive** | Component follows a high-density mobile-first approach (**Two-Tier Scrolling Standard**): Zero-Scroll at `lg`+, one page scroll with no nested scroll windows below `lg`. Shrinks gaps, padding, and icons on smartphones while using adaptive scaling for Tablet/Desktop. |
 | **Color Tokens** | Component strictly uses semantic OKLCH theme variables (e.g., `bg-primary/10`, `border-border/60`) and avoids hardcoded hex/RGB/HSL colors. |
 | **UX Helpers** | Component implements Tooltips for icon-only actions, `aria-label` for screen readers, and `FormDescription` for complex input guidance. |
 | **Viewport dvh** | Component uses dynamic viewport height units (`dvh`) for full-height or screen-relative containers, avoiding `100vh` mobile cutoffs. |

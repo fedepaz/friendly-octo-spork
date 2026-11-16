@@ -62,7 +62,7 @@ export function KPIsDashboard({ month, year }: KPIsDashboardProps) {
   };
 
   return (
-    <div className="grid  grid-cols-1 lg:grid-cols-12 gap-3 min-h-0 overflow-y-auto lg:overflow-hidden pr-1 custom-scrollbar">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:min-h-0 lg:overflow-hidden pr-1 custom-scrollbar order-3 lg:order-none">
       {/* Top Bento Row: Stats & Quick Actions */}
       <div className="lg:col-span-8 grid md:grid-cols-3 gap-3">
         <Card className="bg-card/40 border-border/40 shadow-premium group hover:bg-card/60 transition-premium rounded-none">
