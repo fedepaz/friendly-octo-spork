@@ -6,6 +6,7 @@ settings:
 
 overrides:
   glob@>=9.0.0 <=14.0.1: ^14.0.2
+  minimatch@>=7.0.0 <11.0.1: ^11.0.1
 
 importers:
 
@@ -5709,10 +5710,6 @@ packages:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
 
-  minimatch@10.2.6:
-    resolution: {integrity: sha512-vpLQEs+VLCr1nU0BXS07maYoFwlDAH0gngQuuttxIwutDFEMHq2blX+8vpgxDdK3J1PwjCJiep77OitTZ4Ll1A==}
-    engines: {node: 18 || 20 || >=22}
-
   minimatch@11.0.9:
     resolution: {integrity: sha512-KCFkfyjqerNlSstjlhIGNXIKZGA/6O4V4RlhZ+Dsr621SPPw0mzlypE9D9ZOoPiVefHID+j7/XuMMlqfD/F60Q==}
     engines: {node: 20 || >=22}
@@ -10030,7 +10027,7 @@ snapshots:
   '@ts-morph/common@0.27.0':
     dependencies:
       fast-glob: 3.3.3
-      minimatch: 10.2.6
+      minimatch: 11.0.9
       path-browserify: 1.0.1
 
   '@tsconfig/node10@1.0.14': {}
@@ -10366,7 +10363,7 @@ snapshots:
       '@typescript-eslint/types': 8.72.2
       '@typescript-eslint/visitor-keys': 8.72.2
       debug: 4.4.3
-      minimatch: 10.2.6
+      minimatch: 11.0.9
       semver: 7.8.6
       tinyglobby: 0.2.17
       ts-api-utils: 2.5.0(typescript@5.9.3)
@@ -13313,10 +13310,6 @@ snapshots:
 
   min-indent@1.0.1: {}
 
-  minimatch@10.2.6:
-    dependencies:
-      brace-expansion: 5.0.13
-
   minimatch@11.0.9:
     dependencies:
       '@isaacs/nonrecursive-glob-match': 1.1.0
@@ -14685,7 +14678,7 @@ snapshots:
     dependencies:
       '@istanbuljs/schema': 0.1.6
       glob: 14.0.6
-      minimatch: 10.2.6
+      minimatch: 11.0.9
 
   thread-stream@4.2.1:
     dependencies:
