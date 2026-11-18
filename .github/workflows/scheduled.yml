@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: main # audit main, regardless of which branch the schedule fired from
       - uses: ./.github/actions/setup
       - name: Run security audit
-        run: pnpm audit --audit-level high
+        run: pnpm audit # fails on low/moderate/high/critical — no gates, no ignores
         working-directory: app
