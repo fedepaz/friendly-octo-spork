@@ -1,3 +1,6 @@
 packages:
   - "apps/*"
   - "packages/*"
+
+overrides:
+  "glob@>=9.0.0 <=14.0.1": "^14.0.2"
