@@ -36,7 +36,7 @@ appFinance/
 
 ### Prerequisites
 
-- Node.js >= 18 (Prisma 7 projects prefer >= 20.19)
+- Node.js `^22.22.3 || ^24.15.0 || >=26.0.0` (Nest 12 CLI / `@angular-devkit` floor — older 22.x crashes `pnpm dev` with `ERR_REQUIRE_CYCLE_MODULE`)
 - pnpm 10.33.2 (`corepack enable`)
 - Docker (for PostgreSQL)
 
