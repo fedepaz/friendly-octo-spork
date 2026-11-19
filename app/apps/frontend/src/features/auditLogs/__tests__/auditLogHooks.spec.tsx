@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React, { Suspense } from "react";
 import { useAuditLogs } from "../hooks/auditLogHooks";
 import { server } from "@/mocks/server";
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse } from "msw/http";
 import { AuditLogDto } from "@repo/shared";
 import { auditLogQueryKeys } from "@/lib/queryKeys";
 
@@ -146,7 +146,7 @@ const mockAuditLogs: AuditLogDto[] = [
 // ---------------------------------------------------------------------------
 
 describe("useAuditLogs", () => {
-  beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }));
+  beforeAll(() => server.listen({ onUnhandledFrame: "bypass" }));
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
 
