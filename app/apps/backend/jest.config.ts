@@ -16,6 +16,8 @@ const config: Config = {
       },
     ],
   },
+  // Nest 12 is ESM-only: run jest with NODE_OPTIONS=--experimental-vm-modules
+  // so require(esm) works on Node < 24.9 (see package.json test script).
   collectCoverageFrom: [
     '**/*.(t|j)s',
     '!**/*.module.ts',

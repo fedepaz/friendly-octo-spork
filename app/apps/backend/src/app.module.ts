@@ -32,10 +32,8 @@ import { InvestmentsModule } from './modules/investments/investment.module';
       isGlobal: true,
       load: [configuration],
       validationSchema,
-      validationOptions: {
-        allowUnknown: true,
-        abortEarly: false,
-      },
+      // Joi options (allowUnknown/abortEarly) are config v12 defaults for
+      // Standard Schema Joi vendors; override via validationOptions.libraryOptions
       envFilePath: [
         path.join(
           __dirname,
