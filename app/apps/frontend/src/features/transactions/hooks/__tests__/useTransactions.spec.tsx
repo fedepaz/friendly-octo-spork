@@ -9,7 +9,7 @@ import {
   useTransactionsByMonth,
 } from "../transactionsHooks";
 import { server } from "@/mocks/server";
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse } from "msw/http";
 import { TransactionDTO, PaginatedResponse } from "@repo/shared";
 
 // ---------------------------------------------------------------------------
@@ -178,7 +178,7 @@ const singleTransaction: TransactionDTO = mockTransactions[0];
 // ---------------------------------------------------------------------------
 
 describe("useTransactions", () => {
-  beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }));
+  beforeAll(() => server.listen({ onUnhandledFrame: "bypass" }));
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
 
@@ -285,7 +285,7 @@ describe("useTransactions", () => {
 // ---------------------------------------------------------------------------
 
 describe("useTransactionById", () => {
-  beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }));
+  beforeAll(() => server.listen({ onUnhandledFrame: "bypass" }));
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
 
@@ -355,7 +355,7 @@ describe("useTransactionById", () => {
 // ---------------------------------------------------------------------------
 
 describe("useTransactionsByMonth", () => {
-  beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }));
+  beforeAll(() => server.listen({ onUnhandledFrame: "bypass" }));
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
 

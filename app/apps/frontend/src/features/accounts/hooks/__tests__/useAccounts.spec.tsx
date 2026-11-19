@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React, { Suspense } from "react";
 import { useAccounts, useAccountById } from "../accountsHooks";
 import { server } from "@/mocks/server";
-import { http, HttpResponse } from "msw";
+import { http, HttpResponse } from "msw/http";
 import { AccountDTO } from "@repo/shared";
 
 // ---------------------------------------------------------------------------
@@ -126,7 +126,7 @@ const singleAccount: AccountDTO = mockAccounts[0];
 // ---------------------------------------------------------------------------
 
 describe("useAccounts", () => {
-  beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }));
+  beforeAll(() => server.listen({ onUnhandledFrame: "bypass" }));
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
 
@@ -206,7 +206,7 @@ describe("useAccounts", () => {
 // ---------------------------------------------------------------------------
 
 describe("useAccountById", () => {
-  beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }));
+  beforeAll(() => server.listen({ onUnhandledFrame: "bypass" }));
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
 
