@@ -1,5 +1,5 @@
 import { useTranslations, useLocale } from "next-intl";
-import { type ColumnDef, type Column, type Row } from "@tanstack/react-table";
+import type { ColumnDef, Column, Row } from "@/components/data-display/data-table/table-features";
 import {
   SortableHeader,
   TacticalTextCell,
