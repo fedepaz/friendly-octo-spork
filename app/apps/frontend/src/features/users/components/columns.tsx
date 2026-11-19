@@ -1,6 +1,6 @@
 // src/features/users/components/columns.tsx
 
-import { Row, type ColumnDef, type Column } from "@tanstack/react-table";
+import type { Row, ColumnDef, Column } from "@/components/data-display/data-table/table-features";
 import { useTranslations } from "next-intl";
 import {
   SortableHeader,

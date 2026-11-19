@@ -1,4 +1,4 @@
-import { Row, type Column, type ColumnDef } from "@tanstack/react-table";
+import type { Row, Column, ColumnDef } from "@/components/data-display/data-table/table-features";
 import { SortableHeader, TacticalTypeCell, TacticalTextCell, PremiumBadgeCell, PremiumAmountCell } from "@/components/data-display/data-table";
 import { AccountDTO, Currency } from "@repo/shared";
 import { Building2, Wallet, Banknote, CreditCard, Landmark } from "lucide-react";
