@@ -1,7 +1,8 @@
 // apps/frontend/jest.setup.ts
 
 import type { Config } from "jest";
-import nextJest from "next/jest";
+// Explicit .js: Node ≥24 ESM config loading does not extension-search subpath exports
+import nextJest from "next/jest.js";
 
 process.env.NEXT_PUBLIC_API_URL = "http://localhost:3001";
 const createJestConfig = nextJest({

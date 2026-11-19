@@ -57,6 +57,8 @@ jobs:
       - name: Run integration tests
         working-directory: app/apps/backend
         env:
+          # Nest 12 is ESM-only; Jest needs vm modules for require(esm)
+          NODE_OPTIONS: --experimental-vm-modules
           DATABASE_URL: postgresql://test:test@localhost:5432/appfinance_test
           DATABASE_HOST: localhost
           DATABASE_PORT: "5432"
