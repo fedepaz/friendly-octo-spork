@@ -5,7 +5,7 @@
   "description": "Finance Tracker",
   "packageManager": "pnpm@10.33.2",
   "engines": {
-    "node": ">=22.21.0"
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
   },
   "scripts": {
     "dev": "turbo run dev",
