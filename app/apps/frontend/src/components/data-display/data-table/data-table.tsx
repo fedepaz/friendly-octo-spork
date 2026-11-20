@@ -12,19 +12,18 @@ import {
   useState,
 } from "react";
 import {
-  type ColumnDef,
   type ColumnFiltersState,
+  type ColumnVisibilityState,
+  type RowData,
   type SortingState,
-  type Table as TableInstance,
-  type VisibilityState,
-  filterFns,
   flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
+  useTable,
 } from "@tanstack/react-table";
+import {
+  dataTableFeatures,
+  type ColumnDef,
+  type DataTableInstance,
+} from "@/components/data-display/data-table/table-features";
 import {
   ArrowUpDown,
   ChevronDown,
@@ -85,7 +84,13 @@ import {
 import { useTranslations } from "next-intl";
 
 declare module "@tanstack/table-core" {
-  interface ColumnMeta<TData, TValue> {
+  interface ColumnMeta<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    TFeatures extends import("@tanstack/table-core").TableFeatures,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    TData extends import("@tanstack/table-core").RowData,
+    TValue extends import("@tanstack/table-core").CellData = import("@tanstack/table-core").CellData,
+  > {
     /**
      * Hidden column that exists only to back a faceted filter — never
      * displayed by the auto-visibility pass or the columns dropdown.
@@ -94,8 +99,8 @@ declare module "@tanstack/table-core" {
   }
 }
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableProps<TData extends RowData> {
+  columns: ColumnDef<TData>[];
   data: TData[];
   title: string;
   tableName: string;
@@ -112,7 +117,7 @@ interface DataTableProps<TData, TValue> {
   enableSelection?: boolean;
   /** Static node, or a render function that receives the table instance
    *  (needed by faceted filters, which bind to column instances). */
-  toolbarContent?: ReactNode | ((table: TableInstance<TData>) => ReactNode);
+  toolbarContent?: ReactNode | ((table: DataTableInstance<TData>) => ReactNode);
 }
 
 function HeaderComponent({ titulo }: { titulo: string }) {
@@ -122,7 +127,7 @@ function HeaderComponent({ titulo }: { titulo: string }) {
     </div>
   );
 }
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
   title,
@@ -134,11 +139,11 @@ export function DataTable<TData, TValue>({
   totalCount = 0,
   enableSelection,
   toolbarContent,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const dtT = useTranslations("DataTable");
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<ColumnVisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [globalFilter, setGlobalFilter] = useState("");
   const userToggledColumnsRef = useRef(new Set<string>());
@@ -151,7 +156,7 @@ export function DataTable<TData, TValue>({
     canDelete: !!onDelete && dataTablePermissions.canDelete,
   };
 
-  const selectColumn: ColumnDef<TData, TValue> = {
+  const selectColumn: ColumnDef<TData> = {
     id: "select",
     header: ({ table }) => (
       <Checkbox
@@ -174,7 +179,7 @@ export function DataTable<TData, TValue>({
     enableHiding: false,
   };
 
-  const actionColumn: ColumnDef<TData, TValue> = {
+  const actionColumn: ColumnDef<TData> = {
     id: "actions",
     enableHiding: false,
     accessorKey: "actions",
@@ -272,16 +277,12 @@ export function DataTable<TData, TValue>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [columns, enableSelection]);
 
-  const table = useReactTable({
+  const table = useTable({
+    features: dataTableFeatures,
     data,
     columns: enhancedColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    filterFns,
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     onGlobalFilterChange: setGlobalFilter,
@@ -296,10 +297,13 @@ export function DataTable<TData, TValue>({
   });
 
   // #76: clamp pagination when the dataset shrinks (e.g. switching to a
-  // month with fewer rows) — otherwise the footer reads "PAGE 3 OF 1"
+  // month with fewer rows) — otherwise the footer reads "PAGE 3 OF 1".
+  // Depend on `data` only: v9 `table` identity changes every render and
+  // would otherwise reset the page index on every render (incl. after Next).
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     table.setPageIndex(0);
-  }, [data, table]);
+  }, [data]);
 
   const [containerWidth, setContainerWidth] = useState(0);
   const tableContainerRef = useCallback((node: HTMLDivElement | null) => {
@@ -337,7 +341,7 @@ export function DataTable<TData, TValue>({
     const visibleCount = Math.min(Math.max(maxDataColumns, 2), dataColumnCount);
 
     setColumnVisibility((prev) => {
-      const visibility: VisibilityState = {};
+      const visibility: ColumnVisibilityState = {};
       let dataIndex = 0;
       columnsId.forEach((id) => {
         if (id === "actions" || id === "select") {
@@ -354,6 +358,15 @@ export function DataTable<TData, TValue>({
           ? (prev[id] ?? autoVisible)
           : autoVisible;
       });
+      // v9: `table` identity changes every render — bail out when unchanged
+      // so this effect cannot loop (Maximum update depth exceeded).
+      const prevKeys = Object.keys(prev);
+      if (
+        prevKeys.length === Object.keys(visibility).length &&
+        prevKeys.every((key) => prev[key] === visibility[key])
+      ) {
+        return prev;
+      }
       return visibility;
     });
   }, [containerWidth, table]);
@@ -549,7 +562,7 @@ export function DataTable<TData, TValue>({
                     onClick={() => table.setPageSize(size)}
                     className={cn(
                       "h-(--control-height-xs) xl:h-(--control-height-sm) w-8 text-xs font-mono font-black border transition-premium cursor-pointer",
-                      table.getState().pagination.pageSize === size
+                      table.state.pagination.pageSize === size
                         ? "bg-primary border-primary text-primary-foreground"
                         : "bg-background/40 border-border/40 text-muted-foreground hover:border-primary/40",
                     )}
@@ -561,7 +574,7 @@ export function DataTable<TData, TValue>({
               <div className="text-xs font-black uppercase tracking-widest text-muted-foreground/60">
                 {dtT("pageLabel")}{" "}
                 <span className="text-foreground font-mono">
-                  {table.getState().pagination.pageIndex + 1}
+                  {table.state.pagination.pageIndex + 1}
                 </span>{" "}
                 {dtT("ofLabel")}{" "}
                 <span className="text-foreground font-mono">

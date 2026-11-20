@@ -1,6 +1,6 @@
 // src/features/auditLogs/components/columns.tsx
 
-import { type ColumnDef, type Column, type Row } from "@tanstack/react-table";
+import type { ColumnDef, Column, Row } from "@/components/data-display/data-table/table-features";
 import { useTranslations, useLocale } from "next-intl";
 import {
   SortableHeader,
@@ -20,13 +20,11 @@ import {
 } from "lucide-react";
 
 interface CellProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  row: Row<any>;
+  row: Row<AuditLogDto>;
 }
 
 interface HeaderProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  column: Column<any>;
+  column: Column<AuditLogDto>;
 }
 
 function ActionHeader({ column }: HeaderProps) {

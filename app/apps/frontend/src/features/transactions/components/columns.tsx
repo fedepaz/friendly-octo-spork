@@ -1,6 +1,7 @@
 // src/features/transactions/components/columns.tsx
 
-import { Row, type ColumnDef, type Column } from "@tanstack/react-table";
+import type { Row, ColumnDef, Column } from "@/components/data-display/data-table/table-features";
+import { includesSomeFilterFn } from "@/components/data-display/data-table/table-features";
 import { useTranslations } from "next-intl";
 import { TransactionDTO } from "@repo/shared";
 import { getTransactionTypeStyles } from "@/lib/utils";
@@ -140,7 +141,7 @@ export const transactionsColumns: ColumnDef<TransactionDTO>[] = [
     accessorKey: "type",
     header: TypeHeader,
     cell: ({ row }) => <TransactionTypeCell row={row} />,
-    filterFn: "arrIncludesSome",
+    filterFn: includesSomeFilterFn,
   },
   {
     accessorKey: "description",
@@ -184,7 +185,7 @@ export const transactionsColumns: ColumnDef<TransactionDTO>[] = [
     accessorFn: (tx) => tx.category?.name ?? "",
     enableHiding: false,
     meta: { facetOnly: true },
-    filterFn: "arrIncludesSome",
+    filterFn: includesSomeFilterFn,
     header: () => null,
     cell: () => null,
   },

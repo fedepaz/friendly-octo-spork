@@ -4,7 +4,7 @@ description: "Install pnpm + Node, install deps, generate Prisma client"
 inputs:
   node-version:
     description: "Node.js version"
-    default: "20"
+    default: "24"
   pnpm-version:
     description: "pnpm version"
     default: "10.33.2"

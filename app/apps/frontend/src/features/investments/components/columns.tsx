@@ -1,4 +1,4 @@
-import { type Column, type ColumnDef } from "@tanstack/react-table";
+import type { Column, ColumnDef } from "@/components/data-display/data-table/table-features";
 import {
   TacticalTextCell,
   PremiumAmountCell,
